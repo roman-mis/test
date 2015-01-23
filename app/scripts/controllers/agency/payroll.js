@@ -1,0 +1,92 @@
+'use strict';
+angular.module('origApp.controllers')
+        .controller('AgencyPayrollController', function($scope, ModalService, $stateParams, HttpResource, ConstantsResource) {
+          $scope.agencyId = $stateParams.agencyId;
+          $scope.countries = ConstantsResource.get('countries');
+
+          function loadPayrollData() {
+            $scope.payrollData = HttpResource.model('agencies/' + $scope.agencyId).get('payroll');
+          }
+
+
+          $scope.getConstant = function(constantKey, code) {
+            var hashData = ConstantsResource.getHashData(constantKey);
+            if (!hashData || !hashData[code]) {
+              return {};
+            }
+            return hashData[code];
+          };
+
+          $scope.openAgencyDefaultInvoicing = function() {
+            ModalService.open({
+              templateUrl: 'views/agency/_edit_default_invoicing.html',
+              parentScope: $scope,
+              controller: '_EditAgencyDefaultInvoicing',
+              size: 'lg'
+            });
+          };
+
+          $scope.openAgencyDefaultPayroll = function() {
+            ModalService.open({
+              templateUrl: 'views/agency/_edit_default_payroll.html',
+              parentScope: $scope,
+              controller: '_EditAgencyDefaultPayroll'
+            });
+          };
+          
+          loadPayrollData();
+
+        })
+
+        //Edit Agency Default Invoicing
+        .controller('_EditAgencyDefaultInvoicing', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
+          $scope.data = {};
+          angular.copy(parentScope.payrollData.default_invoicing, $scope.data);
+  
+          $scope.invoiceMethods = ConstantsResource.get('invoicemethods');
+          $scope.paymentTerms = ConstantsResource.get('paymentterms');
+          $scope.invoiceDesigns = HttpResource.model('invoicedesigns').query({});
+          
+          $scope.agency = HttpResource.model('agencies').get(parentScope.agencyId);
+          
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+          };
+          $scope.ok = function() {
+            $scope.isSaving = true;
+            HttpResource.model('agencies/' + parentScope.agencyId).create($scope.data)
+                    .patch('payroll')
+                    .then(function(response) {
+                      $scope.isSaving = false;
+                      if (!HttpResource.flushError(response)) {
+                        parentScope.payrollData = jQuery.extend(parentScope.payrollData, response.data.object);
+                        $modalInstance.close();
+                      }
+                    });
+          };
+        })
+
+        //Edit Agency Default Payroll
+        .controller('_EditAgencyDefaultPayroll', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
+          $scope.data = {};
+          angular.copy(parentScope.payrollData.default_payroll, $scope.data);
+  
+          $scope.serviceUsed = ConstantsResource.get('servicesused');
+          $scope.marginTypes = ConstantsResource.get('margintypes');
+          
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+          };
+          $scope.ok = function() {
+            $scope.isSaving = true;
+            HttpResource.model('agencies/' + parentScope.agencyId).create($scope.data)
+                    .patch('payroll')
+                    .then(function(response) {
+                      $scope.isSaving = false;
+                      if (!HttpResource.flushError(response)) {
+                        parentScope.payrollData = jQuery.extend(parentScope.payrollData, response.data.object);
+                        $modalInstance.close();
+                      }
+                    });
+          };
+        });

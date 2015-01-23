@@ -1,0 +1,12 @@
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
+local.env.js
+/nbproject/private/
+.elasticbeanstalk/
+/.idea
+/app/fonts
+/config/
+/config/config.json

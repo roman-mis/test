@@ -1,0 +1,25 @@
+// google font
+@import url('http://fonts.googleapis.com/css?family=Questrial');
+
+@import "global/variables";
+
+@import "libs/angular-ui-select/select2";
+
+$fa-var-check: "";
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
+// endbower
+
+// purecss grids and responsiveness bundle
+@import "_pure";
+
+@import "ng-tags-input.css";
+//@import "ng-tags-input.bootstrap.css";
+
+@import "global/index";
+@import "pages/index";
+
+

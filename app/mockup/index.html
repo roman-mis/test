@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <base href="../" />
+        <meta charset="utf-8">
+        <title>Mock up</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="../bower_components/bootstrap-datepicker/css/datepicker.css" />
+        <link rel="stylesheet" href="../bower_components/bootstrap-datepicker/css/datepicker3.css" />
+        <link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+        <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
+        <link rel="stylesheet" href="../bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+        <link rel="stylesheet" href="../bower_components/components-font-awesome/css/font-awesome.css" />
+        <!-- endbower -->        
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="../styles/main.css" />
+        <!-- endbuild -->
+    </head>
+    <body ng-app="origApp">
+        <!--[if lt IE 7]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="../http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <header class="container-fluid">
+            <div class="col-xs-12">
+                <div class="logo-wrapper pull-left">
+                    <a href='#' class='logo'>
+                        <img src="../images/logo.png" alt="image" />
+                    </a>
+                    <span>Welcome {username}</span>
+                </div>
+                <div class="search-wrapper pull-right">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="form-group">
+                            <button type="button"><i class="fa fa-bars"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <div class="page-container container-fluid">
+            <div class="left-sidebar">
+                <div ng-include="'mockup/left-menu.html'"></div>    
+            </div>
+            <div class="main-content">
+                <div class="breadcrumb">
+                    <a href="#">Home</a>
+                    <span></span>
+                    <a href="#">Candidates</a>
+                    <span></span>
+                    <a href="#">{candidate_name}</a>
+                    <span></span>
+                    <a class="active" href="#">History</a>
+                </div>
+
+                <div ng-include="'mockup/candidate.html'"></div>
+            </div>
+            <div class="right-sidebar">
+                <div ng-include="'mockup/right-menu.html'"></div> 
+            </div>
+        </div>
+
+        <!-- build:js(.) scripts/oldieshim.js -->
+        <!--[if lt IE 9]>
+        <script src="../bower_components/es5-shim/es5-shim.js"></script>
+        <script src="../bower_components/json3/lib/json3.js"></script>
+        <![endif]-->
+        <!-- endbuild -->
+
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-resource/angular-resource.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="../bower_components/angular-animate/angular-animate.js"></script>
+        <script src="../bower_components/angular-touch/angular-touch.js"></script>
+        <script src="../bower_components/angular-route/angular-route.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+        <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="../bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+        <script src="../bower_components/angular-ui-select/dist/select.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="../bower_components/moment/moment.js"></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+        <script src="mockup/custom.js"></script>
+        <script src="scripts/directives/main.js"></script>
+        <script src="scripts/directives/origni.js"></script>
+        <script src="scripts/directives/origpostcode.js"></script>       
+        <script src="scripts/directives/origvalidateform.js"></script>    
+        <script src="scripts/directives/origdatepicker.js"></script>
+    </body>
+</html>

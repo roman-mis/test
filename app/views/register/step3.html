@@ -1,0 +1,41 @@
+<div class="row form-header">
+    <div class="wizard-status-bar">
+        <div class="step step1">1</div>
+        <div class="step step2">2</div>
+        <div class="step step3 selected">3</div>
+        <div class="step step4">4</div>
+        <div class="step step5">5</div>
+    </div>
+</div>                
+<div class="row form-body">
+    <div class="col-md-6 left-side">
+        <div class="from-title">
+            Contact Details (continued)
+        </div> 
+        I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.<br/><br/>
+        But also this area could be used for notifications, validations and potentially the non UK national extra bit!
+    </div>
+    <div class="col-md-6 right-side">
+        <form role="form" name="registerform" orig-validate-form>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.agencyName" name="agencyname" class="form-control" placeholder="* Agency Name" maxlength="50" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.jobTitle" name="jobtitle" class="form-control" placeholder=" Job Title" maxlength="50" />
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.sector" name="sector" class="form-control" placeholder=" Sector" maxlength="50"/>
+            </div>
+            <div class="form-group">
+                <div class="input-group date" name="jobStartDate" ng-model="candidate.jobStartDate" placeholder="* Start Date" orig-datepicker required/>
+            </div>
+            <div class="form-group">
+                <span class="notice">
+                    Please note if you have more than one contract,
+                    please complete your most regular contract here
+                    and add additional contracts in your online portal
+                </span>
+            </div>            
+        </form>
+    </div>
+</div>

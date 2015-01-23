@@ -1,0 +1,56 @@
+<div class="candidate-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">P45 Information request</h3>
+	</div>
+	<div class="modal-body">
+		<p>As a new employee your employer needs the information on this form before your first payday to tell HMRC about you and help them use the correct tax code.</p>
+		<form name="P45InformationRequest" class="form-horizontal" role="form">
+			<div class="form-group">
+				<label class="col-sm-5">P45 Gross for Tax</label>
+				<div class="col-sm-6 col-xs-11">
+					<input type="text" class="form-control" />
+				</div>
+				<div class="col-sm-1 col-xs-1"><a href="#"><i class="fa fa-question-circle"></i></a></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-5">P45 Tax Deducted</label>
+				<div class="col-sm-6 col-xs-11">
+					<input type="text" class="form-control" />
+				</div>
+				<div class="col-sm-1 col-xs-1"><a href="#"><i class="fa fa-question-circle"></i></a></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-5">Tax Code</label>
+				<div class="col-sm-6 col-xs-11">
+					<input type="text" class="form-control" />
+				</div>
+				<div class="col-sm-1 col-xs-1"><a href="#"><i class="fa fa-question-circle"></i></a></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-5">Tax Basis</label>
+				<div class="col-sm-6 col-xs-11">
+					<label>
+						<input type="checkbox"> Week 1
+					</label>
+				</div>
+				<div class="col-sm-1 col-xs-1"><a href="#"><i class="fa fa-question-circle"></i></a></div>
+			</div>
+		</form>
+		
+		<div class="row">
+			<div class="col-sm-12">
+				<p class="text-right">
+					<a href="#"><i class="fa fa-question-circle"></i></a></br>
+					<button class="btn btn-primary" style="margin-right: 15px">Upload Originem P45</button>
+				</p>
+			</div>		
+		</div>
+		<p>By submitting this information you are declaring all information is correct as it appears on your most recent P45, if you have any questions on the information being submitted please call the customer service team on
+		   <span>01999 939939</span> or email us on <span> <a href="mailto:oli@makeitsimple.info">oli@makeitsimple.info</a></span>
+		</p>
+	</div>
+	<div class="modal-footer">
+		<a class="padding-10 pointer" ng-click="back()">Back</a>
+		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
+	</div>
+</div>

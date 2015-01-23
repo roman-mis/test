@@ -1,0 +1,24 @@
+<section class="tabs-payroll">
+  <ul class="nav nav-tabs row">
+    <li ng-class="{active: isTabActive('history')}">
+      <a href="" ng-click="setTabActive('history')">History</a>
+    </li>
+    <li ng-class="{active: isTabActive('tax')}">
+      <a href="" ng-click="setTabActive('tax')">Tax</a>
+    </li>
+    <li ng-class="{active: isTabActive('product')}">
+      <a href="" ng-click="setTabActive('product')">Product</a>
+    </li>
+  </ul>
+  
+  <div class="tab-content col-xs-12" ng-show="isTabActive('history')">
+    <div ng-include="'views/candidate/_payroll_history.html'"></div>
+  </div>
+
+  <div class='tab-content col-xs-12 tax' ng-show="isTabActive('tax')" ng-controller="CandidatePayrollTaxController">
+    <div ng-include="'views/candidate/_payroll_tax.html'"></div>
+  </div>
+  <div class='tab-content col-xs-12' ng-show="isTabActive('product')" ng-controller="CandidatePayrollProductController">
+    <div ng-include="'views/candidate/_payroll_product.html'"></div>
+  </div>
+</section>

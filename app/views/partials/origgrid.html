@@ -1,0 +1,32 @@
+<div class="orig-grid-wrapper">
+  <table class="table orig-grid">
+    <thead>
+      <tr>
+        <th class="text-center" ng-repeat="col in options.columns">{{col.display}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr orig-grid-row grid-options="options" row="row" ng-repeat="row in options.data"></tr>
+    </tbody>
+  </table>
+  <div class="orig-grid-pagination-wrapper" ng-if="options.isPagination">
+    <div class="page-rows-count">
+      <label>Results per page</label><br>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="20">20</button>
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="40">40</button>
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="60">60</button>
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="80">80</button>
+      </div>
+    </div>
+    <pagination
+      total-items="options.totalItems" 
+      ng-model="options.currentPage" 
+      items-per-page="options.limit" 
+      max-size="options.maxVisiblePages" 
+      class="pagination" 
+      boundary-links="true" 
+      rotate="false" 
+      num-pages="options.numPages"></pagination>
+  </div>
+</div>

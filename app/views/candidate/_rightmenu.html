@@ -1,0 +1,55 @@
+<div class="sidebar-menu-inner" ng-controller="CandidateSidebarController">
+  <div class="search-wrapper">
+    <div class="form-group nonepadding">
+      <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+        <ui-select-match placeholder="Select Agency">{{title.value}}</ui-select-match>
+        <ui-select-choices repeat="item in titleary | filter: $select.search">
+          <span ng-bind-html="item.value"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+
+  <div class="company-logo">
+    <img src="http://placehold.it/300x150" class="user-photo" alt="image" />
+  </div>
+
+  <div class="main-menu">
+    <div class="menu-wrapper green-light-color">
+      <p class="entry-title col-lg-12"><i class="fa fa-check-square-o pull-left"></i>COMPLIANCE</p>
+      <ul>
+        <li><a href="" ng-click="openDPAWin()" style="display: inline;">DPA QUESTIONS</a></li>
+        <li><a href="" ng-click="openOnboardingWin()">ONBOARDING</a></li>
+        <li><a href="" ng-click="openSalaryCalculatorWin()">SALARY CALCULATOR</a></li>
+      </ul>
+    </div>
+    <div class="menu-wrapper green-light-color">
+      <p class="entry-title col-lg-12"><i class="fa fa-clock-o pull-left"></i>ACTIVITIES</p>
+      <ul>
+        <li><a href="" ng-click="openCreateTaskWin({activityType: 'call_log'})" style="display: inline;">ADD CALL LOG</a></li>
+        <li><a href="" ng-click="openAddExpensesWin()">ADD EXPENSES</a></li>
+        <li><a href="" ng-click="openAddActivityWin()">ADD ACTIVITY</a></li>
+        <li><a href="" ng-click="openCreateDocumentWin({})">ACTION REQUEST</a></li>
+      </ul>
+    </div>
+    <div class="menu-wrapper green-color">
+      <p class="entry-title col-lg-12"><i class="fa fa-users pull-left"></i>AGENCIES</p>
+      <ul>
+        <li><a href="#">{ AGENCY 1 }</a></li>
+        <li><a href="#">{ AGENCY 2 }</a></li>
+      </ul>
+    </div>
+    <button class="menu-wrapper btn btn-success pull-right">See All</button>
+  </div>
+
+  <ul id='left-menu' class='main-menu'>
+    <li><a href="" ng-click="openDPAWin()"><i class="fa fa-question-circle sky-brand"></i><span class="title">DPA</span></a></li>
+    <li><a href="" ng-click="openOnboardingWin()"><i class="fa fa-thumbs-o-up sky-brand"></i><span class="title">ONBOARDING</span></a></li>
+    <li><a href="" ng-click="openSalaryCalculatorWin()"><i class="fa fa-calculator sky-brand"></i><span class="title">CALCULATOR</span></a></li>
+    <li><a href="" ng-click="openCreateTaskWin({activityType: 'call_log'})"><i class="fa fa-phone warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Call Log</span></a></li>
+    <li><a href="" ng-click="openAddExpensesWin()"><i class="fa fa-gbp warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>EXPENSES</span></a></li>
+    <li><a href="" ng-click="openAddActivityWin()"><i class="fa fa-clock-o warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Activity</span></a></li>
+    <li><a href="" ng-click="openCreateDocumentWin({})"><i class="fa fa-flash warning-brand"></i><span class="title">ACTION REQUEST</span></a></li>
+    <li><a href="" ng-click="openCreateTaskWin({activityType: 'task'})"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AGENCIES</span></a></li>
+  </ul>
+</div>

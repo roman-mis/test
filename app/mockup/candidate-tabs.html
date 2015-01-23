@@ -1,0 +1,81 @@
+<div class='candidate-main meta-box container-fluid'>
+    <div class="row visible-sm">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" ng-click="tab.isCollapsed = !tab.isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand visible-sm">{{tab.caption}}</span>
+        </div>
+    </div>
+    <section class='tabs-wrapper row'>
+        <ul class="nav nav-tabs collapse navbar-collapse" collapse="tab.isCollapsed">
+            <li ng-class="{
+                        active:tab.isSet(1)
+                    }">
+                <a href="" ng-click="tab.setTab(1)">Home</a>
+            </li>
+            <li ng-class="{
+                        active:tab.isSet(2)
+                    }">
+                <a href="" ng-click="tab.setTab(2)">Contact</a>
+            </li>
+            <li ng-class="{
+                        active:tab.isSet(3)
+                    }">
+                <a href="" ng-click="tab.setTab(3)">Payroll</a>
+            </li>
+            <li ng-class="{
+                        active:tab.isSet(4)
+                    }">
+                <a href="" ng-click="tab.setTab(4)">Payslips</a>
+            </li>
+            <li ng-class="{
+                        active:tab.isSet(5)
+                    }">
+                <a href="" ng-click="tab.setTab(5)">Agencies</a>
+            </li>
+            <li ng-class="{
+                        active:tab.isSet(6)
+                    }">
+                <a href="" ng-click="tab.setTab(6)">Compliance</a>
+            </li>
+            <li ng-class="{
+                        active:tab.isSet(7)
+                    }">
+                <a href="" ng-click="tab.setTab(7)">History</a>
+            </li>
+        </ul>
+        <div class="edit-panel hidden-sm hidden-xs">
+            <a href="#"><i class="fa fa-arrows"></i></a>
+            <a href="#"><i class="fa fa-chevron-down"></i></a>
+        </div>
+
+        <div class='tab-content col-xs-12' ng-show="tab.isSet(1)">
+            <div ng-include="'mockup/candidate-home.html'"></div>
+        </div>
+
+        <div class='tab-content contact col-xs-12' ng-show="tab.isSet(2)">
+            <div ng-include="'mockup/candidate-contact.html'"></div>
+        </div>
+
+        <div class='tab-content payroll' ng-show="tab.isSet(3)">
+            <div ng-include="'mockup/candidate-payroll.html'"></div>
+        </div>
+
+        <div class='tab-content payslips' ng-show="tab.isSet(4)">
+            <div ng-include="'mockup/candidate-payslips.html'"></div>
+        </div>
+        <div class='agencies tab-content' ng-show="tab.isSet(5)">
+            <div ng-include="'mockup/candidate-agencies.html'"></div>
+        </div>
+        <div class='compliance tab-content' ng-show="tab.isSet(6)">
+            <div ng-include="'mockup/candidate-compliance.html'"></div>
+        </div>
+        <div class='history tab-content' ng-show="tab.isSet(7)">
+            <div ng-include="'mockup/candidate-tab-history.html'"></div>
+        </div>
+    </section>
+</div>

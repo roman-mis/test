@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-sm-4 pull-right">
+    <button type="button" class="btn btn-success form-control" ng-click="openAgencyBranchModal(null)"><i class="fa fa-plus"></i> Add New Branch</button>
+  </div>
+</div>		
+<!-- Accordion content -->
+<div class="agencies_wrapper">
+  <div>
+    <accordion close-others="oneAtATime">
+      <accordion-group is-open="status.open" ng-class="{'active' : status.open}" ng-repeat="branch in branches">
+        <accordion-heading>
+          {{branch.name}}<i class="pull-right fa" ng-class="{'fa-chevron-up': status.open, 'fa-chevron-down': !status.open}"></i>
+        </accordion-heading>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="meta-box-content">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="consultant in branch.consultants">
+                    <td>{{consultant.first_name}} {{consultant.last_name}}</td>
+                    <td><a href="mailto:{{consultant.email_address}}">{{consultant.email_address}}</a></td>
+                    <td>{{consultant.phone}}</td>
+                    <td>{{consultant.role.description}}</td>
+                    <td>{{consultant.status.description}}</td>
+                    <td style="width:100px; white-space: nowrap;">
+                      <div class="action_wrapper text-center">
+                        <a href="javascript:void(0)" ng-click="openAgencyConsultantModal(branch, consultant)" title="View details"><i class="fa fa-eye"></i></a>
+                        <a href="javascript:void(0)" ng-click="changeConsultantLockStatus(consultant)" title="Lock/Unlock"><i class="fa fa-{{consultant.locked?'lock':'unlock'}}"></i></a>
+                        <a href="javascript:void(0)" ng-click="changeConsultantPassword(consultant)" title="Change password"><i class="fa fa-long-arrow-right"></i></a>
+                        <!--<a href="javascript:void(0)" ng-click="openAgencyConsultantModal(branch, consultant)" title="Edit consultant"><i class="fa fa-edit"></i></a>-->
+                        <a href="javascript:void(0)" ng-click="deleteAgencyConsultant(branch, consultant)" title="Delete consultant"><i class="fa fa-close"></i></a>
+                      </div>	
+                    </td>
+                  </tr>
+                </tbody>
+              </table>		
+            </div>
+          </div>
+        </div>
+        <div class="row" style="padding-top: 100px;">	
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-success form-control" ng-click="openAgencyConsultantModal(branch, null)"><i class="fa fa-plus"></i> Add New Consultant</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-success form-control" ng-click="openAgencyBranchModal(branch)"><i class="fa fa-edit"></i> Edit Branch</button>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-danger form-control" ng-click="deleteAgencyBranch(branch)" 
+                        ng-disabled="isDeletingBranch"><i class="fa fa-close"></i> Delete Branch</button>
+          </div>
+        </div>	
+      </accordion-group>
+    </accordion>
+  </div>
+</div>

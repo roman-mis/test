@@ -1,0 +1,99 @@
+<div class="candidate-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">Expenses Wizard - Start and End times</h3>
+	</div>
+	<div class="modal-body">
+		<p>Please enter the start and end times for your working day</p>
+		<div class="row">
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="checkbox-item">
+							<label>
+								<input type="checkbox"> Monday - Date
+							</label>
+						</div>	
+					</div>
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="start-date">
+					</div>	
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="end-date">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="checkbox-item">
+							<label>
+								<input type="checkbox"> Tuesday - Date
+							</label>
+						</div>	
+					</div>
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="start-date">
+					</div>	
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="end-date">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="checkbox-item">
+							<label>
+								<input type="checkbox"> Wednesday - Date
+							</label>
+						</div>	
+					</div>
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="start-date">
+					</div>	
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="end-date">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="checkbox-item">
+							<label>
+								<input type="checkbox"> Thursday - Date
+							</label>
+						</div>	
+					</div>
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="start-date">
+					</div>	
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="end-date">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="checkbox-item">
+							<label>
+								<input type="checkbox"> Friday - Date
+							</label>
+						</div>	
+					</div>
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="start-date">
+					</div>	
+					<div class="col-xs-3 form-group">
+						<input type="number" class="form-control" min="1" max="24" step="0.5" value="3" name="end-date">
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<button class="btn btn-primary fomr-group">Apply to all days</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a class="padding-10 pointer" ng-click="back()">Back</a>
+		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
+	</div>
+</div>

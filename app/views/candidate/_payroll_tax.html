@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-xs-12">
+    <p class="entry-title">Payroll Tax Settings</p>    
+  </div>
+</div>
+<form name="taxForm" class="row" novalidate>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">Starter Declaration</div>
+    <div class="col-xs-4">
+      <ui-select ng-model="tax.declaration" theme="select2" search-enabled="false">
+        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+        <ui-select-choices repeat="item.code as item in starterDeclarations">{{item.description}}</ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="col-sm-4 col-xs-5">
+      <button class="btn btn-success form-control" ng-click="saveTax()" ng-disabled="taxForm.$invalid || isTaxSaving">
+        <div ng-show="!isTaxSaving">Save and Close<i class="fa fa-save"></i></div>
+        <div ng-show="isTaxSaving">Saving... <i class="fa fa-spinner fa-spin"></i></div>
+      </button>
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">P45 Gross for Tax</div>
+    <div class="col-xs-4">
+      <div class="input-group">
+        <div class="input-group-addon">&#163;</div>
+        <input class="form-control" type="text" ng-model="tax.p45_gross_tax">
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-5">
+      <button class="btn btn-success form-control">Save and Home<i class="fa fa-home"></i></button>
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">P45 Tax Deducted</div>
+    <div class="col-xs-4">
+      <div class="input-group">
+        <div class="input-group-addon">&#163;</div>
+        <input class="form-control" type="text" ng-model="tax.p45_tax_deducted">
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-5">
+      <button class="btn btn-danger form-control">Cancel<i class="fa fa-times-circle-o"></i></button>
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">Start Date</div>
+    <div class="col-xs-4">
+      <div orig-datepicker placeholder="* Date of Birth" ng-model="tax.start_date"></div>  
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">Pay Frequency</div>
+    <div class="col-xs-4">
+      <ui-select ng-model="tax.pay_frequency" theme="select2" search-enabled="false">
+        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+        <ui-select-choices repeat="item.code as item in payFrequencies">{{item.description}}</ui-select-choices>
+      </ui-select>  
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">NI Number</div>
+    <div class="col-xs-4">
+      <input class="form-control" type="text" placeholder="" ng-model="tax.ni_number">
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">Tax Code</div>
+    <div class="col-xs-4">
+      <input class="form-control" type="text" placeholder="" ng-model="tax.tax_code">
+    </div>
+  </div>
+  <div class="col-xs-12 nonepadding form-group">
+    <div class="col-sm-4 col-xs-3">Tax Basis</div>
+    <div class="col-xs-4">
+      <ui-select ng-model="tax.tax_basis" name="title" theme="select2" search-enabled="false">
+        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+        <ui-select-choices repeat="item.code as item in taxBasises">{{item.description}}</ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="col-sm-4 col-xs-5">
+      <button class="btn btn-success form-control">SEND PAYSLIP<i class="fa fa-paper-plane-o"></i></button>
+    </div>
+  </div>
+</form>

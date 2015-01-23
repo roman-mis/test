@@ -1,0 +1,19 @@
+<div class="candidate-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">Please select the Agency your expense claim relates to</h3>
+	</div>
+	<div class="modal-body">
+		<div class="div-center">
+			<p class="text-center">
+				<ui-select ng-model="data.agency" theme="select2" search-enabled="true">
+					<ui-select-match placeholder="Select an agency">{{data.agency.description}}</ui-select-match>
+					<ui-select-choices repeat="item in priorities | filter: $select.search">{{item.description}}</ui-select-choices>
+				</ui-select>
+			</p>	
+		</div>		
+	</div>
+	<div class="modal-footer">
+		<a class="padding-10 pointer" ng-click="back()">Back</a>
+		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
+	</div>
+</div>

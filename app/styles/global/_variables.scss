@@ -1,0 +1,58 @@
+/*Custom Bootstrap*/
+
+/*Grid*/
+$screen-lg: 1280px;
+$screen-md: 1024px;
+$screen-sm: 768px;
+$screen-xs: 568px;
+$grid-float-breakpoint: $screen-md;
+
+$screen-xs-max: ($screen-sm - 1);
+$screen-sm-max: ($screen-md - 1);
+$screen-md-max: ($screen-lg - 1);
+$grid-gutter-width: 22px;
+$grid-gutter-width-md: 16px;
+
+/*Color*/
+$gray-darker: #555;
+$gray: #7c7e7f;
+$gray-light: #a6a4a2;
+$gray-lighter: #d5d2cf;
+$gray-lightest: #f1efef;
+
+$green: #009646;
+$green-light: #79c44a;
+
+$sky: #9ad3ef;
+
+$brand-danger: #c62725;
+$brand-warning: #b2781b;
+$brand-warning-light: #ed8d29;
+
+$state-danger-bg: #e1202b;
+$state-danger-text: #fff;
+$state-danger-border: $brand-danger;
+
+$state-warning-bg: #ed8c28;
+$state-warning-text: #fff;
+$state-warning-border: $brand-warning;
+
+$btn-danger-bg: #e1202b;
+$btn-danger-text: #fff;
+$btn-danger-border: $brand-danger;
+
+$btn-warning-bg: #ed8c28;
+$btn-warning-color: #fff;
+$btn-warning-border: $brand-warning;
+
+$body-border-color: $gray-light;
+$body-background-color: $gray-lightest;
+
+$background-color: $gray-lightest;
+$header-background-color:#808285;
+$body-border-color:#d4d4d4;
+$body-background-color:#ffffff;
+
+/* Fonts */
+$main-font: 'Questrial', sans-serif;
+$line-height-base: 1.34;

@@ -1,0 +1,31 @@
+<div class="candidate-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">Expenses Wizard - Date Selector</h3>
+	</div>
+	<div class="modal-body">
+		<p>Please select the dates you would like to claim for:</p>
+		<div class="checkbox-item">
+			<label>
+				<input type="checkbox"> Today's Date
+			</label>
+		</div>	
+		<div class="checkbox-item">
+			<label>
+				<input type="checkbox"> Yesterday's Date
+			</label>
+		</div>		
+		<div class="div-center-dates">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Select multiple dates" ng-model="model" />
+			</div>
+		</div>
+		
+		<datepicker ng-model="activeDate1" class="inline-datepicker" multi-select="selectedDates1" style="width:283px;"></datepicker>
+		
+		<datepicker ng-model="activeDate2" class="inline-datepicker" multi-select="selectedDates2"></datepicker>
+	</div>
+	<div class="modal-footer">
+		<a class="padding-10 pointer" ng-click="back()">Back</a>
+		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
+	</div>
+</div>

@@ -1,0 +1,370 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <base href="/" />
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/angular-notify/dist/angular-notify.css" />
+    <!-- endbower -->
+
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+
+  <body ng-app="origApp">
+    <!-- Header Section-->
+        <header class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="logo-wrapper pull-left">
+						<a href='#' class='logo'>
+							<img src="images/logo.png" alt="image" />
+						</a>
+						<span>Welcome {username}</span>
+					</div>
+					<div class="search-wrapper pull-right">
+						<form class="form-inline">
+							<div class="form-group">
+								<input type="text" class="form-control" id="search" name="search" placeholder="Search" />
+							</div>
+							<div class="form-group">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</div>
+							<div class="form-group">
+								<span class="sitemenu" dropdown>
+								  <button type="button" dropdown-toggle><i class="fa fa-bars"></i></button>
+								  <ul class="dropdown-menu">
+									<li><a href><i class="fa fa-search-plus"></i> &nbsp;Advanced search</a></li>
+									<li><a href><i class="fa fa-user"></i> &nbsp;My profile</a></li>
+									<li class="divider"></li>
+									<li><a href ng-click="logout()"><i class="fa fa-sign-out"></i> &nbsp;Logout</a></li>
+								  </ul>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</header>
+
+    <!-- Body Section -->
+    <section class="page-container container-fluid lty-body page-container-agency">
+      <div class="select-company">
+        <select class="form-control">
+          <option>Change Company</option>
+        </select>
+      </div>	
+
+      <!-- Left Sidebar Menu -->
+      <div class="sidemenu left-sidebar">
+        <div class="sidebar-menu-inner">
+          <div class="user-meta-box">
+            <div class="user-photo-wrapper">
+              <img src="{{currentUser.avatar_url}}" onerror="this.src='http://placehold.it/200x200'" class="user-photo" alt="avatar" />
+            </div>
+          </div>
+          <ul id="main-menu" class="main-menu">
+            <li>
+              <a href="#" tooltip data-placement="top"
+                 title="Home"
+                 tooltip-placement="top"><i class="fa fa-home"></i><span class="title">Home</span></a>
+            </li>
+            <li><a href="/candidates" tooltip data-placement="top"
+                   title ="CANDIDATE"
+                   tooltip-placement="top"><i class="fa fa-user"></i><span class="title">CANDIDATE</span></a></li>
+            <li class='active'><a href="/agency" tooltip data-placement="top"
+                                  title="AGENCY"
+                                  tooltip-placement="top"><i class="fa fa-users"></i><span class="title">AGENCY</span></a></li>
+            <li><a href="#" tooltip data-placement="top"
+                   title="End client"
+                   tooltip-placement="top"><i class="fa fa-building"></i><span class="title">END CLIENT</span></a></li>
+            <li><a href="#" tooltip data-placement="top"
+                   title="payroll"
+                   tooltip-placement="top"><i class="fa fa-money"></i><span class="title">PAYROLL</span></a></li>
+            <li><a href="#" tooltip data-placement="top"
+                   title="reports"
+                   tooltip-placement="top"><i class="fa fa-newspaper-o"></i><span class="title">REPORTS</span></a></li>
+            <li><a href="#" tooltip data-placement="top"
+                   title="activity"
+                   tooltip-placement="top"><i class="fa fa-clock-o"></i><span class="title">Activity</span></a></li>
+            <li><a href="#" tooltip data-placement="top"
+                   title="admin"
+                   tooltip-placement="top"><i class="fa fa-tachometer"></i><span class="title">admin</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="pull-right">
+          <div class="btn-group" role="group" aria-label="">
+            <button type="button" class="btn btn-success">Home</button>
+            <button type="button" class="btn btn-success">My Profile</button>
+            <button type="button" class="btn btn-success">Log Out</button>
+          </div>
+        </div>	
+        <div class="clearfix"></div>
+        <div class="breadcrumb">
+          <a href="#">Home</a>
+          <span></span>
+          <a href="#">Agency</a>
+          <span></span>
+          <a href="#" class="active">Home</a>     
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="pull-left" style="margin-top: 5px; margin-bottom: 10px;">Agency Home</h3>
+            <form class="form-inline pull-right">
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="search">
+                <i class="fa fa-search form-control-feedback"></i>
+              </div>
+            </form>
+          </div>
+        </div>	
+        <div class="candidate-main padding-10 meta-box container-fluid">
+          <div class="row">
+            <div class="col-sm-12">			
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Agency</th>
+                    <th>Type</th>
+                    <th>Phone</th>
+                    <th>Town</th>
+                    <th>Live</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <a href="#" class="action_wrapper"><i class="fa fa-plus-square"></i></a>&nbsp;&nbsp;
+                      ABC Services
+                    </td>
+                    <td>Head Office</td>
+                    <td>01617131730</td>
+                    <td>Manchester</td>
+                    <td>100</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      ABC Services
+                    </td>
+                    <td>Branch</td>
+                    <td>02088643803</td>
+                    <td>London</td>
+                    <td>50</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      ABC Services
+                    </td>
+                    <td>Branch</td>
+                    <td>02088643803</td>
+                    <td>London</td>
+                    <td>50</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a href="#" class="action_wrapper"><i class="fa fa-plus-square"></i></a>&nbsp;&nbsp;
+                      123 Recruitment
+                    </td>
+                    <td>Head Office</td>
+                    <td>01617131730</td>
+                    <td>Manchester</td>
+                    <td>100</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <a href="#" class="action_wrapper"><i class="fa fa-plus-square"></i></a>&nbsp;&nbsp;
+                      Time Recruitment
+                    </td>
+                    <td>Head Office</td>
+                    <td>01617131730</td>
+                    <td>Manchester</td>
+                    <td>100</td>
+                  </tr>
+                </tbody>
+              </table>		
+            </div>
+          </div>
+          <div class="col-sm12">
+            <div class="form-group">
+              <button type="button" class="btn btn-success form-control">Load More...</button>
+            </div>
+          </div>		
+        </div>
+
+      </div>
+
+      <!-- Right Sidebar Menu  -->
+      <div class="sidemenu right-sidebar">
+        <div class="sidebar-menu-inner">
+          <div class="company-logo">
+            <img src="http://placehold.it/300x150" class="user-photo" alt="image" />    
+          </div>
+          <div class="add-agency">
+            <div class="form-group hidden-xs hidden-sm">
+              <button type="button" class="btn btn-success form-control">Add New Agency</button>
+            </div>
+          </div>
+
+          <div class="main-menu">
+            <div class="menu-wrapper green-light-color">
+              <p class="entry-title col-lg-12"><i class="fa fa-check-square-o pull-left"></i>Current Pending Candidates</p>
+              <ul>
+                <li><a href="#">ggg</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+              </ul>    
+            </div>
+            <div class="menu-wrapper green-light-color">
+              <p class="entry-title col-lg-12"><i class="fa fa-clock-o pull-left"></i>New Registrations</p>
+              <ul>
+                <li><a href="#">ggg</a></li>
+                <li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+              </ul>
+            </div>
+            <div class="menu-wrapper green-color">
+              <p class="entry-title col-lg-12"><i class="fa fa-users pull-left"></i>New Agencies</p>
+              <ul>
+                <li><a href="#">ABC Recruitment</a></li>
+                <li><a href="#">123 Recruitment</a></li>
+                <li><a href="#">Time Recruitment</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <ul id="left-menu" class="main-menu">
+            <li><a href="#"><i class="fa fa-check-square-o sky-brand"></i><span class="title">Current Pending Candidates</span></a></li>
+            <li><a href="#"><i class="fa fa-clock-o sky-brand"></i><span class="title">New Registrations</span></a></li>
+            <li><a href="#"><i class="fa fa-users sky-brand"></i><span class="title">New Agencies</span></a></li>
+          </ul>
+        </div>
+      </div>	
+    </section>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/angular-notify/dist/angular-notify.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+
+    <!-- vendors -->
+    <script src="scripts/vendors/tasty-resource.js"></script>
+
+    <!-- routes -->
+    <script src="scripts/routes/router.js"></script> 
+    <script src="scripts/routes/register.js"></script>
+    <script src="scripts/routes/candidate.js"></script>
+
+    <!-- constants -->
+    <script src="scripts/constants/main.js"></script>
+    <script src="scripts/constants/constants_resource.js"></script>
+    <script src="scripts/constants/candidate.js"></script>
+
+    <!-- services -->
+    <script src="scripts/services/main.js"></script>
+    <script src="scripts/services/s3service.js"></script>
+    <script src="scripts/services/http_resource.js"></script>
+    <script src="scripts/services/authservice.js"></script>
+    <script src="scripts/services/msgservice.js"></script>
+    <script src="scripts/services/modalservice.js"></script>
+
+    <!-- directives -->
+    <script src="scripts/directives/main.js"></script>
+    <script src="scripts/directives/origni.js"></script>        
+    <script src="scripts/directives/origuniqueemail.js"></script>
+    <script src="scripts/directives/origpostcode.js"></script>       
+    <script src="scripts/directives/origmatch.js"></script>
+    <script src="scripts/directives/origvalidateform.js"></script>
+    <script src="scripts/directives/tooltip.js"></script>
+    <script src="scripts/directives/origtabbar.js"></script>
+    <script src="scripts/directives/origwidget.js"></script>        
+    <script src="scripts/directives/origs3fileupload.js"></script>        
+    <script src="scripts/directives/origdatepicker.js"></script>
+    <script src="scripts/directives/origgrid.js"></script>
+
+    <!-- filters -->
+    <script src="scripts/filters/main.js"></script>
+    <script src="scripts/filters/capitalize.js"></script>
+
+    <!-------------- controllers ----------------------->
+    <script src="scripts/controllers/main.js"></script>
+
+    <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/controllers/register/home.js"></script>
+    <script src="scripts/controllers/register/step1.js"></script>
+    <script src="scripts/controllers/register/step2.js"></script>
+    <script src="scripts/controllers/register/step3.js"></script>
+    <script src="scripts/controllers/register/step4.js"></script>
+    <script src="scripts/controllers/register/step5.js"></script>
+    <script src="scripts/controllers/register/confirm.js"></script>
+    <script src="scripts/controllers/register/welcome.js"></script>
+    <script src="scripts/controllers/register/activateuser.js"></script>
+
+    <script src="scripts/controllers/login.js"></script>
+
+    <script src="scripts/controllers/candidate/list.js"></script>       
+    <script src="scripts/controllers/candidate/main.js"></script>       
+    <script src="scripts/controllers/candidate/contact.js"></script>       
+    <script src="scripts/controllers/candidate/payroll.js"></script>       
+    <script src="scripts/controllers/candidate/payroll_tax.js"></script>       
+    <script src="scripts/controllers/candidate/payroll_product.js"></script>       
+    <script src="scripts/controllers/candidate/home.js"></script>       
+    <script src="scripts/controllers/candidate/sidebar.js"></script>
+    <script src="scripts/controllers/candidate/maintab.js"></script>
+    <script src="scripts/controllers/candidate/agencies.js"></script>
+    <!-- endbuild -->
+
+
+  </body>
+</html>

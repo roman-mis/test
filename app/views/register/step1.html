@@ -1,0 +1,56 @@
+<div class="row form-header">
+    <div class="wizard-status-bar">
+        <div class="step step1 selected">1</div>
+        <div class="step step2">2</div>
+        <div class="step step3">3</div>
+        <div class="step step4">4</div>
+        <div class="step step5">5</div>
+    </div>
+</div>                
+<div class="row form-body">
+    <div class="col-md-6 left-side">
+        <div class="from-title">
+            Contact Details
+        </div> 
+        I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.<br/><br/>
+        But also this area could be used for notifications, validations and potentially the non UK national extra bit!
+    </div>
+    <div class="col-md-6 right-side">
+        <form role="form" name="registerform" orig-validate-form>
+            <div class="form-group">
+                <p class="col-md-8 col-sm-8 nonepadding">
+                <ui-select ng-model="candidate.title" name="title" theme="select2" ng-disabled="disabled" search-enabled="false" required>
+                    <ui-select-match placeholder="* Title">{{candidate.title}}</ui-select-match>
+                    <ui-select-choices repeat="item in titleary | filter: $select.search">
+                        <span ng-bind-html="item"></span>                        
+                    </ui-select-choices>
+                </ui-select>
+                </p>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="form-group">
+                <input type="text"   ng-model="candidate.firstName" name="firstname" class="form-control" placeholder="* First Name" maxlength="20" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.lastName" name="lastname" class="form-control" placeholder="* Last Name" maxlength="20" required/>
+            </div>
+            <div class="form-group">
+                <input type="email" ng-model="candidate.emailAddress" orig-unique-email name="emailaddress" class="form-control" maxlength="100" placeholder="* Email Address" required/>
+                <div class="alert alert-danger" ng-hide="registerform.emailaddress.$pristine || registerform.emailaddress.$error.email || !registerform.emailaddress.$error.unique"  role="alert">
+                    Email address has already been taken
+                </div>
+            </div>            
+            <div class="form-group">
+                <input type="text" ng-model="candidate.contactNumber" name="contactnumber" class="form-control" placeholder="* Contact Number" maxlength="15" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.niNumber" orig-ni name="ninumber" class="form-control" placeholder="* NI Number" maxlength="13" required/>
+                <div class="alert alert-danger" ng-show="registerform.ninumber.$error.ni"  role="alert">Please enter a valid NI number</div>
+            </div>
+            <div class="form-group">
+                <div  class="input-group col-md-8 col-sm-8" name="birthday" ng-model="candidate.dateOfBirthday" placeholder="* Date of Birth" orig-datepicker required/>
+            </div>
+        </form>
+    </div>
+</div>

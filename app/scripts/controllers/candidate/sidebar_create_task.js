@@ -1,0 +1,43 @@
+'use strict';
+angular.module('origApp.controllers')
+        .controller('CandidateSidebarCreateTaskController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, params, MsgService) {
+
+          $scope.data = {};
+          if (params.agency) {
+            $scope.data.agency = params.agency;
+          }
+          $scope.activityType = params.activityType;
+
+
+          $scope.candidate = parentScope.candidate;
+          $scope.agencies = HttpResource.model('agencies').query({});
+          $scope.users = HttpResource.model('users').query({});
+          $scope.templates = HttpResource.model('templates').query({template_type: 'TASK'});
+
+          //load constants
+          $scope.priorities = ConstantsResource.get('priorities');
+          $scope.taskTypes = ConstantsResource.get($scope.activityType === 'call_log' ? 'calllogtasktypes' : 'createtasktypes');
+          $scope.statuses = ConstantsResource.get('statuses');
+
+          $scope.onTemplateChange = function(template) {
+            $scope.data.template_title = template.title;
+            $scope.data.template_html = template.template_body;
+          };
+
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+          };
+          $scope.save = function() {
+            $scope.isSaving = true;
+            var endpointName = $scope.activityType === 'call_log' ? 'calllog' : 'task';
+            HttpResource.model('candidates/' + $scope.candidate._id + '/' + endpointName).create($scope.data).post()
+                    .then(function(response) {
+                      $scope.isSaving = false;
+                      if (!HttpResource.flushError(response)) {
+                        $modalInstance.close();
+                        MsgService.success('New task has been created successfully.');
+                      }
+                    });
+          };
+        });
+

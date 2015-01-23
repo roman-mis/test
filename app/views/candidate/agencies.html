@@ -1,0 +1,93 @@
+<div class="pure-g">
+  <div class="agencies_wrapper pure-u-1">
+    <accordion close-others="true">
+      <accordion-group is-open="product.isOpen" ng-class="{'active' : product.isOpen}" ng-repeat="product in payrollProducts">
+        <accordion-heading>
+          {{product.agency_id.name}} <i class="pull-right fa" ng-class="{'fa-chevron-up': status.open, 'fa-chevron-down': !status.open}"></i>
+        </accordion-heading>
+        <div class="pure-u-1 nonepadding">
+          <div class="pure-g">
+            <div class="pure-u-1 pure-u-md-1-2">
+              <div class="pure-g">
+                <div class="pure-u-2-5">Consultant </div>
+                <div class="pure-u-3-5">								
+                  <span class="green-light-color">{{product.consultant_id.name}}</span>
+                </div>
+                <div class="pure-u-2-5">Branch</div>
+                <div class="pure-u-3-5">
+                  <span class="green-light-color">{{product.branch_id.name}}</span>
+                </div>
+                <div class="pure-u-2-5">Date Added</div>
+                <div class="pure-u-3-5">
+                  <span class="green-light-color ">22/22/2222</span>
+                </div>
+                <div class="pure-u-2-5">Agency Ref</div>
+                <div class="pure-u-3-5 pure-form">
+                  <input class="pure-input-1" id="name" type="text" value="product.agency_href" placeholder="">
+                </div>	
+              </div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+              <div class="pure-g">
+                <div class="pure-u-2-5">Margin </div>
+                <div class="pure-u-3-5">								
+                  <span class="green-light-color">{{getConstantDescription('margins', product.margin)}}</span>
+                </div>
+                <div class="pure-u-2-5">Contact</div>
+                <div class="pure-u-3-5">
+                  <span class="green-light-color">01617131730</span>
+                </div>
+                <div class="pure-u-2-5"></div>
+                <div class="pure-u-3-5">
+                  <a href="mailto:info@originem.co.uk" class="green-light-color">info@originem.co.uk</a>
+                </div>
+              </div>
+            </div>
+            <div class="pure-u-1-2">
+              <p class="entry-title pure-u-1">Exception History</p>
+            </div>
+            <div class="pure-u-1-2">
+              <div class="pure-g">
+                <div class="pure-u-2-5"></div>
+                <div class="pure-u-3-5 pure-form">
+                  <a href="javacript:void(0)" class="btn btn-success pure-input-1"  ng-click="openAgenciesAddingMargin(product)">Add</a>
+                </div>
+              </div>
+            </div>		
+            <div class="pure-u-1">
+              <div class="meta-box-content">
+                <p class="text-center" ng-show="product.margin_exception.length == 0">There are no margin exceptions.</p>
+                <table class="table" ng-show="product.margin_exception.length > 0">
+                  <thead>
+                    <tr>
+                      <th>Reason</th>
+                      <th>Deduction type</th>
+                      <th>Deduction</th>
+                      <th>Remaining</th>
+                      <th>Amount</th>
+                      <th class="no-bg" width="50px"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="exception in product.margin_exception">
+                      <td>{{getConstantDescription('reasons', exception.reason)}}</td>
+                      <td>{{getConstantDescription('deductiontypes', exception.deduction_type)}}</td>
+                      <td>{{exception.deduction_date | formatDate: 'DD/MM/YYYY'}}</td>
+                      <td>{{exception.deduction_period}}</td>
+                      <td>{{exception.deduction_number_of_payroll}}</td>
+                      <td class="text-center" style="white-space: nowrap; width: 50px">
+                        <a href="" ng-click="openAgenciesAddingMargin(product, exception)"><i class="fa fa-edit"></i></a>
+                        <a href=""><i class="fa fa-folder-o"></i></a>
+                        <a href="" ng-click="deleteMarginException(product, exception)"><i class="fa fa-trash-o"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>		
+            </div>
+          </div>		
+        </div>
+      </accordion-group>
+    </accordion>
+  </div>
+</div>

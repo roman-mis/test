@@ -1,0 +1,54 @@
+<div class="sidebar-menu-inner">
+    <div class="search-wrapper hidden-sm hidden-xs">
+        <div class="form-group nonepadding">
+            <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                <ui-select-choices repeat="item in titleary | filter: $select.search">
+                    <span ng-bind-html="item.value"></span>                        
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+
+    <div class="company-logo hidden-sm hidden-xs">
+        <img src="http://placehold.it/300x150" class='user-photo' alt='image' />    
+    </div>
+
+    <div class="main-menu hidden-md hidden-sm hidden-xs">
+        <div class="menu-wrapper green-light-color">
+            <p class="entry-title col-lg-12"><i class="fa fa-check-square-o pull-left"></i>COMPLIANCE</p>
+            <ul>
+                <li><a href="#">DPA QUESTIONS</a></li>
+                <li><a href="#">ON BOARDING</a></li>
+                <li><a href="#">SALARY CALCULATOR</a></li>
+            </ul>    
+        </div>
+        <div class="menu-wrapper green-light-color">
+            <p class="entry-title col-lg-12"><i class="fa fa-clock-o pull-left"></i>ACTIVITIES</p>
+            <ul>
+                <li><a href="#">DPA QUESTIONS</a></li>
+                <li><a href="#">ON BOARDING</a></li>
+                <li><a href="#">SALARY CALCULATOR</a></li>
+            </ul>    
+        </div>
+        <div class="menu-wrapper green-color">
+            <p class="entry-title col-lg-12"><i class="fa fa-users pull-left"></i>AGENCIES</p>
+            <ul>
+                <li><a href="#">{ AGENCY 1 }</a></li>
+                <li><a href="#">{ AGENCY 2 }</a></li>
+            </ul>    
+        </div>
+        <button class="btn btn-success pull-right">See All</button>
+    </div>
+
+    <ul id='left-menu' class='main-menu hidden-lg'>
+        <li><a href="#"><i class="fa fa-question-circle sky-brand"></i><span class="title">Dpa</span></a></li>
+        <li><a href="#"><i class="fa fa-thumbs-o-up sky-brand"></i><span class="title">ON BOARDING</span></a></li>
+        <li><a href="#"><i class="fa fa-calendar sky-brand"></i><span class="title">CALCULATOR</span></a></li>
+        <li><a href="#"><i class="fa fa-phone warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Call Log</span></a></li>
+        <li><a href="#"><i class="fa fa-gbp warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>EXPENSES</span></a></li>
+        <li><a href="#"><i class="fa fa-clock-o warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Activity</span></a></li>
+        <li><a href="#"><i class="fa fa-flash warning-brand"></i><span class="title">ACTION REQUEST</span></a></li>
+        <li><a href="#"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AGENCIES</span></a></li>
+    </ul>
+</div>

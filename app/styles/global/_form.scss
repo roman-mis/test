@@ -1,0 +1,152 @@
+/**
+  * Input Element
+  */
+input[type=text],input[type=email],input[type=url],input[type=number],input[type=password], textarea, textarea.form-control, select.form-control{
+  border-radius:0px;
+  border: 2px solid $gray-light;
+  background-color: $gray-lightest;
+  outline: none;
+  input{
+    height:34px; 
+  }
+  &::placeholder{
+    color: $gray; 
+    outline: none;
+  }
+  &:focus{
+    background-color: #fff;
+    border-color: $gray-light;
+    box-shadow: none;
+  }
+  &:hover{
+    background-color: #fff;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(189, 221, 158, 0.75);
+    -moz-box-shadow:    0px 2px 5px 0px rgba(189, 221, 158, 0.75);
+    box-shadow:         0px 2px 5px 0px rgba(189, 221, 158, 0.75);
+  }
+}
+button{
+  &:focus{
+    outline: none;
+    border-color: $gray-light;
+    box-shadow: none;
+  }
+}
+span.text-muted{
+  color: $gray-lighter; 
+}
+.form-group {
+  margin-bottom: 6px;
+}
+
+/**/
+.input-group-btn button{
+  line-height: normal;
+  border-radius: 0px;
+  background-color: $gray-lightest;
+  border: 2px solid $gray-light;
+}
+.input-group .input-group-addon{
+  border: 2px solid $gray-light;
+  border-radius: 0px;
+  border-right: 0px;
+}
+/*Date Picker*/
+.orig-datepicker{
+  input{
+    border-right: none;
+  }
+  &:hover input{
+    background-color: #fff;
+  }
+  .input-group-btn{
+    z-index: 10;
+    button{
+      border-left: 1px solid $gray-light;
+    }
+  }
+  &:hover .input-group-btn{
+    button{
+      background-color: #fff;
+      border-color: $gray-light;
+      margin-left: 0px;
+      @include box-green-shadow();
+    }
+  }
+}
+/**--ui-select(bootstrap theme)-**/
+.ui-select-bootstrap button{
+  height: 34px;
+  border-radius: 0px;
+  background: $gray-lightest;
+}
+.ui-select-bootstrap button .caret{
+  &::after{
+    content: " ";
+    width: 34px;
+    height: 34px;
+    border-left: solid 1px #CCC;            
+    position: absolute;
+    top: -22px;
+    left: -20px;
+  }
+}
+
+/*-----------Check BOX SYTLE----------------------*/
+.checkbox{
+  margin-top: 0px;
+}
+.checkbox input[type=checkbox]:checked + label:after{
+  padding-top: 4px;
+}
+
+/*-------Show Errors------------*/
+.form-group .alert{
+  margin-top: 8px;
+}
+input.ng-dirty.ng-invalid, div.ng-dirty.ng-invalid>button, div.ng-dirty.ng-invalid.select2, div.ng-dirty.ng-invalid.input-group{
+  border-color: red;
+}
+
+.nonepadding{
+  padding-left: 0px;
+  padding-right: 0px;        
+}
+.clear{
+  clear:both;
+}
+/*
+ * S3FileUploader
+ */
+.fileupoad-area{
+  position: relative;
+  .fileupload{
+    top:0px;
+    left:0px;
+    position: absolute;
+    opacity: 1;
+  }
+  .fileinput{
+    opacity: 0;
+    z-index: 5;
+  }
+}
+
+/**
+ * Loading bar
+ */
+#loading-bar .bar {
+  background-color: #8dc044;
+  height: 5px;
+}
+
+.checkbox input[type=checkbox]:checked + label:after {
+  font-family: 'Glyphicons Halflings';
+  content: "\e013";
+}
+.checkbox label:after {
+  padding-left: 4px;
+  padding-top: 2px;
+  font-size: 9px;
+}
+

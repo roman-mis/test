@@ -1,0 +1,34 @@
+<div class="candidate-layout">
+  <div class="candidate-center">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="pull-left" style="margin-top: 5px; margin-bottom: 10px;">Agency Home</h3>
+        <form class="form-inline pull-right">
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="search">
+            <i class="fa fa-search form-control-feedback"></i>
+          </div>
+        </form>
+      </div>
+    </div>	
+    <div class="candidate-main padding-10 meta-box container-fluid">
+      <div class="row">
+        <div class="col-sm-12" id="agency_list">			
+          <div orig-grid="gridOptions" external-scope="$scope"></div>
+        </div>
+      </div>
+      <div class="col-sm12">
+        <div class="form-group">
+          <button type="button" class="btn btn-success form-control"
+                  ng-disabled="isLoading"
+                  ng-show="ableLoadMore" 
+                  ng-click="loadAgencies(false)">Load More...</button>
+        </div>
+      </div>		
+    </div>
+  </div>
+
+  <div class="sidemenu right-sidebar">
+    <div ng-include="'views/agency/_rightmenu.html'"></div> 
+  </div>
+</div>

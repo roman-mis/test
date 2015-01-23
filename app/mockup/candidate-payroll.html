@@ -1,0 +1,359 @@
+<section class="tabs-payroll" ng-controller="tabPayroll
+        as tabroll">
+    <ul class="nav nav-tabs row">
+        <li ng-class="{
+                    active:tabroll.isSet(1)
+                }">
+            <a href="" ng-click="tabroll.setTab(1)">History</a>
+        </li>
+        <li ng-class="{
+                    active:tabroll.isSet(2)
+                }">
+            <a href="" ng-click="tabroll.setTab(2)">Tax</a>
+        </li>
+        <li ng-class="{
+                    active:tabroll.isSet(3)
+                }">
+            <a href="" ng-click="tabroll.setTab(3)">Product</a>
+        </li>
+    </ul>
+    <div class='tab-content col-xs-12' ng-show="tabroll.isSet(1)">
+        <div class="col-xs-12">
+            <div class="col-xs-4">Current Product</div>
+            <div class="col-xs-8 green-light-color">Umbrella</div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-4">Current Product</div>
+            <div class="col-xs-8 green-light-color">Umbrella</div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-4">Current Product</div>
+            <div class="col-xs-8 green-light-color">Umbrella</div>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-4">Current Product</div>
+            <div class="col-xs-8 green-light-color">Umbrella</div>
+        </div>
+
+        <table class="table history">
+            <thead>
+                <tr>
+                    <th class="text-center">Date<a href="#" class="pull-right"><i class="fa fa-sort"></i></a></th>
+                    <th>activity<a href="#" class="pull-right"><i class="fa fa-sort"></i></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">22/05/14</td>
+                    <td>
+                        <a href="#">Address Change</a>
+                        <div class="action_wrapper pull-right">
+                            <a href="#"><i class="fa fa-search"></i></a>
+                            <a href="#"><i class="fa fa-backward"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">20/05/14</td>
+                    <td>
+                        <a href="#">Change of Bank Account No.</a>
+                        <div class="action_wrapper pull-right">
+                            <a href="#"><i class="fa fa-search"></i></a>
+                            <a href="#"><i class="fa fa-backward"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">20/05/14</td>
+                    <td>
+                        <a href="#">Change of Bank Account No.</a>
+                        <div class="action_wrapper pull-right">
+                            <a href="#"><i class="fa fa-search"></i></a>
+                            <a href="#"><i class="fa fa-backward"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">20/05/14</td>
+                    <td>
+                        <a href="#">Change of Bank Account No.</a>
+                        <div class="action_wrapper pull-right">
+                            <a href="#"><i class="fa fa-search"></i></a>
+                            <a href="#"><i class="fa fa-backward"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class='tab-content col-xs-12 tax' ng-show="tabroll.isSet(2)">
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="entry-title">History</p>    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>Starter Declaration</p>
+                </div>
+                <div class="col-xs-4">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-4 col-xs-5">
+                    <button class="btn btn-success form-control">Save and Close<i class="fa fa-save"></i></button>
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>P45 Gross for Tax</p>
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" placeholder="$" />
+                </div>
+                <div class="col-sm-4 col-xs-5">
+                    <button class="btn btn-success form-control">Save and Home<i class="fa fa-home"></i></button>
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>P45 Tax Deducted</p>
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" placeholder="test" />
+                </div>
+                <div class="col-sm-4 col-xs-5">
+                    <button class="btn btn-danger form-control">Cancel<i class="fa fa-times-circle-o"></i></button>
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>Start Date</p>
+                </div>
+                <div class="col-xs-4">
+                    <div orig-datepicker placeholder="* Date of Birth" ng-model="seldate"></div>  
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>Pay Frequency</p>
+                </div>
+                <div class="col-xs-4">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>  
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>NI Number</p>
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>Tax Code</p>
+                </div>
+                <div class="col-xs-4">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding form-group">
+                <div class="col-sm-4 col-xs-3">
+                    <p>Tax Basis</p>
+                </div>
+                <div class="col-xs-4">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-4 col-xs-5">
+                    <button class="btn btn-success form-control">SEND PAYSLIP<i class="fa fa-paper-plane-o"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='tab-content col-xs-12' ng-show="tabroll.isSet(3)">
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="entry-title">Calculation Settings</p>    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 nonepadding">
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <p>Agency</p>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <p>Holiday Pay Rule</p>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding">
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <p>Margin</p>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <p>Derogation Contract</p>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                        <ui-select-match placeholder="* Title">{{title.value}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>                        
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-xs-12 nonepadding">
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <p>Margin Fixed</p>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <p>Derogation Spread</p>
+                </div>
+                <div class="col-sm-3 col-xs-6 form-group">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="entry-title">Contract Type</p>    
+            </div>
+            <div class="col-sm-6 col-xs-12 nonepadding">
+                <div class="col-xs-6 form-group">
+                    <p>Service Used</p>
+                </div>
+                <div class="col-xs-6 form-group">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-6 form-group">
+                    <p>Payment Terms</p>
+                </div>
+                <div class="col-xs-6 form-group">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-6 form-group">
+                    <p>Payment Method</p>
+                </div>
+                <div class="col-xs-6 form-group">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+            </div>
+            <div class="col-sm-6 col-xs-12 nonepadding">
+                <div class="col-xs-12 form-group">
+                    <p>Job Description</p>
+                </div>
+                <div class="col-xs-12 form-group">
+                    <input class="form-control" type="text" placeholder="" />
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-6 form-group">
+                    <button class="btn btn-success form-control pull-left">add<i class="fa fa-plus"></i></button>
+                </div>
+                <div class="col-xs-6 form-group">
+                    <button class="btn btn-danger form-control">cancel<i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="entry-title">Current Services</p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12">
+                <div class="meta-box-content">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Product</th>
+                                <th class="text-center">Agency</th>
+                                <th class="text-center">Margin</th>
+                                <th class="text-center">Hol. Pay</th>
+                                <th class="text-center">Derogation</th>
+                                <th class="text-center no-bg" style="width: 8px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center no-bg"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center no-bg"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center no-bg"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center">all</td>
+                                <td class="text-center no-bg"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

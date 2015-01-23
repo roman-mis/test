@@ -1,0 +1,65 @@
+<div class="candidate-modal">
+  <div class="modal-header">
+    <h3 class="modal-title">Edit Default Payroll</h3>
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" name="form" role="form" novalidate>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label class="col-sm-6">Product Type</label>
+            <div class="col-sm-6">
+              <select class="form-control" ng-model="data.product_type">
+								<option ng-repeat="item in serviceUsed" value="{{item.code}}">{{item.description}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-9 col-sm-6">Margin Charged to agency</label>
+            <div class="col-xs-3 col-sm-6">
+              <div class="make-switch">
+                <label class="switch_wrap pull-right" for="fieldMargin">
+                  <input id="fieldMargin" type="checkbox" ng-model="data.product_type" />
+                  <div class="switch"><span class="bullet"></span></div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6">Margin Type</label>
+            <div class="col-sm-6">
+              <select class="form-control" ng-model="data.margin_type">
+								<option ng-repeat="item in marginTypes" value="{{item.code}}">{{item.description}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6">Margin Amount</label>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <div class="input-group-addon">&#163;</div>
+                <input class="form-control" type="text" ng-model="data.margin_amount">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-6">Holiday Amount</label>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <div class="input-group-addon">&percnt;</div>
+                <input class="form-control" type="text" ng-model="data.holiday_amount">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>	
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || form.$invalid">
+      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+    </button>
+    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+  </div>
+</div>

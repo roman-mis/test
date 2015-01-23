@@ -1,0 +1,75 @@
+<div class="candidate-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">P46 Information request</h3>
+	</div>
+	<div class="modal-body">
+		<p>As a new employee your employer needs the information on this form before your first payday to tell HMRC about you and help them use the correct tax code.</p>
+		<p>Employee Statement - You need to tick only one of the following statements A, B or C.</p>
+			
+		<ul class="list-alert-checkbox">
+			<li>
+				<div class="alert alert-info" role="alert">
+					A - This is my first job since last 6 April and I have not been receiving taxable Jobseeker's Allowance, Employment and Support Allowance, taxable Incapacity Benefit, state Pension or occupational Pension.
+				</div>
+				<div>
+					<input type="checkbox">
+				</div>
+			</li>
+			<li>
+				<div class="alert alert-info" role="alert">
+					B - This is now my only job buy since last 6 April I have had another job, or receiving taxable Jobseeker's Allowance, Employment and Support Allowance, taxable Incapacity Benefit, state Pension or occupational Pension.
+				</div>
+				<div>
+					<input type="checkbox">
+				</div>
+			</li>
+			<li>
+				<div class="alert alert-info" role="alert">
+					C - As well as my new job, I have another job or State Pension or Occupational Pension.
+				</div>
+				<div>
+					<input type="checkbox">
+				</div>
+			</li>
+		</ul>	
+		
+		<ul class="list-alert-checkbox">
+			<li>
+				<div class="alert alert-info alert-question" role="alert">
+					Have you left a course of UK higher education before last 6 April and received your first UK Student Loan instalment on or after 1 September 1998 and not fully repaid you Student Loan?
+				</div>
+				<div>
+					<label>
+						<input type="checkbox"> Yes
+					<label>	
+					 &nbsp; &nbsp;
+					<label>
+						<input type="checkbox"> No
+					<label>		
+				</div>
+			</li>
+			<li>
+				<div class="alert alert-info  alert-question" role="alert">
+					Are you repaying your UK student loan by agreement with the UK Student Loans Company to make monthly payments through your bank or building society account? 
+				</div>
+				<div>
+					<label>
+						<input type="checkbox"> Yes
+					<label>	
+					 &nbsp; &nbsp;
+					<label>
+						<input type="checkbox"> No
+					<label>	
+				</div>
+			</li>
+		</ul>
+	
+		<label>
+			<input type="checkbox"> I agree that all information is correct to the best of my knowledge
+		<label>	
+	</div>
+	<div class="modal-footer">
+		<a class="padding-10 pointer" ng-click="back()">Back</a>
+		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
+	</div>
+</div>

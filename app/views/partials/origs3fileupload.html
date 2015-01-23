@@ -1,0 +1,9 @@
+<div class="input-group orig-fileupload">
+<form name="s3upload" method="post" enctype="multipart/form-data">
+<input type="file"  onchange="angular.element(this).scope().fileNameChanged(this)"   ng-model="ngModel.url" name="p45document" class="fileinput btn-lg col-md-12 col-sm-12 col-xs-12"/>
+<div class="input-group fileupload col-md-12 col-sm-12 col-xs-12" ng-form="uploadform">
+	<input type="text" class="form-control" placeholder="{{placeholder}}"   ng-model="ngModel.name" name="s3upload" ng-disabled="true"/>
+	<span class="input-group-addon"><i class="fa fa-upload"></i></span>
+</div>
+</form>
+</div>

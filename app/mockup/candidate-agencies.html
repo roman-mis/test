@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-xs-12 nonepadding">
+        <div class="col-sm-3 col-sm-offset-6 col-xs-6">
+            <button class="btn btn-success form-control">Add Agency<i class="fa fa-plus"></i></button>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <button class="btn btn-danger form-control">Remove Agency<i class="fa fa-remove"></i></button>
+        </div>
+    </div>
+    <div class="agencies_wrapper col-xs-12">
+        <div ng-controller="AccordionDemoCtrl">
+            <accordion close-others="oneAtATime">
+                <accordion-group is-open="status.open" ng-class="{'active' : status.open}">
+                    <accordion-heading>
+                        ABC Recruitment<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i>
+                    </accordion-heading>
+                    <div class="col-xs-12 nonepadding">
+                        <div class="col-sm-6">
+                            <span class="pull-left">Consultant: </span>
+                            <span class="green-light-color pull-right">Paul Hilton</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="pull-left">Branch:</span>
+                            <span class="green-light-color pull-right">Bolton</span>
+                        </div>
+                        <div class="padding clearfix"></div>
+                        <div class='col-sm-6'>
+                            <p class="entry-title">Margin Structure</p>
+                            <div class="row">
+                                <div class="col-xs-12 form-group">
+                                    <span class="pull-left">Branch:</span>
+                                    <span class="green-light-color pull-right">Bolton</span>
+                                </div>
+                                <div class="form-group col-xs-12 nonepadding">
+                                    <div class="col-xs-4">Amount</div>
+                                    <div class="col-xs-8">
+                                        <input class="form-control" type="text" placeholder="$" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 nonepadding">
+                                    <div class="col-xs-4">Exceptions</div>
+                                    <div class="col-xs-4">
+                                        <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                                            <ui-select-match placeholder="">{{title.value}}</ui-select-match>
+                                            <ui-select-choices repeat="item in titleary | filter: $select.search">
+                                                <span ng-bind-html="item.value"></span>                        
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <input class="form-control" type="text" placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 nonepadding">
+                                    <div class="col-xs-4">Length</div>
+                                    <div class="col-xs-4">
+                                        <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                                            <ui-select-match placeholder="">{{title.value}}</ui-select-match>
+                                            <ui-select-choices repeat="item in titleary | filter: $select.search">
+                                                <span ng-bind-html="item.value"></span>                        
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <input class="form-control" type="text" placeholder="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-sm-6'>
+                            <p class="entry-title">Agency Contact Information</p>
+                            <ul class="entry-content">
+                                <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">0161 713 1730</span></li>
+                                <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">07875 361 751</span></li>
+                                <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<span class="meta">mark@originem.co.uk</span></li>
+                                <li class="clearfix"><i class="fa fa-envelope"></i>Alt.Email<span class="meta">info@originem.co.uk</span></li>
+                                <li class="clearfix"><i class="fa fa-facebook"></i>Facebook<span class="meta">facebook.com/originem</span></li>
+                                <li class="clearfix"><i class="fa fa-linkedin"></i>Linkedin<span class="meta">linkdedin.com/originem</span></li>
+                            </ul>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3 col-xs-6 col-sm-offset-6">
+                                <button class="btn btn-success form-control">Save and Home<i class="fa fa-home"></i></button>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <button class="btn btn-danger form-control">Cancel<i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="123 Recruitment"></accordion-group>
+                <accordion-group heading="XYZ Limited"></accordion-group>
+                <accordion-group heading="987 Holding"></accordion-group>
+            </accordion>
+        </div>
+    </div>
+</div>

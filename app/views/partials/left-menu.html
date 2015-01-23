@@ -1,0 +1,46 @@
+<div class="sidebar-menu-inner">
+    <div class="user-meta-box">
+		<div class="user-date col-xs-12">
+			<p class="datetime hidden-md hidden-sm hidden-xs">19.45, Monday 13th October</p>
+			<p class="datetime hidden-lg">19.45,<br/> 13 Oct</p>
+			<p class="week-info">Week 23</p>
+		</div>	
+		<div class="clearfix"></div>
+        <div class='user-photo-wrapper'>
+            <img src="{{currentUser.avatar_url}}" onerror="this.src='http://placehold.it/150x150'" class="user-photo img-circle" alt="avatar" />
+        </div>
+		<div class="clearfix"></div>
+    </div>
+    <ul id='main-menu' class='main-menu'>
+        <li>
+            <a href="#" tooltip data-placement="top"
+               title="Home"
+               tooltip-placement="top"><i class="fa fa-home"></i><span class="title">Home</span></a>
+        </li>
+        <li ng-class="{active: isStateIncludes('candidates') || isStateIncludes('candidate')}">
+          <a href="/candidates" tooltip data-placement="top" title ="CANDIDATE" tooltip-placement="top">
+            <i class="fa fa-user"></i><span class="title">CANDIDATE</span>
+          </a>
+        </li>
+        <li ng-class="{active: isStateIncludes('agencies') || isStateIncludes('agency')}">
+          <a href="/agencies" tooltip data-placement="top" title="AGENCY" tooltip-placement="top">
+            <i class="fa fa-users"></i><span class="title">AGENCY</span>
+          </a>
+        </li>
+        <li><a href="#" tooltip data-placement="top"
+               title="End client"
+               tooltip-placement="top"><i class="fa fa-building"></i><span class="title">END CLIENT</span></a></li>
+        <li><a href="#" tooltip data-placement="top"
+               title="payroll"
+               tooltip-placement="top"><i class="fa fa-money"></i><span class="title">PAYROLL</span></a></li>
+        <li><a href="#" tooltip data-placement="top"
+               title="reports"
+               tooltip-placement="top"><i class="fa fa-newspaper-o"></i><span class="title">REPORTS</span></a></li>
+        <li><a href="#" tooltip data-placement="top"
+               title="activity"
+               tooltip-placement="top"><i class="fa fa-clock-o"></i><span class="title">Activity</span></a></li>
+        <li><a href="#" tooltip data-placement="top"
+               title="admin"
+               tooltip-placement="top"><i class="fa fa-tachometer"></i><span class="title">admin</span></a></li>
+    </ul>
+</div>

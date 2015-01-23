@@ -1,0 +1,109 @@
+<div class="candidate-modal">
+	<div class="modal-header">
+		<h3 class="modal-title">Edit Default Invoicing</h3>
+	</div>
+	<div class="modal-body">
+		<form class="form-horizontal" name="form" role="form" novalidate>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-7">Holiday Pay included</label>
+						<div class="col-xs-4 col-sm-5">
+							<div class="make-switch">
+								<label class="switch_wrap pull-right" for="field">
+									<input id="field" type="checkbox" ng-model="data.holiday_pay_included" />
+									<div class="switch"><span class="bullet"></span></div>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-7">Employers NI included</label>
+						<div class="col-xs-4 col-sm-5">
+							<div class="make-switch">
+								<label class="switch_wrap pull-right" for="fieldNI">
+									<input id="fieldNI" type="checkbox" ng-model="data.employers_ni_included" />
+									<div class="switch"><span class="bullet"></span></div>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-8 col-sm-7">VAT charged</label>
+						<div class="col-xs-4 col-sm-5">
+							<div class="make-switch pull-right">
+								<label class="switch_wrap" for="fieldVAT">
+									<input id="fieldVAT" type="checkbox" ng-model="data.invoice_vat_charged" />
+									<div class="switch"><span class="bullet"></span></div>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">	
+					<div class="form-group">
+						<label class="col-sm-6">Invoice Method</label>
+						<div class="col-sm-6">
+							<select class="form-control" ng-model="data.invoice_method">
+								<option ng-repeat="item in invoiceMethods" value="{{item.code}}">{{item.description}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-6">Invoice Design</label>
+						<div class="col-sm-6">
+							<select class="form-control" ng-model="data.invoice_design">
+								<option ng-repeat="item in invoiceDesigns" value="{{item._id}}">{{item.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>	
+			<div class="row">
+				<div class="col-sm-12 col-md-6">	
+					<div class="form-group">
+						<label class="col-sm-6">Invoice Email Primary</label>
+						<div class="col-sm-6">
+							<input type="email" class="form-control" ng-model="data.invoice_email_primary">
+						</div>
+					</div>
+				</div>	
+				<div class="col-sm-12 col-md-6 ">		
+					<div class="form-group">
+						<label class="col-sm-6">Invoice Email Secondary</label>
+						<div class="col-sm-6">
+							<input type="email" class="form-control" ng-model="data.invoice_email_secondary">
+						</div>
+					</div>
+				</div>	
+				<div class="col-sm-6">	
+					<div class="form-group">
+						<label class="col-sm-6">Payment Terms</label>
+						<div class="col-sm-6">
+							<select class="form-control" ng-model="data.payment_terms">
+								<option ng-repeat="item in paymentTerms" value="{{item.code}}">{{item.description}}</option>
+							</select>
+						</div>
+					</div>
+				</div>	
+				<div class="col-sm-6">	
+					<div class="form-group">
+						<label class="col-sm-6">Invoice to</label>
+						<div class="col-sm-6">
+							<select class="form-control" ng-model="data.invoice_to">
+								<option ng-repeat="item in agency.branches" value="{{item._id}}">{{item.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</form>  
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || form.$invalid">
+      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+    </button>
+		<button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+	</div>
+</div>

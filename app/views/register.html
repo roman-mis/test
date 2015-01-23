@@ -1,0 +1,15 @@
+<div class="container register-container">
+    <div class="register-body" ui-view>        
+    </div>
+    <div class="row">
+        <div class="nav_image col-md-6 hidden-xs hidden-sm">
+            <img src="images/logo-back.png" alt=""/>
+        </div>
+        <div class="nav_button form-group  col-md-6">
+            <a ng-click="prevstep()" class="btn btn-prev" ng-hide="isFirstStep || currentStep==1  || currentStep==-1"><span class="hidden-xs"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;&nbsp;</span>PREVIOUS</a>
+            <a ng-click="nextstep()" class="btn btn-next" ng-hide="isFirstStep || isLastStep || currentStep==-1">NEXT<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></span></a>
+            <a ng-click="submit()" class="btn btn-submit" ng-disabled="isSubmitDisable" ng-show="isLastStep">SUBMIT<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></span></a>
+            <div class="indicatetext" ng-hide="isFirstStep || isLastStep || currentStep==-1">* indicates required field</div>        
+        </div>
+    </div>
+</div>

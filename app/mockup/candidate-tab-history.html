@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-xs-12 nonepadding">
+        <div class="col-lg-3 col-xs-3">
+            <input class="form-control" type="text" placeholder="Search" />
+        </div>
+        <div class="col-lg-4 col-xs-3">
+            <ui-select ng-model="title" name="title" theme="select2"  ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
+                <ui-select-match placeholder="* Activity">{{title.value}}</ui-select-match>
+                <ui-select-choices repeat="item in titleary | filter: $select.search">
+                    <span ng-bind-html="item.value"></span>                        
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-lg-4 col-xs-3">
+            <div class="row" orig-datepicker placeholder="* Date" ng-model="seldate"></div>
+        </div>
+        <div class="col-lg-1 col-xs-3">
+            <button class="btn btn-success form-control">Go</button>                  
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="meta-box-content">
+            <table class="table history">
+                <thead>
+                    <tr>
+                        <th class="text-center">Date<a href="#" class="pull-right"><i class="fa fa-sort"></i></a></th>
+                        <th>activity<a href="#" class="pull-right"><i class="fa fa-sort"></i></a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">22/05/14</td>
+                        <td>
+                            <a href="#">Address Change</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20/05/14</td>
+                        <td>
+                            <a href="#">Change of Bank Account No.</a>
+                            <div class="action_wrapper pull-right">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                                <a href="#"><i class="fa fa-backward"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
