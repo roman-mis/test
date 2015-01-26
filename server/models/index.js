@@ -13,7 +13,7 @@ var fs = require('fs'),
     
 //   },
 // });
-var conn=mongoose.createConnection(process.env.DATABASEURL);
+var conn=mongoose.createConnection(process.env.DATABASE_URL);
 // var conn=mongoose;
 autoIncrement.initialize(conn);
 

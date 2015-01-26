@@ -28,9 +28,9 @@ router.post('/testmailing',controller.testMailing);
 
 router.get('/verifybcrypt/:password',controller.verifyBcrypt);
 
-router.put('/copy_s3', controller.copy_s3);
+router.put('/copy_s3', controller.copyS3);
 
-router.put('/move_s3', controller.move_s3);
+router.put('/move_s3', controller.moveS3);
 
 router.post('/addagencybranch/:id',controller.addagencybranch);
 
