@@ -479,5 +479,5 @@ function sendMail(opt,userModel){
 				activationLink:newActivationLink};
 	var mailOption=_.assign(opt||{},{to:userModel.emailAddress});
 	
-		return mailer.sendEmail(mailOption,mailModel,'userRegistrationActivation');
+		return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
 }

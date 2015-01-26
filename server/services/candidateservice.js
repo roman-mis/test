@@ -229,7 +229,7 @@ function sendMail(opt,userModel){
 		var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
 					activationLink:newActivationLink};
 		var mailOption={to:userModel.emailAddress};
-			return mailer.sendEmail(mailOption,mailModel,'userRegistrationActivation');
+			return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
 }
 
 
