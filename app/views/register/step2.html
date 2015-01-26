@@ -42,23 +42,24 @@
             <div class="row form-group">
                 <div class="col-md-6 col-sm-6 gender">
                     <ui-select ng-model="candidate.details.gender" name="gender" theme="select2" search-enabled="false" required>
-                        <ui-select-match placeholder="* Gender">{{candidate.details.gender.value}}</ui-select-match>
-                        <ui-select-choices repeat="item in genders | filter: $select.search">
+                        <ui-select-match placeholder="* Gender">{{$select.selected.value}}</ui-select-match>
+                        <ui-select-choices repeat="item.key as item in genders | filter: $select.search">
                             <span ng-bind-html="item.value"></span>                        
                         </ui-select-choices>
                     </ui-select>    
                 </div>
                 <div class="col-md-6 col-sm-6 national">
                     <ui-select ng-model="candidate.details.nationality" theme="select2" name="nationality" search-enabled="true" required>
-                        <ui-select-match placeholder="* Nationality">{{candidate.details.nationality.description}}</ui-select-match>
-                        <ui-select-choices repeat="item in nationality | filter: $select.search">{{item.description}}</ui-select-choices>
+                        <ui-select-match placeholder="* Nationality">{{$select.selected.description}}</ui-select-match>
+                        <ui-select-choices repeat="item.code as item in nationality | filter: $select.search">{{item.description}}</ui-select-choices>
                     </ui-select>
                 </div>
             </div>      
         </form>
     </div>
     
-    <div class="addtionalinfo-container col-md-6" ng-hide="!candidate.details.nationality || candidate.details.nationality.description == 'British'" ng-class="{postcodeerror:registerform.postcode.$error.postcode}">
+    <!-- if nationality is 'British' -->
+    <div class="addtionalinfo-container col-md-6" ng-hide="!candidate.details.nationality || candidate.details.nationality == '1'" ng-class="{postcodeerror:registerform.postcode.$error.postcode}">
         <div class="left-content">
             <div class="from-title">
                 Non UK Nationals

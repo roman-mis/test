@@ -15,6 +15,7 @@ angular.module('origApp.controllers')
                   .customGet('activation/' + $scope.emailAddress, {verificationCode: $scope.activatecode}, function(response) {
                     if (response.data.result === true) {
                     } else {
+                      alert(response.data.message);
                       $location.path('/register/home')
                     }
                   }, function(response) {
