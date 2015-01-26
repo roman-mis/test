@@ -20,14 +20,14 @@ module.exports = function(app){
 
 router.get('/',restMiddleware(db),controller.getAllUsers);
 
-router.get('/activation/:email_address',controller.getActivation);
+router.get('/activation/:emailAddress',controller.getActivation);
 
-router.post('/activation/:email_address',controller.postActivation);
+router.post('/activation/:emailAddress',controller.postActivation);
 
 router.post('/:id/lockunlock/:flag',controller.lockunlock);
 
-router.get('/emailvalidation/:email_address',controller.emailValidation);
+router.get('/emailvalidation/:emailAddress',controller.emailValidation);
 
-router.get('/changepassword/verify/:email_address/:code',controller.verifyChangePassword);
+router.get('/changepassword/verify/:emailAddress/:code',controller.verifyChangePassword);
 
-router.post('/changepassword/:email_address/:code',controller.changePassword);
+router.post('/changepassword/:emailAddress/:code',controller.changePassword);

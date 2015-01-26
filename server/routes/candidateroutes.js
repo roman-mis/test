@@ -71,4 +71,4 @@ router.get('/:id/agencies', candidatecontroller.getAgencies);
 router.post('/:id/document',candidatecontroller.uploadDocuments);
 // router.get('/:id/document/signuploadurl',candidatecontroller.getUploadDocumentSignedUrl);
 // router.get('/:id/document/signgeturl',candidatecontroller.getDownloadDocumentSignedUrl);
-// router.get('/:id/document/:generated_name',candidatecontroller.getDocument);
+// router.get('/:id/document/:generatedName',candidatecontroller.getDocument);

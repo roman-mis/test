@@ -12,7 +12,7 @@ module.exports = function(app){
   app.use('/api/public', router);
 };
 
-router.get('/candidates/emailvalidation/:email_address',controller.emailValidation);
+router.get('/candidates/emailvalidation/:emailAddress',controller.emailValidation);
 
 
 router.get('/sign_s3', controller.signS3);
