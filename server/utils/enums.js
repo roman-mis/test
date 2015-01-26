@@ -1,20 +1,20 @@
 
 module.exports={
-	event_type:{
+	eventType:{
 		DPANOTE:'DPANOTE',
 		CALL_LOG:'CALL_LOG',
 		CREATE_TASK: 'CREATE_TASK',
 		ONBOARDING: 'ONBOARDING'
 	},
-	task_category:{
+	taskCategory:{
 		CALL_LOG:'CALL_LOG',
 		TASK:'TASK'
 	},
-	template_types:{
+	templateTypes:{
 		CALL_LOG:'CALL_LOG',
 		TASK:'TASK'
 	},
-	document_types:{
+	documentTypes:{
 		'1':'P45',
 		'2':'APP_FORM',
 		'3':'CONTRACT',
@@ -22,7 +22,7 @@ module.exports={
 		'5':'EXPENSE_FORM',
 		OTHERS:'OTHERS'
 	},
-	code_types:{
+	codeTypes:{
 		'ChangePassword':'CHPWD'
 	}
 }

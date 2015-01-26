@@ -58,7 +58,7 @@ module.exports=function(conn){
 			});
 			
 		},
-		search:function(modelName,option,populated_models){
+		search:function(modelName,option,populatedModels){
 			// return Q.Promise(function(resolve,reject){
 			// 	var opt=option||{};
 			// 	var filters =opt.filters||[];
@@ -69,7 +69,7 @@ module.exports=function(conn){
 			// 	var model=conn.DB.model(modelName);
 			// 	var query=model.find();
 				
-			// 	_.forEach(populated_models,function(val,ky){
+			// 	_.forEach(populatedModels,function(val,ky){
 			// 		query.populate(val);
 			// 	});
 			// 	if(select && select.trim()!=''){
@@ -123,7 +123,7 @@ module.exports=function(conn){
 
 
 
-	function findFilter(filterName,filter,model,option,populated_models){
+	function findFilter(filterName,filter,model,option,populatedModels){
 		return Q.Promise(function(resolve,reject){
 			var prop=model.schema.paths[filterName];
 
@@ -208,7 +208,7 @@ module.exports=function(conn){
 
 	}
 
-	function goDeepSchema(model,filterName,filter,option,populated_models){
+	function goDeepSchema(model,filterName,filter,option,populatedModels){
 		return Q.Promise(function(resolve,reject){
 			var newFilters=filterName.split('.');
 			

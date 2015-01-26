@@ -1,9 +1,9 @@
 module.exports=function(){
 
-	// var base_url;
+	// var baseUrl;
 
 	return function(req,res,next){
-		global.base_url = req.protocol + '://' + req.get('host');
+		global.baseUrl = req.protocol + '://' + req.get('host');
 		next();
 	};
 

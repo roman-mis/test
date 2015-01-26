@@ -36,14 +36,14 @@ module.exports=utils={
 
 		return null;
 	},
-	secureString:function(unsecure_string){
+	secureString:function(unsecureString){
 		var deff=Q.defer();
 		bcrypt.genSalt(10, function(err, salt) {
 			if(err){
 				deff.reject(err);
 			}
 			else{
-			    bcrypt.hash(unsecure_string, salt, function(err, hash) {
+			    bcrypt.hash(unsecureString, salt, function(err, hash) {
 			        if(err){
 			        	deff.reject(err);
 
@@ -58,11 +58,11 @@ module.exports=utils={
 		return deff.promise;
 
 	},
-	compareSecureString:function(secure_string,plain_string){
+	compareSecureString:function(secureString,plainString){
 		var deff=Q.defer();
-		bcrypt.compare(plain_string,secure_string,function(err,test_result){
+		bcrypt.compare(plainString,secureString,function(err,testResult){
                     
-			deff.resolve(test_result);
+			deff.resolve(testResult);
         });
 
 		return deff.promise;
