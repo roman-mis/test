@@ -50,7 +50,7 @@ router.get('/:id/sales',controller.getAgencySales);
 router.patch('/:id/sales',controller.patchAgencySales);
 
 router.get('/:id/logosignedurl',controller.getAgencyLogoUploadSignedUrl);
-router.get('/:id/file_signed_url/:file_name',controller.getFileSignedUrl);
-router.get('/:id/file_redirect_url/:file_name',controller.getFileRedirectUrl);
+router.get('/:id/file_signed_url/:fileName',controller.getFileSignedUrl);
+router.get('/:id/file_redirect_url/:fileName',controller.getFileRedirectUrl);
 router.patch('/consultants/:id/lockunlock/:flag',controller.lockUnlockConsultant);
 router.post('/consultants/:id/changepassword',controller.changeConsultantPassword);

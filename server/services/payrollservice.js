@@ -16,12 +16,12 @@ var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 
 service.getPayrollProductDetails = function(id){
 	var query=db.User.findById(id)
-		.populate('worker.payroll_product.agency_id');
+		.populate('worker.payrollProduct.agencyId');
 	// Q.nfcall(query.exec.bind(query)).then(function(result){
 		
-	// 	result['candidate_no'] = 'test'; // Original Value = 1, changing to test
+	// 	result['candidateNo'] = 'test'; // Original Value = 1, changing to test
 	// 	result.candidateNo = 'test';
-	// 	console.log(result['candidate_no']); // Still displays 1
+	// 	console.log(result['candidateNo']); // Still displays 1
 
 	// 	deff.resolve(result);
 
@@ -123,7 +123,7 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
    				if(payrollProductDetails._id == "" || payrollProductDetails._id == undefined){
    					console.log('add');
    					delete payrollProductDetails['_id'];
-   					payrollProductDetails['created_date'] = new Date();
+   					payrollProductDetails['createdDate'] = new Date();
    					user.worker.payrollProduct.push(payrollProductDetails);
    					console.log(payrollProductDetails);
    					product=user.worker.payrollProduct[user.worker.payrollProduct.length-1];
@@ -133,7 +133,7 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
    					//REVIEW: First get the existing product then update it.
    					product=user.worker.payrollProduct.id(payrollProductDetails._id);
    					if(product){
-   						payrollProductDetails['updated_date'] = new Date();
+   						payrollProductDetails['updatedDate'] = new Date();
    						utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
    					}
    					else{

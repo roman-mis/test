@@ -8,15 +8,15 @@ function BaseSchema(definition,option) {
   if(opt){
 
     if(!opt.skipCreatedDate && !definition.createdDate){
-      definition['created_date']={type:Date,default:Date.now};
-      // console.log('setting created_date');
+      definition['createdDate']={type:Date,default:Date.now};
+      // console.log('setting createdDate');
     }
     if(!opt.skipUpdatedDate && !definition.updatedDate){
-      definition['updated_date']={type:Date,default:Date.now};
+      definition['updatedDate']={type:Date,default:Date.now};
       
     }
     if(!opt.skipUpdatedBy && !definition.updatedBy){
-      definition['updated_by']={type:mongoose.Schema.Types.ObjectId,ref:'User'};
+      definition['updatedBy']={type:mongoose.Schema.Types.ObjectId,ref:'User'};
       
     }
   }

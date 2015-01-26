@@ -76,7 +76,7 @@ service.isCodeValid=function(emailAddress,verificationCode){
 service.getAllUsers=function(request){
 	return Q.Promise(function(resolve,reject){
 		var q=db.User.find();
-		// q.where('user_type').ne('WK');
+		// q.where('userType').ne('WK');
 		queryutils.applySearch(q,db.User,request)
 		.then(resolve,reject);
 	});
@@ -364,7 +364,7 @@ service.sendCodeEmail=function(user,code,opt){
 			var mailModel={activationLink:activationLink,title:user.title,firstName:user.firstName,lastName:user.lastName};
 			var mailOption=_.assign(opt||{},{to:user.emailAddress});
 			console.log('calling sendEmail');
-			return mailer.sendEmail(mailOption,mailModel,'user_change_password')
+			return mailer.sendEmail(mailOption,mailModel,'userChangePassword')
 			.then(function(){
 				console.log('email sent');
 				resolve();
@@ -479,5 +479,5 @@ function sendMail(opt,userModel){
 				activationLink:newActivationLink};
 	var mailOption=_.assign(opt||{},{to:userModel.emailAddress});
 	
-		return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
+		return mailer.sendEmail(mailOption,mailModel,'userRegistrationActivation');
 }

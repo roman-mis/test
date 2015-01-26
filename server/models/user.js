@@ -147,7 +147,7 @@ module.exports = function(mongoose,autoIncrement) {
       dpaUpdatedBy:{type:Schema.Types.ObjectId,ref:'User'}
        /* branchId:{type:Schema.Types.ObjectId,ref:'Agency.branches'}*/
 },{skipCreatedDate:false/*default false*/,skipUpdatedDate:false/*default false*/,skipUpdatedBy:false/*default false*/});
-schema.plugin(autoIncrement.plugin,{model:'User',field:'candidate_no',startAt:1,incrementBy:1});
+schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,incrementBy:1});
 
   return mongoose.model('User',schema);
 
