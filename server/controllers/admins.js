@@ -24,15 +24,15 @@ router.post('/', postAdmin );
 function postAdmin(req,res){
 	var newUser={
         title:req.body.title,
-        first_name:req.body.first_name,
-        last_name:req.body.last_name,
-        email_address: req.body.email_address,
-        user_type: 'AM'
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        emailAddress: req.body.emailAddress,
+        userType: 'AM'
       };
 
-    var fullUrl = req.protocol + '://' + req.get('host') +'/register/activate/'+newUser.email_address;
+    var fullUrl = req.protocol + '://' + req.get('host') +'/register/activate/'+newUser.emailAddress;
       var opt={
-          activation_link:fullUrl
+          activationLink:fullUrl
       };
       console.log(newUser);
       
@@ -56,6 +56,6 @@ function postAdmin(req,res){
 
 function getUserInfoViewModel(usr){
   
-     return {_id:usr._id,title:usr.title,first_name:usr.first_name,last_name:usr.last_name,email_address:usr.email_address
+     return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress
     };
 }

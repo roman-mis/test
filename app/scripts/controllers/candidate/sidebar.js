@@ -499,7 +499,7 @@ angular.module('origApp.controllers')
           };
         })
 
-        //Add Expenses  17 P46_information_request
+        //Add Expenses  17 P46InformationRequest
         .controller('_CandidateSidebarExpenses17Controller', function($scope, $modalInstance, ModalService) {
           $scope.back = function() {
             $modalInstance.close();
@@ -519,7 +519,7 @@ angular.module('origApp.controllers')
           };
         })
 
-        //Add Expenses  18 P45_information_request
+        //Add Expenses  18 P45InformationRequest
         .controller('_CandidateSidebarExpenses18Controller', function($scope, $modalInstance, ModalService) {
           $scope.back = function() {
             $modalInstance.close();

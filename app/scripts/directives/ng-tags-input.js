@@ -21,8 +21,8 @@ var KEYS = {
     comma: 188
 };
 
-var MAX_SAFE_INTEGER = 9007199254740991;
-var SUPPORTED_INPUT_TYPES = ['text', 'email', 'url'];
+var MAXSAFEINTEGER = 9007199254740991;
+var SUPPORTEDINPUTTYPES = ['text', 'email', 'url'];
 
 function SimplePubSub() {
     var events = {};
@@ -104,9 +104,9 @@ var tagsInput = angular.module('ngTagsInput', []);
  * @param {number=} tabindex Tab order of the control.
  * @param {string=} [placeholder=Add a tag] Placeholder text for the control.
  * @param {number=} [minLength=3] Minimum length for a new tag.
- * @param {number=} [maxLength=MAX_SAFE_INTEGER] Maximum length allowed for a new tag.
+ * @param {number=} [maxLength=MAXSAFEINTEGER] Maximum length allowed for a new tag.
  * @param {number=} [minTags=0] Sets minTags validation error key if the number of tags added is less than minTags.
- * @param {number=} [maxTags=MAX_SAFE_INTEGER] Sets maxTags validation error key if the number of tags added is greater than maxTags.
+ * @param {number=} [maxTags=MAXSAFEINTEGER] Sets maxTags validation error key if the number of tags added is greater than maxTags.
  * @param {boolean=} [allowLeftoverText=false] Sets leftoverText validation error key if there is any leftover text in
  *                                             the input element when the directive loses focus.
  * @param {string=} [removeTagSymbol=×] Symbol character for the remove tag button.
@@ -199,7 +199,7 @@ tagsInput.directive('tagsInput', ["$timeout","$document","tagsInputConfig", func
     }
 
     function validateType(type) {
-        return SUPPORTED_INPUT_TYPES.indexOf(type) !== -1;
+        return SUPPORTEDINPUTTYPES.indexOf(type) !== -1;
     }
 
     return {
@@ -223,7 +223,7 @@ tagsInput.directive('tagsInput', ["$timeout","$document","tagsInputConfig", func
                 removeTagSymbol: [String, String.fromCharCode(215)],
                 replaceSpacesWithDashes: [Boolean, true],
                 minLength: [Number, 3],
-                maxLength: [Number, MAX_SAFE_INTEGER],
+                maxLength: [Number, MAXSAFEINTEGER],
                 addOnEnter: [Boolean, true],
                 addOnSpace: [Boolean, false],
                 addOnComma: [Boolean, true],
@@ -231,7 +231,7 @@ tagsInput.directive('tagsInput', ["$timeout","$document","tagsInputConfig", func
                 allowedTagsPattern: [RegExp, /.+/],
                 enableEditingLastTag: [Boolean, false],
                 minTags: [Number, 0],
-                maxTags: [Number, MAX_SAFE_INTEGER],
+                maxTags: [Number, MAXSAFEINTEGER],
                 displayProperty: [String, 'text'],
                 allowLeftoverText: [Boolean, false],
                 addFromAutocompleteOnly: [Boolean, false]

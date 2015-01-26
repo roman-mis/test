@@ -12,7 +12,7 @@ angular.module('origApp.controllers')
           $scope.emailAddress = $stateParams.emailAddress;
           $scope.activatecode = $stateParams.activatecode;
           HttpResource.model("users")
-                  .customGet('activation/' + $scope.emailAddress, {verification_code: $scope.activatecode}, function(response) {
+                  .customGet('activation/' + $scope.emailAddress, {verificationCode: $scope.activatecode}, function(response) {
                     if (response.data.result === true) {
                     } else {
                       $location.path('/register/home')
@@ -25,8 +25,8 @@ angular.module('origApp.controllers')
             if ($scope.activateform.$validate()) {
               HttpResource.model("users")
                       .customPost('activation/' + $scope.emailAddress, {
-                        verification_code: $scope.activatecode,
-                        new_password: $scope.password
+                        verificationCode: $scope.activatecode,
+                        newPassword: $scope.password
                       })
                       .then(function(row) {
                         if (row.result === true) {

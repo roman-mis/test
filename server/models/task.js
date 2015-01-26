@@ -11,15 +11,15 @@ module.exports = function(mongoose) {
 		user:{type:Schema.Types.ObjectId,ref:'User'},
 		agency:{type:Schema.Types.ObjectId,ref:'Agency'},
 		priority:String,
-		task_type:String,
+		taskType:String,
 		status:String,
-		template_html:String,
+		templateHtml:String,
 		template:{type:Schema.Types.ObjectId,ref:'Template'},
-		template_title:String,
-		follow_up_task_date:Date,
-		notify_me:Boolean,
-		completed_date:Date,
-		task_category: {type:String, required:true,trim:true}
+		templateTitle:String,
+		followUpTaskDate:Date,
+		notifyMe:Boolean,
+		completedDate:Date,
+		taskCategory: {type:String, required:true,trim:true}
 	});
 
   	return mongoose.model('Task',schema);

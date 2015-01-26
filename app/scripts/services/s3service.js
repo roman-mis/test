@@ -16,15 +16,15 @@ angular.module('origApp.services')
           var signRequest = function(file) {
             var defer = $q.defer();
             HttpResource.model('public').customGet('sign_s3', {
-              s3_object_type: file.type || "text/plain",
-              s3_object_name: config.fileName
+              s3ObjectType: file.type || "text/plain",
+              s3ObjectName: config.fileName
             }, function(response) {
               defer.resolve(response.data);
             });
             return defer.promise;
           };
 
-          var uploadToBucket = function(file, url, public_url) {
+          var uploadToBucket = function(file, url, publicUrl) {
             var defer = $q.defer();
             var obj = {
               method: 'PUT',
@@ -45,7 +45,7 @@ angular.module('origApp.services')
               var defer = $q.defer();
 
               signRequest(config.file).then(function(data) {
-                uploadToBucket(config.file, data.signed_request, data.url).then(function(responseData) {
+                uploadToBucket(config.file, data.signedRequest, data.url).then(function(responseData) {
                   defer.resolve(data);
                 });
               });

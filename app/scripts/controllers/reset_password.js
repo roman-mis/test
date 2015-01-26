@@ -21,7 +21,7 @@ angular.module('origApp.controllers')
             if ($scope.pwdform.$validate()) {
               HttpResource.model("users")
                       .customPost('changepassword/' + $scope.emailAddress + '/' + $scope.verifyCode, {
-                        new_password: $scope.password
+                        newPassword: $scope.password
                       })
                       .then(function(response) {
                         if (!HttpResource.flushError(response)) {

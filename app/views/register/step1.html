@@ -19,8 +19,8 @@
         <form role="form" name="registerform" orig-validate-form>
             <div class="form-group">
                 <p class="col-md-8 col-sm-8 nonepadding">
-                <ui-select ng-model="candidate.title" name="title" theme="select2" ng-disabled="disabled" search-enabled="false" required>
-                    <ui-select-match placeholder="* Title">{{candidate.title}}</ui-select-match>
+                <ui-select ng-model="candidate.details.title" name="title" theme="select2" ng-disabled="disabled" search-enabled="false" required>
+                    <ui-select-match placeholder="* Title">{{candidate.details.title}}</ui-select-match>
                     <ui-select-choices repeat="item in titleary | filter: $select.search">
                         <span ng-bind-html="item"></span>                        
                     </ui-select-choices>
@@ -30,26 +30,26 @@
             <div class="clear">
             </div>
             <div class="form-group">
-                <input type="text"   ng-model="candidate.firstName" name="firstname" class="form-control" placeholder="* First Name" maxlength="20" required/>
+                <input type="text"   ng-model="candidate.details.firstName" name="firstname" class="form-control" placeholder="* First Name" maxlength="20" required/>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.lastName" name="lastname" class="form-control" placeholder="* Last Name" maxlength="20" required/>
+                <input type="text" ng-model="candidate.details.lastName" name="lastname" class="form-control" placeholder="* Last Name" maxlength="20" required/>
             </div>
             <div class="form-group">
-                <input type="email" ng-model="candidate.emailAddress" orig-unique-email name="emailaddress" class="form-control" maxlength="100" placeholder="* Email Address" required/>
+                <input type="email" ng-model="candidate.details.emailAddress" orig-unique-email name="emailaddress" class="form-control" maxlength="100" placeholder="* Email Address" required/>
                 <div class="alert alert-danger" ng-hide="registerform.emailaddress.$pristine || registerform.emailaddress.$error.email || !registerform.emailaddress.$error.unique"  role="alert">
                     Email address has already been taken
                 </div>
             </div>            
             <div class="form-group">
-                <input type="text" ng-model="candidate.contactNumber" name="contactnumber" class="form-control" placeholder="* Contact Number" maxlength="15" required/>
+                <input type="text" ng-model="candidate.details.contactNumber" name="contactnumber" class="form-control" placeholder="* Contact Number" maxlength="15" required/>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.niNumber" orig-ni name="ninumber" class="form-control" placeholder="* NI Number" maxlength="13" required/>
+                <input type="text" ng-model="candidate.details.niNumber" orig-ni name="ninumber" class="form-control" placeholder="* NI Number" maxlength="13" required/>
                 <div class="alert alert-danger" ng-show="registerform.ninumber.$error.ni"  role="alert">Please enter a valid NI number</div>
             </div>
             <div class="form-group">
-                <div  class="input-group col-md-8 col-sm-8" name="birthday" ng-model="candidate.dateOfBirthday" placeholder="* Date of Birth" orig-datepicker required/>
+                <div  class="input-group col-md-8 col-sm-8" name="birthday" ng-model="candidate.details.dateOfBirthday" placeholder="* Date of Birth" orig-datepicker required/>
             </div>
         </form>
     </div>

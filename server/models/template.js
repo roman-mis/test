@@ -7,8 +7,8 @@ module.exports = function(mongoose) {
   	
 	var schema=BaseSchema({
 		title:String,
-		template_body:String,
-		template_type:String
+		templateBody:String,
+		templateType:String
 	});
 
   	return mongoose.model('Template',schema);

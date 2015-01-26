@@ -24,23 +24,23 @@ router.get('/worker', function(req, res){
 });
 router.post('/worker',function(req,res){
    var worker={
-          contact_number: req.body.contact_number,
-          ni_number:      req.body.ni_number,
-          birth_date:     req.body.birth_date,
-          address_1:    req.body.address_1,
-          address_2:      req.body.address_2,
-          address_3:      req.body.address_3,
+          contactNumber: req.body.contactNumber,
+          niNumber:      req.body.niNumber,
+          birthDate:     req.body.birthDate,
+          address1:    req.body.address1,
+          address2:      req.body.address2,
+          address3:      req.body.address3,
           town:           req.body.town,
           county:         req.body.county,
-          post_code:      req.body.post_code,
+          postCode:      req.body.postCode,
           gender:         req.body.gender,
           nationality:    req.body.nationality,
-          arrival_date:   utils.nullifyDate(req.body.arrival_date),
-          recent_dep_date:utils.nullifyDate(req.body.recent_dep_date),
-          emp_last_visit: req.body.emp_last_visit,
-          agency_name:    req.body.agency_name,
-          job_title:      req.body.job_title,
-          start_date:     req.body.start_date
+          arrivalDate:   utils.nullifyDate(req.body.arrivalDate),
+          recentDepDate:utils.nullifyDate(req.body.recentDepDate),
+          empLastVisit: req.body.empLastVisit,
+          agencyName:    req.body.agencyName,
+          jobTitle:      req.body.jobTitle,
+          startDate:     req.body.startDate
       }
 
     var workerModel=new db.Worker(worker);
@@ -58,10 +58,10 @@ router.post('/worker',function(req,res){
 router.post('/',function(req,res){
   var newUser={
         title:req.body.title,
-        first_name:req.body.first_name + new Date().getTime().toString(),
-        last_name:req.body.last_name,
-        email_address: req.body.email_address,
-        user_type: 'WK'
+        firstName:req.body.firstName + new Date().getTime().toString(),
+        lastName:req.body.lastName,
+        emailAddress: req.body.emailAddress,
+        userType: 'WK'
       };
 
     var usr=new db.User(newUser);

@@ -41,7 +41,7 @@ angular.module('origApp.controllers')
           //upload company logo
           $scope.onSelectCompanyLogo = function(fileInput) {
             $scope.$apply(function() {
-              $scope.agencyContact.local_logo_path = fileInput.value;
+              $scope.agencyContact.localLogoPath = fileInput.value;
             });
           };
           
@@ -56,10 +56,10 @@ angular.module('origApp.controllers')
             var mimeType = file.type || 'text/plain';
             $scope.isLogoUploading = true;
             HttpResource.model('agencies/' + $scope.agencyId).customGet('logosignedurl', {
-              mime_type: mimeType,
-              file_name: fileName
+              mimeType: mimeType,
+              fileName: fileName
             }, function(response) {
-              var signedRequest = response.data.signed_request;
+              var signedRequest = response.data.signedRequest;
               $http({
                 method: 'PUT',
                 url: signedRequest,
@@ -71,7 +71,7 @@ angular.module('origApp.controllers')
                     .then(function(response) {
                       $scope.isLogoUploading = false;
                       if (!HttpResource.flushError(response)) {
-                        $scope.agencyContact.local_logo_path = '';
+                        $scope.agencyContact.localLogoPath = '';
                         $scope.agencyContact.logo = fileName;
                       }
                     });

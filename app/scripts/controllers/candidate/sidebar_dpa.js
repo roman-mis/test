@@ -12,11 +12,11 @@ angular.module('origApp.controllers')
 
           //define public properties
           $scope.dpaLists = [
-            {question: 'What is your postcode?', answer: candidateInfo.post_code},
-            {question: 'What is your first line of address?', answer: candidateInfo.address_1},
-            {question: 'What is your NI Number?', answer: candidateInfo.ni_number},
-            {question: 'What is your birthday?', answer: candidateInfo.birth_date},
-            {question: 'What is email address?', answer: candidateInfo.email_address}
+            {question: 'What is your postcode?', answer: candidateInfo.postCode},
+            {question: 'What is your first line of address?', answer: candidateInfo.address1},
+            {question: 'What is your NI Number?', answer: candidateInfo.niNumber},
+            {question: 'What is your birthday?', answer: candidateInfo.birthDate},
+            {question: 'What is email address?', answer: candidateInfo.emailAddress}
           ];
           $scope.generatedSets = [];
           $scope.remainingSets = [];

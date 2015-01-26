@@ -41,7 +41,7 @@ angular.module('origApp.controllers')
         //Edit Agency Default Invoicing
         .controller('_EditAgencyDefaultInvoicing', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
           $scope.data = {};
-          angular.copy(parentScope.payrollData.default_invoicing, $scope.data);
+          angular.copy(parentScope.payrollData.defaultInvoicing, $scope.data);
   
           $scope.invoiceMethods = ConstantsResource.get('invoicemethods');
           $scope.paymentTerms = ConstantsResource.get('paymentterms');
@@ -69,7 +69,7 @@ angular.module('origApp.controllers')
         //Edit Agency Default Payroll
         .controller('_EditAgencyDefaultPayroll', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
           $scope.data = {};
-          angular.copy(parentScope.payrollData.default_payroll, $scope.data);
+          angular.copy(parentScope.payrollData.defaultPayroll, $scope.data);
   
           $scope.serviceUsed = ConstantsResource.get('servicesused');
           $scope.marginTypes = ConstantsResource.get('margintypes');

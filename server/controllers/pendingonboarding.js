@@ -33,11 +33,11 @@ module.exports = function(dbs){
     	var pendingOnboardingDetails = {
     		user: req.params.id,
     		agency:req.body.agency,
-    		agency_name: req.body.agency_name,
+    		agencyName: req.body.agencyName,
     		consultant: req.body.consultant,
-    		paye_rate: req.body.paye_rate,
-    		outsourced_rate: req.body.outsourced_rate,
-    		service_used: req.body.service_used,
+    		payeRate: req.body.payeRate,
+    		outsourcedRate: req.body.outsourcedRate,
+    		serviceUsed: req.body.serviceUsed,
     		requirements: req.body.requirements
     	};
 
@@ -45,12 +45,12 @@ module.exports = function(dbs){
       var historyDetails;
       if(complete){
         historyDetails = {
-          event_type: enums.event_type.ONBOARDING,
-          event_date: new Date(),
-          history_by: req.user.id,
+          eventType: enums.eventType.ONBOARDING,
+          eventDate: new Date(),
+          historyBy: req.user.id,
           user: req.params.id,
-          event_data: pendingOnboardingDetails,
-          notes: 'DPA updated by ' + req.user.first_name + ' ' + req.user.last_name
+          eventData: pendingOnboardingDetails,
+          notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
         };
       }
 

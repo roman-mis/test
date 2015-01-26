@@ -37,9 +37,9 @@ angular.module('origApp.services')
         initUser();
         return user;
       },
-      doLogin: function(email_address, password) {
+      doLogin: function(emailAddress, password) {
         var defer = $q.defer();
-        HttpResource.model('authenticate').customPost('', {email_address: email_address, password: password}).then(
+        HttpResource.model('authenticate').customPost('', {emailAddress: emailAddress, password: password}).then(
           function(response) {
             var data = response.data;
             if (data.result == true) {

@@ -22,12 +22,12 @@ module.exports = function(dbs){
 
     controller.patchDpa=function(req,res){
       var dpaDetails = {
-        event_type: enums.event_type.DPANOTE,
-        event_date: new Date(),
-        history_by: req.user._id,
+        eventType: enums.eventType.DPANOTE,
+        eventDate: new Date(),
+        historyBy: req.user._id,
         user: req.params.id,
-        event_data: null,
-        notes: 'DPA updated by ' + req.user.first_name + ' ' + req.user.last_name
+        eventData: null,
+        notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
       };
 
       historyservice.saveDpa(req.params.id, dpaDetails).then(function(response){

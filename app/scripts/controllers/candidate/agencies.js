@@ -45,9 +45,9 @@ angular.module('origApp.controllers')
             exceptionResource.delete(exception._id).then(function(response) {
               if (!HttpResource.flushError(response)) {
                 //remove row from the grid
-                jQuery(product.margin_exception).each(function(index) {
+                jQuery(product.marginException).each(function(index) {
                   if (this._id === exception._id) {
-                    product.margin_exception.splice(index, 1);
+                    product.marginException.splice(index, 1);
                   }
                 });
               }
@@ -81,13 +81,13 @@ angular.module('origApp.controllers')
               $scope.isSaving = false;
               if (!HttpResource.flushError(response)) {
                 if ($scope.editing) { //if edited
-                  jQuery(params.payrollProduct.margin_exception).each(function(index) {
+                  jQuery(params.payrollProduct.marginException).each(function(index) {
                     if (this._id === $scope.data._id) {
-                      angular.copy($scope.data, params.payrollProduct.margin_exception[index]);
+                      angular.copy($scope.data, params.payrollProduct.marginException[index]);
                     }
                   });
                 } else { //if added
-                  params.payrollProduct.margin_exception.push($scope.data);
+                  params.payrollProduct.marginException.push($scope.data);
                 }
                 $scope.data = {};
                 $modalInstance.close();

@@ -13,7 +13,7 @@ module.exports = function(dbs){
 
 
     controller.emailValidation=function(req,res){
-      userservice.checkDuplicateUser(req.params.email_address)
+      userservice.checkDuplicateUser(req.params.emailAddress)
         .then(function(){
           res.json({result:true});
         },res.sendFailureResponse);
@@ -28,7 +28,7 @@ module.exports = function(dbs){
     }
 
     controller.getActivation =function (req,res){
-      userservice.isActivationCodeValid(req.params.email_address,req.query.verification_code)
+      userservice.isActivationCodeValid(req.params.emailAddress,req.query.verificationCode)
         .then(function(){
           console.log(true);
           res.json({result:true});
@@ -41,12 +41,12 @@ module.exports = function(dbs){
 
 
     controller.postActivation=function (req,res){
-      console.log('verifying code : '+req.body.verification_code);
-      userservice.isActivationCodeValid(req.params.email_address,req.body.verification_code)
-        .then(function(activation_code){
-          console.log('activating code : '+req.body.verification_code);
+      console.log('verifying code : '+req.body.verificationCode);
+      userservice.isActivationCodeValid(req.params.emailAddress,req.body.verificationCode)
+        .then(function(activationCode){
+          console.log('activating code : '+req.body.verificationCode);
 
-          userservice.activateUser(activation_code,req.body.new_password)
+          userservice.activateUser(activationCode,req.body.newPassword)
           .then(function(){
             res.json({result:true});
           },function(err){
@@ -73,7 +73,7 @@ module.exports = function(dbs){
         		});
         
     		    var pagination=req._restOptions.pagination||{};
-    		    var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,total_count:result.count}};
+    		    var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
     		    
     		    res.json(resp);
 
@@ -82,14 +82,14 @@ module.exports = function(dbs){
     }
 
     controller.verifyChangePassword=function(req,res){
-        userservice.verifyCode(req.params.email_address,req.params.code,enums.code_types.ChangePassword)
+        userservice.verifyCode(req.params.emailAddress,req.params.code,enums.codeTypes.ChangePassword)
           .then(function(response){
               res.json(response);
           },res.sendFailureResponse);
     }
 
     controller.changePassword=function(req,res){
-      userservice.changePassword(req.params.email_address,req.params.code,req.body.new_password)
+      userservice.changePassword(req.params.emailAddress,req.params.code,req.body.newPassword)
           .then(function(response){
               if(response.result){
                 res.json({result:true});
@@ -104,8 +104,8 @@ module.exports = function(dbs){
 
     function getUserViewModel(user){
       return {
-        _id:user._id,title:user.title,first_name:user.first_name,last_name:user.last_name,
-        email_address:user.email_address
+        _id:user._id,title:user.title,firstName:user.firstName,lastName:user.lastName,
+        emailAddress:user.emailAddress
       };
     }
 

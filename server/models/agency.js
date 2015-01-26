@@ -6,9 +6,9 @@ var BaseSchema=require(__dirname+'/baseschema');
 module.exports = function(mongoose) {
   	
 	var consultantSchema=BaseSchema({
-		first_name:       {type:String,required:false,trim:true},
-    last_name:        {type:String,required:false,trim:true},
-    email_address:    {type:String},
+		firstName:       {type:String,required:false,trim:true},
+    lastName:        {type:String,required:false,trim:true},
+    emailAddress:    {type:String},
     phone:            {type:String},
     role:             {type:String},
     status:           {type:String},
@@ -22,7 +22,7 @@ module.exports = function(mongoose) {
     address3:            {type:String},
 		town:                {type:String},
     postcode:            {type:String},
-    branch_type:         {type:String},
+    branchType:         {type:String},
 
 		consultants:[consultantSchema]
 	});
@@ -30,17 +30,17 @@ module.exports = function(mongoose) {
 
 	var schema = BaseSchema({
 		name: 				       {type:String},
-		// agency_type: 		     {type:String},
+		// agencyType: 		     {type:String},
 		address1: 			     {type:String},
 		address2: 			     {type:String},
 		address3: 			     {type:String},
 		town: 				       {type:String},
 		country: 			       {type:String},
 		postcode: 			     {type:String},
-		company_reg_no: 	   {type:String},
-		company_vat_no: 	   {type:String},
-    logo_file_name:      {type:String},
-		contact_information:{
+		companyRegNo: 	   {type:String},
+		companyVatNo: 	   {type:String},
+    logoFileName:      {type:String},
+		contactInformation:{
 			phone1: 			    {type:String},
   		phone2: 			    {type:String},
   		fax: 				      {type:String},
@@ -50,33 +50,33 @@ module.exports = function(mongoose) {
   		email: 				    {type:String},
   		logo: 				    {type:String}
 		},
-    default_invoicing:{
-      holiday_pay_included:       {type:Boolean},
-      employers_ni_included:      {type:Boolean},
-      invoice_vat_charged:        {type:Boolean},
-      invoice_method:             {type:String},
-      invoice_design:             {type:Schema.Types.ObjectId,ref:'Invoice_Design'},
-      invoice_email_primary:      {type:String},
-      invoice_email_secondary:    {type:String},
-      payment_terms:              {type:String},
-      invoice_to:                 {type:String}
+    defaultInvoicing:{
+      holidayPayIncluded:       {type:Boolean},
+      employersNiIncluded:      {type:Boolean},
+      invoiceVatCharged:        {type:Boolean},
+      invoiceMethod:             {type:String},
+      invoiceDesign:             {type:Schema.Types.ObjectId,ref:'Invoice_Design'},
+      invoiceEmailPrimary:      {type:String},
+      invoiceEmailSecondary:    {type:String},
+      paymentTerms:              {type:String},
+      invoiceTo:                 {type:String}
     },
-    default_payroll:{
-      product_type:               {type:String},
-      margin_charged_to_agency:   {type:Boolean},
-      margin_type:                {type:String},
-      margin_amount:              {type:Number},
-      holiday_amount:             {type:Number}
+    defaultPayroll:{
+      productType:               {type:String},
+      marginChargedToAgency:   {type:Boolean},
+      marginType:                {type:String},
+      marginAmount:              {type:Number},
+      holidayAmount:             {type:Number}
     },
     sales:{
-      lead_sales:                 {type:Schema.Types.ObjectId,ref:'User'},
-      account_manager:            {type:Schema.Types.ObjectId,ref:'User'},
-      commission_profile:         {type:Schema.Types.ObjectId,ref:'User'}
+      leadSales:                 {type:Schema.Types.ObjectId,ref:'User'},
+      accountManager:            {type:Schema.Types.ObjectId,ref:'User'},
+      commissionProfile:         {type:Schema.Types.ObjectId,ref:'User'}
     },
-    administration_cost:{
-      per_referral:           {type:Number},
-      per_timesheet:          {type:Number},
-      timesheet_gross:        {type:Number}
+    administrationCost:{
+      perReferral:           {type:Number},
+      perTimesheet:          {type:Number},
+      timesheetGross:        {type:Number}
     },
 		branches:[branchSchema]
 	},{});

@@ -7,7 +7,7 @@ var express = require('express'),
 var app = express();
 
 require('./config/express')(app);
-
+console.log("hi")
 // db
 // .sequelize
 // .sync({force:false})

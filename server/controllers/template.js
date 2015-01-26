@@ -37,8 +37,8 @@ module.exports = function(dbs){
 	controller.postTemplate=function (req, res) {
 		var newTemplate={
 			title: req.body.title,
-			template_body: req.body.template_body,
-			template_type: req.body.template_type
+			templateBody: req.body.templateBody,
+			templateType: req.body.templateType
 		};
 
 		templateservice.addTemplate(newTemplate).then(function(response){
@@ -62,8 +62,8 @@ module.exports = function(dbs){
 		return {
 			_id: template._id,
 			title: template.title,
-			template_body: template.template_body,
-			template_type: template.template_type
+			templateBody: template.templateBody,
+			templateType: template.templateType
 		}
 	}
 	

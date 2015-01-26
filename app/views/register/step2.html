@@ -19,38 +19,38 @@
     <div class="col-md-6 right-side">
         <form role="form" name="registerform" orig-validate-form>
             <div class="form-group">
-                <input type="text" ng-model="candidate.address1" name="address1" class="form-control" placeholder="* Address1" maxlength="50" required/>
+                <input type="text" ng-model="candidate.details.address1" name="address1" class="form-control" placeholder="* Address1" maxlength="50" required/>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.address2" name="address2" class="form-control" maxlength="50" placeholder="  Address2" />
+                <input type="text" ng-model="candidate.details.address2" name="address2" class="form-control" maxlength="50" placeholder="  Address2" />
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.address3" name="address3" class="form-control" maxlength="50" placeholder="  Address3"/>
+                <input type="text" ng-model="candidate.details.address3" name="address3" class="form-control" maxlength="50" placeholder="  Address3"/>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.town" name="town" class="form-control" placeholder="* Town" maxlength="20" required=""/>
+                <input type="text" ng-model="candidate.details.town" name="town" class="form-control" placeholder="* Town" maxlength="20" required=""/>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.county" name="county" class="form-control" placeholder="  County" maxlength="20" />
+                <input type="text" ng-model="candidate.details.county" name="county" class="form-control" placeholder="  County" maxlength="20" />
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.postCode" orig-postcode name="postcode" class="form-control" placeholder="* Postcode" maxlength="10" required/>
+                <input type="text" ng-model="candidate.details.postCode" orig-postcode name="postcode" class="form-control" placeholder="* Postcode" maxlength="10" required/>
                 <div class="alert alert-danger" ng-show="registerform.postcode.$error.postcode"  role="alert">
                     Please enter correct Postcode
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-md-6 col-sm-6 gender">
-                    <ui-select ng-model="candidate.gender" name="gender" theme="select2" search-enabled="false" required>
-                        <ui-select-match placeholder="* Gender">{{candidate.gender.value}}</ui-select-match>
+                    <ui-select ng-model="candidate.details.gender" name="gender" theme="select2" search-enabled="false" required>
+                        <ui-select-match placeholder="* Gender">{{candidate.details.gender.value}}</ui-select-match>
                         <ui-select-choices repeat="item in genders | filter: $select.search">
                             <span ng-bind-html="item.value"></span>                        
                         </ui-select-choices>
                     </ui-select>    
                 </div>
                 <div class="col-md-6 col-sm-6 national">
-                    <ui-select ng-model="candidate.nationality" theme="select2" name="nationality" search-enabled="true" required>
-                        <ui-select-match placeholder="* Nationality">{{candidate.nationality.description}}</ui-select-match>
+                    <ui-select ng-model="candidate.details.nationality" theme="select2" name="nationality" search-enabled="true" required>
+                        <ui-select-match placeholder="* Nationality">{{candidate.details.nationality.description}}</ui-select-match>
                         <ui-select-choices repeat="item in nationality | filter: $select.search">{{item.description}}</ui-select-choices>
                     </ui-select>
                 </div>
@@ -58,7 +58,7 @@
         </form>
     </div>
     
-    <div class="addtionalinfo-container col-md-6" ng-hide="!candidate.nationality || candidate.nationality.description == 'British'" ng-class="{postcodeerror:registerform.postcode.$error.postcode}">
+    <div class="addtionalinfo-container col-md-6" ng-hide="!candidate.details.nationality || candidate.details.nationality.description == 'British'" ng-class="{postcodeerror:registerform.postcode.$error.postcode}">
         <div class="left-content">
             <div class="from-title">
                 Non UK Nationals
@@ -66,17 +66,17 @@
             <span class="comment">(only to be completed by non UK nationals)</span>
             &nbsp;<br/>&nbsp;<br/>
             When Did you arive in the UK?
-            <p  class="col-md-8" name="entrancedate" ng-model="candidate.entranceDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>
+            <p  class="col-md-8" name="entrancedate" ng-model="candidate.details.entranceDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>
             Have you been to the UK before?<br/>
             <span class="comment">If yes please enter most recent departure date</span>
-            <p  class="col-md-8" name="recententrancedate" ng-model="candidate.recentEntranceDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>                 
+            <p  class="col-md-8" name="recententrancedate" ng-model="candidate.details.recentEntranceDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>                 
             Did you enter into any paid employment during your last visit?
             <div class="form-group">
                 <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.payEmployFlag"  id="inlineRadio1" value="option1"> Yes
+                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.payEmployFlag"  id="inlineRadio1" value="option1"> Yes
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.payEmployFlag" id="inlineRadio1" value="option2"> No
+                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.payEmployFlag" id="inlineRadio1" value="option2"> No
                 </label>                   
             </div>
         </div>            

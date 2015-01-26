@@ -8,7 +8,7 @@ module.exports = function(dbs){
         aws = require('aws-sdk'),
         mailer=require('../mailing/mailer'),
         path=require('path'),
-        data_list=require('../data/data_list.json'),
+        dataList=require('../data/data_list.json'),
         awsService=require('../services/awsservice');
     var bcrypt=require('bcryptjs');
     var utils=require('../utils/utils');
@@ -23,113 +23,113 @@ module.exports = function(dbs){
     };
     controller.starterdeclarations =function(req,res){
 
-      res.json(data_list.StarterDeclarations);
+      res.json(dataList.StarterDeclarations);
     };
 
     controller.payfrequencies =function(req,res){
 
-      res.json(data_list.PayFrequency);
+      res.json(dataList.PayFrequency);
     };
 
     controller.taxbasis =function(req,res){
 
-      res.json(data_list.TaxBasis);
+      res.json(dataList.TaxBasis);
     };
 
     controller.margins=function(req,res){
 
-      res.json(data_list.Margin);
+      res.json(dataList.Margin);
     };
 
     controller.holidaypayrules = function(req,res){
 
-      res.json(data_list.HolidayPayRule);
+      res.json(dataList.HolidayPayRule);
     };
 
     controller.derogationcontracts = function(req,res){
 
-      res.json(data_list.DerogationContract);
+      res.json(dataList.DerogationContract);
     };
 
     controller.servicesused = function(req,res){
 
-      res.json(data_list.ServiceUsed);
+      res.json(dataList.ServiceUsed);
     };
 
     controller.paymentterms=function(req,res){
 
-      res.json(data_list.PaymentTerms);
+      res.json(dataList.PaymentTerms);
     };
 
     controller.paymentmethods=function(req,res){
 
-      res.json(data_list.PaymentMethod);
+      res.json(dataList.PaymentMethod);
     };
 
 
     controller.holidays =function(req,res){
 
-      res.json(data_list.Holidays);
+      res.json(dataList.Holidays);
     };
 
     controller.vehicletypes=function(req,res){
 
-      res.json(data_list.VehicleTypes);
+      res.json(dataList.VehicleTypes);
     };
 
     controller.priorities = function(req,res){
 
-      res.json(data_list.Priorities);
+      res.json(dataList.Priorities);
     };
 
     controller.calllogtasktypes = function(req,res){
 
-      res.json(data_list.CallLogTaskTypes);
+      res.json(dataList.CallLogTaskTypes);
     };
 
     controller.statuses = function(req,res){
 
-      res.json(data_list.Statuses);
+      res.json(dataList.Statuses);
     };
 
     controller.createtasktypes=function(req,res){
 
-      res.json(data_list.CreateTaskTypes);
+      res.json(dataList.CreateTaskTypes);
     };
 
     controller.documenttypes=function(req,res){
 
-      res.json(data_list.DocumentTypes);
+      res.json(dataList.DocumentTypes);
     };
 
     controller.marginexceptiontypes = function(req,res){
 
-      res.json(data_list.MarginExceptionTypes);
+      res.json(dataList.MarginExceptionTypes);
     };
 
     controller.reasons=function(req,res){
 
-      res.json(data_list.Reasons);
+      res.json(dataList.Reasons);
     };
 
     controller.deductiontypes=function(req,res){
 
-      res.json(data_list.DeductionTypes);
+      res.json(dataList.DeductionTypes);
     };
 
     controller.agencytypes=function(req,res){
 
-      res.json(data_list.AgencyTypes);
+      res.json(dataList.AgencyTypes);
     };
 
     controller.invoicemethods=function(req,res){
 
-      res.json(data_list.InvoiceMethods);
+      res.json(dataList.InvoiceMethods);
     };
 
     controller.statuslist=function(req,res){
 
-      res.json(data_list.StatusList);
+      res.json(dataList.StatusList);
     };
 
     controller.countries=function(req,res){
@@ -138,19 +138,19 @@ module.exports = function(dbs){
     }
 
     controller.margintypes=function(req,res){
-      res.json(data_list.MarginTypes);
+      res.json(dataList.MarginTypes);
     }
 
     controller.roleslist=function(req,res){
-      res.json(data_list.RolesList);
+      res.json(dataList.RolesList);
     }
 
     controller.mealslist=function(req,res){
-      res.json(data_list.MealsList);
+      res.json(dataList.MealsList);
     }
 
     controller.transportationmeans=function(req,res){
-      res.json(data_list.TransportationMeans);
+      res.json(dataList.TransportationMeans);
     }
     
   return controller;

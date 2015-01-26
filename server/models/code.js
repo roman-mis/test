@@ -7,10 +7,10 @@ var BaseSchema=require(__dirname+'/baseschema');
 module.exports = function(mongoose,autoIncrement) {
   var schema = BaseSchema({
     code:              {type:String,required:true,trim:true},
-    email_address:    {type:String},
+    emailAddress:    {type:String},
     user:         {type:Schema.Types.ObjectId,ref:'User'},
-    code_type: 		{type:String},
-    is_used:          {type:Boolean,default:false}
+    codeType: 		{type:String},
+    isUsed:          {type:Boolean,default:false}
 });
 
   return mongoose.model('Code',schema);

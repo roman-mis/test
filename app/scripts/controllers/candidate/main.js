@@ -16,7 +16,7 @@ angular.module('origApp.controllers')
           //load condidate basic information
           $scope.loadCandidate = function() {
             $scope.candidate = cddAPI.get($scope.candidateId, function() {
-              $scope.baseBreadcrumbs[2].text = $scope.candidate.first_name + ' ' + $scope.candidate.last_name;
+              $scope.baseBreadcrumbs[2].text = $scope.candidate.firstName + ' ' + $scope.candidate.lastName;
               $rootScope.breadcrumbs = $scope.baseBreadcrumbs;
             });
           };

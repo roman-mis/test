@@ -25,11 +25,11 @@ module.exports = function(dbs){
     controller.getAgencies = function(req, res){
       candidateservice.getUserAgencies(req.params.id)
         .then(function(user){
-          var payroll_products = user.worker.payroll_product;
-          //console.log(payroll_products);
+          var payrollProducts = user.worker.payrollProduct;
+          //console.log(payrollProducts);
           var agencies = [];
-          _.forEach(payroll_products,function(payroll_product,key){
-            agencies.push(payroll_product.agency_id);
+          _.forEach(payrollProducts,function(payrollProduct,key){
+            agencies.push(payrollProduct.agencyId);
           });
           res.json({result:true,objects:agencies});
 
@@ -37,29 +37,29 @@ module.exports = function(dbs){
     }
     controller.uploadDocuments=function(req,res){
 
-      // var document_names=Array.isArray(req.body.document_name)?req.body.document_name:[req.body.document_name];
-      // var document_types=Array.isArray(req.body.document_type)?req.body.document_type:[req.body.document_type];
+      // var documentNames=Array.isArray(req.body.documentName)?req.body.documentName:[req.body.documentName];
+      // var documentTypes=Array.isArray(req.body.documentType)?req.body.documentType:[req.body.documentType];
       // var agencies=Array.isArray(req.body.agency)?req.body.agency:[req.body.agency];
-      // var generated_names=Array.isArray(req.body.generated_name)?req.body.generated_name:[req.body.generated_name];
-      // var mime_types=Array.isArray(req.body.mime_type)?req.body.mime_type:[req.body.mime_type];
+      // var generatedNames=Array.isArray(req.body.generatedName)?req.body.generatedName:[req.body.generatedName];
+      // var mimeTypes=Array.isArray(req.body.mimeType)?req.body.mimeType:[req.body.mimeType];
       var docs=[];
       
       // console.log(req.body);
       var nowDate=new Date();
       _.forEach(req.body.documents,function(doc,idx){
-          var document_name=doc.document_name;
-          var document_type=doc.document_type;
+          var documentName=doc.documentName;
+          var documentType=doc.documentType;
           var agency=doc.agency;
-          var newFileName=doc.generated_name;
-          var mime_type=doc.mime_type;
+          var newFileName=doc.generatedName;
+          var mimeType=doc.mimeType;
           var document={
-            document_name:document_name,
-            document_type:document_type,
+            documentName:documentName,
+            documentType:documentType,
             agency:agency,
-            generated_name:newFileName,
-            mime_type:mime_type,
-            uploaded_by:req.user.id,
-            uploaded_date:nowDate
+            generatedName:newFileName,
+            mimeType:mimeType,
+            uploadedBy:req.user.id,
+            uploadedDate:nowDate
           };
           docs.push(document);
         });
@@ -88,7 +88,7 @@ module.exports = function(dbs){
       //console.log(res);
       //return;
       var newFileName=req.params.avatarfilename;
-      var folder=process.env.S3_AVATARS_FOLDER+req.params.id+'/';
+      var folder=process.env.S3AVATARSFOLDER+req.params.id+'/';
       console.log('retrieving avatar '+newFileName);
       awsservice.getS3Object(newFileName,folder)
         .then(function(data){
@@ -116,7 +116,7 @@ module.exports = function(dbs){
             //console.log(file);
             var newFileName=new Date().getTime().toString() + filename;
            
-            var folder=process.env.S3_AVATARS_FOLDER+req.params.id+'/';
+            var folder=process.env.S3AVATARSFOLDER+req.params.id+'/';
             file.on('data',function(data){
               if(data){
                 candidateservice.uploadAvatar(req.params.id,data,newFileName,mimetype,folder)
@@ -175,7 +175,7 @@ module.exports = function(dbs){
          
         });
         var pagination=req._restOptions.pagination||{};
-        var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,total_count:result.count}};
+        var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
         //console.log('about to send the message to client');
 
         res.json(resp);
@@ -196,7 +196,7 @@ module.exports = function(dbs){
       var contactDetail={
               phone:req.body.phone, 
               mobile:req.body.mobile, 
-              alt_email:req.body.alt_email, 
+              altEmail:req.body.altEmail, 
               facebook:req.body.facebook, 
               linkedin:req.body.linkedin, 
               google:req.body.google
@@ -205,36 +205,36 @@ module.exports = function(dbs){
 
 
       var addressDetails={
-          contact_number:req.body.contact_number,
-          ni_number:req.body.ni_number,
-          birth_date:req.body.birth_date,
-          address_1:req.body.address_1,
-          address_2:req.body.address_2,
-          address_3:req.body.address_3,
+          contactNumber:req.body.contactNumber,
+          niNumber:req.body.niNumber,
+          birthDate:req.body.birthDate,
+          address1:req.body.address1,
+          address2:req.body.address2,
+          address3:req.body.address3,
           town:req.body.town,
           county:req.body.county,
-          post_code:req.body.post_code,
+          postCode:req.body.postCode,
           nationality:req.body.nationality
         };
     //TODO: should be changed to req.user.id only after this api requires authentication
-      //addressDetails.updated_by=(req.user?req.user.id:undefined);
-        var user_information={
-          email_address:req.body.email_address
+      //addressDetails.updatedBy=(req.user?req.user.id:undefined);
+        var userInformation={
+          emailAddress:req.body.emailAddress
         };
         
 
-     // addressDetails.updated_by=(req.user?req.user.id:undefined);
+     // addressDetails.updatedBy=(req.user?req.user.id:undefined);
 
-      if(user_information.email_address){
-        // console.log(user_information);
-        candidatecommonservice.getUserByEmail(user_information.email_address)
+      if(userInformation.emailAddress){
+        // console.log(userInformation);
+        candidatecommonservice.getUserByEmail(userInformation.emailAddress)
           .then(function(existingUser){
             //console.log(existingUser);
             if(existingUser && existingUser.id!=req.params.id) {
               var response=
               { 
                 name: 'DuplicateRecordExists',
-                message: 'Email address '+user_information.email_address+' already taken'
+                message: 'Email address '+userInformation.emailAddress+' already taken'
               };
               
               res.sendFailureResponse(response);
@@ -250,10 +250,10 @@ module.exports = function(dbs){
       }
 
       function submitUser(){
-        candidateservice.updateContactDetail(req.params.id,user_information,addressDetails,contactDetail)
+        candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
          .then(function(response){
           console.log('contact detail submited');
-            var vm=getContactInformationViewModel(response.object,response.object.worker.contact_detail);
+            var vm=getContactInformationViewModel(response.object,response.object.worker.contactDetail);
               res.json({result:true,object:vm});
            },function(err){
               res.sendFailureResponse(err);
@@ -263,17 +263,17 @@ module.exports = function(dbs){
 
     controller.updateBankDetails=function (req, res){
       var bankDetails={
-        bank_name:req.body.bank_name,
-        account_name:req.body.account_name,
-        sort_code:req.body.sort_code,
-        account_no:req.body.account_no,
-        bank_roll_no:req.body.bank_roll_no
+        bankName:req.body.bankName,
+        accountName:req.body.accountName,
+        sortCode:req.body.sortCode,
+        accountNo:req.body.accountNo,
+        bankRollNo:req.body.bankRollNo
       };
-      //bankDetails.updated_by=(req.user?req.user.id:undefined);
+      //bankDetails.updatedBy=(req.user?req.user.id:undefined);
 
       candidateservice.updateBankDetails(req.params.id, bankDetails)
          .then(function(response){
-        res.json({result:true,object:getBankDetailViewModel(response.object.worker.bank_detail)});
+        res.json({result:true,object:getBankDetailViewModel(response.object.worker.bankDetail)});
         },function(err){
          res.sendFailureResponse(err);
       });
@@ -284,7 +284,7 @@ module.exports = function(dbs){
         candidateservice.getUser(req.params.id)
           .then(function(user){
             if(user){
-              var vm=getContactInformationViewModel(user,user.worker.contact_detail);
+              var vm=getContactInformationViewModel(user,user.worker.contactDetail);
               res.json({result:true,object:vm});
             }
             else{
@@ -297,9 +297,9 @@ module.exports = function(dbs){
       candidateservice.getUser(req.params.id)
          .then(function(user){
             if(user){
-               //res.json({result:true, object:{'bank_name':details.bank_name,'account_name':details.account_name,'sort_code':
-               //         details.sort_code,'account_no':details.account_no,'bank_roll_no':details.bank_roll_no}}); 
-              var vm=getBankDetailViewModel(user.worker.bank_detail);
+               //res.json({result:true, object:{'bank_name':details.bankName,'account_name':details.accountName,'sort_code':
+               //         details.sortCode,'account_no':details.accountNo,'bank_roll_no':details.bankRollNo}}); 
+              var vm=getBankDetailViewModel(user.worker.bankDetail);
               res.json({result:true, object: vm});
             }
             else {
@@ -315,67 +315,67 @@ module.exports = function(dbs){
           //return;
           var newUser={
             title:req.body.title,
-            first_name:req.body.first_name,
-            last_name:req.body.last_name,
-            email_address: req.body.email_address,
-            user_type: 'WK'
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            emailAddress: req.body.emailAddress,
+            userType: 'WK'
           };
 
 
           var contactDetail={
               phone:req.body.phone, 
               mobile:req.body.mobile, 
-              alt_email:req.body.alt_email, 
+              altEmail:req.body.altEmail, 
               facebook:req.body.facebook, 
               linkedin:req.body.linkedin, 
               google:req.body.google 
           };
           
           var bankDetail={
-            bank_name:req.body.bank_name, 
-            account_name:req.body.account_name, 
-            sort_code:req.body.sort_code, 
-            account_no:req.body.account_no, 
-            bank_roll_no:req.body.bank_roll_no
+            bankName:req.body.bankName, 
+            accountName:req.body.accountName, 
+            sortCode:req.body.sortCode, 
+            accountNo:req.body.accountNo, 
+            bankRollNo:req.body.bankRollNo
           };
           
 
           var taxDetail={
-              current_p45:req.body.current_p45,
-              p45_uploaded:req.body.p45_uploaded,
-              p46_uploaded:req.body.p46_uploaded,
-              ni_number:      req.body.ni_number,
-              p45_document_url:req.body.p45_document_url
+              currentP45:req.body.currentP45,
+              p45Uploaded:req.body.p45Uploaded,
+              p46Uploaded:req.body.p46Uploaded,
+              niNumber:      req.body.niNumber,
+              p45DocumentUrl:req.body.p45DocumentUrl
           };
 
           var worker={
-              contact_number: req.body.contact_number,
+              contactNumber: req.body.contactNumber,
               
-              birth_date:     req.body.birth_date,
-              address_1:    req.body.address_1,
-              address_2:      req.body.address_2,
-              address_3:      req.body.address_3,
+              birthDate:     req.body.birthDate,
+              address1:    req.body.address1,
+              address2:      req.body.address2,
+              address3:      req.body.address3,
               town:           req.body.town,
               county:         req.body.county,
-              post_code:      req.body.post_code,
+              postCode:      req.body.postCode,
               gender:         req.body.gender,
               nationality:    req.body.nationality,
-              arrival_date:   utils.nullifyDate(req.body.arrival_date),
-              recent_dep_date:utils.nullifyDate(req.body.recent_dep_date),
-              emp_last_visit: req.body.emp_last_visit,
-              agency_name:    req.body.agency_name,
-              job_title:      req.body.job_title,
-              start_date:     req.body.start_date,
-              bank_detail:bankDetail,
-              contact_detail:contactDetail,
-              tax_detail: taxDetail
+              arrivalDate:   utils.nullifyDate(req.body.arrivalDate),
+              recentDepDate:utils.nullifyDate(req.body.recentDepDate),
+              empLastVisit: req.body.empLastVisit,
+              agencyName:    req.body.agencyName,
+              jobTitle:      req.body.jobTitle,
+              startDate:     req.body.startDate,
+              bankDetail:bankDetail,
+              contactDetail:contactDetail,
+              taxDetail: taxDetail
           };
 
-          // worker.tax_detail.push(taxDetail);
+          // worker.taxDetail.push(taxDetail);
           // new.worker=worker;
-          var fullUrl = req.protocol + '://' + req.get('host') +'/register/activate/'+newUser.email_address;
+          var fullUrl = req.protocol + '://' + req.get('host') +'/register/activate/'+newUser.emailAddress;
           var opt={
-              activation_link:fullUrl
+              activationLink:fullUrl
           };
           console.log(newUser);
           candidateservice.signup(opt,newUser,worker)
@@ -407,37 +407,37 @@ module.exports = function(dbs){
 
     function getContactInformationViewModel(user,contact){
       var worker=user.worker;
-      return {'_id':user.id,'email_address':user.email_address, 'address_1':worker.address_1,'address_2':worker.address_2,
-          'address_3':worker.address_3,'county':worker.county,'post_code':worker.post_code,'nationality':worker.nationality,
-          'contact_number':worker.contact_number,
-          'phone':contact.phone,'mobile':contact.mobile,'alt_email':contact.alt_email,
+      return {'_id':user.id,'email_address':user.emailAddress, 'address_1':worker.address1,'address_2':worker.address2,
+          'address_3':worker.address3,'county':worker.county,'post_code':worker.postCode,'nationality':worker.nationality,
+          'contact_number':worker.contactNumber,
+          'phone':contact.phone,'mobile':contact.mobile,'alt_email':contact.altEmail,
                     'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
             };
     }
 
     function getBankDetailViewModel(bankDetail){
-      return { bank_name:bankDetail.bank_name, account_name:bankDetail.account_name,
-                sort_code:bankDetail.sort_code, account_no:bankDetail.account_no, bank_roll_no:bankDetail.bank_roll_no
+      return { bankName:bankDetail.bankName, accountName:bankDetail.accountName,
+                sortCode:bankDetail.sortCode, accountNo:bankDetail.accountNo, bankRollNo:bankDetail.bankRollNo
               };
     }
 
     function getCandidateInfoViewModel(usr){
       var worker=usr.worker||{};
-      var contact_detail=worker.contact_detail||{};
+      var contactDetail=worker.contactDetail||{};
 
         // return worker;
         // var usr=worker.user;
         // return worker;
         //console.log('id '+usr.id);
         //console.log(usr);
-         return {_id:usr._id,title:usr.title,first_name:usr.first_name,last_name:usr.last_name,email_address:usr.email_address,
-          birth_date:worker.birth_date,ni_number:worker.tax_detail.ni_number,
-          contact_number:worker.contact_number,address_1:worker.address_1,address_2:worker.address_2,address_3:worker.address_3,
-          town:worker.town,county:worker.county,post_code:worker.post_code,gender:worker.gender,nationality:worker.nationality,
-          phone:contact_detail.phone,mobile:contact_detail.mobile,alt_email:contact_detail.alt_email,
-          facebook:contact_detail.facebook,linkedin:contact_detail.linkedin,
-          google:contact_detail.google,is_active:usr.is_active,candidate_ref:utils.padLeft(usr.candidate_no||'0',7,'0'),
-          avatar_url:(usr.avatar_file_name?'api/candiates/'+usr.id+'/avatar/'+usr.avatar_file_name:'')
+         return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress,
+          birthDate:worker.birthDate,niNumber:worker.taxDetail.niNumber,
+          contactNumber:worker.contactNumber,address1:worker.address1,address2:worker.address2,address3:worker.address3,
+          town:worker.town,county:worker.county,postCode:worker.postCode,gender:worker.gender,nationality:worker.nationality,
+          phone:contactDetail.phone,mobile:contactDetail.mobile,altEmail:contactDetail.altEmail,
+          facebook:contactDetail.facebook,linkedin:contactDetail.linkedin,
+          google:contactDetail.google,isActive:usr.isActive,candidateRef:utils.padLeft(usr.candidateNo||'0',7,'0'),
+          avatarUrl:(usr.avatarFileName?'api/candiates/'+usr.id+'/avatar/'+usr.avatarFileName:'')
         };
     }
 
@@ -448,11 +448,11 @@ module.exports = function(dbs){
 
 // controller.uploadDocuments=function(req,res){
 
-//   var document_names=Array.isArray(req.body.document_name)?req.body.document_name:[req.body.document_name];
-//   var document_types=Array.isArray(req.body.document_type)?req.body.document_type:[req.body.document_type];
+//   var documentNames=Array.isArray(req.body.documentName)?req.body.documentName:[req.body.documentName];
+//   var documentTypes=Array.isArray(req.body.documentType)?req.body.documentType:[req.body.documentType];
 //   var agencies=Array.isArray(req.body.agency)?req.body.agency:[req.body.agency];
 
-//   //var foundValue=utils.parseEnumValue(enums.document_types,req.body.document_type);
+//   //var foundValue=utils.parseEnumValue(enums.documentTypes,req.body.documentType);
 //   //console.log(foundValue);
 //   // res.json(foundValue);
 //   // if(!foundValue){
@@ -474,18 +474,18 @@ module.exports = function(dbs){
 //   console.log('files '+files.length);
 //   console.log(files.length);
 //   _.forEach(files,function(file,idx){
-//       var document_name=document_names[idx];
-//       var document_type=document_types[idx];
+//       var documentName=documentNames[idx];
+//       var documentType=documentTypes[idx];
 //       var agency=agencies[idx]||undefined;
-//       var newFileName=new Date().getTime().toString() + document_name+'.'+file.extension;
+//       var newFileName=new Date().getTime().toString() + documentName+'.'+file.extension;
 //       var document={
 //         user:req.params.id,
-//         document_name:document_name,
-//         document_type:document_type,
+//         documentName:documentName,
+//         documentType:documentType,
 //         agency:agency,
-//         generated_name:newFileName,
-//         mime_type:file.mimetype,
-//         uploaded_by:req.user._id,
+//         generatedName:newFileName,
+//         mimeType:file.mimetype,
+//         uploadedBy:req.user._id,
 //         data:file.buffer
 //       };
 //       docs.push(document);
@@ -521,8 +521,8 @@ module.exports = function(dbs){
 //   db.Worker.findOne({user:req.params.id})
 //   .populate('user')
 //   .exec(function(err,worker){
-//       console.log(worker.tax_detail);
-//       console.log(worker.tax_detail._id);
+//       console.log(worker.taxDetail);
+//       console.log(worker.taxDetail._id);
 //       res.json(worker.user);
     
 //   });

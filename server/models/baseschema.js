@@ -7,15 +7,15 @@ function BaseSchema(definition,option) {
   var opt=option||{};
   if(opt){
 
-    if(!opt.skipCreatedDate && !definition.created_date){
+    if(!opt.skipCreatedDate && !definition.createdDate){
       definition['created_date']={type:Date,default:Date.now};
       // console.log('setting created_date');
     }
-    if(!opt.skipUpdatedDate && !definition.updated_date){
+    if(!opt.skipUpdatedDate && !definition.updatedDate){
       definition['updated_date']={type:Date,default:Date.now};
       
     }
-    if(!opt.skipUpdatedBy && !definition.updated_by){
+    if(!opt.skipUpdatedBy && !definition.updatedBy){
       definition['updated_by']={type:mongoose.Schema.Types.ObjectId,ref:'User'};
       
     }
@@ -26,12 +26,12 @@ function BaseSchema(definition,option) {
   //   //console.log('pre save');
   //   //console.log(this);
   //   // var skipCreatedDate=this.schema.get('skipCreatedDate');
-  //   // if( !skipCreatedDate && !this.created_date){
-  //   //   this.created_date=Date();
+  //   // if( !skipCreatedDate && !this.createdDate){
+  //   //   this.createdDate=Date();
   //   // }
   //   // var skipUpdatedDate=this.schema.get('skipUpdatedDate');
-  //   // if( !skipUpdatedDate && !this.updated_date){
-  //   //   this.updated_date=Date();
+  //   // if( !skipUpdatedDate && !this.updatedDate){
+  //   //   this.updatedDate=Date();
   //   // }
   //   next();
   // });

@@ -8,11 +8,11 @@ module.exports = function(mongoose) {
 	var schema=BaseSchema({
 		user:{type:Schema.Types.ObjectId,ref:'User'},
 		agency:{type:Schema.Types.ObjectId,ref:'Agency'},
-		agency_name:String,
+		agencyName:String,
 		consultant:{type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
-		paye_rate:Number,
-		outsourced_rate:Number,
-		service_used:String,
+		payeRate:Number,
+		outsourcedRate:Number,
+		serviceUsed:String,
 		requirements:[
 				String
 		]

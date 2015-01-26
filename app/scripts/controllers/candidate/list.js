@@ -51,12 +51,12 @@ angular.module('origApp.controllers')
             } else {
               params._offset = 0;
             }
-            if ($scope.filter_first_name) {
-              params.first_name_contains = $scope.filter_first_name;
+            if ($scope.filterFirstName) {
+              params.firstNameContains = $scope.filterFirstName;
             }
             $scope.gridOptions.data = cddAPI.query(params, function() {
               if ($scope.gridOptions.data.meta) {
-                $scope.gridOptions.totalItems = $scope.gridOptions.data.meta.total_count;
+                $scope.gridOptions.totalItems = $scope.gridOptions.data.meta.totalCount;
               }
             });
           };

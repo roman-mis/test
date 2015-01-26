@@ -5,7 +5,7 @@ var fs = require('fs'),
   db = {};
   var autoIncrement=require('mongoose-auto-increment');
 
-// var sequelize = new Sequelize(process.env.DATABASE_URL, {
+// var sequelize = new Sequelize(process.env.DATABASEURL, {
 //   debug: false,
 //   logging: console.log,
 //   define: {
@@ -13,7 +13,7 @@ var fs = require('fs'),
     
 //   },
 // });
-var conn=mongoose.createConnection(process.env.DATABASE_URL);
+var conn=mongoose.createConnection(process.env.DATABASEURL);
 // var conn=mongoose;
 autoIncrement.initialize(conn);
 

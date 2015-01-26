@@ -8,7 +8,7 @@ angular.module('origApp.controllers')
           ];
 
           $scope.ableLoadMore = false;
-          $scope.search_name = '';
+          $scope.searchName = '';
 
           //trigger filtering after 500ms from the last typing
           var searchTimerPromise = null;
@@ -55,8 +55,8 @@ angular.module('origApp.controllers')
             if ($scope.gridOptions.limit) {
               params._limit = $scope.gridOptions.limit;
             }
-            if ($scope.search_name) {
-              params.name_contains = $scope.search_name;
+            if ($scope.searchName) {
+              params.nameContains = $scope.searchName;
             }
 
             params._offset = $scope.gridOptions.data.length;
@@ -66,7 +66,7 @@ angular.module('origApp.controllers')
               $scope.isLoading = false;
               $scope.gridOptions.data = $scope.gridOptions.data.concat(items);
               if (items.meta) {
-                $scope.gridOptions.totalItems = items.meta.total_count;
+                $scope.gridOptions.totalItems = items.meta.totalCount;
                 if ($scope.gridOptions.data.length < $scope.gridOptions.totalItems) {
                   $scope.ableLoadMore = true;
                 } else {
@@ -94,7 +94,7 @@ angular.module('origApp.controllers')
             agency.branches.forEach(function(branch) {
               htmlStr += '<tr class="branch-row" data-agency-id="' + agency._id + '">' +
                       '<td>&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-file-o"></i> &nbsp;' + (branch.name || '') + '</td>' +
-                      '<td>' + (branch.branch_type || '') + '</td>' +
+                      '<td>' + (branch.branchType || '') + '</td>' +
                       '<td>' + (branch.postcode || '') + '</td>' +
                       '<td>' + (branch.town || '') + '</td>' +
                       '<td>' + (branch.address1 || '') + '<br/>' + (branch.address2 || '') + '</td>' +

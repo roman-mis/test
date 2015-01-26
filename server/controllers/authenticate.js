@@ -13,10 +13,10 @@ module.exports = function(dbs){
 
   controller.authenticate =function(req, res) {
 
-    candidateservice.authenticateUser(req.body.email_address,req.body.password)
+    candidateservice.authenticateUser(req.body.emailAddress,req.body.password)
     .then(function(user){
       var vm=getUserViewModel(user);
-      var token = jwt.sign(vm, process.env.JWT_SECRET, {expiresInMinutes:60*200});
+      var token = jwt.sign(vm, process.env.JWTSECRET, {expiresInMinutes:60*200});
       
         res.json({result:true,token:token,object:vm});  
     },
@@ -28,9 +28,9 @@ module.exports = function(dbs){
   
   function getUserViewModel(user){
     return {id:user._id,_id:user._id,title:user.title,
-      first_name:user.first_name,last_name:user.last_name,
-      email_address:user.email_address,user_type:user.user_type,
-      avatar_url:(user.avatar_file_name?'api/candiates/'+user.id+'/'+user.avatar_file_name:'')
+      firstName:user.firstName,lastName:user.lastName,
+      emailAddress:user.emailAddress,userType:user.userType,
+      avatarUrl:(user.avatarFileName?'api/candiates/'+user.id+'/'+user.avatarFileName:'')
           }
   }
 

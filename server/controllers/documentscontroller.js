@@ -22,39 +22,39 @@ module.exports = function(dbs){
 
 
     controller.getUploadDocumentSignedUrl=function(req,res){
-       var object_name=req.query.file_name;
-            var object_type=req.query.mime_type;
-            // var document_upload=req.query.document_upload||false;
-            var folder=process.env.S3_TEMP_FOLDER;
+       var objectName=req.query.fileName;
+            var objectType=req.query.mimeType;
+            // var documentUpload=req.query.documentUpload||false;
+            var folder=process.env.S3TEMPFOLDER;
 
-        awsService.getS3SignedUrl('putObject', object_name,object_type,folder)
-        .then(function(return_data){
-            res.json(return_data);
+        awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
+        .then(function(returnData){
+            res.json(returnData);
            
         },res.sendFailureResponse);
     }
 
     controller.getViewDocumentSignedUrl=function(req,res){
-       var object_name=req.query.file_name;
-         //   var object_type=req.query.mime_type;
-            // var document_upload=req.query.document_upload||false;
-            var folder=process.env.S3_TEMP_FOLDER;
+       var objectName=req.query.fileName;
+         //   var objectType=req.query.mimeType;
+            // var documentUpload=req.query.documentUpload||false;
+            var folder=process.env.S3TEMPFOLDER;
 
-        awsService.getS3SignedUrl('getObject', object_name,null,folder)
-        .then(function(return_data){
-            res.json(return_data);
+        awsService.getS3SignedUrl('getObject', objectName,null,folder)
+        .then(function(returnData){
+            res.json(returnData);
            
         },res.sendFailureResponse);
     }
 
     controller.deleteTempDocument=function(req,res){
-       var object_name = req.params.fileName;
-           // var object_type=req.query.mime_type;
+       var objectName = req.params.fileName;
+           // var objectType=req.query.mimeType;
             
-            var folder=process.env.S3_TEMP_FOLDER;
+            var folder=process.env.S3TEMPFOLDER;
 
-        awsService.deleteS3Object(object_name,folder)
-        .then(function(return_data){
+        awsService.deleteS3Object(objectName,folder)
+        .then(function(returnData){
             res.json({result:true});
             
         },res.sendFailureResponse);

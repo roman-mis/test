@@ -42,7 +42,7 @@ angular.module('origApp.controllers')
           };
 
           $scope.save = function(isComplete) {
-            var reqList = $scope.data.serviceUsedObj ? $scope.data.serviceUsedObj.requirement_list : [];
+            var reqList = $scope.data.serviceUsedObj ? $scope.data.serviceUsedObj.requirementList : [];
             $scope.data.requirements = arrayIntersect(reqList, $scope.data.requirements);
             var sendData = candidateResource.create($scope.data);
             if(isComplete){
@@ -68,15 +68,15 @@ angular.module('origApp.controllers')
           $scope.showScript = function(script){
             ModalService.open({
               templateUrl: 'views/candidate/_onboarding_script.html',
-              params: {onboarding_script: script},
+              params: {onboardingScript: script},
               controller: function($scope, params){
-                $scope.onboarding_script = params.onboarding_script;
+                $scope.onboardingScript = params.onboardingScript;
               }
             });
           };
           
           $scope.$watch('data.service_used', function(){
-            $scope.data.serviceUsedObj = $scope.getServiceUsed($scope.data.service_used);
+            $scope.data.serviceUsedObj = $scope.getServiceUsed($scope.data.serviceUsed);
           });
         });
 

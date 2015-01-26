@@ -34,24 +34,24 @@ module.exports = function(dbs){
 				owner:req.user.id,
 				agency:req.body.agency,
 				priority: req.body.priority,
-				task_type: req.body.task_type,
+				taskType: req.body.taskType,
 				status: req.body.status,
-				template_html: req.body.template_html,
+				templateHtml: req.body.templateHtml,
 				template: req.body.template,
-				template_title: req.body.template_title,
-				follow_up_task_date: req.body.follow_up_task_date,
-				notify_me: req.body.notify_me,
-				completed_date: null,
-				task_category: enums.task_category.TASK
+				templateTitle: req.body.templateTitle,
+				followUpTaskDate: req.body.followUpTaskDate,
+				notifyMe: req.body.notifyMe,
+				completedDate: null,
+				taskCategory: enums.taskCategory.TASK
 			};
 
 			var historyDetails = {
-				event_type: enums.event_type.CREATE_TASK,
-				event_date: new Date(),
-				history_by: req.user.id,
+				eventType: enums.eventType.CREATETASK,
+				eventDate: new Date(),
+				historyBy: req.user.id,
 				user: req.params.id,
-				event_data: null,
-				notes: 'DPA updated by ' + req.user.first_name + ' ' + req.user.last_name
+				eventData: null,
+				notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
 			};
 
 			console.log(taskDetails);
@@ -81,24 +81,24 @@ module.exports = function(dbs){
 				owner:req.user.id,
 				agency:req.body.agency,
 				priority: req.body.priority,
-				task_type: req.body.task_type,
+				taskType: req.body.taskType,
 				status: req.body.status,
-				template_html: req.body.template_html,
+				templateHtml: req.body.templateHtml,
 				template: req.body.template,
-				template_title: req.body.template_title,
-				follow_up_task_date: req.body.follow_up_task_date,
-				notify_me: req.body.notify_me,
-				completed_date: null,
-				task_category: enums.task_category.CALL_LOG
+				templateTitle: req.body.templateTitle,
+				followUpTaskDate: req.body.followUpTaskDate,
+				notifyMe: req.body.notifyMe,
+				completedDate: null,
+				taskCategory: enums.taskCategory.CALLLOG
 			};
 
 			var historyDetails = {
-				event_type: enums.event_type.CREATE_TASK,
-				event_date: new Date(),
-				history_by: req.user.id,
+				eventType: enums.eventType.CREATETASK,
+				eventDate: new Date(),
+				historyBy: req.user.id,
 				user: req.params.id,
-				event_data: null,
-				notes: 'DPA updated by ' + req.user.first_name + ' ' + req.user.last_name
+				eventData: null,
+				notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
 			};
 
 			console.log(taskDetails);

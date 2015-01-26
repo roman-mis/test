@@ -39,13 +39,13 @@ module.exports = function(dbs){
 
       var payrollTax={
         declaration: req.body.declaration,
-        p45_gross_tax: req.body.p45_gross_tax,
-        p45_tax_deducted: req.body.p45_tax_deducted,
-        pay_frequency: req.body.pay_frequency,
-        tax_code: req.body.tax_code,
-        tax_basis: req.body.tax_basis,
-        start_date: req.body.start_date,
-        ni_number: req.body.ni_number
+        p45GrossTax: req.body.p45GrossTax,
+        p45TaxDeducted: req.body.p45TaxDeducted,
+        payFrequency: req.body.payFrequency,
+        taxCode: req.body.taxCode,
+        taxBasis: req.body.taxBasis,
+        startDate: req.body.startDate,
+        niNumber: req.body.niNumber
       };
 
       candidatepayrollservice.updatePayrollTaxDetails(req.params.candidateId, payrollTax).then(function(response){
@@ -59,7 +59,7 @@ module.exports = function(dbs){
       candidatepayrollservice.getPayrollProductDetails(req.params.candidateId)
         .then(function(user){
           if(user){
-            var pp = user.worker.payroll_product.id(req.params.productId);
+            var pp = user.worker.payrollProduct.id(req.params.productId);
             console.log(pp);
             res.json({result:true, object: pp});
           }
@@ -71,9 +71,9 @@ module.exports = function(dbs){
 
     controller.getPayrollProducts=function (req,res){
       candidatepayrollservice.getPayrollProductDetails(req.params.candidateId)
-        .then(function(payroll_products){
-          if(payroll_products){
-            res.json({result:true, objects: payroll_products});
+        .then(function(payrollProducts){
+          if(payrollProducts){
+            res.json({result:true, objects: payrollProducts});
           }
           else{
             res.json({result:false, message:'Payroll Product Information not found'});
@@ -84,16 +84,16 @@ module.exports = function(dbs){
     controller.postPayrollProduct=function (req,res){
       // var payrollProduct = {
       //   _id: req.body._id,
-      //   agency_id: req.body.agency_id,
+      //   agencyId: req.body.agencyId,
       //   margin: req.body.margin,
-      //   margin_fixed: req.body.margin_fixed,
-      //   holiday_pay_rule: req.body.holiday_pay_rule,
-      //   derogation_contract: req.body.derogation_contract,
-      //   derogation_spread: req.body.derogation_spread,
-      //   service_used: req.body.service_used,
-      //   payment_terms: req.body.payment_terms,
-      //   payment_method: req.body.payment_method,
-      //   job_description: req.body.job_description
+      //   marginFixed: req.body.marginFixed,
+      //   holidayPayRule: req.body.holidayPayRule,
+      //   derogationContract: req.body.derogationContract,
+      //   derogationSpread: req.body.derogationSpread,
+      //   serviceUsed: req.body.serviceUsed,
+      //   paymentTerms: req.body.paymentTerms,
+      //   paymentMethod: req.body.paymentMethod,
+      //   jobDescription: req.body.jobDescription
       // }
 
       // candidatepayrollservice.updatePayrollProductDetails(req.params.id, payrollProduct).then(function(response){
@@ -107,19 +107,19 @@ module.exports = function(dbs){
 
     function savePayrollProduct(req, res, type){
       var payrollProduct = {
-        agency_id: req.body.agency_id,
-        branch_id: req.body.branch_id,
-        consultant_id: req.body.consultant_id,
-        agency_ref: req.body.agency_ref,
+        agencyId: req.body.agencyId,
+        branchId: req.body.branchId,
+        consultantId: req.body.consultantId,
+        agencyRef: req.body.agencyRef,
         margin: req.body.margin,
-        margin_fixed: req.body.margin_fixed,
-        holiday_pay_rule: req.body.holiday_pay_rule,
-        derogation_contract: req.body.derogation_contract,
-        derogation_spread: req.body.derogation_spread,
-        service_used: req.body.service_used,
-        payment_terms: req.body.payment_terms,
-        payment_method: req.body.payment_method,
-        job_description: req.body.job_description
+        marginFixed: req.body.marginFixed,
+        holidayPayRule: req.body.holidayPayRule,
+        derogationContract: req.body.derogationContract,
+        derogationSpread: req.body.derogationSpread,
+        serviceUsed: req.body.serviceUsed,
+        paymentTerms: req.body.paymentTerms,
+        paymentMethod: req.body.paymentMethod,
+        jobDescription: req.body.jobDescription
       }
       console.log(payrollProduct);
 
@@ -146,16 +146,16 @@ module.exports = function(dbs){
 
       // var payrollProduct = {
       //   _id: req.body._id,
-      //   agency_id: req.body.agency_id,
+      //   agencyId: req.body.agencyId,
       //   margin: req.body.margin,
-      //   margin_fixed: req.body.margin_fixed,
-      //   holiday_pay_rule: req.body.holiday_pay_rule,
-      //   derogation_contract: req.body.derogation_contract,
-      //   derogation_spread: req.body.derogation_spread,
-      //   service_used: req.body.service_used,
-      //   payment_terms: req.body.payment_terms,
-      //   payment_method: req.body.payment_method,
-      //   job_description: req.body.job_description
+      //   marginFixed: req.body.marginFixed,
+      //   holidayPayRule: req.body.holidayPayRule,
+      //   derogationContract: req.body.derogationContract,
+      //   derogationSpread: req.body.derogationSpread,
+      //   serviceUsed: req.body.serviceUsed,
+      //   paymentTerms: req.body.paymentTerms,
+      //   paymentMethod: req.body.paymentMethod,
+      //   jobDescription: req.body.jobDescription
       // }
 
       // if(req.body._id == undefined || req.body._id == ''){
@@ -183,33 +183,33 @@ module.exports = function(dbs){
 
     function getPayrollTaxViewModel(user){
       var worker = user.worker;
-      if(worker.payroll_tax == null)
+      if(worker.payrollTax == null)
         return {};
       else{
           return {
             '_id':user._id, 
-            declaration: worker.payroll_tax.declaration, 
-            p45_gross_tax: worker.payroll_tax.p45_gross_tax,
-            p45_tax_deducted: worker.payroll_tax.p45_tax_deducted,
-            pay_frequency: worker.payroll_tax.pay_frequency,
-            tax_basis: worker.payroll_tax.tax_basis,
-            tax_code: worker.payroll_tax.tax_code,
-            start_date: worker.start_date,
-            ni_number: worker.tax_detail.ni_number
+            declaration: worker.payrollTax.declaration, 
+            p45GrossTax: worker.payrollTax.p45GrossTax,
+            p45TaxDeducted: worker.payrollTax.p45TaxDeducted,
+            payFrequency: worker.payrollTax.payFrequency,
+            taxBasis: worker.payrollTax.taxBasis,
+            taxCode: worker.payrollTax.taxCode,
+            startDate: worker.startDate,
+            niNumber: worker.taxDetail.niNumber
           };
       }
     }
 
     function getPayrollProductViewModel(user,product){
       var worker = user.worker;
-      return product;//{'_id':product.id, payroll_product: worker.payroll_product};
+      return product;//{'_id':product.id, payrollProduct: worker.payrollProduct};
     }
 
     controller.getMarginException=function (req,res){
       candidateservice.getUser(req.params.candidateId)
         .then(function(user){
           if(user){
-            res.json({result:true, objects: user.worker.payroll_product.id(req.params.productId).margin_exception});
+            res.json({result:true, objects: user.worker.payrollProduct.id(req.params.productId).marginException});
           }
           else{
             res.json({result:false, message:'Payroll Product Information not found'});
@@ -219,14 +219,14 @@ module.exports = function(dbs){
 
     controller.postMarginException=function (req,res){
       var marginExceptionDetails = {
-        margin_type: req.body.margin_type,
+        marginType: req.body.marginType,
         reason:  req.body.reason,
-        deduction_type:  req.body.deduction_type,
-        deduction_date:  req.body.deduction_date,
-        deduction_period:  req.body.deduction_period,
-        deduction_number_of_payroll:  req.body.deduction_number_of_payroll,
-        created_by:  req.user.id,
-        created_date: new Date()
+        deductionType:  req.body.deductionType,
+        deductionDate:  req.body.deductionDate,
+        deductionPeriod:  req.body.deductionPeriod,
+        deductionNumberOfPayroll:  req.body.deductionNumberOfPayroll,
+        createdBy:  req.user.id,
+        createdDate: new Date()
       };
 
       candidatepayrollservice.postMarginException(req.params.candidateId, req.params.productId, marginExceptionDetails).then(function(response){
@@ -238,14 +238,14 @@ module.exports = function(dbs){
 
     controller.patchMarginException=function (req,res){
       var marginExceptionDetails = {
-        margin_type: req.body.margin_type,
+        marginType: req.body.marginType,
         reason:  req.body.reason,
-        deduction_type:  req.body.deduction_type,
-        deduction_date:  req.body.deduction_date,
-        deduction_period:  req.body.deduction_period,
-        deduction_number_of_payroll:  req.body.deduction_number_of_payroll,
-        // created_by:  req.user.id,
-        // created_date: new Date()
+        deductionType:  req.body.deductionType,
+        deductionDate:  req.body.deductionDate,
+        deductionPeriod:  req.body.deductionPeriod,
+        deductionNumberOfPayroll:  req.body.deductionNumberOfPayroll,
+        // createdBy:  req.user.id,
+        // createdDate: new Date()
       };
 
       candidatepayrollservice.patchMarginException(req.params.candidateId, req.params.productId, req.params.marginExceptionId, marginExceptionDetails).then(function(response){

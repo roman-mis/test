@@ -12,7 +12,7 @@ angular.module('origApp.controllers')
           $scope.candidate = parentScope.candidate;
           $scope.agencies = HttpResource.model('agencies').query({});
           $scope.users = HttpResource.model('users').query({});
-          $scope.templates = HttpResource.model('templates').query({template_type: 'TASK'});
+          $scope.templates = HttpResource.model('templates').query({templateType: 'TASK'});
 
           //load constants
           $scope.priorities = ConstantsResource.get('priorities');
@@ -20,8 +20,8 @@ angular.module('origApp.controllers')
           $scope.statuses = ConstantsResource.get('statuses');
 
           $scope.onTemplateChange = function(template) {
-            $scope.data.template_title = template.title;
-            $scope.data.template_html = template.template_body;
+            $scope.data.templateTitle = template.title;
+            $scope.data.templateHtml = template.templateBody;
           };
 
           $scope.cancel = function() {

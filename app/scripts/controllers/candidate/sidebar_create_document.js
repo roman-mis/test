@@ -23,20 +23,20 @@ angular.module('origApp.controllers')
 
           $scope.onSelectFile = function(fileInput) {
             $scope.$apply(function() {
-              $scope.data.document_path = fileInput.value;
+              $scope.data.documentPath = fileInput.value;
             });
           };
 
           $scope.viewFile = function(fileName, $event) {
             HttpResource.model('documents').customGet('sign_temp_viewdoc_s3', {
-              file_name: fileName
+              fileName: fileName
             }, function(response) {
               ModalService.open({
                 templateUrl: 'views/candidate/_documentview.html',
                 parentScope: $scope,
                 controller: function($scope) {
                   $scope.fileName = fileName;
-                  $scope.fileURL = response.data.signed_request;
+                  $scope.fileURL = response.data.signedRequest;
                   setTimeout(function() {
                     window.open($scope.fileURL, 'docview_frame');
                   }, 100);
@@ -52,7 +52,7 @@ angular.module('origApp.controllers')
                     .then(function(response) {
                       if (response.data.result) {
                         $scope.files.forEach(function(file, index) {
-                          if (file.generated_name === fileName) {
+                          if (file.generatedName === fileName) {
                             $scope.files.splice(index, 1);
                           }
                         });
@@ -70,10 +70,10 @@ angular.module('origApp.controllers')
             var mimeType = file.type || 'text/plain';
             $scope.isUploading = true;
             HttpResource.model('documents').customGet('sign_temp_s3', {
-              mime_type: mimeType,
-              file_name: fileName
+              mimeType: mimeType,
+              fileName: fileName
             }, function(response) {
-              var signedRequest = response.data.signed_request;
+              var signedRequest = response.data.signedRequest;
               $http({
                 method: 'PUT',
                 url: signedRequest,
@@ -82,18 +82,18 @@ angular.module('origApp.controllers')
               }).success(function(data) {
                 //get view url of file
                 $scope.isUploading = false;
-                $scope.data.generated_name = fileName;
-                $scope.data.mime_type = mimeType;
-                $scope.data.created_date = moment().toString();
+                $scope.data.generatedName = fileName;
+                $scope.data.mimeType = mimeType;
+                $scope.data.createdDate = moment().toString();
                 var newFile = {};
                 angular.copy($scope.data, newFile);
                 $scope.files.push(newFile);
                 resetUploadData();
 
                 $scope.uploadDocumentForm.agency.$setPristine();
-                $scope.uploadDocumentForm.document_name.$setPristine();
-                $scope.uploadDocumentForm.document_path.$setPristine();
-                $scope.uploadDocumentForm.document_type.$setPristine();
+                $scope.uploadDocumentForm.documentName.$setPristine();
+                $scope.uploadDocumentForm.documentPath.$setPristine();
+                $scope.uploadDocumentForm.documentType.$setPristine();
 
               });
             });

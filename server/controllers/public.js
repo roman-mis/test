@@ -23,12 +23,12 @@ module.exports = function(dbs){
     var controller={};
 
     controller.emailValidation=function(req,res){
-      userservice.checkDuplicateUser(req.params.email_address)
+      userservice.checkDuplicateUser(req.params.emailAddress)
         .then(function(){
           res.json({result:true});
         },res.sendFailureResponse);
       // console.log('')
-      // candidateservice.getUserByEmail(req.params.email_address)
+      // candidateservice.getUserByEmail(req.params.emailAddress)
       //   .then(function(user){
       //   if(user==null){
       //     res.json({result:true});
@@ -43,14 +43,14 @@ module.exports = function(dbs){
 
     controller.signS3=function(req, res){
       
-            var object_name=req.query.s3_object_name;
-            var object_type=req.query.s3_object_type;
-            var document_upload=req.query.document_upload||false;
-            var folder=document_upload?process.env.S3_TEMP_FOLDER:process.env.S3_P45_TEMP_FOLDER;
+            var objectName=req.query.s3ObjectName;
+            var objectType=req.query.s3ObjectType;
+            var documentUpload=req.query.documentUpload||false;
+            var folder=documentUpload?process.env.S3TEMPFOLDER:process.env.S3P45TEMPFOLDER;
 
-        awsService.getS3SignedUrl('putObject', object_name,object_type,folder)
-        .then(function(return_data){
-            res.json(return_data);
+        awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
+        .then(function(returnData){
+            res.json(returnData);
             res.end();
         },function(err){
             console.log(err);
@@ -61,27 +61,27 @@ module.exports = function(dbs){
 
     controller.getFile=function(req,res){
         var awsConfig={
-          AWS_ACCESS_KEY:process.env.AWS_ACCESS_KEY,
-          AWS_SECRET_KEY:process.env.AWS_SECRET_KEY,
-          S3_BUCKET : process.env.S3_BUCKET
+          AWSACCESSKEY:process.env.AWSACCESSKEY,
+          AWSSECRETKEY:process.env.AWSSECRETKEY,
+          S3BUCKET : process.env.S3BUCKET
         };
 
 
 
         aws.config.update({
-            accessKeyId: awsConfig.AWS_ACCESS_KEY,
-            secretAccessKey: awsConfig.AWS_SECRET_KEY
+            accessKeyId: awsConfig.AWSACCESSKEY,
+            secretAccessKey: awsConfig.AWSSECRETKEY
         });
         var s3 = new aws.S3();
-        var s3_params = {
-            Bucket: awsConfig.S3_BUCKET,
+        var s3Params = {
+            Bucket: awsConfig.S3BUCKET,
             Key: req.params.filename
         };
 
         //var file = require('fs').createWriteStream(path.normalize(__dirname+'/'+req.params.filename));
         
         console.log('file retrieval started for : '+req.params.filename);
-        s3.getObject(s3_params
+        s3.getObject(s3Params
           ,function(err,data){
               console.log('done');
               
@@ -99,7 +99,7 @@ module.exports = function(dbs){
           });
 
         //).createReadStream().pipe(file);
-        // s3.getObject(s3_params).
+        // s3.getObject(s3Params).
         //   on('httpData', function(chunk) { 
         //     console.log('chunk received '+chunk);
         //     file.write(chunk); }).
@@ -138,13 +138,13 @@ module.exports = function(dbs){
 
     controller.verifyBcrypt=function(req,res){
       utils.secureString(req.params.password)
-      .then(function(encrypted_password){
-        res.json('Password encrypted to '+encrypted_password);
-        utils.compareSecureString(encrypted_password,req.params.password)
+      .then(function(encryptedPassword){
+        res.json('Password encrypted to '+encryptedPassword);
+        utils.compareSecureString(encryptedPassword,req.params.password)
           .then(console.log)
           .then(function(){
               console.log('Trying with wrong password');
-              utils.compareSecureString(encrypted_password,'wrongpassword').
+              utils.compareSecureString(encryptedPassword,'wrongpassword').
               then(console.log);
 
           });
@@ -192,16 +192,16 @@ module.exports = function(dbs){
     };
 
 
-    controller.copy_s3=function(req, res){
+    controller.copyS3=function(req, res){
             
-            var object_source=req.query.s3_object_name;
-            var object_name=_.last(req.query.s3_object_name.split('/'));
+            var objectSource=req.query.s3ObjectName;
+            var objectName=_.last(req.query.s3ObjectName.split('/'));
             var id=req.query.id;
-            //var object_type=req.query.s3_object_type;
+            //var objectType=req.query.s3ObjectType;
 
-        awsService.copyS3Object(object_source,object_name,process.env.S3_P45_FOLDER+id+'/')
-        .then(function(return_data){
-            res.json(return_data);
+        awsService.copyS3Object(objectSource,objectName,process.env.S3P45FOLDER+id+'/')
+        .then(function(returnData){
+            res.json(returnData);
             res.end();
         },function(err){
             //console.log(err);
@@ -210,16 +210,16 @@ module.exports = function(dbs){
 
     };
 
-    controller.move_s3 = function(req, res){
+    controller.moveS3 = function(req, res){
             
-            var object_source=req.query.s3_object_name;
-            var object_name=_.last(req.query.s3_object_name.split('/'));
+            var objectSource=req.query.s3ObjectName;
+            var objectName=_.last(req.query.s3ObjectName.split('/'));
             var id=req.query.id;
-            //var object_type=req.query.s3_object_type;
+            //var objectType=req.query.s3ObjectType;
 
-        awsService.moveS3Object(process.env.S3_P45_TEMP_FOLDER+object_source,object_name,process.env.S3_P45_FOLDER+id+'/')
-        .then(function(return_data){
-            res.json(return_data);
+        awsService.moveS3Object(process.env.S3P45TEMPFOLDER+objectSource,objectName,process.env.S3P45FOLDER+id+'/')
+        .then(function(returnData){
+            res.json(returnData);
             res.end();
         },function(err){
             //console.log(err);
@@ -266,19 +266,19 @@ module.exports = function(dbs){
     };
 
     controller.testagencypopulate =function(req,res){
-      db.DB.model('Agency').find({'branches.name':req.query.branch_name},function(err,agencies){
+      db.DB.model('Agency').find({'branches.name':req.query.branchName},function(err,agencies){
         res.json(agencies);
       });
     };
 
     controller.testagencybybranchid = function(req,res){
-      db.DB.model('Agency').find({'branches._id':req.query.branch_id},function(err,agencies){
+      db.DB.model('Agency').find({'branches._id':req.query.branchId},function(err,agencies){
         res.json(agencies);
       });
     };
 
     controller.setcandidatebranch =function(req,res){
-      db.DB.model('Agency').find({'branches._id':req.query.branch_id},function(err,agencies){
+      db.DB.model('Agency').find({'branches._id':req.query.branchId},function(err,agencies){
         res.json(agencies);
       });
     };
@@ -286,7 +286,7 @@ module.exports = function(dbs){
     controller.putagencybranchincandidate = function(req,res){
       db.DB.model('User').findById(req.params.id,function(err,user){
         if(user){
-          user.branch_id=Schema.Types.ObjectId(req.query.branch_id);
+          user.branchId=Schema.Types.ObjectId(req.query.branchId);
           user.save(function(err,us){
             if(err){
               res.json(err);
