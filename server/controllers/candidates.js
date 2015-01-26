@@ -88,7 +88,7 @@ module.exports = function(dbs){
       //console.log(res);
       //return;
       var newFileName=req.params.avatarfilename;
-      var folder=process.env.S3AVATARSFOLDER+req.params.id+'/';
+      var folder=process.env.S3_AVATARS_FOLDER+req.params.id+'/';
       console.log('retrieving avatar '+newFileName);
       awsservice.getS3Object(newFileName,folder)
         .then(function(data){
@@ -116,7 +116,7 @@ module.exports = function(dbs){
             //console.log(file);
             var newFileName=new Date().getTime().toString() + filename;
            
-            var folder=process.env.S3AVATARSFOLDER+req.params.id+'/';
+            var folder=process.env.S3_AVATARS_FOLDER+req.params.id+'/';
             file.on('data',function(data){
               if(data){
                 candidateservice.uploadAvatar(req.params.id,data,newFileName,mimetype,folder)
@@ -208,9 +208,9 @@ module.exports = function(dbs){
           contactNumber:req.body.contactNumber,
           niNumber:req.body.niNumber,
           birthDate:req.body.birthDate,
-          address1:req.body.address1,
-          address2:req.body.address2,
-          address3:req.body.address3,
+          address_1:req.body.address_1,
+          address_2:req.body.address_2,
+          address_3:req.body.address_3,
           town:req.body.town,
           county:req.body.county,
           postCode:req.body.postCode,
@@ -352,9 +352,9 @@ module.exports = function(dbs){
               contactNumber: req.body.contactNumber,
               
               birthDate:     req.body.birthDate,
-              address1:    req.body.address1,
-              address2:      req.body.address2,
-              address3:      req.body.address3,
+              address_1:    req.body.address_1,
+              address_2:      req.body.address_2,
+              address_3:      req.body.address_3,
               town:           req.body.town,
               county:         req.body.county,
               postCode:      req.body.postCode,
@@ -407,8 +407,8 @@ module.exports = function(dbs){
 
     function getContactInformationViewModel(user,contact){
       var worker=user.worker;
-      return {'_id':user.id,'email_address':user.emailAddress, 'address_1':worker.address1,'address_2':worker.address2,
-          'address_3':worker.address3,'county':worker.county,'post_code':worker.postCode,'nationality':worker.nationality,
+      return {'_id':user.id,'email_address':user.emailAddress, 'address_1':worker.address_1,'address_2':worker.address_2,
+          'address_3':worker.address_3,'county':worker.county,'post_code':worker.postCode,'nationality':worker.nationality,
           'contact_number':worker.contactNumber,
           'phone':contact.phone,'mobile':contact.mobile,'alt_email':contact.altEmail,
                     'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
@@ -432,7 +432,7 @@ module.exports = function(dbs){
         //console.log(usr);
          return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress,
           birthDate:worker.birthDate,niNumber:worker.taxDetail.niNumber,
-          contactNumber:worker.contactNumber,address1:worker.address1,address2:worker.address2,address3:worker.address3,
+          contactNumber:worker.contactNumber,address_1:worker.address_1,address_2:worker.address_2,address_3:worker.address_3,
           town:worker.town,county:worker.county,postCode:worker.postCode,gender:worker.gender,nationality:worker.nationality,
           phone:contactDetail.phone,mobile:contactDetail.mobile,altEmail:contactDetail.altEmail,
           facebook:contactDetail.facebook,linkedin:contactDetail.linkedin,

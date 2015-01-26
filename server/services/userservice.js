@@ -23,8 +23,8 @@ service.getUser=function(id){
 
 }
 
-service.removeUser=function(user_id){
-	var q = db.User.remove({_id: user_id});
+service.removeUser=function(userId){
+	var q = db.User.remove({_id: userId});
 	return Q.nfcall(q.exec.bind(q));
 }
 
@@ -35,13 +35,13 @@ service.getUserByParam=function(parameters){
 
 }
 
-service.lockunlock=function(id,flag,locked_by){
+service.lockunlock=function(id,flag,lockedBy){
 	flag=flag||false;
 	return Q.Promise(function(resolve,reject){
 		db.User.findById(id,function(err,user){
 			if(user){
 				user.locked=flag;
-				user.locked_unlocked_by=locked_by;
+				user.lockedUnlockedBy=lockedBy;
 				Q.nfcall(user.save.bind(user))
 				.then(function(){
 					resolve(user);
@@ -54,12 +54,12 @@ service.lockunlock=function(id,flag,locked_by){
 	});
 	
 }
-service.isCodeValid=function(email_address,verification_code){
+service.isCodeValid=function(emailAddress,verificationCode){
 	return Q.Promise(function(resolve,reject){
-		var q=db.Code.findOne({email_address:email_address,code:verification_code,is_used:false});
+		var q=db.Code.findOne({emailAddress:emailAddress,code:verificationCode,isUsed:false});
 		q.exec(function(err,code){
 	      if(code){
-	        console.log('code found for : '+email_address + ' and verification code = '+verification_code);
+	        console.log('code found for : '+emailAddress + ' and verification code = '+verificationCode);
 	        //console.log(user);
 	        resolve(code);
 	        
@@ -82,11 +82,11 @@ service.getAllUsers=function(request){
 	});
 }
 
-service.checkDuplicateUser=function(email_address,existingInfo){
+service.checkDuplicateUser=function(emailAddress,existingInfo){
 	existingInfo=existingInfo||{};
 	return Q.Promise(function(resolve,reject){
 
-		db.User.findOne({email_address: email_address},function(err, existingUser){
+		db.User.findOne({emailAddress: emailAddress},function(err, existingUser){
 			//console.log('are ids equal   '+existingUser._id.equals(existingInfo._id));
 			if(existingUser){
 				 	console.log('existingUser._id  '+existingUser._id);
@@ -95,7 +95,7 @@ service.checkDuplicateUser=function(email_address,existingInfo){
 						var response = { 
 							result:false,
 							name: 'DuplicateRecordExists',
-							message: 'Email address '+email_address+' already taken'
+							message: 'Email address '+emailAddress+' already taken'
 						};
 
 						reject(response);	
@@ -121,12 +121,12 @@ service.checkDuplicateUser=function(email_address,existingInfo){
 service.createUser=function(opt, user){
 	console.log('create user');
 	var deff=Q.defer();
-	db.User.findOne({email_address: user.email_address},function(err, existingUser){
+	db.User.findOne({emailAddress: user.emailAddress},function(err, existingUser){
 		if(existingUser){
 			console.log('create user');
 			var response ={ 
 				name: 'DuplicateRecordExists',
-				message: 'Email address '+user.email_address+' already taken'
+				message: 'Email address '+user.emailAddress+' already taken'
 			};
 			deff.reject(response);
 		}else{
@@ -150,12 +150,12 @@ service.createUser=function(opt, user){
 	});
 	return deff.promise;
 	// return Q.Promise(function(resolve,reject){
-	// 	db.User.findOne({email_address: user.email_address},function(err,existingUser){
+	// 	db.User.findOne({emailAddress: user.emailAddress},function(err,existingUser){
 	// 	if(existingUser) {
 	// 		var response=
 	// 		{ 
 	// 			name: 'DuplicateRecordExists',
-	// 			message: 'Email address '+user.email_address+' already taken'
+	// 			message: 'Email address '+user.emailAddress+' already taken'
 	// 		};
 			
 	// 		deff.reject(response);
@@ -204,7 +204,7 @@ service.createUser=function(opt, user){
 	// 				var guid=uuid.v1();
 	// 				console.log('Activation Code is : '+guid);
 					
-	// 				userModel.activation_code=guid;
+	// 				userModel.activationCode=guid;
 
 					
 	// 				console.log('saving started....');
@@ -232,16 +232,16 @@ service.createUser=function(opt, user){
 	// });
 }
 
-service.isActivationCodeValid=function(email_address,verification_code){
+service.isActivationCodeValid=function(emailAddress,verificationCode){
 	var deff=Q.defer();
-	db.User.findOne({email_address:email_address})
+	db.User.findOne({emailAddress:emailAddress})
 	  .exec(function(err,user){
 	      if(user){
-	        console.log('user found with code : '+user.activation_code );
+	        console.log('user found with code : '+user.activationCode );
 	        //console.log(user);
-	        console.log('and last activated date '+user.activated_date);
+	        console.log('and last activated date '+user.activatedDate);
 
-              if(verification_code===user.activation_code &&  !user.activated_date){
+              if(verificationCode===user.activationCode &&  !user.activatedDate){
                 deff.resolve(user);
               }
               else{
@@ -258,17 +258,17 @@ service.isActivationCodeValid=function(email_address,verification_code){
 };
 
 
-service.activateUser=function(user,new_password){
+service.activateUser=function(user,newPassword){
 	var deff=Q.defer();
 	
-	user.is_active=true;
+	user.isActive=true;
 	Q.fcall(function(){
 		
-		if(new_password){
-			return utils.secureString(new_password).
-					then(function(secure_password){
-						console.log('password hashed : '+secure_password);
-						user.password=secure_password;	
+		if(newPassword){
+			return utils.secureString(newPassword).
+					then(function(securePassword){
+						console.log('password hashed : '+securePassword);
+						user.password=securePassword;	
 					});
 			
 		}
@@ -277,7 +277,7 @@ service.activateUser=function(user,new_password){
 		}
 	})
 	.then(function(){
-		user.activated_date=new Date();
+		user.activatedDate=new Date();
 		
 		console.log('running save');
 		user.save(function(err){
@@ -298,14 +298,14 @@ service.activateUser=function(user,new_password){
 	return deff.promise;
 };
 
-service.sendChangePasswordEmail=function(id,generate_by){
+service.sendChangePasswordEmail=function(id,generateBy){
 	// console.log('sendChangePasswordEmail');
 	return Q.Promise(function(resolve,reject){
 		service.getUser(id)
 			.then(function(user){
 				if(user){
 					console.log('user found');
-					service.generateCodeAndSendEmail(user,enums.code_types.ChangePassword,generate_by)
+					service.generateCodeAndSendEmail(user,enums.codeTypes.ChangePassword,generateBy)
 					.then(function(response){
 						resolve(response);
 					},reject);
@@ -316,11 +316,11 @@ service.sendChangePasswordEmail=function(id,generate_by){
 			},reject);	
 	});
 }
-service.generateCodeAndSendEmail=function(user,code_type,generate_by){
+service.generateCodeAndSendEmail=function(user,codeType,generateBy){
 	console.log('generateCodeAndSendEmail');
 	return Q.Promise(function(resolve,reject){
 		
-		service.generateCode(user,code_type,generate_by)
+		service.generateCode(user,codeType,generateBy)
 			.then(function(code){
 				console.log('sending code email');
 				service.sendCodeEmail(user,code,{subject:'Change password link'})
@@ -337,12 +337,12 @@ service.generateCodeAndSendEmail=function(user,code_type,generate_by){
 	});
 }
 
-service.generateCode=function(user,code_type,generate_by){
+service.generateCode=function(user,codeType,generateBy){
 	return Q.Promise(function(resolve,reject){
 			
 			var guid=uuid.v1();
 			console.log('generating code');
-			var newCode=new db.Code({code:guid,email_address:user.email_address,user:user._id,code_type:code_type,updated_by:generate_by});
+			var newCode=new db.Code({code:guid,emailAddress:user.emailAddress,user:user._id,codeType:codeType,updatedBy:generateBy});
 			console.log('new Code is : ');console.log(newCode);
 
 			return Q.nfcall(newCode.save.bind(newCode))
@@ -358,11 +358,11 @@ service.generateCode=function(user,code_type,generate_by){
 service.sendCodeEmail=function(user,code,opt){
 	return Q.Promise(function(resolve,reject){
 		console.log('sending email');
-		var activation_link=global.base_url + '/reset-password/'+user.email_address+'/'+code.code;
+		var activationLink=global.baseUrl + '/reset-password/'+user.emailAddress+'/'+code.code;
 
-		if(code.code_type===enums.code_types.ChangePassword){
-			var mailModel={activation_link:activation_link,title:user.title,first_name:user.first_name,last_name:user.last_name};
-			var mailOption=_.assign(opt||{},{to:user.email_address});
+		if(code.codeType===enums.codeTypes.ChangePassword){
+			var mailModel={activationLink:activationLink,title:user.title,firstName:user.firstName,lastName:user.lastName};
+			var mailOption=_.assign(opt||{},{to:user.emailAddress});
 			console.log('calling sendEmail');
 			return mailer.sendEmail(mailOption,mailModel,'user_change_password')
 			.then(function(){
@@ -377,10 +377,10 @@ service.sendCodeEmail=function(user,code,opt){
 	});
 }
 
-service.verifyCode=function(email_address,verification_code,code_type){
+service.verifyCode=function(emailAddress,verificationCode,codeType){
 	
 	return Q.Promise(function(resolve,reject){
-		verifyCode(email_address,verification_code,code_type)
+		verifyCode(emailAddress,verificationCode,codeType)
 			.then(function(response){
 				if(response.result){
 					resolve({result:true});
@@ -395,17 +395,17 @@ service.verifyCode=function(email_address,verification_code,code_type){
 
 }
 
-function verifyCode(email_address,verification_code,code_type){
+function verifyCode(emailAddress,verificationCode,codeType){
 	return Q.Promise(function(resolve,reject){
-		service.getUserByParam({email_address:email_address})
+		service.getUserByParam({emailAddress:emailAddress})
 			.then(function(user){
 				if(user){
 					console.log('user found');
-					service.getCode(user._id,verification_code,code_type)
+					service.getCode(user._id,verificationCode,codeType)
 						.then(function(code){
 							if(code){
 								console.log('code found');
-								if(code.is_used){
+								if(code.isUsed){
 									resolve({result:false,message:'Code already used.'});
 								}
 								else{
@@ -426,12 +426,12 @@ function verifyCode(email_address,verification_code,code_type){
 		
 }
 
-service.changePassword=function(email_address,verification_code,new_password){
+service.changePassword=function(emailAddress,verificationCode,newPassword){
 	console.log('change password');
 	console.log(arguments);
 	return Q.Promise(function(resolve,reject){
 
-		verifyCode(email_address,verification_code,enums.code_types.ChangePassword)
+		verifyCode(emailAddress,verificationCode,enums.codeTypes.ChangePassword)
 			.then(function(response){
 				if(response.result){
 					console.log('code verified');
@@ -439,7 +439,7 @@ service.changePassword=function(email_address,verification_code,new_password){
 					service.useCode(response.object.code)
 						.then(function(){
 							var user=response.object.user;
-							user.password=new_password;
+							user.password=newPassword;
 							Q.nfcall(user.save.bind(user))
 								.then(function(){
 									resolve({result:true,object:{user:user,code:response.code}});
@@ -456,16 +456,16 @@ service.changePassword=function(email_address,verification_code,new_password){
 }
 
 
-service.getCode=function(user_id,code,code_type){
+service.getCode=function(userId,code,codeType){
 	console.log('searching for code');
-	var q=db.Code.findOne({user:user_id,code:code,code_type:code_type});
+	var q=db.Code.findOne({user:userId,code:code,codeType:codeType});
 	return Q.nfcall(q.exec.bind(q));
 
 }
 
 service.useCode=function(code){
-	code.is_used=true;
-	code.updated_date=Date();
+	code.isUsed=true;
+	code.updatedDate=Date();
 	return Q.nfcall(code.save.bind(code));
 
 }
@@ -473,11 +473,11 @@ service.useCode=function(code){
 module.exports=service;
 
 function sendMail(opt,userModel){
-	var newActivationLink=opt.activation_link+'/'+userModel.activation_code;
+	var newActivationLink=opt.activationLink+'/'+userModel.activationCode;
 
-	var mailModel={title:userModel.title,first_name:userModel.first_name,last_name:userModel.last_name,
-				activation_link:newActivationLink};
-	var mailOption=_.assign(opt||{},{to:userModel.email_address});
+	var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
+				activationLink:newActivationLink};
+	var mailOption=_.assign(opt||{},{to:userModel.emailAddress});
 	
 		return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
 }

@@ -5,7 +5,7 @@ var fs = require('fs'),
   db = {};
   var autoIncrement=require('mongoose-auto-increment');
 
-// var sequelize = new Sequelize(process.env.DATABASEURL, {
+// var sequelize = new Sequelize(process.env.DATABASE_URL, {
 //   debug: false,
 //   logging: console.log,
 //   define: {

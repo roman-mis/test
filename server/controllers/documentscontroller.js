@@ -25,7 +25,7 @@ module.exports = function(dbs){
        var objectName=req.query.fileName;
             var objectType=req.query.mimeType;
             // var documentUpload=req.query.documentUpload||false;
-            var folder=process.env.S3TEMPFOLDER;
+            var folder=process.env.S3_TEMP_FOLDER;
 
         awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
         .then(function(returnData){
@@ -38,7 +38,7 @@ module.exports = function(dbs){
        var objectName=req.query.fileName;
          //   var objectType=req.query.mimeType;
             // var documentUpload=req.query.documentUpload||false;
-            var folder=process.env.S3TEMPFOLDER;
+            var folder=process.env.S3_TEMP_FOLDER;
 
         awsService.getS3SignedUrl('getObject', objectName,null,folder)
         .then(function(returnData){
@@ -51,7 +51,7 @@ module.exports = function(dbs){
        var objectName = req.params.fileName;
            // var objectType=req.query.mimeType;
             
-            var folder=process.env.S3TEMPFOLDER;
+            var folder=process.env.S3_TEMP_FOLDER;
 
         awsService.deleteS3Object(objectName,folder)
         .then(function(returnData){

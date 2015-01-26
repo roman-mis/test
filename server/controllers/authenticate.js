@@ -16,7 +16,7 @@ module.exports = function(dbs){
     candidateservice.authenticateUser(req.body.emailAddress,req.body.password)
     .then(function(user){
       var vm=getUserViewModel(user);
-      var token = jwt.sign(vm, process.env.JWTSECRET, {expiresInMinutes:60*200});
+      var token = jwt.sign(vm, process.env.JWT_SECRET, {expiresInMinutes:60*200});
       
         res.json({result:true,token:token,object:vm});  
     },

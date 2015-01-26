@@ -12,25 +12,25 @@ var utils=require('../utils/utils');
 var awsservice=require('../services/awsservice');
 var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 
-service.getPendingOnboardingDetails=function(user_id){
-	var q = db.Pending_Onboarding.findOne({user: user_id});
+service.getPendingOnboardingDetails=function(userId){
+	var q = db.Pending_Onboarding.findOne({user: userId});
 	return Q.nfcall(q.exec.bind(q));
 }
 
-service.removePendingOnboardingDetails=function(user_id){
-	var q = db.Pending_Onboarding.remove({user: user_id});
+service.removePendingOnboardingDetails=function(userId){
+	var q = db.Pending_Onboarding.remove({user: userId});
 	return Q.nfcall(q.exec.bind(q));
 }
 
-service.patchPendingOnboardingDetails = function(user_id, pendingOnboardingDetails, complete, historyDetails){
+service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetails, complete, historyDetails){
 	return Q.Promise(function(resolve,reject){
-		candidatecommonservice.getUser(user_id)
+		candidatecommonservice.getUser(userId)
 		   .then(function(user){
 		   		if(user){
 	   				if(!complete){
 	   					// Adding to the pending
 	   					var pendingOnboardingModel;
-		   				service.getPendingOnboardingDetails(user_id)
+		   				service.getPendingOnboardingDetails(userId)
 		   				.then(function(pendingOnboardingModel){
 		   					
 		   					if(pendingOnboardingModel == null){
@@ -47,7 +47,7 @@ service.patchPendingOnboardingDetails = function(user_id, pendingOnboardingDetai
 		   				});
 	   				}else{
 	   					// Remove Onboarding data and add to history
-	   					var q = db.Pending_Onboarding.remove({user: user_id});
+	   					var q = db.Pending_Onboarding.remove({user: userId});
  						return Q.nfcall(q.exec.bind(q))
             			.then(function(){ 
             				console.log('success');

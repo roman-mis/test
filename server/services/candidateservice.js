@@ -15,7 +15,7 @@ var awsservice=require('../services/awsservice');
 var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 var enums=require('../utils/enums');
 var path=require('path');
-var data_list=require('../data/data_list.json');
+var dataList=require('../data/data_list.json');
 // service.simpleTest=function(someparam){
 // 	return 'you sent me '+someparam;
 
@@ -65,17 +65,17 @@ service.uploadDocuments=function(id,documents){
      				_.forEach(documents,function(doc){
      					
      					var data=doc.data;
-     					var mimetype=doc.mime_type;
-     					var newFileName=doc.generated_name;
+     					var mimetype=doc.mimeType;
+     					var newFileName=doc.generatedName;
      					// console.log('am here');
-     					// console.log(data_list.DocumentTypes);
-     					 var docEnum=utils.findInArray(data_list.DocumentTypes,doc.document_type,'code');
+     					// console.log(dataList.DocumentTypes);
+     					 var docEnum=utils.findInArray(dataList.DocumentTypes,doc.documentType,'code');
      					 // console.log('docEnum = '+docEnum);
      					 var rootPath=(docEnum||{}).path;
-     					var folder=(rootPath||enums.document_types.OTHERS)+'/'+id+'/'+(doc.agency?doc.agency+'/':'');
+     					var folder=(rootPath||enums.documentTypes.OTHERS)+'/'+id+'/'+(doc.agency?doc.agency+'/':'');
      					// console.log('folder = '+folder);
      					// console.log('file key = '+newFileName );
-     					console.log('Moving a Document   '+doc.generated_name+' to '+folder);
+     					console.log('Moving a Document   '+doc.generatedName+' to '+folder);
      					
      					o.push(awsservice.moveS3Object(process.env.S3_TEMP_FOLDER+newFileName,newFileName,folder));
      				});
@@ -108,12 +108,12 @@ service.uploadDocuments=function(id,documents){
 
 service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 	var deff=Q.defer();
-	db.User.findOne({email_address: user.email_address},function(err,existingUser){
+	db.User.findOne({emailAddress: user.emailAddress},function(err,existingUser){
 		if(existingUser) {
 			var response=
 			{ 
 				name: 'DuplicateRecordExists',
-				message: 'Email address '+user.email_address+' already taken'
+				message: 'Email address '+user.emailAddress+' already taken'
 			};
 			
 			deff.reject(response);
@@ -162,15 +162,15 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 					var guid=uuid.v1();
 					console.log('Activation Code is : '+guid);
 					
-					userModel.activation_code=guid;
+					userModel.activationCode=guid;
 
 					
 					console.log('saving started....');
-					if(userModel.worker.tax_detail.p45_document_url && userModel.worker.tax_detail.p45_document_url.trim()!='')
+					if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!='')
 					{
-						userModel.worker.tax_detail.p45_document_url=_.last(userModel.worker.tax_detail.p45_document_url.split('/'));
-						var doc={document_type:enums.document_types.P45,document_name:userModel.worker.tax_detail.p45_document_url,
-							generated_name:userModel.worker.tax_detail.p45_document_url,uploaded_date:new Date()};
+						userModel.worker.taxDetail.p45DocumentUrl=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
+						var doc={documentType:enums.documentTypes.P45,documentName:userModel.worker.taxDetail.p45DocumentUrl,
+							generatedName:userModel.worker.taxDetail.p45DocumentUrl,uploadedDate:new Date()};
 
 						userModel.documents.push(doc);
 
@@ -184,11 +184,11 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 								console.log('user id is '+userModel._id);
 								console.log('user is new ? '+userModel.isNew);
 								
-								if(userModel.worker.tax_detail.p45_document_url && userModel.worker.tax_detail.p45_document_url.trim()!='')
+								if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!='')
 								{
 
-									var object_name=_.last(userModel.worker.tax_detail.p45_document_url.split('/'));
-									return awsservice.moveS3Object(process.env.S3_P45_TEMP_FOLDER+object_name,object_name,process.env.S3_P45_FOLDER+userModel._id+'/')
+									var objectName=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
+									return awsservice.moveS3Object(process.env.S3_P45_TEMP_FOLDER+objectName,objectName,process.env.S3_P45_FOLDER+userModel._id+'/')
 									.then(function(){
 										return sendMail(opt,userModel);
 									});
@@ -224,11 +224,11 @@ return deff.promise;
 
 }
 function sendMail(opt,userModel){
-		var newActivationLink=opt.activation_link+'/'+userModel.activation_code;
+		var newActivationLink=opt.activationLink+'/'+userModel.activationCode;
 
-		var mailModel={title:userModel.title,first_name:userModel.first_name,last_name:userModel.last_name,
-					activation_link:newActivationLink};
-		var mailOption={to:userModel.email_address};
+		var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
+					activationLink:newActivationLink};
+		var mailOption={to:userModel.emailAddress};
 			return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
 }
 
@@ -238,14 +238,14 @@ service.getUser=candidatecommonservice.getUser;
 
 // service.getWorkerByUser=candidatecommonservice.getWorkerByUser;
 
-service.updateBankDetails=function(user_id, bank_details){
+service.updateBankDetails=function(userId, bankDetails){
 	var deff=Q.defer()
 
-	service.getUser(user_id)
+	service.getUser(userId)
 	   .then(function(user){
 	   		if(user){
 	   			//db.sequelize.transaction(function(t){
-					var props=utils.updateSubModel(user.worker.bank_detail,bank_details);
+					var props=utils.updateSubModel(user.worker.bankDetail,bankDetails);
 					return Q.nfcall(user.save.bind(user))
 						.then(function(result){
 							
@@ -264,16 +264,16 @@ service.updateBankDetails=function(user_id, bank_details){
 }
 	
 
-service.updateContactDetail=function(user_id,user_information,worker_primary_address,worker_contact){
+service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress,workerContact){
 	return Q.Promise(function(resolve,reject){
-		service.getUser(user_id)
+		service.getUser(userId)
 		   .then(function(user){
 		   		if(user){
 		   				console.log('my user');
 		   				console.log(user);
-						var props=utils.updateSubModel(user.worker.contact_detail,worker_contact);
-						utils.updateSubModel(user,user_information);
-						utils.updateModel(user.worker,worker_primary_address);
+						var props=utils.updateSubModel(user.worker.contactDetail,workerContact);
+						utils.updateSubModel(user,userInformation);
+						utils.updateModel(user.worker,workerPrimaryAddress);
 
 						return Q.all([Q.nfcall(user.save.bind(user))])
 							.then(function(result){
@@ -292,14 +292,14 @@ service.updateContactDetail=function(user_id,user_information,worker_primary_add
 
 }
 
-service.authenticateUser=function(email_address,password){
+service.authenticateUser=function(emailAddress,password){
 	var deff=Q.defer();
-	console.log('authenticate user email address: '+email_address+' and password : '+password);
-	service.getUserByEmail(email_address)
+	console.log('authenticate user email address: '+emailAddress+' and password : '+password);
+	service.getUserByEmail(emailAddress)
 		.then(function(user){
 			// console.log('user object');
 			// console.log(user);
-			if(user && user.is_active){
+			if(user && user.isActive){
 				utils.compareSecureString(user.password,password)
 				.then(function(result){
 					if(result){
@@ -311,7 +311,7 @@ service.authenticateUser=function(email_address,password){
 				});	
 			}
 			else{
-				deff.reject({name:'InvalidLogin',message:'User not found',detail:(user && !user.is_active?'not activated '+user.is_active:'user object not found in db')});
+				deff.reject({name:'InvalidLogin',message:'User not found',detail:(user && !user.isActive?'not activated '+user.isActive:'user object not found in db')});
 			}
 			
 		},function(err){
@@ -327,7 +327,7 @@ service.uploadAvatar=function(id,data,newFileName,mimetype,folder){
 	      	.then(function(user){
 		        if(user){
 		         	//db.sequelize.transaction(function(t){
-		         		user.avatar_file_name=newFileName;
+		         		user.avatarFileName=newFileName;
 		         		
 		         	Q(Q.nfcall(user.save.bind(user))
 		         			.then(function(){

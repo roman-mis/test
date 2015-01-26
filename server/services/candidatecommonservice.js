@@ -12,7 +12,7 @@ var utils=require('../utils/utils');
 
 var service={};
 service.getUserByEmail=function(email){
-	var query=db.User.findOne({email_address:email});
+	var query=db.User.findOne({emailAddress:email});
 	return Q.nfcall(query.exec.bind(query));
 	
 }
@@ -28,12 +28,12 @@ service.getUser=function(id,options){
 }
 
 service.getDocumentViewModel=function(document,candidate){
-	return {_id:document._id,agency:document.agency,document_type:document.document_type,
-		document_name:document.document_name,generated_name:document.generated_name,mime_type:document.mime_type}
+	return {_id:document._id,agency:document.agency,documentType:document.documentType,
+		documentName:document.documentName,generatedName:document.generatedName,mimeType:document.mimeType}
 }
 
-// service.getWorkerByUser=function(user_id){
-// 	var query=db.User.FindById(user_id);
+// service.getWorkerByUser=function(userId){
+// 	var query=db.User.FindById(userId);
 // 	return Q.nfcall(query.exec.bind(query));
 // }
 

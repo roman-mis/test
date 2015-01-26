@@ -5,7 +5,7 @@ var aws = require('aws-sdk'),
 var service;
 
 module.exports=service={
-	getS3SignedUrl:function(method_name,s3_object_name,s3_object_type,folder,opt){
+	getS3SignedUrl:function(methodName,s3ObjectName,s3ObjectType,folder,opt){
 		opt=opt||{};
 		var deff=Q.defer();
 		
@@ -18,7 +18,7 @@ module.exports=service={
 
 	    var s3 = new aws.S3();
 
-	    var s3_params ={};
+	    var s3Params ={};
 	    
 	    if(folder && folder!='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
@@ -27,42 +27,42 @@ module.exports=service={
 	    	folder=folder||'';
 	    }
 
-	    if(method_name==='putObject'){
-	    	var s3_params =_.assign({
-		        Key: (folder||'')+s3_object_name,
-		        ContentType: s3_object_type
+	    if(methodName==='putObject'){
+	    	var s3Params =_.assign({
+		        Key: (folder||'')+s3ObjectName,
+		        ContentType: s3ObjectType
 	    	},defaultS3Params);
 	    }
 	    else {
-	    		var s3_params =_.assign({
-		        Key: (folder||'')+s3_object_name
+	    		var s3Params =_.assign({
+		        Key: (folder||'')+s3ObjectName
 	    	},defaultS3getParams);
 
 	    }
 
-	    s3_params=_.assign(s3_params,opt);
+	    s3Params=_.assign(s3Params,opt);
 
 
-	    console.log(s3_params);
+	    console.log(s3Params);
 
-	    //console.log(s3_params);
-	    s3.getSignedUrl(method_name, s3_params, function(err, data){
+	    //console.log(s3Params);
+	    s3.getSignedUrl(methodName, s3Params, function(err, data){
 	        if(err){
 	            console.log(err);
 	            deff.reject(err);
 	        } else {
-	            var return_data = {
-	                signed_request: data,
-	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3_params.Key
+	            var returnData = {
+	                signedRequest: data,
+	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 	            };
-	            deff.resolve(return_data);
+	            deff.resolve(returnData);
 	            
 	        }
 	    });
 
 	    return deff.promise;
 	},
-	copyS3Object:function(s3_object_source,s3_object_name,folder,opt){
+	copyS3Object:function(s3ObjectSource,s3ObjectName,folder,opt){
 		opt=_.assign(opt||{},defaultS3Params);
 		var deff=Q.defer();
 		
@@ -83,32 +83,32 @@ module.exports=service={
 	    	folder=folder||'';
 	    }
 
-	    var s3_params =_.assign({
-	    	CopySource:s3_object_source,
-	        Key: (folder||'')+s3_object_name
+	    var s3Params =_.assign({
+	    	CopySource:s3ObjectSource,
+	        Key: (folder||'')+s3ObjectName
 	    },defaultS3Params);
 
-	    console.log(s3_params);
+	    console.log(s3Params);
 
-	    //console.log(s3_params);
-	    s3.copyObject(s3_params, function(err, data){
+	    //console.log(s3Params);
+	    s3.copyObject(s3Params, function(err, data){
 	        if(err){
 	        	console.log('copy error ...');
 	            console.log(err);
 	            deff.reject(err);
 	        } else {
-	            var return_data = {
-	                signed_request: data,
-	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3_params.Key
+	            var returnData = {
+	                signedRequest: data,
+	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 	            };
-	            deff.resolve(return_data);
+	            deff.resolve(returnData);
 	            
 	        }
 	    });
 
 	    return deff.promise;
 	},
-	moveS3Object:function(s3_object_source,s3_object_name,folder,opt){
+	moveS3Object:function(s3ObjectSource,s3ObjectName,folder,opt){
 		opt=_.assign(opt||{},defaultS3Params);
 		var deff=Q.defer();
 		
@@ -129,31 +129,31 @@ module.exports=service={
 	    	folder=folder||'';
 	    }
 
-	    var s3_params =_.assign({
-	    	CopySource:defaultS3Params.Bucket+'/'+ s3_object_source,
-	        Key: (folder||'')+s3_object_name
+	    var s3Params =_.assign({
+	    	CopySource:defaultS3Params.Bucket+'/'+ s3ObjectSource,
+	        Key: (folder||'')+s3ObjectName
 	    },defaultS3Params);
 
-	    console.log(s3_params);
+	    console.log(s3Params);
 
-	    //console.log(s3_params);
-	    s3.copyObject(s3_params, function(err, data){
+	    //console.log(s3Params);
+	    s3.copyObject(s3Params, function(err, data){
 	        if(err){
 	        	console.log('copy error ...');
 	            console.log(err);
 	            deff.reject(err);
 	        } else {
 	        	var deleteParam=_.assign({
-			    	Key: s3_object_source
+			    	Key: s3ObjectSource
 			    },defaultS3PlainParams);
 
-	        	service.deleteS3Object(s3_object_source).then(function(data){
+	        	service.deleteS3Object(s3ObjectSource).then(function(data){
 	        		
-		        		var return_data = {
+		        		var returnData = {
 			                data: data,
-			                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3_params.Key
+			                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 			            };
-			            deff.resolve(return_data);
+			            deff.resolve(returnData);
 			        
 	        	},function(err){
 
@@ -168,11 +168,11 @@ module.exports=service={
 
 	    return deff.promise;
 	},
-	deleteS3Object:function(s3_object_source,folder){
+	deleteS3Object:function(s3ObjectSource,folder){
 		//opt=_.assign(opt||{},defaultS3Params);
 		var deff=Q.defer();
 		//deleting
-		console.log('deleting '+s3_object_source+'.....');
+		console.log('deleting '+s3ObjectSource+'.....');
 
 	    aws.config.update({
 	        accessKeyId: awsConfig.AWS_ACCESS_KEY,
@@ -188,7 +188,7 @@ module.exports=service={
 	    }
 	   
     	var deleteParam=_.assign({
-	    	Key: (folder||'')+s3_object_source
+	    	Key: (folder||'')+s3ObjectSource
 	    },defaultS3PlainParams);
 
     	s3.deleteObject(deleteParam,function(err,data){
@@ -198,17 +198,17 @@ module.exports=service={
     			deff.reject(err);
     		} else {
     		
-        		var return_data = {
+        		var returnData = {
 	                data: data
 	            };
-	            deff.resolve(return_data);
+	            deff.resolve(returnData);
 	        }
     	});
 
     	return deff.promise;
 
 	},
-	putS3Object:function(data,s3_object_name,s3_object_type,folder,opt){
+	putS3Object:function(data,s3ObjectName,s3ObjectType,folder,opt){
 		opt=_.assign(opt||{},defaultS3Params);
 		var deff=Q.defer();
 		console.log('putS3Object');
@@ -221,34 +221,34 @@ module.exports=service={
 
 	    var s3 = new aws.S3();
 
-	    var s3_params =_.assign({
-	        Key: (folder||'')+s3_object_name,
-	        ContentType: s3_object_type,
+	    var s3Params =_.assign({
+	        Key: (folder||'')+s3ObjectName,
+	        ContentType: s3ObjectType,
 	        Body:data
 	    },defaultS3Params);
 
-	    console.log(s3_params);
+	    console.log(s3Params);
 
-	    //console.log(s3_params);
-	    s3.putObject(s3_params, function(err, data){
+	    //console.log(s3Params);
+	    s3.putObject(s3Params, function(err, data){
 	        if(err){
 	            console.log(err);
 	            deff.reject(err);
 	        } else {
-	            var return_data = {
-	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3_params.Key
+	            var returnData = {
+	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 	            };
-	            deff.resolve(return_data);
+	            deff.resolve(returnData);
 	            
 	        }
 	    });
 
 	    return deff.promise;
 	},
-	getS3Object:function(s3_object_name,folder){
+	getS3Object:function(s3ObjectName,folder){
 		return Q.Promise(function(resolve,reject){
-			var s3_params =_.assign({
-		        Key: (folder||'')+s3_object_name
+			var s3Params =_.assign({
+		        Key: (folder||'')+s3ObjectName
 		    },defaultS3PlainParams);
 			
 			aws.config.update({
@@ -256,7 +256,7 @@ module.exports=service={
 		        secretAccessKey: awsConfig.AWS_SECRET_KEY
 		    });
 		    var s3 = new aws.S3();
-		    var response=s3.getObject(s3_params,function(err,data){
+		    var response=s3.getObject(s3Params,function(err,data){
 		    	console.log('getObject complete');
 		    	if(err){
 		    		reject(err);

@@ -46,7 +46,7 @@ module.exports = function(dbs){
             var objectName=req.query.s3ObjectName;
             var objectType=req.query.s3ObjectType;
             var documentUpload=req.query.documentUpload||false;
-            var folder=documentUpload?process.env.S3TEMPFOLDER:process.env.S3P45TEMPFOLDER;
+            var folder=documentUpload?process.env.S3_TEMP_FOLDER:process.env.S3_P45_TEMP_FOLDER;
 
         awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
         .then(function(returnData){
@@ -61,20 +61,20 @@ module.exports = function(dbs){
 
     controller.getFile=function(req,res){
         var awsConfig={
-          AWSACCESSKEY:process.env.AWSACCESSKEY,
-          AWSSECRETKEY:process.env.AWSSECRETKEY,
-          S3BUCKET : process.env.S3BUCKET
+          AWS_ACCESS_KEY:process.env.AWS_ACCESS_KEY,
+          AWS_SECRET_KEY:process.env.AWS_SECRET_KEY,
+          S3_BUCKET : process.env.S3_BUCKET
         };
 
 
 
         aws.config.update({
-            accessKeyId: awsConfig.AWSACCESSKEY,
-            secretAccessKey: awsConfig.AWSSECRETKEY
+            accessKeyId: awsConfig.AWS_ACCESS_KEY,
+            secretAccessKey: awsConfig.AWS_SECRET_KEY
         });
         var s3 = new aws.S3();
         var s3Params = {
-            Bucket: awsConfig.S3BUCKET,
+            Bucket: awsConfig.S3_BUCKET,
             Key: req.params.filename
         };
 
@@ -199,7 +199,7 @@ module.exports = function(dbs){
             var id=req.query.id;
             //var objectType=req.query.s3ObjectType;
 
-        awsService.copyS3Object(objectSource,objectName,process.env.S3P45FOLDER+id+'/')
+        awsService.copyS3Object(objectSource,objectName,process.env.S3_P45_FOLDER+id+'/')
         .then(function(returnData){
             res.json(returnData);
             res.end();
@@ -217,7 +217,7 @@ module.exports = function(dbs){
             var id=req.query.id;
             //var objectType=req.query.s3ObjectType;
 
-        awsService.moveS3Object(process.env.S3P45TEMPFOLDER+objectSource,objectName,process.env.S3P45FOLDER+id+'/')
+        awsService.moveS3Object(process.env.S3_P45_TEMP_FOLDER+objectSource,objectName,process.env.S3_P45_FOLDER+id+'/')
         .then(function(returnData){
             res.json(returnData);
             res.end();

@@ -20,7 +20,7 @@ service.getPayrollProductDetails = function(id){
 	// Q.nfcall(query.exec.bind(query)).then(function(result){
 		
 	// 	result['candidate_no'] = 'test'; // Original Value = 1, changing to test
-	// 	result.candidate_no = 'test';
+	// 	result.candidateNo = 'test';
 	// 	console.log(result['candidate_no']); // Still displays 1
 
 	// 	deff.resolve(result);
@@ -30,31 +30,31 @@ service.getPayrollProductDetails = function(id){
 	return Q.Promise(function(resolve,reject){
 	    Q.nfcall(query.exec.bind(query))
 	    .then(function(user){
-		     var payroll_products = [];
+		     var payrollProducts = [];
         
-	        _.forEach(user.worker.payroll_product, function(value, key){
-	          	var agency = value.agency_id;
+	        _.forEach(user.worker.payrollProduct, function(value, key){
+	          	var agency = value.agencyId;
 	          	var branch = null, consultant = null;
 	          	if(agency.branches != undefined){
 		            // Get Branch
-		            if(user.worker.payroll_product[key].branch_id != undefined){
-		            	var current_branch = value.agency_id.branches.id(user.worker.payroll_product[key].branch_id);
+		            if(user.worker.payrollProduct[key].branchId != undefined){
+		            	var currentBranch = value.agencyId.branches.id(user.worker.payrollProduct[key].branchId);
 			            branch = {
-			              "_id" : current_branch.id,
-			              "name" : current_branch.name
+			              "_id" : currentBranch.id,
+			              "name" : currentBranch.name
 			            };
 		            }
 		            console.log('here');
 
 		            // Get Consultant
-		            if(user.worker.payroll_product[key].consultant_id != undefined){
+		            if(user.worker.payrollProduct[key].consultantId != undefined){
 		            	_.forEach(agency.branches, function(branch, key){
 			            	if(branch.consultants.length > 0){
-			            		var current_consultant = branch.consultants.id(user.worker.payroll_product[key].consultant_id);
-			            		if(current_consultant != null){
+			            		var currentConsultant = branch.consultants.id(user.worker.payrollProduct[key].consultantId);
+			            		if(currentConsultant != null){
 				            		consultant = {
-						                "_id" : current_consultant.id,
-						                "name" : current_consultant.name
+						                "_id" : currentConsultant.id,
+						                "name" : currentConsultant.name
 					              	};
 					              	return false;
 			            		}
@@ -63,45 +63,45 @@ service.getPayrollProductDetails = function(id){
 		            }
 		        }
 	          	
-	          	var payroll_product = {
-		            agency_id: {
+	          	var payrollProduct = {
+		            agencyId: {
 		              "_id" : agency.id,
 		              "name" : agency.name
 		            },
-		            branch_id: branch,
-		            consultant_id: consultant,
-		            agency_ref: value.agency_ref,
+		            branchId: branch,
+		            consultantId: consultant,
+		            agencyRef: value.agencyRef,
 		            margin: value.margin,
-		            margin_fixed: value.margin_fixed,
-		            holiday_pay_rule: value.holiday_pay_rule,
-		            derogation_contract: value.derogation_contract,
-		            derogation_spread: value.derogation_spread,
-		            service_used: value.service_used,
-		            payment_terms: value.payment_terms,
-		            payment_method: value.payment_method,
-		            job_description: value.job_description,
-		            created_date: value.created_date,
+		            marginFixed: value.marginFixed,
+		            holidayPayRule: value.holidayPayRule,
+		            derogationContract: value.derogationContract,
+		            derogationSpread: value.derogationSpread,
+		            serviceUsed: value.serviceUsed,
+		            paymentTerms: value.paymentTerms,
+		            paymentMethod: value.paymentMethod,
+		            jobDescription: value.jobDescription,
+		            createdDate: value.createdDate,
 		            _id: value.id,
-		            margin_exception: value.margin_exception
+		            marginException: value.marginException
 	         	};
-	          	payroll_products.push(payroll_product);
+	          	payrollProducts.push(payrollProduct);
 	        });
-			resolve(payroll_products);
+			resolve(payrollProducts);
 	    },reject);
 	});
 }
 
-service.updatePayrollTaxDetails=function(user_id, payrollTaxDetails){
+service.updatePayrollTaxDetails=function(userId, payrollTaxDetails){
 	var deff=Q.defer();
-	candidatecommonservice.getUser(user_id)
+	candidatecommonservice.getUser(userId)
 	   .then(function(user){
 	   		if(user){
    				var worker = user.worker;
-   				utils.updateSubModel(user.worker.tax_detail,{ni_number:payrollTaxDetails.ni_number});
-   				utils.updateSubModel(user.worker,{start_date:payrollTaxDetails.start_date});
-   				// worker.tax_detail.ni_number = payrollTaxDetails.ni_number;
-   				// worker.start_date = payrollTaxDetails.start_date;
-   				var props = utils.updateSubModel(user.worker.payroll_tax, payrollTaxDetails);
+   				utils.updateSubModel(user.worker.taxDetail,{niNumber:payrollTaxDetails.niNumber});
+   				utils.updateSubModel(user.worker,{startDate:payrollTaxDetails.startDate});
+   				// worker.taxDetail.niNumber = payrollTaxDetails.niNumber;
+   				// worker.startDate = payrollTaxDetails.startDate;
+   				var props = utils.updateSubModel(user.worker.payrollTax, payrollTaxDetails);
    				console.log(user);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
 					deff.resolve(user);						
@@ -113,10 +113,10 @@ service.updatePayrollTaxDetails=function(user_id, payrollTaxDetails){
    	return deff.promise;
 }
 
-service.updatePayrollProductDetails=function(user_id, payrollProductDetails){
+service.updatePayrollProductDetails=function(userId, payrollProductDetails){
 	var deff=Q.defer();
 
-	candidatecommonservice.getUser(user_id)
+	candidatecommonservice.getUser(userId)
 	   .then(function(user){
 	   		if(user){
 	   			var product;
@@ -124,17 +124,17 @@ service.updatePayrollProductDetails=function(user_id, payrollProductDetails){
    					console.log('add');
    					delete payrollProductDetails['_id'];
    					payrollProductDetails['created_date'] = new Date();
-   					user.worker.payroll_product.push(payrollProductDetails);
+   					user.worker.payrollProduct.push(payrollProductDetails);
    					console.log(payrollProductDetails);
-   					product=user.worker.payroll_product[user.worker.payroll_product.length-1];
+   					product=user.worker.payrollProduct[user.worker.payrollProduct.length-1];
 
    				}else{
    					console.log('edit');
    					//REVIEW: First get the existing product then update it.
-   					product=user.worker.payroll_product.id(payrollProductDetails._id);
+   					product=user.worker.payrollProduct.id(payrollProductDetails._id);
    					if(product){
    						payrollProductDetails['updated_date'] = new Date();
-   						utils.updateSubModel(user.worker.payroll_product.id(payrollProductDetails._id),payrollProductDetails);
+   						utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
    					}
    					else{
    						return deff.reject({result:false,name:'NotFound',message:'Product not found'});
@@ -143,11 +143,11 @@ service.updatePayrollProductDetails=function(user_id, payrollProductDetails){
    					console.log('existing product');
    					console.log(payrollProductDetails);
    					console.log(product);
-   		// 			user.worker.payroll_product.forEach(function(payroll_product_single, key){
-					// 	if(payroll_product_single != null){
-					// 		if(payroll_product_single._id == payrollProductDetails._id){
+   		// 			user.worker.payrollProduct.forEach(function(payrollProductSingle, key){
+					// 	if(payrollProductSingle != null){
+					// 		if(payrollProductSingle._id == payrollProductDetails._id){
 					// 			delete payrollProductDetails['_id'];
-					// 			utils.updateSubModel(user.worker.payroll_product[key], payrollProductDetails);
+					// 			utils.updateSubModel(user.worker.payrollProduct[key], payrollProductDetails);
 					// 			//REVIEW: missing return false; statement to stop the loop from continuing...without that statement your code will keep running for other items in the list too.
 					// 		}
 					// 	}
@@ -171,12 +171,12 @@ service.deletePayrollProductDetails=function(candidateId, productId){
 	candidatecommonservice.getUser(candidateId)
 		.then(function(user){
 			if(user){
-				var products = user.worker.payroll_product;
-				var product = user.worker.payroll_product.id(productId);
+				var products = user.worker.payrollProduct;
+				var product = user.worker.payrollProduct.id(productId);
 				
 				// Get Index
 				var index = products.indexOf(product);
-				user.worker.payroll_product.splice(index, 1);
+				user.worker.payrollProduct.splice(index, 1);
 
 				return Q.nfcall(user.save.bind(user)).then(function(result){
 					deff.resolve();						
@@ -193,9 +193,9 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 	candidatecommonservice.getUser(candidateId)
 		.then(function(user){
 			if(user){
-				user.worker.payroll_product.id(productId).margin_exception.push(marginExceptionDetails);
+				user.worker.payrollProduct.id(productId).marginException.push(marginExceptionDetails);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
-					marginException = user.worker.payroll_product.id(productId).margin_exception;
+					marginException = user.worker.payrollProduct.id(productId).marginException;
 					deff.resolve({object:marginException[marginException.length-1]});						
 				}, deff.reject);
 			} else {
@@ -211,9 +211,9 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 		.then(function(user){
 			if(user){
 				console.log(marginExceptionId);
-				utils.updateSubModel(user.worker.payroll_product.id(productId).margin_exception.id(marginExceptionId), marginExceptionDetails);
+				utils.updateSubModel(user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId), marginExceptionDetails);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
-					marginException = user.worker.payroll_product.id(productId).margin_exception.id(marginExceptionId);
+					marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 					console.log(marginException);
 					deff.resolve({object:marginException});						
 				}, deff.reject);
@@ -229,9 +229,9 @@ service.deleteMarginException = function(candidateId, productId, marginException
 	candidatecommonservice.getUser(candidateId)
 		.then(function(user){
 			if(user){
-				marginException = user.worker.payroll_product.id(productId).margin_exception.id(marginExceptionId);
-				var index = user.worker.payroll_product.id(productId).margin_exception.indexOf(marginException);
-				user.worker.payroll_product.id(productId).margin_exception.splice(index, 1);
+				marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
+				var index = user.worker.payrollProduct.id(productId).marginException.indexOf(marginException);
+				user.worker.payrollProduct.id(productId).marginException.splice(index, 1);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
 					deff.resolve();						
 				}, deff.reject);

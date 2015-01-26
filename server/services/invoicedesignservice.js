@@ -23,9 +23,9 @@ service.getAllInvoiceDesigns = function(request){
 
 }
 
-service.saveInvoiceDesign = function(invoice_id, invoicedesign){
+service.saveInvoiceDesign = function(invoiceId, invoicedesign){
 	// return Q.Promise(function(resolve,reject){
-	// 	if(invoice_id == null){
+	// 	if(invoiceId == null){
 	// 		// Add
 	// 		var invoiceDesignModel;
 	// 		invoiceDesignModel = new db.Invoice_Design(invoicedesign);
@@ -35,9 +35,9 @@ service.saveInvoiceDesign = function(invoice_id, invoicedesign){
 	// 		},reject);
 	// 	}else{
 	// 		// Update
-	// 		var invoiceDesignModel = agency.branches.id(branch_id);
+	// 		var invoiceDesignModel = agency.branches.id(branchId);
 	// 		if(branch){
-	// 			utils.updateSubModel(agency.branches.id(branch_id), branchInfo);
+	// 			utils.updateSubModel(agency.branches.id(branchId), branchInfo);
 	// 			Q.nfcall(agency.save.bind(agency))
 	// 			.then(function(){
 	// 				resolve({result:true, object:{agency:agency, branch: branch}});

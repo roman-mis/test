@@ -12,14 +12,14 @@ var utils=require('../utils/utils');
 var awsservice=require('../services/awsservice');
 var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 
-service.getTaskDetails=function(user_id){
-	var q = db.Task.find({user: user_id, task_category: 'TASK'});
+service.getTaskDetails=function(userId){
+	var q = db.Task.find({user: userId, taskCategory: 'TASK'});
 	return Q.nfcall(q.exec.bind(q));
 }
 
-service.postTaskDetails = function(user_id, taskDetails, historyDetails){
+service.postTaskDetails = function(userId, taskDetails, historyDetails){
 	return Q.Promise(function(resolve,reject){
-		candidatecommonservice.getUser(user_id)
+		candidatecommonservice.getUser(userId)
 		   .then(function(user){
 		   		if(user){
 	   				var taskModel, historyModel;
@@ -37,14 +37,14 @@ service.postTaskDetails = function(user_id, taskDetails, historyDetails){
 	});
 }
 
-service.getCalllogDetails=function(user_id){
-	var q = db.Task.find({user: user_id, task_category: 'CALL_LOG'});
+service.getCalllogDetails=function(userId){
+	var q = db.Task.find({user: userId, taskCategory: 'CALL_LOG'});
 	return Q.nfcall(q.exec.bind(q));
 }
 
-service.postCalllogDetails = function(user_id, taskDetails, historyDetails){
+service.postCalllogDetails = function(userId, taskDetails, historyDetails){
 	return Q.Promise(function(resolve,reject){
-		candidatecommonservice.getUser(user_id)
+		candidatecommonservice.getUser(userId)
 		   .then(function(user){
 		   		if(user){
 	   				var taskModel, historyModel;

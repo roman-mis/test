@@ -23,7 +23,7 @@ module.exports = function(dbs){
 
 
 	controller.getFileSignedUrl=function(req,res){
-		var folder=process.env.S3AGENCYFOLDER+req.params.id+'/';
+		var folder=process.env.S3_AGENCY_FOLDER+req.params.id+'/';
 		 awsService.getS3SignedUrl('getObject', req.params.fileName,null,folder,{Expires:500})
 	    .then(function(returnData){
 	        res.json(returnData);
@@ -32,7 +32,7 @@ module.exports = function(dbs){
 
 	}
 	controller.getFileRedirectUrl=function(req,res){
-		var folder=process.env.S3AGENCYFOLDER+req.params.id+'/';
+		var folder=process.env.S3_AGENCY_FOLDER+req.params.id+'/';
 		 awsService.getS3SignedUrl('getObject', req.params.fileName,null,folder,{Expires:500})
 	    .then(function(returnData){
 	        res.redirect(returnData.signedRequest);
@@ -46,7 +46,7 @@ module.exports = function(dbs){
 		  //console.log(res);
 		  //return;
 		  var newFileName=req.params.fileName;
-		  var folder=process.env.S3AGENCYFOLDER+req.params.id+'/';
+		  var folder=process.env.S3_AGENCY_FOLDER+req.params.id+'/';
 		  console.log('retrieving file from aws '+newFileName);
 		  awsservice.getS3Object(newFileName,folder)
 		    .then(function(data){
@@ -59,7 +59,7 @@ module.exports = function(dbs){
 		 var objectName=req.query.fileName;
 	        var objectType=req.query.mimeType;
 	        // var documentUpload=req.query.documentUpload||false;
-	        var folder=process.env.S3AGENCYFOLDER+req.params.id+'/';
+	        var folder=process.env.S3_AGENCY_FOLDER+req.params.id+'/';
 
 	    awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
 	    .then(function(returnData){

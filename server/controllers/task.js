@@ -46,7 +46,7 @@ module.exports = function(dbs){
 			};
 
 			var historyDetails = {
-				eventType: enums.eventType.CREATETASK,
+				eventType: enums.eventType.CREATE_TASK,
 				eventDate: new Date(),
 				historyBy: req.user.id,
 				user: req.params.id,
@@ -89,11 +89,11 @@ module.exports = function(dbs){
 				followUpTaskDate: req.body.followUpTaskDate,
 				notifyMe: req.body.notifyMe,
 				completedDate: null,
-				taskCategory: enums.taskCategory.CALLLOG
+				taskCategory: enums.taskCategory.CALL_LOG
 			};
 
 			var historyDetails = {
-				eventType: enums.eventType.CREATETASK,
+				eventType: enums.eventType.CREATE_TASK,
 				eventDate: new Date(),
 				historyBy: req.user.id,
 				user: req.params.id,

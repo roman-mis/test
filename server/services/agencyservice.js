@@ -25,10 +25,10 @@ service.getAllAgencies=function(request){
 	
 }
 
-service.saveAgency = function(agencyDetails, agency_id){
+service.saveAgency = function(agencyDetails, agencyId){
 	return Q.Promise(function(resolve,reject){	
 		var agency;
-		if(agency_id == null){
+		if(agencyId == null){
 			// Add Agency
 			agency = new db.Agency(agencyDetails);
 
@@ -39,7 +39,7 @@ service.saveAgency = function(agencyDetails, agency_id){
 			    address3:            agencyDetails.address3,
 				town:                agencyDetails.town,
 			    postcode:            agencyDetails.postcode,
-			    branch_type:         "HQ"
+			    branchType:         "HQ"
 			}
 
 			agency.branches.push(branch);
@@ -50,12 +50,12 @@ service.saveAgency = function(agencyDetails, agency_id){
 				},reject);
 		}else{
 			// Update Agency
-			service.getAgency(agency_id).then(function(agency){
-				var previousLogoFile=agency.logo_file_name;
+			service.getAgency(agencyId).then(function(agency){
+				var previousLogoFile=agency.logoFileName;
 				utils.updateSubModel(agency, agencyDetails);
 				
 				_.forEach(agency.branches, function(branch, key){
-					if(branch.branch_type == "HQ"){
+					if(branch.branchType == "HQ"){
 						var branchDetails = {
 							address1:            agencyDetails.address1,
 						    address2:            agencyDetails.address2,
@@ -70,14 +70,14 @@ service.saveAgency = function(agencyDetails, agency_id){
 
 				Q.nfcall(agency.save.bind(agency))
 				.then(function(){
-					// console.log('agencyDetails.logo_file_name    '+agencyDetails.logo_file_name);
+					// console.log('agencyDetails.logo_file_name    '+agencyDetails.logoFileName);
 					// console.log('previousLogoFile     '+previousLogoFile);
-					// console.log('are big equal '+(previousLogoFile.trim().toLowerCase()==agencyDetails.logo_file_name.trim().toLowerCase()));
-					// console.log('haha agencyDetails.logo_file_name.trim().toLowerCase()    '+agencyDetails.logo_file_name.trim().toLowerCase());
+					// console.log('are big equal '+(previousLogoFile.trim().toLowerCase()==agencyDetails.logoFileName.trim().toLowerCase()));
+					// console.log('haha agencyDetails.logo_file_name.trim().toLowerCase()    '+agencyDetails.logoFileName.trim().toLowerCase());
 					// console.log('previousLogoFile.trim().toLowerCase()     '+previousLogoFile.trim().toLowerCase());
 					
 
-					if(agencyDetails.logo_file_name && agencyDetails.logo_file_name.trim()!='' && previousLogoFile && previousLogoFile.trim()!='' && (previousLogoFile.trim().toLowerCase()!=agencyDetails.logo_file_name.trim().toLowerCase())){
+					if(agencyDetails.logoFileName && agencyDetails.logoFileName.trim()!='' && previousLogoFile && previousLogoFile.trim()!='' && (previousLogoFile.trim().toLowerCase()!=agencyDetails.logoFileName.trim().toLowerCase())){
 						console.log('removing previous logo');
 						var folder=process.env.S3_AGENCY_FOLDER+agency._id+'/';
 					 	return awsservice.deleteS3Object(previousLogoFile,folder);
@@ -95,12 +95,12 @@ service.saveAgency = function(agencyDetails, agency_id){
 
 
 
-service.saveAgencyContact = function(agency_id, contactDetails){
+service.saveAgencyContact = function(agencyId, contactDetails){
 	return Q.Promise(function(resolve,reject){
-		service.getAgency(agency_id)
+		service.getAgency(agencyId)
 			.then(function(agency){
 				if(agency){
-					utils.updateSubModel(agency.contact_information, contactDetails);
+					utils.updateSubModel(agency.contactInformation, contactDetails);
 					
 					Q.nfcall(agency.save.bind(agency))
 					.then(function(){
@@ -167,9 +167,9 @@ service.getUserByConsultantId=function(id){
 }
 
 
-service.postBranch=function(agency_id, branchInfo){
+service.postBranch=function(agencyId, branchInfo){
 	return Q.Promise(function(resolve,reject){
-		service.getAgency(agency_id)
+		service.getAgency(agencyId)
 			.then(function(agency){
 				if(agency){
 					// Add
@@ -186,15 +186,15 @@ service.postBranch=function(agency_id, branchInfo){
 	});
 };
 
-service.patchBranch=function(branch_id, branchInfo){
+service.patchBranch=function(branchId, branchInfo){
 	return Q.Promise(function(resolve,reject){
-		service.getAgencyByBranchId(branch_id)
+		service.getAgencyByBranchId(branchId)
 			.then(function(agency){
 				if(agency){
 					// Update
-					var branch = agency.branches.id(branch_id);
+					var branch = agency.branches.id(branchId);
 					if(branch){
-						utils.updateSubModel(agency.branches.id(branch_id), branchInfo);
+						utils.updateSubModel(agency.branches.id(branchId), branchInfo);
 						Q.nfcall(agency.save.bind(agency))
 						.then(function(){
 							resolve({result:true, object:{agency:agency, branch: branch}});
@@ -209,14 +209,14 @@ service.patchBranch=function(branch_id, branchInfo){
 	});
 };
 
-service.getBranch=function(branch_id){
-	var query=db.Agency.findOne({'branches._id':branch_id});
+service.getBranch=function(branchId){
+	var query=db.Agency.findOne({'branches._id':branchId});
 	return Q.Promise(function(resolve,reject){
 		Q.nfcall(query.exec.bind(query))
 			.then(function(agency){
 
 				if(agency){
-					var branch=agency.branches.id(branch_id);
+					var branch=agency.branches.id(branchId);
 					resolve({agency:agency, branch:branch});
 				}
 				else{
@@ -226,12 +226,12 @@ service.getBranch=function(branch_id){
 	});
 }
 
-service.deleteBranch=function(branch_id){
+service.deleteBranch=function(branchId){
 	return Q.Promise(function(resolve,reject){
-		service.getAgencyByBranchId(branch_id)
+		service.getAgencyByBranchId(branchId)
 			.then(function(agency){
 				if(agency){
-					var branch = agency.branches.id(branch_id);
+					var branch = agency.branches.id(branchId);
 					if(branch){
 						// Get Index
 						var index = agency.branches.indexOf(branch);
@@ -251,17 +251,17 @@ service.deleteBranch=function(branch_id){
 	});
 }
 
-service.postConsultant=function(branch_id, consultantInfo){
+service.postConsultant=function(branchId, consultantInfo){
 	return Q.Promise(function(resolve,reject){
-		service.getAgencyByBranchId(branch_id)
+		service.getAgencyByBranchId(branchId)
 			.then(function(agency){
 				if(agency){
-					var branch = agency.branches.id(branch_id);
+					var branch = agency.branches.id(branchId);
 					if(branch){
 						// For Consultant User Login
-						var fullUrl = global.base_url + '/register/activate/'+consultantInfo.email_address;
+						var fullUrl = global.baseUrl + '/register/activate/'+consultantInfo.emailAddress;
 						var opt={
-						  activation_link:fullUrl,
+						  activationLink:fullUrl,
 						  subject:'You have been added as a consultant.'
 						};
 
@@ -269,19 +269,19 @@ service.postConsultant=function(branch_id, consultantInfo){
 						console.log('Activation Code is : '+guid);
 						
 						var newUser = {
-							first_name: consultantInfo.first_name,
-							last_name: consultantInfo.last_name,
-							email_address: consultantInfo.email_address,
-							user_type: 'AC',
-							contact_detail:{phone:consultantInfo.phone},
-							activation_code: guid
+							firstName: consultantInfo.firstName,
+							lastName: consultantInfo.lastName,
+							emailAddress: consultantInfo.emailAddress,
+							userType: 'AC',
+							contactDetail:{phone:consultantInfo.phone},
+							activationCode: guid
 						}
 						
 						userservice.createUser(opt, newUser).then(function(user){
 							// Add
 							consultantInfo['user']=user.object._id;
 							var consultant = branch.consultants.create(consultantInfo);
-							agency.branches.id(branch_id).consultants.push(consultant);
+							agency.branches.id(branchId).consultants.push(consultant);
 
 							Q.nfcall(agency.save.bind(agency))
 							.then(function(){
@@ -298,9 +298,9 @@ service.postConsultant=function(branch_id, consultantInfo){
 	});
 };
 
-service.patchConsultant=function(consultant_id, consultantInfo){
+service.patchConsultant=function(consultantId, consultantInfo){
 	return Q.Promise(function(resolve,reject){
-		service.getConsultant(consultant_id)
+		service.getConsultant(consultantId)
 			.then(function(consultant){
 				
 				if(consultant){
@@ -308,10 +308,10 @@ service.patchConsultant=function(consultant_id, consultantInfo){
 					var branch=consultant.branch;
 					utils.updateSubModel(consultant, consultantInfo);
 					
-					if(consultantInfo.email_address){
+					if(consultantInfo.emailAddress){
 						//check duplicate email address.
 						console.log('checking duplicate user');
-						userservice.checkDuplicateUser(consultantInfo.email_address,{_id:consultant.user._id})
+						userservice.checkDuplicateUser(consultantInfo.emailAddress,{_id:consultant.user._id})
 							.then(function(){
 								updateConsultant(agency,consultant)
 									.then(function(result){
