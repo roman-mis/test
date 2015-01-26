@@ -345,12 +345,12 @@ function updateConsultant(agency,consultant){
 
 				user=user|| new db.User({});
 
-				user.first_name = consultant.first_name;
-				user.last_name = consultant.last_name;
-				user.email_address = consultant.email_address;
-				user.contact_detail=user.contact_detail||{};
-				user.user_type= 'AC';
-				user.contact_detail.phone=consultant.phone;
+				user.firstName = consultant.firstName;
+				user.lastName = consultant.lastName;
+				user.emailAddress = consultant.emailAddress;
+				user.contactDetail=user.contactDetail||{};
+				user.userType= 'AC';
+				user.contactDetail.phone=consultant.phone;
 				consultant.user=user._id;
 				console.log('updating consultant user');
 				Q.all([Q.nfcall(agency.save.bind(agency)), Q.nfcall(user.save.bind(user))])
@@ -362,9 +362,9 @@ function updateConsultant(agency,consultant){
 	});
 }
 
-service.deleteConsultant=function(consultant_id){
+service.deleteConsultant=function(consultantId){
 	return Q.Promise(function(resolve,reject){
-		service.getConsultant(consultant_id)
+		service.getConsultant(consultantId)
 		.then(function(consultant){
 			if(consultant){
 				userservice.removeUser(consultant.user._id)
@@ -385,16 +385,16 @@ service.deleteConsultant=function(consultant_id){
 	});
 };
 
-service.saveAgencyPayroll = function(agency_id, defaultInvoicingDetails, defaultPayrollDetails){
+service.saveAgencyPayroll = function(agencyId, defaultInvoicingDetails, defaultPayrollDetails){
 	return Q.Promise(function(resolve,reject){
-		service.getAgency(agency_id)
+		service.getAgency(agencyId)
 			.then(function(agency){
 				if(agency){
 					// Default Invoicing
-					utils.updateSubModel(agency.default_invoicing, defaultInvoicingDetails); // Edit
+					utils.updateSubModel(agency.defaultInvoicing, defaultInvoicingDetails); // Edit
 					
 					// Default Payroll
-					utils.updateSubModel(agency.default_payroll, defaultPayrollDetails); // Edit
+					utils.updateSubModel(agency.defaultIayroll, defaultPayrollDetails); // Edit
 					
 					Q.nfcall(agency.save.bind(agency))
 					.then(function(){
@@ -407,9 +407,9 @@ service.saveAgencyPayroll = function(agency_id, defaultInvoicingDetails, default
 	});
 };
 
-service.saveAgencySales = function(agency_id, salesDetails, administrationCostDetails){
+service.saveAgencySales = function(agencyId, salesDetails, administrationCostDetails){
 	return Q.Promise(function(resolve,reject){
-		service.getAgency(agency_id)
+		service.getAgency(agencyId)
 			.then(function(agency){
 				if(agency){
 					
@@ -417,7 +417,7 @@ service.saveAgencySales = function(agency_id, salesDetails, administrationCostDe
 					utils.updateSubModel(agency.sales, salesDetails); // Edit
 					
 					// Default Payroll
-					utils.updateSubModel(agency.administration_cost, administrationCostDetails); // Edit
+					utils.updateSubModel(agency.administrationCost, administrationCostDetails); // Edit
 					
 					Q.nfcall(agency.save.bind(agency))
 					.then(function(){
@@ -430,13 +430,13 @@ service.saveAgencySales = function(agency_id, salesDetails, administrationCostDe
 	});
 };
 
-service.lockUnlockConsultant=function(id,flag,lock_unlock_by){
+service.lockUnlockConsultant=function(id,flag,lockUnlockBy){
 	return Q.Promise(function(resolve,reject){
 
 		service.getConsultant(id)
 			.then(function(consultant){
 				if(consultant && consultant.user){
-					userservice.lockunlock(consultant.user,flag,lock_unlock_by)
+					userservice.lockunlock(consultant.user,flag,lockUnlockBy)
 					.then(function(user){
 						resolve({result:true,object:{consultant:consultant,user:user}});
 					},reject);

@@ -22,7 +22,7 @@ var dataList=require('../data/data_list.json');
 // }
 
 service.getUserAgencies=function(id){
-	var query=db.User.findById(id).populate('worker.payroll_product.agency_id');
+	var query=db.User.findById(id).populate('worker.payrollProduct.agencyId');
 	return Q.nfcall(query.exec.bind(query));
 }
 
@@ -33,7 +33,7 @@ service.getAllCandidates=function(request){
 	return Q.Promise(function(resolve,reject){
 		var q=db.User.find();
 		
-		q.where('user_type').equals('WK');
+		q.where('userType').equals('WK');
 		
 		queryutils.applySearch(q,db.User,request)
 		.then(resolve,reject);
@@ -229,7 +229,7 @@ function sendMail(opt,userModel){
 		var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
 					activationLink:newActivationLink};
 		var mailOption={to:userModel.emailAddress};
-			return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
+			return mailer.sendEmail(mailOption,mailModel,'userRegistrationActivation');
 }
 
 
