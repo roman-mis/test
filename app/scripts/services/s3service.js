@@ -15,7 +15,7 @@ angular.module('origApp.services')
           };
           var signRequest = function(file) {
             var defer = $q.defer();
-            HttpResource.model('public').customGet('sign_s3', {
+            HttpResource.model('public').customGet('signS3', {
               s3ObjectType: file.type || "text/plain",
               s3ObjectName: config.fileName
             }, function(response) {

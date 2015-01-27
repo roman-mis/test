@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
           $scope.data = {};
 
           $scope.activityTypes = [
-            {key: 'call_log', label: 'Call Log'},
+            {key: 'callLog', label: 'Call Log'},
             {key: 'task', label: 'Create Task'},
             {key: 'document', label: 'Create Document'}
           ];
@@ -22,7 +22,7 @@ angular.module('origApp.controllers')
             var params = {agency: $scope.data.agency, activityType: $scope.data.activityType};
             switch ($scope.data.activityType) {
               case 'task':
-              case 'call_log':
+              case 'callLog':
                 parentScope.openCreateTaskWin(params);
                 break;
               case 'document':

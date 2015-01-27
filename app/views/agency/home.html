@@ -12,8 +12,8 @@
       <div class="col-xs-12 form-group">Town <span class="meta">{{agency.town}}</span></div>
       <div class="col-xs-12 form-group">Country <span class="meta">{{getConstant('countries', agency.country).name}}</span></div>
       <div class="col-xs-12 form-group">Postcode <span class="meta">{{agency.postcode}}</span></div>
-      <div class="col-xs-12 form-group">Company Reg no. <span class="meta">{{agency.company_reg_no}}</span></div>
-      <div class="col-xs-12 form-group">Company VAT no. <span class="meta">{{agency.company_vat_no}}</span></div>
+      <div class="col-xs-12 form-group">Company Reg no. <span class="meta">{{agency.companyRegNo}}</span></div>
+      <div class="col-xs-12 form-group">Company VAT no. <span class="meta">{{agency.companyVatNo}}</span></div>
     </div>		
   </form>  
 </div>
@@ -36,7 +36,7 @@
         <button type="button" class="btn btn-success form-control" onclick="$('#upload_company_logo').click();">Browse</button>
         <input type="file" onchange="angular.element(this).scope().onSelectCompanyLogo(this)" 
                id="upload_company_logo"
-               name="company_logo" style="display: none;"/>
+               name="companyLogo" style="display: none;"/>
       </div>
       <div class="col-sm-3 col-xs-3 form-group ">
         <button type="button" class="btn btn-success form-control">{{agencyContact.logo}}</button>
