@@ -350,7 +350,7 @@ module.exports = function(dbs){
 
           var worker={
               contactNumber: req.body.contactNumber,
-              
+              sector:   : req.body.sector,
               birthDate:     req.body.birthDate,
               address_1:    req.body.address_1,
               address_2:      req.body.address_2,
@@ -407,10 +407,10 @@ module.exports = function(dbs){
 
     function getContactInformationViewModel(user,contact){
       var worker=user.worker;
-      return {'_id':user.id,'email_address':user.emailAddress, 'address_1':worker.address_1,'address_2':worker.address_2,
-          'address_3':worker.address_3,'county':worker.county,'post_code':worker.postCode,'nationality':worker.nationality,
-          'contact_number':worker.contactNumber,
-          'phone':contact.phone,'mobile':contact.mobile,'alt_email':contact.altEmail,
+      return {'_id':user.id,'emailAddress':user.emailAddress, 'address_1':worker.address_1,'address_2':worker.address_2,
+          'address_3':worker.address_3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
+          'contactNumber':worker.contactNumber,
+          'phone':contact.phone,'mobile':contact.mobile,'altEmail':contact.altEmail,
                     'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
             };
     }
