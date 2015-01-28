@@ -71,28 +71,28 @@
 	"ServiceUsed":[{
 			"code":"1",
 			"description":"Umbrella",
-			"requirement_list":["Umbrella 1", "Umbrella 2", "Umbrella 3", "Umbrella 4"],
-			"onboarding_script":"The Umbrella Script"
+			"requirementList":["Umbrella 1", "Umbrella 2", "Umbrella 3", "Umbrella 4"],
+			"onboardingScript":"The Umbrella Script"
 		},{
 			"code":"2",
 			"description":"PAYE",
-			"requirement_list":["PAYE 1", "PAYE 2", "PAYE 3", "PAYE 4"],
-			"onboarding_script":"The PAYE Script"
+			"requirementList":["PAYE 1", "PAYE 2", "PAYE 3", "PAYE 4"],
+			"onboardingScript":"The PAYE Script"
 		},{
 			"code":"3",
 			"description":"Low end",
-			"requirement_list":["Low end 1", "Low end 2", "Low end 3", "Low end 4"],
-			"onboarding_script":"The Low end Script"
+			"requirementList":["Low end 1", "Low end 2", "Low end 3", "Low end 4"],
+			"onboardingScript":"The Low end Script"
 		},{
 			"code":"4",
 			"description":"Hybrid",
-			"requirement_list":["Hybrid 1", "Hybrid 2", "Hybrid 3", "Hybrid 4"],
-			"onboarding_script":"The Hybrid Script"
+			"requirementList":["Hybrid 1", "Hybrid 2", "Hybrid 3", "Hybrid 4"],
+			"onboardingScript":"The Hybrid Script"
 		},{
 			"code":"5",
 			"description":"PAYE+",
-			"requirement_list":["PAYE+ 1", "PAYE+ 2", "PAYE+ 3", "PAYE+ 4"],
-			"onboarding_script":"The PAYE+ Script"
+			"requirementList":["PAYE+ 1", "PAYE+ 2", "PAYE+ 3", "PAYE+ 4"],
+			"onboardingScript":"The PAYE+ Script"
 		}],
 	"PaymentTerms":[{
 			"code":"1",
