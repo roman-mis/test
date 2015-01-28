@@ -50,14 +50,6 @@ module.exports = function(mongoose,autoIncrement) {
             accountNo:          {type:String,required:false,trim:true},
             bankRollNo:        {type:String,required:false}
         },
-        contactDetail:{
-            phone:               {type:String,required:false},
-            mobile:              {type:String,required:false},
-            altEmail:           {type:String,required:false},
-            facebook:            {type:String,required:false},
-            linkedin:            {type:String,required:false},
-            google:              {type:String,required:false}
-        },
         taxDetail:{
             niNumber:           {type:String,required:false,trim:true},
             currentP45:         {type:Boolean,required:false},

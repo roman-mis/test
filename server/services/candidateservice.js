@@ -271,7 +271,7 @@ service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress
 		   		if(user){
 		   				console.log('my user');
 		   				console.log(user);
-						var props=utils.updateSubModel(user.worker.contactDetail,workerContact);
+						var props=utils.updateSubModel(user.contactDetail,workerContact);
 						utils.updateSubModel(user,userInformation);
 						utils.updateModel(user.worker,workerPrimaryAddress);
 

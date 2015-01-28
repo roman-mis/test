@@ -253,7 +253,7 @@ module.exports = function(dbs){
         candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
          .then(function(response){
           console.log('contact detail submited');
-            var vm=getContactInformationViewModel(response.object,response.object.worker.contactDetail);
+            var vm=getContactInformationViewModel(response.object,response.object.contactDetail);
               res.json({result:true,object:vm});
            },function(err){
               res.sendFailureResponse(err);
@@ -284,7 +284,7 @@ module.exports = function(dbs){
         candidateservice.getUser(req.params.id)
           .then(function(user){
             if(user){
-              var vm=getContactInformationViewModel(user,user.worker.contactDetail);
+              var vm=getContactInformationViewModel(user,user.contactDetail);
               res.json({result:true,object:vm});
             }
             else{
@@ -313,13 +313,7 @@ module.exports = function(dbs){
           console.log('post candidate started');
           //res.json('good');
           //return;
-          var newUser={
-            title:req.body.title,
-            firstName:req.body.firstName,
-            lastName:req.body.lastName,
-            emailAddress: req.body.emailAddress,
-            userType: 'WK'
-          };
+          
 
 
           var contactDetail={
@@ -331,6 +325,15 @@ module.exports = function(dbs){
               google:req.body.google 
           };
           
+          var newUser={
+            title:req.body.title,
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            emailAddress: req.body.emailAddress,
+            userType: 'WK',
+            contactDetail:contactDetail
+          };
+
           var bankDetail={
             bankName:req.body.bankName, 
             accountName:req.body.accountName, 
@@ -349,7 +352,7 @@ module.exports = function(dbs){
           };
 
           var worker={
-              contactNumber: req.body.contactNumber,
+              
               sector:    req.body.sector,
               birthDate:     req.body.birthDate,
               address_1:    req.body.address_1,
@@ -367,9 +370,11 @@ module.exports = function(dbs){
               jobTitle:      req.body.jobTitle,
               startDate:     req.body.startDate,
               bankDetail:bankDetail,
-              contactDetail:contactDetail,
+              
               taxDetail: taxDetail
           };
+          //res.json({user:newUser,worker:worker});
+          //return;
 
           // worker.taxDetail.push(taxDetail);
           // new.worker=worker;
@@ -423,7 +428,7 @@ module.exports = function(dbs){
 
     function getCandidateInfoViewModel(usr){
       var worker=usr.worker||{};
-      var contactDetail=worker.contactDetail||{};
+      var contactDetail=usr.contactDetail||{};
 
         // return worker;
         // var usr=worker.user;
