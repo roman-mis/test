@@ -28,10 +28,14 @@ angular.module('origApp.controllers')
           };
           $scope.submit = function() {
             //updated
+            if(candidate.details.p45Document){
+              candidate.details.p45DocumentUrl = candidate.details.p45Document.url;
+            }else{
+              delete candidate.details.p45DocumentUrl;
+            }
             var newCandidate = angular.copy(candidate.details);
             console.log(newCandidate)
             HttpResource.model('candidates').create(newCandidate).post().then(function(response) {
-              console.log("*/*/*/*/")
               if (!HttpResource.flushError(response)) {
                 $location.path('/register/welcome');
               }

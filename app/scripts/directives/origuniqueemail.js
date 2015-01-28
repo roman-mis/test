@@ -13,6 +13,9 @@ angular.module('origApp.directives')
             require: 'ngModel',
             link: function(scope, ele, attrs, c) {
               scope.$watch(attrs.ngModel, function(newValue) {
+                if(c.$invalid){
+                  return;
+                }
                 if (!newValue) {
                   c.$setValidity('unique', true);
                   return true;
