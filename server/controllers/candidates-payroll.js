@@ -82,34 +82,16 @@ module.exports = function(dbs){
     }
 
     controller.postPayrollProduct=function (req,res){
-      // var payrollProduct = {
-      //   _id: req.body._id,
-      //   agencyId: req.body.agencyId,
-      //   margin: req.body.margin,
-      //   marginFixed: req.body.marginFixed,
-      //   holidayPayRule: req.body.holidayPayRule,
-      //   derogationContract: req.body.derogationContract,
-      //   derogationSpread: req.body.derogationSpread,
-      //   serviceUsed: req.body.serviceUsed,
-      //   paymentTerms: req.body.paymentTerms,
-      //   paymentMethod: req.body.paymentMethod,
-      //   jobDescription: req.body.jobDescription
-      // }
-
-      // candidatepayrollservice.updatePayrollProductDetails(req.params.id, payrollProduct).then(function(response){
-      //   res.json({result:true,object:getPayrollProductViewModel(response)});
-      //   },function(err){
-      //    res.sendFailureResponse(err);
-      // });
+     
 
       savePayrollProduct(req, res, 'post');
     }
 
     function savePayrollProduct(req, res, type){
       var payrollProduct = {
-        agencyId: req.body.agencyId,
-        branchId: req.body.branchId,
-        consultantId: req.body.consultantId,
+        agency: req.body.agency,
+        branch: req.body.branch,
+        consultant: req.body.consultant,
         agencyRef: req.body.agencyRef,
         margin: req.body.margin,
         marginFixed: req.body.marginFixed,
@@ -144,29 +126,7 @@ module.exports = function(dbs){
       console.log('here');
       savePayrollProduct(req, res, 'patch');
 
-      // var payrollProduct = {
-      //   _id: req.body._id,
-      //   agencyId: req.body.agencyId,
-      //   margin: req.body.margin,
-      //   marginFixed: req.body.marginFixed,
-      //   holidayPayRule: req.body.holidayPayRule,
-      //   derogationContract: req.body.derogationContract,
-      //   derogationSpread: req.body.derogationSpread,
-      //   serviceUsed: req.body.serviceUsed,
-      //   paymentTerms: req.body.paymentTerms,
-      //   paymentMethod: req.body.paymentMethod,
-      //   jobDescription: req.body.jobDescription
-      // }
-
-      // if(req.body._id == undefined || req.body._id == ''){
-      //   res.json({result:false, message:'_id not found'});
-      // }else{
-      //   candidatepayrollservice.updatePayrollProductDetails(req.params.id, payrollProduct).then(function(response){
-      //     res.json({result:true,object:getPayrollProductViewModel(response)});
-      //     },function(err){
-      //      res.sendFailureResponse(err);
-      //   });
-      // }
+      
     }
 
     controller.deletePayrollProduct=function (req,res){

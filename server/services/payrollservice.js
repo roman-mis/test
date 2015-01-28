@@ -16,7 +16,7 @@ var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 
 service.getPayrollProductDetails = function(id){
 	var query=db.User.findById(id)
-		.populate('worker.payrollProduct.agencyId');
+		.populate('worker.payrollProduct.agency');
 	// Q.nfcall(query.exec.bind(query)).then(function(result){
 		
 	// 	result['candidateNo'] = 'test'; // Original Value = 1, changing to test
@@ -33,12 +33,12 @@ service.getPayrollProductDetails = function(id){
 		     var payrollProducts = [];
         
 	        _.forEach(user.worker.payrollProduct, function(value, key){
-	          	var agency = value.agencyId;
+	          	var agency = value.agency;
 	          	var branch = null, consultant = null;
 	          	if(agency.branches != undefined){
 		            // Get Branch
-		            if(user.worker.payrollProduct[key].branchId != undefined){
-		            	var currentBranch = value.agencyId.branches.id(user.worker.payrollProduct[key].branchId);
+		            if(user.worker.payrollProduct[key].branch != undefined){
+		            	var currentBranch = value.agency.branches.id(user.worker.payrollProduct[key].branch);
 			            branch = {
 			              "_id" : currentBranch.id,
 			              "name" : currentBranch.name
@@ -47,10 +47,10 @@ service.getPayrollProductDetails = function(id){
 		            console.log('here');
 
 		            // Get Consultant
-		            if(user.worker.payrollProduct[key].consultantId != undefined){
+		            if(user.worker.payrollProduct[key].consultant != undefined){
 		            	_.forEach(agency.branches, function(branch, key){
 			            	if(branch.consultants.length > 0){
-			            		var currentConsultant = branch.consultants.id(user.worker.payrollProduct[key].consultantId);
+			            		var currentConsultant = branch.consultants.id(user.worker.payrollProduct[key].consultant);
 			            		if(currentConsultant != null){
 				            		consultant = {
 						                "_id" : currentConsultant.id,
@@ -64,12 +64,12 @@ service.getPayrollProductDetails = function(id){
 		        }
 	          	
 	          	var payrollProduct = {
-		            agencyId: {
+		            agency: {
 		              "_id" : agency.id,
 		              "name" : agency.name
 		            },
-		            branchId: branch,
-		            consultantId: consultant,
+		            branch: branch,
+		            consultant: consultant,
 		            agencyRef: value.agencyRef,
 		            margin: value.margin,
 		            marginFixed: value.marginFixed,

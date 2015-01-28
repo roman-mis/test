@@ -22,7 +22,7 @@ var dataList=require('../data/data_list.json');
 // }
 
 service.getUserAgencies=function(id){
-	var query=db.User.findById(id).populate('worker.payrollProduct.agencyId');
+	var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 	return Q.nfcall(query.exec.bind(query));
 }
 

@@ -29,7 +29,7 @@ module.exports = function(dbs){
           //console.log(payrollProducts);
           var agencies = [];
           _.forEach(payrollProducts,function(payrollProduct,key){
-            agencies.push(payrollProduct.agencyId);
+            agencies.push(payrollProduct.agency);
           });
           res.json({result:true,objects:agencies});
 

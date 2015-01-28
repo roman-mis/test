@@ -66,9 +66,9 @@ module.exports = function(mongoose,autoIncrement) {
             taxBasis:                   {type:String}
         },
         payrollProduct:[{
-            agencyId:                   {type:Schema.Types.ObjectId,ref:'Agency'},
-            branchId:                   {type:Schema.Types.ObjectId,ref:'Agency.branches'},
-            consultantId:               {type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
+            agency:                   {type:Schema.Types.ObjectId,ref:'Agency'},
+            branch:                   {type:Schema.Types.ObjectId,ref:'Agency.branches'},
+            consultant:               {type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
             agencyRef:                  {type:String},
             margin:                      {type:String},
             marginFixed:                {type:Number},
@@ -95,7 +95,7 @@ module.exports = function(mongoose,autoIncrement) {
         expensesMileageYtd: Number,
         unpaidExpenses: [
             { 
-                agencyId: { type: Schema.Types.ObjectId,ref:'Agency' },
+                agency: { type: Schema.Types.ObjectId,ref:'Agency' },
                 claimReference: String,
                 startedDate: { type: Date, default: Date.now },
                 submittedDate: { type: Date, default: Date.now },
