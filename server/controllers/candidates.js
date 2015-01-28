@@ -350,7 +350,7 @@ module.exports = function(dbs){
 
           var worker={
               contactNumber: req.body.contactNumber,
-              sector:   : req.body.sector,
+              sector:    req.body.sector,
               birthDate:     req.body.birthDate,
               address_1:    req.body.address_1,
               address_2:      req.body.address_2,
