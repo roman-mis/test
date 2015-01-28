@@ -52,7 +52,7 @@ angular.module('origApp.controllers')
               params._offset = 0;
             }
             if ($scope.filterFirstName) {
-              params.firstNameContains = $scope.filterFirstName;
+              params.firstName_contains = $scope.filterFirstName;
             }
             $scope.gridOptions.data = cddAPI.query(params, function() {
               if ($scope.gridOptions.data.meta) {

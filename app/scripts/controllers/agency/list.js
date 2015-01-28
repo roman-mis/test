@@ -56,7 +56,7 @@ angular.module('origApp.controllers')
               params._limit = $scope.gridOptions.limit;
             }
             if ($scope.searchName) {
-              params.nameContains = $scope.searchName;
+              params.name_contains = $scope.searchName;
             }
 
             params._offset = $scope.gridOptions.data.length;
