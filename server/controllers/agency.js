@@ -69,7 +69,6 @@ module.exports = function(dbs){
 	}
 
 	controller.getAllAgency=function (req,res){
-		console.log(global.baseUrl);
 		agencyservice.getAllAgencies(req._restOptions)
 	  	.then(function(result){
 		    console.log('getAllAgency over');
@@ -79,11 +78,7 @@ module.exports = function(dbs){
 		  	result.rows.forEach(function(a){
 		  		var agency=getAgencyVm(a);
 		  		ao.push(agency);
-		  		//REVIEW: using a function to transform model to proper json object
-				// ao.push({id: a._id, name: a.name});
 			});
-
-		    // var resp={result:true, objects:ao};
 		    
 		    var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
@@ -156,10 +151,8 @@ module.exports = function(dbs){
 		}
 
 		agencyservice.saveAgencyContact(req.params.id, contactDetails).then(function(agency){
-			//REVIEW: using vm here too
 			var vm=getAgencyContactVm(agency);
 			res.json({result:true, object:vm});
-			// res.json({result:true, object:response});
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
@@ -505,7 +498,7 @@ module.exports = function(dbs){
 		return { 
 			_id: consultant._id, 
 			emailAddress: consultant.emailAddress,
-			phone:contactDetail.phone,
+			phone:consultant.phone,
 			firstName: consultant.firstName, 
 			lastName: consultant.lastName, 
 			locked: user.locked,

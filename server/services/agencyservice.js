@@ -394,7 +394,7 @@ service.saveAgencyPayroll = function(agencyId, defaultInvoicingDetails, defaultP
 					utils.updateSubModel(agency.defaultInvoicing, defaultInvoicingDetails); // Edit
 					
 					// Default Payroll
-					utils.updateSubModel(agency.defaultIayroll, defaultPayrollDetails); // Edit
+					utils.updateSubModel(agency.defaultPayroll, defaultPayrollDetails); // Edit
 					
 					Q.nfcall(agency.save.bind(agency))
 					.then(function(){
