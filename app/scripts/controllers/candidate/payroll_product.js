@@ -94,6 +94,14 @@ angular.module('origApp.controllers')
           //edit product
           $scope.editProduct = function(product) {
             angular.copy(product, $scope.product);
+            for(var key in $scope.product){
+              if($scope.product[key].code){
+                $scope.product[key] = $scope.product[key].code;
+              }
+              if($scope.product[key]._id){
+                $scope.product[key] = $scope.product[key]._id;
+              }
+            }
           };
 
 

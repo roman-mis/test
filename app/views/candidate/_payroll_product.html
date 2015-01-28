@@ -8,14 +8,14 @@
     <div class="col-xs-12 nonepadding">
       <div class="col-sm-3 col-xs-6 form-group">Agency</div>
       <div class="col-sm-3 col-xs-6 form-group">
-        <ui-select ng-model="product.agency_id" theme="select2" search-enabled="false">
+        <ui-select ng-model="product.agency" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.name}}</ui-select-match>
           <ui-select-choices repeat="item._id as item in agencies">{{item.name}}</ui-select-choices>
         </ui-select>
       </div>
       <div class="col-sm-3 col-xs-6 form-group">Holiday Pay Rule</div>
       <div class="col-sm-3 col-xs-6 form-group">
-        <ui-select ng-model="product.holiday_pay_rule" theme="select2" search-enabled="false">
+        <ui-select ng-model="product.holidayPayRule" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in holidayPayRules">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -31,7 +31,7 @@
       </div>
       <div class="col-sm-3 col-xs-6 form-group">Derogation Contract</div>
       <div class="col-sm-3 col-xs-6 form-group">
-        <ui-select ng-model="product.derogation_contract" theme="select2" search-enabled="false">
+        <ui-select ng-model="product.derogationContract" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in derogationContracts">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -42,12 +42,12 @@
       <div class="col-sm-3 col-xs-6 form-group">
         <div class="input-group">
           <div class="input-group-addon">&#163;</div>
-          <input class="form-control" type="text" ng-model="product.margin_fixed">
+          <input class="form-control" type="text" ng-model="product.marginFixed">
         </div>
       </div>
       <div class="col-sm-3 col-xs-6 form-group">Derogation Spread</div>
       <div class="col-sm-3 col-xs-6 form-group">
-        <input class="form-control" type="text" placeholder="" ng-model="product.derogation_spread">
+        <input class="form-control" type="text" placeholder="" ng-model="product.derogationSpread">
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@
     <div class="col-sm-6 col-xs-12 nonepadding">
       <div class="col-xs-6 form-group">Service Used</div>
       <div class="col-xs-6 form-group">
-        <ui-select ng-model="product.service_used" theme="select2" search-enabled="false">
+        <ui-select ng-model="product.serviceUsed" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in serviceUsed">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -66,7 +66,7 @@
       <div class="clearfix"></div>
       <div class="col-xs-6 form-group">Payment Terms</div>
       <div class="col-xs-6 form-group">
-        <ui-select ng-model="product.payment_terms" theme="select2" search-enabled="false">
+        <ui-select ng-model="product.paymentTerms" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in paymentTerms">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -74,7 +74,7 @@
       <div class="clearfix"></div>
       <div class="col-xs-6 form-group">Payment Method</div>
       <div class="col-xs-6 form-group">
-        <ui-select ng-model="product.payment_method" name="title" theme="select2" search-enabled="false">
+        <ui-select ng-model="product.paymentMethod" name="title" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in paymentMethods">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -83,7 +83,7 @@
     <div class="col-sm-6 col-xs-12 nonepadding">
       <div class="col-xs-12 form-group">Job Description</div>
       <div class="col-xs-12 form-group">
-        <input class="form-control" type="text" placeholder="" ng-model="product.job_description">
+        <input class="form-control" type="text" placeholder="" ng-model="product.jobDescription">
       </div>
       <div class="clearfix"></div>
       <div class="col-xs-6 form-group">
