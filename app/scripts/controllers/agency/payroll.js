@@ -42,7 +42,15 @@ angular.module('origApp.controllers')
         .controller('_EditAgencyDefaultInvoicing', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
           $scope.data = {};
           angular.copy(parentScope.payrollData.defaultInvoicing, $scope.data);
-  
+          for(var key in $scope.data){
+            if($scope.data[key].code){
+              $scope.data[key] = $scope.data[key].code;
+            }
+            if($scope.data[key]._id){
+              $scope.data[key] = $scope.data[key]._id;
+            }
+          }
+          
           $scope.invoiceMethods = ConstantsResource.get('invoicemethods');
           $scope.paymentTerms = ConstantsResource.get('paymentterms');
           $scope.invoiceDesigns = HttpResource.model('invoicedesigns').query({});
@@ -70,6 +78,14 @@ angular.module('origApp.controllers')
         .controller('_EditAgencyDefaultPayroll', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
           $scope.data = {};
           angular.copy(parentScope.payrollData.defaultPayroll, $scope.data);
+          for(var key in $scope.data){
+            if($scope.data[key].code){
+              $scope.data[key] = $scope.data[key].code;
+            }
+            if($scope.data[key]._id){
+              $scope.data[key] = $scope.data[key]._id;
+            }
+          }
   
           $scope.serviceUsed = ConstantsResource.get('servicesused');
           $scope.marginTypes = ConstantsResource.get('margintypes');

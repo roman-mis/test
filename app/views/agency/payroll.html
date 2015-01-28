@@ -7,8 +7,8 @@
       <div class="col-sm-12 form-group">Holiday Pay included <span class="meta-o">{{payrollData.defaultInvoicing.holidayPayIncluded?'Yes':'No'}}</span></div>
       <div class="col-sm-12 form-group">Employers NI included <span class="meta-o">{{payrollData.defaultInvoicing.employersNiIncluded?'Yes':'No'}}</span></div>
       <div class="col-sm-12 form-group">VAT charged <span class="meta-o">{{payrollData.defaultInvoicing.invoiceVatCharged?'Yes':'No'}}</span></div>
-      <div class="col-sm-12 form-group">Invoice Method <span class="meta-o">{{payrollData.defaultInvoicing.invoiceMethod}}</span></div>
-      <div class="col-sm-12 form-group">Invoice Design <span class="meta-o">{{payrollData.defaultInvoicing.invoiceDesign}}</span></div>
+      <div class="col-sm-12 form-group">Invoice Method <span class="meta-o">{{payrollData.defaultInvoicing.invoiceMethod.description}}</span></div>
+      <div class="col-sm-12 form-group">Invoice Design <span class="meta-o">{{payrollData.defaultInvoicing.invoiceDesign.name}}</span></div>
     </div>
     <div class="col-sm-7 nonepadding">
       <div class="col-sm-12 form-group">Invoice Email Primary
@@ -17,8 +17,8 @@
       <div class="col-sm-12 form-group">Invoice Email Secondary
         <a ng-href="{{payrollData.defaultInvoicing.invoiceEmailSecondary}}"><span class="meta">{{payrollData.defaultInvoicing.invoiceEmailSecondary}}</span></a>
       </div>
-      <div class="col-sm-12 form-group">Payment Terms <span class="meta-o">{{payrollData.defaultInvoicing.paymentTerms}}</span></div>
-      <div class="col-sm-12 form-group">Invoice to <span class="meta-o">{{payrollData.defaultInvoicing.invoiceTo}}</span></div>
+      <div class="col-sm-12 form-group">Payment Terms <span class="meta-o">{{payrollData.defaultInvoicing.paymentTerms.description}}</span></div>
+      <div class="col-sm-12 form-group">Invoice to <span class="meta-o">{{payrollData.defaultInvoicing.invoiceTo.name}}</span></div>
     </div>	
   </div>
 </div>
@@ -28,9 +28,9 @@
 <div class="col-sm-12">	
   <div class="row entry-content">
     <div class="col-sm-5 nonepadding">
-      <div class="col-sm-12 form-group">Product Type <span class="meta-o">{{payrollData.defaultPayroll.productType}}</span></div>
+      <div class="col-sm-12 form-group">Product Type <span class="meta-o">{{payrollData.defaultPayroll.productType.description}}</span></div>
       <div class="col-sm-12 form-group">Margin Charged to agency <span class="meta-o">{{payrollData.defaultPayroll.marginChargedToAgency?'Yes':'No'}}</span></div>
-      <div class="col-sm-12 form-group">Margin Type <span class="meta-o">{{payrollData.defaultPayroll.marginType}}</span></div>
+      <div class="col-sm-12 form-group">Margin Type <span class="meta-o">{{payrollData.defaultPayroll.marginType.description}}</span></div>
     </div>
     <div class="col-sm-7 nonepadding">
       <div class="col-sm-12 form-group">Margin Amount <span class="meta-o">&#163;{{payrollData.defaultPayroll.marginAmount || '0'}}</span></div>	

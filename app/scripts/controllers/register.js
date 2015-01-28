@@ -16,6 +16,7 @@ angular.module('origApp.controllers')
             }
           };
           $scope.nextstep = function() {
+            console.log(candidate.details);
             var childScope = angular.element('.register-body').scope();
             var form = childScope.registerform;
             if (form.$validate()) {
