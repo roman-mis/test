@@ -11,8 +11,8 @@ angular.module('origApp.controllers')
             {name: 'town', label: 'Town'},
             {name: 'country', label: 'Country'},
             {name: 'postcode', label: 'Postcode'},
-            {name: 'company_reg_no', label: 'Company Reg No.'},
-            {name: 'company_vat_no', label: 'Company VAT No.'}
+            {name: 'companyRegNo', label: 'Company Reg No.'},
+            {name: 'companyVatNo', label: 'Company VAT No.'}
           ];
           $scope.data = {};
 

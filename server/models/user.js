@@ -40,6 +40,7 @@ module.exports = function(mongoose,autoIncrement) {
         recentDepDate:     {type:Date,required:false},
         empLastVisit:      {type:Boolean,required:false},
         agencyName:         {type:String,required:false,trim:true},
+        sector:             {type:String},
         jobTitle:           {type:String,required:false,trim:true},
         startDate:          {type:Date,required:false},
         bankDetail:{

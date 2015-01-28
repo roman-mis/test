@@ -67,8 +67,8 @@ angular.module('origApp.controllers')
           $scope.fields = [
             {name: 'phone', label: 'Phone'},
             {name: 'mobile', label: 'Mobile'},
-            {name: 'email_address', label: 'Email', type: 'email'},
-            {name: 'alt_email', label: 'Alt.Email', type: 'email'},
+            {name: 'emailAddress', label: 'Email', type: 'email'},
+            {name: 'altEmail', label: 'Alt.Email', type: 'email'},
             {name: 'facebook', label: 'Facebook'},
             {name: 'linkedin', label: 'Linkedin'}
           ];
@@ -134,11 +134,11 @@ angular.module('origApp.controllers')
         // edit bank details
         .controller('_EditBankDetailsController', function($scope, $modalInstance, parentScope, HttpResource) {
           $scope.fields = [
-            {name: 'account_name', label: 'Name on Account'},
-            {name: 'bank_name', label: 'Bank Name'},
-            {name: 'account_no', label: 'Account No.'},
-            {name: 'sort_code', label: 'Sort Code'},
-            {name: 'bank_roll_no', label: 'Bankroll No.'}
+            {name: 'accountName', label: 'Name on Account'},
+            {name: 'bankName', label: 'Bank Name'},
+            {name: 'accountNo', label: 'Account No.'},
+            {name: 'sortCode', label: 'Sort Code'},
+            {name: 'bankRollNo', label: 'Bankroll No.'}
           ];
           $scope.data = {};
 

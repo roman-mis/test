@@ -24,7 +24,7 @@
     <div class="col-xs-4">
       <div class="input-group">
         <div class="input-group-addon">&#163;</div>
-        <input class="form-control" type="text" ng-model="tax.p45_gross_tax">
+        <input class="form-control" type="text" ng-model="tax.p45GrossTax">
       </div>
     </div>
     <div class="col-sm-4 col-xs-5">
@@ -36,7 +36,7 @@
     <div class="col-xs-4">
       <div class="input-group">
         <div class="input-group-addon">&#163;</div>
-        <input class="form-control" type="text" ng-model="tax.p45_tax_deducted">
+        <input class="form-control" type="text" ng-model="tax.p45TaxDeducted">
       </div>
     </div>
     <div class="col-sm-4 col-xs-5">
@@ -46,13 +46,13 @@
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Start Date</div>
     <div class="col-xs-4">
-      <div orig-datepicker placeholder="* Date of Birth" ng-model="tax.start_date"></div>  
+      <div orig-datepicker placeholder="* Date of Birth" ng-model="tax.startDate"></div>  
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Pay Frequency</div>
     <div class="col-xs-4">
-      <ui-select ng-model="tax.pay_frequency" theme="select2" search-enabled="false">
+      <ui-select ng-model="tax.payFrequency" theme="select2" search-enabled="false">
         <ui-select-match>{{$select.selected.description}}</ui-select-match>
         <ui-select-choices repeat="item.code as item in payFrequencies">{{item.description}}</ui-select-choices>
       </ui-select>  
@@ -61,19 +61,19 @@
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">NI Number</div>
     <div class="col-xs-4">
-      <input class="form-control" type="text" placeholder="" ng-model="tax.ni_number">
+      <input class="form-control" type="text" placeholder="" ng-model="tax.niNumber">
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Tax Code</div>
     <div class="col-xs-4">
-      <input class="form-control" type="text" placeholder="" ng-model="tax.tax_code">
+      <input class="form-control" type="text" placeholder="" ng-model="tax.taxCode">
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Tax Basis</div>
     <div class="col-xs-4">
-      <ui-select ng-model="tax.tax_basis" name="title" theme="select2" search-enabled="false">
+      <ui-select ng-model="tax.taxBasis" name="title" theme="select2" search-enabled="false">
         <ui-select-match>{{$select.selected.description}}</ui-select-match>
         <ui-select-choices repeat="item.code as item in taxBasises">{{item.description}}</ui-select-choices>
       </ui-select>

@@ -14,11 +14,11 @@ angular.module('origApp.controllers')
           $scope.gridOptions = {
             isPagination: false,
             columns: [
-              {field: 'service_used', display: 'Product', cellTemplate: '{{getExternalScope().getConstantDescription("servicesused", row.service_used)}}'},
-              {field: 'agency_id', display: 'Agency', cellTemplate: '{{getExternalScope().getConstantDescription("agencies", row.agency_id)}}'},
+              {field: 'serviceUsed', display: 'Product', cellTemplate: '{{getExternalScope().getConstantDescription("servicesused", row.serviceUsed)}}'},
+              {field: 'agencyId', display: 'Agency', cellTemplate: '{{getExternalScope().getConstantDescription("agencies", row.agencyId)}}'},
               {field: 'margin', display: 'Margin', cellTemplate: '{{getExternalScope().getConstantDescription("margins", row.margin)}}'},
-              {field: 'holiday_pay_rule', display: 'Hol. Pay', cellTemplate: '{{getExternalScope().getConstantDescription("holidaypayrules", row.holiday_pay_rule)}}'},
-              {field: 'derogation_contract', display: 'Decoration', cellTemplate: '{{getExternalScope().getConstantDescription("derogationcontracts", row.derogation_contract)}}'},
+              {field: 'holidayPayRule', display: 'Hol. Pay', cellTemplate: '{{getExternalScope().getConstantDescription("holidaypayrules", row.holidayPayRule)}}'},
+              {field: 'derogationContract', display: 'Decoration', cellTemplate: '{{getExternalScope().getConstantDescription("derogationcontracts", row.derogationContract)}}'},
               {field: 'action', display: '', cellTemplate: '<a href="javacript:void(0)" ng-click="getExternalScope().deleteProduct(row)"><i class="fa fa-trash-o"></i></a> ' + 
                         '<a href="javacript:void(0)" ng-click="getExternalScope().editProduct(row)"><i class="fa fa-edit"></i></a>', textAlign: 'center'}
             ],

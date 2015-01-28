@@ -11,7 +11,7 @@
           <div class="form-group">
             <label class="col-sm-3">Candidate Name</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" readonly value="{{candidate.first_name}} {{candidate.last_name}}">
+              <input type="text" class="form-control" readonly value="{{candidate.firstName}} {{candidate.lastName}}">
             </div>
           </div>
 
@@ -36,7 +36,7 @@
           </div>		
           <div class="col-sm-4">
             <div class="form-group">
-              <ui-select ng-model="data.document_type" theme="select2" required name="document_type">
+              <ui-select ng-model="data.documentType" theme="select2" required name="documentType">
                 <ui-select-match placeholder="Select Document Type">{{$select.selected.description}}</ui-select-match>
                 <ui-select-choices repeat="item.code as item in documentTypes">{{item.description}}</ui-select-choices>
               </ui-select>
@@ -44,7 +44,7 @@
           </div>
           <div class="col-sm-5">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Display document Path" readonly ng-model="data.document_path" required name="document_path">
+              <input type="text" class="form-control" placeholder="Display document Path" readonly ng-model="data.documentPath" required name="documentPath">
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
           </div>		
           <div class="col-sm-4">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Document Name" ng-model="data.document_name" required name="document_name">
+              <input type="text" class="form-control" placeholder="Document Name" ng-model="data.documentName" required name="documentName">
             </div>
           </div>
           <div class="col-sm-5">
@@ -101,14 +101,14 @@
               </thead>
               <tbody>
                 <tr ng-repeat="file in files">
-                  <td>{{file.document_name}}</td>
-                  <td>{{getConstantDescription('documenttypes', file.document_type)}}</td>
+                  <td>{{file.documentName}}</td>
+                  <td>{{getConstantDescription('documenttypes', file.documentType)}}</td>
                   <td>{{getConstantDescription('agencies', file.agency)}}</td>
-                  <td>{{file.created_date| formatDate}}</td>
+                  <td>{{file.createdDate| formatDate}}</td>
                   <td>
                     <div>
-                      <a href="" ng-click="viewFile(file.generated_name, $event)"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                      <a href="" ng-click="deleteFile(file.generated_name)"><i class="fa fa-times-circle-o"></i></a>
+                      <a href="" ng-click="viewFile(file.generatedName, $event)"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+                      <a href="" ng-click="deleteFile(file.generatedName)"><i class="fa fa-times-circle-o"></i></a>
                     </div>
                   </td>	
                 </tr>
@@ -136,7 +136,7 @@
     </div>
 
     <div class="modal-body">
-      <iframe frameborder="0" style="width: 100%; box-sizing: border-box; height: 400px;" name="docview_frame"></iframe>
+      <iframe frameborder="0" style="width: 100%; box-sizing: border-box; height: 400px;" name="docviewFrame"></iframe>
     </div>
 
     <div class="modal-footer">

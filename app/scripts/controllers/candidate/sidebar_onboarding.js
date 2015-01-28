@@ -75,7 +75,7 @@ angular.module('origApp.controllers')
             });
           };
           
-          $scope.$watch('data.service_used', function(){
+          $scope.$watch('data.serviceUsed', function(){
             $scope.data.serviceUsedObj = $scope.getServiceUsed($scope.data.serviceUsed);
           });
         });

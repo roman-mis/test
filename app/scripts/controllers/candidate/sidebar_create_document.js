@@ -28,7 +28,7 @@ angular.module('origApp.controllers')
           };
 
           $scope.viewFile = function(fileName, $event) {
-            HttpResource.model('documents').customGet('sign_temp_viewdoc_s3', {
+            HttpResource.model('documents').customGet('signTempViewdocS3', {
               fileName: fileName
             }, function(response) {
               ModalService.open({
@@ -38,7 +38,7 @@ angular.module('origApp.controllers')
                   $scope.fileName = fileName;
                   $scope.fileURL = response.data.signedRequest;
                   setTimeout(function() {
-                    window.open($scope.fileURL, 'docview_frame');
+                    window.open($scope.fileURL, 'docviewFrame');
                   }, 100);
                 },
                 size: 'lg'
@@ -69,7 +69,7 @@ angular.module('origApp.controllers')
             var fileName = new Date().getTime().toString() + '_' + file.name;
             var mimeType = file.type || 'text/plain';
             $scope.isUploading = true;
-            HttpResource.model('documents').customGet('sign_temp_s3', {
+            HttpResource.model('documents').customGet('signTempS3', {
               mimeType: mimeType,
               fileName: fileName
             }, function(response) {

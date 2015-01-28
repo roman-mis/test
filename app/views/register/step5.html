@@ -22,10 +22,10 @@
             </div>
             <div class="form-group"> 
                 <div class="col-md-6 col-sm-3 col-xs-6 nonepadding havep45">
-                    <a class="btn btn-yes form-control" ng-click="candidate.details.haveP45Document = true">Yes<span ng-show="candidate.details.haveP45Document == true">&nbsp;&nbsp;&nbsp; <i class="fa fa-check"></i></span></a>
+                    <a class="btn btn-yes form-control" ng-click="candidate.details.currentP45 = true">Yes<span ng-show="candidate.details.currentP45 == true">&nbsp;&nbsp;&nbsp; <i class="fa fa-check"></i></span></a>
                 </div>
                 <div class="col-md-6 col-sm-3 col-xs-6 nonepadding havep45">
-                    <a class="btn btn-no form-control" ng-click="candidate.details.haveP45Document = false" >No<span ng-show="candidate.details.haveP45Document === false">&nbsp;&nbsp;&nbsp;<i class="fa fa-times"></i></span></a>
+                    <a class="btn btn-no form-control" ng-click="candidate.details.currentP45 = false" >No<span ng-show="candidate.details.currentP45 === false">&nbsp;&nbsp;&nbsp;<i class="fa fa-times"></i></span></a>
                 </div>
                 <div class="col-sm-6 visible-sm">
                     &nbsp;
@@ -36,7 +36,7 @@
                 If yes, Please upload here
             </div>
             <div class="form-group fileupoad-area">
-                <div class="col-md-7 col-sm-7 col-xs-12"  ng-model="candidate.details.fileName" name="p45document" orig-s3-fileupload placeholder="Upload P45"></div>
+                <div class="col-md-7 col-sm-7 col-xs-12"  ng-model="candidate.details.p45DocumentUrl" name="p45document" orig-s3-fileupload placeholder="Upload P45"></div>
             </div>
             <div class="clear">                
             </div>
@@ -60,7 +60,7 @@
                     P46 Information Completed
                 </span>
                 <div class="col-md-3 col-sm-3 col-xs-3 checkbox">
-                    <input type="checkbox" class="checkbox" ng-model="candidate.details.p46Complted" id="p46"/>
+                    <input type="checkbox" class="checkbox" ng-model="candidate.details.p46Uploaded" id="p46"/>
                     <label for="p46">&nbsp;</label>
                 </div>
             </div>

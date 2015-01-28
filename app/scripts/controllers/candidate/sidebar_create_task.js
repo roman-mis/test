@@ -16,7 +16,7 @@ angular.module('origApp.controllers')
 
           //load constants
           $scope.priorities = ConstantsResource.get('priorities');
-          $scope.taskTypes = ConstantsResource.get($scope.activityType === 'call_log' ? 'calllogtasktypes' : 'createtasktypes');
+          $scope.taskTypes = ConstantsResource.get($scope.activityType === 'callLog' ? 'calllogtasktypes' : 'createtasktypes');
           $scope.statuses = ConstantsResource.get('statuses');
 
           $scope.onTemplateChange = function(template) {
@@ -29,7 +29,7 @@ angular.module('origApp.controllers')
           };
           $scope.save = function() {
             $scope.isSaving = true;
-            var endpointName = $scope.activityType === 'call_log' ? 'calllog' : 'task';
+            var endpointName = $scope.activityType === 'callLog' ? 'calllog' : 'task';
             HttpResource.model('candidates/' + $scope.candidate._id + '/' + endpointName).create($scope.data).post()
                     .then(function(response) {
                       $scope.isSaving = false;

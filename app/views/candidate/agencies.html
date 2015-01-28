@@ -3,7 +3,7 @@
     <accordion close-others="true">
       <accordion-group is-open="product.isOpen" ng-class="{'active' : product.isOpen}" ng-repeat="product in payrollProducts">
         <accordion-heading>
-          {{product.agency_id.name}} <i class="pull-right fa" ng-class="{'fa-chevron-up': status.open, 'fa-chevron-down': !status.open}"></i>
+          {{product.agencyId.name}} <i class="pull-right fa" ng-class="{'fa-chevron-up': status.open, 'fa-chevron-down': !status.open}"></i>
         </accordion-heading>
         <div class="pure-u-1 nonepadding">
           <div class="pure-g">
@@ -11,11 +11,11 @@
               <div class="pure-g">
                 <div class="pure-u-2-5">Consultant </div>
                 <div class="pure-u-3-5">								
-                  <span class="green-light-color">{{product.consultant_id.name}}</span>
+                  <span class="green-light-color">{{product.consultantId.name}}</span>
                 </div>
                 <div class="pure-u-2-5">Branch</div>
                 <div class="pure-u-3-5">
-                  <span class="green-light-color">{{product.branch_id.name}}</span>
+                  <span class="green-light-color">{{product.branchId.name}}</span>
                 </div>
                 <div class="pure-u-2-5">Date Added</div>
                 <div class="pure-u-3-5">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="pure-u-2-5">Agency Ref</div>
                 <div class="pure-u-3-5 pure-form">
-                  <input class="pure-input-1" id="name" type="text" value="product.agency_href" placeholder="">
+                  <input class="pure-input-1" id="name" type="text" value="product.agencyHref" placeholder="">
                 </div>	
               </div>
             </div>
@@ -56,8 +56,8 @@
             </div>		
             <div class="pure-u-1">
               <div class="meta-box-content">
-                <p class="text-center" ng-show="product.margin_exception.length == 0">There are no margin exceptions.</p>
-                <table class="table" ng-show="product.margin_exception.length > 0">
+                <p class="text-center" ng-show="product.marginException.length == 0">There are no margin exceptions.</p>
+                <table class="table" ng-show="product.marginException.length > 0">
                   <thead>
                     <tr>
                       <th>Reason</th>
@@ -69,12 +69,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="exception in product.margin_exception">
+                    <tr ng-repeat="exception in product.marginException">
                       <td>{{getConstantDescription('reasons', exception.reason)}}</td>
-                      <td>{{getConstantDescription('deductiontypes', exception.deduction_type)}}</td>
-                      <td>{{exception.deduction_date | formatDate: 'DD/MM/YYYY'}}</td>
-                      <td>{{exception.deduction_period}}</td>
-                      <td>{{exception.deduction_number_of_payroll}}</td>
+                      <td>{{getConstantDescription('deductiontypes', exception.deductionType)}}</td>
+                      <td>{{exception.deductionDate | formatDate: 'DD/MM/YYYY'}}</td>
+                      <td>{{exception.deductionPeriod}}</td>
+                      <td>{{exception.deductionNumberOfPayroll}}</td>
                       <td class="text-center" style="white-space: nowrap; width: 50px">
                         <a href="" ng-click="openAgenciesAddingMargin(product, exception)"><i class="fa fa-edit"></i></a>
                         <a href=""><i class="fa fa-folder-o"></i></a>

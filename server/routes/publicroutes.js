@@ -15,7 +15,7 @@ module.exports = function(app){
 router.get('/candidates/emailvalidation/:emailAddress',controller.emailValidation);
 
 
-router.get('/sign_s3', controller.signS3);
+router.get('/signS3', controller.signS3);
 
 
 

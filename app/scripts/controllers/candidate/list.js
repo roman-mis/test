@@ -28,10 +28,10 @@ angular.module('origApp.controllers')
               $scope.loadCandidates();
             },
             columns: [
-              {field: 'name', display: 'Name', cellTemplate: '{{row.title}}. {{row.first_name}} {{row.last_name}}'},
-              {field: 'contact_number', display: 'Contact number'},
+              {field: 'name', display: 'Name', cellTemplate: '{{row.title}}. {{row.firstName}} {{row.lastName}}'},
+              {field: 'contactNumber', display: 'Contact number'},
               {field: 'address_1', display: 'Address'},
-              {field: 'email_address', display: 'Email', cellTemplate: '<a href="mailto:{{row.email_address}}">{{row.email_address}}</a>'},
+              {field: 'emailAddress', display: 'Email', cellTemplate: '<a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a>'},
               {field: 'phone', display: 'Phone'},
               {field: 'view', display: 'View', cellTemplate: '<a href="javacript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
             ],

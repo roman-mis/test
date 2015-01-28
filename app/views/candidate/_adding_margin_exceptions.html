@@ -6,7 +6,7 @@
     <div class="form-group">
       <label class="col-sm-6">Type of Margin Exception</label>
       <div class="col-sm-6">
-        <ui-select ng-model="data.margin_type" theme="select2" search-enabled="false">
+        <ui-select ng-model="data.marginType" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in marginExceptionTypes">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -26,7 +26,7 @@
     <div class="form-group">
       <label class="col-sm-6">Deduction Type</label>
       <div class="col-sm-6">
-        <ui-select ng-model="data.deduction_type" theme="select2" search-enabled="false">
+        <ui-select ng-model="data.deductionType" theme="select2" search-enabled="false">
           <ui-select-match>{{$select.selected.description}}</ui-select-match>
           <ui-select-choices repeat="item.code as item in deductionTypes">{{item.description}}</ui-select-choices>
         </ui-select>
@@ -39,7 +39,7 @@
           <input type="text" 
                  class="form-control" 
                  placeholder="" 		
-                 ng-model="data.deduction_date"
+                 ng-model="data.deductionDate"
                  datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}"
                  is-open="popup" 
                  date-disabled="disabled(date, mode)"	
@@ -60,13 +60,13 @@
     <div class="form-group">
       <label class="col-sm-6">Period</label>
       <div class="col-sm-6">
-        <input type="text" class="form-control" ng-model="data.deduction_period"/>
+        <input type="text" class="form-control" ng-model="data.deductionPeriod"/>
       </div>	
     </div>
     <div class="form-group">
       <label class="col-sm-6">Number of Payroll</label>
       <div class="col-sm-6">
-        <input type="text" class="form-control" ng-model="data.deduction_number_of_payroll"/>
+        <input type="text" class="form-control" ng-model="data.deductionNumberOfPayroll"/>
       </div>	
     </div>
   </form>		
@@ -75,7 +75,7 @@
   <div class="row">
     <div class="col-sm-7">
       <p class="text-left" style="margin:0; font-size:16px;" ng-show="editing">
-        Created By <span>{{data.created_by}}</span><br/> Date Created <span>{{data.created_date | formatDate: 'DD/MM/YYYY HH:mm'}}</span>
+        Created By <span>{{data.createdBy}}</span><br/> Date Created <span>{{data.createdDate | formatDate: 'DD/MM/YYYY HH:mm'}}</span>
       </p>	
     </div>
     <div class="col-sm-5">
