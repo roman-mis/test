@@ -67,17 +67,17 @@
             <span class="comment">(only to be completed by non UK nationals)</span>
             &nbsp;<br/>&nbsp;<br/>
             When Did you arive in the UK?
-            <p  class="col-md-8" name="entrancedate" ng-model="candidate.details.entranceDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>
+            <p  class="col-md-8" name="entrancedate" ng-model="candidate.details.arrivalDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>
             Have you been to the UK before?<br/>
             <span class="comment">If yes please enter most recent departure date</span>
-            <p  class="col-md-8" name="recententrancedate" ng-model="candidate.details.recentEntranceDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>                 
+            <p  class="col-md-8" name="recententrancedate" ng-model="candidate.details.recentDepDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>                 
             Did you enter into any paid employment during your last visit?
             <div class="form-group">
                 <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.payEmployFlag"  id="inlineRadio1" value="option1"> Yes
+                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.empLastVisit"  id="inlineRadio1" value="option1"> Yes
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.payEmployFlag" id="inlineRadio1" value="option2"> No
+                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.empLastVisit" id="inlineRadio1" value="option2"> No
                 </label>                   
             </div>
         </div>            

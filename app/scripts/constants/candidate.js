@@ -2,23 +2,23 @@
 /** define candidate schema */
 angular.module('origApp.constants')
         .factory('candidate', function() {
-            var details;
             // Public API here
-            return {
-                details : details,
+            var candidate = {
+                details : {},
                 getAttribute: function(key) {
-                    return candidate[key];
+                    return candidate.details[key];
                 },
                 getAttributes: function() {
-                    return candidate;
+                    return candidate.details;
                 },
                 setAttribute: function(key, value) {
-                    candidate[key] = value;
+                    candidate.details[key] = value;
                     return true;
                 },
                 setAttributes: function(info) {
-                    candidate = angular.extend(candidate, info);
+                    candidate.details = angular.extend(candidate.details, info);
                     return true;
                 }
             };
+            return candidate;
         });
