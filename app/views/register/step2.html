@@ -1,85 +1,85 @@
 <div class="row form-header">
-    <div class="wizard-status-bar">
-        <div class="step step1">1</div>
-        <div class="step step2 selected">2</div>
-        <div class="step step3">3</div>
-        <div class="step step4">4</div>
-        <div class="step step5">5</div>
-    </div>
+  <div class="wizard-status-bar">
+    <div class="step step1">1</div>
+    <div class="step step2 selected">2</div>
+    <div class="step step3">3</div>
+    <div class="step step4">4</div>
+    <div class="step step5">5</div>
+  </div>
 </div>                
 <div class="row form-body">
-    <div class="col-md-6 left-side">
-        <div class="from-title">
-            Contact Details (continued)
-        </div>          
-        I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.<br/><br/>
-        But also this area could be used for notifications, validations and potentially the non UK national extra bit!
-    </div>   
+  <div class="col-md-6 left-side">
+    <div class="from-title">
+      Contact Details (continued)
+    </div>          
+    I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.<br/><br/>
+    But also this area could be used for notifications, validations and potentially the non UK national extra bit!
+  </div>   
 
-    <div class="col-md-6 right-side">
-        <form role="form" name="registerform" orig-validate-form>
-            <div class="form-group">
-                <input type="text" ng-model="candidate.details.address_1" name="address_1" class="form-control" placeholder="* Address1" maxlength="50" required/>
-            </div>
-            <div class="form-group">
-                <input type="text" ng-model="candidate.details.address_2" name="address_2" class="form-control" maxlength="50" placeholder="  Address2" />
-            </div>
-            <div class="form-group">
-                <input type="text" ng-model="candidate.details.address_3" name="address_3" class="form-control" maxlength="50" placeholder="  Address3"/>
-            </div>
-            <div class="form-group">
-                <input type="text" ng-model="candidate.details.town" name="town" class="form-control" placeholder="* Town" maxlength="20" required=""/>
-            </div>
-            <div class="form-group">
-                <input type="text" ng-model="candidate.details.county" name="county" class="form-control" placeholder="  County" maxlength="20" />
-            </div>
-            <div class="form-group">
-                <input type="text" ng-model="candidate.details.postCode" orig-postcode name="postcode" class="form-control" placeholder="* Postcode" maxlength="10" required/>
-                <div class="alert alert-danger" ng-show="registerform.postcode.$error.postcode"  role="alert">
-                    Please enter correct Postcode
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-6 col-sm-6 gender">
-                    <ui-select ng-model="candidate.details.gender" name="gender" theme="select2" search-enabled="false" required>
-                        <ui-select-match placeholder="* Gender">{{$select.selected.value}}</ui-select-match>
-                        <ui-select-choices repeat="item.key as item in genders | filter: $select.search">
-                            <span ng-bind-html="item.value"></span>                        
-                        </ui-select-choices>
-                    </ui-select>    
-                </div>
-                <div class="col-md-6 col-sm-6 national">
-                    <ui-select ng-model="candidate.details.nationality" theme="select2" name="nationality" search-enabled="true" required>
-                        <ui-select-match placeholder="* Nationality">{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in nationality | filter: $select.search">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-            </div>      
-        </form>
-    </div>
-    
-    <!-- if nationality is 'British' -->
-    <div class="addtionalinfo-container col-md-6" ng-hide="!candidate.details.nationality || candidate.details.nationality == '1'" ng-class="{postcodeerror:registerform.postcode.$error.postcode}">
-        <div class="left-content">
-            <div class="from-title">
-                Non UK Nationals
-            </div>
-            <span class="comment">(only to be completed by non UK nationals)</span>
-            &nbsp;<br/>&nbsp;<br/>
-            When Did you arive in the UK?
-            <p  class="col-md-8" name="entrancedate" ng-model="candidate.details.arrivalDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>
-            Have you been to the UK before?<br/>
-            <span class="comment">If yes please enter most recent departure date</span>
-            <p  class="col-md-8" name="recententrancedate" ng-model="candidate.details.recentDepDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>                 
-            Did you enter into any paid employment during your last visit?
-            <div class="form-group">
-                <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.empLastVisit"  id="inlineRadio1" value="option1"> Yes
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.empLastVisit" id="inlineRadio1" value="option2"> No
-                </label>                   
-            </div>
-        </div>            
-    </div>
+  <div class="col-md-6 right-side">
+    <form role="form" name="registerform" orig-validate-form>
+      <div class="form-group">
+        <input type="text" ng-model="candidate.details.address_1" name="address_1" class="form-control" placeholder="* Address1" maxlength="50" required/>
+      </div>
+      <div class="form-group">
+        <input type="text" ng-model="candidate.details.address_2" name="address_2" class="form-control" maxlength="50" placeholder="  Address2" />
+      </div>
+      <div class="form-group">
+        <input type="text" ng-model="candidate.details.address_3" name="address_3" class="form-control" maxlength="50" placeholder="  Address3"/>
+      </div>
+      <div class="form-group">
+        <input type="text" ng-model="candidate.details.town" name="town" class="form-control" placeholder="* Town" maxlength="20" required=""/>
+      </div>
+      <div class="form-group">
+        <input type="text" ng-model="candidate.details.county" name="county" class="form-control" placeholder="  County" maxlength="20" />
+      </div>
+      <div class="form-group">
+        <input type="text" ng-model="candidate.details.postCode" orig-postcode name="postcode" class="form-control" placeholder="* Postcode" maxlength="10" required/>
+        <div class="alert alert-danger" ng-show="registerform.postcode.$error.postcode"  role="alert">
+          Please enter correct Postcode
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-6 col-sm-6 gender">
+          <ui-select ng-model="candidate.details.gender" name="gender" theme="select2" search-enabled="false" required>
+            <ui-select-match placeholder="* Gender">{{$select.selected.value}}</ui-select-match>
+            <ui-select-choices repeat="item.key as item in genders | filter: $select.search">
+              <span ng-bind-html="item.value"></span>                        
+            </ui-select-choices>
+          </ui-select>    
+        </div>
+        <div class="col-md-6 col-sm-6 national">
+          <ui-select ng-model="candidate.details.nationality" theme="select2" name="nationality" search-enabled="true" required>
+            <ui-select-match placeholder="* Nationality">{{$select.selected.description}}</ui-select-match>
+            <ui-select-choices repeat="item.code as item in nationality | filter: $select.search">{{item.description}}</ui-select-choices>
+          </ui-select>
+        </div>
+      </div>      
+    </form>
+  </div>
+
+  <!-- if nationality is 'British' -->
+  <div class="addtionalinfo-container col-md-6" ng-hide="!candidate.details.nationality || candidate.details.nationality == '1'" ng-class="{postcodeerror:registerform.postcode.$error.postcode}">
+    <div class="left-content">
+      <div class="from-title">
+        Non UK Nationals
+      </div>
+      <span class="comment">(only to be completed by non UK nationals)</span>
+      &nbsp;<br/>&nbsp;<br/>
+      When Did you arive in the UK?
+      <p  class="col-md-8" name="arrivalDate" ng-model="candidate.details.arrivalDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>
+      Have you been to the UK before?<br/>
+      <span class="comment">If yes please enter most recent departure date</span>
+      <p  class="col-md-8" name="recentDepDate" ng-model="candidate.details.recentDepDate" placeholder="* dd/mm/yyyy" orig-datepicker required/>                 
+      Did you enter into any paid employment during your last visit?
+      <div class="form-group">
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.empLastVisit" id="inlineRadio1" ng-value="true"> Yes
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" ng-model="candidate.details.empLastVisit" id="inlineRadio1" ng-value="false"> No
+        </label>                   
+      </div>
+    </div>            
+  </div>
 </div>
