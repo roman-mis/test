@@ -15,7 +15,7 @@ angular.module('origApp.controllers')
             isPagination: false,
             columns: [
               {field: 'serviceUsed', display: 'Product', cellTemplate: '{{getExternalScope().getConstantDescription("servicesused", row.serviceUsed)}}'},
-              {field: 'agencyId', display: 'Agency', cellTemplate: '{{getExternalScope().getConstantDescription("agencies", row.agencyId)}}'},
+              {field: 'agencyId', display: 'Agency', cellTemplate: '{{row.agency.name}}'},
               {field: 'margin', display: 'Margin', cellTemplate: '{{getExternalScope().getConstantDescription("margins", row.margin)}}'},
               {field: 'holidayPayRule', display: 'Hol. Pay', cellTemplate: '{{getExternalScope().getConstantDescription("holidaypayrules", row.holidayPayRule)}}'},
               {field: 'derogationContract', display: 'Decoration', cellTemplate: '{{getExternalScope().getConstantDescription("derogationcontracts", row.derogationContract)}}'},
