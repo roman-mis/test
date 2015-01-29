@@ -320,8 +320,14 @@ module.exports = function(dbs){
 
 	controller.getAgencyPayroll = function(req, res){
 		agencyservice.getAgency(req.params.id).then(function(agency){
-			var vm = getAgencyPayrollVm(agency);
-			res.json({result:true, object:vm});
+			// var vm = getAgencyPayrollVm(agency);
+			// res.json({result:true, object:vm});
+
+			getAgencyPayrollVm(agency)
+	        .then(function(branch){
+	          res.json(branch);
+	        });
+
 		},res.sendFailureResponse);
 	}
 
@@ -347,8 +353,13 @@ module.exports = function(dbs){
 	    }
 
 	    agencyservice.saveAgencyPayroll(agencyId, defaultInvoicingDetails, defaultPayrollDetails).then(function(agency){
-			var vm = getAgencyPayrollVm(agency);
-			res.json({result: true, object: vm});
+			// var vm = getAgencyPayrollVm(agency);
+			// res.json({result: true, object: vm});
+			getAgencyPayrollVm(agency)
+	        .then(function(branch){
+	          res.json(branch);
+	        });
+
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
@@ -400,6 +411,71 @@ module.exports = function(dbs){
 	}
 
 	function getAgencyPayrollVm(agency){
+      	var deff=Q.defer();
+      	if(agency.defaultInvoicing.invoiceTo){
+  		agencyservice.getBranch(agency.defaultInvoicing.invoiceTo)
+        .then(function(_agency){
+      	var branchVm = {
+				_id: agency._id,
+				name: agency.name,
+				defaultInvoicing:{
+			      holidayPayIncluded:       agency.defaultInvoicing.holidayPayIncluded,
+			      employersNiIncluded:      agency.defaultInvoicing.employersNiIncluded,
+			      invoiceVatCharged:        agency.defaultInvoicing.invoiceVatCharged,
+			      invoiceMethod:             utils.findInArray(dataList.InvoiceMethods, agency.defaultInvoicing.invoiceMethod, 'code'),
+			      invoiceDesign: {
+			      	_id: _agency.agency.defaultInvoicing.invoiceDesign._id,
+			      	content: _agency.agency.defaultInvoicing.invoiceDesign.content
+			      },
+			      invoiceEmailPrimary:      agency.defaultInvoicing.invoiceEmailPrimary,
+			      invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
+			      paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
+			      invoiceTo: {
+			      	_id: _agency.branch._id,
+			      	name: _agency.branch.name
+			      }
+			    },
+			    defaultPayroll:{
+			      productType:               utils.findInArray(dataList.ServiceUsed, agency.defaultPayroll.productType, 'code'),
+			      marginChargedToAgency:   agency.defaultPayroll.marginChargedToAgency,
+			      marginType:                utils.findInArray(dataList.MarginTypes, agency.defaultPayroll.marginType, 'code'),
+			      marginAmount:        	  agency.defaultPayroll.marginAmount,
+			      holidayAmount:             agency.defaultPayroll.holidayAmount
+			    }
+			};
+          	deff.resolve({result:true, object: branchVm});
+        },deff.reject);
+		}else{
+			var branchVm = {
+				_id: agency._id,
+				name: agency.name,
+				defaultInvoicing:{
+			      holidayPayIncluded:       agency.defaultInvoicing.holidayPayIncluded,
+			      employersNiIncluded:      agency.defaultInvoicing.employersNiIncluded,
+			      invoiceVatCharged:        agency.defaultInvoicing.invoiceVatCharged,
+			      invoiceMethod:             utils.findInArray(dataList.InvoiceMethods, agency.defaultInvoicing.invoiceMethod, 'code'),
+			      invoiceDesign: 			agency.defaultInvoicing.invoiceDesign,
+			      invoiceEmailPrimary:      agency.defaultInvoicing.invoiceEmailPrimary,
+			      invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
+			      paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
+			      invoiceTo: 				agency.defaultInvoicing.invoiceTo
+			    },
+			    defaultPayroll:{
+			      productType:               utils.findInArray(dataList.ServiceUsed, agency.defaultPayroll.productType, 'code'),
+			      marginChargedToAgency:   agency.defaultPayroll.marginChargedToAgency,
+			      marginType:                utils.findInArray(dataList.MarginTypes, agency.defaultPayroll.marginType, 'code'),
+			      marginAmount:        	  agency.defaultPayroll.marginAmount,
+			      holidayAmount:             agency.defaultPayroll.holidayAmount
+			    }
+			};
+				deff.resolve({result:true, object: branchVm});
+		}
+      
+        return deff.promise;
+    }
+
+	function getAgencyPayrollVm_(agency){
+		
 		return {
 			_id: agency._id,
 			name: agency.name,
