@@ -50,10 +50,11 @@ module.exports = function(dbs){
           historyBy: req.user.id,
           user: req.params.id,
           eventData: pendingOnboardingDetails,
-          notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
+          notes: 'Onboarding added by ' + req.user.firstName + ' ' + req.user.lastName
         };
       }
-
+      //res.json({onboarding:pendingOnboardingDetails,history:historyDetails});
+      //return;
       //console.log(historyDetails);
 
     	pendingonboardingservice.patchPendingOnboardingDetails(req.params.id, pendingOnboardingDetails, complete, historyDetails)
