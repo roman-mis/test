@@ -101,6 +101,19 @@ module.exports = function(dbs){
           },res.sendFailureResponse);
     }
 
+    controller.getUser=function(req,res){
+        userservice.getUser(req.params.id)
+          .then(function(user){
+            if(user){
+              var userVm=getUserViewModel(user);
+              res.json({result:true,object:userVm});
+            }
+            else{
+              res.json({result:false,message:'User not found'});
+            }
+          },res.sendFailureResponse);
+    }
+
 
     function getUserViewModel(user){
       return {
