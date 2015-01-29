@@ -2,11 +2,33 @@
 angular.module('origApp.controllers')
         .controller('AgencyPayrollController', function($scope, ModalService, $stateParams, HttpResource, ConstantsResource) {
           $scope.agencyId = $stateParams.agencyId;
-          $scope.countries = ConstantsResource.get('countries');
-
+  
           function loadPayrollData() {
-            $scope.payrollData = HttpResource.model('agencies/' + $scope.agencyId).get('payroll');
+            $scope.payrollData = HttpResource.model('agencies/' + $scope.agencyId).get('payroll', function(){
+              $scope.loadNames();
+            });
           }
+          
+          $scope.loadNames = function(){
+            //load invoice design detail
+            if($scope.payrollData.defaultInvoicing.invoiceDesign){
+              $scope.payrollData.defaultInvoicing.invoiceDesign = HttpResource.model('invoicedesigns').get($scope.payrollData.defaultInvoicing.invoiceDesign, function(){
+                console.log($scope.payrollData.defaultInvoicing.invoiceDesign);
+              });
+            }
+
+            //get invoiceTo label
+            $scope.agency = HttpResource.model('agencies').get($scope.agencyId, function(){
+              var invoiceToItems = $scope.agency.branches.filter(function(branch){
+                return branch._id == $scope.payrollData.defaultInvoicing.invoiceTo;
+              });
+              if(invoiceToItems.length > 0){
+                $scope.payrollData.defaultInvoicing.invoiceTo = invoiceToItems[0];
+              }else{
+                $scope.payrollData.defaultInvoicing.invoiceTo = null;
+              }
+            });
+          };
 
 
           $scope.getConstant = function(constantKey, code) {
@@ -68,6 +90,7 @@ angular.module('origApp.controllers')
                       $scope.isSaving = false;
                       if (!HttpResource.flushError(response)) {
                         parentScope.payrollData = jQuery.extend(parentScope.payrollData, response.data.object);
+                        parentScope.loadNames();
                         $modalInstance.close();
                       }
                     });
