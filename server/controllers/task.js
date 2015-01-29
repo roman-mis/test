@@ -51,9 +51,10 @@ module.exports = function(dbs){
 				historyBy: req.user.id,
 				user: req.params.id,
 				eventData: null,
-				notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
+				notes: 'Task added by ' + req.user.firstName + ' ' + req.user.lastName
 			};
-
+			res.json({task:taskDetails,history:historyDetails});
+			return;
 			console.log(taskDetails);
 			console.log(historyDetails);
 
@@ -93,12 +94,12 @@ module.exports = function(dbs){
 			};
 
 			var historyDetails = {
-				eventType: enums.eventType.CREATE_TASK,
+				eventType: enums.eventType.CALL_LOG,
 				eventDate: new Date(),
 				historyBy: req.user.id,
 				user: req.params.id,
-				eventData: null,
-				notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
+				eventData: taskDetails,
+				notes: 'Call log added by ' + req.user.firstName + ' ' + req.user.lastName
 			};
 
 			console.log(taskDetails);

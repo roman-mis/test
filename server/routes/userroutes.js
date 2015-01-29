@@ -20,6 +20,8 @@ module.exports = function(app){
 
 router.get('/',restMiddleware(db),controller.getAllUsers);
 
+router.get('/:id',controller.getUser);
+
 router.get('/activation/:emailAddress',controller.getActivation);
 
 router.post('/activation/:emailAddress',controller.postActivation);
