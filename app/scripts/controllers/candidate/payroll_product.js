@@ -54,14 +54,15 @@ angular.module('origApp.controllers')
               $scope.isSaving = false;
               if (!HttpResource.flushError(response)) {
                 //$scope.loadProducts();
+                var newObject = productResource.create(response.data.object);
                 if ($scope.product._id) { //if edited
                   jQuery($scope.gridOptions.data).each(function(index) {
                     if (this._id === $scope.product._id) {
-                      angular.copy($scope.product, $scope.gridOptions.data[index]);
+                      angular.copy(newObject, $scope.gridOptions.data[index]);
                     }
                   });
                 } else { //if added
-                  $scope.gridOptions.data.push($scope.product);
+                  $scope.gridOptions.data.push(newObject);
                 }
                 $scope.product = {};
               }
