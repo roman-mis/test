@@ -104,6 +104,10 @@ angular.module('origApp.controllers')
               }
             }
           };
+          
+          $scope.cancelEdit = function(){
+            $scope.product = {};
+          };
 
 
           $scope.loadProducts();
