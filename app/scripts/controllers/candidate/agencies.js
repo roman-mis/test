@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
         .controller('CandidateAgenciesController', function($scope, HttpResource, ModalService, $stateParams, ConstantsResource) {
           var candidateId = $stateParams.candidateId;
-  
+
           $scope.oneAtATime = true;
           $scope.status = {
             isFirstOpen: true,
@@ -39,8 +39,8 @@ angular.module('origApp.controllers')
               controller: '_CandidateAgenciesAddingMarginController'
             });
           };
-          
-          $scope.deleteMarginException = function(product, exception){
+
+          $scope.deleteMarginException = function(product, exception) {
             var exceptionResource = HttpResource.model('candidates/' + candidateId + '/payrollproduct/' + product._id + '/marginexception');
             exceptionResource.delete(exception._id).then(function(response) {
               if (!HttpResource.flushError(response)) {
@@ -58,54 +58,56 @@ angular.module('origApp.controllers')
 
         // Add/Edit Margin Exceptions
         .controller('_CandidateAgenciesAddingMarginController', function($scope, $modalInstance, HttpResource, ConstantsResource, params) {
-          
+
           var exceptionResource = HttpResource.model('candidates/' + params.candidateId + '/payrollproduct/' + params.payrollProduct._id + '/marginexception');
-          
+
           $scope.data = {};
-          if(params.editingException){
+          if (params.editingException) {
             angular.copy(params.editingException, $scope.data);
+            $scope.data.createdBy = HttpResource.model('users').get($scope.data.createdBy);
             $scope.editing = true;
           }
-          
+
           $scope.deductionTypes = ConstantsResource.get('deductiontypes');
           $scope.exceptionReasons = ConstantsResource.get('reasons');
           $scope.marginExceptionTypes = ConstantsResource.get('marginexceptiontypes');
-          
+
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
-          
+
           //save margin exception information
           $scope.saveException = function() {
             var successCallback = function(response) {
               $scope.isSaving = false;
               if (!HttpResource.flushError(response)) {
+                var newObject = exceptionResource.create(response.data.object);
                 if ($scope.editing) { //if edited
                   jQuery(params.payrollProduct.marginException).each(function(index) {
                     if (this._id === $scope.data._id) {
-                      angular.copy($scope.data, params.payrollProduct.marginException[index]);
+                      angular.copy(newObject, params.payrollProduct.marginException[index]);
                     }
                   });
                 } else { //if added
-                  params.payrollProduct.marginException.push($scope.data);
+                  params.payrollProduct.marginException.push(newObject);
                 }
                 $scope.data = {};
                 $modalInstance.close();
               }
             };
-            
+
             $scope.isSaving = true;
             var sendData = exceptionResource.create($scope.data);
             if ($scope.editing) {
-              sendData.patch()
+              sendData.patch($scope.data._id)
                       .then(successCallback);
             } else {
               sendData.post()
                       .then(successCallback);
             }
           };
-		  $scope.disabled = function(date, mode) {
-			return ( mode === 'day' && ( date.getDay() !== 0 ) );
-		  };
-			
+          $scope.disabled = function(date, mode) {
+            return (mode === 'day' && (date.getDay() !== 0));
+          };
+
         });
