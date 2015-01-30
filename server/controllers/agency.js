@@ -412,7 +412,7 @@ module.exports = function(dbs){
 
 	function getAgencyPayrollVm(agency){
       	var deff=Q.defer();
-      	if(agency.defaultInvoicing.invoiceTo){
+      	if(agency.defaultInvoicing.invoiceTo && agency.defaultInvoicing.invoiceTo != null && agency.defaultInvoicing.invoiceTo != undefined){
   		agencyservice.getBranch(agency.defaultInvoicing.invoiceTo)
         .then(function(_agency){
       	var branchVm = {
