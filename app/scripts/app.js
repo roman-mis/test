@@ -25,8 +25,8 @@ angular.module('origApp', [
   'origApp.constants',
   'origApp.services',
   'origApp.directives',
-  'origApp.filters'
-  //'ngTagsInput' 
+  'origApp.filters',
+  'ngTagsInput' 
   //,
  // 'gm.datepickerMultiSelect'
 ])
