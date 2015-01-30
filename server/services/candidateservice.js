@@ -22,7 +22,7 @@ var dataList=require('../data/data_list.json');
 // }
 
 service.getUserAgencies=function(id){
-	var query=db.User.findById(id).populate('worker.payrollProduct.agencyId');
+	var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 	return Q.nfcall(query.exec.bind(query));
 }
 
@@ -271,7 +271,7 @@ service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress
 		   		if(user){
 		   				console.log('my user');
 		   				console.log(user);
-						var props=utils.updateSubModel(user.worker.contactDetail,workerContact);
+						var props=utils.updateSubModel(user.contactDetail,workerContact);
 						utils.updateSubModel(user,userInformation);
 						utils.updateModel(user.worker,workerPrimaryAddress);
 

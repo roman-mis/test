@@ -50,14 +50,6 @@ module.exports = function(mongoose,autoIncrement) {
             accountNo:          {type:String,required:false,trim:true},
             bankRollNo:        {type:String,required:false}
         },
-        contactDetail:{
-            phone:               {type:String,required:false},
-            mobile:              {type:String,required:false},
-            altEmail:           {type:String,required:false},
-            facebook:            {type:String,required:false},
-            linkedin:            {type:String,required:false},
-            google:              {type:String,required:false}
-        },
         taxDetail:{
             niNumber:           {type:String,required:false,trim:true},
             currentP45:         {type:Boolean,required:false},
@@ -74,9 +66,9 @@ module.exports = function(mongoose,autoIncrement) {
             taxBasis:                   {type:String}
         },
         payrollProduct:[{
-            agencyId:                   {type:Schema.Types.ObjectId,ref:'Agency'},
-            branchId:                   {type:Schema.Types.ObjectId,ref:'Agency.branches'},
-            consultantId:               {type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
+            agency:                   {type:Schema.Types.ObjectId,ref:'Agency'},
+            branch:                   {type:Schema.Types.ObjectId,ref:'Agency.branches'},
+            consultant:               {type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
             agencyRef:                  {type:String},
             margin:                      {type:String},
             marginFixed:                {type:Number},
@@ -103,7 +95,7 @@ module.exports = function(mongoose,autoIncrement) {
         expensesMileageYtd: Number,
         unpaidExpenses: [
             { 
-                agencyId: { type: Schema.Types.ObjectId,ref:'Agency' },
+                agency: { type: Schema.Types.ObjectId,ref:'Agency' },
                 claimReference: String,
                 startedDate: { type: Date, default: Date.now },
                 submittedDate: { type: Date, default: Date.now },

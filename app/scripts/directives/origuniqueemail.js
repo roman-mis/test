@@ -12,17 +12,21 @@ angular.module('origApp.directives')
             restrict: 'AE',
             require: 'ngModel',
             link: function(scope, ele, attrs, c) {
-              scope.$watch(attrs.ngModel, function(newValue) {
-                if (!newValue) {
-                  c.$setValidity('unique', true);
-                  return true;
-                } else {
+              ele.bind('change', function(){
+                if(c.$invalid && !c.$error.unique){
+                  return;
+                }
+                var newValue = ele.val();
+                if (newValue) {
                   HttpResource.model("public").customGet('candidates/emailvalidation/' + newValue, {}, function(response) {
                     c.$setValidity('unique', response.data.result);
                   }, function(response) {
 
                   });
                 }
+              });
+              scope.$watch(attrs.ngModel, function(newValue) {
+                c.$setValidity('unique', true);
               });
             }
           };

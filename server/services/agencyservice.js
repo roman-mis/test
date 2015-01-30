@@ -210,11 +210,11 @@ service.patchBranch=function(branchId, branchInfo){
 };
 
 service.getBranch=function(branchId){
-	var query=db.Agency.findOne({'branches._id':branchId});
+	var query=db.Agency.findOne({'branches._id':branchId}).populate('defaultInvoicing.invoiceDesign');
 	return Q.Promise(function(resolve,reject){
 		Q.nfcall(query.exec.bind(query))
 			.then(function(agency){
-
+				console.log(agency);
 				if(agency){
 					var branch=agency.branches.id(branchId);
 					resolve({agency:agency, branch:branch});
@@ -392,12 +392,13 @@ service.saveAgencyPayroll = function(agencyId, defaultInvoicingDetails, defaultP
 				if(agency){
 					// Default Invoicing
 					utils.updateSubModel(agency.defaultInvoicing, defaultInvoicingDetails); // Edit
-					
+					console.log(agency.defaultInvoicing);
 					// Default Payroll
-					utils.updateSubModel(agency.defaultIayroll, defaultPayrollDetails); // Edit
-					
+					utils.updateSubModel(agency.defaultPayroll, defaultPayrollDetails); // Edit
+					console.log('here');
 					Q.nfcall(agency.save.bind(agency))
-					.then(function(){
+					.then(function(agency){
+						console.log('here');
 						resolve(agency);
 					},reject);
 				}else{

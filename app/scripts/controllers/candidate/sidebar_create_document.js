@@ -34,12 +34,16 @@ angular.module('origApp.controllers')
               ModalService.open({
                 templateUrl: 'views/candidate/_documentview.html',
                 parentScope: $scope,
-                controller: function($scope) {
+                controller: function($scope, $modalInstance) {
                   $scope.fileName = fileName;
                   $scope.fileURL = response.data.signedRequest;
                   setTimeout(function() {
                     window.open($scope.fileURL, 'docviewFrame');
                   }, 100);
+                  
+                  $scope.close = function() {
+                    $modalInstance.dismiss('cancel');
+                  };
                 },
                 size: 'lg'
               });

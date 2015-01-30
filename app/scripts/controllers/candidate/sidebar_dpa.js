@@ -13,9 +13,9 @@ angular.module('origApp.controllers')
           //define public properties
           $scope.dpaLists = [
             {question: 'What is your postcode?', answer: candidateInfo.postCode},
-            {question: 'What is your first line of address?', answer: candidateInfo.address1},
+            {question: 'What is your first line of address?', answer: candidateInfo.address_1},
             {question: 'What is your NI Number?', answer: candidateInfo.niNumber},
-            {question: 'What is your birthday?', answer: candidateInfo.birthDate},
+            {question: 'What is your birthday?', answer: moment(candidateInfo.birthDate).format('DD/MM/YYYY')},
             {question: 'What is email address?', answer: candidateInfo.emailAddress}
           ];
           $scope.generatedSets = [];

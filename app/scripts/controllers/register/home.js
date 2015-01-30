@@ -16,7 +16,7 @@ angular.module('origApp.controllers')
                 firstName: 'Wen',
                 lastName: 'Xuning',
                 emailAddress: 'eaa@sf.com',
-                contactNumber: '13',
+                phone: '13',
                 niNumber: '123',
                 birthDate: '1991-8-2',
                 address_1: '12',

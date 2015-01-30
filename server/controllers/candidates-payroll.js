@@ -55,18 +55,49 @@ module.exports = function(dbs){
       });
     }
 
+    // controller.getPayrollProduct=function (req,res){
+    //   candidatepayrollservice.getPayrollProductDetails(req.params.candidateId)
+    //     .then(function(payrollProducts){
+    //       if(payrollProducts){
+    //         _.forEach(payrollProducts, function(payrollProduct, key){
+    //           console.log(payrollProduct);
+    //           if(payrollProduct['_id'] == req.params.productId){
+    //             res.json({result:true, object: payrollProduct});
+    //             return false;
+    //           }
+    //         });
+    //       }
+    //       else{
+    //         res.json({result:false, message:'Payroll Product Information not found'});
+    //       }
+    //     },res.sendFailureResponse);
+    // }
+
     controller.getPayrollProduct=function (req,res){
-      candidatepayrollservice.getPayrollProductDetails(req.params.candidateId)
-        .then(function(user){
-          if(user){
-            var pp = user.worker.payrollProduct.id(req.params.productId);
-            console.log(pp);
-            res.json({result:true, object: pp});
+      getPayrollProduct(req.params.candidateId, req.params.productId)
+      .then(function(payrollProduct){
+        res.json(payrollProduct);
+      });
+    }
+
+    function getPayrollProduct(candidateId, productId){
+      var deff=Q.defer();
+      candidatepayrollservice.getPayrollProductDetails(candidateId)
+        .then(function(payrollProducts){
+          if(payrollProducts){
+            _.forEach(payrollProducts, function(payrollProduct, key){
+              // console.log(payrollProduct);
+              if(payrollProduct['_id'] == productId){
+                deff.resolve({result:true, object: payrollProduct});
+                return false;
+              }
+            });
           }
           else{
-            res.json({result:false, message:'Payroll Product Information not found'});
+            deff.reject({result:false, message:'Payroll Product Information not found'});
           }
-        },res.sendFailureResponse);
+        },deff.reject);
+        return deff.promise;
     }
 
     controller.getPayrollProducts=function (req,res){
@@ -82,34 +113,18 @@ module.exports = function(dbs){
     }
 
     controller.postPayrollProduct=function (req,res){
-      // var payrollProduct = {
-      //   _id: req.body._id,
-      //   agencyId: req.body.agencyId,
-      //   margin: req.body.margin,
-      //   marginFixed: req.body.marginFixed,
-      //   holidayPayRule: req.body.holidayPayRule,
-      //   derogationContract: req.body.derogationContract,
-      //   derogationSpread: req.body.derogationSpread,
-      //   serviceUsed: req.body.serviceUsed,
-      //   paymentTerms: req.body.paymentTerms,
-      //   paymentMethod: req.body.paymentMethod,
-      //   jobDescription: req.body.jobDescription
-      // }
-
-      // candidatepayrollservice.updatePayrollProductDetails(req.params.id, payrollProduct).then(function(response){
-      //   res.json({result:true,object:getPayrollProductViewModel(response)});
-      //   },function(err){
-      //    res.sendFailureResponse(err);
-      // });
-
       savePayrollProduct(req, res, 'post');
+    }
+
+    controller.patchPayrollProduct=function (req,res){
+      savePayrollProduct(req, res, 'patch');
     }
 
     function savePayrollProduct(req, res, type){
       var payrollProduct = {
-        agencyId: req.body.agencyId,
-        branchId: req.body.branchId,
-        consultantId: req.body.consultantId,
+        agency: req.body.agency,
+        branch: req.body.branch,
+        consultant: req.body.consultant,
         agencyRef: req.body.agencyRef,
         margin: req.body.margin,
         marginFixed: req.body.marginFixed,
@@ -132,41 +147,18 @@ module.exports = function(dbs){
       candidatepayrollservice.updatePayrollProductDetails(req.params.candidateId, payrollProduct).then(function(response){
         // REVIEW: using new response and proper viewmodel
         // res.json({result:true,object:getPayrollProductViewModel(response.user,response.product)});
-        var vm=getPayrollProductViewModel(response.user,response.product);
-        res.json({result:true,object:vm});
+        // var vm=getPayrollProductViewModel(response.user,response.product);
+        // res.json({result:true,object:vm});
+
+        getPayrollProduct(response.user.id, response.product.id)
+        .then(function(payrollProduct){
+          res.json(payrollProduct);
+        });
+
         
         },function(err){
          res.sendFailureResponse(err);
       });
-    }
-
-    controller.patchPayrollProduct=function (req,res){
-      console.log('here');
-      savePayrollProduct(req, res, 'patch');
-
-      // var payrollProduct = {
-      //   _id: req.body._id,
-      //   agencyId: req.body.agencyId,
-      //   margin: req.body.margin,
-      //   marginFixed: req.body.marginFixed,
-      //   holidayPayRule: req.body.holidayPayRule,
-      //   derogationContract: req.body.derogationContract,
-      //   derogationSpread: req.body.derogationSpread,
-      //   serviceUsed: req.body.serviceUsed,
-      //   paymentTerms: req.body.paymentTerms,
-      //   paymentMethod: req.body.paymentMethod,
-      //   jobDescription: req.body.jobDescription
-      // }
-
-      // if(req.body._id == undefined || req.body._id == ''){
-      //   res.json({result:false, message:'_id not found'});
-      // }else{
-      //   candidatepayrollservice.updatePayrollProductDetails(req.params.id, payrollProduct).then(function(response){
-      //     res.json({result:true,object:getPayrollProductViewModel(response)});
-      //     },function(err){
-      //      res.sendFailureResponse(err);
-      //   });
-      // }
     }
 
     controller.deletePayrollProduct=function (req,res){
@@ -201,8 +193,9 @@ module.exports = function(dbs){
     }
 
     function getPayrollProductViewModel(user,product){
-      var worker = user.worker;
-      return product;//{'_id':product.id, payrollProduct: worker.payrollProduct};
+      // var worker = user.worker;
+       // console.log(product.id);
+       return user;//{'_id':product.id, payrollProduct: worker.payrollProduct};
     }
 
     controller.getMarginException=function (req,res){

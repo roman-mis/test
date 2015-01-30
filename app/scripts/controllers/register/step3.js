@@ -10,5 +10,4 @@
 angular.module('origApp.controllers')
         .controller('RegisterStep3Controller', function($scope, candidate) {            
             $scope.candidate = candidate;
-            console.log(candidate);
         });

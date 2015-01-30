@@ -15,7 +15,7 @@ angular.module('origApp.controllers')
             isPagination: false,
             columns: [
               {field: 'serviceUsed', display: 'Product', cellTemplate: '{{getExternalScope().getConstantDescription("servicesused", row.serviceUsed)}}'},
-              {field: 'agencyId', display: 'Agency', cellTemplate: '{{getExternalScope().getConstantDescription("agencies", row.agencyId)}}'},
+              {field: 'agencyId', display: 'Agency', cellTemplate: '{{row.agency.name}}'},
               {field: 'margin', display: 'Margin', cellTemplate: '{{getExternalScope().getConstantDescription("margins", row.margin)}}'},
               {field: 'holidayPayRule', display: 'Hol. Pay', cellTemplate: '{{getExternalScope().getConstantDescription("holidaypayrules", row.holidayPayRule)}}'},
               {field: 'derogationContract', display: 'Decoration', cellTemplate: '{{getExternalScope().getConstantDescription("derogationcontracts", row.derogationContract)}}'},
@@ -54,14 +54,15 @@ angular.module('origApp.controllers')
               $scope.isSaving = false;
               if (!HttpResource.flushError(response)) {
                 //$scope.loadProducts();
+                var newObject = productResource.create(response.data.object);
                 if ($scope.product._id) { //if edited
                   jQuery($scope.gridOptions.data).each(function(index) {
                     if (this._id === $scope.product._id) {
-                      angular.copy($scope.product, $scope.gridOptions.data[index]);
+                      angular.copy(newObject, $scope.gridOptions.data[index]);
                     }
                   });
                 } else { //if added
-                  $scope.gridOptions.data.push($scope.product);
+                  $scope.gridOptions.data.push(newObject);
                 }
                 $scope.product = {};
               }
@@ -94,6 +95,18 @@ angular.module('origApp.controllers')
           //edit product
           $scope.editProduct = function(product) {
             angular.copy(product, $scope.product);
+            for(var key in $scope.product){
+              if($scope.product[key].code){
+                $scope.product[key] = $scope.product[key].code;
+              }
+              if($scope.product[key]._id){
+                $scope.product[key] = $scope.product[key]._id;
+              }
+            }
+          };
+          
+          $scope.cancelEdit = function(){
+            $scope.product = {};
           };
 
 
