@@ -12,7 +12,7 @@ module.exports=utils={
 		var foundValue=_.find(arr,function(val,ky){
 			if(_.isObject(val)){
 				// console.log(val);
-				return (val[keyName]+'').toLowerCase()===(key||'').toLowerCase();
+				return (val[keyName]+'').toString().toLowerCase()===(key||'').toString().toLowerCase();
 			}
 
 			return val.toLowerCase()===ky.toLowerCase();

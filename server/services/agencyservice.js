@@ -114,7 +114,7 @@ service.saveAgencyContact = function(agencyId, contactDetails){
 }
 
 service.getAgency=function(id){
-	var q=db.Agency.findById(id).populate('branches.consultants.user');
+	var q=db.Agency.findById(id).populate('branches.consultants.user').populate('defaultInvoicing.invoiceDesign');
 	return Q.nfcall(q.exec.bind(q));
 }
 
@@ -390,6 +390,7 @@ service.saveAgencyPayroll = function(agencyId, defaultInvoicingDetails, defaultP
 		service.getAgency(agencyId)
 			.then(function(agency){
 				if(agency){
+
 					// Default Invoicing
 					utils.updateSubModel(agency.defaultInvoicing, defaultInvoicingDetails); // Edit
 					console.log(agency.defaultInvoicing);
@@ -397,8 +398,9 @@ service.saveAgencyPayroll = function(agencyId, defaultInvoicingDetails, defaultP
 					utils.updateSubModel(agency.defaultPayroll, defaultPayrollDetails); // Edit
 					console.log('here');
 					Q.nfcall(agency.save.bind(agency))
-					.then(function(agency){
+					.then(function(){
 						console.log('here');
+
 						resolve(agency);
 					},reject);
 				}else{
