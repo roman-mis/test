@@ -1,0 +1,218 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <base href="/" />
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/angular-notify/dist/angular-notify.css" />
+    <!-- endbower -->
+
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body class="animation" ng-app="demo" ng-controller="CubeCtrl">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-9">
+				<ol class="breadcrumb">
+				  <li class="active"><a class="pointer" ng-click="direction('back');go('/one')">Admin Home</a></li>
+				  <li><a href="#">Templates</a></li>
+				</ol>
+				
+				<div class="cube">
+					<div ng-view class="animate" style="width:100%;"></div>
+				</div>
+				<script type="text/ng-template" id="page1.html">
+				   <div class="row firstLevel-menu">
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0004-office.png" alt=""></p>
+								<h3 class="text-center">Company profile</h3>								
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0115-users.png" alt=""></p>
+								<h3 class="text-center">Users</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+						<a href="#">
+							<p class="admin-icon"><img src="/images/64px/0186-list-numbered.png" alt=""></p>
+							<h3 class="text-center">Lists</h3>
+						</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a class="pointer" ng-click="direction('front');go('/two')">
+								<p class="admin-icon"><img src="/images/64px/0371-insert-template.png" alt=""></p>
+								<h3 class="text-center">Templates</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a class="pointer" ng-click="direction('front');go('/three')">
+								<p class="admin-icon"><img  src="/images/64px/0034-library.png" alt=""></p>
+								<h3 class="text-center">HMRC</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img  src="/images/64px/0189-tree.png" alt=""></p>
+								<h3 class="text-center">Third party software integration</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0099-floppy-disk.png" alt=""></p>
+								<h3 class="text-center">Backups</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0185-clipboard.png" alt=""></p>
+								<h3 class="text-center">Data checking</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0062-coin-pound.png" alt=""></p>
+								<h3 class="text-center">Payment rate</h3>
+							</a>
+						</div>
+					</div>
+				</script>
+				
+				<script type="text/ng-template" id="page2.html">
+				   <div class="row secondLevel-menu">
+						<div class="col-xs-12" style="margin-bottom: 16px;">
+							<a class="pull-right pointer" ng-click="direction('back');go('/one')"><i class="fa fa-reply"></i>&nbsp; Back</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0101-database.png" alt=""></p>
+								<h3 class="text-center">Call Log Content</h3>								
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0275-spell-check.png" alt=""></p>
+								<h3 class="text-center">Task Content</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+						<a href="#">
+							<p class="admin-icon"><img src="/images/64px/0049-folder-open.png" alt=""></p>
+							<h3 class="text-center">Documents</h3>
+						</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0070-envelop.png" alt=""></p>
+								<h3 class="text-center"> Email</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0039-file-text2.png" alt=""></p>
+								<h3 class="text-center">Invoices</h3>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0005-newspaper.png" alt=""></p>
+								<h3 class="text-center"> Payslips</h3>
+							</a>
+						</div>	
+					</div>
+				</script>
+				<script type="text/ng-template" id="page3.html">
+					
+				   <div class="row secondLevel-menu">
+						<div class="col-xs-12">
+							<a class="pull-right pointer" ng-click="direction('back');go('/one')"><i class="fa fa-reply"></i>&nbsp; Back</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0265-notification.png" alt=""></p>
+								<h3 class="text-center">RTI Submissions</h3>								
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0156-stats-dots.png" alt=""></p>
+								<h3 class="text-center"> Approved Mileage Rates</h3>
+							</a>
+						</div>	
+						<div class="col-xs-6 col-sm-4 col-md-2">
+							<a href="#">
+								<p class="admin-icon"><img src="/images/64px/0370-table2.png" alt=""></p>
+								<h3 class="text-center"> Statutory tables</h3>
+							</a>
+						</div>			
+					</div>
+				</script>	
+			</div>
+			
+			<div class="col-sm-3">
+			
+			</div>
+		</div>
+	</div>
+  
+  
+   <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/angular-notify/dist/angular-notify.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+	
+	<script src="scripts/controllers/admin/CubeCtrl.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
