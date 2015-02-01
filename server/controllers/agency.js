@@ -249,9 +249,9 @@ module.exports = function(dbs){
 	}
 
 	controller.getConsultants=function(req,res){
-		agencyservice.getAgencyByBranchId(req.params.branchid)
-			.then(function(agency){
-				var allConsultantVms=_.map(agency.branches.id(req.params.branchid).consultants,function(consultant,idx){
+		agencyservice.getConsultants(req.params.branchid)
+			.then(function(branches){
+				var allConsultantVms=_.map(branches,function(consultant,idx){
 					var con=getConsultantVm(consultant);
 					return con;
 				});

@@ -130,15 +130,22 @@ service.getAgency=function(id){
 	return Q.nfcall(q.exec.bind(q));
 }
 
-service.getAgencyByBranchId=function(id){
-	var q=db.Agency.findOne({'branches._id':id}).populate('branches.consultants.user');
+// service.getAgencyByBranchId=function(id){
+// 	var q=db.Agency.findOne({'branches._id':id}).populate('branches.consultants.user');
+// 	return Q.nfcall(q.exec.bind(q));
+// }
+
+// service.getAgencyByConsultantId=function(id){
+// 	var q=db.Agency.findOne({'branches.consultants._id':id}).populate('branches.consultants.user');
+// 	return Q.nfcall(q.exec.bind(q));
+// }
+
+service.getConsultants=function(branchId){
+	var q=db.Consultant.find({'branch':branchId}).populate('agency').populate('branch').populate('user');
 	return Q.nfcall(q.exec.bind(q));
+
 }
 
-service.getAgencyByConsultantId=function(id){
-	var q=db.Agency.findOne({'branches.consultants._id':id}).populate('branches.consultants.user');
-	return Q.nfcall(q.exec.bind(q));
-}
 service.getConsultant=function(id){
 	return Q.Promise(function(resolve,reject){
 		var q=db.Consultant.findById(id).populate('agency').populate('branch').populate('user');
