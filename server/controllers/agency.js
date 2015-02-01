@@ -114,15 +114,15 @@ module.exports = function(dbs){
 	  		address3: req.body.address3,			
 	  		town: req.body.town,				
 	  		country: req.body.country,			
-	  		postcode: req.body.postcode,		
+	  		postCode: req.body.postCode,		
 	  		companyRegNo: req.body.companyRegNo,	
 	  		companyVatNo: req.body.companyVatNo,
 	  		logoFileName:req.body.logoFileName
 		};
 
-		agencyservice.saveAgency(agencyDetails, (type == 'patch'?req.params.id:null)).then(function(agency){
+		agencyservice.saveAgency(agencyDetails, (type == 'patch'?req.params.id:null)).then(function(result){
 			//REVIEW: using vm here too
-			var vm = getAgencyVm(agency);
+			var vm = getAgencyVm(result.agency);
 			res.json({result:true, object:vm});
 			// res.json({result:true, object:response});
 		},function(err){
@@ -172,12 +172,12 @@ module.exports = function(dbs){
 	}
 
 	controller.getBranch = function(req,res){
-		agencyservice.getAgencyByBranchId(req.params.id)
-		.then(function(agency){
-			if(agency){
-				res.json({result:true, object: getBranchVm(agency.branches.id(req.params.id))});
+		agencyservice.getBranch(req.params.id)
+		.then(function(branch){
+			if(branch){
+				res.json({result:true, object: getBranchVm(branch)});
 			}else{
-				res.json({result:true, object: null});
+				res.json({result:false, object: null});
 			}
 		},res.sendFailureResponse);
 	}
@@ -197,9 +197,11 @@ module.exports = function(dbs){
 	}
 
 	controller.getBranches=function(req,res){
-		agencyservice.getAgency(req.params.id)
-		.then(function(agency){
-			var allBranchVms=_.map(agency.branches, function(branch,key){
+		agencyservice.getBranches({'agency':req.params.id})
+		.then(function(branches){
+			console.log('branches here');
+			console.log(branches);
+			var allBranchVms=_.map(branches, function(branch,key){
 				var con=getBranchVm(branch);
 				return con;
 			});
@@ -215,7 +217,7 @@ module.exports = function(dbs){
 	    	address2:            req.body.address2,
 	    	address3:            req.body.address3,
 			town:                req.body.town,
-	    	postcode:            req.body.postcode,
+	    	postCode:            req.body.postCode,
 	    	branchType: 		 "BRANCH"
 		}
 		agencyservice.postBranch(req.params.id, branchInfo)
@@ -231,7 +233,7 @@ module.exports = function(dbs){
 	    	address2:            req.body.address2,
 	    	address3:            req.body.address3,
 			town:                req.body.town,
-	    	postcode:            req.body.postcode
+	    	postCode:            req.body.postCode
 		}
 		agencyservice.patchBranch(req.params.id, branchInfo)
 			.then(function(response){
@@ -390,7 +392,7 @@ module.exports = function(dbs){
 				if(	consultant.user){
 					console.log('consultant found');
 					// console.log(consultant);
-					userservice.sendChangePasswordEmail(consultant.user._id,req.user._id)
+					return userservice.sendChangePasswordEmail(consultant.user._id,req.user._id)
 					.then(function(response){
 						if(response.result){
 							res.json({result:true,message:'Change password link sent successfully'});
@@ -398,7 +400,7 @@ module.exports = function(dbs){
 						else{
 							res.json({result:false,message:response.message});	
 						}
-					});
+					},res.sendFailureResponse);
 				}
 				else{
 					res.sendFailureResponse({result:false,name:'NOTFOUND',message:'User profile not found'});
@@ -561,7 +563,7 @@ module.exports = function(dbs){
 		    address2: branch.address2,
 		    address3: branch.address3,
 			town: branch.town,
-		    postcode: branch.postcode,
+		    postCode: branch.postCode,
 		    branchType: branch.branchType,
 		    consultants: allConsultantVms
 		};

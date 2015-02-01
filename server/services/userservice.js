@@ -123,7 +123,7 @@ service.createUser=function(opt, user){
 	var deff=Q.defer();
 	db.User.findOne({emailAddress: user.emailAddress},function(err, existingUser){
 		if(existingUser){
-			console.log('create user');
+			console.log('create user duplicate records');
 			var response ={ 
 				name: 'DuplicateRecordExists',
 				message: 'Email address '+user.emailAddress+' already taken'
@@ -301,11 +301,11 @@ service.activateUser=function(user,newPassword){
 service.sendChangePasswordEmail=function(id,generateBy){
 	// console.log('sendChangePasswordEmail');
 	return Q.Promise(function(resolve,reject){
-		service.getUser(id)
+		return service.getUser(id)
 			.then(function(user){
 				if(user){
 					console.log('user found');
-					service.generateCodeAndSendEmail(user,enums.codeTypes.ChangePassword,generateBy)
+					return service.generateCodeAndSendEmail(user,enums.codeTypes.ChangePassword,generateBy)
 					.then(function(response){
 						resolve(response);
 					},reject);
@@ -320,10 +320,10 @@ service.generateCodeAndSendEmail=function(user,codeType,generateBy){
 	console.log('generateCodeAndSendEmail');
 	return Q.Promise(function(resolve,reject){
 		
-		service.generateCode(user,codeType,generateBy)
+		return service.generateCode(user,codeType,generateBy)
 			.then(function(code){
 				console.log('sending code email');
-				service.sendCodeEmail(user,code,{subject:'Change password link'})
+				return service.sendCodeEmail(user,code,{subject:'Change password link'})
 					.then(function(){
 						resolve({result:true,object:{user:user,code:code}});
 					},reject);
@@ -364,7 +364,7 @@ service.sendCodeEmail=function(user,code,opt){
 			var mailModel={activationLink:activationLink,title:user.title,firstName:user.firstName,lastName:user.lastName};
 			var mailOption=_.assign(opt||{},{to:user.emailAddress});
 			console.log('calling sendEmail');
-			return mailer.sendEmail(mailOption,mailModel,'userChangePassword')
+			return mailer.sendEmail(mailOption,mailModel,'user_change_password')
 			.then(function(){
 				console.log('email sent');
 				resolve();

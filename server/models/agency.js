@@ -5,29 +5,6 @@ var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
   	
-	var consultantSchema=BaseSchema({
-		firstName:       {type:String,required:false,trim:true},
-    lastName:        {type:String,required:false,trim:true},
-    emailAddress:    {type:String},
-    phone:            {type:String},
-    role:             {type:String},
-    status:           {type:String},
-    user:             {type:Schema.Types.ObjectId,ref:'User'}
-	})
-
-	var branchSchema=BaseSchema({
-		name:{type:String,required:true},
-    address1:            {type:String},
-    address2:            {type:String},
-    address3:            {type:String},
-		town:                {type:String},
-    postcode:            {type:String},
-    branchType:         {type:String},
-
-		consultants:[consultantSchema]
-	});
-
-
 	var schema = BaseSchema({
 		name: 				       {type:String},
 		// agencyType: 		     {type:String},
@@ -36,7 +13,7 @@ module.exports = function(mongoose) {
 		address3: 			     {type:String},
 		town: 				       {type:String},
 		country: 			       {type:String},
-		postcode: 			     {type:String},
+		postCode: 			     {type:String},
 		companyRegNo: 	   {type:String},
 		companyVatNo: 	   {type:String},
     logoFileName:      {type:String},
@@ -78,7 +55,7 @@ module.exports = function(mongoose) {
       perTimesheet:          {type:Number},
       timesheetGross:        {type:Number}
     },
-		branches:[branchSchema]
+		branches:[{type:Schema.Types.ObjectId,ref:'Branch'}]
 	},{});
 	// mongoose.model('AgencyBranch',branchSchema);
   	return mongoose.model('Agency',schema);

@@ -67,8 +67,8 @@ module.exports = function(mongoose,autoIncrement) {
         },
         payrollProduct:[{
             agency:                   {type:Schema.Types.ObjectId,ref:'Agency'},
-            branch:                   {type:Schema.Types.ObjectId,ref:'Agency.branches'},
-            consultant:               {type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
+            branch:                   {type:Schema.Types.ObjectId,ref:'Branch'},
+            consultant:               {type:Schema.Types.ObjectId,ref:'Consultant'},
             agencyRef:                  {type:String},
             margin:                      {type:String},
             marginFixed:                {type:Number},

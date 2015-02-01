@@ -15,33 +15,35 @@ module.exports={
 			generateTextFromHTML: true
 		});
 		
-		var deff=Q.defer();
-		// console.log('compiling template');
-		// console.log(model);
-		//deff.resolve();
-		//return deff.promise;
-		var mailContent=compileTemplate(model,mailType);
-		var transporter=createTransport();
-		opt.html=mailContent;
+		return Q.Promise(function(resolve,reject){
 
-		// console.log('options');
-		 console.log(opt);
-		
-		
-		// awsConfig
-		transporter.sendMail(opt,function(err,result){
-			transporter.close();
-			console.log(err);
-			console.log(result);
-			if(err){
-				deff.reject(err,result);
+			// console.log('compiling template');
+			// console.log(model);
+			//deff.resolve();
+			//return deff.promise;
+			var mailContent=compileTemplate(model,mailType);
+			var transporter=createTransport();
+			opt.html=mailContent;
 
-			}
-			else{
-				deff.resolve(result);
-			}
+			// console.log('options');
+			 console.log(opt);
+			
+			
+			// awsConfig
+			return transporter.sendMail(opt,function(err,result){
+				transporter.close();
+				console.log(err);
+				console.log(result);
+				if(err){
+					reject(err,result);
+
+				}
+				else{
+					resolve(result);
+				}
+			});
+		
 		});
-		return deff.promise;
 	}
 }
 

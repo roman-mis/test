@@ -21,6 +21,9 @@ module.exports = function(dbs){
     var controller={};
     var awsService=require('../services/awsservice');
 
+    controller.postExpense=function(req,res){
+
+    };
 
     controller.getAgencies = function(req, res){
       candidateservice.getUserAgencies(req.params.id)
