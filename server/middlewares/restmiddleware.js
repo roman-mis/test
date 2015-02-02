@@ -82,7 +82,7 @@ module.exports=function(db){
 					//console.log('validating with  '+itm);
 					if(q.toLowerCase().indexOf('_'+itm)>=0){
 						//console.log('looks like valid ');
-						filterName=q.toLowerCase().replace('_'+itm,'');
+						filterName=q.replace('_'+itm,'');
 						operator =itm;
 						return false;
 					}
