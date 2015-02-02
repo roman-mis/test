@@ -25,12 +25,11 @@ angular.module('origApp.controllers')
           $scope.agencies = HttpResource.model('agencies').query({});
         })
         .controller('CandidateSidebarAddExpenses3Controller', function($scope, HttpResource) {
-          $scope.minDate = new Date();
-          $scope.expenseData.claimDate = new Date();
+          var currentDate = new Date();
+          $scope.minDate = currentDate;
+          $scope.expenseData.claimDate = currentDate;
   
           $scope.$watch('expenseData.claimDate', function(){
-            console.log($('#claim_datepicker'));
-            
             setTimeout(function(){
               var that = $('#claim_datepicker td > .btn.active.btn-info');
               if(that.length === 1){
@@ -50,6 +49,10 @@ angular.module('origApp.controllers')
             $scope.expenseData.claimDateRange = [];
             $scope.expenseData.claimDateRange[0] = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
             $scope.expenseData.claimDateRange[1] = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+            if($scope.expenseData.claimDateRange[0] < currentDate){
+              $scope.expenseData.claimDateRange[0] = currentDate;
+            }
+            //console.log($scope.expenseData.claimDateRange);
             $scope.gotoNext();
           };
         });
