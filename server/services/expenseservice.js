@@ -8,7 +8,6 @@ service.saveExpenses = function(expenseDetails){
 	var deff = Q.defer();
 	var expenseModel;
 	expenseModel = new db.Expense(expenseDetails);
-	console.log(expenseModel);
 	expenseModel.save(function(err){
 		if(err){
 			deff.reject(err);
