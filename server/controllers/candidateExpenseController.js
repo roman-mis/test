@@ -1,20 +1,8 @@
 'use strict';
 
 
-module.exports = function(dbs){
-	var express = require('express'),
-    jwt = require('jsonwebtoken'),
-	db = dbs,
-	router = express.Router(),
-	expenseservice=require('../services/expenseservice'),
-	utils=require('../utils/utils'),
-	expressJwt = require('express-jwt'),
-	restMiddleware=require('../middlewares/restmiddleware'),
-	fs=require('fs'),
-	path=require('path')
-	;
-	var awsservice=require('../services/awsservice');
-
+module.exports = function(){
+	var expenseservice=require('../services/expenseservice');
 	var controller={};
 
 	controller.postExpenses=function (req, res) {
@@ -28,11 +16,10 @@ module.exports = function(dbs){
 		};
 
 		expenseservice.saveExpenses(newExpense).then(function(response){
-			res.json({result:true, object:newExpense});
+			res.json({result:true, object:response});
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
-	}
-	
-  return controller;
+	};
+  	return controller;
 };
