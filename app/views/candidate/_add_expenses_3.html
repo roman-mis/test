@@ -1,15 +1,26 @@
-<div class="candidate-modal">
-	<div class="modal-body">
-		<p>You have selected the online wizard <br />
-		You can now select to add multiple days or an individual claim <br />	
-		Please select one of the following:</p>
-		<ul class="button-container-center">
-			<li class="text-center"><button class="btn btn-primary" ng-click="ok()">Single</button></li>
-			<li class="text-center"><button class="btn btn-primary" ng-click="ok()">Multiple</button></li>
-		</ul>
-	</div>
-	<div class="modal-footer">
-		<a class="padding-10 pointer" ng-click="back()">Back</a>
-		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
-	</div>
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExpenses3Controller">
+  <div class="modal-header modal-headerExpenses">
+    <h4 class="modal-title" id="myModalLabel">Expenses #1 | Claim Dates</h4>
+    <small>Select a week range from the date piker below.</small>
+  </div><!-- /modal-header -->
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-xs-10 col-sm-9">
+        <p class="underlineText">Select Range</p>
+        <datepicker ng-model="expenseData.claimDate" 
+                    format-day="d" 
+                    min-date="minDate" 
+                    show-weeks="false" 
+                    id="claim_datepicker" 
+                    class="inline-datepicker-center"></datepicker>
+      </div>
+    </div>
+  </div><!-- /modal-body -->
+
+  <div class="modal-footer">
+    <a href="" class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()">Next</button>
+  </div><!-- /modal footer -->
 </div>

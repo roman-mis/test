@@ -1,19 +1,18 @@
-<div class="candidate-modal">
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExpenses2Controller">
 	<div class="modal-header">
 		<h3 class="modal-title">Please select the Agency your expense claim relates to</h3>
 	</div>
 	<div class="modal-body">
 		<div class="div-center">
-			<p class="text-center">
-				<ui-select ng-model="data.agency" theme="select2" search-enabled="true">
-					<ui-select-match placeholder="Select an agency">{{data.agency.description}}</ui-select-match>
-					<ui-select-choices repeat="item in priorities | filter: $select.search">{{item.description}}</ui-select-choices>
-				</ui-select>
-			</p>	
-		</div>		
+      <ui-select ng-model="expenseData.agency" theme="select2" search-enabled="true">
+        <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+      </ui-select>
+		</div>
 	</div>
 	<div class="modal-footer">
-		<a class="padding-10 pointer" ng-click="back()">Back</a>
-		<button class="btn btn-primary" ng-click="ok()">NEXT</button>
+    <a href="" ng-click="gotoPrevious()" class="btn pull-left"><i class="fa fa-chevron-left"></i></a>
+		<a class="padding-10 pointer" ng-click="cancel()">Cancel</a>
+		<button class="btn btn-primary" ng-click="gotoNext()" ng-disabled="!expenseData.agency">Next</button>
 	</div>
 </div>
