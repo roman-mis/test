@@ -162,7 +162,8 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/{,*/}*.js',
+          'server/{,*/}*.js'
         ]
       },
       test: {
@@ -445,6 +446,7 @@ module.exports = function (grunt) {
   });
 
 
+
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -460,6 +462,7 @@ module.exports = function (grunt) {
       'configureProxies',
       'develop',
       'watch'
+      
     ]);
   });
 
@@ -474,6 +477,10 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma'
+  ]);
+
+  grunt.registerTask('validate', [
+     'newer:jshint'
   ]);
 
   grunt.registerTask('build', [
