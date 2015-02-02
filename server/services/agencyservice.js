@@ -337,7 +337,7 @@ service.postConsultant=function(branchId, consultantInfo){
 
 								
 							},reject);
-						}else{
+						} else{
 							reject({result:false,name:'NOTFOUND',message:'Branch not found'});
 						}
 					
