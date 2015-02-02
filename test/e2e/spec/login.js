@@ -22,14 +22,14 @@ describe('Browse to sign in', function() {
   });
 
   it('should outline in red invalid fields', function () {
-    var login = element(by.model('email_address'));
+    var login = element(by.model('emailAddress'));
     expectInvalid(login);
 
     var pass = element(by.model('password'));
     expectInvalid(pass);
 
-    login.sendKeys('oli@makeitsimple.info');
-    pass.sendKeys('passw0rd123');
+    login.sendKeys('ishwor@makeitsimple.info');
+    pass.sendKeys('passw0rd');
 
     logButton.click();
 
