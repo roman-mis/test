@@ -67,9 +67,9 @@ angular.module('origApp.controllers')
 
           $scope.openAddExpensesWin = function() {
             ModalService.open({
-              templateUrl: 'views/candidate/_add_expenses.html',
+              templateUrl: 'views/candidate/_add_exp.html',
               parentScope: $scope,
-              controller: 'CandidateSidebarAddExpensesController'
+              controller: 'CandidateSidebarAddExpController'
             });
           };
         })
