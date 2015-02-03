@@ -126,7 +126,9 @@ service.saveAgencyContact = function(agencyId, contactDetails){
 
 service.getAgency=function(id){
 	console.log('getAgency');
-	var q=db.Agency.findById(id).populate('defaultInvoicing.invoiceDesign');
+	var q=db.Agency.findById(id)
+	.populate('defaultInvoicing.invoiceDesign')
+	.populate('defaultInvoicing.invoiceTo');
 	return Q.nfcall(q.exec.bind(q));
 }
 
