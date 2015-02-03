@@ -84,7 +84,7 @@ angular.module('origApp.controllers')
               return (typeof ($scope.addData.date) === 'string' && val.date === $scope.addData.date)
                       || (typeof ($scope.addData.date) === 'object' && typeof (val.date) === 'object' && val.date.getTime() === $scope.addData.date.getTime());
             });
-            $scope.alreadyAdded = filtered.length > 0;
+            $scope.alreadyAdded = $scope.addData.date && filtered.length > 0;
           };
 
           $scope.add = function() {

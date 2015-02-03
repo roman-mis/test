@@ -61,8 +61,8 @@ describe('Browse to sign up', function() {
     element(by.className('select2-result-single')).click();
     expect(select.getAttribute('class')).toContain('ng-valid');
 
-    validateInputByModel('candidate.details.firstName','Roman');
-    validateInputByModel('candidate.details.lastName','Konstantinov');
+    validateInputByModel('candidate.details.firstName','Test');
+    validateInputByModel('candidate.details.lastName','Tester');
 
     // email test
     var input = element(by.model('candidate.details.emailAddress'));
@@ -83,16 +83,13 @@ describe('Browse to sign up', function() {
 
     nextBtn.click();
   });
- it('should navigate to step2 page ', function() {
- browser.wait(function() {
- return browser.getCurrentUrl().then(function(url) {
- return (url.indexOf('step2') !== -1);
- });
- });
- });
-
-
-
+  it('should navigate to step2 page ', function () {
+    browser.wait(function () {
+      return browser.getCurrentUrl().then(function (url) {
+        return (url.indexOf('step2') !== -1);
+      });
+    });
+  });
 
 
   it('step2 form should have no errors', function() {
