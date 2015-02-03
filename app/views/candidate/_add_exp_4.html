@@ -6,7 +6,7 @@
   <div class="modal-body">
     <form class="form-inline row">
       <div class="form-group col-sm-4 col-xs-5">
-        <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in days" ng-change="onDateChanged()">
+        <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
           <option value="">- Select -</option>
         </select>
       </div>
