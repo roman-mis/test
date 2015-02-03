@@ -10,7 +10,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   suites: {
-    main:['./spec/login.js'],
+    main:['./spec/reg.js','./spec/check-inbox.js'],
     reg: './spec/reg.js',
     login: './spec/login.js',
     candidates: ['./spec/login.js','./spec/candidates.js'],
@@ -23,6 +23,7 @@ exports.config = {
       savePath: 'protractor-results',
       consolidateAll: false
     }));
+    jasmine.getEnv().addReporter(new jasmineReporters.TerminalReporter({verbosity: 3}));
   },
   jasmineNodeOpts: {
     showColors: true,

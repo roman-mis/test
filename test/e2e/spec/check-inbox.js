@@ -3,8 +3,8 @@ describe('Checking mailbox', function() {
 
   it('should navigate to gmail.com',function(){
     browser.driver.get('http://gmail.com');
-/*    var loginBtn = browser.driver.findElement(by.css('.btn.red'));
-    loginBtn.click();*/
+    /*    var loginBtn = browser.driver.findElement(by.css('.btn.red'));
+     loginBtn.click();*/
   });
 
   it('match the proper login page url', function () {
@@ -48,9 +48,9 @@ describe('Checking mailbox', function() {
   });
 
   it('should follow emaik link in email',function(){
-  //  browser.driver.findElement(by.css('div.msg a')).click();
+    //  browser.driver.findElement(by.css('div.msg a')).click();
     browser.driver.findElement(by.css('div.msg a')).getAttribute('href').then(function(href){
-        browser.driver.get(href);
+      browser.driver.get(href);
     });
   });
 

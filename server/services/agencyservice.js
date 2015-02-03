@@ -124,9 +124,16 @@ service.saveAgencyContact = function(agencyId, contactDetails){
 	});
 }
 
-service.getAgency=function(id){
-	console.log('getAgency');
-	var q=db.Agency.findById(id).populate('defaultInvoicing.invoiceDesign');
+service.getAgency=function(id, populate){
+	populate = typeof populate !== 'undefined' ? populate : false;
+	var q=db.Agency.findById(id)
+	.populate('defaultInvoicing.invoiceDesign');
+	
+	if(populate){
+		console.log('populate with invoiceTo');
+		q.populate('branches').populate('defaultInvoicing.invoiceTo');
+	}
+	
 	return Q.nfcall(q.exec.bind(q));
 }
 

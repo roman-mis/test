@@ -14,7 +14,6 @@ module.exports=utils={
 				// console.log(val);
 				return (val[keyName]+'').toString().toLowerCase()===(key||'').toString().toLowerCase();
 			}
-			
 			return val.toLowerCase()===key.toLowerCase();
 		});
 
