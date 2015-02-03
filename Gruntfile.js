@@ -447,7 +447,7 @@ module.exports = function (grunt) {
       options: {
         // Task-specific options go here.
       },
-      test: {},
+      test: {}
     },
     protractor: {
       options: {
