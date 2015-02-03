@@ -90,9 +90,9 @@ module.exports = function(dbs){
 	}
 
 	controller.getAgency=function(req,res){
-		agencyservice.getAgency(req.params.id)
+		agencyservice.getAgency(req.params.id, true)
 			.then(function(agency){
-				var vm=getAgencyVm(agency);
+				var vm=getAgencyVm(agency, true);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
 	}
@@ -301,7 +301,19 @@ module.exports = function(dbs){
 			},res.sendFailureResponse);
 	}
 
-	function getAgencyVm(agency){
+	function getAgencyVm(agency, branches){
+		branches = typeof branches !== 'undefined' ? branches : false;
+		var _branches = agency.branches;
+		if(branches){
+			_branches = [];
+			_.forEach(agency.branches, function(branch){
+				var _branch = {
+					_id: branch._id,
+					name: branch.name
+				};
+				_branches.push(_branch);
+			});
+		}
 		return {
 			_id:agency._id,
 			name:agency.name,
@@ -313,7 +325,7 @@ module.exports = function(dbs){
 			postCode: agency.postCode,
 			companyRegNo: agency.companyRegNo,
 			companyVatNo: agency.companyVatNo,
-			branches: agency.branches
+			branches: _branches
 		};
 	}
 
