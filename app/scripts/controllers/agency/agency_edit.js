@@ -10,7 +10,7 @@ angular.module('origApp.controllers')
             {name: 'address3', label: 'Address 3'},
             {name: 'town', label: 'Town'},
             {name: 'country', label: 'Country'},
-            {name: 'postcode', label: 'Postcode'},
+            {name: 'postCode', label: 'Postcode'},
             {name: 'companyRegNo', label: 'Company Reg No.'},
             {name: 'companyVatNo', label: 'Company VAT No.'}
           ];
