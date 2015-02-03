@@ -121,8 +121,7 @@ module.exports = function(dbs){
 		};
 
 		agencyservice.saveAgency(agencyDetails, (type == 'patch'?req.params.id:null)).then(function(result){
-			//REVIEW: using vm here too
-			var vm = getAgencyVm(result.agency);
+			var vm = getAgencyVm(result.agency, result.branch);
 			res.json({result:true, object:vm});
 			// res.json({result:true, object:response});
 		},function(err){
@@ -303,21 +302,19 @@ module.exports = function(dbs){
 	}
 
 	function getAgencyVm(agency){
-		//console.log(agency);
-		return agency;
-		// return {
-		// 	_id:agency._id,
-		// 	name:agency.name,
-		// 	// agencyType: agency.agencyType,
-		// 	address1: agency.address1,
-		// 	address2: agency.address2,
-		// 	address3: agency.address3,
-		// 	town: agency.town,
-		// 	country: agency.country,
-		// 	postcode: agency.postcode,
-		// 	companyRegNo: agency.companyRegNo,
-		// 	companyVatNo: agency.companyVatNo
-		// };
+		return {
+			_id:agency._id,
+			name:agency.name,
+			address1: agency.address1,
+			address2: agency.address2,
+			address3: agency.address3,
+			town: agency.town,
+			country: agency.country,
+			postcode: agency.postcode,
+			companyRegNo: agency.companyRegNo,
+			companyVatNo: agency.companyVatNo,
+			branches: agency.branches
+		};
 	}
 
 	controller.getAgencyPayroll = function(req, res){
@@ -431,11 +428,10 @@ module.exports = function(dbs){
 	      	}
 	      	
 			function build(agency){
-				
+				console.log(agency);
 				var invoiceDesign=agency.defaultInvoicing.invoiceDesign||{};
-
+				
 				var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
-
 
 				var payrollVm={
 				_id: agency._id,
@@ -570,6 +566,7 @@ module.exports = function(dbs){
 	}
 
 	function getConsultantVm(consultant){
+		console.log(consultant);
 		var user=consultant.user||{};
 		var contactDetail=user.contactDetail||{};
 		var status=utils.findInArray(dataList.StatusList,consultant.status,"code")||{};

@@ -7,7 +7,8 @@ module.exports = function(){
 	var controller={};
 
 	controller.postExpenses=function (req, res) {
-		var expense = JSON.parse(req.body.expense);		
+		// var expense = JSON.parse(req.body.expense);		
+		var expense = req.body;		
 		var days = [];
 		_.forEach(expense.days, function(day){
 			
