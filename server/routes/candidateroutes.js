@@ -9,6 +9,7 @@ var express = require('express'),
 	candidatepayrollcontroller = require('../controllers/candidates-payroll')(db),
 	historycontroller = require('../controllers/history')(),
 	pendingonboardingcontroller = require('../controllers/pendingonboarding')(db),
+	expensecontroller = require('../controllers/candidateExpenseController')(),
 	expressJwt = require('express-jwt'),
 	restMiddleware=require('../middlewares/restmiddleware'),
 	taskcontroller = require('../controllers/task')(db),
@@ -72,3 +73,6 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 // router.get('/:id/document/signuploadurl',candidatecontroller.getUploadDocumentSignedUrl);
 // router.get('/:id/document/signgeturl',candidatecontroller.getDownloadDocumentSignedUrl);
 // router.get('/:id/document/:generatedName',candidatecontroller.getDocument);
+
+
+router.post('/:id/expenses', expensecontroller.postExpenses);
