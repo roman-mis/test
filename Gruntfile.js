@@ -62,13 +62,13 @@ module.exports = function (grunt) {
         }
       },
       nodejs: {
-          files: [
-              'server/**/*.js',
-              'server/**/*.json',
-              'server/*.js'
-          ],
-          tasks: ['env:all','develop'],
-          options: { nospawn: true }
+        files: [
+          'server/**/*.js',
+          'server/**/*.json',
+          'server/*.js'
+        ],
+        tasks: ['env:all','develop'],
+        options: { nospawn: true }
       },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
@@ -442,10 +442,25 @@ module.exports = function (grunt) {
         },
         src:['test/**/*.js']
       }
+    },
+    protractor_webdriver: {
+      options: {
+        // Task-specific options go here.
+      },
+      test: {},
+    },
+    protractor: {
+      options: {
+        configFile: "test/e2e/conf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        args: {
+          // Arguments passed to the command
+        }
+      },
+      all: {},
     }
   });
-
-
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -462,9 +477,11 @@ module.exports = function (grunt) {
       'configureProxies',
       'develop',
       'watch'
-      
+
     ]);
   });
+
+  grunt.loadNpmTasks('grunt-protractor-webdriver');
 
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
@@ -480,7 +497,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('validate', [
-     'newer:jshint'
+    'newer:jshint'
   ]);
 
   grunt.registerTask('build', [
@@ -501,21 +518,21 @@ module.exports = function (grunt) {
   ]);
   grunt.registerTask('temp', [
     'clean:dist',
-    
+
     'imagemin'
-    
+
   ]);
 
   grunt.registerTask('disttest',[
-  		'build',
-  		'env:disttest',
-  		'concurrent:server',
-      'autoprefixer',
-      'connect:livereload',
-      'configureProxies',
-  		'develop',
-      'watch'
-  	]);
+    'build',
+    'env:disttest',
+    'concurrent:server',
+    'autoprefixer',
+    'connect:livereload',
+    'configureProxies',
+    'develop',
+    'watch'
+  ]);
 
   grunt.registerTask('default', [
     'newer:jshint',
@@ -524,6 +541,12 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('mochatest',[
-      'mochaTest:test'
-    ])
+    'mochaTest:test'
+  ])
+
+  grunt.registerTask('test', [
+    'protractor_webdriver',
+    'protractor'
+  ]);
+
 };
