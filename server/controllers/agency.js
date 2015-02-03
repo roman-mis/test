@@ -310,7 +310,7 @@ module.exports = function(dbs){
 			address3: agency.address3,
 			town: agency.town,
 			country: agency.country,
-			postcode: agency.postcode,
+			postCode: agency.postCode,
 			companyRegNo: agency.companyRegNo,
 			companyVatNo: agency.companyVatNo,
 			branches: agency.branches
@@ -430,7 +430,7 @@ module.exports = function(dbs){
 			function build(agency){
 				console.log(agency);
 				var invoiceDesign=agency.defaultInvoicing.invoiceDesign||{};
-				
+
 				var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
 
 				var payrollVm={
