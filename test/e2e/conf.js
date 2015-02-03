@@ -23,6 +23,7 @@ exports.config = {
       savePath: 'protractor-results',
       consolidateAll: false
     }));
+    jasmine.getEnv().addReporter(new jasmineReporters.TerminalReporter({verbosity: 3}));
   },
   jasmineNodeOpts: {
     showColors: true,
