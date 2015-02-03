@@ -424,26 +424,29 @@ module.exports = function(dbs){
 
 
 	function getAgencyPayrollVm(agencyOld,reload){
-      	return Q.Promise(function(resolve,reject){
+		return Q.Promise(function(resolve,reject){
       		console.log('getting agency again for payroll vm');
-	      	if(reload){
-	      		return agencyservice.getAgency(agencyOld._id)
+	      	// if(reload){
+	      		return agencyservice.getAgency(agencyOld._id, true)
 	      		.then(function(agency){
 	      			console.log('got agency again....');
 				
 	      			build(agency);
 
 	      		},reject);
-	      	}
-	      	else{
-	      		build(agencyOld);
-	      	}
+	      	// }
+	      	// else{
+	      	// 	console.log('No reload');
+	      	// 	build(agencyOld);
+	      	// }
 	      	
 			function build(agency){
 				console.log(agency);
 				var invoiceDesign=agency.defaultInvoicing.invoiceDesign||{};
 
-				var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
+				// var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
+				
+
 
 				var payrollVm={
 				_id: agency._id,
@@ -461,8 +464,8 @@ module.exports = function(dbs){
 				  invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
 				  paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
 				  invoiceTo: {
-				  	_id: invoiceTo._id,
-				  	name: invoiceTo.name
+				  	_id: agency.defaultInvoicing.invoiceTo._id,
+				  	name: agency.defaultInvoicing.invoiceTo.name
 				  }
 				},
 				defaultPayroll:{
