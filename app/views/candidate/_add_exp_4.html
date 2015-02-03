@@ -105,13 +105,19 @@
         <table class="table table-striped ">
           <thead>
             <tr>
-              <th>Date <span class="pull-right"><a  href="#"><i class="fa fa-caret-up"></i></a><a class="sortCaret" href="#"><i class="fa fa-caret-down"></i></a></span></th>
+              <th>Date 
+                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                  <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                  <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                  <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                </a>
+              </th>
               <th>Start</th>
               <th>End</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="doctime in expenseData.documentTimes">
+            <tr ng-repeat="doctime in expenseData.documentTimes| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
               <td>{{doctime.date==='all'?'All dates in selection':(doctime.date|formatDate:'ddd DD/MM/YYYY')}}</td>
               <td>{{doctime.startTime}}</td>
               <td>{{doctime.endTime}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
@@ -124,6 +130,6 @@
   <div class="modal-footer">
     <a href="" class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
     <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="expenseData.documentTimes.length==0">Next</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="expenseData.documentTimes.length == 0">Next</button>
   </div>
 </div>
