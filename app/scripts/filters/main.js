@@ -7,7 +7,7 @@
  * # fromvaild
  */
 angular.module('origApp.filters', [])
-        .filter('formatDate', function($filter) {
+        .filter('formatDate', function() {
           return function(input, format) {
             format = format || 'DD/MM/YYYY HH:mm:ss';
             if (input === undefined) {
@@ -15,4 +15,4 @@ angular.module('origApp.filters', [])
             }
             return moment(input).format(format);
           };
-        })
+        });

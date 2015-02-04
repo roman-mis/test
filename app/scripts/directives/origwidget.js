@@ -18,7 +18,7 @@ angular.module('origApp.directives')
                 },
                 templateUrl: 'views/partials/origwidget.html',
                 replace: true,
-                link: function($scope, ele, attrs, c) {
+                link: function() {
                    return true;
                 }
             };

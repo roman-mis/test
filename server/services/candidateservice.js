@@ -1,20 +1,18 @@
-// 'use strict';
+'use strict';
 
 var db = require('../models');
 var Q=require('q');
 // var Promise=require('promise');
-var _=require('lodash');
+// var _=require('lodash');
 // var Sequelize=require('sequelize');
 var mailer=require('../mailing/mailer');
 var uuid = require('node-uuid');
-var url=require('url');
 var service={};
 var utils=require('../utils/utils');
 var queryutils=require('../utils/queryutils')(db);
 var awsservice=require('../services/awsservice');
 var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 var enums=require('../utils/enums');
-var path=require('path');
 var dataList=require('../data/data_list.json');
 // service.simpleTest=function(someparam){
 // 	return 'you sent me '+someparam;
@@ -24,7 +22,7 @@ var dataList=require('../data/data_list.json');
 service.getUserAgencies=function(id){
 	var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 	return Q.nfcall(query.exec.bind(query));
-}
+};
 
 service.getUserByEmail=candidatecommonservice.getUserByEmail;
 
@@ -39,7 +37,7 @@ service.getAllCandidates=function(request){
 		.then(resolve,reject);
 	});
 	
-}
+};
 
 service.uploadDocuments=function(id,documents){
 	return Q.Promise(function(resolve,reject){
@@ -52,7 +50,7 @@ service.uploadDocuments=function(id,documents){
 					//console.log(user);
 		         	///add document to user if applicable
 		         	//console.log(user.documents);
-		         	_.forEach(documents,function(doc,idx){
+		         	_.forEach(documents,function(doc){
 
 		         		var document=user.documents.create(doc);
 
@@ -64,8 +62,8 @@ service.uploadDocuments=function(id,documents){
      				var o=[];Q.Promise(function(){});
      				_.forEach(documents,function(doc){
      					
-     					var data=doc.data;
-     					var mimetype=doc.mimeType;
+     					// var data=doc.data;
+     					// var mimetype=doc.mimeType;
      					var newFileName=doc.generatedName;
      					// console.log('am here');
      					// console.log(dataList.DocumentTypes);
@@ -104,9 +102,18 @@ service.uploadDocuments=function(id,documents){
 		        }
 			},reject);
 	});
+};
+
+function sendMail(opt,userModel){
+		var newActivationLink=opt.activationLink+'/'+userModel.activationCode;
+
+		var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
+					activationLink:newActivationLink};
+		var mailOption={to:userModel.emailAddress};
+			return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
 }
 
-service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
+service.signup=function(opt,user,worker){
 	var deff=Q.defer();
 	db.User.findOne({emailAddress: user.emailAddress},function(err,existingUser){
 		if(existingUser) {
@@ -149,7 +156,7 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 
 					if(hasError){
 						console.log('there are errors');
-						response.errors=_.map(errObj,function(itm,val){
+						response.errors=_.map(errObj,function(itm){
 							return itm;
 						});
 						console.log(response.errors);
@@ -166,7 +173,7 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 
 					
 					console.log('saving started....');
-					if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!='')
+					if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!=='')
 					{
 						userModel.worker.taxDetail.p45DocumentUrl=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
 						var doc={documentType:enums.documentTypes.P45,documentName:userModel.worker.taxDetail.p45DocumentUrl,
@@ -184,7 +191,7 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 								console.log('user id is '+userModel._id);
 								console.log('user is new ? '+userModel.isNew);
 								
-								if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!='')
+								if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!=='')
 								{
 
 									var objectName=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
@@ -194,7 +201,7 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 									});
 								}
 								else{
-									opt.subject='Registration successful.'
+									opt.subject='Registration successful.';
 									return sendMail(opt,userModel);
 								}
 
@@ -222,15 +229,8 @@ service.signup=function(opt,user,worker,contactdetail,bankdetail,taxdetail){
 
 return deff.promise;
 
-}
-function sendMail(opt,userModel){
-		var newActivationLink=opt.activationLink+'/'+userModel.activationCode;
+};
 
-		var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
-					activationLink:newActivationLink};
-		var mailOption={to:userModel.emailAddress};
-			return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
-}
 
 
 
@@ -238,16 +238,16 @@ service.getUser=candidatecommonservice.getUser;
 
 // service.getWorkerByUser=candidatecommonservice.getWorkerByUser;
 
-service.updateBankDetails=function(userId, bankDetails){
-	var deff=Q.defer()
+service.updateBankDetails=function(userId){
+	var deff=Q.defer();
 
 	service.getUser(userId)
 	   .then(function(user){
 	   		if(user){
 	   			//db.sequelize.transaction(function(t){
-					var props=utils.updateSubModel(user.worker.bankDetail,bankDetails);
+					// var props=utils.updateSubModel(user.worker.bankDetail,bankDetails);
 					return Q.nfcall(user.save.bind(user))
-						.then(function(result){
+						.then(function(){
 							
 							deff.resolve({result:true,object:user});
 							
@@ -261,22 +261,22 @@ service.updateBankDetails=function(userId, bankDetails){
 	},deff.reject);
 
      return deff.promise;
-}
+};
 	
 
-service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress,workerContact){
+service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress){
 	return Q.Promise(function(resolve,reject){
 		service.getUser(userId)
 		   .then(function(user){
 		   		if(user){
 		   				console.log('my user');
 		   				console.log(user);
-						var props=utils.updateSubModel(user.contactDetail,workerContact);
+						//var props=utils.updateSubModel(user.contactDetail,workerContact);
 						utils.updateSubModel(user,userInformation);
 						utils.updateModel(user.worker,workerPrimaryAddress);
 
 						return Q.all([Q.nfcall(user.save.bind(user))])
-							.then(function(result){
+							.then(function(){
 								
 								resolve({result:true,object:user});
 								
@@ -290,7 +290,7 @@ service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress
 		},reject);
 	});
 
-}
+};
 
 service.authenticateUser=function(emailAddress,password){
 	var deff=Q.defer();
@@ -319,7 +319,7 @@ service.authenticateUser=function(emailAddress,password){
 		});
 
 	return deff.promise;
-}
+};
 
 service.uploadAvatar=function(id,data,newFileName,mimetype,folder){
 	return Q.Promise(function(resolve,reject){
@@ -329,7 +329,7 @@ service.uploadAvatar=function(id,data,newFileName,mimetype,folder){
 		         	//db.sequelize.transaction(function(t){
 		         		user.avatarFileName=newFileName;
 		         		
-		         	Q(Q.nfcall(user.save.bind(user))
+		         	new Q(Q.nfcall(user.save.bind(user))
 		         			.then(function(){
 		         				console.log('uploading avatar');
 
@@ -350,7 +350,7 @@ service.uploadAvatar=function(id,data,newFileName,mimetype,folder){
 	        
     });
 		
-}
+};
 
 
  module.exports=service;

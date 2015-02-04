@@ -8,7 +8,7 @@
 // 'test/spec/**/*.js'
 
 var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
-var _=require('lodash');
+// var _=require('lodash');
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -156,13 +156,22 @@ module.exports = function (grunt) {
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
+        jshintrc: 'client.jshintrc',
+        reporter: require('jshint-stylish'),
+		force : true
       },
-      all: {
+      client: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js',
+          '<%= yeoman.app %>/scripts/{,*/}*.js'
+        ]
+      },
+	  server: {
+		  options: {
+			jshintrc: 'server.jshintrc',
+			reporter: require('jshint-stylish')
+		  },
+        src: [
           'server/{,*/}*.js'
         ]
       },
@@ -480,7 +489,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('validate', [
-     'newer:jshint'
+     'jshint'
   ]);
 
   grunt.registerTask('build', [
@@ -525,5 +534,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('mochatest',[
       'mochaTest:test'
-    ])
+    ]);
 };

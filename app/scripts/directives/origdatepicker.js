@@ -8,7 +8,7 @@
  */
 
 angular.module('origApp.directives')
-        .directive('origDatepicker', function($compile) {
+        .directive('origDatepicker', function() {
             return {
                 restrict: 'AE',
                 scope: {
@@ -30,6 +30,6 @@ angular.module('origApp.directives')
 					};
                    return true;
                 }               
-            }
+            };
         });
 		

@@ -1,18 +1,19 @@
+'use strict';
 var db = require('../models');
 var Q=require('q');
 // var Promise=require('promise');
 var _=require('lodash');
-var mailer=require('../mailing/mailer');
+// var mailer=require('../mailing/mailer');
 var uuid = require('node-uuid');
-var url=require('url');
+// var url=require('url');
 var service={};
 var utils=require('../utils/utils');
 var queryutils=require('../utils/queryutils')(db);
 var awsservice=require('../services/awsservice');
 var userservice=require('../services/userservice');
 var candidatecommonservice=require('../services/candidatecommonservice');
-var Schema=require('mongoose').Schema;
-var path=require('path');
+// var Schema=require('mongoose').Schema;
+// var path=require('path');
 
 service.getAllAgencies=function(request){
 	
@@ -23,24 +24,35 @@ service.getAllAgencies=function(request){
 		.then(resolve,reject);
 	});
 	
-}
+};
 
 service.saveAgency = function(agencyDetails, agencyId){
+	
+	function removePreviousLogo(){
+		console.log('removing previous logo');
+		if(agencyDetails.logoFileName && agencyDetails.logoFileName.trim()!=='' && previousLogoFile && previousLogoFile.trim()!=='' && (previousLogoFile.trim().toLowerCase()!==agencyDetails.logoFileName.trim().toLowerCase())){
+					console.log('removing previous logo');
+					var folder=process.env.S3_AGENCY_FOLDER+agency._id+'/';
+				 	return awsservice.deleteS3Object(previousLogoFile,folder);
+			}
+		return true;
+	}
+
 	console.log('saveAgency');
 	return Q.Promise(function(resolve,reject){	
 		var agency;
-		if(agencyId == null){
+		if(agencyId === null){
 			// Add Agency
 			agency = new db.Agency(agencyDetails);
 
 			var branch =new db.Branch({
-				name: 				 "Head Office",
+				name: 				 'Head Office',
 			    address1:            agencyDetails.address1,
 			    address2:            agencyDetails.address2,
 			    address3:            agencyDetails.address3,
 				town:                agencyDetails.town,
 			    postCode:            agencyDetails.postCode,
-			    branchType:         "HQ",
+			    branchType:         'HQ',
 			});
 
 			agency.branches.push(branch._id);
@@ -90,19 +102,11 @@ service.saveAgency = function(agencyDetails, agencyId){
 					
 				},reject);
 
-				function removePreviousLogo(){
-					console.log('removing previous logo');
-					if(agencyDetails.logoFileName && agencyDetails.logoFileName.trim()!='' && previousLogoFile && previousLogoFile.trim()!='' && (previousLogoFile.trim().toLowerCase()!=agencyDetails.logoFileName.trim().toLowerCase())){
-								console.log('removing previous logo');
-								var folder=process.env.S3_AGENCY_FOLDER+agency._id+'/';
-							 	return awsservice.deleteS3Object(previousLogoFile,folder);
-						}
-					return true;
-				}
+				
 			
 		}
 	});
-}
+};
 
 
 
@@ -122,13 +126,13 @@ service.saveAgencyContact = function(agencyId, contactDetails){
 				}
 			},reject);
 	});
-}
+};
 
 service.getAgency=function(id){
 	console.log('getAgency');
 	var q=db.Agency.findById(id).populate('defaultInvoicing.invoiceDesign');
 	return Q.nfcall(q.exec.bind(q));
-}
+};
 
 // service.getAgencyByBranchId=function(id){
 // 	var q=db.Agency.findOne({'branches._id':id}).populate('branches.consultants.user');
@@ -144,7 +148,7 @@ service.getConsultants=function(branchId){
 	var q=db.Consultant.find({'branch':branchId}).populate('agency').populate('branch').populate('user');
 	return Q.nfcall(q.exec.bind(q));
 
-}
+};
 
 service.getConsultant=function(id){
 	return Q.Promise(function(resolve,reject){
@@ -155,7 +159,7 @@ service.getConsultant=function(id){
 
 			},reject);
 	});
-}
+};
 
 service.getUserByConsultantId=function(id){
 	return Q.Promise(function(resolve,reject){
@@ -171,7 +175,7 @@ service.getUserByConsultantId=function(id){
 			}
 		},reject);
 	});
-}
+};
 
 
 service.postBranch=function(agencyId, branchInfo){
@@ -233,7 +237,7 @@ service.getBranch=function(branchId){
 				}
 			},reject);
 	});
-}
+};
 
 service.getBranches=function(filter,populate){
 	console.log('about to getBranches');
@@ -245,10 +249,10 @@ service.getBranches=function(filter,populate){
 
 	var q=db.Branch.find();
 
-	_.forEach(filter,function(f,idx){
+	_.forEach(filter,function(f){
 		q.where(f);
 	});
-	_.forEach(populate,function(p,idx){
+	_.forEach(populate,function(p){
 		q.populate(p);
 	});
 	// console.log('filters');
@@ -256,7 +260,7 @@ service.getBranches=function(filter,populate){
 	// console.log('populate');console.log(populate);
 	return Q.nfcall(q.exec.bind(q));
 
-}
+};
 
 service.deleteBranch=function(branchId){
 	return Q.Promise(function(resolve,reject){
@@ -293,7 +297,7 @@ service.deleteBranch=function(branchId){
 				
 			},reject);
 	});
-}
+};
 
 service.postConsultant=function(branchId, consultantInfo){
 	return Q.Promise(function(resolve,reject){
@@ -319,12 +323,12 @@ service.postConsultant=function(branchId, consultantInfo){
 								userType: 'AC',
 								contactDetail:{phone:consultantInfo.phone},
 								activationCode: guid
-							}
+							};
 							
 							return userservice.createUser(opt, newUser).then(function(user){
 								// Add
 								console.log('user created');
-								consultantInfo['user']=user.object._id;
+								consultantInfo.user=user.object._id;
 								var consultant = new db.Consultant(consultantInfo);
 								consultant.branch=branch._id;
 								consultant.agency=branch.agency;
@@ -337,7 +341,7 @@ service.postConsultant=function(branchId, consultantInfo){
 
 								
 							},reject);
-						}else{
+						} else{
 							reject({result:false,name:'NOTFOUND',message:'Branch not found'});
 						}
 					
@@ -363,7 +367,7 @@ service.patchConsultant=function(consultantId, consultantInfo){
 								updateConsultant(agency,consultant)
 									.then(function(result){
 										resolve({result:true,object:{agency:agency, branch:branch, consultant:result.object.consultant,user:result.object.user}});
-									},reject)
+									},reject);
 								},reject);
 					}else{
 						updateConsultant(agency, consultant)
@@ -378,7 +382,7 @@ service.patchConsultant=function(consultantId, consultantInfo){
 				}
 			},reject);
 	});
-}
+};
 
 function updateConsultant(agency,consultant){
 	return Q.Promise(function(resolve,reject){
@@ -415,7 +419,7 @@ service.deleteConsultant=function(consultantId){
 					.then(function(consultant){
 						if(consultant){
 							return userservice.removeUser(consultant.user._id)
-								.then(function(response){
+								.then(function(){
 									// Get Index
 									var branch=consultant.branch;
 									var index = branch.consultants.indexOf(consultant);
@@ -425,7 +429,7 @@ service.deleteConsultant=function(consultantId){
 										.then(function(){
 											resolve({result:true});
 										},reject);
-								},function(err){
+								},function(){
 									reject({result:false,name:'ERROR',message:'Delete Msg'});
 								});
 						}
@@ -500,5 +504,5 @@ service.lockUnlockConsultant=function(id,flag,lockUnlockBy){
 				}
 			},reject);
 	});
-}
+};
 module.exports = service;

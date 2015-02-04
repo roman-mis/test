@@ -44,9 +44,9 @@ angular.module('origApp', [
   .run(function($rootScope, $state, AuthService) {
     $rootScope.$watch(function() {
       return $state.current.name;
-    }, function(newValue, oldValue, scope) {
+    }, function(newValue) {
       var stateName = newValue.split('.')[0];
-      if (stateName === "app") {
+      if (stateName === 'app') {
         if (AuthService.isLoggedIn() === false) {
           AuthService.redirectToLogin();
         }
