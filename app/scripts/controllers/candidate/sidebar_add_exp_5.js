@@ -19,27 +19,27 @@ angular.module('origApp.controllers')
 
           $scope.add = function() {
             //check if there is invalid post code
-            var codes = $scope.addData.code.split(/,/g).map(function(item){
+            var codes = $scope.addData.code.split(/,/g).map(function(item) {
               return $.trim(item);
             });
-            codes = $.unique(codes.filter(function(item){
+            codes = $.unique(codes.filter(function(item) {
               return item !== '';
             }));
-            if(codes.length===0){
+            if (codes.length === 0) {
               MsgService.danger('There are no valid postcodes that have been entered.');
               return;
             }
             var invalidCodes = [];
-            codes.forEach(function(val){
-              if(!ValidationHelper.isValidPostCode(val)){
+            codes.forEach(function(val) {
+              if (!ValidationHelper.isValidPostCode(val)) {
                 invalidCodes.push(val);
               }
             });
-            if(invalidCodes.length > 0){
+            if (invalidCodes.length > 0) {
               MsgService.danger('Invalid postcode: ' + invalidCodes.join(', '));
               return;
             }
-            
+
             $scope.expenseData.postCodes.push({
               date: $scope.addData.date,
               codes: codes
@@ -52,27 +52,9 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            //check if all dates is selected
-            var bool = false;
-            var filtered = $scope.expenseData.postCodes.filter(function(val) {
-              return val.date === 'all';
-            });
-            if (filtered.length > 0) {
-              bool = true;
+            if ($scope.isAllDatesEntered($scope.expenseData.postCodes)) {
+              $scope.gotoNext();
             }
-            filtered = $scope.expenseData.postCodes.filter(function(val) {
-              return val.date !== 'all';
-            });
-            if (!bool && filtered.length === $scope.expenseData.daysInRange.length - 1) {
-              bool = true;
-            }
-
-            if (!bool) {
-              MsgService.danger('All days should be selected.');
-              return;
-            }
-            
-            $scope.gotoNext();
           };
 
         });

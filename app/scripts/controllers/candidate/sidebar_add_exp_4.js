@@ -49,10 +49,8 @@ angular.module('origApp.controllers')
               bool = true;
             }
 
-            if (bool) {
+            if ($scope.isAllDatesEntered($scope.expenseData.documentTimes)) {
               $scope.gotoNext();
-            } else {
-              MsgService.danger('All days should be selected.');
             }
           };
 
