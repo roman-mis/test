@@ -57,7 +57,7 @@ angular.module('origApp.controllers')
                     tr0 = $tableBody.find('tr')[0],
                     $tds = $(tr0).children();
             $ths.each(function(index){
-              $(this).css('width', $($tds[index]).width() + 16 + 'px');
+              $(this).css('width', $($tds[index]).width() + 'px');
             });
           };
 

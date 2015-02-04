@@ -44,7 +44,7 @@ angular.module('origApp.controllers')
             $scope.expenseData.daysInRange = daysInRange;
             
             //$scope.gotoNext();
-            $scope.mainData.step = 7;
+            $scope.mainData.step = 8;
           };
         });
 

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp4Controller', function($scope, HttpResource, MsgService) {
-          $scope.expenseData.documentTimes = [];
+          $scope.expenseData.documentTimes = $scope.expenseData.documentTimes || [];
 
           $scope.defaultAddData = {
             date: '',

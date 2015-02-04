@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp5Controller', function($scope, HttpResource, MsgService, ValidationHelper) {
-          $scope.expenseData.postCodes = [];
+          $scope.expenseData.postCodes = $scope.expenseData.postCodes || [];
 
           $scope.defaultAddData = {
             date: '',

@@ -1,16 +1,12 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp6Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
-          $scope.expenseData.subsistense = [];
+        .controller('CandidateSidebarAddExp7Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
+          $scope.expenseData.subsistense = $scope.expenseData.subsistense || [];
           $scope.mealTypes = ConstantsResource.get('mealslist');
 
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
           
-          $scope.onDateChanged = function() {
-            $scope.alreadyAdded = $scope.isAlreadyAddedDate($scope.addData.date, $scope.expenseData.subsistense);
-          };
-
           $scope.onMealTypeChanged = function(){
             $scope.addData.cost = $scope.addData.mealType ? $scope.addData.mealType.default_cost : '0.00';
           };

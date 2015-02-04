@@ -62,7 +62,7 @@ angular.module('origApp.filters', [])
             }
             var sum = 0;
             _.each(input, function(inp) {
-              sum += inp[field] || 0;
+              sum += isNaN(inp[field]*1) ? 0 : inp[field]*1;
             });
             return sum;
           };
