@@ -1,11 +1,11 @@
+'use strict';
 //var utils=require('../utils/utils');
-var validate=require('mongoose-validator');
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
   	
-	var schema=BaseSchema({
+	var schema= new BaseSchema({
 		firstName:       {type:String,required:false,trim:true},
     lastName:        {type:String,required:false,trim:true},
     emailAddress:    {type:String},
@@ -19,4 +19,4 @@ module.exports = function(mongoose) {
 
 	
   	return mongoose.model('Consultant',schema);
-}
+};

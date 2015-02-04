@@ -1,21 +1,8 @@
 'use strict';
 
-module.exports = function(dbs){
+module.exports = function(){
   
-    var express = require('express'),
-        router = express.Router(),
-        jwt = require('jsonwebtoken'),
-    db = dbs,
-    router = express.Router(),
-    utils=require('../utils/utils'),
-    expressJwt = require('express-jwt'),
-    restMiddleware=require('../middlewares/restmiddleware'),
-    fs=require('fs'),
-    path=require('path');
 
-    var awsservice=require('../services/awsservice');
-    var enums=require('../utils/enums');
-    var _=require('lodash');
     var controller={};
     var awsService=require('../services/awsservice');
 
@@ -32,7 +19,7 @@ module.exports = function(dbs){
             res.json(returnData);
            
         },res.sendFailureResponse);
-    }
+    };
 
     controller.getViewDocumentSignedUrl=function(req,res){
        var objectName=req.query.fileName;
@@ -45,7 +32,7 @@ module.exports = function(dbs){
             res.json(returnData);
            
         },res.sendFailureResponse);
-    }
+    };
 
     controller.deleteTempDocument=function(req,res){
        var objectName = req.params.fileName;
@@ -54,11 +41,11 @@ module.exports = function(dbs){
             var folder=process.env.S3_TEMP_FOLDER;
 
         awsService.deleteS3Object(objectName,folder)
-        .then(function(returnData){
+        .then(function(){
             res.json({result:true});
             
         },res.sendFailureResponse);
-    }
+    };
 
   return controller;
 };

@@ -72,7 +72,7 @@ describe('Browse to sign up', function() {
     input.clear();
     expectValid(input);
     expectInvalid(input);
-    input.sendKeys('originemtest+t'+new Date().getTime().toString().substr(-9,6)+'@gmail.com');
+    input.sendKeys('originemtest+t'+new Date().getTime().toString().substr(-9,6)+'@yandex.com');//originemtest@yandex.com
     expectValid(input);
 
 

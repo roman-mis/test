@@ -2,11 +2,12 @@
 
 var express = require('express'),
     router = express.Router(),
+
     db = require('../models'),
 	router = express.Router(),
 	controller=require('../controllers/template')(db),
 	restMiddleware=require('../middlewares/restmiddleware');
-
+	
 module.exports = function(app){
   app.use('/api/templates', router);
 };

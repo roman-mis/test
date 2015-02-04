@@ -6,7 +6,7 @@ var express = require('express'),
     controller=require('../controllers/constants')(db);
 
 module.exports = function(app){
-  app.use('/api/constantsz', router);
+  app.use('/api/constants', router);
 };
 
 router.get('/nationalities',controller.nationalities);

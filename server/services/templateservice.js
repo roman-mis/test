@@ -12,6 +12,7 @@ service.getAllTemplates = function(request){
 		queryutils.applySearch(q,db.Template,request)
 		.then(resolve,reject);
 	});
+
 };
 
 service.addTemplate = function(template){

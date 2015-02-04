@@ -1,3 +1,4 @@
+'use strict';
 var _=require('lodash');
 var bcrypt=require('bcryptjs'),
  Q=require('q'),
@@ -94,22 +95,22 @@ module.exports=utils={
 		_.forEach(filters,function(filter,filterName){
 			console.log('=======================================================');
 			console.log('searching for '+filterName+' = '+JSON.stringify(filter));
-			_.forEach(modelOptions,function(itm,idx){
+			_.forEach(modelOptions,function(itm){
 				var option=itm.option,model=itm.model;
 				console.log('---------------------------------------------------');
 				console.log('In Table '+model.tableName +' with these attributes '+JSON.stringify(_.keys(model.tableAttributes)));
 				if(_.indexOf(_.keys(model.tableAttributes),filterName)>=0){
 					console.log(' and found ');
 					var filterText=filterName + ' ';
-					if(filter.operator=='exact' ){
+					if(filter.operator==='exact' ){
 						filterText+=' = ? ';
 					}
-					else if(filter.operator=='contains' ){
+					else if(filter.operator==='contains' ){
 						filterText+=' like ? ';
 					}
 
-					option.where[0]=option.where[0] + (option.where[0]!='' ?' and ' : ' ') + filterText;
-					var filterValues=(filter.operator=='contains'? '%'+filter.term+'%':filter.term);
+					option.where[0]=option.where[0] + (option.where[0]!=='' ?' and ' : ' ') + filterText;
+					var filterValues=(filter.operator==='contains'? '%'+filter.term+'%':filter.term);
 					option.where.push(filterValues);
 					return false;
 				}
@@ -117,10 +118,10 @@ module.exports=utils={
 		});
 	},
 	padLeft:function(nr, n, str){
-	    return Array(n-String(nr).length+1).join(str||'0')+nr||'0';
+	    return new Array(n-String(nr).length+1).join(str||'0')+nr||'0';
 	},
 	createDirectory:function(path){
-		return Q.Promise(function(resolve,reject,notify){
+		return Q.Promise(function(resolve,reject){
 			console.log('createDirectory  : '+path);
 			fs.exists(path,function(exists){
 				if(exists){
@@ -157,7 +158,7 @@ module.exports=utils={
 		});
 	},
 	receiveFile:function(fieldName,file,filename){
-		return Q.Promise(function(resolve,reject,notify){
+		return Q.Promise(function(resolve,reject){
 			var tempDir=path.join(__dirname+'/..',process.env.TEMP_DIR||'/temp/');
 
 			console.log('Receiving file : '+ filename);
@@ -185,4 +186,4 @@ module.exports=utils={
   	console.log('file sent');
 	}
 	
-}
+};

@@ -6,6 +6,7 @@ module.exports = function(){
 	var expenseservice=require('../services/expenseservice');
 	var controller={};
 
+
 	controller.getExpense = function(req, res){
 		expenseservice.getExpense(req.params.id)
 		.then(function(expense){

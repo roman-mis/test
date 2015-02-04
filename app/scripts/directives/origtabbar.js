@@ -8,7 +8,7 @@
  */
 
 angular.module('origApp.directives')
-        .directive('orgTabbar', function($compile) {
+        .directive('orgTabbar', function() {
             return {
                 restrict: 'AE',
                 scope: {
@@ -17,11 +17,11 @@ angular.module('origApp.directives')
                 },
                 templateUrl: 'views/partials/origtabbar.html',
                 replace: true,
-                link: function($scope, ele, attrs, c) {
+                link: function() {
                    return true;
                 },
                 controller:function($scope, $filter){
-                    $scope.captionName = $filter('filter')($scope.tabs, {id:$scope.active}, false)[0]['name'];
+                    $scope.captionName = $filter('filter')($scope.tabs, {id:$scope.active}, false)[0].name;
                 }
             };
         });

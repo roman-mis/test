@@ -7,7 +7,7 @@ angular.module('origApp.controllers')
               AuthService.doLogin($scope.emailAddress, $scope.password).then(
                       function() {
                       },
-                      function(response) {
+                      function() {
                         MsgService.alertByKey('danger', 'LoginError');
                       }
               );

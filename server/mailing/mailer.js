@@ -1,11 +1,9 @@
-'use strict'
+'use strict';
 var nodeMailer=require('nodemailer'),
 	_=require('lodash'),
 	path=require('path'),
 	fs=require('fs'),
-	Q=require('q'),
-	sesTransport = require('nodemailer-ses-transport');
-
+	Q=require('q');
 
 module.exports={
 
@@ -45,7 +43,7 @@ module.exports={
 		
 		});
 	}
-}
+};
 
 function compileTemplate(model,mailType){
 	
@@ -60,7 +58,7 @@ function compileTemplate(model,mailType){
 
 function getTemplateHtml(mailType){
 	var templatePath=path.normalize(__dirname+'/templates/'+mailType+'.html');
-	var content=fs.readFileSync(templatePath, "utf8");
+	var content=fs.readFileSync(templatePath, 'utf8');
 	return content;
 
 }

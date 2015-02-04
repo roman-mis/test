@@ -1,6 +1,7 @@
 'use strict';
 
 
+
 module.exports = function(dbs){
 	var db = dbs,
 	
@@ -14,13 +15,17 @@ module.exports = function(dbs){
 	var controller={};
 		  
 		controller.getTaskDetails=function(req,res){
-			console.log('calling getTaskDetails');
+			// console.log('calling getTaskDetails');
 		  	taskservice.getTaskDetails(req.params.id)
 		    .then(function(result){
-		    	
+		    	// console.log('returned from promise');
 		      res.json({result:true, objects:result});
 		      
-		    },res.sendFailureResponse);
+		    },function(err){
+		    	// console.log('rejected');
+		    	// console.log(err);
+		    	res.sendFailureResponse(err);
+		    });
 			
 		};
 

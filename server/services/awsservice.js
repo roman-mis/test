@@ -1,6 +1,8 @@
+// 'use strict';
+
 var aws = require('aws-sdk'),
-    path=require('path')
-    Q=require('q'),
+    // path=require('path')
+    Q=require('q')
     _=require('lodash');
 var service;
 
@@ -20,7 +22,7 @@ module.exports=service={
 
 	    var s3Params ={};
 	    
-	    if(folder && folder!='' && folder.slice(-1)!=='/'){
+	    if(folder && folder!=='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
 	    }
 	    else{
@@ -76,7 +78,7 @@ module.exports=service={
 
 	    var s3 = new aws.S3();
 	    
-	    if(folder && folder!='' && folder.slice(-1)!=='/'){
+	    if(folder && folder!=='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
 	    }
 	    else{
@@ -122,7 +124,7 @@ module.exports=service={
 
 	    var s3 = new aws.S3();
 
-	    if(folder && folder!='' && folder.slice(-1)!=='/'){
+	    if(folder && folder!=='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
 	    }
 	    else{
@@ -137,15 +139,15 @@ module.exports=service={
 	    console.log(s3Params);
 
 	    //console.log(s3Params);
-	    s3.copyObject(s3Params, function(err, data){
+	    s3.copyObject(s3Params, function(err){
 	        if(err){
 	        	console.log('copy error ...');
 	            console.log(err);
 	            deff.reject(err);
 	        } else {
-	        	var deleteParam=_.assign({
-			    	Key: s3ObjectSource
-			    },defaultS3PlainParams);
+	      //   	var deleteParam=_.assign({
+			    // 	Key: s3ObjectSource
+			    // },defaultS3PlainParams);
 
 	        	service.deleteS3Object(s3ObjectSource).then(function(data){
 	        		
@@ -180,7 +182,7 @@ module.exports=service={
 	    });
 
 	    var s3 = new aws.S3();
-	    if(folder && folder!='' && folder.slice(-1)!=='/'){
+	    if(folder && folder!=='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
 	    }
 	    else{
@@ -230,7 +232,7 @@ module.exports=service={
 	    console.log(s3Params);
 
 	    //console.log(s3Params);
-	    s3.putObject(s3Params, function(err, data){
+	    s3.putObject(s3Params, function(err){
 	        if(err){
 	            console.log(err);
 	            deff.reject(err);
@@ -279,7 +281,7 @@ module.exports=service={
 
 		});
 	}
-}    
+};    
 
 
 var defaultS3Params={

@@ -2,7 +2,9 @@
 
 var express = require('express'),
     router = express.Router(),
+
     db = require('../models'),
+
 	router = express.Router(),
 	candidatecontroller = require('../controllers/candidates')(db),
 	candidatepayrollcontroller = require('../controllers/candidates-payroll')(db),

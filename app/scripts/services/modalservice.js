@@ -1,11 +1,6 @@
 'use strict';
-/*global _:false, $:false */
 angular.module('origApp.services')
   .factory('ModalService', function($modal) {
-    var defaultOptions = {
-      
-    };
-    
     var _ModalSrv = {
       open: function(options){
         var modalOptions = {
