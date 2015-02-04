@@ -10,11 +10,7 @@ angular.module('origApp.controllers')
           $scope.addData = angular.copy($scope.defaultAddData);
 
           $scope.onDateChanged = function() {
-            var filtered = $scope.expenseData.postCodes.filter(function(val) {
-              return (typeof ($scope.addData.date) === 'string' && val.date === $scope.addData.date)
-                      || (typeof ($scope.addData.date) === 'object' && typeof (val.date) === 'object' && val.date.getTime() === $scope.addData.date.getTime());
-            });
-            $scope.alreadyAdded = $scope.addData.date && filtered.length > 0;
+            $scope.alreadyAdded = $scope.isAlreadyAddedDate($scope.addData.date, $scope.expenseData.postCodes);
           };
 
           $scope.add = function() {

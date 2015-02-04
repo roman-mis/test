@@ -6,6 +6,14 @@ angular.module('origApp.controllers')
 
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
+          
+          $scope.onDateChanged = function() {
+            $scope.alreadyAdded = $scope.isAlreadyAddedDate($scope.addData.date, $scope.expenseData.subsistense);
+          };
+
+          $scope.onMealTypeChanged = function(){
+            $scope.addData.cost = $scope.addData.mealType ? $scope.addData.mealType.default_cost : '0.00';
+          };
 
           $scope.add = function() {
             $scope.expenseData.subsistense.push($scope.addData);
@@ -31,4 +39,3 @@ angular.module('origApp.controllers')
           
           $(window).on('resize', $scope.normalizeTables);
         });
-
