@@ -138,7 +138,8 @@ module.exports = function(mongoose,autoIncrement) {
             google:              {type:String,required:false}
         },
       dpaUpdatedDate:{type:Date,default:Date.now},
-      dpaUpdatedBy:{type:Schema.Types.ObjectId,ref:'User'}
+      dpaUpdatedBy:{type:Schema.Types.ObjectId,ref:'User'},
+      expensesBalance: Number,
        /* branchId:{type:Schema.Types.ObjectId,ref:'Agency.branches'}*/
 },{skipCreatedDate:false/*default false*/,skipUpdatedDate:false/*default false*/,skipUpdatedBy:false/*default false*/});
 schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,incrementBy:1});

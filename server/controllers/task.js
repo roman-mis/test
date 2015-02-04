@@ -1,19 +1,28 @@
 'use strict';
 
 
-module.exports = function(){
-	var taskservice=require('../services/taskservice'),
-	enums=require('../utils/enums');
 
+module.exports = function(dbs){
+	var db = dbs,
+	
+	 
+	taskservice=require('../services/taskservice')(db),
+	
+	 //restMiddleware=require('../middlewares/restmiddleware'),
+	
+	 enums=require('../utils/enums')
+	;
 	var controller={};
 		  
 		controller.getTaskDetails=function(req,res){
+			console.log('calling getTaskDetails');
 		  	taskservice.getTaskDetails(req.params.id)
 		    .then(function(result){
+		    	
 		      res.json({result:true, objects:result});
-		    },function(){
-
-		    });
+		      
+		    },res.sendFailureResponse);
+			
 		};
 
 		controller.postTaskDetails = function(req, res){

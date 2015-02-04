@@ -1,20 +1,16 @@
 'use strict';
 
-var db = require('../models');
-var Q=require('q');
-// var Promise=require('promise');
-// var _=require('lodash');
-var service={};
-var queryutils=require('../utils/queryutils')(db);
+var db = require('../models'),
+	Q=require('q'),
+	queryutils=require('../utils/queryutils')(db);
+
+var service = {};
 
 service.getAllTemplates = function(request){
-	
 	return Q.Promise(function(resolve,reject){
 		var q=db.Template.find();
-		
 		queryutils.applySearch(q,db.Template,request)
 		.then(resolve,reject);
-
 	});
 
 };

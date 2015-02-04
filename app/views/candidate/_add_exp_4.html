@@ -1,0 +1,135 @@
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExp4Controller">
+  <div class="modal-header modal-headerExpenses">
+    <h4 class="modal-title" id="myModalLabel">Expenses #2 | Days, Hours & Minutes</h4>
+    <small>Document start and end times.</small>
+  </div>
+  <div class="modal-body">
+    <form class="form-inline row">
+      <div class="form-group col-sm-4 col-xs-5">
+        <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
+          <option value="">- Select -</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6 col-xs-7">
+        <select class="selectTime form-control" ng-model="addData.startHours">
+          <option value="00">00</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+        </select>
+        <select class="selectTime form-control" ng-model="addData.startMins">
+          <option value="00">00</option>
+          <option value="05">05</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+          <option value="55">55</option>
+        </select>
+        <span>- to -</span>
+        <select class="selectTime form-control" ng-model="addData.endHours">
+          <option value="00">00</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+        </select>
+        <select class="selectTime form-control" ng-model="addData.endMins">
+          <option value="00">00</option>
+          <option value="05">05</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+          <option value="55">55</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-2">
+        <button type="button" class="btn btn-default form-control" ng-click="add()" ng-disabled="!addData.date || alreadyAdded"><i class="fa fa-plus"></i> Add</button>
+      </div>
+      <div class="form-group col-sm-12" ng-show="alreadyAdded" style="color: red;">
+        The date you selected has already been added.
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped ">
+          <thead>
+            <tr>
+              <th>Date 
+                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                  <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                  <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                  <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                </a>
+              </th>
+              <th>Start</th>
+              <th>End</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="doctime in expenseData.documentTimes| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+              <td>{{doctime.date==='all'?'All dates in selection':(doctime.date|formatDate:'ddd DD/MM/YYYY')}}</td>
+              <td>{{doctime.startTime}}</td>
+              <td>{{doctime.endTime}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="" class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="expenseData.documentTimes.length == 0">Next</button>
+  </div>
+</div>

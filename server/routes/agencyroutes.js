@@ -42,8 +42,8 @@ router.get('/:id/payroll',controller.getAgencyPayroll);
 router.patch('/:id/payroll',controller.patchAgencyPayroll);
 
 /* Sales Tab */
-// router.get('/:id/sales',controller.getAgencySales);
-// router.patch('/:id/sales',controller.patchAgencySales);
+router.get('/:id/sales',controller.getAgencySales);
+router.patch('/:id/sales',controller.patchAgencySales);
 
 router.get('/:id/logosignedurl',controller.getAgencyLogoUploadSignedUrl);
 router.get('/:id/file_signed_url/:fileName',controller.getFileSignedUrl);

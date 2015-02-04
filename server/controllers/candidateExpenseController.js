@@ -6,8 +6,17 @@ module.exports = function(){
 	var expenseservice=require('../services/expenseservice');
 	var controller={};
 
+
+	controller.getExpense = function(req, res){
+		expenseservice.getExpense(req.params.id)
+		.then(function(expense){
+			res.json({result:true, object: expense});
+		}, res.sendFailureResponse);
+	};
+
 	controller.postExpenses=function (req, res) {
-		var expense = JSON.parse(req.body.expense);		
+		// var expense = JSON.parse(req.body.expense);		
+		var expense = req.body;		
 		var days = [];
 		_.forEach(expense.days, function(day){
 			

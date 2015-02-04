@@ -1,11 +1,12 @@
 'use strict';
 
-var db = require('../models');
-var Q=require('q');
-// var Promise=require('promise');
+var db = require('../models'),
+	Q=require('q'),
+	utils=require('../utils/utils'),
+	candidatecommonservice=require(__dirname+'/candidatecommonservice');
+
 var service={};
-var utils=require('../utils/utils');
-var candidatecommonservice=require(__dirname+'/candidatecommonservice');
+
 
 service.saveDpa=function(userId, dpaDetails){
 	var historyModel;

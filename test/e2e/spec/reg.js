@@ -1,3 +1,5 @@
+var helper = require('./ui-helper.js');
+
 describe('Browse to sign up', function() {
 
   var nextBtn=element(by.css('[ng-click="nextstep()"]'));
@@ -31,19 +33,17 @@ describe('Browse to sign up', function() {
 
 
 
+  /* TESTs START HERE */
 
 
   it('should navigate to page with register options ', function() {
     browser.get('/register/home');
   });
-
-
   it('should find reg button ', function() {
     var regButton=element(by.css('[ng-click="$parent.nextstep()"]'));
     expect(regButton.isPresent()).toBe(true);
     regButton.click();
   });
-
   it('should navigate to step1 page ', function() {
     browser.wait(function() {
       return browser.getCurrentUrl().then(function(url) {
@@ -52,91 +52,80 @@ describe('Browse to sign up', function() {
     });
   });
 
-
-
-
   it('step1 form should have no errors', function() {
     nextBtn.click();
 
-    var select=element(by.model('candidate.title'));
+    var select=element(by.model('candidate.details.title'));
     expect(select.getAttribute('class')).toContain('ng-invalid');
     element(by.css('[ng-click="$select.toggle($event)"]')).click();
     element(by.className('select2-result-single')).click();
     expect(select.getAttribute('class')).toContain('ng-valid');
 
-    validateInputByModel('candidate.firstName','Roman');
-    validateInputByModel('candidate.lastName','Konstantinov');
+    validateInputByModel('candidate.details.firstName','Test');
+    validateInputByModel('candidate.details.lastName','Tester');
 
     // email test
-    var input = element(by.model('candidate.emailAddress'));
+    var input = element(by.model('candidate.details.emailAddress'));
     expectInvalid(input);
     input.sendKeys('boojaka');
     expectValid(input);
     input.clear();
     expectValid(input);
     expectInvalid(input);
-    input.sendKeys('boojaka+t'+new Date().getTime().toString().substr(-9,6)+'@gmail.com');
+    input.sendKeys('originemtest+t'+new Date().getTime().toString().substr(-9,6)+'@yandex.com');//originemtest@yandex.com
     expectValid(input);
 
 
-    validateInputByModel('candidate.contactNumber','+44777612345');
-    validateInputByModel('candidate.niNumber','AB 12 34 56 C');
+    validateInputByModel('candidate.details.phone','+44777612345');
+    validateInputByModel('candidate.details.niNumber','AB 12 34 56 C');
 
-
-    var input = element(by.model('ngModel'));
-    input.sendKeys('1987/03/26');
+    helper.getDateByModel('candidate.details.birthDate').clear().sendKeys('26/03/1987');
 
     nextBtn.click();
   });
-
-
-
-  it('should navigate to step2 page ', function() {
-    browser.wait(function() {
-      return browser.getCurrentUrl().then(function(url) {
+  it('should navigate to step2 page ', function () {
+    browser.wait(function () {
+      return browser.getCurrentUrl().then(function (url) {
         return (url.indexOf('step2') !== -1);
       });
     });
   });
 
 
-
-
   it('step2 form should have no errors', function() {
-    nextBtn.click();
 
-    var select = element.all(by.model('candidate.gender'));
+   nextBtn.click();
+
+  var select = element.all(by.model('candidate.details.gender'));
     expectInvalid(select.get(0));
     selectSelector(select,1);
     expectValid(select.get(0));
 
 
-    var select = element.all(by.model('candidate.nationality'));
+    var select = element.all(by.model('candidate.details.nationality'));
     expectInvalid(select.get(0));
     selectSelector(select,0);
     expectValid(select.get(0));
     expect($('.addtionalinfo-container').isDisplayed()).toBeFalsy();
 
-    validateInputByModel('candidate.address1','Super street');
-
-    validateInputByModel('candidate.town','Super town');
-
-    validateInputByModel('candidate.postCode','E20 2BB');
+    validateInputByModel('candidate.details.address_1','Super street');
+    validateInputByModel('candidate.details.town','Super town');
+    validateInputByModel('candidate.details.postCode','E20 2BB');
 
 
     //additinal info for non-resident
     selectSelector(select,1);
     expect($('.addtionalinfo-container').isDisplayed()).toBeTruthy();
 
-    var date=$('.addtionalinfo-container [name="entrancedate"] [ng-model="ngModel"]');
+    var date=helper.getDateByModel('candidate.details.arrivalDate');
     date.sendKeys('2000/01/29');
     expect(date.getAttribute('class')).toContain('ng-valid');
 
-    var date=$('.addtionalinfo-container [name="recententrancedate"] [ng-model="ngModel"]');
+    var date=helper.getDateByModel('candidate.details.recentDepDate');
     date.sendKeys('2000/01/01');
     expect(date.getAttribute('class')).toContain('ng-valid');
 
-    var checkboxes=$$('.addtionalinfo-container [ng-model="candidate.payEmployFlag"] ');
+    var checkboxes=$$('.addtionalinfo-container [ng-model="candidate.details.empLastVisit"] ');
     checkboxes.get(0).click();
 
     nextBtn.click();
@@ -153,10 +142,9 @@ describe('Browse to sign up', function() {
     });
   });
 
-
   it('should validate step3 form', function() {
-    validateInputByModel('candidate.agencyName', 'Super Agency');
-    validateDateByName('jobStartDate','02/01/2014');
+    validateInputByModel('candidate.details.agencyName', 'Super Agency');
+    helper.getDateByModel('candidate.details.startDate').sendKeys('02/01/2014');
     nextBtn.click();
   });
 
@@ -174,10 +162,10 @@ describe('Browse to sign up', function() {
 
   it('should validate step4 form', function() {
     nextBtn.click();
-    validateInputByModel('candidate.bankName', 'Super bank');
-    validateInputByModel('candidate.accountName', 'Super account name');
-    validateInputByModel('candidate.sortCode', '77-00');
-    validateInputByModel('candidate.accountNumber', '12345678');
+    validateInputByModel('candidate.details.bankName', 'Super bank');
+    validateInputByModel('candidate.details.accountName', 'Super account name');
+    validateInputByModel('candidate.details.sortCode', '77-00');
+    validateInputByModel('candidate.details.accountNo', '12345678');
 
     nextBtn.click();
   });

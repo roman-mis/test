@@ -36,7 +36,7 @@ module.exports = function(mongoose) {
       invoiceEmailPrimary:      {type:String},
       invoiceEmailSecondary:    {type:String},
       paymentTerms:              {type:String},
-      invoiceTo:                 {type:Schema.Types.ObjectId,ref:'Agency.branches'}
+      invoiceTo:                 {type:Schema.Types.ObjectId,ref:'Branch'}
     },
     defaultPayroll:{
       productType:               {type:String},

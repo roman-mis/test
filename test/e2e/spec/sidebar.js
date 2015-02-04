@@ -129,22 +129,22 @@ describe('Checking ONBOARDING', function() {
 
 describe('Checking Call Log', function() {
 
-  it('should open call log dialog', function () {
+/*  it('should open call log dialog', function () {
     browser.get('/candidates/548af0d1f1ffa56c251ff15f');
-    testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'call_log\'})"]'));
-  });
+    testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'callLog\'})"]'));
+  });*/
 
   it('should allow to create task', function () {
     browser.get('/candidates/548af0d1f1ffa56c251ff15f');
-    testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'call_log\'})"]'));
-    helper.selectSelector(element.all(by.model('data.agency')),1);
-    helper.selectSelector(element.all(by.model('data.task_type')),3);
+    testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'callLog\'})"]'));
+    helper.selectSelector(element.all(by.model('data.agency')),0);
+    helper.selectSelector(element.all(by.model('data.taskType')),3);
     helper.selectSelector(element.all(by.model('data.priority')),1);
     helper.selectSelector(element.all(by.model('data.status')),0);
     helper.selectSelector(element.all(by.model('data.template')),0);
-    element(by.model('data.template_title')).clear().sendKeys('Super task title');
-    element(by.model('data.template_html')).clear().sendKeys('Super task desc');
-    helper.getDateByModel('data.follow_up_task_date').clear().sendKeys('01/01/2015');
+    element(by.model('data.templateTitle')).clear().sendKeys('Super task title');
+    element(by.model('data.templateHtml')).clear().sendKeys('Super task desc');
+    helper.getDateByModel('data.followUpTaskDate').clear().sendKeys('01/01/2015');
     helper.selectSelector(element.all(by.model('data.assignee')),1);
     element(by.css('[ng-click="save()"]')).click();
     expect($('.modal-content').isPresent()).toBeFalsy();

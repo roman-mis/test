@@ -1,10 +1,10 @@
-'use strict';
-// var validate=require('mongoose-validator');
-// var Schema=require('mongoose').Schema;
+
+var validate=require('mongoose-validator');
+var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
-module.exports = function(mongoose) {
-    var schema=new BaseSchema({
+module.exports = function(mongoose,autoIncrement) {
+    var schema=BaseSchema({
         companyProfile: {
             contact: {
                 companyName: String,

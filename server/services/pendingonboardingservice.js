@@ -1,12 +1,11 @@
 'use strict';
 
-var db = require('../models');
-var Q=require('q');
-// var Promise=require('promise');
-// var _=require('lodash');
+var db = require('../models'),
+	Q=require('q'),
+	utils=require('../utils/utils'),
+	candidatecommonservice=require(__dirname+'/candidatecommonservice');
+
 var service={};
-var utils=require('../utils/utils');
-var candidatecommonservice=require(__dirname+'/candidatecommonservice');
 
 service.getPendingOnboardingDetails=function(userId){
 	var q = db.Pending_Onboarding.findOne({user: userId});
@@ -25,8 +24,8 @@ service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetail
 		   		if(user){
 	   				if(!complete){
 	   					// Adding to the pending
-	   					// var pendingOnboardingModel;
-		   				service.getPendingOnboardingDetails(userId)
+
+	   					service.getPendingOnboardingDetails(userId)
 		   				.then(function(pendingOnboardingModel){
 		   					
 		   					if(pendingOnboardingModel === null){

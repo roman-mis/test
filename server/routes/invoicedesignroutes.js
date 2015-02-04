@@ -2,13 +2,11 @@
 
 var express = require('express'),
     router = express.Router(),
-	db = require('../models'),
+
+    db = require('../models'),
 	router = express.Router(),
 	controller=require('../controllers/invoicedesigncontroller')(db),
-	restMiddleware=require('../middlewares/restmiddleware')
-	
-;
-
+	restMiddleware=require('../middlewares/restmiddleware');
 module.exports = function(app){
   app.use('/api/invoicedesigns', router);
 };
