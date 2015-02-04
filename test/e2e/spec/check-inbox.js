@@ -21,14 +21,14 @@ describe('Checking mailbox', function() {
     browser.driver.findElement(by.css('.b-mail-button__button')).click();
   });
 
-  it('should enter mailbox', function () {
+  it('should enter lite version', function () {
+    browser.driver.get('https://mail.yandex.com/lite/inbox');
     browser.driver.wait(function () {
       return browser.driver.getCurrentUrl().then(function (url) {
-        return (url.indexOf('neo2') !== -1);
+        return (url.indexOf('lite') !== -1);
       });
     }, 7000);
   });
-
 
   it('should find new email',function(){
     expect(browser.driver.isElementPresent(by.css('.b-messages .b-messages__message_unread'))).toBeTruthy();
@@ -37,7 +37,7 @@ describe('Checking mailbox', function() {
 
 
   it('should navigate to open email',function(){
-    browser.driver.findElement(by.css('.b-messages .b-messages__message_unread .b-messages__message__left__wrapper a')).click();
+    browser.driver.findElement(by.css('.b-messages .b-messages__message_unread .b-messages__message__link')).click();
   });
 
   it('should ensure open email', function () {
@@ -64,7 +64,7 @@ describe('Checking mailbox', function() {
   });
 
 
-  it('should enter users details', function () {
+  it('submiting users details', function () {
     element(by.css('.activate-container [name="password"]')).sendKeys('andyboss');
     element(by.css('.activate-container [name="confirmpassword"]')).sendKeys('andyboss');
     element(by.css('.activate-container [ng-click="submit()"]')).click();

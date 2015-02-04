@@ -41,7 +41,7 @@ router.post('/worker',function(req,res){
           agencyName:    req.body.agencyName,
           jobTitle:      req.body.jobTitle,
           startDate:     req.body.startDate
-      }
+      };
 
     var workerModel=new db.Worker(worker);
     workerModel.save(function(err,mod){

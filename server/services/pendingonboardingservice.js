@@ -24,6 +24,7 @@ service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetail
 		   		if(user){
 	   				if(!complete){
 	   					// Adding to the pending
+
 	   					service.getPendingOnboardingDetails(userId)
 		   				.then(function(pendingOnboardingModel){
 		   					
@@ -35,7 +36,7 @@ service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetail
 		   						utils.updateSubModel(pendingOnboardingModel, pendingOnboardingDetails);
 		   					}
 
-		   					return Q.nfcall(pendingOnboardingModel.save.bind(pendingOnboardingModel)).then(function(result){
+		   					return Q.nfcall(pendingOnboardingModel.save.bind(pendingOnboardingModel)).then(function(){
 								resolve({object:pendingOnboardingModel});						
 							}, reject);
 		   				});
@@ -47,12 +48,12 @@ service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetail
             				console.log('success');
             				var historyModel = new db.History(historyDetails);
             				Q.nfcall(historyModel.save.bind(historyModel))
-			   					.then(function(result){
+			   					.then(function(){
 									resolve({object:historyModel});						
 								}, reject);
-                  		},function(err){
+                  		},function(){
                   			console.log('fail');
-                  			reject;
+                  			// reject;
                       	});
    					}
 		   		}

@@ -1,17 +1,8 @@
 'use strict';
 
-module.exports = function(dbs){
+module.exports = function(){
   
-    var express = require('express'),
-        jwt = require('jsonwebtoken'),
-        db = dbs,
-        aws = require('aws-sdk'),
-        mailer=require('../mailing/mailer'),
-        path=require('path'),
-        dataList=require('../data/data_list.json'),
-        awsService=require('../services/awsservice');
-    var bcrypt=require('bcryptjs');
-    var utils=require('../utils/utils');
+    var dataList=require('../data/data_list.json');
     var countries=require('../data/countries.json');
 
     var controller={};
@@ -135,23 +126,27 @@ module.exports = function(dbs){
     controller.countries=function(req,res){
       res.json(countries);
       
-    }
+    };
 
     controller.margintypes=function(req,res){
       res.json(dataList.MarginTypes);
-    }
+    };
 
     controller.roleslist=function(req,res){
       res.json(dataList.RolesList);
-    }
+    };
 
     controller.mealslist=function(req,res){
       res.json(dataList.MealsList);
-    }
+    };
 
     controller.transportationmeans=function(req,res){
       res.json(dataList.TransportationMeans);
-    }
+    };
+
+    controller.otherexpensetypes=function(req,res){
+      res.json(dataList.OtherExpenseTypes);
+    };
     
   return controller;
 };

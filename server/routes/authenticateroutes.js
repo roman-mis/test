@@ -3,9 +3,7 @@
 var express = require('express'),
     router = express.Router(),
     db = require('../models'),
-    controller=require('../controllers/authenticate')(db),
-    jwt = require('jsonwebtoken')
-;
+    controller=require('../controllers/authenticate')(db);
 module.exports = function(app){
   app.use('/api', router);
 };

@@ -18,14 +18,14 @@ angular.module('origApp.directives')
                 }
                 var newValue = ele.val();
                 if (newValue) {
-                  HttpResource.model("public").customGet('candidates/emailvalidation/' + newValue, {}, function(response) {
+                  HttpResource.model('public').customGet('candidates/emailvalidation/' + newValue, {}, function(response) {
                     c.$setValidity('unique', response.data.result);
-                  }, function(response) {
+                  }, function() {
 
                   });
                 }
               });
-              scope.$watch(attrs.ngModel, function(newValue) {
+              scope.$watch(attrs.ngModel, function() {
                 c.$setValidity('unique', true);
               });
             }

@@ -1,11 +1,11 @@
+'use strict';
 //var utils=require('../utils/utils');
-var validate=require('mongoose-validator');
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
   	
-	var schema = BaseSchema({
+	var schema = new BaseSchema({
 		name: 				       {type:String},
 		// agencyType: 		     {type:String},
 		address1: 			     {type:String},
@@ -59,4 +59,4 @@ module.exports = function(mongoose) {
 	},{});
 	// mongoose.model('AgencyBranch',branchSchema);
   	return mongoose.model('Agency',schema);
-}
+};

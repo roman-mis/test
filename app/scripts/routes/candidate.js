@@ -1,4 +1,5 @@
-angular.module("origApp").config(function($stateProvider) {
+'use strict';
+angular.module('origApp').config(function($stateProvider) {
   $stateProvider
     .state('app.candidates', {
       url: '/candidates',

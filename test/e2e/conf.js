@@ -10,12 +10,12 @@ exports.config = {
     'browserName': 'chrome'
   },
   suites: {
-    main:['./spec/reg.js','./spec/check-inbox.js'],
+    main:'./spec/reg.js',
     reg: './spec/reg.js',
     login: './spec/login.js',
     candidates: ['./spec/login.js','./spec/candidates.js'],
     sidebar: ['./spec/login.js','./spec/sidebar.js'],
-    test: './spec/login.js'
+    test: ['./spec/reg.js','./spec/check-inbox.js']
   },
 
   onPrepare: function () {

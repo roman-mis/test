@@ -1,5 +1,4 @@
 'use strict';
-/*global $:false */
 angular.module('origApp.services')
   .factory('AuthService', function($location, HttpResource, $window, $cookieStore, $rootScope, $q, $filter) {
     var user = {};
@@ -14,8 +13,8 @@ angular.module('origApp.services')
 
     function clearSession() {
       $window.sessionStorage.isLoggedIn = 0;
-      $window.sessionStorage.removeItem("token");
-      $window.sessionStorage.removeItem("currentUser");
+      $window.sessionStorage.removeItem('token');
+      $window.sessionStorage.removeItem('currentUser');
     }
 
     function initUser() {
@@ -31,7 +30,7 @@ angular.module('origApp.services')
         return user;
       },
       isLoggedIn: function() {
-        return  $window.sessionStorage.isLoggedIn == "1";
+        return  $window.sessionStorage.isLoggedIn === '1';
       },
       getCurrentUser: function() {
         initUser();
@@ -42,7 +41,7 @@ angular.module('origApp.services')
         HttpResource.model('authenticate').customPost('', {emailAddress: emailAddress, password: password}).then(
           function(response) {
             var data = response.data;
-            if (data.result == true) {
+            if (data.result === true) {
               $window.sessionStorage.isLoggedIn = 1;
               $window.sessionStorage.token = data.token;
               $window.sessionStorage.currentUser = $filter('json')(data.object);

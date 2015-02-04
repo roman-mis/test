@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('origApp.directives')
-	.directive("fileread", [function () {
+	.directive('fileread', [function () {
 		return {
         scope: {
-            fileread: "="
+            fileread: '='
         },
-			link: function (scope, element, attributes) {
-				element.bind("change", function (changeEvent) {
+			link: function (scope, element) {
+				element.bind('change', function (changeEvent) {
 					scope.$apply(function () {
 						scope.fileread = changeEvent.target.files[0].name;
 						// or all selected files:
@@ -15,5 +15,5 @@ angular.module('origApp.directives')
 					});
 				});
 			}
-		}
+		};
 	}]);

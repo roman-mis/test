@@ -6,4 +6,4 @@
  * @description
  * # fromvaild
  */
-angular.module('origApp.directives', [])
+angular.module('origApp.directives', []);

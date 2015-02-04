@@ -13,6 +13,7 @@ service.getAllInvoiceDesigns = function(request){
 		queryutils.applySearch(q,db.Invoice_Design,request)
 		.then(resolve,reject);
 	});
+
 };
 
 service.saveInvoiceDesign = function(invoiceId, invoicedesign){

@@ -1,4 +1,4 @@
-
+'use strict';
 var _=require('lodash');
 
 module.exports=function(db){
@@ -11,8 +11,8 @@ module.exports=function(db){
 		};
 
 		if(req.query._include){
-			var includes=_.map(req.query._include.split(',')
-			,function(el){
+			var includes=_.map(req.query._include.split(','),
+				function(el){
 				if(el){
 					// console.log(el);
 					return el.trim();
@@ -47,7 +47,7 @@ module.exports=function(db){
 		}
 
 		if(req.query._orderby){
-			var allOrderBys=[];
+			//var allOrderBys=[];
 			var orderBys=_.map(req.query._orderby.split(','),
 				function(itm){
 
@@ -55,7 +55,7 @@ module.exports=function(db){
 						var orderItem={};
 						var orderName=itm.replace('-','');
 						// orderItem.push(orderName);
-						var order=(itm.substr(0,1)=='-'?'desc':'asc');
+						var order=(itm.substr(0,1)==='-'?'desc':'asc');
 						orderItem[orderName]=order;
 						
 						return orderItem;	
@@ -72,13 +72,13 @@ module.exports=function(db){
 		var filters={};
 		_.forEach(req.query,function(v,q){
 			// console.log('q = ');
-			if(q && v && q.substr(0,1)!='_'){
+			if(q && v && q.substr(0,1)!=='_'){
 				var filter={};
 
 				var filterName=q;
 				var operator='exact';
 				//console.log('checking '+q.toLowerCase());
-				_.forEach(['exact','iexact','contains','icontains'],function(itm,idx){
+				_.forEach(['exact','iexact','contains','icontains'],function(itm){
 					//console.log('validating with  '+itm);
 					if(q.toLowerCase().indexOf('_'+itm)>=0){
 						//console.log('looks like valid ');
@@ -137,7 +137,7 @@ module.exports=function(db){
 				 if(ky.toLowerCase ){
 				 	//console.log('has toLowerCase');
 				 	//console.log(ky);
-				 	if(ky.toLowerCase()==modelName.toLowerCase()){
+				 	if(ky.toLowerCase()===modelName.toLowerCase()){
 				 		return true;	
 				 	}
 					
@@ -184,7 +184,7 @@ module.exports=function(db){
 			if(model){
 				var ky=model.model.name;
 				// console.log(ky);
-				if(ky.toLowerCase()==modelName.toLowerCase()){
+				if(ky.toLowerCase()===modelName.toLowerCase()){
 					return true;
 				}
 			}

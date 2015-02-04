@@ -1,20 +1,8 @@
 'use strict';
 
 
-module.exports = function(dbs){
-	var express = require('express'),
-    jwt = require('jsonwebtoken'),
-	db = dbs,
-	router = express.Router(),
-	templateservice=require('../services/templateservice'),
-	utils=require('../utils/utils'),
-	expressJwt = require('express-jwt'),
-	restMiddleware=require('../middlewares/restmiddleware'),
-	fs=require('fs'),
-	path=require('path')
-	;
-	var awsservice=require('../services/awsservice');
-
+module.exports = function(){
+	var templateservice=require('../services/templateservice');
 	var controller={};
 
 	controller.getAllTemplates=function (req,res){
@@ -29,10 +17,10 @@ module.exports = function(dbs){
 		    console.log('result');
 	  		console.log(templates);
 		  	res.json({result:true, objects:templates});
-	  	},function(err){
+	  	},function(){
 
 	  	});
-	}
+	};
 
 	controller.postTemplate=function (req, res) {
 		var newTemplate={
@@ -47,7 +35,7 @@ module.exports = function(dbs){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
-	}
+	};
 
 	controller.getTemplate=function(req,res){
 		templateservice.getTemplate(req.params.id)
@@ -55,7 +43,7 @@ module.exports = function(dbs){
 				var vm = getTemplateVm(template);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
-	}
+	};
 
 
 	function getTemplateVm(template){
@@ -64,7 +52,7 @@ module.exports = function(dbs){
 			title: template.title,
 			templateBody: template.templateBody,
 			templateType: template.templateType
-		}
+		};
 	}
 	
   return controller;

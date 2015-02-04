@@ -55,7 +55,7 @@
         </table>
       </div>
       <div class="col-xs-4 pull-right">
-        <p class="">Total: <span>&#163;270.00</span></p>
+        <p class="">Total: <span>&#163;{{expenseData.transports | rowsSum:'cost' | formatNumber}}</span></p>
       </div>
     </div> 
   </div><!-- /modal-body -->

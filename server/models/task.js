@@ -1,11 +1,11 @@
+'use strict';
 //var utils=require('../utils/utils');
-var validate=require('mongoose-validator');
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
   	
-	var schema=BaseSchema({
+	var schema= new BaseSchema({
 		assignee:{type:Schema.Types.ObjectId,ref:'User'},
 		owner:{type:Schema.Types.ObjectId,ref:'User'},
 		user:{type:Schema.Types.ObjectId,ref:'User'},
@@ -23,4 +23,4 @@ module.exports = function(mongoose) {
 	});
 
   	return mongoose.model('Task',schema);
-}
+};

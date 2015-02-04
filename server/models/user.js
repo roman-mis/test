@@ -1,3 +1,4 @@
+'use strict';
 //var utils=require('../utils/utils');
 var validate=require('mongoose-validator');
 var Schema=require('mongoose').Schema;
@@ -5,7 +6,7 @@ var BaseSchema=require(__dirname+'/baseschema');
  // var autoIncrement=require('mongoose-auto-increment');
  
 module.exports = function(mongoose,autoIncrement) {
-  var schema = BaseSchema({
+  var schema = new BaseSchema({
     title:              {type:String,required:false,trim:true},
     firstName:         {type:String,required:true,trim:true},
     lastName:          {type:String,required:true,trim:true},
@@ -145,4 +146,4 @@ schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,i
 
   return mongoose.model('User',schema);
 
-}
+};

@@ -1,12 +1,12 @@
+'use strict';
 //var utils=require('../utils/utils');
-var validate=require('mongoose-validator');
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
   	
 
-	var schema=BaseSchema({
+	var schema= new BaseSchema({
 		name:{type:String,required:true},
     address1:            {type:String},
     address2:            {type:String},
@@ -20,4 +20,4 @@ module.exports = function(mongoose) {
 
 
   	return mongoose.model('Branch',schema);
-}
+};

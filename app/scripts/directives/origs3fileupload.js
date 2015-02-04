@@ -29,8 +29,8 @@ angular.module('origApp.directives')
                 }).then(function(data) {
                   scope.ngModel.url = data.url;
                   scope.ngModel.name = fileName;
-                }, function(response) {
-                  console.log("error");
+                }, function() {
+                  console.log('error');
                 });
               };
             }

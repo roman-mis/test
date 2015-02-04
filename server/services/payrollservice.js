@@ -1,11 +1,11 @@
 'use strict';
 
+
 var db = require('../models'),
 	Q=require('q'),
 	_=require('lodash'),
 	utils=require('../utils/utils'),
 	candidatecommonservice=require(__dirname+'/candidatecommonservice');
-
 var service={};
 
 service.getPayrollProductDetails = function(id){
@@ -18,6 +18,7 @@ service.getPayrollProductDetails = function(id){
 	return Q.Promise(function(resolve,reject){
 	    Q.nfcall(query.exec.bind(query))
 	    .then(function(user){
+
 	    	console.log(user.worker.payrollProduct);
 	    	var payrollProducts = [];
 
@@ -91,11 +92,13 @@ service.updatePayrollTaxDetails=function(userId, payrollTaxDetails){
 	candidatecommonservice.getUser(userId)
 	   .then(function(user){
 	   		if(user){
+
    				utils.updateSubModel(user.worker.taxDetail,{niNumber:payrollTaxDetails.niNumber});
    				utils.updateSubModel(user.worker,{startDate:payrollTaxDetails.startDate});
    				utils.updateSubModel(user.worker.payrollTax, payrollTaxDetails);
 
 				return Q.nfcall(user.save.bind(user)).then(function(result){
+
 					deff.resolve(user);						
 				}, deff.reject);
 	   		} else {
@@ -112,6 +115,7 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
 	   .then(function(user){
 	   		if(user){
 	   			var product;
+
    				if(payrollProductDetails._id === '' || payrollProductDetails._id === undefined){
    					console.log('add');
    					delete payrollProductDetails._id;
@@ -141,9 +145,11 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
    					}
    				}
 
+
    	// 			return Q.nfcall(user.save.bind(user)).then(function(result){
 				// 	deff.resolve({user:user, product:product});						
 				// }, deff.reject);
+
 	   		} else {
 	   			deff.reject({name:'NotFound',message:'No Payroll Product detail found'});
 	   		}
@@ -163,7 +169,7 @@ service.deletePayrollProductDetails=function(candidateId, productId){
 				var index = products.indexOf(product);
 				user.worker.payrollProduct.splice(index, 1);
 
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 					deff.resolve();						
 				}, deff.reject);
 			} else {
@@ -179,6 +185,7 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 		.then(function(user){
 			if(user){
 				user.worker.payrollProduct.id(productId).marginException.push(marginExceptionDetails);
+
 				return Q.nfcall(user.save.bind(user)).then(function(result){
 					var marginException = user.worker.payrollProduct.id(productId).marginException;
 					deff.resolve({object:marginException[marginException.length-1]});						
@@ -197,6 +204,7 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 			if(user){
 				console.log(marginExceptionId);
 				utils.updateSubModel(user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId), marginExceptionDetails);
+
 				return Q.nfcall(user.save.bind(user)).then(function(result){
 					var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 					console.log(marginException);
@@ -217,7 +225,7 @@ service.deleteMarginException = function(candidateId, productId, marginException
 				var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 				var index = user.worker.payrollProduct.id(productId).marginException.indexOf(marginException);
 				user.worker.payrollProduct.id(productId).marginException.splice(index, 1);
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 					deff.resolve();						
 				}, deff.reject);
 			} else {

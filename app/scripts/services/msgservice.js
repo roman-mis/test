@@ -1,8 +1,6 @@
 'use strict';
-/*global _:false, $:false */
 angular.module('origApp.services')
   .factory('MsgService', function($timeout, $rootScope, $interpolate, $modal, notify) {
-    var alerts = [];
     var defaultDuration = 2500;
     var messages = {
       'RegisterError': 'There was a problem registering candidate, please try again',
@@ -52,7 +50,7 @@ angular.module('origApp.services')
        @param {String} key
        @param {Object} params - value object that contains variables to format msg
        */
-      getAlertText: function(key, params) {
+      getAlertText: function(key) {
         return messages[key];
       },
       alertByKey: function(messageType, key, params) {
