@@ -14,6 +14,10 @@ angular.module('origApp.controllers')
             $scope.mainData.step++;
           };
 
+          $scope.gotoPrevious = function() {
+            $scope.mainData.step--;
+          };
+
           //check if all dates are selected
           $scope.isAllDatesEntered = function(items) {
             var aItems = items.filter(function(item) {
@@ -24,7 +28,7 @@ angular.module('origApp.controllers')
             }
             var dateVals = [];
             items.forEach(function(item) {
-              if(item.date !== 'all'){
+              if (item.date !== 'all') {
                 dateVals.push(item.date.getTime());
               }
             });
@@ -36,8 +40,16 @@ angular.module('origApp.controllers')
             return false;
           };
 
-          $scope.gotoPrevious = function() {
-            $scope.mainData.step--;
+          $scope.normalizeTables = function() {
+            var $tableBody = $('#tableBody'),
+                    $tableHeader = $('#tableHeader'),
+                    thTr = $tableHeader.find('tr')[0],
+                    $ths = $(thTr).find('th'),
+                    tr0 = $tableBody.find('tr')[0],
+                    $tds = $(tr0).children();
+            $ths.each(function(index){
+              $(this).css('width', $($tds[index]).width() + 16 + 'px');
+            });
           };
 
         });

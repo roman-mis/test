@@ -54,4 +54,16 @@ angular.module('origApp.filters', [])
             }
             return input;
           };
+        })
+        .filter('rowsSum', function($filter) {
+          return function(input, field) {
+            if (input === undefined) {
+              return input;
+            }
+            var sum = 0;
+            _.each(input, function(inp) {
+              sum += inp[field] || 0;
+            });
+            return sum;
+          };
         });
