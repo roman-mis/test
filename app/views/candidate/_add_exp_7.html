@@ -8,12 +8,14 @@
     <form class="form">
       <div class="row">
         <div class="form-group col-sm-4 col-xs-5">
-          <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange">
+          <select class="form-control" ng-model="addData.date" 
+                  ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
             <option value="">- Select -</option>
           </select>
         </div>
         <div class="form-group col-sm-3 col-xs-4">
-          <select class="form-control" ng-model="addData.mealType" ng-options="type.description for type in mealTypes track by type.code">
+          <select class="form-control" ng-model="addData.mealType" 
+                  ng-options="type.description for type in mealTypes track by type.code" ng-change="onMealTypeChanged()">
             <option value="">-Meal Type-</option>
           </select>
         </div>
@@ -25,13 +27,16 @@
         </div>
         <div class="form-group col-sm-2">
           <button type="button" class="btn btn-default form-control"
-                  ng-disabled="!addData.date || !addData.mealType || !addData.cost" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+                  ng-disabled="!addData.date || !addData.mealType || !addData.cost || alreadyAdded" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-3 col-sm-offset-4 col-xs-4 col-xs-offset-5">
           <input type="text" class="form-control" placeholder="chocolate bar" ng-model="addData.chocolateBar"/>
         </div>
+      </div>
+      <div class="form-group col-sm-12" ng-show="alreadyAdded" style="color: red;">
+        The date you selected has already been added.
       </div>
     </form>
     <div class="row">
