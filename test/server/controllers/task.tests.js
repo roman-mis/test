@@ -66,6 +66,7 @@ describe('task',function(){
 			getTaskDetailsStub=sinon.stub(taskServiceMock,'getTaskDetails');
 			
 		});
+		
 		beforeEach(function(){
 			
 			getTaskDetailsStub.reset();
