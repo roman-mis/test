@@ -35,5 +35,24 @@
     margin-left: 5px;
   }
 
+  #tableHeader, #tableBody{
+    margin-bottom: 0px;
+  }
+  .tableWrapper {
+    width: 100%; 
+    max-height: 320px;
+    overflow-y: auto;
+    display: block;
+    margin-bottom: 15px;
+  }
+  @media screen and (max-width: 598px) {
+    .tableWrapper {
+      display: table;
+    }
+    #tableHeader, #tableBody {
+      table-layout: fixed;
+      word-wrap: break-word;
+    }
+  }
 
 }
