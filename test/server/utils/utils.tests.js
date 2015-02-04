@@ -30,6 +30,7 @@ describe('utils tests',function(){
 
 	describe('secureString Tests',function(){
 		it('should return secure string',function(done){
+			this.timeout(6000);//becrypt  genSalt is time consuming 
 			var password='password';
 			return utils.secureString(password)
 				.then(function(secureString){

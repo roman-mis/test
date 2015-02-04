@@ -4,10 +4,16 @@ var db = require('../models'),
 	Q=require('q'),
 	service={};
 
+service.getExpense=function(id){
+	var q=db.Expense.findById(id);
+	return Q.nfcall(q.exec.bind(q));
+};
+
 service.saveExpenses = function(expenseDetails){
 	var deff = Q.defer();
 	var expenseModel;
 	expenseModel = new db.Expense(expenseDetails);
+
 	expenseModel.save(function(err){
 		if(err){
 			deff.reject(err);

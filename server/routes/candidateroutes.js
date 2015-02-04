@@ -76,3 +76,4 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 
 
 router.post('/:id/expenses', expensecontroller.postExpenses);
+router.get('/expenses/:id', expensecontroller.getExpense);
