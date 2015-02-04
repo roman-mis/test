@@ -46,8 +46,7 @@ module.exports = function(mongoose) {
             smp: Number,
             spp: Number
         },
-        netPay: Number,
-        
+        netPay: Number        
     });
     
     return mongoose.model('PayrollWorker',schema);
