@@ -49,6 +49,23 @@ module.exports = function(mongoose,autoIncrement) {
                 contractorStatus: String,
                 taxCodeContractors: String
             }
+        },
+        rti: {
+        },
+        mileageRates: {
+        },
+        cis: {
+        },
+        statutoryTables: {
+            nmw: [
+                {
+                    ageLower: Number,
+                    ageUpper: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ]
         }
     });
 
