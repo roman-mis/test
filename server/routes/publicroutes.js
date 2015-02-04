@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express'),
-    jwt = require('jsonwebtoken'),
     db = require('../models'),
     controller=require('../controllers/public')(db),
     router = express.Router()
@@ -16,9 +15,6 @@ router.get('/candidates/emailvalidation/:emailAddress',controller.emailValidatio
 
 
 router.get('/signS3', controller.signS3);
-
-
-
 
 /*test api end points*/
 

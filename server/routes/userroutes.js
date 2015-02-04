@@ -1,8 +1,6 @@
 'use strict';
 
-var express = require('express'),
-    jwt = require('jsonwebtoken'),
-    
+var express = require('express'),    
     router = express.Router(),
     expressJwt = require('express-jwt'),
     db = require('../models'),

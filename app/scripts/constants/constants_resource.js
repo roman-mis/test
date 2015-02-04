@@ -19,7 +19,6 @@ angular.module('origApp.constants')
               if (data[key] && data[key].length > 0) {
                 return data[key];
               }
-              var constantKey = key;
               data[key] = api.customGet(key, {}, function(){
                 hashData[key] = _resource.makeHashData('code', data[key]);
               });

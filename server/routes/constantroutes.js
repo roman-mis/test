@@ -1,17 +1,9 @@
 'use strict';
 
 var express = require('express'),
-    jwt = require('jsonwebtoken'),
     db = require('../models'),
     router = express.Router(),
-    controller=require('../controllers/constants')(db),
-    aws = require('aws-sdk'),
-    mailer=require('../mailing/mailer'),
-    path=require('path'),
-    expressJwt = require('express-jwt'),
-    awsService=require('../services/awsservice');
-var bcrypt=require('bcryptjs');
-var utils=require('../utils/utils');
+    controller=require('../controllers/constants')(db);
 
 module.exports = function(app){
   app.use('/api/constants', router);

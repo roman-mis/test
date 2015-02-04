@@ -1,21 +1,9 @@
 'use strict';
 
-module.exports = function(dbs){
+module.exports = function(){
   
-    var express = require('express'),
-        router = express.Router(),
-        jwt = require('jsonwebtoken'),
-    db = dbs,
-    router = express.Router(),
-    utils=require('../utils/utils'),
-    expressJwt = require('express-jwt'),
-    restMiddleware=require('../middlewares/restmiddleware'),
-    fs=require('fs'),
-    path=require('path'),
-    candidatecommonservice = require('../services/candidatecommonservice'),
-    historyservice = require('../services/historyservice');
-    var awsservice=require('../services/awsservice');
-    var enums=require('../utils/enums')
+    var historyservice = require('../services/historyservice');
+    var enums=require('../utils/enums');
 
     var controller={};
 
@@ -30,12 +18,12 @@ module.exports = function(dbs){
         notes: 'DPA updated by ' + req.user.firstName + ' ' + req.user.lastName
       };
 
-      historyservice.saveDpa(req.params.id, dpaDetails).then(function(response){
+      historyservice.saveDpa(req.params.id, dpaDetails).then(function(){
         res.json({result:true});
         },function(err){
          res.sendFailureResponse(err);
       });
-    }
+    };
 
   return controller;
 };

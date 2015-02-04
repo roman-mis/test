@@ -1,4 +1,4 @@
-
+'use strict';
 module.exports=function(app){
 
 	function getResponseMessage(response){
@@ -29,7 +29,7 @@ module.exports=function(app){
 				console.log('--------------------error-----------------');
 				console.log(response);
 				if(response.name){
-					if(response.name=='ModelValidationError'||response.name=='ValidationError'){
+					if(response.name==='ModelValidationError'||response.name==='ValidationError'){
 						return res.status(400).json(
 							{
 								result:false,
@@ -38,7 +38,7 @@ module.exports=function(app){
 							});
 
 					}
-					else if(response.name=='DuplicateRecordExists'){
+					else if(response.name==='DuplicateRecordExists'){
 						return res.status(400).json({
 							result:false,
 							type:'DuplicateRecordExists',
@@ -46,14 +46,14 @@ module.exports=function(app){
 							detail:getResponseDetail(response)
 						});
 					}
-					else if(response.name=='SequelizeDatabaseError'){
+					else if(response.name==='SequelizeDatabaseError'){
 						return res.status(500).json({
 							result:false,
 							type:'ServerError',
 							message:getResponseMessage(response)
 						});
 					}
-					else if(response.name=='NotFound'){
+					else if(response.name==='NotFound'){
 						return res.status(404).json({
 							result:false,
 							type:'NotFound',
@@ -61,7 +61,7 @@ module.exports=function(app){
 							detail:getResponseDetail(response)
 						});
 					}
-					else if(response.name=='Unauthorized'){
+					else if(response.name==='Unauthorized'){
 						return res.status(401).json({
 							result:false,
 							type:'Unauthorized',
@@ -69,7 +69,7 @@ module.exports=function(app){
 							detail:getResponseDetail(response)
 						});
 					}
-					else if(response.name=='InvalidLogin'){
+					else if(response.name==='InvalidLogin'){
 						return res.status(400).json({
 							result:false,
 							type:'InvalidLogin',
@@ -77,7 +77,7 @@ module.exports=function(app){
 							detail:getResponseDetail(response)
 						});
 					}
-					else if(response.name=='CastError' && response.type && response.type=='ObjectId'){
+					else if(response.name==='CastError' && response.type && response.type==='ObjectId'){
 						return res.status(400).json({
 							result:false,
 							type:'InvalidId',
@@ -97,6 +97,6 @@ module.exports=function(app){
 		};
 
 		next();
-	}
+	};
 
 };

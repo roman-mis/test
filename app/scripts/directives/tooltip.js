@@ -10,7 +10,7 @@ angular.module('origApp.directives')
         .directive('tooltip', function() {
             return {
                 restrict: 'AE',
-                link: function(scope, ele, attrs, c) {
+                link: function(scope, ele) {
                     angular.element(ele).tooltip();
                 }
             };

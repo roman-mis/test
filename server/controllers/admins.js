@@ -2,24 +2,18 @@
 
 var express = require('express'),
     router = express.Router(),
-    jwt = require('jsonwebtoken'),
-	db = require('../models'),
 	router = express.Router(),
-	userservice=require('../services/userservice'),
-	utils=require('../utils/utils'),
-	expressJwt = require('express-jwt'),
-	restMiddleware=require('../middlewares/restmiddleware'),
-	fs=require('fs'),
-	path=require('path')
-;
-var awsservice=require('../services/awsservice');
+	userservice=require('../services/userservice');
 
 module.exports = function(app){
   app.use('/api/admins', router);
 };
 
-router.post('/', postAdmin );
-
+function getUserInfoViewModel(usr){
+  
+     return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress
+    };
+}
 
 function postAdmin(req,res){
 	var newUser={
@@ -54,8 +48,5 @@ function postAdmin(req,res){
 
 }
 
-function getUserInfoViewModel(usr){
-  
-     return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress
-    };
-}
+router.post('/', postAdmin );
+

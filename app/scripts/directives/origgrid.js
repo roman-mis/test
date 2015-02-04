@@ -40,7 +40,7 @@ angular.module('origApp.directives')
             },
             templateUrl: 'views/partials/origgrid.html',
             replace: true,
-            link: function($scope, ele, attrs, c) {
+            link: function() {
               return true;
             }
           };
@@ -58,7 +58,7 @@ angular.module('origApp.directives')
               };
             },
             template: '<td orig-grid-cell grid-options="gridOptions" row="row" column="col" ng-repeat="col in gridOptions.columns" class="text-{{col.textAlign}}"></td>',
-            link: function($scope, ele, attrs, c) {
+            link: function($scope, ele) {
               if ($scope.gridOptions.rowTemplate) {
                 ele.html($scope.gridOptions.rowTemplate);
                 $compile(ele.contents())($scope);
@@ -81,7 +81,7 @@ angular.module('origApp.directives')
               };
             },
             template: '{{cellValue}}',
-            link: function($scope, ele, attrs, c) {
+            link: function($scope, ele) {
               $scope.cellValue = $scope.row[$scope.column.field];
               if ($scope.column.cellTemplate) {
                 ele.html($scope.column.cellTemplate);

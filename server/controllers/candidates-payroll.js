@@ -1,22 +1,9 @@
 'use strict';
 
 
-module.exports = function(dbs){
-  var express = require('express'),
-    router = express.Router(),
-    jwt = require('jsonwebtoken'),
-    db = dbs,
-    router = express.Router(),
-    candidatepayrollservice=require('../services/payrollservice'),
-    candidateservice=require('../services/candidateservice'),
-    utils=require('../utils/utils'),
-    expressJwt = require('express-jwt'),
-    restMiddleware=require('../middlewares/restmiddleware'),
-    fs=require('fs'),
-    path=require('path')
-    ;
-    var awsservice=require('../services/awsservice');
-
+module.exports = function(){
+  var candidatepayrollservice=require('../services/payrollservice'),
+    candidateservice=require('../services/candidateservice');
     var controller={};
 
 
@@ -33,7 +20,7 @@ module.exports = function(dbs){
             res.json({result:false,message:'Payroll Tax Information not found'});
           }
         },res.sendFailureResponse);
-    }
+    };
 
     controller.postPayrollTax=function (req,res){
 
@@ -53,7 +40,7 @@ module.exports = function(dbs){
         },function(err){
          res.sendFailureResponse(err);
       });
-    }
+    };
 
     // controller.getPayrollProduct=function (req,res){
     //   candidatepayrollservice.getPayrollProductDetails(req.params.candidateId)
@@ -78,16 +65,16 @@ module.exports = function(dbs){
       .then(function(payrollProduct){
         res.json(payrollProduct);
       });
-    }
+    };
 
     function getPayrollProduct(candidateId, productId){
       var deff=Q.defer();
       candidatepayrollservice.getPayrollProductDetails(candidateId)
         .then(function(payrollProducts){
           if(payrollProducts){
-            _.forEach(payrollProducts, function(payrollProduct, key){
+            _.forEach(payrollProducts, function(payrollProduct){
               // console.log(payrollProduct);
-              if(payrollProduct['_id'] == productId){
+              if(payrollProduct._id === productId){
                 deff.resolve({result:true, object: payrollProduct});
                 return false;
               }
@@ -110,15 +97,15 @@ module.exports = function(dbs){
             res.json({result:false, message:'Payroll Product Information not found'});
           }
         },res.sendFailureResponse);
-    }
+    };
 
     controller.postPayrollProduct=function (req,res){
       savePayrollProduct(req, res, 'post');
-    }
+    };
 
     controller.patchPayrollProduct=function (req,res){
       savePayrollProduct(req, res, 'patch');
-    }
+    };
 
     function savePayrollProduct(req, res, type){
       var payrollProduct = {
@@ -135,13 +122,13 @@ module.exports = function(dbs){
         paymentTerms: req.body.paymentTerms,
         paymentMethod: req.body.paymentMethod,
         jobDescription: req.body.jobDescription
-      }
+      };
       console.log(payrollProduct);
 
-      if(type=='patch' && (req.params.productId == undefined || req.params.productId == '')){
+      if(type==='patch' && (req.params.productId === undefined || req.params.productId === '')){
         res.json({result:false, message:'Product Id not found'});
       }else{
-        payrollProduct['_id'] = req.params.productId;
+        payrollProduct._id = req.params.productId;
       }
 
       candidatepayrollservice.updatePayrollProductDetails(req.params.candidateId, payrollProduct).then(function(response){
@@ -163,7 +150,7 @@ module.exports = function(dbs){
 
     controller.deletePayrollProduct=function (req,res){
       candidatepayrollservice.deletePayrollProductDetails(req.params.candidateId, req.params.productId)
-      .then(function(response){
+      .then(function(){
         // REVIEW: using new response and proper viewmodel
         // res.json({result:true,object:getPayrollProductViewModel(response.user,response.product)});
         // var vm=getPayrollProductViewModel(response.user,response.product);
@@ -171,12 +158,13 @@ module.exports = function(dbs){
         },function(err){
          res.sendFailureResponse(err);
       });
-    }
+    };
 
     function getPayrollTaxViewModel(user){
       var worker = user.worker;
-      if(worker.payrollTax == null)
+      if(worker.payrollTax === null){
         return {};
+      }
       else{
           return {
             '_id':user._id, 
@@ -192,12 +180,6 @@ module.exports = function(dbs){
       }
     }
 
-    function getPayrollProductViewModel(user,product){
-      // var worker = user.worker;
-       // console.log(product.id);
-       return user;//{'_id':product.id, payrollProduct: worker.payrollProduct};
-    }
-
     controller.getMarginException=function (req,res){
       candidateservice.getUser(req.params.candidateId)
         .then(function(user){
@@ -208,7 +190,7 @@ module.exports = function(dbs){
             res.json({result:false, message:'Payroll Product Information not found'});
           }
         },res.sendFailureResponse);
-    }
+    };
 
     controller.postMarginException=function (req,res){
       var marginExceptionDetails = {
@@ -227,7 +209,7 @@ module.exports = function(dbs){
       },function(err){
          res.sendFailureResponse(err);
       });
-    }
+    };
 
     controller.patchMarginException=function (req,res){
       var marginExceptionDetails = {
@@ -246,16 +228,16 @@ module.exports = function(dbs){
       },function(err){
          res.sendFailureResponse(err);
       });
-    }
+    };
 
     controller.deleteMarginException=function (req,res){
       candidatepayrollservice.deleteMarginException(req.params.candidateId, req.params.productId, req.params.marginExceptionId)
-      .then(function(response){
+      .then(function(){
         res.json({result:true});
       },function(err){
         res.sendFailureResponse(err);
       });
-    }
+    };
 
   return controller;
 };
