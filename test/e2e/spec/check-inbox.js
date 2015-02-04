@@ -64,7 +64,7 @@ describe('Checking mailbox', function() {
   });
 
 
-  it('should enter users details', function () {
+  it('submiting users details', function () {
     element(by.css('.activate-container [name="password"]')).sendKeys('andyboss');
     element(by.css('.activate-container [name="confirmpassword"]')).sendKeys('andyboss');
     element(by.css('.activate-container [ng-click="submit()"]')).click();
