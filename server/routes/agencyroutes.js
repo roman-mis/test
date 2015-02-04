@@ -2,16 +2,12 @@
 
 var express = require('express'),
     router = express.Router(),
-    jwt = require('jsonwebtoken'),
 	db = require('../models'),
 	router = express.Router(),
 	controller=require('../controllers/agency')(db),
 	expressJwt = require('express-jwt'),
 	restMiddleware=require('../middlewares/restmiddleware'),
-	routeskipper=require('../middlewares/route-skipper')
-	
-;
-var awsservice=require('../services/awsservice');
+	routeskipper=require('../middlewares/route-skipper');
 
 module.exports = function(app){
   app.use('/api/agencies',routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[]), router);
