@@ -1,46 +1,42 @@
-var db = require('../models');
-var Q=require('q');
-// var Promise=require('promise');
-var _=require('lodash');
-var mailer=require('../mailing/mailer');
-var uuid = require('node-uuid');
-var url=require('url');
+'use strict';
+
+var db = require('../models'),
+	Q=require('q'),
+	_=require('lodash'),
+	uuid = require('node-uuid'),
+	utils=require('../utils/utils'),
+	queryutils=require('../utils/queryutils')(db),
+	awsservice=require('../services/awsservice'),
+	userservice=require('../services/userservice'),
+	candidatecommonservice=require('../services/candidatecommonservice');
+
 var service={};
-var utils=require('../utils/utils');
-var queryutils=require('../utils/queryutils')(db);
-var awsservice=require('../services/awsservice');
-var userservice=require('../services/userservice');
-var candidatecommonservice=require('../services/candidatecommonservice');
-var Schema=require('mongoose').Schema;
-var path=require('path');
 
 service.getAllAgencies=function(request){
-	
 	return Q.Promise(function(resolve,reject){
 		var q=db.Agency.find().populate('branches');
 		
 		queryutils.applySearch(q,db.Agency,request)
 		.then(resolve,reject);
 	});
-	
-}
+};
 
 service.saveAgency = function(agencyDetails, agencyId){
 	console.log('saveAgency');
 	return Q.Promise(function(resolve,reject){	
 		var agency;
-		if(agencyId == null){
+		if(agencyId === null){
 			// Add Agency
 			agency = new db.Agency(agencyDetails);
 
 			var branch =new db.Branch({
-				name: 				 "Head Office",
+				name: 				 'Head Office',
 			    address1:            agencyDetails.address1,
 			    address2:            agencyDetails.address2,
 			    address3:            agencyDetails.address3,
 				town:                agencyDetails.town,
 			    postCode:            agencyDetails.postCode,
-			    branchType:         "HQ",
+			    branchType:          'HQ',
 			});
 
 			agency.branches.push(branch._id);
@@ -99,12 +95,9 @@ service.saveAgency = function(agencyDetails, agencyId){
 						}
 					return true;
 				}
-			
 		}
 	});
-}
-
-
+};
 
 service.saveAgencyContact = function(agencyId, contactDetails){
 	return Q.Promise(function(resolve,reject){
@@ -122,7 +115,7 @@ service.saveAgencyContact = function(agencyId, contactDetails){
 				}
 			},reject);
 	});
-}
+};
 
 service.getAgency=function(id, populate){
 	populate = typeof populate !== 'undefined' ? populate : false;
@@ -135,7 +128,7 @@ service.getAgency=function(id, populate){
 	}
 	
 	return Q.nfcall(q.exec.bind(q));
-}
+};
 
 // service.getAgencyByBranchId=function(id){
 // 	var q=db.Agency.findOne({'branches._id':id}).populate('branches.consultants.user');
@@ -151,7 +144,7 @@ service.getConsultants=function(branchId){
 	var q=db.Consultant.find({'branch':branchId}).populate('agency').populate('branch').populate('user');
 	return Q.nfcall(q.exec.bind(q));
 
-}
+};
 
 service.getConsultant=function(id){
 	return Q.Promise(function(resolve,reject){
@@ -162,7 +155,7 @@ service.getConsultant=function(id){
 
 			},reject);
 	});
-}
+};
 
 service.getUserByConsultantId=function(id){
 	return Q.Promise(function(resolve,reject){
@@ -178,7 +171,7 @@ service.getUserByConsultantId=function(id){
 			}
 		},reject);
 	});
-}
+};
 
 
 service.postBranch=function(agencyId, branchInfo){
@@ -240,7 +233,7 @@ service.getBranch=function(branchId){
 				}
 			},reject);
 	});
-}
+};
 
 service.getBranches=function(filter,populate){
 	console.log('about to getBranches');
@@ -263,7 +256,7 @@ service.getBranches=function(filter,populate){
 	// console.log('populate');console.log(populate);
 	return Q.nfcall(q.exec.bind(q));
 
-}
+};
 
 service.deleteBranch=function(branchId){
 	return Q.Promise(function(resolve,reject){
@@ -300,14 +293,12 @@ service.deleteBranch=function(branchId){
 				
 			},reject);
 	});
-}
+};
 
 service.postConsultant=function(branchId, consultantInfo){
 	return Q.Promise(function(resolve,reject){
 		return service.getBranch(branchId)
 				.then(function(branch){
-					
-						
 						if(branch){
 							// For Consultant User Login
 							var fullUrl = global.baseUrl + '/register/activate/'+consultantInfo.emailAddress;
@@ -326,12 +317,12 @@ service.postConsultant=function(branchId, consultantInfo){
 								userType: 'AC',
 								contactDetail:{phone:consultantInfo.phone},
 								activationCode: guid
-							}
+							};
 							
 							return userservice.createUser(opt, newUser).then(function(user){
 								// Add
 								console.log('user created');
-								consultantInfo['user']=user.object._id;
+								consultantInfo.user = user.object._id;
 								var consultant = new db.Consultant(consultantInfo);
 								consultant.branch=branch._id;
 								consultant.agency=branch.agency;
@@ -370,7 +361,7 @@ service.patchConsultant=function(consultantId, consultantInfo){
 								updateConsultant(agency,consultant)
 									.then(function(result){
 										resolve({result:true,object:{agency:agency, branch:branch, consultant:result.object.consultant,user:result.object.user}});
-									},reject)
+									},reject);
 								},reject);
 					}else{
 						updateConsultant(agency, consultant)
@@ -385,7 +376,7 @@ service.patchConsultant=function(consultantId, consultantInfo){
 				}
 			},reject);
 	});
-}
+};
 
 function updateConsultant(agency,consultant){
 	return Q.Promise(function(resolve,reject){
@@ -507,5 +498,5 @@ service.lockUnlockConsultant=function(id,flag,lockUnlockBy){
 				}
 			},reject);
 	});
-}
+};
 module.exports = service;

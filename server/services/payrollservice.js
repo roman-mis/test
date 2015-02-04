@@ -1,13 +1,12 @@
 'use strict';
 
-var db = require('../models');
-var Q=require('q');
-var _=require('lodash');
-var service={};
-var utils=require('../utils/utils');
-var candidatecommonservice=require(__dirname+'/candidatecommonservice');
+var db = require('../models'),
+	Q=require('q'),
+	_=require('lodash'),
+	utils=require('../utils/utils'),
+	candidatecommonservice=require(__dirname+'/candidatecommonservice');
 
-//service.getWorkerByUser = candidatecommonservice.getWorkerByUser;
+var service={};
 
 service.getPayrollProductDetails = function(id){
 	var query=db.User.findById(id)
@@ -172,7 +171,7 @@ service.deletePayrollProductDetails=function(candidateId, productId){
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.postMarginException = function(candidateId, productId, marginExceptionDetails){
 	var deff=Q.defer();
@@ -181,7 +180,7 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 			if(user){
 				user.worker.payrollProduct.id(productId).marginException.push(marginExceptionDetails);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
-					marginException = user.worker.payrollProduct.id(productId).marginException;
+					var marginException = user.worker.payrollProduct.id(productId).marginException;
 					deff.resolve({object:marginException[marginException.length-1]});						
 				}, deff.reject);
 			} else {
@@ -189,7 +188,7 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.patchMarginException = function(candidateId, productId, marginExceptionId, marginExceptionDetails){
 	var deff=Q.defer();
@@ -199,7 +198,7 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 				console.log(marginExceptionId);
 				utils.updateSubModel(user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId), marginExceptionDetails);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
-					marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
+					var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 					console.log(marginException);
 					deff.resolve({object:marginException});						
 				}, deff.reject);
@@ -208,14 +207,14 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.deleteMarginException = function(candidateId, productId, marginExceptionId){
 	var deff=Q.defer();
 	candidatecommonservice.getUser(candidateId)
 		.then(function(user){
 			if(user){
-				marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
+				var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 				var index = user.worker.payrollProduct.id(productId).marginException.indexOf(marginException);
 				user.worker.payrollProduct.id(productId).marginException.splice(index, 1);
 				return Q.nfcall(user.save.bind(user)).then(function(result){
@@ -226,6 +225,6 @@ service.deleteMarginException = function(candidateId, productId, marginException
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 module.exports=service;
