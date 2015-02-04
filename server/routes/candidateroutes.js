@@ -2,8 +2,7 @@
 
 var express = require('express'),
     router = express.Router(),
-    jwt = require('jsonwebtoken'),
-	db = require('../models'),
+    db = require('../models'),
 	router = express.Router(),
 	candidatecontroller = require('../controllers/candidates')(db),
 	candidatepayrollcontroller = require('../controllers/candidates-payroll')(db),
