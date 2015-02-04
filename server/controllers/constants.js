@@ -143,6 +143,10 @@ module.exports = function(){
     controller.transportationmeans=function(req,res){
       res.json(dataList.TransportationMeans);
     };
+
+    controller.otherexpensetypes=function(req,res){
+      res.json(dataList.OtherExpenseTypes);
+    };
     
   return controller;
 };
