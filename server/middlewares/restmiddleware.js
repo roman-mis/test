@@ -3,6 +3,90 @@ var _=require('lodash');
 
 module.exports=function(db){
 
+	function includeModel(allIncludes,db,inc,parentInc){
+		var modelName=inc;
+		var subModelIndex=-1;
+		subModelIndex =inc.indexOf('.');
+		if(subModelIndex>=0){
+			modelName=inc.substr(0,subModelIndex);	
+		}
+		var myModel;
+		if(parentInc){
+			myModel=hasThisModel(parentInc.include,modelName);
+		}
+		else{
+			myModel=hasThisModel(allIncludes,modelName);
+		}
+		//console.log('including : '+modelName);
+		// var myModelInc;
+
+		if(!myModel){
+			myModel=_.find(db.sequelize.models,function(itm){
+				var ky=itm.name;
+				//console.log(db.sequelize.models[ky]);
+				// var itm=db[ky]
+				//console.log(typeof ky);
+				 if(ky.toLowerCase ){
+				 	//console.log('has toLowerCase');
+				 	//console.log(ky);
+				 	if(ky.toLowerCase()===modelName.toLowerCase()){
+				 		return true;	
+				 	}
+					
+				 }
+
+				return false;
+			});
+					
+			// console.log(myModel);
+			if(myModel){
+				myModel={model:myModel};
+				//console.log('adding : '+modelName);
+				//console.log('found');
+				
+				if(parentInc){
+					parentInc.include=parentInc.include||[];
+
+					parentInc.include.push(myModel);
+				}
+				else{
+					allIncludes.push(myModel);	
+				}
+				
+			}
+		}
+		else{
+			// myModelInc={model:myModel};
+		}
+
+		if(myModel && subModelIndex>=0){
+			//console.log('going for sub key');
+			var subModelKey=inc.substr(subModelIndex+1,inc.length-1-modelName.length);
+			includeModel(allIncludes,db,subModelKey,myModel);
+		}
+	}
+
+	function hasThisModel(allIncludes,modelName){
+		// console.log(allIncludes);
+		var allFlattened=_.flatten(allIncludes);
+		// console.log('all flattened');
+		// console.log(allFlattened);
+
+		var existingModel=_.find(allFlattened,function(model){
+			if(model){
+				var ky=model.model.name;
+				// console.log(ky);
+				if(ky.toLowerCase()===modelName.toLowerCase()){
+					return true;
+				}
+			}
+
+			return false;
+		});
+		
+		return existingModel;
+	}
+	
 	return function(req,res,next){
 		var opt={
 			include:[],
@@ -111,88 +195,5 @@ module.exports=function(db){
 		next();
 	};
 
-	function includeModel(allIncludes,db,inc,parentInc){
-		var modelName=inc;
-		var subModelIndex=-1;
-		subModelIndex =inc.indexOf('.');
-		if(subModelIndex>=0){
-			modelName=inc.substr(0,subModelIndex);	
-		}
-		var myModel;
-		if(parentInc){
-			myModel=hasThisModel(parentInc.include,modelName);
-		}
-		else{
-			myModel=hasThisModel(allIncludes,modelName);
-		}
-		//console.log('including : '+modelName);
-		// var myModelInc;
-
-		if(!myModel){
-			myModel=_.find(db.sequelize.models,function(itm){
-				var ky=itm.name;
-				//console.log(db.sequelize.models[ky]);
-				// var itm=db[ky]
-				//console.log(typeof ky);
-				 if(ky.toLowerCase ){
-				 	//console.log('has toLowerCase');
-				 	//console.log(ky);
-				 	if(ky.toLowerCase()===modelName.toLowerCase()){
-				 		return true;	
-				 	}
-					
-				 }
-
-				return false;
-			});
-					
-			// console.log(myModel);
-			if(myModel){
-				myModel={model:myModel};
-				//console.log('adding : '+modelName);
-				//console.log('found');
-				
-				if(parentInc){
-					parentInc.include=parentInc.include||[];
-
-					parentInc.include.push(myModel);
-				}
-				else{
-					allIncludes.push(myModel);	
-				}
-				
-			}
-		}
-		else{
-			// myModelInc={model:myModel};
-		}
-
-		if(myModel && subModelIndex>=0){
-			//console.log('going for sub key');
-			var subModelKey=inc.substr(subModelIndex+1,inc.length-1-modelName.length);
-			includeModel(allIncludes,db,subModelKey,myModel);
-		}
-	}
-
-	function hasThisModel(allIncludes,modelName){
-		// console.log(allIncludes);
-		var allFlattened=_.flatten(allIncludes);
-		// console.log('all flattened');
-		// console.log(allFlattened);
-
-		var existingModel=_.find(allFlattened,function(model){
-			if(model){
-				var ky=model.model.name;
-				// console.log(ky);
-				if(ky.toLowerCase()===modelName.toLowerCase()){
-					return true;
-				}
-			}
-
-			return false;
-		});
-		
-		return existingModel;
-	}
 
 };

@@ -1,4 +1,4 @@
-// 'use strict';
+ 'use strict';
 var db = require('../models');
 var Q=require('q');
 // var Promise=require('promise');
@@ -10,6 +10,36 @@ var queryutils=require('../utils/queryutils')(db);
 var awsservice=require('../services/awsservice');
 var userservice=require('../services/userservice');
 var candidatecommonservice=require('../services/candidatecommonservice');
+
+
+function updateConsultant(agency,consultant){
+	return Q.Promise(function(resolve,reject){
+		console.log('retrieving consultant user');
+		candidatecommonservice.getUser(consultant.user)
+			.then(function(user){
+				//create new user if doesn't exists
+				if(!user){
+					console.log('user for consultant not found');
+				}
+
+				user=user|| new db.User({});
+
+				user.firstName = consultant.firstName;
+				user.lastName = consultant.lastName;
+				user.emailAddress = consultant.emailAddress;
+				user.contactDetail=user.contactDetail||{};
+				user.userType= 'AC';
+				user.contactDetail.phone=consultant.phone;
+				consultant.user=user._id;
+				console.log('updating consultant user');
+				Q.all([Q.nfcall(agency.save.bind(agency)), Q.nfcall(user.save.bind(user))])
+				.then(function(){
+					consultant.user=user;
+					resolve({result:true,object:{consultant:consultant,user:user}});
+				},reject);
+			},reject);
+	});
+}
 
 service.getAllAgencies=function(request){
 	
@@ -49,6 +79,8 @@ service.saveAgency = function(agencyDetails, agencyId){
 					resolve({agency:agency,branch:branch});
 				},reject);
 		}else{
+			
+
 			// Update Agency
 			return Q.all([service.getAgency(agencyId),service.getBranches([{'agency':agencyId},{'branchType':'HQ'}])])
 				.spread(function(agency,branches){
@@ -59,6 +91,7 @@ service.saveAgency = function(agencyDetails, agencyId){
 					console.log(agency);
 					return Q.nfcall(agency.save.bind(agency))
 						.then(function(){
+							
 							if(branches && branches.length>0){
 								branch=branches[0];
 								var branchDetails = {
@@ -73,7 +106,13 @@ service.saveAgency = function(agencyDetails, agencyId){
 								return Q.nfcall(branch.save.bind(branch))
 									.then(function(){
 										console.log('branch saved');
-										return removePreviousLogo();
+										console.log('removing previous logo');
+										if(agencyDetails.logoFileName && agencyDetails.logoFileName.trim()!=='' && previousLogoFile && previousLogoFile.trim()!=='' && (previousLogoFile.trim().toLowerCase()!==agencyDetails.logoFileName.trim().toLowerCase())){
+												console.log('removing previous logo');
+												var folder=process.env.S3_AGENCY_FOLDER+agency._id+'/';
+											 	return awsservice.deleteS3Object(previousLogoFile,folder);
+											}
+										return true;
 									});
 							}
 
@@ -87,15 +126,7 @@ service.saveAgency = function(agencyDetails, agencyId){
 					
 				},reject);
 
-				function removePreviousLogo(){
-					console.log('removing previous logo');
-					if(agencyDetails.logoFileName && agencyDetails.logoFileName.trim()!=='' && previousLogoFile && previousLogoFile.trim()!=='' && (previousLogoFile.trim().toLowerCase()!==agencyDetails.logoFileName.trim().toLowerCase())){
-								console.log('removing previous logo');
-								var folder=process.env.S3_AGENCY_FOLDER+agency._id+'/';
-							 	return awsservice.deleteS3Object(previousLogoFile,folder);
-						}
-					return true;
-				}
+				
 			
 		}
 	});
@@ -377,34 +408,6 @@ service.patchConsultant=function(consultantId, consultantInfo){
 	});
 };
 
-function updateConsultant(agency,consultant){
-	return Q.Promise(function(resolve,reject){
-		console.log('retrieving consultant user');
-		candidatecommonservice.getUser(consultant.user)
-			.then(function(user){
-				//create new user if doesn't exists
-				if(!user){
-					console.log('user for consultant not found');
-				}
-
-				user=user|| new db.User({});
-
-				user.firstName = consultant.firstName;
-				user.lastName = consultant.lastName;
-				user.emailAddress = consultant.emailAddress;
-				user.contactDetail=user.contactDetail||{};
-				user.userType= 'AC';
-				user.contactDetail.phone=consultant.phone;
-				consultant.user=user._id;
-				console.log('updating consultant user');
-				Q.all([Q.nfcall(agency.save.bind(agency)), Q.nfcall(user.save.bind(user))])
-				.then(function(){
-					consultant.user=user;
-					resolve({result:true,object:{consultant:consultant,user:user}});
-				},reject);
-			},reject);
-	});
-}
 
 service.deleteConsultant=function(consultantId){
 	return Q.Promise(function(resolve,reject){

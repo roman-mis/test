@@ -1,5 +1,7 @@
 'use strict';
 
+var Q=require('q'),
+_=require('lodash');
 
 module.exports = function(){
   var candidatepayrollservice=require('../services/payrollservice'),

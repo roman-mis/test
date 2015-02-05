@@ -1,24 +1,29 @@
-var app = angular.module('demo', ['ngRoute', 'ngAnimate']);
+var app = angular.module('origApp.controllers');
 
-app.config(function ($routeProvider) {
-  $routeProvider
-  .when('/one', {
-    templateUrl:'page1.html'
+app.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  .state('app.admin.one', {
+    url: '/one',
+    templateUrl: 'views/admin/page1.html'
   })
-  .when('/two', {
-    templateUrl:'page2.html'
+  .state('app.admin.two', {
+    url: '/two',
+    templateUrl: 'views/admin/page2.html'
   })
-   .when('/three', {
-    templateUrl:'page3.html'
-  })
-  .otherwise({
-    redirectTo:'/one'
+  .state('app.admin.three', {
+    url: '/three',
+    templateUrl: 'views/admin/page3.html'
   });
+  $urlRouterProvider.otherwise('/one');
 });
 
 app.controller('CubeCtrl', function($scope, $rootScope, $location) {
-  $rootScope.breadcrumbs = [{link:'/', text:'Home'}];
+
+  $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                            {link: '/admin', text: 'Admin'}];
+
   $scope.go = function(path) {
-	$location.path(path);
-  }
+  $location.path(path);
+ }
+
 });

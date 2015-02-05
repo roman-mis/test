@@ -2,6 +2,8 @@
 
 
 module.exports = function(){
+	var _=require('lodash');
+	var Q=require('q');
 	var invoicedesignservice=require('../services/invoicedesignservice');
 
 	var controller={};
