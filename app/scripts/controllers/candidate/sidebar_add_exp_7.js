@@ -11,9 +11,18 @@ angular.module('origApp.controllers')
             $scope.addData.cost = $scope.addData.mealType ? $scope.addData.mealType.default_cost : '0.00';
           };
 
-          $scope.add = function() {
-            $scope.expenseData.subsistense.push($scope.addData);
+          
+          function addItem(data){
+            $scope.expenseData.subsistense.push(data);
             $scope.addData = angular.copy($scope.defaultAddData);
+          }
+
+          $scope.add = function() {
+            if($scope.addData.date==='all'){
+              $scope.addAllDatesData($scope.addData, addItem);
+            }else{
+              addItem($scope.addData);
+            }
           };
 
           $scope.remove = function(index) {

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp4Controller', function($scope, HttpResource, MsgService) {
-          $scope.expenseData.documentTimes = $scope.expenseData.documentTimes || [];
+          $scope.expenseData.times = $scope.expenseData.times || [];
 
           $scope.defaultAddData = {
             date: '',
@@ -13,39 +13,47 @@ angular.module('origApp.controllers')
           $scope.addData = angular.copy($scope.defaultAddData);
 
           $scope.onDateChanged = function() {
-            $scope.alreadyAdded = $scope.isAlreadyAddedDate($scope.addData.date, $scope.expenseData.documentTimes);
+            $scope.alreadyAdded = $scope.isAlreadyAddedDate($scope.addData.date, $scope.expenseData.times);
           };
-
-          $scope.add = function() {
-            $scope.expenseData.documentTimes.push({
-              date: $scope.addData.date,
-              startTime: $scope.addData.startHours + ':' + $scope.addData.startMins,
-              endTime: $scope.addData.endHours + ':' + $scope.addData.endMins
+          
+          function addItem(data){
+            $scope.expenseData.times.push({
+              date: data.date,
+              startTime: data.startHours + ':' + data.startMins,
+              endTime: data.endHours + ':' + data.endMins
             });
             $scope.addData = angular.copy($scope.defaultAddData);
+          }
+
+          $scope.add = function() {
+            if($scope.addData.date==='all'){
+              $scope.addAllDatesData($scope.addData, addItem);
+            }else{
+              addItem($scope.addData);
+            }
           };
 
           $scope.remove = function(index) {
-            $scope.expenseData.documentTimes.splice(index, 1);
+            $scope.expenseData.times.splice(index, 1);
           };
 
           $scope.ok = function() {
             //check if all dates is selected
             var bool = false;
-            var filtered = $scope.expenseData.documentTimes.filter(function(val) {
+            var filtered = $scope.expenseData.times.filter(function(val) {
               return val.date === 'all';
             });
             if (filtered.length > 0) {
               bool = true;
             }
-            filtered = $scope.expenseData.documentTimes.filter(function(val) {
+            filtered = $scope.expenseData.times.filter(function(val) {
               return val.date !== 'all';
             });
             if (!bool && filtered.length === $scope.expenseData.daysInRange.length - 1) {
               bool = true;
             }
 
-            if ($scope.isAllDatesEntered($scope.expenseData.documentTimes)) {
+            if ($scope.isAllDatesEntered($scope.expenseData.times)) {
               $scope.gotoNext();
             }
           };
