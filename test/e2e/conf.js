@@ -10,7 +10,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   suites: {
-    main:'./spec/reg.js',
+    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
     reg: './spec/reg.js',
     login: './spec/login.js',
     candidates: ['./spec/login.js','./spec/candidates.js'],
