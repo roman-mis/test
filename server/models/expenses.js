@@ -7,6 +7,7 @@ module.exports = function(mongoose,autoIncrement) {
     var schema = new BaseSchema({
         agency: { type: Schema.Types.ObjectId, ref:'Agency' },
         user: { type: Schema.Types.ObjectId, ref:'User' },
+        createdBy : { type: Schema.Types.ObjectId, ref:'User' },
         // claimReference: String,
         startedDate: { type: Date, default: Date.now },
         submittedDate: { type: Date, default: Date.now },
@@ -15,7 +16,7 @@ module.exports = function(mongoose,autoIncrement) {
             startTime: String,
             endTime: String,
             expenses: [{
-                type: String, // subsistence, travel, other, voucher
+                expenseType: String, // subsistence, travel, other, voucher
                 subType: String, // breakfast, meal1, carvan, motorbike, stationery
                 value: Number,
                 text: String, // WE43 9KK

@@ -43,7 +43,8 @@ module.exports = function(){
 
 		var newExpense = {
 			agency: expense.agency,
-			user: req.user.id,
+			user: req.params.id,
+			createdBy: req.user.id,
 			startedDate: new Date(),
 			submittedDate: new Date(),
 			days: days
