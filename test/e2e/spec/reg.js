@@ -108,7 +108,7 @@ describe('Browse to sign up', function() {
     expectValid(select.get(0));
     expect($('.addtionalinfo-container').isDisplayed()).toBeFalsy();
 
-    validateInputByModel('candidate.details.address_1','Super street');
+    validateInputByModel('candidate.details.address1','Super street');
     validateInputByModel('candidate.details.town','Super town');
     validateInputByModel('candidate.details.postCode','E20 2BB');
 
