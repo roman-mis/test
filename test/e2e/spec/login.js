@@ -1,5 +1,3 @@
-
-
 describe('Browse to sign in', function() {
 
   var expectValid = function (element) {
@@ -28,8 +26,12 @@ describe('Browse to sign in', function() {
     var pass = element(by.model('password'));
     expectInvalid(pass);
 
-    login.sendKeys('ishwor@makeitsimple.info');
-    pass.sendKeys('passw0rd');
+    console.log('Login details right here ----->');
+    console.log(loginData.userEmail);
+    console.log(loginData.userPassword);
+
+    login.sendKeys(loginData.userEmail);
+    pass.sendKeys(loginData.userPassword);
 
     logButton.click();
 

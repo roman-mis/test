@@ -5,8 +5,16 @@ var db = require('../models'),
 	service={};
 
 
-service.getExpense=function(id){
+service.getExpense=function(id, populate){
+	populate = typeof populate !== 'undefined' ? populate : false;
 	var q=db.Expense.findById(id);
+
+	if(populate){
+		q.populate('agency');
+		q.populate('user');
+		q.populate('createdBy');
+	}
+
 	return Q.nfcall(q.exec.bind(q));
 };
 
