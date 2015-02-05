@@ -18,9 +18,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 app.controller('CubeCtrl', function($scope, $rootScope, $location) {
+
   $rootScope.breadcrumbs = [{link:'/', text:'Home'},
                             {link: '/admin', text: 'Admin'}];
+
   $scope.go = function(path) {
   $location.path(path);
  }
+
 });
