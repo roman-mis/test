@@ -29,9 +29,9 @@ module.exports = function(mongoose,autoIncrement) {
     worker:{
         contactNumber:      {type:String,required:false,trim:true},
         birthDate:          {type:Date,required:false},
-        address_1:           {type:String,required:false,trim:true},
-        address_2:           {type:String,trim:false},
-        address_3:           {type:String,trim:false},
+        address1:           {type:String,required:false,trim:true},
+        address2:           {type:String,trim:false},
+        address3:           {type:String,trim:false},
         town:                {type:String,required:false,trim:true},
         county:              {type:String,required:false,trim:true},
         postCode:           {type:String,required:false,trim:true},    
