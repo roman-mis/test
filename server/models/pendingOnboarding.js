@@ -9,14 +9,14 @@ module.exports = function(mongoose) {
 		user:{type:Schema.Types.ObjectId,ref:'User'},
 		agency:{type:Schema.Types.ObjectId,ref:'Agency'},
 		agencyName:String,
-		consultant:{type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
+		consultant:{type:Schema.Types.ObjectId,ref:'Consultant'},
 		payeRate:Number,
 		outsourcedRate:Number,
 		serviceUsed:String,
 		requirements:[
-				String
+			String
 		]
 	});
 
-  	return mongoose.model('Pending_Onboarding',schema);
+  	return mongoose.model('PendingOnboarding',schema);
 };
