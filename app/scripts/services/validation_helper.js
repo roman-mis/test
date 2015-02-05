@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('origApp.services')
-        .factory('ValidationHelper', function($filter) {
+        .factory('ValidationHelper', function() {
           var _helper = {
             isValidPostCode: function(value) {
               var valid = true;

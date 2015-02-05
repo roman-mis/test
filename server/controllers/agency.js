@@ -110,7 +110,7 @@ module.exports = function(){
 		};
 
 
-		agencyservice.saveAgency(agencyDetails, (type == 'patch'?req.params.id:null)).then(function(result){
+		agencyservice.saveAgency(agencyDetails, (type === 'patch'?req.params.id:null)).then(function(result){
 			var vm = getAgencyVm(result.agency, result.branch);
 			res.json({result:true, object:vm});
 			// res.json({result:true, object:response});
