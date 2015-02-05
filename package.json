@@ -36,7 +36,7 @@
     "grunt-autoprefixer": "^0.7.3",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-compass": "^0.7.2",
+    "grunt-contrib-compass": "^1.0.1",
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-connect": "^0.7.1",
     "grunt-contrib-copy": "^0.5.0",
@@ -83,6 +83,6 @@
     "e2e_candidates": "protractor test/e2e/conf.js --suite candidates",
     "e2e_sidebar": "protractor test/e2e/conf.js --suite sidebar",
     "e2e_test": "protractor test/e2e/conf.js --suite test",
-    "debug": "node ./node_modules/protractor/bin/elementexplorer.js"
+    "debug": "protractor test/e2e/conf.js --suite dummy"
   }
 }

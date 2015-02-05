@@ -100,9 +100,9 @@ angular.module('origApp.controllers')
         // edit primary address
         .controller('_EditPrimaryAddressController', function($scope, $modalInstance, parentScope, HttpResource) {
           $scope.fields = [
-            {name: 'address_1', label: 'Address 1'},
-            {name: 'address_2', label: 'Address 2'},
-            {name: 'address_3', label: 'Address 3'},
+            {name: 'address1', label: 'Address 1'},
+            {name: 'address2', label: 'Address 2'},
+            {name: 'address3', label: 'Address 3'},
             {name: 'nationality', label: 'Nationality'}
           ];
           $scope.data = {};

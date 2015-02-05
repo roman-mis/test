@@ -1,21 +1,52 @@
 'use strict';
 
-
+var controller = {};
 module.exports = function(){
-	var _=require('lodash');
-	var expenseservice=require('../services/expenseservice');
-	var controller={};
+	var _ = require('lodash'),
+	expenseservice = require('../services/expenseservice'),
+	Q = require('q');
 
+	function getExpenseVm(expense, reload){
+		return Q.Promise(function(resolve, reject){
+			function build(expense){
+				var expenseVm = {
+					_id: expense._id,
+					agency: {_id: expense.agency._id, name: expense.agency.name},
+					user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
+					createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
+					startedDate: expense.startedDate,
+		        	submittedDate: expense.submittedDate,
+		        	days: expense.days
+				};
+				resolve({result:true, object: expenseVm});
+			}
+
+			if(reload){
+				return expenseservice.getExpense(expense._id, true)
+	      		.then(function(expense){
+	      			build(expense);
+	      		},reject);
+			}else{
+				build(expense);
+			}
+		});
+	}
 
 	controller.getExpense = function(req, res){
-		expenseservice.getExpense(req.params.id)
+		expenseservice.getExpense(req.params.id, true)
 		.then(function(expense){
-			res.json({result:true, object: expense});
+
+			getExpenseVm(expense, false)
+	        .then(function(_expense){
+          		res.json(_expense);
+	        },res.sendFailureResponse);
+
 		}, res.sendFailureResponse);
 	};
 
-	controller.postExpenses=function (req, res) {
-		// var expense = JSON.parse(req.body.expense);		
+	
+
+	controller.postExpenses=function (req, res) {	
 		var expense = req.body;		
 		var days = [];
 		_.forEach(expense.days, function(day){
@@ -43,14 +74,18 @@ module.exports = function(){
 
 		var newExpense = {
 			agency: expense.agency,
-			user: req.user.id,
+			user: req.params.id,
+			createdBy: req.user.id,
 			startedDate: new Date(),
 			submittedDate: new Date(),
 			days: days
 		};
 
 		expenseservice.saveExpenses(newExpense).then(function(response){
-			res.json({result:true, object:response});
+			getExpenseVm(response, true)
+	        .then(function(_expense){
+          		res.json(_expense);
+	        },res.sendFailureResponse);
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});

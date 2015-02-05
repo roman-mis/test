@@ -10,7 +10,7 @@ var utils;
 
 module.exports=utils={
 	findInArray:function(arr,key,keyName){
-		var foundValue=_.find(arr,function(val,ky){
+		var foundValue=_.find(arr,function(val){
 			if(_.isObject(val)){
 				// console.log(val);
 				return (val[keyName]+'').toString().toLowerCase()===(key||'').toString().toLowerCase();

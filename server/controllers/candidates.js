@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = function(){
   var candidateservice=require('../services/candidateservice'),
     utils=require('../utils/utils'),
@@ -199,9 +198,9 @@ module.exports = function(){
           contactNumber:req.body.contactNumber,
           niNumber:req.body.niNumber,
           birthDate:req.body.birthDate,
-          address_1:req.body.address_1,
-          address_2:req.body.address_2,
-          address_3:req.body.address_3,
+          address1:req.body.address1,
+          address2:req.body.address2,
+          address3:req.body.address3,
           town:req.body.town,
           county:req.body.county,
           postCode:req.body.postCode,
@@ -348,9 +347,9 @@ module.exports = function(){
               
               sector:    req.body.sector,
               birthDate:     req.body.birthDate,
-              address_1:    req.body.address_1,
-              address_2:      req.body.address_2,
-              address_3:      req.body.address_3,
+              address1:    req.body.address1,
+              address2:      req.body.address2,
+              address3:      req.body.address3,
               town:           req.body.town,
               county:         req.body.county,
               postCode:      req.body.postCode,
@@ -405,8 +404,8 @@ module.exports = function(){
 
     function getContactInformationViewModel(user,contact){
       var worker=user.worker;
-      return {'_id':user.id,'emailAddress':user.emailAddress, 'address_1':worker.address_1,'address_2':worker.address_2,
-          'address_3':worker.address_3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
+      return {'_id':user.id,'emailAddress':user.emailAddress, 'address1':worker.address1,'address2':worker.address2,
+          'address3':worker.address3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
           'contactNumber':worker.contactNumber,
           'phone':contact.phone,'mobile':contact.mobile,'altEmail':contact.altEmail,
                     'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
@@ -430,7 +429,7 @@ module.exports = function(){
         //console.log(usr);
          return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress,
           birthDate:worker.birthDate,niNumber:worker.taxDetail.niNumber,
-          contactNumber:worker.contactNumber,address_1:worker.address_1,address_2:worker.address_2,address_3:worker.address_3,
+          contactNumber:worker.contactNumber,address1:worker.address1,address2:worker.address2,address3:worker.address3,
           town:worker.town,county:worker.county,postCode:worker.postCode,gender:worker.gender,nationality:worker.nationality,
           phone:contactDetail.phone,mobile:contactDetail.mobile,altEmail:contactDetail.altEmail,
           facebook:contactDetail.facebook,linkedin:contactDetail.linkedin,

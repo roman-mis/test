@@ -30,7 +30,7 @@ angular.module('origApp.controllers')
             columns: [
               {field: 'name', display: 'Name', cellTemplate: '{{row.title}}. {{row.firstName}} {{row.lastName}}'},
               {field: 'contactNumber', display: 'Contact number'},
-              {field: 'address_1', display: 'Address'},
+              {field: 'address1', display: 'Address'},
               {field: 'emailAddress', display: 'Email', cellTemplate: '<a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a>'},
               {field: 'phone', display: 'Phone'},
               {field: 'view', display: 'View', cellTemplate: '<a href="javacript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
