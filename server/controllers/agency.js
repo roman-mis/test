@@ -4,21 +4,11 @@
 var awsservice=require('../services/awsservice');
 
 var controller={};
-module.exports = function(dbs){
-	var express = require('express'),
-    jwt = require('jsonwebtoken'),
-	db = dbs,
-	router = express.Router(),
-	agencyservice=require('../services/agencyservice'),
+module.exports = function(){
+	var agencyservice=require('../services/agencyservice'),
 	utils=require('../utils/utils'),
-	expressJwt = require('express-jwt'),
-	restMiddleware=require('../middlewares/restmiddleware'),
-	// urlhelper=require('../middlewares/urlhelper'),
-	fs=require('fs'),
-	path=require('path'),
 	dataList=require('../data/data_list.json'),
 	awsService=require('../services/awsservice'),
-	dataList=require('../data/data_list.json'),
 	userservice=require('../services/userservice');
 
 
@@ -30,7 +20,7 @@ module.exports = function(dbs){
 	       
 	    },res.sendFailureResponse);
 
-	}
+	};
 	controller.getFileRedirectUrl=function(req,res){
 		var folder=process.env.S3_AGENCY_FOLDER+req.params.id+'/';
 		 awsService.getS3SignedUrl('getObject', req.params.fileName,null,folder,{Expires:500})
@@ -39,10 +29,9 @@ module.exports = function(dbs){
 	       
 	    },res.sendFailureResponse);
 
-	}
+	};
 	controller.getFile=function(req,res){
 		
-		  var exten=path.extname(req.params.fileName);
 		  //console.log(res);
 		  //return;
 		  var newFileName=req.params.fileName;
@@ -53,7 +42,7 @@ module.exports = function(dbs){
 		     	utils.sendFileData(res,data);
 		    },res.sendFailureResponse);
 
-	}
+	};
 
 	controller.getAgencyLogoUploadSignedUrl=function(req,res){
 		 var objectName=req.query.fileName;
@@ -66,7 +55,7 @@ module.exports = function(dbs){
 	        res.json(returnData);
 	       
 	    },res.sendFailureResponse);
-	}
+	};
 
 	controller.getAllAgency=function (req,res){
 		agencyservice.getAllAgencies(req._restOptions)
@@ -84,26 +73,26 @@ module.exports = function(dbs){
 	    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
 	    
 		    res.json(resp);
-	  	},function(err){
+	  	},function(){
 
 	  	});
-	}
+	};
 
 	controller.getAgency=function(req,res){
-		agencyservice.getAgency(req.params.id)
+		agencyservice.getAgency(req.params.id, true)
 			.then(function(agency){
-				var vm=getAgencyVm(agency);
+				var vm=getAgencyVm(agency, true);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.postAgency=function (req, res) {
 		saveAgency(req, res, 'post');
-	}
+	};
 
 	controller.patchAgency=function (req, res) {
 		saveAgency(req, res, 'patch');
-	}
+	};
 
 	function saveAgency(req, res, type){
 		var agencyDetails = {
@@ -114,15 +103,15 @@ module.exports = function(dbs){
 	  		address3: req.body.address3,			
 	  		town: req.body.town,				
 	  		country: req.body.country,			
-	  		postcode: req.body.postcode,		
+	  		postCode: req.body.postCode,		
 	  		companyRegNo: req.body.companyRegNo,	
 	  		companyVatNo: req.body.companyVatNo,
 	  		logoFileName:req.body.logoFileName
 		};
 
-		agencyservice.saveAgency(agencyDetails, (type == 'patch'?req.params.id:null)).then(function(agency){
-			//REVIEW: using vm here too
-			var vm = getAgencyVm(agency);
+
+		agencyservice.saveAgency(agencyDetails, (type === 'patch'?req.params.id:null)).then(function(result){
+			var vm = getAgencyVm(result.agency, result.branch);
 			res.json({result:true, object:vm});
 			// res.json({result:true, object:response});
 		},function(err){
@@ -136,7 +125,7 @@ module.exports = function(dbs){
 				var vm=getAgencyContactVm(agency);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.patchAgencyContact=function (req, res) {
 		var contactDetails = {
@@ -148,7 +137,7 @@ module.exports = function(dbs){
 	  		website: req.body.website,
 	  		email: req.body.email,
 	  		logo: req.body.logo
-		}
+		};
 
 		agencyservice.saveAgencyContact(req.params.id, contactDetails).then(function(agency){
 			var vm=getAgencyContactVm(agency);
@@ -156,7 +145,7 @@ module.exports = function(dbs){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
-	}
+	};
 
 	function getAgencyContactVm(agency){
 		return{
@@ -168,19 +157,19 @@ module.exports = function(dbs){
 	  		website: agency.contactInformation.website,
 	  		email: agency.contactInformation.email,
 	  		logo: agency.contactInformation.logo
-		}
+		};
 	}
 
 	controller.getBranch = function(req,res){
-		agencyservice.getAgencyByBranchId(req.params.id)
-		.then(function(agency){
-			if(agency){
-				res.json({result:true, object: getBranchVm(agency.branches.id(req.params.id))});
+		agencyservice.getBranch(req.params.id)
+		.then(function(branch){
+			if(branch){
+				res.json({result:true, object: getBranchVm(branch)});
 			}else{
-				res.json({result:true, object: null});
+				res.json({result:false, object: null});
 			}
 		},res.sendFailureResponse);
-	}
+	};
 
 	controller.getConsultant = function(req,res){
 		agencyservice.getConsultant(req.params.id)
@@ -194,19 +183,21 @@ module.exports = function(dbs){
 				}
 				
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.getBranches=function(req,res){
-		agencyservice.getAgency(req.params.id)
-		.then(function(agency){
-			var allBranchVms=_.map(agency.branches, function(branch,key){
+		agencyservice.getBranches({'agency':req.params.id})
+		.then(function(branches){
+			console.log('branches here');
+			console.log(branches);
+			var allBranchVms=_.map(branches, function(branch){
 				var con=getBranchVm(branch);
 				return con;
 			});
 
 			res.json({result:true, objects: allBranchVms});
 		},res.sendFailureResponse);
-	}
+	};
 
 	controller.postBranch=function(req,res){
 		var branchInfo={
@@ -215,14 +206,14 @@ module.exports = function(dbs){
 	    	address2:            req.body.address2,
 	    	address3:            req.body.address3,
 			town:                req.body.town,
-	    	postcode:            req.body.postcode,
-	    	branchType: 		 "BRANCH"
-		}
+	    	postCode:            req.body.postCode,
+	    	branchType: 		 'BRANCH'
+		};
 		agencyservice.postBranch(req.params.id, branchInfo)
 			.then(function(response){
 				res.json({result:true,object:getBranchVm(response.object.branch)});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.patchBranch=function(req,res){
 		var branchInfo={
@@ -231,32 +222,32 @@ module.exports = function(dbs){
 	    	address2:            req.body.address2,
 	    	address3:            req.body.address3,
 			town:                req.body.town,
-	    	postcode:            req.body.postcode
-		}
+	    	postCode:            req.body.postCode
+		};
 		agencyservice.patchBranch(req.params.id, branchInfo)
 			.then(function(response){
 				res.json({result:true,object:getBranchVm(response.object.branch)});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.deleteBranch=function(req,res){
 		agencyservice.deleteBranch(req.params.id)
 			.then(function(response){
 				res.json(response);
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.getConsultants=function(req,res){
-		agencyservice.getAgencyByBranchId(req.params.branchid)
-			.then(function(agency){
-				var allConsultantVms=_.map(agency.branches.id(req.params.branchid).consultants,function(consultant,idx){
+		agencyservice.getConsultants(req.params.branchid)
+			.then(function(branches){
+				var allConsultantVms=_.map(branches,function(consultant){
 					var con=getConsultantVm(consultant);
 					return con;
 				});
 
 				res.json({result: true, objects: allConsultantVms});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.postConsultant=function(req,res){
 		var consultantInfo={
@@ -266,15 +257,15 @@ module.exports = function(dbs){
 	    	phone:        req.body.phone,
 	    	role:         req.body.role,
 	    	status:       req.body.status
-		}
+		};
 		agencyservice.postConsultant(req.params.branchid, consultantInfo)
 			.then(function(response){
 				var consultant = response.object.consultant;
-				consultant.user = response.object.user
+				consultant.user = response.object.user;
 				var consultantVm=getConsultantVm(consultant);
 				res.json({result:true,object:consultantVm});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.patchConsultant=function(req, res){
 		var consultantInfo={
@@ -284,38 +275,48 @@ module.exports = function(dbs){
 	    	phone:        req.body.phone,
 	    	role:         req.body.role,
 	    	status:       req.body.status
-		}
+		};
 		agencyservice.patchConsultant(req.params.id, consultantInfo)
 			.then(function(response){
 				console.log('response received ');
 				var consultantVm=getConsultantVm(response.object.consultant);
 				res.json({result:true,object:consultantVm});
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.deleteConsultant=function(req,res){
 		agencyservice.deleteConsultant(req.params.id)
 			.then(function(response){
 				res.json(response);
 			},res.sendFailureResponse);
-	}
+	};
 
-	function getAgencyVm(agency){
-		//console.log(agency);
-		return agency;
-		// return {
-		// 	_id:agency._id,
-		// 	name:agency.name,
-		// 	// agencyType: agency.agencyType,
-		// 	address1: agency.address1,
-		// 	address2: agency.address2,
-		// 	address3: agency.address3,
-		// 	town: agency.town,
-		// 	country: agency.country,
-		// 	postcode: agency.postcode,
-		// 	companyRegNo: agency.companyRegNo,
-		// 	companyVatNo: agency.companyVatNo
-		// };
+	function getAgencyVm(agency, branches){
+		branches = typeof branches !== 'undefined' ? branches : false;
+		var _branches = agency.branches;
+		if(branches){
+			_branches = [];
+			_.forEach(agency.branches, function(branch){
+				var _branch = {
+					_id: branch._id,
+					name: branch.name
+				};
+				_branches.push(_branch);
+			});
+		}
+		return {
+			_id:agency._id,
+			name:agency.name,
+			address1: agency.address1,
+			address2: agency.address2,
+			address3: agency.address3,
+			town: agency.town,
+			country: agency.country,
+			postCode: agency.postCode,
+			companyRegNo: agency.companyRegNo,
+			companyVatNo: agency.companyVatNo,
+			branches: _branches
+		};
 	}
 
 	controller.getAgencyPayroll = function(req, res){
@@ -329,7 +330,7 @@ module.exports = function(dbs){
 	        },res.sendFailureResponse);
 
 		},res.sendFailureResponse);
-	}
+	};
 
 	controller.patchAgencyPayroll = function(req, res){
 		var agencyId = req.params.id;
@@ -350,7 +351,7 @@ module.exports = function(dbs){
 			marginType:                req.body.marginType,
 			marginAmount:        		req.body.marginAmount,
 			holidayAmount:             req.body.holidayAmount
-	    }
+	    };
 
 	    agencyservice.saveAgencyPayroll(agencyId, defaultInvoicingDetails, defaultPayrollDetails).then(function(agency){
 			// var vm = getAgencyPayrollVm(agency);
@@ -364,7 +365,7 @@ module.exports = function(dbs){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
-	}	
+	};	
 
 	controller.lockUnlockConsultant=function(req,res){
 		agencyservice.lockUnlockConsultant(req.params.id,req.params.flag,req.user?req.user.id:null)
@@ -381,7 +382,7 @@ module.exports = function(dbs){
 				
 				
 			},res.sendFailureResponse);
-	}
+	};
 
 	controller.changeConsultantPassword=function(req,res){
 		agencyservice.getConsultant(req.params.id)
@@ -390,7 +391,7 @@ module.exports = function(dbs){
 				if(	consultant.user){
 					console.log('consultant found');
 					// console.log(consultant);
-					userservice.sendChangePasswordEmail(consultant.user._id,req.user._id)
+					return userservice.sendChangePasswordEmail(consultant.user._id,req.user._id)
 					.then(function(response){
 						if(response.result){
 							res.json({result:true,message:'Change password link sent successfully'});
@@ -398,7 +399,7 @@ module.exports = function(dbs){
 						else{
 							res.json({result:false,message:response.message});	
 						}
-					});
+					},res.sendFailureResponse);
 				}
 				else{
 					res.sendFailureResponse({result:false,name:'NOTFOUND',message:'User profile not found'});
@@ -409,31 +410,31 @@ module.exports = function(dbs){
 				console.log(err);
 			});
 		
-	}
+	};
 
 
 	function getAgencyPayrollVm(agencyOld,reload){
-      	return Q.Promise(function(resolve,reject){
+		return Q.Promise(function(resolve,reject){
       		console.log('getting agency again for payroll vm');
-	      	if(reload){
-	      		return agencyservice.getAgency(agencyOld._id)
+	      	// if(reload){
+	      		return agencyservice.getAgency(agencyOld._id, true)
 	      		.then(function(agency){
 	      			console.log('got agency again....');
 				
 	      			build(agency);
 
 	      		},reject);
-	      	}
-	      	else{
-	      		build(agencyOld);
-	      	}
+	      	// }
+	      	// else{
+	      	// 	console.log('No reload');
+	      	// 	build(agencyOld);
+	      	// }
 	      	
 			function build(agency){
-				
+				console.log(agency);
 				var invoiceDesign=agency.defaultInvoicing.invoiceDesign||{};
 
-				var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
-
+				// var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
 
 				var payrollVm={
 				_id: agency._id,
@@ -451,8 +452,8 @@ module.exports = function(dbs){
 				  invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
 				  paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
 				  invoiceTo: {
-				  	_id: invoiceTo._id,
-				  	name: invoiceTo.name
+				  	_id: agency.defaultInvoicing.invoiceTo._id,
+				  	name: agency.defaultInvoicing.invoiceTo.name
 				  }
 				},
 				defaultPayroll:{
@@ -468,6 +469,20 @@ module.exports = function(dbs){
 
 				resolve({result:true, object: payrollVm});
 			}
+	      	if(reload){
+	      		return agencyservice.getAgency(agencyOld._id)
+	      		.then(function(agency){
+	      			console.log('got agency again....');
+				
+	      			build(agency);
+
+	      		},reject);
+	      	}
+	      	else{
+	      		build(agencyOld);
+	      	}
+	      	
+			
 	      		
 	      	
 	        
@@ -475,38 +490,38 @@ module.exports = function(dbs){
       	
     }
 
-	function getAgencyPayrollVm_(agency){
+	// function getAgencyPayrollVm_(agency){
 		
-		return {
-			_id: agency._id,
-			name: agency.name,
-			defaultInvoicing:{
-		      holidayPayIncluded:       agency.defaultInvoicing.holidayPayIncluded,
-		      employersNiIncluded:      agency.defaultInvoicing.employersNiIncluded,
-		      invoiceVatCharged:        agency.defaultInvoicing.invoiceVatCharged,
-		      invoiceMethod:             utils.findInArray(dataList.InvoiceMethods, agency.defaultInvoicing.invoiceMethod, 'code'),
-		      invoiceDesign:             agency.defaultInvoicing.invoiceDesign,
-		      invoiceEmailPrimary:      agency.defaultInvoicing.invoiceEmailPrimary,
-		      invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
-		      paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
-		      invoiceTo:                 agency.defaultInvoicing.invoiceTo
-		    },
-		    defaultPayroll:{
-		      productType:               utils.findInArray(dataList.ServiceUsed, agency.defaultPayroll.productType, 'code'),
-		      marginChargedToAgency:   agency.defaultPayroll.marginChargedToAgency,
-		      marginType:                utils.findInArray(dataList.MarginTypes, agency.defaultPayroll.marginType, 'code'),
-		      marginAmount:        	  agency.defaultPayroll.marginAmount,
-		      holidayAmount:             agency.defaultPayroll.holidayAmount
-		    }
-		};
-	}
+	// 	return {
+	// 		_id: agency._id,
+	// 		name: agency.name,
+	// 		defaultInvoicing:{
+	// 	      holidayPayIncluded:       agency.defaultInvoicing.holidayPayIncluded,
+	// 	      employersNiIncluded:      agency.defaultInvoicing.employersNiIncluded,
+	// 	      invoiceVatCharged:        agency.defaultInvoicing.invoiceVatCharged,
+	// 	      invoiceMethod:             utils.findInArray(dataList.InvoiceMethods, agency.defaultInvoicing.invoiceMethod, 'code'),
+	// 	      invoiceDesign:             agency.defaultInvoicing.invoiceDesign,
+	// 	      invoiceEmailPrimary:      agency.defaultInvoicing.invoiceEmailPrimary,
+	// 	      invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
+	// 	      paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
+	// 	      invoiceTo:                 agency.defaultInvoicing.invoiceTo
+	// 	    },
+	// 	    defaultPayroll:{
+	// 	      productType:               utils.findInArray(dataList.ServiceUsed, agency.defaultPayroll.productType, 'code'),
+	// 	      marginChargedToAgency:   agency.defaultPayroll.marginChargedToAgency,
+	// 	      marginType:                utils.findInArray(dataList.MarginTypes, agency.defaultPayroll.marginType, 'code'),
+	// 	      marginAmount:        	  agency.defaultPayroll.marginAmount,
+	// 	      holidayAmount:             agency.defaultPayroll.holidayAmount
+	// 	    }
+	// 	};
+	// }
 
 	controller.getAgencySales = function(req, res){
 		agencyservice.getAgency(req.params.id).then(function(agency){
 			var vm = getAgencySalesVm(agency);
 			res.json({result:true, object:vm});
 		},res.sendFailureResponse);
-	}
+	};
 
 	controller.patchAgencySales = function(req, res){
 		var agencyId = req.params.id;
@@ -519,7 +534,7 @@ module.exports = function(dbs){
 			perReferral:               req.body.perReferral,
 			perTimesheet:   			req.body.perTimesheet,
 			timesheetGross:            req.body.timesheetGross
-	    }
+	    };
 
 		agencyservice.saveAgencySales(agencyId, salesDetails, administrationCostDetails).then(function(agency){
 			var vm = getAgencySalesVm(agency);
@@ -527,7 +542,7 @@ module.exports = function(dbs){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
-	}
+	};
 
 		
 	function getAgencySalesVm(agency){
@@ -549,7 +564,7 @@ module.exports = function(dbs){
 	}
 
 	function getBranchVm(branch){
-		var allConsultantVms=_.map(branch.consultants,function(consultant, key){
+		var allConsultantVms=_.map(branch.consultants,function(consultant){
 			var con=getConsultantVm(consultant);
 			return con;
 		});
@@ -561,17 +576,17 @@ module.exports = function(dbs){
 		    address2: branch.address2,
 		    address3: branch.address3,
 			town: branch.town,
-		    postcode: branch.postcode,
+		    postCode: branch.postCode,
 		    branchType: branch.branchType,
 		    consultants: allConsultantVms
 		};
 	}
 
 	function getConsultantVm(consultant){
+		console.log(consultant);
 		var user=consultant.user||{};
-		var contactDetail=user.contactDetail||{};
-		var status=utils.findInArray(dataList.StatusList,consultant.status,"code")||{};
-		var role=utils.findInArray(dataList.RolesList,consultant.role,"code")||{};
+		var status=utils.findInArray(dataList.StatusList,consultant.status,'code')||{};
+		var role=utils.findInArray(dataList.RolesList,consultant.role,'code')||{};
 		return { 
 			_id: consultant._id, 
 			emailAddress: consultant.emailAddress,

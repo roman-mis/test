@@ -7,7 +7,7 @@
  * # origPostcode
  */
 angular.module('origApp.directives')
-	.directive('origPostcode', function () {
+	.directive('origPostcode', function (ValidationHelper) {
 		return {
 			restrict: 'A',
 			require: 'ngModel',
@@ -24,11 +24,7 @@ angular.module('origApp.directives')
 				});
 
 				function validate(value) {
-					var valid = true;
-					if (angular.isDefined(value) && value.length > 0) {						
-						valid =  /[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/gi.test(value);
-					}
-					ngModel.$setValidity('postcode', valid);
+					ngModel.$setValidity('postcode', ValidationHelper.isValidPostCode(value));
 					return value;
 				}
 			}

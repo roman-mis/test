@@ -1,5 +1,3 @@
-
-
 describe('Browse to sign in', function() {
 
   var expectValid = function (element) {
@@ -22,14 +20,18 @@ describe('Browse to sign in', function() {
   });
 
   it('should outline in red invalid fields', function () {
-    var login = element(by.model('email_address'));
+    var login = element(by.model('emailAddress'));
     expectInvalid(login);
 
     var pass = element(by.model('password'));
     expectInvalid(pass);
 
-    login.sendKeys('oli@makeitsimple.info');
-    pass.sendKeys('passw0rd123');
+    console.log('Login details right here ----->');
+    console.log(loginData.userEmail);
+    console.log(loginData.userPassword);
+
+    login.sendKeys(loginData.userEmail);
+    pass.sendKeys(loginData.userPassword);
 
     logButton.click();
 

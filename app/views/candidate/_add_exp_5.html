@@ -1,0 +1,60 @@
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExp5Controller">
+  <div class="modal-header modal-headerExpenses">
+    <h4 class="modal-title" id="myModalLabel">Expenses #3 | Travel</h4>
+    <small>Document postcode information.</small>
+  </div><!-- /modal-header -->
+
+  <div class="modal-body">
+    <form class="form-inline row">
+      <div class="form-group col-sm-4 col-xs-5">
+        <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
+          <option value="">- Select -</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6 col-xs-7 postcodeInput" style="display: inline-flex;">
+        <input type="text" class="form-control" ng-model="addData.code" name="postcode" placeholder="Separated by comma"/>
+        <!--<tags-input ng-model="tags">
+          <auto-complete source="loadTags($query)"></auto-complete>
+        </tags-input>-->
+        <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
+      </div>
+      <div class="form-group col-sm-2">
+        <button type="button" class="btn btn-default form-control" 
+                ng-disabled="!addData.date || !addData.code || alreadyAdded" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+      </div>
+      <div class="form-group col-sm-12" ng-show="alreadyAdded" style="color: red;">
+        The date you selected has already been added.
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date 
+                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                  <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                  <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                  <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                </a>
+              </th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in expenseData.postCodes | orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+              <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
+              <td>{{item.codes.join(', ')}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> 
+  </div><!-- /modal-body -->
+
+  <div class="modal-footer">
+    <a class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="expenseData.postCodes.length == 0">Next</button>
+  </div><!-- /modal footer -->
+</div>

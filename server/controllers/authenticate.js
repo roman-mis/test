@@ -2,10 +2,8 @@
 
 
 
-module.exports = function(dbs){
-  var express = require('express'),
-    db = dbs,
-    jwt = require('jsonwebtoken'),
+module.exports = function(){
+  var jwt = require('jsonwebtoken'),
     candidateservice=require('../services/candidateservice');
 
   var controller={};
@@ -31,7 +29,7 @@ module.exports = function(dbs){
       firstName:user.firstName,lastName:user.lastName,
       emailAddress:user.emailAddress,userType:user.userType,
       avatarUrl:(user.avatarFileName?'api/candiates/'+user.id+'/'+user.avatarFileName:'')
-          }
+          };
   }
 
 

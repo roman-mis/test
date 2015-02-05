@@ -1,19 +1,8 @@
 'use strict';
 
-module.exports = function(dbs){
+module.exports = function(){
   
-    var express = require('express'),
-        router = express.Router(),
-        jwt = require('jsonwebtoken'),
-    db = dbs,
-    router = express.Router(),
-    utils=require('../utils/utils'),
-    expressJwt = require('express-jwt'),
-    restMiddleware=require('../middlewares/restmiddleware'),
-    fs=require('fs'),
-    path=require('path'),
-    pendingonboardingservice = require('../services/pendingonboardingservice');
-    var awsservice=require('../services/awsservice');
+    var pendingonboardingservice = require('../services/pendingonboardingservice');
     var enums=require('../utils/enums');
 
 
@@ -27,7 +16,7 @@ module.exports = function(dbs){
         },function(){
 
         });
-    }
+    };
 
     controller.patchPendingOnboardingDetails = function(req, res){
     	var pendingOnboardingDetails = {
@@ -41,7 +30,7 @@ module.exports = function(dbs){
     		requirements: req.body.requirements
     	};
 
-      var complete = (req.body.complete == true ? true : false);
+      var complete = (req.body.complete === true ? true : false);
       var historyDetails;
       if(complete){
         historyDetails = {
@@ -63,7 +52,7 @@ module.exports = function(dbs){
         },function(){
 
         });
-    }
+    };
 
   return controller;
 };

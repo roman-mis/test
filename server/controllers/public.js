@@ -2,18 +2,11 @@
 
 
 module.exports = function(dbs){
-      var express = require('express'),
-        jwt = require('jsonwebtoken'),
-        db = dbs,
-        router = express.Router(),
-        candidateservice=require('../services/candidateservice'),
-
+      var db = dbs,
         aws = require('aws-sdk'),
         mailer=require('../mailing/mailer'),
-        path=require('path'),
         awsService=require('../services/awsservice'),
         userservice=require('../services/userservice'),
-        URL=require('url'),
         logger=require('../utils/logger');
 
         var Schema=require('mongoose').Schema;
@@ -81,8 +74,8 @@ module.exports = function(dbs){
         //var file = require('fs').createWriteStream(path.normalize(__dirname+'/'+req.params.filename));
         
         console.log('file retrieval started for : '+req.params.filename);
-        s3.getObject(s3Params
-          ,function(err,data){
+        s3.getObject(s3Params,
+          function(err,data){
               console.log('done');
               
               if(err){
@@ -115,7 +108,7 @@ module.exports = function(dbs){
       logger.error('error');
 
       res.json('logged');
-    }
+    };
 
     controller.testMailing=function(req,res){
       var to=req.body.to;
@@ -236,7 +229,7 @@ module.exports = function(dbs){
             name:req.body.name
           };
           agency.branches.push(branch);
-          agency.save(function(err,branch){
+          agency.save(function(err){
             if(!err){
               res.sendFailureResponse(err);
             }

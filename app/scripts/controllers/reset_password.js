@@ -5,7 +5,7 @@ angular.module('origApp.controllers')
           $scope.emailAddress = $stateParams.emailAddress;
           $scope.verifyCode = $stateParams.verifyCode;
           $scope.isValidCode = true;
-          HttpResource.model("users")
+          HttpResource.model('users')
                   .customGet('changepassword/verify/' + $scope.emailAddress + '/' + $scope.verifyCode, {}, function(response) {
                     if (response.data.result === true) {
                       $scope.isValidCode = true;
@@ -13,13 +13,13 @@ angular.module('origApp.controllers')
                       $scope.isValidCode = false;
                       //MsgService.danger(response.data.message);
                     }
-                  }, function(response) {
+                  }, function() {
 
                   });
 
           $scope.submit = function() {
             if ($scope.pwdform.$validate()) {
-              HttpResource.model("users")
+              HttpResource.model('users')
                       .customPost('changepassword/' + $scope.emailAddress + '/' + $scope.verifyCode, {
                         newPassword: $scope.password
                       })
@@ -28,7 +28,7 @@ angular.module('origApp.controllers')
                           MsgService.success('Password has been changed successfully.');
                           $location.path('/');
                         }
-                      }, function(response) {
+                      }, function() {
 
                       });
             }

@@ -1,31 +1,33 @@
 'use strict';
 
 
-module.exports = function(dbs){
-	var express = require('express'),
-    jwt = require('jsonwebtoken'),
-	db = dbs,
-	router = express.Router(),
-	taskservice=require('../services/taskservice'),
-	utils=require('../utils/utils'),
-	expressJwt = require('express-jwt'),
-	restMiddleware=require('../middlewares/restmiddleware'),
-	fs=require('fs'),
-	path=require('path'),
-	enums=require('../utils/enums')
-	;
-	var awsservice=require('../services/awsservice');
 
+module.exports = function(dbs){
+	var db = dbs,
+	
+	 
+	taskservice=require('../services/taskservice')(db),
+	
+	 //restMiddleware=require('../middlewares/restmiddleware'),
+	
+	 enums=require('../utils/enums')
+	;
 	var controller={};
 		  
 		controller.getTaskDetails=function(req,res){
+			// console.log('calling getTaskDetails');
 		  	taskservice.getTaskDetails(req.params.id)
 		    .then(function(result){
+		    	// console.log('returned from promise');
 		      res.json({result:true, objects:result});
-		    },function(){
-
+		      
+		    },function(err){
+		    	// console.log('rejected');
+		    	// console.log(err);
+		    	res.sendFailureResponse(err);
 		    });
-		}
+			
+		};
 
 		controller.postTaskDetails = function(req, res){
 			var taskDetails = {
@@ -64,7 +66,7 @@ module.exports = function(dbs){
 		    },function(){
 
 		    });
-		}
+		};
 
 		controller.getCalllogDetails=function(req,res){
 		  	taskservice.getCalllogDetails(req.params.id)
@@ -73,7 +75,7 @@ module.exports = function(dbs){
 		    },function(){
 
 		    });
-		}
+		};
 
 		controller.postCalllogDetails = function(req, res){
 			var taskDetails = {
@@ -111,6 +113,6 @@ module.exports = function(dbs){
 		    },function(){
 
 		    });
-		}
+		};
 	return controller;
 };

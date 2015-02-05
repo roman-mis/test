@@ -1,26 +1,16 @@
 'use strict';
 
-
-module.exports = function(dbs){
-  var express = require('express'),
-    router = express.Router(),
-    jwt = require('jsonwebtoken'),
-    db = dbs,
-    router = express.Router(),
-    candidateservice=require('../services/candidateservice'),
+module.exports = function(){
+  var candidateservice=require('../services/candidateservice'),
     utils=require('../utils/utils'),
-    expressJwt = require('express-jwt'),
-    restMiddleware=require('../middlewares/restmiddleware'),
-    fs=require('fs'),
-    path=require('path'),
-    candidatecommonservice = require('../services/candidatecommonservice'),
-    historyservice = require('../services/historyservice');
+    candidatecommonservice = require('../services/candidatecommonservice');
     var awsservice=require('../services/awsservice');
-    var enums=require('../utils/enums');
     var _=require('lodash');
     var controller={};
-    var awsService=require('../services/awsservice');
 
+    controller.postExpense=function(){
+
+    };
 
     controller.getAgencies = function(req, res){
       candidateservice.getUserAgencies(req.params.id)
@@ -28,13 +18,13 @@ module.exports = function(dbs){
           var payrollProducts = user.worker.payrollProduct;
           //console.log(payrollProducts);
           var agencies = [];
-          _.forEach(payrollProducts,function(payrollProduct,key){
+          _.forEach(payrollProducts,function(payrollProduct){
             agencies.push(payrollProduct.agency);
           });
           res.json({result:true,objects:agencies});
 
         },res.sendFailureResponse);
-    }
+    };
     controller.uploadDocuments=function(req,res){
 
       // var documentNames=Array.isArray(req.body.documentName)?req.body.documentName:[req.body.documentName];
@@ -46,7 +36,7 @@ module.exports = function(dbs){
       
       // console.log(req.body);
       var nowDate=new Date();
-      _.forEach(req.body.documents,function(doc,idx){
+      _.forEach(req.body.documents,function(doc){
           var documentName=doc.documentName;
           var documentType=doc.documentType;
           var agency=doc.agency;
@@ -80,11 +70,11 @@ module.exports = function(dbs){
           res.json({result:true,objects:documentvms});
         },res.sendFailureResponse);
 
-    }
+    };
 
 
     controller.getAvatar =function(req,res){
-      var exten=path.extname(req.params.avatarfilename);
+      //var exten=path.extname(req.params.avatarfilename);
       //console.log(res);
       //return;
       var newFileName=req.params.avatarfilename;
@@ -104,7 +94,7 @@ module.exports = function(dbs){
           res.end();
           console.log('file sent');
         },res.sendFailureResponse);
-    }
+    };
 
     controller.postAvatar=function (req,res){
       //console.log(req.busboy);
@@ -139,7 +129,7 @@ module.exports = function(dbs){
       else{
         res.json({result:false,message:'No file posted'});
       }
-    }
+    };
 
     controller.getCandidate=function (req,res){
       candidateservice.getUser(req.params.id,req._restOptions)
@@ -157,7 +147,7 @@ module.exports = function(dbs){
         },function(err){
           res.sendFailureResponse(err);
         });
-    }
+    };
 
 
     controller.getAllCandidate=function (req,res){
@@ -183,13 +173,13 @@ module.exports = function(dbs){
       },function(err){
         res.sendFailureResponse(err);
       });
-    }
+    };
 
 
     controller.getLoggedInUser=function (req,res){
       console.log(req.user);
       res.json(req.user);
-    }
+    };
 
     controller.updateContactDetail=function (req, res){
       
@@ -208,9 +198,9 @@ module.exports = function(dbs){
           contactNumber:req.body.contactNumber,
           niNumber:req.body.niNumber,
           birthDate:req.body.birthDate,
-          address_1:req.body.address_1,
-          address_2:req.body.address_2,
-          address_3:req.body.address_3,
+          address1:req.body.address1,
+          address2:req.body.address2,
+          address3:req.body.address3,
           town:req.body.town,
           county:req.body.county,
           postCode:req.body.postCode,
@@ -225,12 +215,23 @@ module.exports = function(dbs){
 
      // addressDetails.updatedBy=(req.user?req.user.id:undefined);
 
+      function submitUser(){
+        candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
+         .then(function(response){
+          console.log('contact detail submited');
+            var vm=getContactInformationViewModel(response.object,response.object.contactDetail);
+              res.json({result:true,object:vm});
+           },function(err){
+              res.sendFailureResponse(err);
+           });
+       }
+       
       if(userInformation.emailAddress){
         // console.log(userInformation);
         candidatecommonservice.getUserByEmail(userInformation.emailAddress)
           .then(function(existingUser){
             //console.log(existingUser);
-            if(existingUser && existingUser.id!=req.params.id) {
+            if(existingUser && existingUser.id!==req.params.id) {
               var response=
               { 
                 name: 'DuplicateRecordExists',
@@ -249,17 +250,8 @@ module.exports = function(dbs){
         submitUser();
       }
 
-      function submitUser(){
-        candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
-         .then(function(response){
-          console.log('contact detail submited');
-            var vm=getContactInformationViewModel(response.object,response.object.contactDetail);
-              res.json({result:true,object:vm});
-           },function(err){
-              res.sendFailureResponse(err);
-           });
-       }
-    }
+     
+    };
 
     controller.updateBankDetails=function (req, res){
       var bankDetails={
@@ -277,7 +269,7 @@ module.exports = function(dbs){
         },function(err){
          res.sendFailureResponse(err);
       });
-    }
+    };
 
     controller.getContactDetail=function (req,res){
 
@@ -291,7 +283,7 @@ module.exports = function(dbs){
               res.json({result:false,message:'Contact Information not found'});
             }
           },res.sendFailureResponse);
-    }
+    };
 
     controller.getBankDetail=function (req, res){
       candidateservice.getUser(req.params.id)
@@ -306,7 +298,7 @@ module.exports = function(dbs){
                res.status(404).json({result:false, message:'Bank details not found'});
             }
          },res.sendFailureResponse);
-    }
+    };
 
     controller.postCandidate=function (req, res) {
       
@@ -355,9 +347,9 @@ module.exports = function(dbs){
               
               sector:    req.body.sector,
               birthDate:     req.body.birthDate,
-              address_1:    req.body.address_1,
-              address_2:      req.body.address_2,
-              address_3:      req.body.address_3,
+              address1:    req.body.address1,
+              address2:      req.body.address2,
+              address3:      req.body.address3,
               town:           req.body.town,
               county:         req.body.county,
               postCode:      req.body.postCode,
@@ -407,13 +399,13 @@ module.exports = function(dbs){
             });
           
 
-    }
+    };
 
 
     function getContactInformationViewModel(user,contact){
       var worker=user.worker;
-      return {'_id':user.id,'emailAddress':user.emailAddress, 'address_1':worker.address_1,'address_2':worker.address_2,
-          'address_3':worker.address_3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
+      return {'_id':user.id,'emailAddress':user.emailAddress, 'address1':worker.address1,'address2':worker.address2,
+          'address3':worker.address3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
           'contactNumber':worker.contactNumber,
           'phone':contact.phone,'mobile':contact.mobile,'altEmail':contact.altEmail,
                     'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
@@ -437,7 +429,7 @@ module.exports = function(dbs){
         //console.log(usr);
          return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress,
           birthDate:worker.birthDate,niNumber:worker.taxDetail.niNumber,
-          contactNumber:worker.contactNumber,address_1:worker.address_1,address_2:worker.address_2,address_3:worker.address_3,
+          contactNumber:worker.contactNumber,address1:worker.address1,address2:worker.address2,address3:worker.address3,
           town:worker.town,county:worker.county,postCode:worker.postCode,gender:worker.gender,nationality:worker.nationality,
           phone:contactDetail.phone,mobile:contactDetail.mobile,altEmail:contactDetail.altEmail,
           facebook:contactDetail.facebook,linkedin:contactDetail.linkedin,

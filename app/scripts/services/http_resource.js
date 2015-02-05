@@ -8,7 +8,7 @@
  * Provider in the originemApp.
  */
 angular.module('origApp.services')
-  .provider('HttpResource', function(TastyResourceProvider) {
+  .provider('HttpResource', function() {
     var baseUrl = '';
     // setBaseUrl
     this.setBaseUrl = function(uri) {
@@ -17,7 +17,7 @@ angular.module('origApp.services')
 
     var formatFactory = function(TastyResource, modelName) {
       var resource = baseUrl + '' + modelName + '/';
-      return TastyResource({
+      return new TastyResource({
         url: resource,
         cache: false
       });
