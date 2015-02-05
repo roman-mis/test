@@ -10,6 +10,7 @@ module.exports = function(){
 		return Q.Promise(function(resolve, reject){
 			function build(expense){
 				var expenseVm = {
+					_id: expense._id,
 					agency: {_id: expense.agency._id, name: expense.agency.name},
 					user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
 					createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
