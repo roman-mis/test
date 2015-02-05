@@ -16,7 +16,7 @@ module.exports = function(mongoose) {
             invoicesSent: Number,
             invoicesReceipted: Number,
             payrollsUnpaid: Number,
-            timesheetsUnpayrolled: Number
+            awaitingPayroll: Number
         },
         agencies: [
             {
