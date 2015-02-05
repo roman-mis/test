@@ -39,6 +39,15 @@ angular.module('origApp.controllers')
             MsgService.danger('All days should be selected.');
             return false;
           };
+          
+          //check if date has already been added
+          $scope.isAlreadyAddedDate = function(date, items){
+            var filtered = items.filter(function(val) {
+              return (typeof (date) === 'string' && val.date === date)
+                      || (typeof (date) === 'object' && typeof (val.date) === 'object' && val.date.getTime() === date.getTime());
+            });
+            return date && filtered.length > 0;
+          };
 
           $scope.normalizeTables = function() {
             var $tableBody = $('#tableBody'),
@@ -48,7 +57,7 @@ angular.module('origApp.controllers')
                     tr0 = $tableBody.find('tr')[0],
                     $tds = $(tr0).children();
             $ths.each(function(index){
-              $(this).css('width', $($tds[index]).width() + 16 + 'px');
+              $(this).css('width', $($tds[index]).width() + 'px');
             });
           };
 
