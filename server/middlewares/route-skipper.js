@@ -1,10 +1,11 @@
 'use strict';
-var URL = require('url');
+
+var _=require('lodash');
 
 module.exports = function (authorizer,options) {
   var parent = authorizer;
-
-  var options = Array.isArray(options) ? options : [options];
+  var URL = require('url');
+  options = Array.isArray(options) ? options : [options];
 
   return function (req, res, next) {
     console.log('route skipper called');

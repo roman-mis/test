@@ -8,18 +8,18 @@ var service={};
 
 service.getAllInvoiceDesigns = function(request){
 	return Q.Promise(function(resolve,reject){
-		var q=db.Invoice_Design.find();
+		var q=db.InvoiceDesign.find();
 		
-		queryutils.applySearch(q,db.Invoice_Design,request)
+		queryutils.applySearch(q,db.InvoiceDesign,request)
 		.then(resolve,reject);
 	});
 
 };
 
-service.saveInvoiceDesign = function(invoiceId, invoicedesign){
+service.saveInvoiceDesign = function(invoiceId, invoiceDesign){
 	var deff = Q.defer();
 	var invoiceDesignModel;
-	invoiceDesignModel = new db.Invoice_Design(invoicedesign);
+	invoiceDesignModel = new db.InvoiceDesign(invoiceDesign);
 	invoiceDesignModel.save(function(err){
 		if(err){
 			deff.reject(err);
@@ -32,7 +32,7 @@ service.saveInvoiceDesign = function(invoiceId, invoicedesign){
 };
 
 service.getInvoiceDesign=function(id){
-	var q=db.Invoice_Design.findById(id);
+	var q=db.InvoiceDesign.findById(id);
 	return Q.nfcall(q.exec.bind(q));
 };
 

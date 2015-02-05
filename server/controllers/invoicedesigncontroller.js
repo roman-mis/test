@@ -2,6 +2,8 @@
 
 
 module.exports = function(){
+	var _=require('lodash');
+	var Q=require('q');
 	var invoicedesignservice=require('../services/invoicedesignservice');
 
 	var controller={};
@@ -11,11 +13,11 @@ module.exports = function(){
 			invoicedesignservice.getAllInvoiceDesigns(req._restOptions)
 		  	.then(function(result){
 		  		
-			    var invoicedesigns =_.map(result.rows, function(invoicedesign){
-			    	var vm=getInvoiceDesignVm(invoicedesign);
+			    var invoiceDesigns =_.map(result.rows, function(invoiceDesign){
+			    	var vm=getInvoiceDesignVm(invoiceDesign);
 			      	return vm;
 			  	});
-			    res.json({result:true, objects:invoicedesigns});
+			    res.json({result:true, objects:invoiceDesigns});
 		  	},function(){
 
 		  	});
@@ -45,17 +47,17 @@ module.exports = function(){
 
 		controller.getInvoiceDesign=function(req,res){
 			invoicedesignservice.getInvoiceDesign(req.params.id)
-				.then(function(invoicedesign){
-					var vm = getInvoiceDesignVm(invoicedesign);
+				.then(function(invoiceDesign){
+					var vm = getInvoiceDesignVm(invoiceDesign);
 					res.json({result:true, object:vm});
 				},res.sendFailureResponse);
 		};
 
-		function getInvoiceDesignVm(invoicedesign){
+		function getInvoiceDesignVm(invoiceDesign){
 			return {
-				_id: invoicedesign._id,
-				name: invoicedesign.name,
-				content: invoicedesign.content,
+				_id: invoiceDesign._id,
+				name: invoiceDesign.name,
+				content: invoiceDesign.content,
 			};
 		}
  return controller;

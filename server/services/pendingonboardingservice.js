@@ -8,12 +8,12 @@ var db = require('../models'),
 var service={};
 
 service.getPendingOnboardingDetails=function(userId){
-	var q = db.Pending_Onboarding.findOne({user: userId});
+	var q = db.PendingOnboarding.findOne({user: userId});
 	return Q.nfcall(q.exec.bind(q));
 };
 
 service.removePendingOnboardingDetails=function(userId){
-	var q = db.Pending_Onboarding.remove({user: userId});
+	var q = db.PendingOnboarding.remove({user: userId});
 	return Q.nfcall(q.exec.bind(q));
 };
 
@@ -30,7 +30,7 @@ service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetail
 		   					
 		   					if(pendingOnboardingModel === null){
 		   						// Add
-		   						pendingOnboardingModel = new db.Pending_Onboarding(pendingOnboardingDetails);
+		   						pendingOnboardingModel = new db.PendingOnboarding(pendingOnboardingDetails);
 		   					}else{
 		   						// Edit
 		   						utils.updateSubModel(pendingOnboardingModel, pendingOnboardingDetails);
@@ -42,7 +42,7 @@ service.patchPendingOnboardingDetails = function(userId, pendingOnboardingDetail
 		   				});
 	   				}else{
 	   					// Remove Onboarding data and add to history
-	   					var q = db.Pending_Onboarding.remove({user: userId});
+	   					var q = db.PendingOnboarding.remove({user: userId});
  						return Q.nfcall(q.exec.bind(q))
             			.then(function(){ 
             				console.log('success');

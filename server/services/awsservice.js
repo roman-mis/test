@@ -1,10 +1,32 @@
-// 'use strict';
+ 'use strict';
 
 var aws = require('aws-sdk'),
     // path=require('path')
-    Q=require('q')
+    Q=require('q'),
     _=require('lodash');
 var service;
+
+
+
+var defaultS3Params={
+	Bucket: process.env.S3_BUCKET,
+    Expires: 60,
+    ACL: 'private'
+};
+var defaultS3getParams={
+	Bucket: process.env.S3_BUCKET,
+    Expires: 60
+};
+var defaultS3PlainParams={
+	Bucket: process.env.S3_BUCKET
+};
+
+
+var awsConfig={
+	AWS_ACCESS_KEY:process.env.AWS_ACCESS_KEY,
+	AWS_SECRET_KEY:process.env.AWS_SECRET_KEY,
+	S3_BUCKET : process.env.S3_BUCKET
+};
 
 module.exports=service={
 	getS3SignedUrl:function(methodName,s3ObjectName,s3ObjectType,folder,opt){
@@ -30,13 +52,13 @@ module.exports=service={
 	    }
 
 	    if(methodName==='putObject'){
-	    	var s3Params =_.assign({
+	    	s3Params =_.assign({
 		        Key: (folder||'')+s3ObjectName,
 		        ContentType: s3ObjectType
 	    	},defaultS3Params);
 	    }
 	    else {
-	    		var s3Params =_.assign({
+	    		s3Params =_.assign({
 		        Key: (folder||'')+s3ObjectName
 	    	},defaultS3getParams);
 
@@ -282,24 +304,3 @@ module.exports=service={
 		});
 	}
 };    
-
-
-var defaultS3Params={
-	Bucket: process.env.S3_BUCKET,
-    Expires: 60,
-    ACL: 'private'
-};
-var defaultS3getParams={
-	Bucket: process.env.S3_BUCKET,
-    Expires: 60
-}
-var defaultS3PlainParams={
-	Bucket: process.env.S3_BUCKET
-};
-
-
-var awsConfig={
-		    AWS_ACCESS_KEY:process.env.AWS_ACCESS_KEY,
-		    AWS_SECRET_KEY:process.env.AWS_SECRET_KEY,
-		    S3_BUCKET : process.env.S3_BUCKET
-  		};

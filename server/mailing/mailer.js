@@ -5,6 +5,48 @@ var nodeMailer=require('nodemailer'),
 	fs=require('fs'),
 	Q=require('q');
 
+
+function getTemplateHtml(mailType){
+	var templatePath=path.normalize(__dirname+'/templates/'+mailType+'.html');
+	var content=fs.readFileSync(templatePath, 'utf8');
+	return content;
+
+}
+
+function compileTemplate(model,mailType){
+	
+	var template=getTemplateHtml(mailType);
+	var content=_.template(template,model,{interpolate: /\{\{(.+?)\}\}/g});
+	// console.log('compiled content');
+	// console.log(content);
+	
+	return content;
+
+}
+
+
+function createTransport(){
+	var transportOption={
+		host:process.env.SMTP_HOST,
+		port:process.env.SMTP_PORT,
+		auth:{
+			user:process.env.SMTP_USERNAME,
+			pass:process.env.SMTP_PASSWORD
+		}
+    
+	};
+	
+	console.log('smtp');
+	console.log(transportOption);
+	var transporter=nodeMailer.createTransport(
+
+	// sesTransport(
+	transportOption
+	// )
+	);
+	return transporter;
+}
+
 module.exports={
 
 	sendEmail:function(mailOptions,model,mailType){
@@ -44,43 +86,3 @@ module.exports={
 		});
 	}
 };
-
-function compileTemplate(model,mailType){
-	
-	var template=getTemplateHtml(mailType);
-	var content=_.template(template,model,{interpolate: /\{\{(.+?)\}\}/g});
-	// console.log('compiled content');
-	// console.log(content);
-	
-	return content;
-
-}
-
-function getTemplateHtml(mailType){
-	var templatePath=path.normalize(__dirname+'/templates/'+mailType+'.html');
-	var content=fs.readFileSync(templatePath, 'utf8');
-	return content;
-
-}
-
-function createTransport(){
-	var transportOption={
-		host:process.env.SMTP_HOST,
-		port:process.env.SMTP_PORT,
-		auth:{
-			user:process.env.SMTP_USERNAME,
-			pass:process.env.SMTP_PASSWORD
-		}
-    
-	};
-	
-	console.log('smtp');
-	console.log(transportOption);
-	var transporter=nodeMailer.createTransport(
-
-	// sesTransport(
-	transportOption
-	// )
-	);
-	return transporter;
-}
