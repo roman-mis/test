@@ -10,11 +10,12 @@ angular.module('origApp.filters', [])
         .filter('capitalize', function() {
           return function(input) {
             // input will be the string we pass in
-            if (input)
+            if (input){
               return input[0].toUpperCase() + input.slice(1);
-          }
+            }
+          };
         })
-        .filter('formatDate', function($filter) {
+        .filter('formatDate', function() {
           return function(input, format) {
             format = format || 'DD/MM/YYYY HH:mm:ss';
             if (input === undefined) {
@@ -55,7 +56,7 @@ angular.module('origApp.filters', [])
             return input;
           };
         })
-        .filter('rowsSum', function($filter) {
+        .filter('rowsSum', function() {
           return function(input, field) {
             if (input === undefined) {
               return input;

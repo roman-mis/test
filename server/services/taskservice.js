@@ -26,7 +26,7 @@ module.exports=function(dbs){
 						taskModel = new db.Task(taskDetails);
 	   					historyModel = new db.History(historyDetails);
 	   					return Q.all([Q.nfcall(taskModel.save.bind(taskModel)), Q.nfcall(historyModel.save.bind(historyModel))])
-	   					.then(function(result){
+	   					.then(function(){
 							resolve({object:taskModel});						
 						}, reject);
 		   			}
@@ -51,7 +51,7 @@ module.exports=function(dbs){
 						taskModel = new db.Task(taskDetails);
 	   					historyModel = new db.History(historyDetails);
 	   					return Q.all([Q.nfcall(taskModel.save.bind(taskModel)), Q.nfcall(historyModel.save.bind(historyModel))])
-	   					.then(function(result){
+	   					.then(function(){
 							resolve({object:taskModel});						
 						}, reject);
 		   			}
