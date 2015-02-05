@@ -15,7 +15,9 @@ exports.config = {
     login: './spec/login.js',
     candidates: ['./spec/login.js','./spec/candidates.js'],
     sidebar: ['./spec/login.js','./spec/sidebar.js'],
-    test: ['./spec/reg.js','./spec/check-inbox.js']
+    test: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
+    //test: [/*'./spec/reg.js',*/'./spec/check-inbox.js'/*,'./spec/activate.js','./spec/login.js'*/],
+    dummy: ['./spec/dummy.js']
   },
 
   onPrepare: function () {
@@ -24,6 +26,11 @@ exports.config = {
       consolidateAll: false
     }));
     jasmine.getEnv().addReporter(new jasmineReporters.TerminalReporter({verbosity: 3}));
+
+    global.loginData={
+      userEmail:null,
+      userPassword:'andyboss'
+    }
   },
   jasmineNodeOpts: {
     showColors: true,
