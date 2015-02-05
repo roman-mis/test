@@ -3,7 +3,7 @@
 var rewire=require('rewire');
 var utils=rewire('../../../server/utils/utils');
 var chai=require('chai');
-var bcrypt=require('bcrypt');
+var bcrypt=require('bcryptjs');
 var expect=chai.expect;
 
 describe('utils tests',function(){
@@ -73,7 +73,7 @@ describe('utils tests',function(){
 
 	describe('compareSecureString tests', function(){
 		it('should return true if plainString hashes to secureString, otherwise false', function(done){
-			var hash = bcrypt.hash("greenEggz", null, null);
+			var hash = utils.secureString("greenEggz");
 			var retVal = utils.compareSecureString(hash,"greenEggz");
 			expect(retVal).to.be.ok();
 			done();
@@ -95,8 +95,11 @@ describe('utils tests',function(){
 
 			//var model = utils.updateModel(model, viewmodel);
 			var props = utils.updateModel(model, viewmodel);
+			console.log("props is......");
+			console.log(props);
 			expect(props).to.be.ok();
-			expect(props).to.include('addedField','addedField2');
+			expect(props).to.include('addedField');
+			expect(props).to.include('addedField2');
 			done();
 			});
 	});
@@ -118,8 +121,11 @@ describe('utils tests',function(){
 			var viewmodel = { 'addedField':'123val', 'addedField2': '456val'};
 			var props = utils.updateSubModel(model, viewmodel);
 			//model = utils.updateSubModel(model, viewmodel);
+			console.log("props is......");
+			console.log(props);
 			expect(props).to.be.ok();
-			expect(props).to.include('addedField','addedField2');
+			expect(props).to.include('addedField');
+			expect(props).to.include('addedField2');
 			expect(props).to.not.have.property('_id');
 			done();
 		});
