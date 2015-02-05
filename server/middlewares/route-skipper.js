@@ -1,6 +1,6 @@
 'use strict';
 
-var _=require('_');
+var _=require('lodash');
 
 module.exports = function (authorizer,options) {
   var parent = authorizer;

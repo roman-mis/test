@@ -2,7 +2,7 @@
 
 
 module.exports = function(){
-	var _=require('_');
+	var _=require('lodash');
 	var templateservice=require('../services/templateservice');
 	var controller={};
 
