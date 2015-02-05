@@ -1,3 +1,4 @@
+'use strict';
 var URL = require('url');
 
 module.exports = function (authorizer,options) {
@@ -11,7 +12,7 @@ module.exports = function (authorizer,options) {
 
     var skip = false;
 
-    options.forEach(function(opts,idx){
+    options.forEach(function(opts){
         if (opts.custom) {
           skip = skip || opts.custom(req);
         }
@@ -35,7 +36,7 @@ module.exports = function (authorizer,options) {
         //    console.log("(opts.path instanceof RegExp && !!opts.path.exec(url.pathname))      "+(opts.path instanceof RegExp && !!opts.path.exec(url.pathname)));
         var pathNameMatched=false;
         var myPaths=Array.isArray(opts.path)?opts.path:[opts.path];
-        _.forEach(myPaths,function(pth,idx){
+        _.forEach(myPaths,function(pth){
           if((typeof pth === 'string' && pth === url.pathname)){
             pathNameMatched=true;
             return false;
@@ -63,5 +64,5 @@ module.exports = function (authorizer,options) {
 
     parent(req, res, next);
 
-  }
+  };
 };

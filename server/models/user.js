@@ -1,3 +1,4 @@
+'use strict';
 //var utils=require('../utils/utils');
 var validate=require('mongoose-validator');
 var Schema=require('mongoose').Schema;
@@ -5,7 +6,7 @@ var BaseSchema=require(__dirname+'/baseschema');
  // var autoIncrement=require('mongoose-auto-increment');
  
 module.exports = function(mongoose,autoIncrement) {
-  var schema = BaseSchema({
+  var schema = new BaseSchema({
     title:              {type:String,required:false,trim:true},
     firstName:         {type:String,required:true,trim:true},
     lastName:          {type:String,required:true,trim:true},
@@ -28,9 +29,9 @@ module.exports = function(mongoose,autoIncrement) {
     worker:{
         contactNumber:      {type:String,required:false,trim:true},
         birthDate:          {type:Date,required:false},
-        address_1:           {type:String,required:false,trim:true},
-        address_2:           {type:String,trim:false},
-        address_3:           {type:String,trim:false},
+        address1:           {type:String,required:false,trim:true},
+        address2:           {type:String,trim:false},
+        address3:           {type:String,trim:false},
         town:                {type:String,required:false,trim:true},
         county:              {type:String,required:false,trim:true},
         postCode:           {type:String,required:false,trim:true},    
@@ -67,8 +68,8 @@ module.exports = function(mongoose,autoIncrement) {
         },
         payrollProduct:[{
             agency:                   {type:Schema.Types.ObjectId,ref:'Agency'},
-            branch:                   {type:Schema.Types.ObjectId,ref:'Agency.branches'},
-            consultant:               {type:Schema.Types.ObjectId,ref:'Agency.branches.consultants'},
+            branch:                   {type:Schema.Types.ObjectId,ref:'Branch'},
+            consultant:               {type:Schema.Types.ObjectId,ref:'Consultant'},
             agencyRef:                  {type:String},
             margin:                      {type:String},
             marginFixed:                {type:Number},
@@ -137,11 +138,12 @@ module.exports = function(mongoose,autoIncrement) {
             google:              {type:String,required:false}
         },
       dpaUpdatedDate:{type:Date,default:Date.now},
-      dpaUpdatedBy:{type:Schema.Types.ObjectId,ref:'User'}
+      dpaUpdatedBy:{type:Schema.Types.ObjectId,ref:'User'},
+      expensesBalance: Number,
        /* branchId:{type:Schema.Types.ObjectId,ref:'Agency.branches'}*/
 },{skipCreatedDate:false/*default false*/,skipUpdatedDate:false/*default false*/,skipUpdatedBy:false/*default false*/});
 schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,incrementBy:1});
 
   return mongoose.model('User',schema);
 
-}
+};

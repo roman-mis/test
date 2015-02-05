@@ -1,13 +1,11 @@
 'use strict';
 
 var express = require('express'),
-    db = require('./models'),
     http = require('http');
 
 var app = express();
 
 require('./config/express')(app);
-console.log("hi")
 // db
 // .sequelize
 // .sync({force:false})

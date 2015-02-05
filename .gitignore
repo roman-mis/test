@@ -10,3 +10,4 @@ local.env.js
 /app/fonts
 /config/
 /config/config.json
+/protractor-results

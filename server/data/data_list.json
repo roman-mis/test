@@ -366,5 +366,15 @@
 			"code":"4",
 			"description":"Public Transport",
 			"default_ppm":"N/A"
+		}],
+	"OtherExpenseTypes":[{
+			"code":"1",
+			"description":"Stationary"
+		},{
+			"code":"2",
+			"description":"Training"
+		},{
+			"code":"3",
+			"description":"Other"
 		}]
 }

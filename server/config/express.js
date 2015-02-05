@@ -1,20 +1,18 @@
-var express = require('express'),
-    glob = require('glob'),
+'use strict';
+var glob = require('glob'),
     gzippo = require('gzippo'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
     compress = require('compression'),
     methodOverride = require('method-override'),
     path = require('path'),
-    expressJwt = require('express-jwt'),
     responseHandler=require('../middlewares/responsehandler'),
     urlhelper=require('../middlewares/urlhelper'),
-    URL = require('url'),
     multer=require('multer');
     var busboy=require('connect-busboy');
 
 
-module.exports = function(app, config){
+module.exports = function(app){
   app.set('port', process.env.PORT || 3000);
   // app.use('/api', expressJwt({secret:process.env.JWT_SECRET})
   //   .unless({path:[/\/api\/users\/emailvalidation?/,'/api/candidates']}));

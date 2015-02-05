@@ -1,11 +1,9 @@
-'use strict'
+'use strict';
 var nodeMailer=require('nodemailer'),
 	_=require('lodash'),
 	path=require('path'),
 	fs=require('fs'),
-	Q=require('q'),
-	sesTransport = require('nodemailer-ses-transport');
-
+	Q=require('q');
 
 module.exports={
 
@@ -15,35 +13,37 @@ module.exports={
 			generateTextFromHTML: true
 		});
 		
-		var deff=Q.defer();
-		// console.log('compiling template');
-		// console.log(model);
-		//deff.resolve();
-		//return deff.promise;
-		var mailContent=compileTemplate(model,mailType);
-		var transporter=createTransport();
-		opt.html=mailContent;
+		return Q.Promise(function(resolve,reject){
 
-		// console.log('options');
-		 console.log(opt);
-		
-		
-		// awsConfig
-		transporter.sendMail(opt,function(err,result){
-			transporter.close();
-			console.log(err);
-			console.log(result);
-			if(err){
-				deff.reject(err,result);
+			// console.log('compiling template');
+			// console.log(model);
+			//deff.resolve();
+			//return deff.promise;
+			var mailContent=compileTemplate(model,mailType);
+			var transporter=createTransport();
+			opt.html=mailContent;
 
-			}
-			else{
-				deff.resolve(result);
-			}
+			// console.log('options');
+			 console.log(opt);
+			
+			
+			// awsConfig
+			return transporter.sendMail(opt,function(err,result){
+				transporter.close();
+				console.log(err);
+				console.log(result);
+				if(err){
+					reject(err,result);
+
+				}
+				else{
+					resolve(result);
+				}
+			});
+		
 		});
-		return deff.promise;
 	}
-}
+};
 
 function compileTemplate(model,mailType){
 	
@@ -58,7 +58,7 @@ function compileTemplate(model,mailType){
 
 function getTemplateHtml(mailType){
 	var templatePath=path.normalize(__dirname+'/templates/'+mailType+'.html');
-	var content=fs.readFileSync(templatePath, "utf8");
+	var content=fs.readFileSync(templatePath, 'utf8');
 	return content;
 
 }

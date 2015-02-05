@@ -1,8 +1,9 @@
+'use strict';
 
 var Q=require('q');
 
 
-module.exports=function(conn){
+module.exports=function(){
 	return {
 		applySearch:function(q,Model,request){
 			// var q=Model.find();
@@ -15,17 +16,17 @@ module.exports=function(conn){
 					// console.log('=======================================================');
 					// console.log('searching for '+filterName+' = '+JSON.stringify(filter));
 					
-					var filterObj={};
+					// var filterObj={};
 					
-						if(filter.operator=='exact' ||filter.operator=='equals' ){
+						if(filter.operator==='exact' ||filter.operator==='equals' ){
 					
 							 q.where(filterName).equals(filter.term);
 						}
-						else if(filter.operator=='contains' ){
+						else if(filter.operator==='contains' ){
 					
 							q.where(filterName).equals(new RegExp(filter.term,'i'));
 						}
-						else if(filter.operator=='ne' ){
+						else if(filter.operator==='ne' ){
 					
 							q.where(filterName).ne(filter.term);
 						}
@@ -40,7 +41,7 @@ module.exports=function(conn){
 						q.limit(pagination.limit);
 						q.skip(pagination.offset);
 						
-						_.forEach(orders,function(order,idx){
+						_.forEach(orders,function(order){
 							q.sort(order);
 				
 						});
@@ -58,7 +59,7 @@ module.exports=function(conn){
 			});
 			
 		},
-		search:function(modelName,option,populatedModels){
+		search:function(){
 			// return Q.Promise(function(resolve,reject){
 			// 	var opt=option||{};
 			// 	var filters =opt.filters||[];
@@ -86,136 +87,136 @@ module.exports=function(conn){
 				
 			// });
 		}
-	}
+	};
 
-	function applyFilters(filters,query,model){
-		return Q.Promise(function(resolve,reject){
-			var allPromisedFilters=_.map(filters,function(filterItem,ky){
-			return findFilter(ky,filterItem,model);
-			// return Q.Promise(function(resolve,reject){
+	// function applyFilters(filters,query,model){
+	// 	return Q.Promise(function(resolve){
+	// 		var allPromisedFilters=_.map(filters,function(filterItem,ky){
+	// 		return findFilter(ky,filterItem,model);
+	// 		// return Q.Promise(function(resolve,reject){
 				
-			// });
+	// 		// });
 
-			});
+	// 		});
 
-			if(allPromisedFilters.length>0) {
-				var newP=allPromisedFilters[0];
+	// 		if(allPromisedFilters.length>0) {
+	// 			var newP=allPromisedFilters[0];
 				
-				for(i=1;i<allPromisedFilters.length;i++) {
-					newP=newP
-					.then(allPromisedFilters[i].then(function(r){
-						applyFilter(query,r,{});
-						return true;
-					}));
-				}
+	// 			for(var i=1;i<allPromisedFilters.length;i++) {
+	// 				newP=newP
+	// 				.then(allPromisedFilters[i].then(function(r){
+	// 					applyFilter(query,r,{});
+	// 					return true;
+	// 				}));
+	// 			}
 
-				newP.then(function(){
-					resolve(query);
-				});
-			}
-			else{
-				resolve(query);
-			}
+	// 			newP.then(function(){
+	// 				resolve(query);
+	// 			});
+	// 		}
+	// 		else{
+	// 			resolve(query);
+	// 		}
 			
-		});
+	// 	});
 
-	}
+	// }
 
 
 
-	function findFilter(filterName,filter,model,option,populatedModels){
-		return Q.Promise(function(resolve,reject){
-			var prop=model.schema.paths[filterName];
+	// function findFilter(filterName,filter,model){
+	// 	return Q.Promise(function(resolve,reject){
+	// 		var prop=model.schema.paths[filterName];
 
-			var newFilters=filterName.split('.');
-			if(prop!==undefined && prop.options && (prop.options.type===String||prop.options.type===Number||prop.options.type===Date||prop.options.type===Boolean) ){
-				resolve({key:filterName,operator:filter.operator,term:filter.term});
+	// 		var newFilters=filterName.split('.');
+	// 		if(prop!==undefined && prop.options && (prop.options.type===String||prop.options.type===Number||prop.options.type===Date||prop.options.type===Boolean) ){
+	// 			resolve({key:filterName,operator:filter.operator,term:filter.term});
 
-				// var filterItem=filter.val;
-				// var operator=filterItem.operator.toLowerCase();
-				// if(operator==='exact'||operator==='iexact'||operator==='equals')
-				// {
-				// 	query.where(filter.key).equals(filterItem.term);	
-				// }
-				// else if(operator==='gt'){
-				// 	query.where(filter.key).gt(filterItem.term);
-				// }
+	// 			// var filterItem=filter.val;
+	// 			// var operator=filterItem.operator.toLowerCase();
+	// 			// if(operator==='exact'||operator==='iexact'||operator==='equals')
+	// 			// {
+	// 			// 	query.where(filter.key).equals(filterItem.term);	
+	// 			// }
+	// 			// else if(operator==='gt'){
+	// 			// 	query.where(filter.key).gt(filterItem.term);
+	// 			// }
 				
 
-				// resolve()
-			}
-			else if(newFilters.length>1){ 
-				//if (prop!==undefined && prop.schema && prop.schema.paths){
-					var a=filterName;
-				for(i=0;i<newFilters.length;i++){
-					a=filterName.substring(0,_.lastIndexOf(a,'.'));
-					var b=filterName.substring(_.lastIndexOf(a,'.')+1);
+	// 			// resolve()
+	// 		}
+	// 		else if(newFilters.length>1){ 
+	// 			//if (prop!==undefined && prop.schema && prop.schema.paths){
+	// 				var a=filterName;
+	// 			for(var i=0;i<newFilters.length;i++){
+	// 				a=filterName.substring(0,_.lastIndexOf(a,'.'));
+	// 				var b=filterName.substring(_.lastIndexOf(a,'.')+1);
 					
-					prop=newFilters.model.schema.paths[a];
-					if(prop!==undefined && prop.caster){
-						var newModel=conn.DB.model(a);
-						findFilter(b,filter,newModel,{},[])
-							.then(function(r){
-								var newQ=model.find();
-								newQ=applyFilter(newQ,r,{select:'_id'});
-								Q.nfcall(newQ.exec.bind(newQ))
-									.then(function(ids){
-										resolve({key:a,operator:'in',term:ids});
-									},reject);
+	// 				prop=newFilters.model.schema.paths[a];
+	// 				if(prop!==undefined && prop.caster){
+	// 					var newModel=conn.DB.model(a);
+	// 					findFilter(b,filter,newModel,{},[])
+	// 						.then(function(r){
+	// 							var newQ=model.find();
+	// 							newQ=applyFilter(newQ,r,{select:'_id'});
+	// 							Q.nfcall(newQ.exec.bind(newQ))
+	// 								.then(function(ids){
+	// 									resolve({key:a,operator:'in',term:ids});
+	// 								},reject);
 
-							},reject);
-						break;
-					}
-				}
-				// prop=model.schema.paths[filterName];
+	// 						},reject);
+	// 					break;
+	// 				}
+	// 			}
+	// 			// prop=model.schema.paths[filterName];
 
-				// if(prop.schema){//prop with 
+	// 			// if(prop.schema){//prop with 
 
-				// }
-				// var newFilterName=_.remove(newFilters,function(itm,idx){return idx>0}).join();
+	// 			// }
+	// 			// var newFilterName=_.remove(newFilters,function(itm,idx){return idx>0}).join();
 
-			}
-		});
-	}
+	// 		}
+	// 	});
+	// }
 
-	function applyFilter(query,filter,option){
-		if(filter && filter.key){
-			query=query.where(r.key);
-			if(filter.operator=='exact'||filter.operator=='iexact'||filter.operator=='contains'||filter.operator=='equals')
-			{
-				query=query.equals(r.term);
-			}
-			else if(filter.operator==='gt'){
-				query.where(filter.key).gt(filter.term);
-			}
-			else if(filter.operator=='lt'){
-				query=query.where(filter.key).lt(filter.term);
-			}
-			else if(filter.operator=='in'){
-				query=query.where(filter.key).in(filter.term);
-			}
+	// function applyFilter(query,filter,option){
+	// 	if(filter && filter.key){
+	// 		query=query.where(r.key);
+	// 		if(filter.operator==='exact'||filter.operator==='iexact'||filter.operator==='contains'||filter.operator==='equals')
+	// 		{
+	// 			query=query.equals(r.term);
+	// 		}
+	// 		else if(filter.operator==='gt'){
+	// 			query.where(filter.key).gt(filter.term);
+	// 		}
+	// 		else if(filter.operator==='lt'){
+	// 			query=query.where(filter.key).lt(filter.term);
+	// 		}
+	// 		else if(filter.operator==='in'){
+	// 			query=query.where(filter.key).in(filter.term);
+	// 		}
 
-		}
+	// 	}
 
-		if(option && option.select){
-			query.select(select);
-		}
+	// 	if(option && option.select){
+	// 		query.select(select);
+	// 	}
 
-		return query;
-	}
+	// 	return query;
+	// }
 
-	function traverseFilter(filterName,filter,option){
+	// function traverseFilter(){
 
-	}
+	// }
 
-	function goDeepSchema(model,filterName,filter,option,populatedModels){
-		return Q.Promise(function(resolve,reject){
-			var newFilters=filterName.split('.');
+	// function goDeepSchema(model,filterName,filter){
+	// 	return Q.Promise(function(){
+	// 		// var newFilters=filterName.split('.');
 			
-		});
-	}
+	// 	});
+	// }
 
 
-}
+};
 
 

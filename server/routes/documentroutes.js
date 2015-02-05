@@ -1,14 +1,10 @@
 'use strict';
 
 var express = require('express'),
-    jwt = require('jsonwebtoken'),
     db = require('../models'),
     controller=require('../controllers/documentscontroller')(db),
     router = express.Router(),
-    expressJwt = require('express-jwt'),
-    
-    restMiddleware=require('../middlewares/restmiddleware')
-  ;
+    expressJwt = require('express-jwt');
 
 
 module.exports = function(app){

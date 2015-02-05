@@ -1,6 +1,5 @@
-var fs = require('fs'),
-  
-  mongoose = require('mongoose');
+'use strict';
+  var mongoose = require('mongoose');
 
 function BaseSchema(definition,option) {
  
@@ -8,15 +7,15 @@ function BaseSchema(definition,option) {
   if(opt){
 
     if(!opt.skipCreatedDate && !definition.createdDate){
-      definition['createdDate']={type:Date,default:Date.now};
+      definition.createdDate={type:Date,default:Date.now};
       // console.log('setting createdDate');
     }
     if(!opt.skipUpdatedDate && !definition.updatedDate){
-      definition['updatedDate']={type:Date,default:Date.now};
+      definition.updatedDate={type:Date,default:Date.now};
       
     }
     if(!opt.skipUpdatedBy && !definition.updatedBy){
-      definition['updatedBy']={type:mongoose.Schema.Types.ObjectId,ref:'User'};
+      definition.updatedBy={type:mongoose.Schema.Types.ObjectId,ref:'User'};
       
     }
   }

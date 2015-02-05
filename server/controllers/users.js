@@ -1,12 +1,8 @@
 'use strict';
 
 
-module.exports = function(dbs){
-  var express = require('express'),
-    jwt = require('jsonwebtoken'),
-    db = dbs,
-    router = express.Router(),
-    userservice=require('../services/userservice'),
+module.exports = function(){
+  var userservice=require('../services/userservice'),
     enums=require('../utils/enums');
 
     var controller={};
@@ -22,10 +18,10 @@ module.exports = function(dbs){
 
     controller.lockunlock=function(req,res){
     	userservice.lockunlock(req.params.id,req.params.flag,req.user.id)
-    	.then(function(user){
+    	.then(function(){
     		res.json({result:true});
     	},res.sendFailureResponse);
-    }
+    };
 
     controller.getActivation =function (req,res){
       userservice.isActivationCodeValid(req.params.emailAddress,req.query.verificationCode)
@@ -37,7 +33,7 @@ module.exports = function(dbs){
           res.json({result:false,message:'Invalid code'});
         });
         
-    }
+    };
 
 
     controller.postActivation=function (req,res){
@@ -53,12 +49,12 @@ module.exports = function(dbs){
             res.sendFailureResponse(err);
           });
           
-        },function(err){
+        },function(){
           console.log(false);
           res.json({result:false,message:'Invalid code'});
         });
         
-    }
+    };
 
 
 
@@ -79,14 +75,14 @@ module.exports = function(dbs){
 
     		},res.sendFailureResponse);
 
-    }
+    };
 
     controller.verifyChangePassword=function(req,res){
         userservice.verifyCode(req.params.emailAddress,req.params.code,enums.codeTypes.ChangePassword)
           .then(function(response){
               res.json(response);
           },res.sendFailureResponse);
-    }
+    };
 
     controller.changePassword=function(req,res){
       userservice.changePassword(req.params.emailAddress,req.params.code,req.body.newPassword)
@@ -99,7 +95,7 @@ module.exports = function(dbs){
               }
               
           },res.sendFailureResponse);
-    }
+    };
 
     controller.getUser=function(req,res){
         userservice.getUser(req.params.id)
@@ -112,7 +108,7 @@ module.exports = function(dbs){
               res.json({result:false,message:'User not found'});
             }
           },res.sendFailureResponse);
-    }
+    };
 
 
     function getUserViewModel(user){

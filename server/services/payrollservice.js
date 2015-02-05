@@ -1,100 +1,104 @@
-// 'use strict';
+'use strict';
 
-var db = require('../models');
-var Q=require('q');
-// var Promise=require('promise');
-var _=require('lodash');
-var mailer=require('../mailing/mailer');
-var uuid = require('node-uuid');
-var url=require('url');
+
+var db = require('../models'),
+	Q=require('q'),
+	_=require('lodash'),
+	utils=require('../utils/utils'),
+	candidatecommonservice=require(__dirname+'/candidatecommonservice');
 var service={};
-var utils=require('../utils/utils');
-var awsservice=require('../services/awsservice');
-var candidatecommonservice=require(__dirname+'/candidatecommonservice');
-
-//service.getWorkerByUser = candidatecommonservice.getWorkerByUser;
 
 service.getPayrollProductDetails = function(id){
 	var query=db.User.findById(id)
-		.populate('worker.payrollProduct.agency');
+		.populate('worker.payrollProduct.agency')
+		.populate('worker.payrollProduct.branch')
+		.populate('worker.payrollProduct.consultant')
+		.populate('worker.payrollProduct.marginException.createdBy');
 
 	return Q.Promise(function(resolve,reject){
 	    Q.nfcall(query.exec.bind(query))
 	    .then(function(user){
-		     var payrollProducts = [];
-        	_.forEach(user.worker.payrollProduct, function(value, key){
-	          	if(value == null)
-	          		return;
-	          	var agency = value.agency;
-	          	var branch = null, consultant = null;
-	          	if(agency.branches != undefined){
-		            // Get Branch
-		            if(user.worker.payrollProduct[key].branch != undefined){
-		            	var currentBranch = value.agency.branches.id(user.worker.payrollProduct[key].branch);
-			            branch = {
-			              "_id" : currentBranch.id,
-			              "name" : currentBranch.name
-			            };
-		            }
 
-		            // Get Consultant
-		            if(user.worker.payrollProduct[key].consultant != undefined){
-		            	_.forEach(agency.branches, function(branch, key1){
-			            	if(branch.consultants.length > 0){
-			            		var currentConsultant = branch.consultants.id(user.worker.payrollProduct[key].consultant);
-			            		if(currentConsultant != null){
-				            		consultant = {
-						                "_id" : currentConsultant.id,
-						                "name" : currentConsultant.name
-					              	};
-					              	return false;
-			            		}
-			            	}
-			            });
-		            }
-		        }
-	          	
-	          	var payrollProduct = {
-		            agency: {
-		              "_id" : agency.id,
-		              "name" : agency.name
-		            },
-		            branch: branch,
-		            consultant: consultant,
-		            agencyRef: value.agencyRef,
-		            margin: value.margin,
-		            marginFixed: value.marginFixed,
-		            holidayPayRule: value.holidayPayRule,
-		            derogationContract: value.derogationContract,
-		            derogationSpread: value.derogationSpread,
-		            serviceUsed: value.serviceUsed,
-		            paymentTerms: value.paymentTerms,
-		            paymentMethod: value.paymentMethod,
-		            jobDescription: value.jobDescription,
-		            createdDate: value.createdDate,
-		            _id: value.id,
-		            marginException: value.marginException
-	         	};
-	          	payrollProducts.push(payrollProduct);
-	        });
+	    	console.log(user.worker.payrollProduct);
+	    	var payrollProducts = [];
+
+	    	_.forEach(user.worker.payrollProduct, function(_payrollProduct){
+	    		// Agency
+	    		var agency = null;
+	    		if(_payrollProduct.agency !== null){
+	    			agency = {_id: _payrollProduct.agency._id, name: _payrollProduct.agency.name};
+	    		}
+				// Branch
+				var branch = null;
+	    		if(_payrollProduct.branch !== null){
+	    			branch = {_id: _payrollProduct.branch._id, name: _payrollProduct.branch.name};
+	    		}
+	    		// Consultant
+				var consultant = null;
+	    		if(_payrollProduct.consultant !== null){
+	    			consultant = {_id: _payrollProduct.consultant._id, name: _payrollProduct.consultant.name};
+	    		}
+
+	    		// For Margin Exception
+	          	var marginExceptionVms = [];
+	          	if(_payrollProduct.marginException !== null && Array.isArray(_payrollProduct.marginException)){
+	          		_.forEach(_payrollProduct.marginException, function(_marginException){
+	          			var marginExceptionVm = {
+          					_id: _marginException._id,
+          					marginType: _marginException.marginType,
+			                reason: _marginException.reason,
+			                deductionType: _marginException.deductionType,
+			                deductionDate: _marginException.deductionDate,
+			                deductionPeriod: _marginException.deductionPeriod,
+			                deductionNumberOfPayroll: _marginException.deductionNumberOfPayroll,
+			                createdBy: {
+			                	_id: _marginException.createdBy._id,
+	          					firstName: _marginException.createdBy.firstName,
+	          					lastName: _marginException.createdBy.lastName
+			                },
+			                createdDate: _marginException.createdDate
+	          			};
+	          			marginExceptionVms.push(marginExceptionVm);
+	          		});
+	          	}
+
+	    		var payrollProduct = {
+	    			_id: _payrollProduct._id,
+	    			agency: agency,
+	    			branch: branch,
+	    			consultant: consultant,
+	    			agencyRef: _payrollProduct.agencyRef,
+		            margin: _payrollProduct.margin,
+		            marginFixed: _payrollProduct.marginFixed,
+		            holidayPayRule: _payrollProduct.holidayPayRule,
+		            derogationContract: _payrollProduct.derogationContract,
+		            derogationSpread: _payrollProduct.derogationSpread,
+		            serviceUsed: _payrollProduct.serviceUsed,
+		            paymentTerms:  _payrollProduct.paymentTerms,
+		            paymentMethod: _payrollProduct.paymentMethod,
+		            jobDescription: _payrollProduct.jobDescription,
+		            marginException: marginExceptionVms
+	    		};
+	    		payrollProducts.push(payrollProduct);
+	    	});
+        	
 			resolve(payrollProducts);
 	    },reject);
 	});
-}
+};
 
 service.updatePayrollTaxDetails=function(userId, payrollTaxDetails){
 	var deff=Q.defer();
 	candidatecommonservice.getUser(userId)
 	   .then(function(user){
 	   		if(user){
-   				var worker = user.worker;
+
    				utils.updateSubModel(user.worker.taxDetail,{niNumber:payrollTaxDetails.niNumber});
    				utils.updateSubModel(user.worker,{startDate:payrollTaxDetails.startDate});
-   				// worker.taxDetail.niNumber = payrollTaxDetails.niNumber;
-   				// worker.startDate = payrollTaxDetails.startDate;
-   				var props = utils.updateSubModel(user.worker.payrollTax, payrollTaxDetails);
-   				console.log(user);
+   				utils.updateSubModel(user.worker.payrollTax, payrollTaxDetails);
+
 				return Q.nfcall(user.save.bind(user)).then(function(result){
+
 					deff.resolve(user);						
 				}, deff.reject);
 	   		} else {
@@ -102,7 +106,7 @@ service.updatePayrollTaxDetails=function(userId, payrollTaxDetails){
 	   		}
 	}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.updatePayrollProductDetails=function(userId, payrollProductDetails){
 	var deff=Q.defer();
@@ -111,36 +115,47 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
 	   .then(function(user){
 	   		if(user){
 	   			var product;
-   				if(payrollProductDetails._id == "" || payrollProductDetails._id == undefined){
+
+   				if(payrollProductDetails._id === '' || payrollProductDetails._id === undefined){
    					console.log('add');
-   					delete payrollProductDetails['_id'];
-   					payrollProductDetails['createdDate'] = new Date();
+   					delete payrollProductDetails._id;
+   					payrollProductDetails.createdDate = new Date();
    					user.worker.payrollProduct.push(payrollProductDetails);
    					console.log(payrollProductDetails);
    					product=user.worker.payrollProduct[user.worker.payrollProduct.length-1];
+
+   					return Q.nfcall(user.save.bind(user)).then(function(result){
+						deff.resolve({user:user, product:product});						
+					}, deff.reject);
 
    				}else{
    					console.log('edit');
    					
    					product=user.worker.payrollProduct.id(payrollProductDetails._id);
    					if(product){
-   						payrollProductDetails['updatedDate'] = new Date();
+   						payrollProductDetails.updatedDate = new Date();
    						utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
+   						
+   						return Q.nfcall(user.save.bind(user)).then(function(result){
+							deff.resolve({user:user, product:product});						
+						}, deff.reject);
    					}
    					else{
    						return deff.reject({result:false,name:'NotFound',message:'Product not found'});
    					}
    				}
 
-   				return Q.nfcall(user.save.bind(user)).then(function(result){
-					deff.resolve({user:user, product:product});						
-				}, deff.reject);
+
+   	// 			return Q.nfcall(user.save.bind(user)).then(function(result){
+				// 	deff.resolve({user:user, product:product});						
+				// }, deff.reject);
+
 	   		} else {
 	   			deff.reject({name:'NotFound',message:'No Payroll Product detail found'});
 	   		}
 	}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.deletePayrollProductDetails=function(candidateId, productId){
 	var deff=Q.defer();
@@ -154,7 +169,7 @@ service.deletePayrollProductDetails=function(candidateId, productId){
 				var index = products.indexOf(product);
 				user.worker.payrollProduct.splice(index, 1);
 
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 					deff.resolve();						
 				}, deff.reject);
 			} else {
@@ -162,7 +177,7 @@ service.deletePayrollProductDetails=function(candidateId, productId){
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.postMarginException = function(candidateId, productId, marginExceptionDetails){
 	var deff=Q.defer();
@@ -170,8 +185,9 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 		.then(function(user){
 			if(user){
 				user.worker.payrollProduct.id(productId).marginException.push(marginExceptionDetails);
+
 				return Q.nfcall(user.save.bind(user)).then(function(result){
-					marginException = user.worker.payrollProduct.id(productId).marginException;
+					var marginException = user.worker.payrollProduct.id(productId).marginException;
 					deff.resolve({object:marginException[marginException.length-1]});						
 				}, deff.reject);
 			} else {
@@ -179,7 +195,7 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.patchMarginException = function(candidateId, productId, marginExceptionId, marginExceptionDetails){
 	var deff=Q.defer();
@@ -188,8 +204,9 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 			if(user){
 				console.log(marginExceptionId);
 				utils.updateSubModel(user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId), marginExceptionDetails);
+
 				return Q.nfcall(user.save.bind(user)).then(function(result){
-					marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
+					var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 					console.log(marginException);
 					deff.resolve({object:marginException});						
 				}, deff.reject);
@@ -198,17 +215,17 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 service.deleteMarginException = function(candidateId, productId, marginExceptionId){
 	var deff=Q.defer();
 	candidatecommonservice.getUser(candidateId)
 		.then(function(user){
 			if(user){
-				marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
+				var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 				var index = user.worker.payrollProduct.id(productId).marginException.indexOf(marginException);
 				user.worker.payrollProduct.id(productId).marginException.splice(index, 1);
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 					deff.resolve();						
 				}, deff.reject);
 			} else {
@@ -216,6 +233,6 @@ service.deleteMarginException = function(candidateId, productId, marginException
 	   		}
 		}, deff.reject);
    	return deff.promise;
-}
+};
 
 module.exports=service;
