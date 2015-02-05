@@ -2,6 +2,7 @@
 
 
 module.exports = function(){
+  var _=require('_');
   var userservice=require('../services/userservice'),
     enums=require('../utils/enums');
 

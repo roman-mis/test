@@ -450,6 +450,15 @@ module.exports = function (grunt) {
           clearRequireCache:false
         },
         src:['test/**/*.js']
+      },
+      server:{
+        options:{
+          reporter:'spec',
+          captureFile:'server_results.txt',
+          quiet:false,
+          clearRequireCache:false
+        },
+        src:['test/server/**/*.js']
       }
     },
     protractor_webdriver: {
@@ -557,4 +566,16 @@ module.exports = function (grunt) {
     'protractor_webdriver',
     'protractor'
   ]);
+
+  var defaultServerTestSrc = grunt.config('mochaTest.server.src');
+  grunt.event.on('watch', function(action, filepath) {
+    grunt.config('mochaTest.server.src', defaultServerTestSrc);
+    if (filepath.match('test/server/')) {
+      grunt.config('mochaTest.server.src', filepath);
+    }
+  });
+
+  grunt.registerTask('server.test',[
+    'mochaTest:server'
+    ]);
 };

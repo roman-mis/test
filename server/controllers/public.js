@@ -2,7 +2,10 @@
 
 
 module.exports = function(dbs){
+
       var db = dbs,
+        _=require('lodash'),
+        
         aws = require('aws-sdk'),
         mailer=require('../mailing/mailer'),
         awsService=require('../services/awsservice'),
@@ -10,7 +13,7 @@ module.exports = function(dbs){
         logger=require('../utils/logger');
 
         var Schema=require('mongoose').Schema;
-    var bcrypt=require('bcryptjs');
+    
     var utils=require('../utils/utils');
 
     var controller={};
@@ -149,38 +152,7 @@ module.exports = function(dbs){
       });
 
       return;
-      bcrypt.genSalt(10, function(err, salt) {
-          if(err){
-            console.log(err);
-          }
-          else{
-            bcrypt.hash(req.params.password, salt, function(err, hash) {
-                // Store hash in your password DB.
-                console.log('hash generated : '+hash);
-                bcrypt.compare(req.params.password,hash,function(err,result){
-                    console.log('Result : '+result);
-                    if(!result){
-                      console.log(err);
-                    }
-
-                    console.log('Trying with wrong password');
-
-                    bcrypt.compare('wrong password',hash,function(err,result){
-                        console.log('Result : '+result);
-                        if(!result){
-                          console.log(err);
-                        }
-                        res.send('done');
-                        res.end();
-                    });
-
-                });
-                
-
-                 
-            });
-          }
-      });
+      
 
     };
 

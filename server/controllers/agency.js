@@ -1,7 +1,9 @@
 'use strict';
 
 
-var awsservice=require('../services/awsservice');
+var awsservice=require('../services/awsservice'),
+_=require('lodash'),
+Q=require('q');
 
 var controller={};
 module.exports = function(){
@@ -110,7 +112,7 @@ module.exports = function(){
 		};
 
 
-		agencyservice.saveAgency(agencyDetails, (type == 'patch'?req.params.id:null)).then(function(result){
+		agencyservice.saveAgency(agencyDetails, (type === 'patch'?req.params.id:null)).then(function(result){
 			var vm = getAgencyVm(result.agency, result.branch);
 			res.json({result:true, object:vm});
 			// res.json({result:true, object:response});
@@ -413,23 +415,10 @@ module.exports = function(){
 	};
 
 
-	function getAgencyPayrollVm(agencyOld,reload){
-		return Q.Promise(function(resolve,reject){
-      		console.log('getting agency again for payroll vm');
-	      	// if(reload){
-	      		return agencyservice.getAgency(agencyOld._id, true)
-	      		.then(function(agency){
-	      			console.log('got agency again....');
-				
-	      			build(agency);
+	function getAgencyPayrollVm(agencyOld){
+		
 
-	      		},reject);
-	      	// }
-	      	// else{
-	      	// 	console.log('No reload');
-	      	// 	build(agencyOld);
-	      	// }
-	      	
+		return Q.Promise(function(resolve,reject){
 			function build(agency){
 				console.log(agency);
 				var invoiceDesign=agency.defaultInvoicing.invoiceDesign||{};
@@ -469,21 +458,23 @@ module.exports = function(){
 
 				resolve({result:true, object: payrollVm});
 			}
-	      	if(reload){
-	      		return agencyservice.getAgency(agencyOld._id)
+
+      		console.log('getting agency again for payroll vm');
+	      	// if(reload){
+	      		return agencyservice.getAgency(agencyOld._id, true)
 	      		.then(function(agency){
 	      			console.log('got agency again....');
 				
 	      			build(agency);
 
 	      		},reject);
-	      	}
-	      	else{
-	      		build(agencyOld);
-	      	}
+	      	// }
+	      	// else{
+	      	// 	console.log('No reload');
+	      	// 	build(agencyOld);
+	      	// }
 	      	
 			
-	      		
 	      	
 	        
       	});

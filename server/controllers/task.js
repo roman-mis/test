@@ -55,11 +55,7 @@ module.exports = function(dbs){
 				eventData: null,
 				notes: 'Task added by ' + req.user.firstName + ' ' + req.user.lastName
 			};
-			res.json({task:taskDetails,history:historyDetails});
-			return;
-			console.log(taskDetails);
-			console.log(historyDetails);
-
+			
 			taskservice.postTaskDetails(req.params.id, taskDetails, historyDetails)
 		    .then(function(result){
 		      res.json({result:true, object:result.object});
