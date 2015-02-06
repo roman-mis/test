@@ -23,14 +23,22 @@ angular.module('origApp.controllers')
             }
             return (type.default_ppm || 'N/A').toLowerCase() !== 'n/a';
           };
-
-          $scope.add = function() {
+          
+          function addItem(data){
             $scope.expenseData.transports.push({
-              date: $scope.addData.date,
-              type: $scope.addData.type,
-              cost: $scope.getCost($scope.addData.type, $scope.addData.mileage)
+              date: data.date,
+              type: data.type,
+              cost: $scope.getCost(data.type, data.mileage)
             });
             $scope.addData = angular.copy($scope.defaultAddData);
+          }
+
+          $scope.add = function() {
+            if($scope.addData.date==='all'){
+              $scope.addAllDatesData($scope.addData, addItem);
+            }else{
+              addItem($scope.addData);
+            }
           };
 
           $scope.remove = function(index) {
@@ -42,6 +50,13 @@ angular.module('origApp.controllers')
               $scope.gotoNext();
             }
           };
+          
+          $scope.$watch('expenseData.transports.length', function(){
+            setTimeout(function(){
+              $scope.normalizeTables();
+            });
+          });
+          
 
         });
 

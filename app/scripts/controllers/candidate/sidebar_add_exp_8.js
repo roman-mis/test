@@ -6,10 +6,18 @@ angular.module('origApp.controllers')
 
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
-          
-          $scope.add = function() {
-            $scope.expenseData.others.push($scope.addData);
+
+          function addItem(data) {
+            $scope.expenseData.others.push(data);
             $scope.addData = angular.copy($scope.defaultAddData);
+          }
+
+          $scope.add = function() {
+            if ($scope.addData.date === 'all') {
+              $scope.addAllDatesData($scope.addData, addItem);
+            } else {
+              addItem($scope.addData);
+            }
           };
 
           $scope.remove = function(index) {
@@ -22,12 +30,12 @@ angular.module('origApp.controllers')
             }
           };
 
-          $scope.$watch('expenseData.others.length', function(){
-            setTimeout(function(){
+          $scope.$watch('expenseData.others.length', function() {
+            setTimeout(function() {
               $scope.normalizeTables();
             });
           });
 
-          
+
           $(window).on('resize', $scope.normalizeTables);
         });
