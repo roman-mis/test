@@ -2,8 +2,8 @@
 
 var sinon=require('sinon'),
 	mockery=require('mockery'),
-	chai=require('chai'),
-	expect=chai.expect,
+	// chai=require('chai'),
+	// expect=chai.expect,
 	Q=require('q');
 
 //this is the parent test suite for the whole controller
