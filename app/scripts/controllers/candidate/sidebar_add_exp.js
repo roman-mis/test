@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, MsgService) {
 
-          $scope.mainData = {step: 3};
+          $scope.mainData = {step: 1};
 
           $scope.expenseData = {};
 
@@ -65,5 +65,6 @@ angular.module('origApp.controllers')
             });
           };
 
+          $(window).on('resize', $scope.normalizeTables);
         });
 
