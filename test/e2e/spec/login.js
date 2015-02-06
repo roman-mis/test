@@ -1,6 +1,6 @@
-loginData.userName='originemtest+t240444';
+/*loginData.userName='originemtest+t240444';
 loginData.userEmail=loginData.userName+'@yandex.com';
-loginData.userPassword='andyboss';
+loginData.userPassword='andyboss';*/
 
 describe('Browse to sign in', function() {
 
