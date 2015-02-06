@@ -10,5 +10,5 @@ module.exports = function(mongoose) {
 		content:String,
 	});
 
-  	return mongoose.model('Invoice_Design',schema);
+  	return mongoose.model('InvoiceDesign',schema);
 };

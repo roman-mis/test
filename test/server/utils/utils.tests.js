@@ -97,6 +97,8 @@ describe('utils tests',function(){
 			var props = utils.updateModel(model, viewmodel);
 			console.log("props is......");
 			console.log(props);
+			console.log("model is.....");
+			console.log(model);
 			expect(props).to.be.ok();
 			expect(props).to.include('addedField');
 			expect(props).to.include('addedField2');
@@ -106,7 +108,7 @@ describe('utils tests',function(){
 
 	describe('updateSubModel tests', function(){
 		it('should should update model with values from viewmodel', function(done){
-			var model = { '_id': '1q2w3e4r',
+			var model = { 
 					'youtubeId': '1234',
     				       'keywords': "hello",
     					'watches': [ {
@@ -118,11 +120,13 @@ describe('utils tests',function(){
 			};
 			
 			
-			var viewmodel = { 'addedField':'123val', 'addedField2': '456val'};
+			var viewmodel = { 'addedField':'123val', 'addedField2': '456val', "_id":"1q2w3e4r"};
 			var props = utils.updateSubModel(model, viewmodel);
 			//model = utils.updateSubModel(model, viewmodel);
 			console.log("props is......");
 			console.log(props);
+			console.log("model is....");
+			console.log(model);
 			expect(props).to.be.ok();
 			expect(props).to.include('addedField');
 			expect(props).to.include('addedField2');

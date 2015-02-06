@@ -9,6 +9,7 @@ angular.module('origApp.directives')
               externalScope: '='
             },
             controller: function($scope) {
+              console.log($scope.options);
               var defaultOptions = {
                 limit: 20,
                 maxVisiblePages: 5

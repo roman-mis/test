@@ -5,9 +5,7 @@ module.exports = function(){
     var pendingonboardingservice = require('../services/pendingonboardingservice');
     var enums=require('../utils/enums');
 
-
     var controller={};
-
 
     controller.getPendingOnboardingDetails=function(req,res){
       	pendingonboardingservice.getPendingOnboardingDetails(req.params.id)

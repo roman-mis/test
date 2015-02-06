@@ -1,0 +1,48 @@
+<div class="orig-grid-wrapper">
+  <table class="table orig-grid">
+    <thead>
+      <tr>
+        <th class="text-center">
+          <img style="width:20px;height:20px" src={{img}} alt="">
+        </th>
+        <th class="text-center" ng-repeat="col in options.columns">
+          {{col}}
+        </th>
+      </tr>
+      <tr class="text-center" ng-repeat="raw in options.data">
+        <td>
+          <img style="width:20px;height:20px" src='/images/64px/0039-file-text2.png' alt="">
+        </td>
+        <td ng-repeat="col in raw track by $index">
+          {{col}}
+        </td>
+        <td>
+          <i class="fa fa-eye"></i> &nbsp;&nbsp;| &nbsp;&nbsp;<i class="fa fa-trash"></i>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+  <div class="orig-grid-pagination-wrapper" ng-if="options.isPagination">
+    <div class="page-rows-count">
+      <label>Results per page</label><br>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="20">20</button>
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="40">40</button>
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="60">60</button>
+        <button class="btn btn-default" ng-model="options.limit" btn-radio="80">80</button>
+      </div>
+    </div>
+    <pagination
+      total-items="options.totalItems" 
+      ng-model="options.currentPage" 
+      items-per-page="options.limit" 
+      max-size="options.maxVisiblePages" 
+      class="pagination" 
+      boundary-links="true" 
+      rotate="false" 
+      num-pages="options.numPages"></pagination>
+  </div>
+</div>

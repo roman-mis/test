@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, MsgService) {
 
-          $scope.mainData = {step: 3};
+          $scope.mainData = {step: 1};
 
           $scope.expenseData = {};
 
@@ -20,17 +20,9 @@ angular.module('origApp.controllers')
 
           //check if all dates are selected
           $scope.isAllDatesEntered = function(items) {
-            var aItems = items.filter(function(item) {
-              return item.date === 'all';
-            });
-            if (aItems.length > 0) {
-              return true;
-            }
             var dateVals = [];
             items.forEach(function(item) {
-              if (item.date !== 'all') {
-                dateVals.push(item.date.getTime());
-              }
+              dateVals.push(item.date.getTime());
             });
             dateVals = $.unique(dateVals);
             if (dateVals.length === $scope.expenseData.daysInRange.length - 1) {
@@ -39,12 +31,14 @@ angular.module('origApp.controllers')
             MsgService.danger('All days should be selected.');
             return false;
           };
-          
+
           //check if date has already been added
-          $scope.isAlreadyAddedDate = function(date, items){
+          $scope.isAlreadyAddedDate = function(date, items) {
+            if (date === 'all') {
+              return items.length > 0;
+            }
             var filtered = items.filter(function(val) {
-              return (typeof (date) === 'string' && val.date === date)
-                      || (typeof (date) === 'object' && typeof (val.date) === 'object' && val.date.getTime() === date.getTime());
+              return val.date.getTime() === date.getTime();
             });
             return date && filtered.length > 0;
           };
@@ -56,10 +50,21 @@ angular.module('origApp.controllers')
                     $ths = $(thTr).find('th'),
                     tr0 = $tableBody.find('tr')[0],
                     $tds = $(tr0).children();
-            $ths.each(function(index){
+            $ths.each(function(index) {
               $(this).css('width', $($tds[index]).width() + 'px');
             });
           };
 
+          $scope.addAllDatesData = function(data, callback) {
+            $scope.expenseData.daysInRange.forEach(function(dateItem) {
+              if (dateItem.object !== 'all') {
+                var newData = angular.copy(data);
+                newData.date = dateItem.object;
+                callback(newData);
+              }
+            });
+          };
+
+          $(window).on('resize', $scope.normalizeTables);
         });
 

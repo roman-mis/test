@@ -13,6 +13,15 @@ angular.module('origApp.controllers')
             $scope.alreadyAdded = $scope.isAlreadyAddedDate($scope.addData.date, $scope.expenseData.postCodes);
           };
 
+ 
+          function addItem(data){
+            $scope.expenseData.postCodes.push({
+              date: data.date,
+              codes: data.codes
+            });
+            $scope.addData = angular.copy($scope.defaultAddData);
+          }
+
           $scope.add = function() {
             //check if there is invalid post code
             var codes = $scope.addData.code.split(/,/g).map(function(item) {
@@ -35,12 +44,14 @@ angular.module('origApp.controllers')
               MsgService.danger('Invalid postcode: ' + invalidCodes.join(', '));
               return;
             }
-
-            $scope.expenseData.postCodes.push({
-              date: $scope.addData.date,
-              codes: codes
-            });
-            $scope.addData = angular.copy($scope.defaultAddData);
+            
+            $scope.addData.codes = codes;
+            
+            if($scope.addData.date==='all'){
+              $scope.addAllDatesData($scope.addData, addItem);
+            }else{
+              addItem($scope.addData);
+            }
           };
 
           $scope.remove = function(index) {

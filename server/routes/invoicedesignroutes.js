@@ -5,7 +5,7 @@ var express = require('express'),
 
     db = require('../models'),
 	router = express.Router(),
-	controller=require('../controllers/invoicedesigncontroller')(db),
+	controller=require('../controllers/invoiceDesignController')(db),
 	restMiddleware=require('../middlewares/restmiddleware');
 module.exports = function(app){
   app.use('/api/invoicedesigns', router);
@@ -14,4 +14,4 @@ module.exports = function(app){
 router.get('/',restMiddleware(db),controller.getAllInvoiceDesigns);
 router.get('/:id',controller.getInvoiceDesign);
 router.post('/', controller.postInvoiceDesign);
-router.patch('/', controller.patchInvoiceDesign);
+router.patch('/:id', controller.patchInvoiceDesign);
