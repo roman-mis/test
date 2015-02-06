@@ -13,6 +13,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
   .state('app.admin.three', {
     url: '/three',
     templateUrl: 'views/admin/page3.html'
+  })
+  .state('app.admin.task', {
+    url: '/:templateType',
+    controller:'templatesController',
+    templateUrl: 'views/admin/templates.html'
   });
   $urlRouterProvider.otherwise('/one');
 });
@@ -23,6 +28,7 @@ app.controller('CubeCtrl', function($scope, $rootScope, $location) {
                             {link: '/admin', text: 'Admin'}];
 
   $scope.go = function(path) {
+    console.log(path);
   $location.path(path);
  }
 
