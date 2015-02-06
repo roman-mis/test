@@ -44,33 +44,18 @@ module.exports = function(){
 		}, res.sendFailureResponse);
 	};
 
-	
-
 	controller.postExpenses=function (req, res) {	
 		var expense = req.body;		
 		var days = [];
-		_.forEach(expense.days, function(day){
-			
-			var exps = [];
-			_.forEach(day.expenses, function(_expense){
-				var e = {
-					type: _expense.type,
-					subType: _expense.subType,
-					value: _expense.value,
-					description: _expense.description,
-					receiptUrls: _expense.receiptUrls
-				};
-				exps.push(e);
-			});
-
-			var _day = {
-				date: day.date,
-				startTime: day.startTime,
-				endTime: day.endTime,
-				expenses: exps,
-			};
-			days.push(_day);
-		});
+		// _.forEach(expense.days, function(day){
+		// 	var _day = {
+		// 		date: day.date,
+		// 		startTime: day.startTime,
+		// 		endTime: day.endTime,
+		// 		expenses: day.expenses,
+		// 	};
+		// 	days.push(_day);
+		// });
 
 		var newExpense = {
 			agency: expense.agency,
@@ -78,7 +63,7 @@ module.exports = function(){
 			createdBy: req.user.id,
 			startedDate: new Date(),
 			submittedDate: new Date(),
-			days: days
+			days: expense.days
 		};
 
 		expenseservice.saveExpenses(newExpense).then(function(response){
