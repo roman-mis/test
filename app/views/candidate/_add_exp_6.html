@@ -31,7 +31,7 @@
     </form>
     <div class="row">
       <div class="col-sm-12">
-        <table class="table table-striped ">
+        <table class="table table-striped"id="tableHeader">
           <thead>
             <tr>
               <th>Date 
@@ -45,17 +45,21 @@
               <th>Cost</th>
             </tr>
           </thead>
-          <tbody>
-            <tr ng-repeat="item in expenseData.transports | orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
-              <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
-              <td>{{item.type.description}}</td>
-              <td>&#163;{{item.cost | formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
-            </tr>
-          </tbody>
         </table>
+        <div class="tableWrapper">
+          <table class="table table-striped" id="tableBody">
+            <tbody>
+              <tr ng-repeat="item in expenseData.transports| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+                <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
+                <td>{{item.type.description}}</td>
+                <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="col-xs-4 pull-right">
-        <p class="">Total: <span>&#163;{{expenseData.transports | rowsSum:'cost' | formatNumber}}</span></p>
+        <p class="">Total: <span>&#163;{{expenseData.transports| rowsSum:'cost' | formatNumber}}</span></p>
       </div>
     </div> 
   </div><!-- /modal-body -->

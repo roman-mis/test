@@ -43,7 +43,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="item in expenseData.postCodes | orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
-              <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
+              <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
               <td>{{item.codes.join(', ')}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
             </tr>
           </tbody>

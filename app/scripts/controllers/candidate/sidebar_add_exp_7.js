@@ -1,19 +1,19 @@
 'use strict';
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp7Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
-          $scope.expenseData.subsistense = $scope.expenseData.subsistense || [];
+          $scope.expenseData.subsistences = $scope.expenseData.subsistences || [];
           $scope.mealTypes = ConstantsResource.get('mealslist');
 
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
           
-          $scope.onMealTypeChanged = function(){
-            $scope.addData.cost = $scope.addData.mealType ? $scope.addData.mealType.default_cost : '0.00';
+          $scope.onTypeChanged = function(){
+            $scope.addData.cost = $scope.addData.type ? $scope.addData.type.default_cost : '0.00';
           };
 
           
           function addItem(data){
-            $scope.expenseData.subsistense.push(data);
+            $scope.expenseData.subsistences.push(data);
             $scope.addData = angular.copy($scope.defaultAddData);
           }
 
@@ -26,21 +26,19 @@ angular.module('origApp.controllers')
           };
 
           $scope.remove = function(index) {
-            $scope.expenseData.subsistense.splice(index, 1);
+            $scope.expenseData.subsistences.splice(index, 1);
           };
 
           $scope.ok = function() {
-            if ($scope.isAllDatesEntered($scope.expenseData.subsistense)) {
+            if ($scope.isAllDatesEntered($scope.expenseData.subsistences)) {
               $scope.gotoNext();
             }
           };
 
-          $scope.$watch('expenseData.subsistense.length', function(){
+          $scope.$watch('expenseData.subsistences.length', function(){
             setTimeout(function(){
               $scope.normalizeTables();
             });
           });
-
           
-          $(window).on('resize', $scope.normalizeTables);
         });

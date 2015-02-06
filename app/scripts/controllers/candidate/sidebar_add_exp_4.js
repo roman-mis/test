@@ -38,24 +38,14 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            //check if all dates is selected
-            var bool = false;
-            var filtered = $scope.expenseData.times.filter(function(val) {
-              return val.date === 'all';
+            //reset daysInRange
+            var newDaysInRange = [$scope.expenseData.daysInRange[0]];
+            $scope.expenseData.times.forEach(function(item){
+              newDaysInRange.push({object: item.date, label: moment(item.date).format('ddd DD/MM/YYYY')});
             });
-            if (filtered.length > 0) {
-              bool = true;
-            }
-            filtered = $scope.expenseData.times.filter(function(val) {
-              return val.date !== 'all';
-            });
-            if (!bool && filtered.length === $scope.expenseData.daysInRange.length - 1) {
-              bool = true;
-            }
-
-            if ($scope.isAllDatesEntered($scope.expenseData.times)) {
-              $scope.gotoNext();
-            }
+            $scope.expenseData.daysInRange = newDaysInRange;
+            
+            $scope.gotoNext();
           };
 
         });

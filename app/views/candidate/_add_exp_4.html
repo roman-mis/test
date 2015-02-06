@@ -117,10 +117,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="doctime in expenseData.times| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
-              <td>{{doctime.date==='all'?'All dates in selection':(doctime.date|formatDate:'ddd DD/MM/YYYY')}}</td>
-              <td>{{doctime.startTime}}</td>
-              <td>{{doctime.endTime}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+            <tr ng-repeat="item in expenseData.times| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+              <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
+              <td>{{item.startTime}}</td>
+              <td>{{item.endTime}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
             </tr>
           </tbody>
         </table>

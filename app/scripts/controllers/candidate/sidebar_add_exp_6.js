@@ -50,6 +50,13 @@ angular.module('origApp.controllers')
               $scope.gotoNext();
             }
           };
+          
+          $scope.$watch('expenseData.transports.length', function(){
+            setTimeout(function(){
+              $scope.normalizeTables();
+            });
+          });
+          
 
         });
 
