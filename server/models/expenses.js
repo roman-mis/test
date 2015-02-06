@@ -15,14 +15,14 @@ module.exports = function(mongoose,autoIncrement) {
             date: Date,
             startTime: String,
             endTime: String,
+            postcodes: [ String ],
             expenses: [{
                 expenseType: String, // subsistence, travel, other, voucher
                 subType: String, // breakfast, meal1, carvan, motorbike, stationery
                 value: Number,
                 text: String, // WE43 9KK
                 description: String,
-                receiptUrls: String,
-                postcodes: [ String ]
+                receiptUrls: String
             }]
         }]
     });
