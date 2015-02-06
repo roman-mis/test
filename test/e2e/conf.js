@@ -17,7 +17,7 @@ exports.config = {
     sidebar: ['./spec/login.js','./spec/sidebar.js'],
     test: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
     //test: [/*'./spec/reg.js',*/'./spec/check-inbox.js'/*,'./spec/activate.js','./spec/login.js'*/],
-    dummy: ['./spec/dummy.js']
+    dummy: ['./spec/login.js','./spec/candidates.js']
   },
 
   onPrepare: function () {
@@ -28,8 +28,9 @@ exports.config = {
     jasmine.getEnv().addReporter(new jasmineReporters.TerminalReporter({verbosity: 3}));
 
     global.loginData={
-      userEmail:null,
-      userPassword:'andyboss'
+      userEmail:'boojaka@gmail.com',
+      userPassword:'z3c1x2',
+      userName:'boojaka'
     }
   },
   jasmineNodeOpts: {
