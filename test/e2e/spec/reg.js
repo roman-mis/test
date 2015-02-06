@@ -1,5 +1,10 @@
 var helper = require('./ui-helper.js');
 
+loginData.userName='originemtest+t'+new Date().getTime().toString().substr(-9,6);
+loginData.userEmail=loginData.userName+'@yandex.com';
+loginData.userPassword='andyboss';
+
+
 describe('Browse to sign up', function() {
 
   var nextBtn=element(by.css('[ng-click="nextstep()"]'));
@@ -61,7 +66,7 @@ describe('Browse to sign up', function() {
     element(by.className('select2-result-single')).click();
     expect(select.getAttribute('class')).toContain('ng-valid');
 
-    validateInputByModel('candidate.details.firstName','Test');
+    validateInputByModel('candidate.details.firstName',loginData.userName);
     validateInputByModel('candidate.details.lastName','Tester');
 
     // email test
@@ -72,7 +77,7 @@ describe('Browse to sign up', function() {
     input.clear();
     expectValid(input);
     expectInvalid(input);
-    input.sendKeys('originemtest+t'+new Date().getTime().toString().substr(-9,6)+'@yandex.com');//originemtest@yandex.com
+    input.sendKeys(loginData.userEmail);
     expectValid(input);
 
 

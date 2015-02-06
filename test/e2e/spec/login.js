@@ -1,3 +1,7 @@
+/*loginData.userName='originemtest+t240444';
+loginData.userEmail=loginData.userName+'@yandex.com';
+loginData.userPassword='andyboss';*/
+
 describe('Browse to sign in', function() {
 
   var expectValid = function (element) {
@@ -14,7 +18,7 @@ describe('Browse to sign in', function() {
   });
 
 
-  it('should find reg button ', function () {
+  it('should find login button ', function () {
     expect(logButton.isPresent()).toBe(true);
     logButton.click();
   });
