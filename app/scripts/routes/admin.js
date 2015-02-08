@@ -9,12 +9,12 @@ angular.module("origApp").config(function($stateProvider) {
 		url: '/home',
 		templateUrl: 'views/admin/home.html'
 	})
-	.state('app.admin.two', {
-		url: '/two',
-		templateUrl: 'views/admin/page2.html'
+	.state('app.admin.templates', {
+		url: '/templates',
+		templateUrl: 'views/admin/templates.html'
 	})
-	.state('app.admin.three', {
-		url: '/three',
-		templateUrl: 'views/admin/page3.html'
+	.state('app.admin.company_profile', {
+		url: '/company_profile',
+		templateUrl: 'views/admin/company_profile.html'
 	});
 });
