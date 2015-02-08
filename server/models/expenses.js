@@ -22,7 +22,7 @@ module.exports = function(mongoose,autoIncrement) {
                 value: Number,
                 text: String, // WE43 9KK
                 description: String,
-                receiptUrls: String
+                receiptUrls: [ String ]
             }]
         }]
     });
