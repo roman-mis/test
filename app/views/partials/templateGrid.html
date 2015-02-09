@@ -1,23 +1,23 @@
-<div class="orig-grid-wrapper">
+<div class="orig-grid-wrapper ">
   <table class="table orig-grid">
     <thead>
       <tr >
-        <th class="col-xs-2">
-          <img style="width:20px;height:20px" src={{img}} alt="">
-        </th>
-        <th class="col-xs-2" ng-repeat="col in options.columns">
+        <td class="col-xs-2 btn-success text-center">
+          <img style="width:20px;height:20px" src="/images/64px/0371-insert-template.png" alt="">
+        </td>
+        <td class="col-xs-2 btn-success text-center" ng-repeat="col in options.columns">
           {{col}}
-        </th>
+        </td>
       </tr>
-      <tr  ng-repeat="raw in options.data">
-        <td   class="col-xs-2">
+      <tr  ng-repeat="raw in options.data" >
+        <td   class="col-xs-1 text-center">
           <img style="width:20px;height:20px" src='/images/64px/0039-file-text2.png' alt="">
         </td>
-        <td class="col-xs-2" ng-repeat="col in raw track by $index">
-          {{col}}
+        <td class="col-xs-2 text-center" ng-repeat="col in raw track by $index">
+          {{col| date:'yyyy-MM-dd'}}
         </td>
-        <td class="col-xs-2">
-          <i ng-click="options.loadAdminTemplate($index)"class="fa fa-eye"></i> &nbsp;&nbsp;| &nbsp;&nbsp;<i ng-click="options.deleteAdminTemplate($index)" class="fa fa-trash"></i>
+        <td class="col-xs-3 text-center">
+          <i ng-click="options.loadAdminTemplate($index)"class="fa fa-eye"></i> &nbsp;| &nbsp;<i class="fa fa-files-o" ng-click="options.clone($index)"></i> &nbsp;| &nbsp; <i ng-click="options.deleteAdminTemplate($index)" class="fa fa-trash"></i>
         </td>
       </tr>
     </thead>

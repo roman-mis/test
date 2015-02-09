@@ -1,34 +1,41 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('addNewController',['$scope','$stateParams','HttpResource',
-	function($scope,$stateParams,HttpResource){	
+app.controller('addNewController',['$scope', '$stateParams', '$location', 'HttpResource', 'adminTemplate',
+	function($scope, $stateParams, $location, HttpResource, adminTemplate){	
 		var fields = ['templateName','templateType','mergeFields',
-				'templatTitle','body'];	
-		$scope.templateName = 'dddd';
+				'templatTitle','body'];
+		console.log(adminTemplate.details.templateType);
+		if($stateParams.type === 'edite'){
+			$scope.data=adminTemplate;	
+		}
+		
+		$scope.paste = function(){
+			$scope.data=adminTemplate;
+			console.log(adminTemplate);
+			console.log('paste');
+		}
 
 		$scope.notEmpty = function(vars){
-			var isEmpty = true;
+			var notEmpty = true;
 			for(var i = 0; i < vars.length; i++){
-				if($scope[vars[i]] === undefined || $scope[vars[i]] === ''){
+				if($scope.data.details[vars[i]] === undefined || $scope.data.details[vars[i]] === ''){
 					console.log(vars[i] + 'isEmpty');
 					isEmpty = false;
 					break;
 				}
 			}
-			
-			return isEmpty;
+			return notEmpty;
 		}
 
 		$scope.clear = function(vars){
-			vars.forEach(function(v){
-				$scope[v] = '';
-			});
+			$scope.data.details={};
+			adminTemplate.details={};
 		}
 
 		$scope.getData = function(fields){
 			var data = {};
 			for(var i = 0; i < fields.length; i++){
-				data[fields[i]] = $scope[fields[i]];
+				data[fields[i]] = $scope.data.details[fields[i]];
 			}
 			return data;
 		}
@@ -36,18 +43,14 @@ app.controller('addNewController',['$scope','$stateParams','HttpResource',
 		$scope.save = function(){
 			if($scope.notEmpty(fields)){
 				var data = $scope.getData(fields);
+				console.log(data)
 				HttpResource.model('admin/templates').create(data).post().then(function(response) {
 	              if (!HttpResource.flushError(response)) {
 	                console.log('done!');
-	                $scope.clear(fields);
+	                $scope.clear();
+	                $location.path('admin/templates');
 	              }
 	            });
 			}
-		}
-		$scope.get = function(){
-			var data = HttpResource.model('admin').customGet('templates', {}, function(response){
-                console.log(response);
-                console.log(data);
-              });
 		}
 }]);

@@ -110,10 +110,14 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
           	var id = $scope.gridOptions.allData[index]._id;
             t = HttpResource.model('admin/templates/'+id)
             .query({},function(data) {
-              console.log(t);
               adminTemplate.details = t.object;
-              console.log(adminTemplate);
+              $location.path('/admin/add_new/edite');
             });
+          };
+
+          $scope.gridOptions.clone = function(index) {
+          	adminTemplate.details = $scope.gridOptions.allData[index];
+          	console.log(adminTemplate)
           };
 
            $scope.gridOptions.deleteAdminTemplate = function(index) {
@@ -132,5 +136,4 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
               }
             });
           };
-          console.log($scope.gridOptions);
 }]);
