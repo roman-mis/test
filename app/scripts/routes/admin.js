@@ -11,7 +11,8 @@ angular.module("origApp").config(function($stateProvider) {
 	})
 	.state('app.admin.templates', {
 		url: '/templates',
-		templateUrl: 'views/admin/templates.html'
+		templateUrl: 'views/admin/templates.html',
+		controller: 'templatesController'
 	})
 	.state('app.admin.company_profile', {
 		url: '/company_profile',

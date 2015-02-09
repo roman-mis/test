@@ -2,6 +2,7 @@ var app = angular.module('origApp.controllers');
 
 app.controller('templatesController',['$scope','$location','HttpResource', 'adminTemplate',
 	function($scope,$location,HttpResource,adminTemplate){	
+		console.log('hello');
 	// console.log('templatesController');
 	// console.log($stateParams.templateType);
 	// $scope.img= '';
@@ -131,4 +132,5 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
               }
             });
           };
+          console.log($scope.gridOptions);
 }]);
