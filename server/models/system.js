@@ -67,7 +67,15 @@ module.exports = function(mongoose) {
                     validTo: Date
                 }
             ]
-        }
+        },
+        paymentRates: [
+            {
+                name: String,
+                rateType: String,
+                hours: Number,
+                importAliases: [ String ]
+            }
+        ]
     });
 
     return mongoose.model('System',schema);
