@@ -1,0 +1,42 @@
+<div>
+
+	<div class="col-xs-12 row" style="margin:10px">
+		<input type="txt" class="col-xs-4" ng-model="templateName"\>
+		<div class="col-xs-1" ></div>
+		<center>
+		<select class="col-xs-3" ng-model="templateType">
+			<option disabled="disabled" ng-selected="true">-- select --</option>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+		</select>
+		</center>	
+		<div class="col-xs-1"></div>
+		<select class="col-xs-3" ng-model="mergeFields">
+			<option disabled="disabled" ng-selected="selected">-- select --</option>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+		</select>
+		
+	</div>
+
+	<div style="margin:10px" class="col-xs-12 row">
+		<input type="txt" class="col-xs-4" ng-model="templatTitle"\>
+	</div>
+
+	<div style="margin:10px" class="col-xs-12 row" >
+		<input style="height:300px;" type="textbox" class="col-xs-12 col-ss-12" ng-model="body"\>
+	</div>
+	<div style="margin:10px" class="col-xs-12 row" >
+		<div class="col-xs-8"></div>
+		<button class="col-xs-2 btn btn-success" ng-click="get()" >GET<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></span></button>
+	</div>
+
+	<div style="margin:10px" class="col-xs-12 row" >
+		<div class="col-xs-8"></div>
+		<button class="col-xs-2 btn btn-success" ng-click="save()" >SAVE<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></span></button>
+	</div>
+</div>

@@ -1,23 +1,23 @@
 <div class="orig-grid-wrapper">
   <table class="table orig-grid">
     <thead>
-      <tr>
-        <th class="text-center">
+      <tr >
+        <th class="col-xs-2">
           <img style="width:20px;height:20px" src={{img}} alt="">
         </th>
-        <th class="text-center" ng-repeat="col in options.columns">
+        <th class="col-xs-2" ng-repeat="col in options.columns">
           {{col}}
         </th>
       </tr>
-      <tr class="text-center" ng-repeat="raw in options.data">
-        <td>
+      <tr  ng-repeat="raw in options.data">
+        <td   class="col-xs-2">
           <img style="width:20px;height:20px" src='/images/64px/0039-file-text2.png' alt="">
         </td>
-        <td ng-repeat="col in raw track by $index">
+        <td class="col-xs-2" ng-repeat="col in raw track by $index">
           {{col}}
         </td>
-        <td>
-          <i class="fa fa-eye"></i> &nbsp;&nbsp;| &nbsp;&nbsp;<i class="fa fa-trash"></i>
+        <td class="col-xs-2">
+          <i ng-click="options.loadAdminTemplate($index)"class="fa fa-eye"></i> &nbsp;&nbsp;| &nbsp;&nbsp;<i ng-click="options.deleteAdminTemplate($index)" class="fa fa-trash"></i>
         </td>
       </tr>
     </thead>
@@ -25,7 +25,7 @@
       
     </tbody>
   </table>
-  <div class="orig-grid-pagination-wrapper" ng-if="options.isPagination">
+  <div class="orig-grid-pagination-wrapper">
     <div class="page-rows-count">
       <label>Results per page</label><br>
       <div class="btn-group">

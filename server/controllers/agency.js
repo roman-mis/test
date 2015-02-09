@@ -60,6 +60,7 @@ module.exports = function(){
 	};
 
 	controller.getAllAgency=function (req,res){
+		
 		agencyservice.getAllAgencies(req._restOptions)
 	  	.then(function(result){
 		    console.log('getAllAgency over');

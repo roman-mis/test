@@ -4,12 +4,12 @@
     add new <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li><a href="#">Call Log</a></li>
-    <li><a href="#">Task</a></li>
-    <li><a href="#">Document</a></li>
-    <li><a href="#">Email</a></li>
-    <li><a href="#">Payslip</a></li>
-    <li><a href="#">Invoice</a></li>
+    <li><a ng-click="direction('front');go('/admin/add_new/call_log')">Call Log</a></li>
+    <li><a ng-click="direction('front');go('/admin/add_new/task')">Task</a></li>
+    <li><a ng-click="direction('front');go('/admin/add_new/document')">Document</a></li>
+    <li><a ng-click="direction('front');go('/admin/add_new/email')">Email</a></li>
+    <li><a ng-click="direction('front');go('/admin/add_new/payslip')">Payslip</a></li>
+    <li><a ng-click="direction('front');go('/admin/add_new/invoice')">Invoice</a></li>
     
   </ul>
 </div>

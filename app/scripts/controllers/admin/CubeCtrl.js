@@ -15,9 +15,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'views/admin/page3.html'
   })
   .state('app.admin.task', {
-    url: '/:templateType',
+    url: '/templates',
     controller:'templatesController',
     templateUrl: 'views/admin/templates.html'
+  })
+  .state('app.admin.addNew', {
+    url: '/add_new/:type',
+    controller:'addNewController',
+    templateUrl: 'views/admin/newTemplate.html'
   });
   $urlRouterProvider.otherwise('/one');
 });

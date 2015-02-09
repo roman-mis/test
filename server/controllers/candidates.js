@@ -153,6 +153,8 @@ module.exports = function(){
     controller.getAllCandidate=function (req,res){
       //console.log('user');
       //console.log(req.user);
+      console.log('req._restOptions')
+      console.log(req._restOptions)
       candidateservice.getAllCandidates(req._restOptions)
       .then(function(result){
         console.log('getAllCandidates over');
@@ -167,6 +169,7 @@ module.exports = function(){
         var pagination=req._restOptions.pagination||{};
         var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
         //console.log('about to send the message to client');
+        console.log(resp)
 
         res.json(resp);
 

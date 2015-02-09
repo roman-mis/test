@@ -55,6 +55,7 @@ angular.module('origApp.controllers')
               params.firstName_contains = $scope.filterFirstName;
             }
             $scope.gridOptions.data = cddAPI.query(params, function() {
+              
               if ($scope.gridOptions.data.meta) {
                 $scope.gridOptions.totalItems = $scope.gridOptions.data.meta.totalCount;
               }
