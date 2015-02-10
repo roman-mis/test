@@ -23,19 +23,19 @@ service.getPayrollProductDetails = function(id){
 			_.forEach(user.worker.payrollProduct, function(_payrollProduct){
 	    		// Agency
 	    		var agency = null;
-	    		if(_payrollProduct.agency !== null){
+	    		if(_payrollProduct.agency){
 	    			agency = {_id: _payrollProduct.agency._id, name: _payrollProduct.agency.name};
 	    		}
 				
 				// Branch
 				var branch = null;
-	    		if(_payrollProduct.branch !== undefined && _payrollProduct.branch !== null){
+	    		if(_payrollProduct.branch){
 	    			branch = {_id: _payrollProduct.branch._id, name: _payrollProduct.branch.name};
 	    		}
 	    		
 	    		// Consultant
 				var consultant = null;
-	    		if(_payrollProduct.consultant !== undefined && _payrollProduct.consultant !== null){
+	    		if(_payrollProduct.consultant){
 	    			consultant = {_id: _payrollProduct.consultant._id, name: _payrollProduct.consultant.name};
 	    		}
 
@@ -113,7 +113,7 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
 
 	candidatecommonservice.getUser(userId)
 	   .then(function(user){
-	   		if(user){
+	   		if(user){ 
 	   			var product;
 
    				if(payrollProductDetails._id === '' || payrollProductDetails._id === undefined){
@@ -130,12 +130,10 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
 
    				}else{
    					console.log('edit');
-   					
    					product=user.worker.payrollProduct.id(payrollProductDetails._id);
    					if(product){
    						payrollProductDetails.updatedDate = new Date();
    						utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
-   						
    						return Q.nfcall(user.save.bind(user)).then(function(result){
 							deff.resolve({user:user, product:product});						
 						}, deff.reject);

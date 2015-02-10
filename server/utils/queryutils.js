@@ -6,6 +6,7 @@ var _=require('lodash');
 module.exports=function(){
 	return {
 		applySearch:function(q,Model,request){
+			console.log(request);
 			// var q=Model.find();
 			return Q.Promise(function(resolve,reject){
 				
