@@ -33,7 +33,7 @@ angular.module('origApp.controllers')
               {field: 'address1', display: 'Address'},
               {field: 'emailAddress', display: 'Email', cellTemplate: '<a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a>'},
               {field: 'phone', display: 'Phone'},
-              {field: 'view', display: 'View', cellTemplate: '<a href="javacript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
+              {field: 'view', display: 'View', cellTemplate: '<a href="javascript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
             ],
             data: []
           };
@@ -55,7 +55,7 @@ angular.module('origApp.controllers')
               params.firstName_contains = $scope.filterFirstName;
             }
             $scope.gridOptions.data = cddAPI.query(params, function() {
-              
+
               if ($scope.gridOptions.data.meta) {
                 $scope.gridOptions.totalItems = $scope.gridOptions.data.meta.totalCount;
               }

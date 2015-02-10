@@ -77,7 +77,7 @@
   "scripts": {
     "start": "node server/app.js",
     "test": "mocha test/server/**/*.js -w",
-    "e2e_main": "protractor --suite=main --baseUrl='http://originempayroll-qa.elasticbeanstalk.com/'  test/e2e/conf.js",
+    "e2e_main": "protractor --suite=main test/e2e/conf.js",
     "e2e_reg": "protractor test/e2e/conf.js --suite reg",
     "e2e_login": "protractor test/e2e/conf.js --suite login",
     "e2e_candidates": "protractor test/e2e/conf.js --suite candidates",
