@@ -8,6 +8,7 @@ module.exports=function(){
 		applySearch:function(q,Model,request){
 			// var q=Model.find();
 			return Q.Promise(function(resolve,reject){
+				
 				var pagination=request.pagination||{limit:1000000,offset:0};
 			
 				var orders=request.orderBy||{};
@@ -29,6 +30,14 @@ module.exports=function(){
 						else if(filter.operator==='ne' ){
 					
 							q.where(filterName).ne(filter.term);
+						}
+						else if(filter.operator==='between' ){
+							var dates = filter.term.split('|');
+							var startDate = dates[0].split('-');
+							var endDate = dates[1].split('-');
+							q.where(filterName)
+							.gt(new Date(startDate[0], startDate[1]-1, startDate[2]))
+							.lt(new Date(endDate[0], endDate[1]-1, endDate[2]));
 						}
 				
 				});
