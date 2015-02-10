@@ -2,8 +2,17 @@
 
 var db = require('../models'),
 	Q=require('q'),
+	queryutils=require('../utils/queryutils')(db),
 	service={};
 
+service.getExpenses=function(request){
+	return Q.Promise(function(resolve,reject){
+		var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
+
+		queryutils.applySearch(q, db.Expense, request)
+			.then(resolve,reject);
+	});
+};
 
 service.getExpense=function(id, populate){
 	populate = typeof populate !== 'undefined' ? populate : false;
