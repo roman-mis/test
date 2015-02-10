@@ -34,13 +34,12 @@ module.exports=function(){
 						}
 						else if(filter.operator==='between' ){
 							var dates = filter.term.split('|');
-							var startDate = dates[0].split('-');
-							var endDate = dates[1].split('-');
+							var start = (isNaN(dates[0])?new Date(dates[0]):Number(dates[0]));
+							var end = (isNaN(dates[1])?new Date(dates[1]):Number(dates[1]));
 							q.where(filterName)
-							.gt(new Date(startDate[0], startDate[1]-1, startDate[2]))
-							.lt(new Date(endDate[0], endDate[1]-1, endDate[2]));
+							.gt(start)
+							.lt(end);
 						}
-				
 				});
 
 				console.log('querying count');
