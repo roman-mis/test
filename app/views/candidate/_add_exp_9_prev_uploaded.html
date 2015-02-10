@@ -1,0 +1,64 @@
+<div class="modal-header modal-headerExpenses">
+  <h4 class="modal-title" id="myModalLabel"> Previously Uploaded Receipts</h4>
+  <small>Match expenses selected in previous step to previous uploads.</small>
+</div><!-- /modal-header -->
+
+<div class="modal-body">
+
+  <div class="row"> 
+
+    <div class="col-xs-12 ">
+      <a href="#" class="pull-right"><i class="fa fa-question-circle"></i></a>
+    </div>
+
+    <div class="col-sm-12">
+      <table class="table table-striped" id="tableHeader">
+        <thead>
+          <tr>
+            <th>Claim Date <div class="pull-right"><a  href="#"><i class="fa fa-caret-up"></i></a><a class="sortCaret" href="#"><i class="fa fa-caret-down"></i></a></div></th>
+        <th>Claim Overview</th>
+        <th class="text-right">Value</th>
+        </tr>
+        </thead>
+      </table>
+      <div class="tableWrapper">
+        <table class="table table-hover" id="tableBody">
+          <tbody>
+            <tr class="rowhighlight"> 
+              <td style="width:30%;">Sat 08/11/2014</td>
+              <td style="width:50%;">ID: 01234; Transport Subsistence</td>
+              <td class="text-right">&#163;49.80</td>
+            </tr>
+            <tr> 
+              <td>Sat 08/11/2014</td>
+              <td>ID: 01234; Transport Subsistence</td>
+              <td class="text-right">&#163;49.80</td>
+            </tr>
+            <tr> 
+              <td>Sat 08/11/2014</td>
+              <td>ID: 01234; Transport Subsistence</td>
+              <td class="text-right">&#163;49.80</td>
+            </tr>
+            <tr> 
+              <td >Sat 08/11/2014</td>
+              <td>ID: 01234; Transport Subsistence</td>
+              <td class="text-right">&#163;49.80</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-xs-12 text-center">
+      <button type="button" class="btn btn-default">Match Selected</button>
+    </div>
+  </div> 
+</div><!-- /modal-body -->
+
+<div class="modal-footer">
+  <p class="pull-left">
+    <a href="javascript:void(0)" class="btn" ng-click="closePrevUploaded()"><i class="fa fa-chevron-left"></i></a>
+    Cancel and return to main receipts screen
+  </p>
+
+</div><!-- /modal footer -->

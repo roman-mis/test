@@ -54,9 +54,48 @@
       word-wrap: break-word;
     }
   }
-  
+
   .alert-info.complete-exp { 
-     margin-bottom: 0px;
-     margin-top: 60px; 
+    margin-bottom: 0px;
+    margin-top: 60px; 
+  }
+
+  .ovalButton {
+    border-radius: 50%;
+    color: #E4E4E4;
+    width: 105px;
+    margin: 6px;
+  }
+  .redDark, .redDark:hover {
+    background: #991818;    
+  } 
+  .greyDark, .greyDark:hover {
+    background: #4c4c4c;
+  }
+  .blueDark,.blueDark:hover {
+    background: #7fc6d4;
+  }
+
+  .fileUpload {
+    position: relative;
+    overflow: hidden;
+  }
+  .fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .filter {
+    margin: 0;
+    display: block;
+    padding-top: 15px;
+    text-align: center;
+    line-height: 1em;
   }
 }
