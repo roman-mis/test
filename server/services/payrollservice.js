@@ -16,26 +16,26 @@ service.getPayrollProductDetails = function(id){
 		.populate('worker.payrollProduct.marginException.createdBy');
 
 	return Q.Promise(function(resolve,reject){
-	    Q.nfcall(query.exec.bind(query))
+	    return Q.nfcall(query.exec.bind(query))
 	    .then(function(user){
 
-	    	console.log(user.worker.payrollProduct);
 	    	var payrollProducts = [];
-
-	    	_.forEach(user.worker.payrollProduct, function(_payrollProduct){
+			_.forEach(user.worker.payrollProduct, function(_payrollProduct){
 	    		// Agency
 	    		var agency = null;
 	    		if(_payrollProduct.agency !== null){
 	    			agency = {_id: _payrollProduct.agency._id, name: _payrollProduct.agency.name};
 	    		}
+				
 				// Branch
 				var branch = null;
-	    		if(_payrollProduct.branch !== null){
+	    		if(_payrollProduct.branch !== undefined && _payrollProduct.branch !== null){
 	    			branch = {_id: _payrollProduct.branch._id, name: _payrollProduct.branch.name};
 	    		}
+	    		
 	    		// Consultant
 				var consultant = null;
-	    		if(_payrollProduct.consultant !== null){
+	    		if(_payrollProduct.consultant !== undefined && _payrollProduct.consultant !== null){
 	    			consultant = {_id: _payrollProduct.consultant._id, name: _payrollProduct.consultant.name};
 	    		}
 
