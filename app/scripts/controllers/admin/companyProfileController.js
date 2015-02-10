@@ -4,6 +4,6 @@ app.controller('companyProfileController',['$scope', '$location', 'HttpResource'
 	function($scope, $location, HttpResource, $rootScope){
     $rootScope.breadcrumbs = [{link:'/', text:'Home'},
                               {link: '/admin/home', text: 'Admin'},
-                              {link: '/admin/home/company_profile', text: 'Company Profile'}
+                              {link: '/admin/company_profile/contact', text: 'Company Profile'}
                               ];
 }]);

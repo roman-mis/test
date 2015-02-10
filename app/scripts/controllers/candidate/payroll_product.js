@@ -19,8 +19,8 @@ angular.module('origApp.controllers')
               {field: 'margin', display: 'Margin', cellTemplate: '{{getExternalScope().getConstantDescription("margins", row.margin)}}'},
               {field: 'holidayPayRule', display: 'Hol. Pay', cellTemplate: '{{getExternalScope().getConstantDescription("holidaypayrules", row.holidayPayRule)}}'},
               {field: 'derogationContract', display: 'Decoration', cellTemplate: '{{getExternalScope().getConstantDescription("derogationcontracts", row.derogationContract)}}'},
-              {field: 'action', display: '', cellTemplate: '<a href="javacript:void(0)" ng-click="getExternalScope().deleteProduct(row)"><i class="fa fa-trash-o"></i></a> ' + 
-                        '<a href="javacript:void(0)" ng-click="getExternalScope().editProduct(row)"><i class="fa fa-edit"></i></a>', textAlign: 'center'}
+              {field: 'action', display: '', cellTemplate: '<a href="javascript:void(0);" ng-click="getExternalScope().deleteProduct(row)"><i class="fa fa-trash-o"></i></a> ' +
+                        '<a href="javascript:void(0);" ng-click="getExternalScope().editProduct(row)"><i class="fa fa-edit"></i></a>', textAlign: 'center'}
             ],
             data: []
           };
@@ -104,7 +104,7 @@ angular.module('origApp.controllers')
               }
             }
           };
-          
+
           $scope.cancelEdit = function(){
             $scope.product = {};
           };

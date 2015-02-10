@@ -7,7 +7,7 @@ module.exports = function(mongoose) {
     var schema = new BaseSchema({
         agency: { type:Schema.Types.ObjectId, ref:'Agency' },
         worker: { type:Schema.Types.ObjectId, ref:'User' },
-        status: String,
+        status: String, // submitted, preValidation, validated, receipted, approved, payrolled
         weekEndingDate: Date,
         addedBy: { type:Schema.Types.ObjectId, ref:'User' },
         dateAdded: { type: Date, default:Date.now },
