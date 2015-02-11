@@ -7,7 +7,6 @@ module.exports = function(mongoose,autoIncrement) {
     var schema = new BaseSchema({
         agency: { type: Schema.Types.ObjectId, ref:'Agency' },
         user: { type: Schema.Types.ObjectId, ref:'User' },
-        createdBy : { type: Schema.Types.ObjectId, ref:'User' },
         // claimReference: String,
         startedDate: { type: Date, default: Date.now },
         submittedDate: { type: Date, default: Date.now },

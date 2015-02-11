@@ -3,7 +3,8 @@
 module.exports = function(){
   var candidateservice=require('../services/candidateservice'),
     utils=require('../utils/utils'),
-    candidatecommonservice = require('../services/candidatecommonservice');
+    candidatecommonservice = require('../services/candidatecommonservice'),
+    dataList=require('../data/data_list.json');
     var awsservice=require('../services/awsservice');
     var _=require('lodash');
     var controller={};
@@ -459,11 +460,31 @@ module.exports = function(){
       });
     };
 
+    controller.getVehicleInformation = function(req,res){
+      candidateservice.getUser(req.params.id)
+         .then(function(user){
+            if(user){
+              var vm=vehicleInformationVm(user, req.params.code);
+              res.json({result:true, object: vm});
+            }
+            else {
+               res.status(404).json({result:false, message:'Vehicle Information not found'});
+            }
+         },res.sendFailureResponse);
+    };
+
     function vehicleInformationVm(user, code){
       var vehicleInformation = {};
       _.forEach(user.worker.vehicleInformation, function(vehicle){
         if(vehicle.vehicleCode === code){
-          vehicleInformation = vehicle;
+          vehicleInformation = {
+            vehicleCode:    utils.findInArray(dataList.VehicleTypes, vehicle.vehicleCode, 'code'),
+            fuelType:       utils.findInArray(dataList.Fuels, vehicle.fuelType, 'code'),
+            engineSize:     utils.findInArray(dataList.EngineSizes, vehicle.engineSize, 'code'),
+            make:           vehicle.make,
+            registration:   vehicle.registration,
+            companyCar:     vehicle.companyCar
+          };
           return false;
         }
       });
