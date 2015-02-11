@@ -6,6 +6,7 @@ var BaseSchema=require(__dirname+'/baseschema');
 module.exports = function(mongoose) {
 
 	var schema = new BaseSchema({
+		templateTechnique: 			 {type:String},
 		templateName: 			     {type:String},
 		templateType: 			     {type:String},
 		mergeFields: 			     {type:String},

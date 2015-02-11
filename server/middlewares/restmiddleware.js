@@ -162,7 +162,7 @@ module.exports=function(db){
 				var filterName=q;
 				var operator='exact';
 				//console.log('checking '+q.toLowerCase());
-				_.forEach(['exact','iexact','contains','icontains'],function(itm){
+				_.forEach(['exact','iexact','contains','icontains', 'between'],function(itm){
 					//console.log('validating with  '+itm);
 					if(q.toLowerCase().indexOf('_'+itm)>=0){
 						//console.log('looks like valid ');

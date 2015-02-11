@@ -18,6 +18,10 @@ function BaseSchema(definition,option) {
       definition.updatedBy={type:mongoose.Schema.Types.ObjectId,ref:'User'};
       
     }
+    if(!opt.skipCreatedBy && !definition.createdBy){
+      definition.createdBy={type:mongoose.Schema.Types.ObjectId,ref:'User'};
+      
+    }
   }
 
   var schm=mongoose.Schema.apply(this,arguments);

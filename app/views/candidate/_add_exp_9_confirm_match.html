@@ -5,7 +5,7 @@
 <div class="modal-body">
   <div class="row" ng-repeat="item in confirmExpenses">
     <div class="col-xs-10">
-      <p>{{$index+1}}. {{receiptFilename}} > {{item.date | formatDate:'DD/MM/YYYY'}} - {{item.expenseType}} - &#163;{{item.value | formatNumber}}</p>
+      <p>{{$index+1}}. {{receiptUrls.join(',')}} > {{item.date | formatDate:'DD/MM/YYYY'}} - {{item.expenseType}} - &#163;{{item.value | formatNumber}}</p>
     </div>
     <div class="col-xs-2">
       <a href="javascript:void(0)" class="pull-right" ng-click="removeConfirmExpenses($index)"><i class="fa fa-times"></i></a>

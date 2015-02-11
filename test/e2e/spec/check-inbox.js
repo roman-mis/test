@@ -22,14 +22,7 @@ describe('Checking mailbox', function() {
     browser.driver.findElement(by.css('.b-mail-button__button')).click();
   });
 
-  it('mailbox should be fully loaded', function () {
-    browser.driver.wait(function () {
-      return  browser.driver.isElementPresent(by.css('.block-messages')).then(function(bool){
-          return bool;
-      });
-    },10000);
 
-  });
 
   it('should enter lite version', function () {
     browser.driver.get('https://mail.yandex.com/lite/inbox');
@@ -40,6 +33,13 @@ describe('Checking mailbox', function() {
     }, 7000);
   });
 
+  it('mailbox should be fully loaded', function () {
+    browser.driver.wait(function () {
+      return  browser.driver.isElementPresent(by.css('.b-messages')).then(function(bool){
+        return bool;
+      });
+    },10000);
+  });
 
   it('should find new email', function () {
     expect(browser.driver.isElementPresent(by.css('.b-messages .b-messages__message_unread'))).toBeTruthy();

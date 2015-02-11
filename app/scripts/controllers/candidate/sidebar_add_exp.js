@@ -1,8 +1,8 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, MsgService) {
+        .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, $stateParams, ConstantsResource, MsgService) {
 
-          $scope.mainData = {step: 1};
+          $scope.mainData = {step: 1, candidateId: $stateParams.candidateId};
 
           $scope.expenseData = {};
 
@@ -28,7 +28,7 @@ angular.module('origApp.controllers')
             if (dateVals.length === $scope.expenseData.daysInRange.length - 1) {
               return true;
             }
-            MsgService.danger('All days should be selected.');
+            MsgService.warn('All days should be selected.');
             return false;
           };
 
@@ -108,12 +108,12 @@ angular.module('origApp.controllers')
           };
           
           $scope.generateSendData = function(){
-            var data = [];
+            var data = {agency: $scope.expenseData.agency._id, days: []};
             $scope.expenseData.daysInRange.forEach(function(dateItem) {
               if (dateItem.object === 'all') {
                 return;
               }
-              var dataItem = {date: dateItem.object, agency: $scope.expenseData.agency._id, expenses: []};
+              var dataItem = {date: dateItem.object, expenses: []};
               $scope.expenseData.times.forEach(function(item) {
                 if (item.date.getTime() === dataItem.date.getTime()) {
                   dataItem.startTime = item.startTime + ':00';
@@ -160,8 +160,7 @@ angular.module('origApp.controllers')
                   });
                 }
               });
-
-              data.push(dataItem);
+              data.days.push(dataItem);
             });
             
             $scope.expenseData.sendData = data;
@@ -171,7 +170,7 @@ angular.module('origApp.controllers')
           
           $scope.getListDataFromSendData = function(sendData){
             var listData = [];
-            sendData.forEach(function(dayItem){
+            sendData.days.forEach(function(dayItem){
               dayItem.expenses.forEach(function(expenseItem){
                 var listItem = angular.copy(expenseItem);
                 listItem.date = dayItem.date;
@@ -186,7 +185,7 @@ angular.module('origApp.controllers')
               $scope.generateSendData();
             }
             var sendData = $scope.expenseData.sendData;
-            sendData.forEach(function(dataItem){
+            sendData.days.forEach(function(dataItem){
               dataItem.expenses = [];
               receiptData.forEach(function(item) {
                 if (item.date.getTime() === dataItem.date.getTime()) {

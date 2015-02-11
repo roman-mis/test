@@ -23,18 +23,12 @@ describe('Navigate to candidates url', function () {
     var initCount = items.count();
 
     var searchInput = element(by.model('filterFirstName'));
-    searchInput.sendKeys('originemtest');
+    searchInput.sendKeys(loginData.userName);
 
     expect(items.count()).toBeGreaterThan(0);
     expect(items.count()).toBeLessThan(initCount);
 
   });
-
-});
-
-
-describe('navigate to users tabs', function () {
-
 
   it('should take to tabs', function () {
     element(by.repeater('row in options.data').row(0)).element(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).click()
@@ -46,6 +40,11 @@ describe('navigate to users tabs', function () {
     }, 3000);
 
   });
+});
+
+/*
+
+describe('navigate to users tabs', function () {
 
   it('check if tabs working', function () {
 
@@ -181,7 +180,7 @@ describe('navigate to users tabs', function () {
 });
 
 
-describe('navigate to Oli\'s tabs', function () {
+describe('navigate to candidate\'s tabs', function () {
 
   var innerTabs = $$('.tabs-payroll .nav-tabs li');
   var innerLinks = $$('.tabs-payroll .nav-tabs li a');
@@ -340,3 +339,4 @@ describe('navigate to Oli\'s tabs', function () {
 
 
 
+*/

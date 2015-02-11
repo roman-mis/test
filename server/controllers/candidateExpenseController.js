@@ -4,6 +4,7 @@ var controller = {};
 module.exports = function(){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice'),
+	candidateservice=require('../services/candidateservice'),
 	Q = require('q');
 
 	function getExpenseVm(expense, reload){
@@ -21,9 +22,11 @@ module.exports = function(){
 	}
 
 	function build(expense){
+		var agency = null; if(expense.agency) {agency={_id: expense.agency._id, name: expense.agency.name};}
 		var expenseVm = {
 			_id: expense._id,
-			agency: {_id: expense.agency._id, name: expense.agency.name},
+			claimReference: expense.claimReference,
+			agency: agency,
 			user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
 			createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
 			startedDate: expense.startedDate,
@@ -53,7 +56,7 @@ module.exports = function(){
 		  		var expense = build(_expense);
 		  		expensesVms.push(expense);
 			});
-
+		  	
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
 			
@@ -62,8 +65,9 @@ module.exports = function(){
 	};
 
 	controller.postExpense=function (req, res) {	
-		var expense = req.body;
-		
+		var request = req.body;
+		var expense = request.expense;
+
 		var newExpense = {
 			agency: expense.agency,
 			user: req.params.id,
@@ -72,12 +76,22 @@ module.exports = function(){
 			submittedDate: new Date(),
 			days: expense.days
 		};
-		console.log(newExpense);
-
+		
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
-          		res.json(_expense);
+          		if(request.vehicleInformation){
+          			// Adding Vehicle Information
+          			var vehicleInformation = req.body.vehicleInformation;
+          			candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
+				        .then(function(){
+				          res.json(_expense);
+				        },function(err){console.log(err);
+				         res.sendFailureResponse(err);
+			      	});
+          		}else{
+          			res.json(_expense);
+          		}
 	        },res.sendFailureResponse);
 		},function(err){
 		 	res.sendFailureResponse(err);
