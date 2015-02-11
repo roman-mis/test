@@ -42,75 +42,46 @@ describe('Checking DPA', function() {
   });
 
   it('DPA should generate unique questions', function () {
-    var elements= element.all(by.repeater('dpa in generatedSets'));
-    var questions=[];
-    var answers=[];
-    var genBtn=[];
-    var corrBtn=[];
 
-    var ensureUnique=function(inputs){
+    var ensureUnique=function(inputPromise){
       var arr=[];
-      conso
-      for(var i=0;i<inputs.length;i++){
-        inputs[i].getAttribute('value').then(function(val){
-          console.log(val);
+      inputPromise.each(function(el){
+        el.getAttribute('value').then(function(val){
           expect(arr.indexOf(val)).toBe(-1);
           arr.push(val);
         });
-      /*  inputs[i].isDisplayed().then(function(bool){
-          console.log(bool);
-          return bool;
-        }).then(function(elem){
-          console.log(elem);
-        });*/
-      }
+      });
     };
 
-    var ensureChange=function(input,btn){
+    var ensureChange=function(input,callback){
       input.getAttribute('value').then(function(val){
+        console.log('value='+val);
+        callback();
+        expect(input.getAttribute('value')).not.toEqual(val);
+      });
+    };
+
+    var questions=element.all(by.model('dpa.question'));
+    var answers=element.all(by.model('dpa.answer'));
+
+    $('[ng-click="reGenerateAllSets()"]').click();
+    ensureUnique(questions);
+    ensureUnique(answers);
+
+    element.all(by.css('[ng-click="reGenerateSet($index)"]')).each(function(btn,i){
+      ensureChange(questions.get(i),function(){
         btn.click();
-        expect(input.getAttribute('value')).toNotEqual(val);
+        ensureUnique(questions);
+        ensureUnique(answers);
       });
-    };
+    });
 
-    var gatherElements=function(callback){
-      questions=answers=genBtn=corrBtn=[];
-      elements.then(function(rows) {
-        for (var i = 0; i < rows.length; i++) {
-        /*  rows[i].element(by.model('dpa.question')).getAttribute('value').then(function(val){
-            console.log(val);
-          });*/
-          questions.push(rows[i].element(by.model('dpa.question')));
-          answers.push(rows[i].element(by.model('dpa.answer')));
-          genBtn.push(rows[i].element(by.css('[ng-click="reGenerateSet($index)"]')));
-          corrBtn.push(rows[i].element(by.css('[ng-click="correctSet($index)"]')));
-        };
-        callback(rows);
-      });
-    };
-
-         $('[ng-click="reGenerateAllSets()"]').click();
-         gatherElements(function(){
-           ensureUnique(questions);
-        //   ensureUnique(answers);
-         });
-
-
-
-
-     /*     gatherElements(function(rows){
-            for (var i = 0; i < rows.length; i++) {
-                genBtn[i].click();
-                ensureUnique(questions);
-                ensureUnique(answers);
-                ensureChange(questions[i], genBtn[i]);
-                ensureChange(answers[i], genBtn[i]);
-                corrBtn[i].click();
-            };
-          });*/
-/*
+    element.all(by.css('[ng-click="correctSet($index)"]')).each(function(btn){
+      btn.click();
+    }).then(function(){
       $('[ng-click="save()"]').click();
-      expect($('.modal-content').isPresent()).toBeFalsy();*/
+      expect($('.modal-content').isPresent()).toBeFalsy();
+    });
 
   });
 
