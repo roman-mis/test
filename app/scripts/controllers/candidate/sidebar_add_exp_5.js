@@ -56,6 +56,7 @@ angular.module('origApp.controllers')
 
           $scope.remove = function(index) {
             $scope.expenseData.postCodes.splice(index, 1);
+            $scope.onDateChanged();
           };
 
           $scope.ok = function() {

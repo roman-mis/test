@@ -13,7 +13,7 @@ angular.module('origApp.controllers')
                     .then(function(response) {
                       $scope.isSaving = false;
                       if (!HttpResource.flushError(response)) {
-                        //console.log(response);
+                        $scope.expenseData.claimReference = response.data.object.claimReference;
                         $scope.gotoNext();
                       }
                     });

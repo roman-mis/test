@@ -35,6 +35,7 @@ angular.module('origApp.controllers')
 
           $scope.remove = function(index) {
             $scope.expenseData.times.splice(index, 1);
+            $scope.onDateChanged();
           };
 
           $scope.ok = function() {
