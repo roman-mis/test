@@ -1,8 +1,8 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, MsgService) {
+        .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, $stateParams, ConstantsResource, MsgService) {
 
-          $scope.mainData = {step: 1};
+          $scope.mainData = {step: 9, candidateId: $stateParams.candidateId};
 
           $scope.expenseData = {};
 
@@ -28,7 +28,7 @@ angular.module('origApp.controllers')
             if (dateVals.length === $scope.expenseData.daysInRange.length - 1) {
               return true;
             }
-            MsgService.danger('All days should be selected.');
+            MsgService.warn('All days should be selected.');
             return false;
           };
 
