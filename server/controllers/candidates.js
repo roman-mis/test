@@ -460,6 +460,19 @@ module.exports = function(){
       });
     };
 
+    controller.getVehicleInformation = function(req,res){
+      candidateservice.getUser(req.params.id)
+         .then(function(user){
+            if(user){
+              var vm=vehicleInformationVm(user, req.params.code);
+              res.json({result:true, object: vm});
+            }
+            else {
+               res.status(404).json({result:false, message:'Vehicle Information not found'});
+            }
+         },res.sendFailureResponse);
+    };
+
     function vehicleInformationVm(user, code){
       var vehicleInformation = {};
       _.forEach(user.worker.vehicleInformation, function(vehicle){
