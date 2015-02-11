@@ -3,7 +3,8 @@
 module.exports = function(){
   var candidateservice=require('../services/candidateservice'),
     utils=require('../utils/utils'),
-    candidatecommonservice = require('../services/candidatecommonservice');
+    candidatecommonservice = require('../services/candidatecommonservice'),
+    dataList=require('../data/data_list.json');
     var awsservice=require('../services/awsservice');
     var _=require('lodash');
     var controller={};
@@ -463,7 +464,14 @@ module.exports = function(){
       var vehicleInformation = {};
       _.forEach(user.worker.vehicleInformation, function(vehicle){
         if(vehicle.vehicleCode === code){
-          vehicleInformation = vehicle;
+          vehicleInformation = {
+            vehicleCode:    utils.findInArray(dataList.VehicleTypes, vehicle.vehicleCode, 'code'),
+            fuelType:       utils.findInArray(dataList.Fuels, vehicle.fuelType, 'code'),
+            engineSize:     utils.findInArray(dataList.EngineSizes, vehicle.engineSize, 'code'),
+            make:           vehicle.make,
+            registration:   vehicle.registration,
+            companyCar:     vehicle.companyCar
+          };
           return false;
         }
       });
