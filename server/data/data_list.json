@@ -376,5 +376,27 @@
 		},{
 			"code":"3",
 			"description":"Other"
+		}],
+	"Fuels":[{
+			"code":"1",
+			"description":"Petrol",
+			"engineSizes":[{
+				"code": "1",
+				"description":"Upto 1000 cc"
+			}]
+		},{
+			"code":"2",
+			"description":"Diesel",
+			"engineSizes":[{
+				"code": "1",
+				"description":"Upto 1200 cc"
+			}]
+		},{
+			"code":"3",
+			"description":"LPG",
+			"engineSizes":[{
+				"code": "1",
+				"description":"Upto 1400 cc"
+			}]
 		}]
 }

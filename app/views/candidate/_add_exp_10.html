@@ -26,10 +26,10 @@
           <tbody>
             <tr ng-repeat="item in summaries| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
               <td>{{item.date| formatDate:'ddd DD/MM/YYYY'}}</td>
-              <td>&#163;{{item.travel| formatNumber}}</td>
-              <td>&#163;{{item.subsistence| formatNumber}}</td>
-              <td>&#163;{{item.other| formatNumber}}</td>
-              <td>&#163;{{item.total| formatNumber}}</td>
+              <td>&#163;{{item.transport | formatNumber}}</td>
+              <td>&#163;{{item.subsistence | formatNumber}}</td>
+              <td>&#163;{{item.other | formatNumber}}</td>
+              <td>&#163;{{item.total | formatNumber}}</td>
             </tr>
           </tbody>
         </table>

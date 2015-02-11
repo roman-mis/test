@@ -75,6 +75,9 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 // router.get('/:id/document/signgeturl',candidatecontroller.getDownloadDocumentSignedUrl);
 // router.get('/:id/document/:generatedName',candidatecontroller.getDocument);
 
-
-router.post('/:id/expenses', expensecontroller.postExpenses);
+router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
+router.post('/:id/expenses', expensecontroller.postExpense);
 router.get('/expenses/:id', expensecontroller.getExpense);
+
+router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);
+router.get('/:id/vehicleinformation/:code', candidatecontroller.getVehicleInformation);

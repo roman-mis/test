@@ -4,7 +4,7 @@ var Q=require('q'),
 _=require('lodash');
 
 module.exports = function(){
-  var candidatepayrollservice=require('../services/payrollservice'),
+  var candidatepayrollservice=require('../services/payrollproductservice'),
     candidateservice=require('../services/candidateservice');
     var controller={};
 
@@ -72,11 +72,10 @@ module.exports = function(){
     function getPayrollProduct(candidateId, productId){
       var deff=Q.defer();
       candidatepayrollservice.getPayrollProductDetails(candidateId)
-        .then(function(payrollProducts){
+        .then(function(payrollProducts){console.log(payrollProducts);console.log(productId);
           if(payrollProducts){
             _.forEach(payrollProducts, function(payrollProduct){
-              // console.log(payrollProduct);
-              if(payrollProduct._id === productId){
+              if(payrollProduct._id.toString() === productId){
                 deff.resolve({result:true, object: payrollProduct});
                 return false;
               }
@@ -125,8 +124,7 @@ module.exports = function(){
         paymentMethod: req.body.paymentMethod,
         jobDescription: req.body.jobDescription
       };
-      console.log(payrollProduct);
-
+      
       if(type==='patch' && (req.params.productId === undefined || req.params.productId === '')){
         res.json({result:false, message:'Product Id not found'});
       }else{
@@ -134,19 +132,12 @@ module.exports = function(){
       }
 
       candidatepayrollservice.updatePayrollProductDetails(req.params.candidateId, payrollProduct).then(function(response){
-        // REVIEW: using new response and proper viewmodel
-        // res.json({result:true,object:getPayrollProductViewModel(response.user,response.product)});
-        // var vm=getPayrollProductViewModel(response.user,response.product);
-        // res.json({result:true,object:vm});
-
-        getPayrollProduct(response.user.id, response.product.id)
-        .then(function(payrollProduct){
-          res.json(payrollProduct);
-        });
-
-        
+          getPayrollProduct(response.user.id, response.product.id)
+          .then(function(payrollProduct){
+            res.json(payrollProduct);
+          });
         },function(err){
-         res.sendFailureResponse(err);
+          res.sendFailureResponse(err);
       });
     }
 

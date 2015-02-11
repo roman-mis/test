@@ -3,7 +3,8 @@
 module.exports = function(){
   var candidateservice=require('../services/candidateservice'),
     utils=require('../utils/utils'),
-    candidatecommonservice = require('../services/candidatecommonservice');
+    candidatecommonservice = require('../services/candidatecommonservice'),
+    dataList=require('../data/data_list.json');
     var awsservice=require('../services/awsservice');
     var _=require('lodash');
     var controller={};
@@ -441,6 +442,57 @@ module.exports = function(){
         };
     }
 
+    controller.patchVehicleInformation = function(req,res){
+      var vehicleInfo = {
+        vehicleCode:    req.params.code,
+        fuelType:       req.body.fuelType,
+        engineSize:     req.body.engineSize,
+        make:           req.body.make,
+        registration:   req.body.registration,
+        companyCar:     req.body.companyCar
+      };
+
+      candidateservice.updateVehicleInformation(req.params.id, vehicleInfo)
+        .then(function(user){
+          res.json({result:true,object:vehicleInformationVm(user, req.params.code)});
+        },function(err){console.log(err);
+         res.sendFailureResponse(err);
+      });
+    };
+
+    controller.getVehicleInformation = function(req,res){
+      candidateservice.getUser(req.params.id)
+         .then(function(user){
+            if(user){
+              var vm=vehicleInformationVm(user, req.params.code);
+              res.json({result:true, object: vm});
+            }
+            else {
+               res.status(404).json({result:false, message:'Vehicle Information not found'});
+            }
+         },res.sendFailureResponse);
+    };
+
+    function vehicleInformationVm(user, code){
+      var vehicleInformation = {};
+      _.forEach(user.worker.vehicleInformation, function(vehicle){
+        if(vehicle.vehicleCode === code){
+          vehicleInformation = {
+            vehicleCode:    utils.findInArray(dataList.VehicleTypes, vehicle.vehicleCode, 'code'),
+            fuelType:       utils.findInArray(dataList.Fuels, vehicle.fuelType, 'code'),
+            engineSize:     utils.findInArray(dataList.EngineSizes, vehicle.engineSize, 'code'),
+            make:           vehicle.make,
+            registration:   vehicle.registration,
+            companyCar:     vehicle.companyCar
+          };
+          return false;
+        }
+      });
+      return {
+        _id: user._id,
+        vehicleInformaiton: vehicleInformation
+      };
+    }
 
   return controller;
 };

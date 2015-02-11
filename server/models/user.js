@@ -44,6 +44,14 @@ module.exports = function(mongoose,autoIncrement) {
         sector:             {type:String},
         jobTitle:           {type:String,required:false,trim:true},
         startDate:          {type:Date,required:false},
+        vehicleInformation: [{
+            vehicleCode:    {type:String,required:false,trim:true},
+            fuelType:       {type:String,required:false,trim:true},
+            engineSize:     {type:String,required:false,trim:true},
+            make:           {type:String,required:false,trim:true},
+            registration:   {type:String,required:false,trim:true},
+            companyCar:     {type:Boolean,required:false}
+        }],
         bankDetail:{
             bankName:           {type:String,required:false,trim:true},
             accountName:        {type:String,required:false,trim:true},

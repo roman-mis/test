@@ -1,7 +1,7 @@
 var helper = require('./ui-helper.js');
 
-loginData.userName='originemtest+t'+new Date().getTime().toString().substr(-9,6);
-loginData.userEmail=loginData.userName+'@yandex.com';
+loginData.userName='originemtest_t'+new Date().getTime().toString().substr(-9,6);
+loginData.userEmail=loginData.userName.replace('_','+')+'@yandex.com';
 loginData.userPassword='andyboss';
 
 

@@ -1,0 +1,21 @@
+<div class="modal-header modal-headerExpenses">
+  <h4 class="modal-title" id="myModalLabel">Please confirm match for the following:</h4>
+</div><!-- /modal-header -->
+
+<div class="modal-body">
+  <div class="row" ng-repeat="item in confirmExpenses">
+    <div class="col-xs-10">
+      <p>{{$index+1}}. {{receiptUrls.join(',')}} > {{item.date | formatDate:'DD/MM/YYYY'}} - {{item.expenseType}} - &#163;{{item.value | formatNumber}}</p>
+    </div>
+    <div class="col-xs-2">
+      <a href="javascript:void(0)" class="pull-right" ng-click="removeConfirmExpenses($index)"><i class="fa fa-times"></i></a>
+    </div>
+  </div>
+</div><!-- /modal-body -->
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default pull-left" ng-click="cancelConfirmMatch()">Cancel &#38; Go Back</button>
+  <button type="button" class="btn btn-primary" 
+          ng-disabled="confirmExpenses.length==0" 
+          ng-click="matchEntries()">Confirm Match</button>
+</div><!-- /modal footer -->

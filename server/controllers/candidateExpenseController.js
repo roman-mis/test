@@ -4,32 +4,36 @@ var controller = {};
 module.exports = function(){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice'),
+	candidateservice=require('../services/candidateservice'),
 	Q = require('q');
 
 	function getExpenseVm(expense, reload){
 		return Q.Promise(function(resolve, reject){
-			function build(expense){
-				var expenseVm = {
-					_id: expense._id,
-					agency: {_id: expense.agency._id, name: expense.agency.name},
-					user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
-					createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
-					startedDate: expense.startedDate,
-		        	submittedDate: expense.submittedDate,
-		        	days: expense.days
-				};
-				resolve({result:true, object: expenseVm});
-			}
-
 			if(reload){
 				return expenseservice.getExpense(expense._id, true)
 	      		.then(function(expense){
-	      			build(expense);
+	      			var expenseVm = build(expense);
+	      			resolve({result:true, object: expenseVm});
 	      		},reject);
 			}else{
 				build(expense);
 			}
 		});
+	}
+
+	function build(expense){
+		var agency = null; if(expense.agency) {agency={_id: expense.agency._id, name: expense.agency.name};}
+		var expenseVm = {
+			_id: expense._id,
+			claimReference: expense.claimReference,
+			agency: agency,
+			user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
+			createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
+			startedDate: expense.startedDate,
+	    	submittedDate: expense.submittedDate,
+	    	days: expense.days
+		};
+		return expenseVm;
 	}
 
 	controller.getExpense = function(req, res){
@@ -44,18 +48,25 @@ module.exports = function(){
 		}, res.sendFailureResponse);
 	};
 
-	controller.postExpenses=function (req, res) {	
-		var expense = req.body;		
-		var days = [];
-		// _.forEach(expense.days, function(day){
-		// 	var _day = {
-		// 		date: day.date,
-		// 		startTime: day.startTime,
-		// 		endTime: day.endTime,
-		// 		expenses: day.expenses,
-		// 	};
-		// 	days.push(_day);
-		// });
+	controller.getExpenses = function(req, res){
+		return expenseservice.getExpenses(req._restOptions)
+		.then(function(expenses){
+			var expensesVms = [];
+		  	_.forEach(expenses.rows, function(_expense){
+		  		var expense = build(_expense);
+		  		expensesVms.push(expense);
+			});
+		  	
+			var pagination=req._restOptions.pagination||{};
+	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
+			
+			res.json(resp);
+		}, res.sendFailureResponse);
+	};
+
+	controller.postExpense=function (req, res) {	
+		var request = req.body;
+		var expense = request.expense;
 
 		var newExpense = {
 			agency: expense.agency,
@@ -65,11 +76,22 @@ module.exports = function(){
 			submittedDate: new Date(),
 			days: expense.days
 		};
-
+		
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
-          		res.json(_expense);
+          		if(request.vehicleInformation){
+          			// Adding Vehicle Information
+          			var vehicleInformation = req.body.vehicleInformation;
+          			candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
+				        .then(function(){
+				          res.json(_expense);
+				        },function(err){console.log(err);
+				         res.sendFailureResponse(err);
+			      	});
+          		}else{
+          			res.json(_expense);
+          		}
 	        },res.sendFailureResponse);
 		},function(err){
 		 	res.sendFailureResponse(err);

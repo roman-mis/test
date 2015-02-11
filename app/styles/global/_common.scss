@@ -19,10 +19,13 @@ body{
   background-color: $gray-lightest;
   font-size: 16px;
   font-family: $main-font;
-      
+
   @media(max-width: $screen-sm-max){
     font-size: 14px;
   }
+}
+table{
+  display: -moz-deck;
 }
 
 .modal-open {
@@ -42,7 +45,7 @@ body{
         top: -285px !important;
     }
 }
-    
+
 .btn{
   &:hover{
     @include box-shadow-hover();
@@ -134,7 +137,7 @@ header{
     @media(max-width: $screen-md-max){
       margin-top: 6px;
     }
-    *{ 
+    *{
       display: block;
       float: left;
       color: $gray;
@@ -301,7 +304,7 @@ header{
           padding-top: 29px;
           @media(max-width: $screen-sm-max){
             padding-top: 0px;
-          } 
+          }
           p{
             margin: 0px;
             padding: 0px;
@@ -319,11 +322,11 @@ header{
         .user-photo-wrapper{
           text-align: center;
           margin-top: 30px;
-          margin-bottom: 54px;    
+          margin-bottom: 54px;
           .user-photo{
             @media(max-width: $screen-md-max){
               display: none;
-            }          
+            }
           }
         }
       }
@@ -339,7 +342,7 @@ header{
           }
           @media(max-width: $screen-md-max){
             display: none;
-          }    
+          }
         }
       }
       .tooltip{
@@ -382,7 +385,7 @@ header{
     }
     .sidebar-menu-inner{
       padding-right: 0px;
-      margin-top: -82px;    
+      margin-top: -82px;
       padding: 15px 10px 15px 15px;
       ul#left-menu {
         @media(min-width:  $screen-lg) {
@@ -416,7 +419,7 @@ header{
       .menu-wrapper{
          @media(max-width:  $screen-md-max){
            display: none;
-         } 
+         }
         .entry-title{
           color: $gray;
           border-bottom: 1px solid $gray;
@@ -468,7 +471,7 @@ header{
       margin-top: 16px;
       @media(max-width: $screen-sm-max){
          display: none;
-       }           
+       }
       *{
         background: #fff!important;
         color: $gray;
@@ -481,7 +484,7 @@ header{
       padding: $grid-gutter-width 0px;
       @media(max-width: $screen-sm-max){
          display: none;
-       }        
+       }
       img{
         max-width: 100%;
       }
@@ -540,13 +543,13 @@ header{
 
     .meta-box{
       position: relative;
-      margin-bottom: 17px;    
+      margin-bottom: 17px;
       color: $gray;
       background-color: #fff;
 
       .meta-box-inner{
         padding: $grid-gutter-width $grid-gutter-width / 2;
-        border: 2px solid $gray-lighter;  
+        border: 2px solid $gray-lighter;
         @media(max-width: $screen-md-max){
           padding: $grid-gutter-width-md $grid-gutter-width-md / 2;
         }
@@ -606,7 +609,7 @@ header{
         top: $grid-gutter-width / 2;
         right: $grid-gutter-width;
         a{
-          color: $gray-light;  
+          color: $gray-light;
         }
       }
       &:hover .edit-panel{
@@ -652,7 +655,7 @@ header{
               color: $green!important;
               border:none!important;
             }
-          }    
+          }
         }
 
       }
@@ -666,7 +669,7 @@ header{
         cursor: pointer;
         border-bottom: 2px solid $green;
         padding-left: 0px;
-        padding-right: 0px;  
+        padding-right: 0px;
         > li{
           background: $green-light;
           margin-bottom: -2px;
@@ -675,10 +678,10 @@ header{
           border-left: 1px solid $gray;
           border-right: 1px solid $gray;
           &:last-child{
-            border-right: 2px solid $gray;    
+            border-right: 2px solid $gray;
           }
           &:first-child{
-            border-left: 2px solid $gray;    
+            border-left: 2px solid $gray;
           }
           &:hover{
             background: $green;
@@ -692,10 +695,10 @@ header{
             margin: 0px;
             &:hover{
               background-color: transparent;
-              color: $gray-lightest;    
+              color: $gray-lightest;
             }
-            &:focus{   
-              color: $gray-lightest;        
+            &:focus{
+              color: $gray-lightest;
             }
           }
           > a{
@@ -703,14 +706,14 @@ header{
           }
           &.active{
             border-color: $green;
-            border-bottom: 2px solid #fff;  
+            border-bottom: 2px solid #fff;
             &:hover{
               border-bottom: 2px solid #fff;
-              background-color: #fff;        
+              background-color: #fff;
             }
             a{
               color: $green;
-              outline:none;        
+              outline:none;
               &:hover{
                 color: $green;
                 outline:none;
@@ -718,7 +721,7 @@ header{
             }
           }
         }
-      }            
+      }
       .tab-content{
         border-right: 2px solid $green;
         border-left: 2px solid $green;
@@ -732,7 +735,7 @@ header{
           padding: $grid-gutter-width;
           border-bottom: 2px solid $green;
           margin-right: -13px;
-          margin-left: -13px;      
+          margin-left: -13px;
           li{
             width: 150px;
             height: 25px;
@@ -838,8 +841,8 @@ header{
       .table > tbody > tr > td,
       .table > tfoot > tr > th,
       .table > tfoot > tr > td{
-        padding: 5px; 
-        font-size: 14px;  
+        padding: 5px;
+        font-size: 14px;
       }
       .table > thead > tr > th,
       .table > thead > tr > td{
@@ -862,7 +865,7 @@ header{
             border-bottom: 2px solid $gray-lighter;
           }
           .panel-heading{
-            background: none;    
+            background: none;
             color: $gray-lightest;
           }
           .panel-title{

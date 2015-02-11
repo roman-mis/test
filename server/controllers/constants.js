@@ -149,9 +149,19 @@ module.exports = function(){
       res.json(dataList.OtherExpenseTypes);
     };
 
+<<<<<<< HEAD
     controller.getAdminTemplatesData=function (req,res){
       res.json(adminTemplatesData[req.params.type]);
   };
+=======
+    controller.fuels=function(req,res){
+      res.json(dataList.Fuels);
+    };
+
+    controller.enginesizes=function(req,res){
+      res.json(dataList.EngineSizes);
+    };
+>>>>>>> 0e69e2b7b76484a127762d4250abbf919f5daa91
     
   return controller;
 };
