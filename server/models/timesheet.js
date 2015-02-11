@@ -9,10 +9,6 @@ module.exports = function(mongoose) {
         worker: { type:Schema.Types.ObjectId, ref:'User' },
         status: String, // submitted, preValidation, validated, receipted, approved, payrolled
         weekEndingDate: Date,
-        addedBy: { type:Schema.Types.ObjectId, ref:'User' },
-        dateAdded: { type: Date, default:Date.now },
-        lastEditedBy: { type:Schema.Types.ObjectId, ref:'User' },
-        dateEdited: { type: Date, default:Date.now },
         elements: [
             {
                 elementType: String,
