@@ -3,7 +3,7 @@
 var db = require('../models');
 var Q=require('q');
 // var Promise=require('promise');
-// var _=require('lodash');
+var _=require('lodash');
 // var Sequelize=require('sequelize');
 var mailer=require('../mailing/mailer');
 var uuid = require('node-uuid');
@@ -290,6 +290,36 @@ service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress
 		},reject);
 	});
 
+};
+
+service.updateVehicleInformation=function(userId, vehicleInformation){
+	return Q.Promise(function(resolve,reject){
+		service.getUser(userId)
+		   .then(function(user){
+		   		if(user){
+	   				var change = false;
+	   				if(user.worker.vehicleInformation.length > 0){
+	   					_.forEach(user.worker.vehicleInformation, function(_vehicle){
+	   						if(vehicleInformation.vehicleCode === _vehicle.vehicleCode){
+	   							utils.updateModel(_vehicle, vehicleInformation);
+	   							change = true;
+	   							return false;
+		   					}
+		   				});
+	   				}
+
+					if(!change){
+						user.worker.vehicleInformation.push(vehicleInformation);
+					}
+					return Q.nfcall(user.save.bind(user))
+						.then(function(){
+							resolve(user);
+						},reject);
+		   		} else {
+		   			reject({name:'NotFound',message:'No User found'});
+		   		}
+		},reject);
+	});
 };
 
 service.authenticateUser=function(emailAddress,password){
