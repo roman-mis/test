@@ -4,6 +4,7 @@ var controller = {};
 module.exports = function(){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice'),
+	candidateservice=require('../services/candidateservice'),
 	Q = require('q');
 
 	function getExpenseVm(expense, reload){
@@ -64,8 +65,9 @@ module.exports = function(){
 	};
 
 	controller.postExpense=function (req, res) {	
-		var expense = req.body;
-		
+		var request = req.body;
+		var expense = request.expense;
+
 		var newExpense = {
 			agency: expense.agency,
 			user: req.params.id,
@@ -74,12 +76,22 @@ module.exports = function(){
 			submittedDate: new Date(),
 			days: expense.days
 		};
-		console.log(newExpense);
-
+		
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
-          		res.json(_expense);
+          		if(request.vehicleInformation){
+          			// Adding Vehicle Information
+          			var vehicleInformation = req.body.vehicleInformation;
+          			candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
+				        .then(function(){
+				          res.json(_expense);
+				        },function(err){console.log(err);
+				         res.sendFailureResponse(err);
+			      	});
+          		}else{
+          			res.json(_expense);
+          		}
 	        },res.sendFailureResponse);
 		},function(err){
 		 	res.sendFailureResponse(err);
