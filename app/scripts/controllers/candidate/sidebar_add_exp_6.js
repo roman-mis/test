@@ -3,9 +3,13 @@ angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp6Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
           $scope.expenseData.transports = $scope.expenseData.transports || [];
           $scope.transportTypes = ConstantsResource.get('transportationmeans');
+          $scope.fuelTypes = ConstantsResource.get('fuels');
+          $scope.engineSizes = ConstantsResource.get('enginesizes');
 
+          $scope.vehicle = $scope.expenseData.vehicleInfo || {};
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
+          $scope.whichShow = 'main';
 
           $scope.getCost = function(type, mileage) {
             var cost = type.default_ppm * mileage;
@@ -23,8 +27,8 @@ angular.module('origApp.controllers')
             }
             return (type.default_ppm || 'N/A').toLowerCase() !== 'n/a';
           };
-          
-          function addItem(data){
+
+          function addItem(data) {
             $scope.expenseData.transports.push({
               date: data.date,
               type: data.type,
@@ -34,9 +38,9 @@ angular.module('origApp.controllers')
           }
 
           $scope.add = function() {
-            if($scope.addData.date==='all'){
+            if ($scope.addData.date === 'all') {
               $scope.addAllDatesData($scope.addData, addItem);
-            }else{
+            } else {
               addItem($scope.addData);
             }
           };
@@ -46,17 +50,58 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            if($scope.isAllDatesEntered($scope.expenseData.transports)){
-              $scope.gotoNext();
+            if ($scope.isAllDatesEntered($scope.expenseData.transports)) {
+              var carvanItems = $scope.expenseData.transports.filter(function(item) {
+                return item.type.code === '1';
+              });
+              if (carvanItems.length === 0) {
+                $scope.gotoNext();
+              }else{
+                //check if ever created expenses
+                $scope.isVehicleChecking = true;
+                var expenses = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses').query({}, function() {
+                  $scope.isVehicleChecking = false;
+                  //if(expenses.length === 0){
+                  $scope.showVehicleForm();
+                  //}else{
+                  //$scope.gotoNext();
+                  //}
+                });
+              }
             }
           };
-          
-          $scope.$watch('expenseData.transports.length', function(){
-            setTimeout(function(){
+
+
+          $scope.showVehicleForm = function() {
+            $scope.whichShow = 'vehicle';
+          };
+
+          $scope.saveVehicleForm = function() {
+            $scope.expenseData.vehicleInfo = angular.copy($scope.vehicle);
+            $scope.gotoNext();
+            /*$scope.isVehicleSaving = true;
+             HttpResource.model('candidates/' + $scope.mainData.candidateId)
+             .create($scope.vehicle)
+             .patch('vehicleinformation')
+             .then(function(response) {
+             $scope.isVehicleSaving = false;
+             if (!HttpResource.flushError(response)) {
+             $scope.gotoNext();
+             }
+             });*/
+          };
+
+          $scope.cancelVehicleForm = function() {
+            $scope.vehicle = $scope.expenseData.vehicleInfo || {};
+            $scope.whichShow = 'main';
+          };
+
+          $scope.$watch('expenseData.transports.length', function() {
+            setTimeout(function() {
               $scope.normalizeTables();
             });
           });
-          
+
 
         });
 
