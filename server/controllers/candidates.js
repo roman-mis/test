@@ -441,6 +441,30 @@ module.exports = function(){
         };
     }
 
+    controller.patchVehicleInformation = function(req,res){
+      var vehicleInfo = {
+        vehicleCode:    req.body.vehicleCode,
+        fuelType:       req.body.fuelType,
+        engineSize:     req.body.engineSize,
+        make:           req.body.make,
+        registration:   req.body.registration,
+        companyCar:     req.body.companyCar
+      };
+
+      candidateservice.updateVehicleInformation(req.params.id, vehicleInfo)
+        .then(function(user){
+          res.json({result:true,objects:vehicleInformationVm(user)});
+        },function(err){console.log(err);
+         res.sendFailureResponse(err);
+      });
+    };
+
+    function vehicleInformationVm(user){
+      return {
+        _id: user._id,
+        vehicleInformaiton: user.worker.vehicleInformation
+      };
+    }
 
   return controller;
 };

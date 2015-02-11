@@ -78,3 +78,5 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
 router.post('/:id/expenses', expensecontroller.postExpense);
 router.get('/expenses/:id', expensecontroller.getExpense);
+
+router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);
