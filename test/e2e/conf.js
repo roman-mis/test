@@ -17,7 +17,7 @@ exports.config = {
     sidebar: ['./spec/login.js','./spec/sidebar.js'],
     test: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
     //test: [/*'./spec/reg.js',*/'./spec/check-inbox.js'/*,'./spec/activate.js','./spec/login.js'*/],
-    dummy: ['./spec/login.js','./spec/sidebar.js']
+    dummy: ['./spec/login.js','./spec/candidates.js','./spec/sidebar.js']
   },
 
   onPrepare: function () {

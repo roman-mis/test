@@ -30,12 +30,6 @@ describe('Navigate to candidates url', function () {
 
   });
 
-});
-
-
-describe('navigate to users tabs', function () {
-
-
   it('should take to tabs', function () {
     element(by.repeater('row in options.data').row(0)).element(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).click()
 
@@ -46,6 +40,11 @@ describe('navigate to users tabs', function () {
     }, 3000);
 
   });
+});
+
+/*
+
+describe('navigate to users tabs', function () {
 
   it('check if tabs working', function () {
 
@@ -340,3 +339,4 @@ describe('navigate to candidate\'s tabs', function () {
 
 
 
+*/
