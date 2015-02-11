@@ -147,6 +147,14 @@ module.exports = function(){
     controller.otherexpensetypes=function(req,res){
       res.json(dataList.OtherExpenseTypes);
     };
+
+    controller.fuels=function(req,res){
+      res.json(dataList.Fuels);
+    };
+
+    controller.enginesizes=function(req,res){
+      res.json(dataList.EngineSizes);
+    };
     
   return controller;
 };

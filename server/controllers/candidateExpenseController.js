@@ -21,9 +21,11 @@ module.exports = function(){
 	}
 
 	function build(expense){
+		var agency = null; if(expense.agency) {agency={_id: expense.agency._id, name: expense.agency.name};}
 		var expenseVm = {
 			_id: expense._id,
-			agency: {_id: expense.agency._id, name: expense.agency.name},
+			claimReference: expense.claimReference,
+			agency: agency,
 			user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
 			createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
 			startedDate: expense.startedDate,
@@ -53,7 +55,7 @@ module.exports = function(){
 		  		var expense = build(_expense);
 		  		expensesVms.push(expense);
 			});
-
+		  	
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
 			

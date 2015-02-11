@@ -67,3 +67,7 @@ router.get('/mealslist',controller.mealslist);
 router.get('/transportationmeans',controller.transportationmeans);
 
 router.get('/otherexpensetypes',controller.otherexpensetypes);
+
+router.get('/fuels',controller.fuels);
+
+router.get('/enginesizes',controller.enginesizes);
