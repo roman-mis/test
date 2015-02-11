@@ -6,7 +6,6 @@ angular.module('origApp.controllers')
 
           $scope.ok = function() {
             $scope.isSaving = true;
-            console.log($scope.sendData);
             HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses')
                     .create($scope.sendData)
                     .post()
