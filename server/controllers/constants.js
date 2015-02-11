@@ -4,6 +4,7 @@ module.exports = function(){
   
     var dataList=require('../data/data_list.json');
     var countries=require('../data/countries.json');
+    var adminTemplatesData=require('../data/admin_templates_data.json');
 
     var controller={};
 
@@ -147,6 +148,10 @@ module.exports = function(){
     controller.otherexpensetypes=function(req,res){
       res.json(dataList.OtherExpenseTypes);
     };
+
+    controller.getAdminTemplatesData=function (req,res){
+      res.json(adminTemplatesData[req.params.type]);
+  };
     
   return controller;
 };

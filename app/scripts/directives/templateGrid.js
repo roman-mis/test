@@ -14,6 +14,7 @@ angular.module('origApp.directives')
                 maxVisiblePages: 5
               };
               console.log($scope.options);
+              console.log($scope.options.getImage("task"));
               $scope.img = $scope.options.columns.splice(0,1)[0];
 
               for(var k in defaultOptions){
