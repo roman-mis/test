@@ -1,38 +1,42 @@
 <table>
 	<tr>
 		<td> Company name &nbsp;</td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.companyName"/> </td>
 	</tr>
 	<tr>
 		<td> Address 1 </td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.address1"/> </td>
 	</tr>
 	<tr>
 		<td> Address 2 </td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.address2"/> </td>
 	</tr>
 	<tr>
 		<td> Town </td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.town"/> </td>
 	</tr>
 	<tr>
 		<td> Country </td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.country"/> </td>
 	</tr>
 	<tr>
 		<td> Post Code </td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.postCode"/> </td>
 	</tr>
 	<tr>
 		<td> Tel </td>
-		<td> <input type="number" /> </td>
+		<td> <input type="number" ng-model="contact.tel"/> </td>
 	</tr>
 	<tr>
 		<td> Fax </td>
-		<td> <input type="number" /> </td>
+		<td> <input type="number" ng-model="contact.fax"/> </td>
 	</tr>
 	<tr>
 		<td> Email </td>
-		<td> <input type="text" /> </td>
+		<td> <input type="text" ng-model="contact.email"/> </td>
 	</tr>
 </table>
+
+<br />
+
+<button class="btn btn-success" ng-click="save()"> Save </button>
