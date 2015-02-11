@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp9Controller', function($scope, HttpResource, ConstantsResource, MsgService, $http) {
 
-          $scope.expenseData.claimDate = new Date("2015-02-06T08:45:07.378Z");
+          /*$scope.expenseData.claimDate = new Date("2015-02-06T08:45:07.378Z");
           $scope.expenseData.agency = {"_config": {"url": "/api/agencies/", "cache": false}, "_resolved": true, "_id": "54c8b81a24b51bd816adcd7d", "name": "ok", "postCode": "qwe"};
           $scope.expenseData.claimDateRange = [new Date("2015-02-05T16:00:00.000Z"), new Date("2015-02-07T16:00:00.000Z")];
           $scope.expenseData.daysInRange = [
@@ -39,7 +39,7 @@ angular.module('origApp.controllers')
             {"date": new Date("2015-02-06T16:00:00.000Z"), "type": {"code": "2", "description": "Training"}, "cost": "1", "$$hashKey": "07R"},
             {"date": new Date("2015-02-07T16:00:00.000Z"), "type": {"code": "2", "description": "Training"}, "cost": "1", "$$hashKey": "07S"},
             {"date": new Date("2015-02-07T16:00:00.000Z"), "type": {"code": "1", "description": "Stationary"}, "cost": "100", "$$hashKey": "07W"}
-          ];
+          ];*/
 
 
           $scope.searchType = '';
