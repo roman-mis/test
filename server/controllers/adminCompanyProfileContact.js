@@ -1,0 +1,58 @@
+'use strict';
+var controller={};
+module.exports = function(){
+	var adminTemplatesService=require('../services/adminCompanyProfileContactservice');
+
+	controller.saveTemplate = function(req,res){
+		
+		var templateContent = {
+			templateName: 	req.body.templateName,
+			templateType: 	req.body.templateType,
+			mergeFields: 	req.body.mergeFields,
+			templatTitle: 	req.body.templatTitle,
+			body: 			req.body.body
+		}
+		adminTemplatesService.saveTemplate(templateContent).then(
+			function(result){
+				console.log('done!')
+				res.json({result:true, object:"vm"});
+			},
+			function(err){
+				console.log(err + 'err')
+				res.sendFailureResponse;
+			})
+	}
+
+	controller.getAlladminTemplates=function (req,res){
+		adminTemplatesService.getAllAdminTemplates(req._restOptions)
+	  	.then(function(result){
+		    
+		    var pagination=req._restOptions.pagination||{};
+		    var resp={result:true,objects:result.rows, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
+	    	console.log(resp);
+		    res.json(resp);
+	  	},function(){
+	  		res.sendFailureResponse;
+	  	});
+	};
+
+
+	controller.getAdminTemplate = function(req,res){
+		console.log(req.params.id)
+		adminTemplatesService.getAdminTemplate(req.params.id)
+		.then(function(adminTemplate){
+			if(adminTemplate){
+				console.log(adminTemplate)
+				res.json({result:true, object: adminTemplate});
+			}else{
+				res.json({result:false, object: null});
+			}
+		},res.sendFailureResponse);
+	};
+
+	controller.getAllAdminCompanyProfileContact = function(req,res){
+		res.json('ahmed hashem');
+	};
+
+	return controller;
+}
