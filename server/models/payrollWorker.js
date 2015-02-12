@@ -9,8 +9,8 @@ module.exports = function(mongoose) {
         payroll: { type: Schema.Types.ObjectId, ref:'Payroll' },
         nmw: Number,
         hoursWorked: Number,
-        totalPayForNmw: Number,
         marginTotal: Number,
+        taxCode: String,
         holidayPay: {
             forNmw: Number,
             taken: Number,
@@ -46,7 +46,20 @@ module.exports = function(mongoose) {
             smp: Number,
             spp: Number
         },
-        netPay: Number        
+        netPay: Number,
+        salary: {
+            totalForNmw: Number,
+            commissions: Number,
+            payBetweenAssignments: Number
+        },
+        rti: {
+            taxablePay: Number,
+            paymentsNonTaxable: Number,
+            totalDeductions: Number,
+            netPay: Number,
+            niCategory: String,
+            
+        }
     });
     
     return mongoose.model('PayrollWorker',schema);

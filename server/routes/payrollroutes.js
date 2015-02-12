@@ -15,4 +15,4 @@ module.exports = function(app){
 router.get('/', restMiddleware(db), controller.getAllPayrolls);
 router.get('/:id', controller.getPayroll);
 router.post('/', controller.postPayroll);
-// router.patch('/:id', controller.patchInvoiceDesign);
+router.patch('/:id', controller.patchPayroll);
