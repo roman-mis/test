@@ -19,6 +19,9 @@ angular.module('origApp.controllers')
           };
           
           $scope.summaries = $scope.generateSummaries();
-          $scope.sendData = $scope.attachReceiptsToSendData($scope.expenseData.receiptListData);
+          $scope.sendData = {
+            expense: $scope.attachReceiptsToSendData($scope.expenseData.receiptListData),
+            vehicleinformation: $scope.expenseData.vehicleInfo
+          };
 
         });

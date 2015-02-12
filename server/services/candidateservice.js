@@ -300,7 +300,7 @@ service.updateVehicleInformation=function(userId, vehicleInformation){
 	   				var change = false;
 	   				if(user.worker.vehicleInformation.length > 0){
 	   					_.forEach(user.worker.vehicleInformation, function(_vehicle){
-	   						if(vehicleInformation.vehicleCode === _vehicle.vehicleCode){
+	   						if(vehicleInformation.vehicleCode.toString() === _vehicle.vehicleCode){
 	   							utils.updateModel(_vehicle, vehicleInformation);
 	   							change = true;
 	   							return false;
