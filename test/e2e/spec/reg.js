@@ -3,7 +3,7 @@ var helper = require('./ui-helper.js');
 loginData.userName='originemtest_t'+new Date().getTime().toString().substr(-9,6);
 loginData.userEmail=loginData.userName.replace('_','+')+'@yandex.com';
 loginData.userPassword='andyboss';
-
+loginData.userSurname='Tester';
 
 describe('Browse to sign up', function() {
 
@@ -67,7 +67,7 @@ describe('Browse to sign up', function() {
     expect(select.getAttribute('class')).toContain('ng-valid');
 
     validateInputByModel('candidate.details.firstName',loginData.userName);
-    validateInputByModel('candidate.details.lastName','Tester');
+    validateInputByModel('candidate.details.lastName',loginData.userSurname);
 
     // email test
     var input = element(by.model('candidate.details.emailAddress'));

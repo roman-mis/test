@@ -83,6 +83,7 @@
     "e2e_candidates": "protractor test/e2e/conf.js --suite candidates",
     "e2e_sidebar": "protractor test/e2e/conf.js --suite sidebar",
     "e2e_test": "protractor test/e2e/conf.js --suite test",
+    "e2e_remote": "protractor --baseUrl=http://originempayroll-qa.elasticbeanstalk.com/ test/e2e/conf.js --suite=remote",
     "debug": "protractor test/e2e/conf.js --suite dummy"
   }
 }

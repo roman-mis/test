@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(){
-  
+
     var dataList=require('../data/data_list.json');
     var countries=require('../data/countries.json');
     var adminTemplatesData=require('../data/admin_templates_data.json');
@@ -126,7 +126,7 @@ module.exports = function(){
 
     controller.countries=function(req,res){
       res.json(countries);
-      
+
     };
 
     controller.margintypes=function(req,res){
@@ -149,11 +149,10 @@ module.exports = function(){
       res.json(dataList.OtherExpenseTypes);
     };
 
-<<<<<<< HEAD
     controller.getAdminTemplatesData=function (req,res){
       res.json(adminTemplatesData[req.params.type]);
   };
-=======
+
     controller.fuels=function(req,res){
       res.json(dataList.Fuels);
     };
@@ -161,7 +160,6 @@ module.exports = function(){
     controller.enginesizes=function(req,res){
       res.json(dataList.EngineSizes);
     };
->>>>>>> 0e69e2b7b76484a127762d4250abbf919f5daa91
-    
+
   return controller;
 };

@@ -88,7 +88,7 @@ describe('Checking DPA', function() {
 });
 
 
-/*
+
 
 
 describe('Checking ONBOARDING', function() {
@@ -146,4 +146,3 @@ describe('Checking Call Log', function() {
 
 });
 
-*/

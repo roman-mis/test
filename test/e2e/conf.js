@@ -16,8 +16,8 @@ exports.config = {
     candidates: ['./spec/login.js','./spec/candidates.js'],
     sidebar: ['./spec/login.js','./spec/sidebar.js'],
     test: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
-    //test: [/*'./spec/reg.js',*/'./spec/check-inbox.js'/*,'./spec/activate.js','./spec/login.js'*/],
-    dummy: ['./spec/login.js','./spec/candidates.js','./spec/sidebar.js']
+    remote: ['./spec/dummy_data.js','./spec/login.js'],
+    dummy: ['./spec/login.js','./spec/candidates.js'/*,'./spec/sidebar.js'*/]
   },
 
   onPrepare: function () {
@@ -30,7 +30,8 @@ exports.config = {
     global.loginData={
       userEmail:'',
       userPassword:'',
-      userName:''
+      userName:'',
+      userSurname:''
     }
   },
   jasmineNodeOpts: {
