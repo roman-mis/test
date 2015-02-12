@@ -68,10 +68,6 @@ router.get('/transportationmeans',controller.transportationmeans);
 
 router.get('/otherexpensetypes',controller.otherexpensetypes);
 
-<<<<<<< HEAD
-router.get('/adminTemplatesData/:type',controller.getAdminTemplatesData);
-=======
 router.get('/fuels',controller.fuels);
 
 router.get('/enginesizes',controller.enginesizes);
->>>>>>> 0e69e2b7b76484a127762d4250abbf919f5daa91
