@@ -9,7 +9,7 @@ module.exports = function(mongoose) {
 		agency: { type: Schema.Types.ObjectId, ref:'Agency' },
 		branch: { type: Schema.Types.ObjectId, ref:'Branch' },
 		invoices: [Number],
-		conpanyDefaults:{
+		companyDefaults:{
 			holidayPayIncluded: Boolean,
 			employeeNiIncluded: Boolean,
 			vatCharged: Boolean,
