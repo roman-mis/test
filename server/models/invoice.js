@@ -28,6 +28,6 @@ module.exports = function(mongoose) {
 		totalVatValue: Number,
 		marginValueToAgency: Number
 	});
-
-  	return mongoose.model('Invoice',schema);
+    
+    return mongoose.model('Invoice',schema);
 };
