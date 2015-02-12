@@ -151,15 +151,23 @@ module.exports = function(){
 
     controller.getAdminTemplatesData=function (req,res){
       res.json(adminTemplatesData[req.params.type]);
+<<<<<<< HEAD
   };
+=======
+    };
+>>>>>>> 56767f71548c2a54f5d38a165f2acf0b7a44a4a4
 
     controller.fuels=function(req,res){
       res.json(dataList.Fuels);
     };
 
+<<<<<<< HEAD
     controller.enginesizes=function(req,res){
       res.json(dataList.EngineSizes);
     };
 
+=======
+    
+>>>>>>> 56767f71548c2a54f5d38a165f2acf0b7a44a4a4
   return controller;
 };
