@@ -1,7 +1,7 @@
 'use strict';
 
 var rewire=require('rewire');
-var utils=rewire('../../../server/utils/utils');
+var utils=require('../../../server/utils/utils');
 var chai=require('chai');
 var bcrypt=require('bcryptjs');
 var expect=chai.expect;
