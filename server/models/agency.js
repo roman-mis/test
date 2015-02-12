@@ -32,7 +32,7 @@ module.exports = function(mongoose) {
       employersNiIncluded:      {type:Boolean},
       invoiceVatCharged:        {type:Boolean},
       invoiceMethod:             {type:String},
-      invoiceDesign:             {type:Schema.Types.ObjectId,ref:'Invoice_Design'},
+      invoiceDesign:             {type:Schema.Types.ObjectId,ref:'InvoiceDesign'},
       invoiceEmailPrimary:      {type:String},
       invoiceEmailSecondary:    {type:String},
       paymentTerms:              {type:String},
