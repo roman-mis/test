@@ -1,7 +1,7 @@
 var helper = require('./ui-helper.js');
 
 var number = helper.getDefaultNumber();
-var count=5;
+var count=3;
 
 describe('Checking agency for sufficient count', function() {
 
@@ -16,10 +16,11 @@ describe('Checking agency for sufficient count', function() {
   });
   it('count agencies in the table', function () {
     var addBtn=$('[ng-click="openAddAgencyWin()"]');
+    var agenciesNames=['Sumertime agency','Woodoo agency','Kengoo Agency','Bogart Int','Slimshady Agency']
     var addAgency=function(i){
       addBtn.click();
       expect($('.modal-content').isDisplayed()).toBeTruthy();
-      element.all(by.repeater('field in fields')).get(0).element(by.css('input')).sendKeys('Super Agency '+i);
+      element.all(by.repeater('field in fields')).get(0).element(by.css('input')).sendKeys(agenciesNames[i-1]);
       element.all(by.repeater('field in fields')).get(1).element(by.css('input')).sendKeys('Super Address1_'+i);
       element.all(by.repeater('field in fields')).get(2).element(by.css('input')).sendKeys('Super Address2_'+i);
       element.all(by.repeater('field in fields')).get(3).element(by.css('input')).sendKeys('Super Address3_'+i);
@@ -28,6 +29,9 @@ describe('Checking agency for sufficient count', function() {
       element.all(by.repeater('field in fields')).get(6).element(by.css('input')).sendKeys('E20 2BB');
       element.all(by.repeater('field in fields')).get(7).element(by.css('input')).sendKeys(number.substr(-5,5));
       element.all(by.repeater('field in fields')).get(8).element(by.css('input')).sendKeys(number.substr(-6,6));
+
+      $('[ng-click="ok()"]').click();
+      expect($('.modal-content').isPresent()).toBeFalsy();
     };
 
     element.all(by.repeater('row in options.data')).count().then(function(n){
@@ -37,9 +41,9 @@ describe('Checking agency for sufficient count', function() {
           addAgency(i);
         };
       }
-      /*element.all(by.repeater('row in options.data')).count().then(function(n) {
-        expect(n).toBe(count);
-      });*/
+      element.all(by.repeater('row in options.data')).count().then(function(n) {
+        expect(n >= count).toBeTruthy();
+      });
     })
   });
 });
