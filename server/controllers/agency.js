@@ -84,7 +84,10 @@ module.exports = function(){
 	controller.getAgency=function(req,res){
 		agencyservice.getAgency(req.params.id, true)
 			.then(function(agency){
+				//console.log('agency is ');
+				//console.log(agency);
 				var vm=getAgencyVm(agency, true);
+				//console.log('vm is ');console.log(vm);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
 	};
@@ -425,7 +428,7 @@ module.exports = function(){
 				var invoiceDesign=agency.defaultInvoicing.invoiceDesign||{};
 
 				// var invoiceTo=utils.findInArray(agency.branches,agency.defaultInvoicing.invoiceTo,"_id")||{};
-
+				var invoiceTo=agency.defaultInvoicing.invoiceTo||{};
 				var payrollVm={
 				_id: agency._id,
 				name: agency.name,
@@ -442,8 +445,8 @@ module.exports = function(){
 				  invoiceEmailSecondary:    agency.defaultInvoicing.invoiceEmailSecondary,
 				  paymentTerms:              utils.findInArray(dataList.PaymentTerms, agency.defaultInvoicing.paymentTerms, 'code'),
 				  invoiceTo: {
-				  	_id: agency.defaultInvoicing.invoiceTo._id,
-				  	name: agency.defaultInvoicing.invoiceTo.name
+				  	_id: invoiceTo._id,
+				  	name: invoiceTo.name
 				  }
 				},
 				defaultPayroll:{
@@ -468,7 +471,7 @@ module.exports = function(){
 				
 	      			build(agency);
 
-	      		},reject);
+	      		}).then(null,reject);
 	      	// }
 	      	// else{
 	      	// 	console.log('No reload');
