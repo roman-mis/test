@@ -156,7 +156,7 @@ module.exports = function(){
     controller.fuels=function(req,res){
       res.json(dataList.Fuels);
     };
-  
+
     controller.enginesizes=function(req,res){
       res.json(dataList.EngineSizes);
     };
