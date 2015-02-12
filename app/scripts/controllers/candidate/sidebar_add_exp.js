@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExpController', function($scope, $modalInstance, parentScope, HttpResource, $stateParams, ConstantsResource, MsgService) {
 
-          $scope.mainData = {step: 1, candidateId: $stateParams.candidateId};
+          $scope.mainData = {step: 3, candidateId: $stateParams.candidateId};
 
           $scope.expenseData = {};
 

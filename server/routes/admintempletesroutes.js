@@ -16,6 +16,8 @@ module.exports = function(app){
 router.get('/',controller.getAlladminTemplates);
 router.get('/:id',controller.getAdminTemplate);
 
+router.post('/:id',controller.updateAdminTemplate);
+
 router.post('/',controller.saveTemplate);
 
 router.delete('/:id',controller.deleteAdminTemplate);

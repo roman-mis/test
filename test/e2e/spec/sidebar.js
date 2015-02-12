@@ -20,80 +20,73 @@ var testModal=function(locator){
     link.click();
   })
 };
-/*
+
+
+
 
 describe('Checking DPA', function() {
 
+  //browser.get('/candidates/54d9edd6c6cb4d0c0a107b5e');
+
   it('should open DPA dialog', function () {
 
-    element.all(by.css('[ng-click="openDPAWin()"]')).filter(function(elem, index) {
-        return elem.isDisplayed().then(function(bool) {
-          return bool;
-        });
-    }).then(function(displayedElem) {
-        displayedElem[0].click();
-        expect($('.modal-content').isDisplayed()).toBeTruthy();
-        $('.modal-content [ng-click="cancel()"]').click();
-        expect($('.modal-content').isPresent()).toBeFalsy();
-        displayedElem[0].click();
+    clickFirstVisible(by.css('[ng-click="openDPAWin()"]'),function(link){
+
+      link.click();
+      expect($('.modal-content').isDisplayed()).toBeTruthy();
+      $('.modal-content [ng-click="cancel()"]').click();
+      expect($('.modal-content').isPresent()).toBeFalsy();
+      link.click();
     });
 
   });
 
   it('DPA should generate unique questions', function () {
-    var elements= element.all(by.repeater('dpa in generatedSets'));
-    var questions=[];
-    var answers=[];
-    var genBtn=[];
-    var corrBtn=[];
-    var ensureUnique=function(inputs){
+
+    var ensureUnique=function(inputPromise){
       var arr=[];
-      for(var i=0;i<inputs.length;i++){
-        inputs[i].getAttribute('value').then(function(val){
+      inputPromise.each(function(el){
+        el.getAttribute('value').then(function(val){
           expect(arr.indexOf(val)).toBe(-1);
           arr.push(val);
         });
-      }
-    };
-
-    var ensureChange=function(input,btn){
-      input.getAttribute('value').then(function(val){
-        btn.click();
-        expect(input.getAttribute('value')).toNotEqual(val);
       });
     };
 
+    var ensureChange=function(input,callback){
+      input.getAttribute('value').then(function(val){
+        console.log('value='+val);
+        callback();
+        expect(input.getAttribute('value')).not.toEqual(val);
+      });
+    };
 
-    elements.then(function(rows){
+    var questions=element.all(by.model('dpa.question'));
+    var answers=element.all(by.model('dpa.answer'));
 
-      for(var i=0;i<rows.length;i++){
-        questions.push(rows[i].element(by.model('dpa.question')));
-        answers.push(rows[i].element(by.model('dpa.answer')));
-        genBtn.push(rows[i].element(by.css('[ng-click="reGenerateSet($index)"]')));
-        corrBtn.push(rows[i].element(by.css('[ng-click="correctSet($index)"]')));
-      };
+    $('[ng-click="reGenerateAllSets()"]').click();
+    ensureUnique(questions);
+    ensureUnique(answers);
 
-      $('[ng-click="reGenerateAllSets()"]').click();
-      ensureUnique(questions);
-      ensureUnique(answers);
-
-      for(var i=0;i<rows.length;i++){
-        genBtn[i].click();
+    element.all(by.css('[ng-click="reGenerateSet($index)"]')).each(function(btn,i){
+      ensureChange(questions.get(i),function(){
+        btn.click();
         ensureUnique(questions);
         ensureUnique(answers);
-        ensureChange(questions[i],genBtn[i]);
-        ensureChange(answers[i],genBtn[i]);
-        corrBtn[i].click();
-      };
+      });
+    });
 
+    element.all(by.css('[ng-click="correctSet($index)"]')).each(function(btn){
+      btn.click();
+    }).then(function(){
       $('[ng-click="save()"]').click();
       expect($('.modal-content').isPresent()).toBeFalsy();
-
     });
 
   });
 
 });
+
 
 
 
@@ -125,17 +118,17 @@ describe('Checking ONBOARDING', function() {
 
 });
 
- */
+
 
 describe('Checking Call Log', function() {
 
-/*  it('should open call log dialog', function () {
-    browser.get('/candidates/548af0d1f1ffa56c251ff15f');
+  it('should open call log dialog', function () {
+  //  browser.get('/candidates/548af0d1f1ffa56c251ff15f');
     testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'callLog\'})"]'));
-  });*/
+  });
 
   it('should allow to create task', function () {
-    browser.get('/candidates/548af0d1f1ffa56c251ff15f');
+
     testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'callLog\'})"]'));
     helper.selectSelector(element.all(by.model('data.agency')),0);
     helper.selectSelector(element.all(by.model('data.taskType')),3);
@@ -152,3 +145,4 @@ describe('Checking Call Log', function() {
 
 
 });
+

@@ -30,12 +30,6 @@ describe('Navigate to candidates url', function () {
 
   });
 
-});
-
-
-describe('navigate to users tabs', function () {
-
-
   it('should take to tabs', function () {
     element(by.repeater('row in options.data').row(0)).element(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).click()
 
@@ -46,6 +40,11 @@ describe('navigate to users tabs', function () {
     }, 3000);
 
   });
+});
+
+
+
+describe('navigate to users tabs', function () {
 
   it('check if tabs working', function () {
 
@@ -181,14 +180,14 @@ describe('navigate to users tabs', function () {
 });
 
 
-describe('navigate to candidate\'s tabs', function () {
+describe('navigate to payroll tabs', function () {
 
   var innerTabs = $$('.tabs-payroll .nav-tabs li');
   var innerLinks = $$('.tabs-payroll .nav-tabs li a');
   var tabContents = $$('.tabs-payroll .tab-content');
 
 
-  it('payroll tab should be working', function () {
+  it('tax tab should be working', function () {
 
     links.get(2).click();
     var checkInnerTabs = function (i) {
@@ -253,8 +252,8 @@ describe('navigate to candidate\'s tabs', function () {
   });
 
 
-  it('payroll tab should be working', function () {
-    //  browser.get('/candidates/548af0d1f1ffa56c251ff15f/payroll');
+  it('product tab should be working', function () {
+
     innerLinks.get(2).click();
 
     var number = helper.getDefaultNumber();
@@ -316,19 +315,20 @@ describe('navigate to candidate\'s tabs', function () {
       // Edit icon click
       element(rows.row(i - 1)).element(by.css('[ng-click="getExternalScope().editProduct(row)"]')).click();
 
-      expect(agency.getText()).toBe('XYZ Agency');
-      expect(margin.getText()).toBe('Fixed Fee');
+      expect(used.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(0).getText());
+      expect(agency.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(1).getText());
+      expect(margin.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(2).getText());
+      expect(rule.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(3).getText());
+      expect(contract.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(4).getText());
       expect(fixed.getAttribute('value')).toBe(number.substr(-3, 3));
-      expect(rule.getText()).toBe('Holiday Pay Retained');
-      expect(contract.getText()).toBe('Opt-in');
       expect(spread.getAttribute('value')).toBe(number.substr(-3, 3));
-      expect(used.getText()).toBe('PAYE');
-      expect(terms.getText()).toBe('On full receipt');
-      expect(method.getText()).toBe('BACS');
       expect(desc.getAttribute('value')).toBe('desc' + number.substr(-3, 3));
 
-      element(rows.row(i - 1)).element(by.css('[ng-click="getExternalScope().deleteProduct(row)"]')).click();
+      expect(terms.getText()).toBe('On full receipt');
+      expect(method.getText()).toBe('BACS');
 
+
+      element(rows.row(i - 1)).element(by.css('[ng-click="getExternalScope().deleteProduct(row)"]')).click();
       expect(element.all(rows).count()).toBe(i - 1);
     });
 
@@ -336,7 +336,3 @@ describe('navigate to candidate\'s tabs', function () {
   });
 
 });
-
-
-
-
