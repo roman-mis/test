@@ -21,7 +21,7 @@ angular.module('origApp.controllers')
           $scope.summaries = $scope.generateSummaries();
           $scope.sendData = {
             expense: $scope.attachReceiptsToSendData($scope.expenseData.receiptListData),
-            vehicleinformation: $scope.expenseData.vehicleInfo
+            vehicleInformation: $scope.expenseData.vehicleInfo
           };
 
         });

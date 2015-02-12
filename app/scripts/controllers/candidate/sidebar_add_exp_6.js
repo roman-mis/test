@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
           $scope.expenseData.transports = $scope.expenseData.transports || [];
           $scope.transportTypes = ConstantsResource.get('transportationmeans');
           $scope.fuelTypes = ConstantsResource.get('fuels');
-          $scope.engineSizes = ConstantsResource.get('enginesizes');
+          $scope.engineSizes = [];
 
           $scope.vehicle = $scope.expenseData.vehicleInfo || {};
           $scope.defaultAddData = {};
@@ -49,23 +49,34 @@ angular.module('origApp.controllers')
             $scope.expenseData.transports.splice(index, 1);
           };
 
+          $scope.onChangeFuelType = function() {
+            var filtered = $scope.fuelTypes.filter(function(item) {
+              return item.code === $scope.vehicle.fuelType;
+            });
+            if (filtered.length > 0) {
+              $scope.engineSizes = filtered[0].engineSizes;
+            } else {
+              $scope.engineSizes = [];
+            }
+          };
+
           $scope.ok = function() {
             if ($scope.isAllDatesEntered($scope.expenseData.transports)) {
               var carvanItems = $scope.expenseData.transports.filter(function(item) {
-                return item.type.code === '1';
+                return item.type.code === $scope.mainData.carvanTransportType;
               });
               if (carvanItems.length === 0) {
                 $scope.gotoNext();
-              }else{
+              } else {
                 //check if ever created expenses
                 $scope.isVehicleChecking = true;
-                var expenses = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses').query({}, function() {
+                var object = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/vehicleinformation').get($scope.mainData.carvanTransportType, function() {
                   $scope.isVehicleChecking = false;
-                  //if(expenses.length === 0){
-                  $scope.showVehicleForm();
-                  //}else{
-                  //$scope.gotoNext();
-                  //}
+                  if(object && object.vehicleInformaiton && object.vehicleInformaiton.vehicleCode){
+                    $scope.gotoNext();
+                  }else{                  
+                    $scope.showVehicleForm();
+                  }
                 });
               }
             }
@@ -78,6 +89,7 @@ angular.module('origApp.controllers')
 
           $scope.saveVehicleForm = function() {
             $scope.expenseData.vehicleInfo = angular.copy($scope.vehicle);
+            $scope.expenseData.vehicleInfo.vehicleCode = $scope.mainData.carvanTransportType;
             $scope.gotoNext();
             /*$scope.isVehicleSaving = true;
              HttpResource.model('candidates/' + $scope.mainData.candidateId)

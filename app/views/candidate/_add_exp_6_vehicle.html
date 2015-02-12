@@ -9,6 +9,7 @@
       <label class="col-sm-3" for="fuel-type">Fuel type</label>
       <div class="col-sm-3 fuelType">
         <select class="form-control" id="fuel-type" ng-model="vehicle.fuelType" required
+                ng-change="onChangeFuelType()"
                 ng-options="type.code as type.description for type in fuelTypes">
         </select>
       </div>
