@@ -44,7 +44,7 @@ module.exports = function(){
 		}
 
 		controller.getPayroll=function(req,res){
-			payrollservice.getPayroll(req.params.id)
+			payrollservice.getPayroll(req.params.id, true)
 				.then(function(payroll){
 					var vm = getPayrollVm(payroll);
 					res.json({result:true, object:vm});
