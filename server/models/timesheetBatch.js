@@ -5,7 +5,9 @@ var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose,autoIncrement) {
     var schema = new BaseSchema({
-        batchNumber: Number    
+        batchNumber: Number,
+        agency: { type:Schema.Types.ObjectId, ref:'Agency' },
+        branch: { type:Schema.Types.ObjectId, ref:'Branch' }
     });
     
     schema.plugin(autoIncrement.plugin,{model:'TimesheetBatch',field:'batchNumber',startAt:1,incrementBy:1});
