@@ -12,7 +12,7 @@ describe('taskservice',function(){
 	
 	//declaration for mocks and test data
 	var taskService, dbMock;
-	var candidateCommonServiceMock,taskModelMock;
+	var taskModelMock;
 
 	//before function is called for each test suite inside this test suite
 	before(function(){
