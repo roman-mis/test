@@ -8,6 +8,7 @@ module.exports = function(mongoose) {
         weekNumber: Number,
         monthNumber: Number,
         periodType: String, // weekly, twoWeekly, fourWeekly, monthly
+        date: Date,
         createdDate: { type: Date, default: Date.now },
         createdBy: { type: Schema.Types.ObjectId, ref:'User' },
         stats: {

@@ -97,7 +97,7 @@ service.updatePayrollTaxDetails=function(userId, payrollTaxDetails){
    				utils.updateSubModel(user.worker,{startDate:payrollTaxDetails.startDate});
    				utils.updateSubModel(user.worker.payrollTax, payrollTaxDetails);
 
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 
 					deff.resolve(user);						
 				}, deff.reject);
@@ -124,7 +124,7 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
    					console.log(payrollProductDetails);
    					product=user.worker.payrollProduct[user.worker.payrollProduct.length-1];
 
-   					return Q.nfcall(user.save.bind(user)).then(function(result){
+   					return Q.nfcall(user.save.bind(user)).then(function(){
 						deff.resolve({user:user, product:product});						
 					}, deff.reject);
 
@@ -134,7 +134,7 @@ service.updatePayrollProductDetails=function(userId, payrollProductDetails){
    					if(product){
    						payrollProductDetails.updatedDate = new Date();
    						utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
-   						return Q.nfcall(user.save.bind(user)).then(function(result){
+   						return Q.nfcall(user.save.bind(user)).then(function(){
 							deff.resolve({user:user, product:product});						
 						}, deff.reject);
    					}
@@ -184,7 +184,7 @@ service.postMarginException = function(candidateId, productId, marginExceptionDe
 			if(user){
 				user.worker.payrollProduct.id(productId).marginException.push(marginExceptionDetails);
 
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 					var marginException = user.worker.payrollProduct.id(productId).marginException;
 					deff.resolve({object:marginException[marginException.length-1]});						
 				}, deff.reject);
@@ -203,7 +203,7 @@ service.patchMarginException = function(candidateId, productId, marginExceptionI
 				console.log(marginExceptionId);
 				utils.updateSubModel(user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId), marginExceptionDetails);
 
-				return Q.nfcall(user.save.bind(user)).then(function(result){
+				return Q.nfcall(user.save.bind(user)).then(function(){
 					var marginException = user.worker.payrollProduct.id(productId).marginException.id(marginExceptionId);
 					console.log(marginException);
 					deff.resolve({object:marginException});						

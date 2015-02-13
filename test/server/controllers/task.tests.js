@@ -164,14 +164,16 @@ describe('task',function(){
 			//stub postTaskDetails function of the mocked taskService an tell it to return the promise that we created earlier.
 			postTaskDetailsStub.returns(p);
 			taskController.postTaskDetails(postTaskDetailsMock,responseMock);
-			d.resolve(tasks);
+			var taskForPost = tasks[0];
+			d.resolve({object: taskForPost});
 
 			sinon.assert.calledOnce(jsonStub);
 
 			//if everything went as planned res.json should have been executed by supplying result:true in the controller.
 			sinon.assert.calledWith(jsonStub,sinon.match({result:true}));
 
-			sinon.assert.calledWith(jsonStub,sinon.match({objects:tasks}));
+			sinon.assert.calledWith(jsonStub,sinon.match({object:taskForPost}));
+
 			//we are done with the test
 			done();
 		});
@@ -190,7 +192,7 @@ describe('task',function(){
 
 			//at this point we have setup everything required to unit test the controller's getTaskDetails function
 			//lets make an actual call to the controller's function by supplying our mocked/faked req and res parameters
-			taskController.postTaskDetails(postTaskDetailstMock,responseMock);
+			taskController.postTaskDetails(postTaskDetailsMock,responseMock);
 			d.reject({result:false,name:'NOTFOUND'});
 			
 			//if everything went as planned, res.sendFailureResponse should be called only once.
@@ -304,7 +306,7 @@ describe('task',function(){
 		
 		beforeEach(function(){
 			
-			postTaskDetailsStub.reset();
+			postCalllogDetailsStub.reset();
 			jsonStub.reset();
 			sendFailureResponseStub.reset();
 		});
@@ -313,16 +315,18 @@ describe('task',function(){
 			var d=Q.defer();
 			var p=d.promise;
 			//stub postTaskDetails function of the mocked taskService an tell it to return the promise that we created earlier.
-			postTaskDetailsStub.returns(p);
-			taskController.postCalllogDetails(tasks,responseMock);
-			d.resolve(tasks);
+			postCalllogDetailsStub.returns(p);
+			taskController.postCalllogDetails(postTaskDetailsMock,responseMock);
+			//d.resolve(tasks);
 
+			var taskForPost = tasks[0];
+			d.resolve({object: taskForPost});
 			sinon.assert.calledOnce(jsonStub);
 
 			//if everything went as planned res.json should have been executed by supplying result:true in the controller.
 			sinon.assert.calledWith(jsonStub,sinon.match({result:true}));
 
-			sinon.assert.calledWith(jsonStub,sinon.match({objects:tasks}));
+			sinon.assert.calledWith(jsonStub,sinon.match({object:taskForPost}));
 			//we are done with the test
 			done();
 		});
@@ -337,11 +341,11 @@ describe('task',function(){
 			var p=d.promise;
 
 			//stub getTaskDetails function of the mocked taskService an tell it to return the promise that we created earlier.
-			postTaskDetailsStub.returns(p);
+			postCalllogDetailsStub.returns(p);
 
 			//at this point we have setup everything required to unit test the controller's getTaskDetails function
 			//lets make an actual call to the controller's function by supplying our mocked/faked req and res parameters
-			taskController.postTaskDetails(tasks,responseMock);
+			taskController.postTaskDetails(postTaskDetailsMock,responseMock);
 			d.reject({result:false,name:'NOTFOUND'});
 			
 			//if everything went as planned, res.sendFailureResponse should be called only once.
