@@ -17,6 +17,12 @@ module.exports=function(){
 		});
 	};
 
+	service.getTimesheetsByBatchId = function(id){
+		console.log(id);
+		var q=db.Timesheet.find({'batch':id});
+		return Q.nfcall(q.exec.bind(q));
+	};
+
 	service.getTimesheet = function(id, populate){
 		var q=db.Timesheet.findById(id);
 		if(populate){
