@@ -38,19 +38,6 @@ module.exports=function(){
 					});
 			}
 		});
-
-		// var deff = Q.defer();
-		// var payrollModel;
-		// payrollModel = new db.Payroll(payroll);
-		// payrollModel.save(function(err){
-		// 	if(err){
-		// 		deff.reject(err);
-		// 	}else{
-		// 		console.log('save success');
-		// 		deff.resolve(payrollModel);
-		// 	}
-		// });
-		// return deff.promise;
 	};
 
 	service.getPayroll=function(id, populate){
