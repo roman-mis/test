@@ -45,7 +45,15 @@
 	</div>
 	</div>
 	<div style="margin:10px" class="col-xs-12 row" >
-		<textarea style="height:300px;width:98%;align:center"  class="col-xs-12 col-ss-12" ng-model="data.details.body"></textarea>
+		<wysiwyg textarea-id="question" 
+          textarea-class="form-control"  
+          textarea-height="180px" 
+          textarea-name="textareaQuestion" 
+          textarea-required 
+          ng-model="data.details.body" 
+          enable-bootstrap-title="true">
+        </wysiwyg>
+      
 	</div>
 
 	<div style="margin:10px" class="col-xs-12 row" >
