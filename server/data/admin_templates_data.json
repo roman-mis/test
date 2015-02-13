@@ -4,7 +4,7 @@
       "target":"client",
       "data":[
         {
-        "type":"Regulation 10 Contract",
+        "type":"Regulation 10 Contract"
         // "entities":[
         //     {
         //         name: 'Worker',
@@ -30,8 +30,8 @@
           "Postcode",
           "Start Date",
           "Creation Date",
-          "Job Title" */
-          ]
+          "Job Title" 
+          ]*/
       },
       {
         "type":"Regulation 5 Contract",
