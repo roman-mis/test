@@ -1,9 +1,9 @@
 'use strict';
 
-module.exports = function(){
+module.exports = function(dbs){
   var candidateservice=require('../services/candidateservice'),
     utils=require('../utils/utils'),
-    candidatecommonservice = require('../services/candidatecommonservice'),
+    candidatecommonservice = require('../services/candidatecommonservice')(dbs),
     dataList=require('../data/data_list.json');
     var awsservice=require('../services/awsservice');
     var _=require('lodash');

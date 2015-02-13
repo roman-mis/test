@@ -23,12 +23,15 @@ module.exports = function(){
 
 	function build(expense){
 		var agency = null; if(expense.agency) {agency={_id: expense.agency._id, name: expense.agency.name};}
+		var user=expense.user||{};
+		var createdBy=expense.createdBy||{};
+
 		var expenseVm = {
 			_id: expense._id,
 			claimReference: expense.claimReference,
 			agency: agency,
-			user: {_id: expense.user._id, firstName: expense.user.firstName, lastName: expense.user.lastName},
-			createdBy: {_id: expense.createdBy._id, firstName: expense.createdBy.firstName, lastName: expense.createdBy.lastName},
+			user: {_id: user._id, firstName: user.firstName, lastName: user.lastName},
+			createdBy: {_id: createdBy._id, firstName: createdBy.firstName, lastName: createdBy.lastName},
 			startedDate: expense.startedDate,
 	    	submittedDate: expense.submittedDate,
 	    	days: expense.days
@@ -51,17 +54,21 @@ module.exports = function(){
 	controller.getExpenses = function(req, res){
 		return expenseservice.getExpenses(req._restOptions)
 		.then(function(expenses){
+			
 			var expensesVms = [];
 		  	_.forEach(expenses.rows, function(_expense){
+		  		
 		  		var expense = build(_expense);
 		  		expensesVms.push(expense);
 			});
-		  	
+		  	console.log('expensesssss');
+		  		// console.log(expenses);
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
 			
 			res.json(resp);
-		}, res.sendFailureResponse);
+		})
+		.then(null, res.sendFailureResponse);
 	};
 
 	controller.postExpense=function (req, res) {	
