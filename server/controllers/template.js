@@ -18,8 +18,8 @@ module.exports = function(){
 		    console.log('result');
 	  		console.log(templates);
 		  	res.json({result:true, objects:templates});
-	  	},function(){
-
+	  	},function(err){
+			res.sendFailureResponse(err);
 	  	});
 	};
 

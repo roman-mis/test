@@ -27,7 +27,9 @@ angular.module('origApp', [
   'origApp.services',
   'origApp.directives',
   'origApp.filters',
-  'ngTagsInput' 
+  'ngTagsInput',
+  'colorpicker.module',
+  'wysiwyg.module' 
   //,
  // 'gm.datepickerMultiSelect'
 ])

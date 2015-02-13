@@ -195,7 +195,10 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      coverageServer:{
+        src:['coverage/']
+      }
     },
 
     // Add vendor prefixed styles
@@ -416,6 +419,10 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      coverageServer:{
+        src:['test/server/**'],
+        dest:'coverage/'
       }
     },
 
@@ -441,6 +448,12 @@ module.exports = function (grunt) {
         singleRun: true
       }
     },
+    blanket:{
+      coverage:{
+        src:['server/'],
+        dest:'coverage/server/'
+      }
+    },
     mochaTest:{
       test:{
         options:{
@@ -455,10 +468,20 @@ module.exports = function (grunt) {
         options:{
           reporter:'spec',
           captureFile:'server_results.txt',
+          require:['test/server/startup.js'],
           quiet:false,
           clearRequireCache:false
         },
         src:['test/server/**/*.js']
+      },
+      serverCoverage:{
+        options:{
+          reporter:'html-cov',
+          quiet:true,
+          captureFile:'coverage.html'
+        },
+        src:['coverage/test/server/**/*.js']
+        
       }
     },
     protractor_webdriver: {
@@ -577,5 +600,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('server.test',[
     'mochaTest:server'
+    ]);
+
+  grunt.registerTask('server.coverage',[
+    'clean:coverageServer','blanket:coverage','copy:coverageServer','mochaTest:serverCoverage'
+    /*'blanket:coverage','mochaTest:serverCoverage'*/
     ]);
 };

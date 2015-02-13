@@ -6,15 +6,6 @@ describe('Checking mailbox', function() {
     browser.driver.get('https://mail.yandex.com/');
   });
 
-  /*
-   it('match the proper login page url', function () {
-   browser.driver.wait(function () {
-   return browser.driver.getCurrentUrl().then(function (url) {
-   return (url.indexOf('ServiceLogin') !== -1);
-   });
-   }, 5000);
-   });
-   */
 
   it('should find login button and fill it', function () {
     browser.driver.findElement(by.css('[name="login"]')).sendKeys('originemtest');
@@ -22,8 +13,14 @@ describe('Checking mailbox', function() {
     browser.driver.findElement(by.css('.b-mail-button__button')).click();
   });
 
-
-
+  it('waiting full version to be loaded', function () {
+    browser.driver.wait(function () {
+      return browser.driver.getCurrentUrl().then(function (url) {
+        return (url.indexOf('neo2') !== -1);
+      });
+    }, 5000);
+  });
+/*
   it('should enter lite version', function () {
     browser.driver.get('https://mail.yandex.com/lite/inbox');
     browser.driver.wait(function () {
@@ -31,9 +28,26 @@ describe('Checking mailbox', function() {
         return (url.indexOf('lite') !== -1);
       });
     }, 7000);
+  });*/
+  it('should enter lite version', function () {
+    browser.driver.get('https://mail.yandex.com/lite/inbox');
+
+    var time=new Date();
+    browser.driver.wait(function(){
+      return browser.driver.getCurrentUrl().then(function (url) {
+        console.log(url);
+        if(new Date() - time>7000){
+          time=new Date();
+          browser.driver.get('https://mail.yandex.com/lite/inbox');
+          console.log('reloading browser..');
+        }
+        return (url.indexOf('lite') !== -1);
+      });
+    }, 22000)
   });
 
-  it('mailbox should be fully loaded', function () {
+
+  it('element with emails should appear', function () {
     browser.driver.wait(function () {
       return  browser.driver.isElementPresent(by.css('.b-messages')).then(function(bool){
         return bool;

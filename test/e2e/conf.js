@@ -9,18 +9,24 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome'
   },
+/*  multiCapabilities: [{
+    'browserName': 'chrome'
+  }, {
+    'browserName': 'chrome'
+  }],*/
   suites: {
-    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
-    reg: './spec/reg.js',
-    login: './spec/login.js',
-    candidates: ['./spec/login.js','./spec/candidates.js'],
-    sidebar: ['./spec/login.js','./spec/sidebar.js'],
-    test: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
-    //test: [/*'./spec/reg.js',*/'./spec/check-inbox.js'/*,'./spec/activate.js','./spec/login.js'*/],
-    dummy: ['./spec/login.js','./spec/candidates.js','./spec/sidebar.js']
+   // main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
+    main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
+    stage: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
+    remote: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
+  //  dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'/*,'./spec/sidebar.js'*/]
+  //  dummy: './spec/dummy.js'
   },
 
   onPrepare: function () {
+   // browser.driver.manage().window().maximize();
+    browser.driver.manage().window().setSize(1050,850);
+    browser.driver.manage().window().setPosition(0,0);
     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
       savePath: 'protractor-results',
       consolidateAll: false
@@ -30,7 +36,8 @@ exports.config = {
     global.loginData={
       userEmail:'',
       userPassword:'',
-      userName:''
+      userName:'',
+      userSurname:''
     }
   },
   jasmineNodeOpts: {

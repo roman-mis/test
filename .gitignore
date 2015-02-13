@@ -11,3 +11,5 @@ local.env.js
 /config/
 /config/config.json
 /protractor-results
+/coverage
+/coverage.html

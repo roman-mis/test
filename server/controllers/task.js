@@ -59,7 +59,9 @@ module.exports = function(dbs){
 			taskservice.postTaskDetails(req.params.id, taskDetails, historyDetails)
 		    .then(function(result){
 		      res.json({result:true, object:result.object});
-		    },function(){
+		     
+		    },function(err){
+		    	res.sendFailureResponse(err);
 
 		    });
 		};
@@ -68,7 +70,8 @@ module.exports = function(dbs){
 		  	taskservice.getCalllogDetails(req.params.id)
 		    .then(function(result){
 		      res.json({result:true, objects:result});
-		    },function(){
+		    },function(err){
+		    	res.sendFailureResponse(err);
 
 		    });
 		};
@@ -105,8 +108,11 @@ module.exports = function(dbs){
 
 			taskservice.postCalllogDetails(req.params.id, taskDetails, historyDetails)
 		    .then(function(result){
+		       
 		      res.json({result:true, object:result.object});
-		    },function(){
+		       
+		    },function(err){
+		    	res.sendFailureResponse(err);
 
 		    });
 		};

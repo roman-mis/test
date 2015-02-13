@@ -156,12 +156,12 @@ angular.module('origApp.controllers')
               return;
             }
             $scope.whichShow = 'prev_uploaded';
-            var dateSearchStr = moment().add(-4*7, 'days').format('YYYY-MM-DD') + '|' + moment().format('YYYY-MM-DD');
+            var dateSearchStr = moment().add(-4*7, 'days').format('YYYY-MM-DD') + '|' + moment().add(1, 'days').format('YYYY-MM-DD');
             $scope.prevUploadedExpenses = [];
             var prevUploadedData = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses').query({startedDate_between: dateSearchStr}, function(){
               prevUploadedData.forEach(function(object){
                 object.days.forEach(function(dayItem){
-                  object.days.expenses.forEach(function(expense){
+                  dayItem.expenses.forEach(function(expense){
                     if(expense.receiptUrls && expense.receiptUrls.length > 0){
                       var newExpense = angular.copy(expense);
                       newExpense.date = dayItem.date;

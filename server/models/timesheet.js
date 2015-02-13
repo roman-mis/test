@@ -5,10 +5,9 @@ var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
     var schema = new BaseSchema({
-        agency: { type:Schema.Types.ObjectId, ref:'Agency' },
         worker: { type:Schema.Types.ObjectId, ref:'User' },
         batch: { type:Schema.Types.ObjectId, ref:'TimesheetBatch' },
-        status: String, // submitted, preValidation, validated, receipted, approved, payrolled
+        status: String, // submitted, preValidation, validated, invoiced, receipted, approved, payrolled
         weekEndingDate: Date,
         elements: [
             {
