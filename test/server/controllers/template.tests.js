@@ -9,7 +9,7 @@ var sinon=require('sinon'),
 //this is the parent test suite for the whole controller
 describe('template',function(){
 	var requestMock, responseMock, templateController, templateServiceMock, postTemplateMock, getTemplateRequestMock;
-	var jsonStub, sendFailureResponseStub;
+	var jsonStub, sendFailureResponseStub, template;
 
 	before(function(){
 		mockery.enable({
@@ -17,12 +17,22 @@ describe('template',function(){
 			warnOnUnregistered:false,
 			useCleanCache:true
 		});
+	
+		template={
+    			"_id" : "54c8f8a73b417dfc00ae9c9b",
+    			"title" : "Payslip Task template title",
+    			"templateBody" : "Payslip for  the candidate template body",
+    			"templateType" : "TASK",
+    			"updatedDate" : "2015-01-28T14:56:39.407Z",
+    			"createdDate" : "2015-01-28T14:56:39.407Z",
+    			"__v" : 0
+		};
 
 	responseMock={'json':function(){},'sendFailureResponse':function(){}};
 	jsonStub=sinon.stub(responseMock, 'json');
 	sendFailureResponseStub=sinon.stub(responseMock,'sendFailureResponse');
 
-	templateServiceMock={'getAllTemplates':function(){}, 'postTemplate':function(){},'addTemplate':function(){},'getTemplate':function(){}};
+	templateServiceMock={'getAllTemplates':function(){}, 'addTemplate':function(){},'getTemplate':function(){}};
 	mockery.registerMock('../services/templateservice',templateServiceMock);
 	templateController=require('../../../server/controllers/template')(null);
 	getTemplateRequestMock={body:{},params:{"_id" : "54c8f8a73b417dfc00ae9c9b"}};
@@ -116,25 +126,25 @@ describe('template',function(){
 });
 
 
-	describe('#postTemplates', function(){
-        var template, postTemplateStub;
+	describe('#postTemplate', function(){
+        var template, addTemplateStub;
      	before(function(){
 		template={
     			"_id" : "54c8f8a73b417dfc00ae9c9b",
     			"title" : "Payslip Task template title",
     			"templateBody" : "Payslip for  the candidate template body",
-    			"templateType" : "TASK",
-    			"updatedDate" : "2015-01-28T14:56:39.407Z",
-    			"createdDate" : "2015-01-28T14:56:39.407Z",
-    			"__v" : 0
+    			"templateType" : "TASK"
+    		//	"updatedDate" : "2015-01-28T14:56:39.407Z",
+    		//	"createdDate" : "2015-01-28T14:56:39.407Z",
+    		//	"__v" : 0
 		};
-		postTemplateStub=sinon.stub(templateServiceMock, 'postTemplate');
+		addTemplateStub=sinon.stub(templateServiceMock, 'addTemplate');
 
 	});
 		
 		beforeEach(function(){
 			
-			postTemplateStub.reset();
+			addTemplateStub.reset();
 			jsonStub.reset();
 			sendFailureResponseStub.reset();
 		});
@@ -143,7 +153,7 @@ describe('template',function(){
 			var d=Q.defer();
 			var p=d.promise;
 
-			postTemplateStub.returns(p);
+			addTemplateStub.returns(p);
 			templateController.postTemplate(postTemplateMock, responseMock);
 			var temp = template[0];
 			d.resolve(template);
@@ -154,7 +164,7 @@ describe('template',function(){
 			//if everything went as planned res.json should have been executed by supplying result:true in the controller.
 			sinon.assert.calledWith(jsonStub,sinon.match({result:true}));
 
-			sinon.assert.calledWith(jsonStub,sinon.match({object:temp}));
+			sinon.assert.calledWith(jsonStub,sinon.match({object:template}));
 			//we are done with the test
 			done();
 		});
@@ -164,7 +174,7 @@ describe('template',function(){
 			var d=Q.defer();
 			var p=d.promise;
 
-			postTemplateStub.returns(p);
+			addTemplateStub.returns(p);
 
 			templateController.postTemplate(postTemplateMock,responseMock);
 			d.reject({result:false,name:'NOTFOUND'});
