@@ -58,14 +58,16 @@ module.exports = function(){
 				_id: invoice._id,
 				agency: {_id: agency._id, name: agency.name},
 				branch: {_id: branch._id, name: branch.name},
-				invoices: invoice.invoices,
+				timesheetBatch: invoice.timesheetBatch,
+				date: invoice.date,
+				invoiceNumber: invoice.invoiceNumber,
+				dueDate: invoice.dueDate,
+				lines: invoice.lines,
 				companyDefaults: invoice.companyDefaults,
-				totalNumberOfContractors: invoice.totalNumberOfContractors,
-				erniValueToAgency: invoice.erniValueToAgency,
-				holidayValueToAgency: invoice.holidayValueToAgency,
-				totalInvoiceValue: invoice.totalInvoiceValue,
-				totalVatValue: invoice.totalVatValue,
-				marginValueToAgency: invoice.marginValueToAgency
+				net: invoice.net,
+				vatRate: invoice.vatRate,
+				vat: invoice.vat,
+				total: invoice.total,
 			};
 		}
 
