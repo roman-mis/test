@@ -24,6 +24,9 @@ exports.config = {
   },
 
   onPrepare: function () {
+   // browser.driver.manage().window().maximize();
+    browser.driver.manage().window().setSize(1050,850);
+    browser.driver.manage().window().setPosition(0,0);
     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
       savePath: 'protractor-results',
       consolidateAll: false
