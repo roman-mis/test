@@ -3,36 +3,36 @@
     {
       "target":"client",
       "data":[
-        {
-        "type":"Regulation 10 Contract"
-        // "entities":[
-        //     {
-        //         name: 'Worker',
-        //         fields: [
-        //             {
-        //                 display: 'Address 1',
-        //                 code: 'address1'
-        //             },
-        //             {
-        //                 display: 'First Name',
-        //                 code: 'firstName'
-        //             }
-        //         ]
-        //     }
-        /*    
-          "First Name",
-          "Last Name",
-          "Address 1",
-          "Address 2",
-          "Address 3",
-          "Town",
-          "County",
-          "Postcode",
-          "Start Date",
-          "Creation Date",
-          "Job Title" 
-          ]*/
-      },
+      //   {
+      //   "type":"Regulation 10 Contract"
+      //   // "entities":[
+      //   //     {
+      //   //         name: 'Worker',
+      //   //         fields: [
+      //   //             {
+      //   //                 display: 'Address 1',
+      //   //                 code: 'address1'
+      //   //             },
+      //   //             {
+      //   //                 display: 'First Name',
+      //   //                 code: 'firstName'
+      //   //             }
+      //   //         ]
+      //   //     }
+          
+      //     "First Name",
+      //     "Last Name",
+      //     "Address 1",
+      //     "Address 2",
+      //     "Address 3",
+      //     "Town",
+      //     "County",
+      //     "Postcode",
+      //     "Start Date",
+      //     "Creation Date",
+      //     "Job Title" 
+      //     ]
+      // },*/
       {
         "type":"Regulation 5 Contract",
         "mergeFields":[
