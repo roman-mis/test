@@ -1,32 +1,70 @@
 'use strict';
 
 module.exports = function(){
-	var timesheetservice=require('../services/timesheetservice')(),
+	var _=require('lodash'),
+		timesheetservice=require('../services/timesheetservice')(),
 		Q=require('q');
 
 	var controller = {};
 
 	controller.getTimesheets = function(req, res){
-		return timesheetservice.getTimesheets()
-	    	.then(function(result){
-	      		// var vm = getTimesheetVm(result);
-	      		res.json({result:true, objects:result});
+		return timesheetservice.getTimesheets(req._restOptions)
+	    	.then(function(timesheets){
+	      		var timesheetVms = [];
+	      		_.forEach(timesheets.rows, function(_timesheet){
+			  		var timesheet = getTimesheetVm(_timesheet);
+			  		timesheetVms.push(timesheet);
+				});
+	      		
+			    var pagination=req._restOptions.pagination||{};
+		    	var resp={result:true,objects:timesheetVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:timesheets.count}};
+				
+				res.json(resp);
     		},function(err){
 		    	res.sendFailureResponse(err);
 	   		});
 	};
 
 	controller.getTimesheet = function(req, res){
-		return timesheetservice.getTimesheet(req.params.id)
+		return timesheetservice.getTimesheet(req.params.id, true)
 	    	.then(function(result){
-	      		res.json({result:true, object:result});
+	      		var timesheet = getTimesheetVm(result);
+	      		res.json({result:true, object:timesheet});
     		},function(err){
 		    	res.sendFailureResponse(err);
 	   		});
 	};
 
 	function getTimesheetVm(timesheet){
-		return timesheet;
+		var worker = timesheet.worker || {};
+		return {
+			_id: timesheet._id,
+			worker: {_id: worker.id, firstName: worker.firstName, lastName: worker.lastName},
+	        batch: timesheet.batch,
+	        status: timesheet.status,
+	        weekEndingDate: timesheet.weekEndingDate,
+	        elements: timesheet.elements,
+	        net: timesheet.net,
+	        vat: timesheet.vat,
+	        totalPreDeductions: timesheet.totalPreDeductions,
+	        deductions: timesheet.deductions,
+	        total: timesheet.total,
+	        imageUrl: timesheet.imageUrl
+		};
+	}
+
+	function buildTimesheetVm(timesheet, reload){
+		return Q.Promise(function(resolve, reject){
+			if(reload){
+				return timesheetservice.getTimesheet(timesheet._id, true)
+	      		.then(function(response){
+	      			var timesheetVm = getTimesheetVm(response);
+	      			resolve({result:true, object: timesheetVm});
+	      		},reject);
+			}else{
+				getTimesheetVm(timesheet);
+			}
+		});
 	}
 
 	controller.patchTimesheet=function (req, res) {
@@ -44,7 +82,6 @@ module.exports = function(){
 
 	controller.postTimesheet=function (req, res) {	
 		var timesheet = req.body;		
-		
 		timesheet.addedBy = req.user.id;
 		timesheet.dateAdded = new Date();
 		timesheet.lastEditedBy = req.user.id;
@@ -52,11 +89,10 @@ module.exports = function(){
 
 		timesheetservice.saveTimesheet(null, timesheet)
 			.then(function(response){
-				res.json(response);
-				// getExpenseVm(response, true)
-		  //       .then(function(_expense){
-	   //        		res.json(_expense);
-		  //       },res.sendFailureResponse);
+				buildTimesheetVm(response, true)
+		        .then(function(_timesheet){
+	          		res.json(_timesheet);
+		        },res.sendFailureResponse);
 			},function(err){
 			 	res.sendFailureResponse(err);
 			});

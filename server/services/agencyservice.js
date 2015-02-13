@@ -9,7 +9,7 @@ var utils=require('../utils/utils');
 var queryutils=require('../utils/queryutils')(db);
 var awsservice=require('../services/awsservice');
 var userservice=require('../services/userservice');
-var candidatecommonservice=require('../services/candidatecommonservice');
+var candidatecommonservice=require('../services/candidatecommonservice')(db);
 
 
 function updateConsultant(agency,consultant){
