@@ -9,8 +9,14 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome'
   },
+/*  multiCapabilities: [{
+    'browserName': 'chrome'
+  }, {
+    'browserName': 'chrome'
+  }],*/
   suites: {
-    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
+   // main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
+    main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
     stage: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
     remote: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
   //  dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'/*,'./spec/sidebar.js'*/]
