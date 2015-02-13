@@ -96,11 +96,17 @@ describe('navigate to users tabs', function () {
 
     var testDialog = function (link) {
       var cancelBtn = $('.modal-content [ng-click="cancel()"]');
-
       link.click();
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-      cancelBtn.click();
-      expect($('.modal-content').isPresent()).toBeFalsy();
+      browser.driver.wait(function() {
+          return $('.modal-content').isDisplayed().then(function(bool){
+            return bool;
+          })
+      },2000).then(function(){
+        cancelBtn.click().then(function(){
+          expect($('.modal-content').isPresent()).toBeFalsy();
+        });
+      });
+
     }
 
     testDialog(editLink1);
@@ -209,11 +215,11 @@ describe('navigate to payroll tabs', function () {
     var number = helper.getDefaultNumber();
     var input1 = element(by.model('tax.p45GrossTax'));
     input1.clear();
-    input1.sendKeys(number.substr(-3, 3));
+    input1.sendKeys(parseInt(number.substr(-3, 3)));
 
     var input2 = element(by.model('tax.p45TaxDeducted'));
     input2.clear();
-    input2.sendKeys(number.substr(-3, 3));
+    input2.sendKeys(parseInt(number.substr(-3, 3)));
 
     var date = helper.getDateByModel('tax.startDate');
     date.clear();
@@ -227,7 +233,7 @@ describe('navigate to payroll tabs', function () {
 
     var code = element(by.model('tax.taxCode'));
     code.clear();
-    code.sendKeys(number.substr(-2, 2));
+    code.sendKeys(parseInt(number.substr(-2, 2)));
 
     var basis = element(by.model('tax.taxBasis'));
     helper.selectSelector(basis, 1);
@@ -241,12 +247,12 @@ describe('navigate to payroll tabs', function () {
     innerLinks.get(1).click();
 
     expect(decl.getText()).toBe('Not Applicable');
-    expect(input1.getAttribute('value')).toBe(number.substr(-3, 3));
-    expect(input2.getAttribute('value')).toBe(number.substr(-3, 3));
+    expect(input1.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
+    expect(input2.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
     expect(date.getAttribute('value')).toBe('26/01/2012');
     expect(freq.getText()).toBe('4 Weekly');
     expect(ni.getAttribute('value')).toBe('JT' + number + 'D');
-    expect(code.getAttribute('value')).toBe(number.substr(-2, 2));
+    expect(code.getAttribute('value')).toBe(String(parseInt(number.substr(-2, 2))));
     expect(basis.getText()).toBe('W1/M1');
 
   });
@@ -320,7 +326,7 @@ describe('navigate to payroll tabs', function () {
       expect(margin.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(2).getText());
       expect(rule.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(3).getText());
       expect(contract.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(4).getText());
-      expect(fixed.getAttribute('value')).toBe(number.substr(-3, 3));
+      expect(fixed.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
       expect(spread.getAttribute('value')).toBe(number.substr(-3, 3));
       expect(desc.getAttribute('value')).toBe('desc' + number.substr(-3, 3));
 

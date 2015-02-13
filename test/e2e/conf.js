@@ -13,7 +13,8 @@ exports.config = {
     main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'],
     stage: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
     remote: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'/*,'./spec/sidebar.js'*/]
+  //  dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'/*,'./spec/sidebar.js'*/]
+  //  dummy: './spec/dummy.js'
   },
 
   onPrepare: function () {
