@@ -5,20 +5,20 @@
       "data":[
         {
         "type":"Regulation 10 Contract",
-        "entities":[
-            {
-                name: 'Worker',
-                fields: [
-                    {
-                        display: 'Address 1',
-                        code: 'address1'
-                    },
-                    {
-                        display: 'First Name',
-                        code: 'firstName'
-                    }
-                ]
-            }
+        // "entities":[
+        //     {
+        //         name: 'Worker',
+        //         fields: [
+        //             {
+        //                 display: 'Address 1',
+        //                 code: 'address1'
+        //             },
+        //             {
+        //                 display: 'First Name',
+        //                 code: 'firstName'
+        //             }
+        //         ]
+        //     }
         /*    
           "First Name",
           "Last Name",
