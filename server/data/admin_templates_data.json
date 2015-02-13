@@ -5,7 +5,21 @@
       "data":[
         {
         "type":"Regulation 10 Contract",
-        "mergeFields":[
+        "entities":[
+            {
+                name: 'Worker',
+                fields: [
+                    {
+                        display: 'Address 1',
+                        code: 'address1'
+                    },
+                    {
+                        display: 'First Name',
+                        code: 'firstName'
+                    }
+                ]
+            }
+        /*    
           "First Name",
           "Last Name",
           "Address 1",
@@ -16,7 +30,7 @@
           "Postcode",
           "Start Date",
           "Creation Date",
-          "Job Title"
+          "Job Title" */
           ]
       },
       {
