@@ -49,7 +49,7 @@ angular.module('origApp.controllers')
               dt.setHours(0, 0, 0, 0);
             }
             $scope.expenseData.daysInRange = daysInRange;
-            
+            $scope.expenseData.times = [];
             $scope.gotoNext();
             //$scope.mainData.step = 6;
           };
