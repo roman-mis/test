@@ -1,7 +1,7 @@
 <div class="candidate-modal" ng-controller="CandidateSidebarAddExp3Controller">
   <div class="modal-header modal-headerExpenses">
     <h4 class="modal-title" id="myModalLabel">Expenses #1 | Claim Dates</h4>
-    <small>Select a week range from the date piker below.</small>
+    <small>Select a week range from the date picker below.</small>
   </div><!-- /modal-header -->
 
   <div class="modal-body">
@@ -10,8 +10,8 @@
         <p class="underlineText">Select Range</p>
         <datepicker ng-model="expenseData.claimDate" 
                     format-day="d" 
-                    starting-day="1"
-                    min-date="minDate" 
+                    starting-day="6"
+                    max-date="minDate" 
                     show-weeks="false" 
                     id="claim_datepicker" 
                     class="inline-datepicker-center"></datepicker>
