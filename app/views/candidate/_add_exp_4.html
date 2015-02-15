@@ -105,12 +105,12 @@
         <table class="table table-striped ">
           <thead>
             <tr>
-              <th>Date 
-                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+              <th ng-click="sortDir = !sortDir">Date 
+                <span class="pull-right">
                   <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
-                  <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
-                  <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
-                </a>
+                  <i class="fa fa-caret-up" ng-show="sortDir === false"></i>
+                  <i class="fa fa-caret-down" ng-show="sortDir === true"></i>
+                </span>
               </th>
               <th>Start</th>
               <th>End</th>

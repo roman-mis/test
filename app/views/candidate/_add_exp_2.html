@@ -4,10 +4,15 @@
 	</div>
 	<div class="modal-body">
 		<div class="div-center">
-      <ui-select ng-model="expenseData.agency" theme="select2" search-enabled="true">
-        <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-        <ui-select-choices repeat="item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
-      </ui-select>
+          <select ui-select2 ng-model="expenseData.agency" placeholder="--Select--" name="agency">
+            <option value=""></option>
+            <option ng-repeat="item in agencies | filter: $select.search">{{item.name}}</option>
+          </select>
+         
+          <!--<ui-select ng-model="expenseData.agency" theme="select2" search-enabled="true">
+            <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+          </ui-select>-->
 		</div>
 	</div>
 	<div class="modal-footer">

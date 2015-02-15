@@ -182,3 +182,18 @@
     width: 50%;
   }
 } 
+
+#claim_datepicker table {
+	td, th {
+		user-select: none;	
+	}
+	&:focus {
+		outline: none;	
+	}
+	thead button, td button {
+		border: none!important;	
+		border-radius: 0px!important;
+		box-shadow: none!important;
+		outline: none!important;
+	}
+}
