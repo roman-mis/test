@@ -7,16 +7,16 @@ var service = {};
 
 service.saveTemplate = function(templateContent){
 	return Q.Promise(function(resolve,reject){
-		console.log(templateContent)
+		console.log(templateContent);
 		var template = db.adminTemplates(templateContent);
-		console.log(template)
+		console.log(template);
 		return Q.all([Q.nfcall(template.save.bind(template))])
 			.then(function(){
 					console.log('save done');
 					resolve({});
 				},reject);
 	});
-}
+};
 
 
 service.getAllAdminTemplates=function(request){
@@ -54,7 +54,7 @@ service.deleteAdminTemplate=function(adminTemplateId){
 		return service.getAdminTemplate(adminTemplateId)
 			.then(function(adminTemplate){
 					console.log(adminTemplate);
-					console.log('i am in the delete')
+					console.log('i am in the delete');
 					if(adminTemplate){
 						// Get Index
 						
@@ -76,11 +76,11 @@ service.updateAdminTemplate=function(adminTemplateId,templateContent){
 	return Q.Promise(function(resolve,reject){
 		return service.getAdminTemplate(adminTemplateId)
 			.then(function(adminTemplate){
-					console.log("##########################")
+					console.log('##########################');
 					console.log(adminTemplate);
 					if(adminTemplate){
 						var v = ['templateTechnique','templateName','templateType',
-							'mergeFields','templatTitle','body']
+							'mergeFields','templatTitle','body'];
 							console.log(v);
 						for(var i = 0; i < v.length; i++){
 							console.log(adminTemplate[v[i]]);
@@ -88,17 +88,17 @@ service.updateAdminTemplate=function(adminTemplateId,templateContent){
 
 							adminTemplate[v[i]] = templateContent[v[i]];
 						}
-						console.log("***********adminTemplate*************");
+						console.log('***********adminTemplate*************');
 						console.log(adminTemplate);
 
 						// Get Index
 						return Q.all([Q.nfcall(adminTemplate.save.bind(adminTemplate))])
 							.then(function(){
 								resolve({result:true});
-								console.log({result:true})
+								console.log({result:true});
 							},reject);
 					}else{
-						console.log({result:false})
+						console.log({result:false});
 						reject({result:false,name:'NOTFOUND',message:'admin template not found'});
 					}
 				

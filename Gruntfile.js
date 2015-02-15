@@ -468,7 +468,7 @@ module.exports = function (grunt) {
         options:{
           reporter:'spec',
           captureFile:'server_results.txt',
-          require:['test/server/startup.js'],
+          require:[],
           quiet:false,
           clearRequireCache:false
         },
