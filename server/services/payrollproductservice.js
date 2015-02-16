@@ -5,7 +5,7 @@ var db = require('../models'),
 	Q=require('q'),
 	_=require('lodash'),
 	utils=require('../utils/utils'),
-	candidatecommonservice=require(__dirname+'/candidatecommonservice');
+	candidatecommonservice=require(__dirname+'/candidatecommonservice')(db);
 var service={};
 
 service.getPayrollProductDetails = function(id){
