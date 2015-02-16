@@ -3,38 +3,8 @@
     {
       "target":"client",
       "data":[
-      //   {
-      //   "type":"Regulation 10 Contract"
-      //   // "entities":[
-      //   //     {
-      //   //         name: 'Worker',
-      //   //         fields: [
-      //   //             {
-      //   //                 display: 'Address 1',
-      //   //                 code: 'address1'
-      //   //             },
-      //   //             {
-      //   //                 display: 'First Name',
-      //   //                 code: 'firstName'
-      //   //             }
-      //   //         ]
-      //   //     }
-          
-      //     "First Name",
-      //     "Last Name",
-      //     "Address 1",
-      //     "Address 2",
-      //     "Address 3",
-      //     "Town",
-      //     "County",
-      //     "Postcode",
-      //     "Start Date",
-      //     "Creation Date",
-      //     "Job Title" 
-      //     ]
-      // },*/
       {
-        "type":"Regulation 5 Contract",
+        "subType":"Regulation 5 Contract",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -50,7 +20,7 @@
           ]
       },
       {
-        "type":"PAYE Contract",
+        "subType":"PAYE Contract",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -66,7 +36,7 @@
           ]
       },
       {
-        "type":"Hybrid Contract",
+        "subType":"Hybrid Contract",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -82,7 +52,7 @@
           ]
       },
        {
-        "type":"Low End Contract",
+        "subType":"Low End Contract",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -98,11 +68,11 @@
           ]
       },
        {
-        "type":"Assignment Schedule",
+        "subType":"Assignment Schedule",
         "mergeFields":[]
       },
       {
-        "type":"Welcome Letter - Umbrella regulation 5",
+        "subType":"Welcome Letter - Umbrella regulation 5",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -113,7 +83,7 @@
           ]
       },
       {
-        "type":"Welcome Letter - Umbrella regulation 10",
+        "subType":"Welcome Letter - Umbrella regulation 10",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -124,7 +94,7 @@
           ]
       },
       {
-        "type":"Welcome Letter - Hybrid",
+        "subType":"Welcome Letter - Hybrid",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -135,7 +105,7 @@
           ]
       },
       {
-        "type":"Welcome Letter - Low End",
+        "subType":"Welcome Letter - Low End",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -146,7 +116,7 @@
           ]
       },
       {
-        "type":"Welcome Letter - PAYE",
+        "subType":"Welcome Letter - PAYE",
         "mergeFields":[
           "First Name",
           "Last Name",
@@ -157,42 +127,42 @@
           ]
       },
       {
-        "type":"Payslip - Umbrella",
+        "subType":"Payslip - Umbrella",
         "mergeFields":[]
       },
       {
-        "type":"Payslip - Hybrid",
+        "subType":"Payslip - Hybrid",
         "mergeFields":[]
       },
       {
-        "type":"Payslip - Low paid",
+        "subType":"Payslip - Low paid",
         "mergeFields":[]
       },{
-        "type":"P45",
+        "subType":"P45",
         "mergeFields":[]
       },
       {
-        "type":"P60",
+        "subType":"P60",
         "mergeFields":[]
       },
       {
-        "type":"Paternity Pay - Qualifies",
+        "subType":"Paternity Pay - Qualifies",
         "mergeFields":[]
       },
       {
-        "type":"Paternity Pay - Does Not Qualify",
+        "subType":"Paternity Pay - Does Not Qualify",
         "mergeFields":[]
       },
       {
-        "type":"Maternity Pay - Does Not Qualify",
+        "subType":"Maternity Pay - Does Not Qualify",
         "mergeFields":[]
       },
       {
-        "type":"SSP - Qualifies",
+        "subType":"SSP - Qualifies",
         "mergeFields":[]
       },
       {
-        "type":"SSP - Does not Qualify",
+        "subType":"SSP - Does not Qualify",
         "mergeFields":[]
       }
     ]
@@ -201,7 +171,7 @@
     "target":"agency",
     "data":[
       {
-        "type":"Validation Report",
+        "subType":"Validation Report",
         "mergeFields":[
           "Company Name",
           "Company Address",
@@ -222,7 +192,7 @@
         ]
       },
       {
-        "type":"Invoice",
+        "subType":"Invoice",
         "mergeFields":[
           "Company Name",
           "Company Address",
@@ -247,7 +217,7 @@
         ]
       },
       {
-        "type":"Credit Note",
+        "subType":"Credit Note",
         "mergeFields":[
           "Company Name",
           "Company Address",
@@ -279,7 +249,7 @@
       "target":"client",
       "data":[
         {
-          "type":"Welcome Email - Umbrella -Reg 10",
+          "subType":"Welcome Email - Umbrella -Reg 10",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -290,7 +260,7 @@
           ]
         },
         {
-          "type":"Welcome Email - Umbrella -Reg 5",
+          "subType":"Welcome Email - Umbrella -Reg 5",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -301,23 +271,23 @@
           ]
         },
         {
-          "type":"Assignment schedule",
+          "subType":"Assignment schedule",
           "mergeFields":[]
         },
         {
-          "type":"PAYE",
+          "subType":"PAYE",
           "mergeFields":[]
         },
         {
-          "type":"Hybrid",
+          "subType":"Hybrid",
           "mergeFields":[]
         },
         {
-          "type":"Low End",
+          "subType":"Low End",
           "mergeFields":[]
         },
         {
-          "type":"Expenses Rejection",
+          "subType":"Expenses Rejection",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -328,7 +298,7 @@
           ]
         },
         {
-          "type":"Expenses Approved",
+          "subType":"Expenses Approved",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -338,14 +308,14 @@
           ]
         },
         {
-          "type":"Expenses Reminder",
+          "subType":"Expenses Reminder",
           "mergeFields":[
             "First Name",
             "Last Name"
           ]
         },
         {
-          "type":"Payslips",
+          "subType":"Payslips",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -354,13 +324,13 @@
           ]
         },
         {
-          "type":"Password Reset",
+          "subType":"Password Reset",
           "mergeFields":[
             "Password Reset Link"
           ]
         },
         {
-          "type":"SSP - Does Qualify",
+          "subType":"SSP - Does Qualify",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -371,7 +341,7 @@
           ]
         },
         {
-          "type":"SSP - Does Not Qualify",
+          "subType":"SSP - Does Not Qualify",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -382,7 +352,7 @@
           ]
         },
         {
-          "type":"SMP - Does Qualify",
+          "subType":"SMP - Does Qualify",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -393,7 +363,7 @@
           ]
         },
         {
-          "type":"SMP - Does Not Qualify",
+          "subType":"SMP - Does Not Qualify",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -404,7 +374,7 @@
           ]
         },
         {
-          "type":"SSP - Does Not Qualify",
+          "subType":"SSP - Does Not Qualify",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -415,7 +385,7 @@
           ]
         },
         {
-          "type":"SSP - Does Qualify",
+          "subType":"SSP - Does Qualify",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -426,11 +396,11 @@
           ]
         },
         {
-          "type":"Holiday Pay request",
+          "subType":"Holiday Pay request",
           "mergeFields":[]
         },
         {
-          "type":"Salary Calculation - No Comparison",
+          "subType":"Salary Calculation - No Comparison",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -443,7 +413,7 @@
           ]
         },
         {
-          "type":"Salary Calculation - Comparison",
+          "subType":"Salary Calculation - Comparison",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -457,13 +427,13 @@
           ]
         },
         {
-          "type":"EVS Welcome Letter",
+          "subType":"EVS Welcome Letter",
           "mergeFields":[
             "TBC"
           ]
         },
         {
-          "type":"P45",
+          "subType":"P45",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -473,7 +443,7 @@
           ]
         },
         {
-          "type":"Removing Agency",
+          "subType":"Removing Agency",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -481,7 +451,7 @@
           ]
         },
         {
-          "type":"Adding Agency",
+          "subType":"Adding Agency",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -489,7 +459,7 @@
           ]
         },
         {
-          "type":"New Enquiries Call - Follow Up 1",
+          "subType":"New Enquiries Call - Follow Up 1",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -499,7 +469,7 @@
           ]
         },
         {
-          "type":"New Enquiries Call - Follow Up 2",
+          "subType":"New Enquiries Call - Follow Up 2",
           "mergeFields":[
             "First Name",
             "Last Name",
@@ -509,7 +479,7 @@
           ]
         },
         {
-          "type":"Thank you for Registering Online",
+          "subType":"Thank you for Registering Online",
           "mergeFields":[
             "First Name",
             "Last Name"
@@ -521,7 +491,7 @@
       "target":"Agency",
       "data":[
         {
-          "type":"Validation Report",
+          "subType":"Validation Report",
           "mergeFields":[
             "Company Name",
             "User Name",
@@ -534,7 +504,7 @@
           ]
         },
         {
-          "type":"Invoice",
+          "subType":"Invoice",
           "mergeFields":[
             "Company Name",
             "User Name",
@@ -548,7 +518,7 @@
           ]
         },
         {
-          "type":"Credit Note",
+          "subType":"Credit Note",
           "mergeFields":[
             "Company Name",
             "User Name",
@@ -561,12 +531,12 @@
           ]
         },
         {
-          "type":"Payment Received",
+          "subType":"Payment Received",
           "mergeFields":[
             "Total Payment"]
         },
         {
-          "type":"NET pay reports",
+          "subType":"NET pay reports",
           "mergeFields":[
             "TBC"
           ]
@@ -579,11 +549,11 @@
       "target":"all",
       "data":[
         {
-          "type":"New Enquires Call",
+          "subType":"New Enquires Call",
           "mergeFields":[]
         },
         {
-          "type":"Payslip",
+          "subType":"Payslip",
           "mergeFields":[]
         }
       ]

@@ -8,7 +8,7 @@ var service = {};
 service.saveTemplate = function(templateContent){
 	return Q.Promise(function(resolve,reject){
 		console.log(templateContent)
-		var template = db.adminTemplates(templateContent);
+		var template = db.Template(templateContent);
 		console.log(template)
 		return Q.all([Q.nfcall(template.save.bind(template))])
 			.then(function(){
@@ -23,8 +23,8 @@ service.getAllAdminTemplates=function(request){
 	console.log('request');
 	console.log(request);
 	return Q.Promise(function(resolve,reject){
-		var q=db.adminTemplates.find();
-		queryutils.applySearch(q,db.adminTemplates,request)
+		var q=db.Template.find();
+		queryutils.applySearch(q,db.Template,request)
 		.then(resolve,reject);
 	});
 	
@@ -32,7 +32,7 @@ service.getAllAdminTemplates=function(request){
 
 
 service.getAdminTemplate=function(adminTemplateId){
-	var query=db.adminTemplates.findOne({'_id':adminTemplateId});
+	var query=db.Template.findOne({'_id':adminTemplateId});
 	return Q.Promise(function(resolve,reject){
 		Q.nfcall(query.exec.bind(query))
 			.then(function(adminTemplate){
