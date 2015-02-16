@@ -5,7 +5,8 @@ $screen-lg: 1280px;
 $screen-md: 1024px;
 $screen-sm: 768px;
 $screen-xs: 568px;
-$grid-float-breakpoint: $screen-md;
+$min-width: 300px;
+$grid-float-breakpoint: $screen-xs;
 
 $screen-xs-max: ($screen-sm - 1);
 $screen-sm-max: ($screen-md - 1);

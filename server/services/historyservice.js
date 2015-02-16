@@ -3,7 +3,7 @@
 var db = require('../models'),
 	Q=require('q'),
 	utils=require('../utils/utils'),
-	candidatecommonservice=require(__dirname+'/candidatecommonservice');
+	candidatecommonservice=require(__dirname+'/candidatecommonservice')(db);
 
 var service={};
 

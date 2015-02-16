@@ -4,6 +4,7 @@ angular.module('origApp.controllers')
           var currentDate = new Date();
           $scope.minDate = currentDate;
           $scope.expenseData.claimDate = $scope.expenseData.claimDate || currentDate;
+          $scope.weekEndingDay = 0;
 
           $scope.$watch('expenseData.claimDate', function() {
             setTimeout(function() {
@@ -23,11 +24,17 @@ angular.module('origApp.controllers')
           $scope.ok = function() {
             var date = $scope.expenseData.claimDate;
             $scope.expenseData.claimDateRange = [];
-            $scope.expenseData.claimDateRange[0] = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
-            $scope.expenseData.claimDateRange[1] = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
-            if ($scope.expenseData.claimDateRange[0] < currentDate) {
-              $scope.expenseData.claimDateRange[0] = currentDate;
+             
+            while(date.getDay()!==$scope.weekEndingDay) {
+              date = new Date(date.getTime() - 24 * 60 * 60 * 1000); 
             }
+              
+              
+            $scope.expenseData.claimDateRange[0] = date;
+            $scope.expenseData.claimDateRange[1] = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+            /*if ($scope.expenseData.claimDateRange[0] < currentDate) {
+              $scope.expenseData.claimDateRange[0] = currentDate;
+            }*/
             //console.log($scope.expenseData.claimDateRange);
             
             var daysInRange = [{object: 'all', label: 'All dates in selection'}];
@@ -42,7 +49,7 @@ angular.module('origApp.controllers')
               dt.setHours(0, 0, 0, 0);
             }
             $scope.expenseData.daysInRange = daysInRange;
-            
+            $scope.expenseData.times = [];
             $scope.gotoNext();
             //$scope.mainData.step = 6;
           };

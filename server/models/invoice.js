@@ -15,7 +15,7 @@ module.exports = function(mongoose,autoIncrement) {
         lines: [
             {
                 worker: { type: Schema.Types.ObjectId, ref:'User' },
-                type: String, // timesheet, margin
+                lineType: String, // timesheet, margin
                 elements: [
                     {
                         text: String,
@@ -27,6 +27,18 @@ module.exports = function(mongoose,autoIncrement) {
                 ]
             }
         ],
+        companyDefaults:{
+            holidayPayIncluded: Boolean,
+            employeeNiIncluded: Boolean,
+            vatCharged: Boolean,
+            invoiceDesign: { type: Schema.Types.ObjectId, ref:'InvoiceDesign' },
+            marginAmount: Number,
+            invoiceEmailPrimary: String,
+            invoiceEmailSecondary: String,
+            paymentTerms: String,
+            marginChargedToAgency: String,
+            holidayAmount: String
+        },
         net: Number,
         vatRate: Number,
         vat: Number,
