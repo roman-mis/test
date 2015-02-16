@@ -24,18 +24,29 @@ describe('KTest', function() {
   });
   
   it('should select a date', function() {
-    element(by.cssContainingText('button', '12')).click();
+    element.all(by.cssContainingText('td', '15')).get(1).click();
     element(by.cssContainingText('button', 'Next')).click();
   });
   
   it('should add days', function() {
     element(by.cssContainingText('option', 'All dates')).click();
-    element(by.cssContainingText('.button', 'Add')).click();
+    element(by.cssContainingText('.btn-default.form-control', 'Add')).click();
     element(by.cssContainingText('button', 'Next')).click();
   });
   
+  it('should add travel', function() {
+    element(by.cssContainingText('button', 'Next')).click();
+  });
+  it('should add subsistence', function() {
+    element.all(by.cssContainingText('button', 'Next')).get(0).click();
+  });
+  it('should add other', function() {
+    element.all(by.cssContainingText('button', 'Next')).get(0).click();
+    
+  });
+  
   it('should sleep', function() {
-    browser.sleep(100);
+    browser.sleep(10000000);
   });
   
 });
