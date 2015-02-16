@@ -72,7 +72,14 @@ angular.module('origApp.controllers')
               controller: 'CandidateSidebarAddExpController'
             });
           };
-        })
+	
+		  $scope.openAddTimesheetWin = function() {
+            ModalService.open({
+              templateUrl: 'views/candidate/_add_timesheet.html',
+              parentScope: $scope
+            });
+          };
+		})
 
         //DPA questions
         .controller('CandidateSidebarDPAController', function($scope, $modalInstance) {
