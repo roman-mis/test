@@ -69,7 +69,21 @@ module.exports = function(mongoose) {
                 amount: Number,
                 validFrom: Date,
                 validTo: Date
-            }]
+            }],
+            employersNiThreshold: [
+                {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            employersNiRate: [
+                {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ]
         },
         paymentRates: [
             {

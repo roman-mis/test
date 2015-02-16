@@ -19,7 +19,12 @@ module.exports = function(mongoose) {
                 chargeRate: Number,
                 amount: Number,
                 vat: Number,
-                isCis: Boolean
+                isCis: Boolean,
+                paymentRate: {
+                    name: String,
+                    rateType: String,
+                    hours: Number,
+                }
             }
         ],
         net: Number,
