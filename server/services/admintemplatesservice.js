@@ -7,15 +7,11 @@ var service = {};
 
 service.saveTemplate = function(templateContent){
 	return Q.Promise(function(resolve,reject){
-<<<<<<< HEAD
+
 		console.log(templateContent)
 		var template = db.Template(templateContent);
 		console.log(template)
-=======
-		console.log(templateContent);
-		var template = db.adminTemplates(templateContent);
-		console.log(template);
->>>>>>> 424198669d4d2ac6e0d6951abddad4bc4dff9e0b
+
 		return Q.all([Q.nfcall(template.save.bind(template))])
 			.then(function(){
 					console.log('save done');
