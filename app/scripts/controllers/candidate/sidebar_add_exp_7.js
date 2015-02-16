@@ -30,9 +30,9 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            if ($scope.isAllDatesEntered($scope.expenseData.subsistences)) {
+            //if ($scope.isAllDatesEntered($scope.expenseData.subsistences)) {
               $scope.gotoNext();
-            }
+            //}
           };
 
           $scope.$watch('expenseData.subsistences.length', function(){

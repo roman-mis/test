@@ -140,7 +140,7 @@ angular.module('origApp.controllers')
           };
           $scope.cancelConfirmMatch = function() {
             $scope.confirmExpenses = [];
-            $scope.whichShow = 'main';
+            $scope.whichShow = 'confirmed';
             $scope.listData.forEach(function(item) {
               item.checked = false;
             });
@@ -183,13 +183,17 @@ angular.module('origApp.controllers')
           };
 
           $scope.closePrevUploaded = function() {
-            $scope.whichShow = 'main';
+            $scope.whichShow = 'confirmed';
             $scope.selectedPrevUpload = null;
           };
 
           $scope.ok = function() {
             $scope.expenseData.receiptListData = $scope.listData;
             $scope.gotoNext();
+          };
+  
+          $scope.closeConfirmed = function() {
+            $scope.whichShow = 'main';
           };
 
           $scope.generateSendData();
