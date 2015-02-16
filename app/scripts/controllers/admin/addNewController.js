@@ -39,7 +39,10 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 
 		// get dropdowns from the server
 		$scope.templatesDropdowns = HttpResource.model('constants')
-			.customGet('/adminTemplatesData/'+$scope.data.details.templateType,{},function(){});
+			.customGet('/adminTemplatesData/'+$scope.data.details.templateType,{},
+				function(){
+					console.log($scope.templatesDropdowns);
+				});
         ////**////
 
 
@@ -48,7 +51,20 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	for(var i = 0; i < $scope.templatesDropdowns.length; i++){
         		for(var j = 0; j < $scope.templatesDropdowns[i].data.length; j++){
 	        		if($scope.templatesDropdowns[i].data[j].subType === selectedSubType){
-	        			$scope.mergeFields= $scope.templatesDropdowns[i].data[j].mergeFields;
+	        			$scope.mergeFields = [];
+	        			for(var k = 0; k < $scope.templatesDropdowns[i].data[j].mergeFieldsGroupNumber.length; k++){
+	        				// $scope.templatesDropdowns[i].data[j].mergeFieldsGroupNumber[k]
+	        				for(var m = 0; m < $scope.templatesDropdowns[i].mergeFieldsGroups.length; m++){
+	        					if($scope.templatesDropdowns[i].data[j].mergeFieldsGroupNumber[k] ===
+	        						$scope.templatesDropdowns[i].mergeFieldsGroups[m].number){
+	        						$scope.mergeFields = $scope.mergeFields.concat($scope.templatesDropdowns[i].mergeFieldsGroups[m].mergeFields)
+	        						break;
+	        					}
+	        					
+	        				}
+	        			console.log($scope.mergeFields);
+	        			}
+	        			// $scope.mergeFields= $scope.templatesDropdowns[i].data[j].mergeFields;
 	        			$scope.data.details.current.subType = selectedSubType;
 	        			
 	        			$scope.data.details.mergeFields="";
@@ -63,15 +79,29 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         $scope.changeTemplateSubType = function(){
         	$scope.data.details.subType = $scope.data.details.current.subType;
         }
+        var formate = function(s){
+        	ar = s.split(' ');
+        	s = '';
+        	for(var i = 0; i< ar.length; i++){
+        		arr = ar[i].split('');
+        		if(i === 0){
+        			arr[0] = arr[0].toLowerCase();
+        		}else{
+					arr[0] = arr[0].toUpperCase();
+        		}
+        		s = s+ arr.join('');
+        	}
+        	return s;
+        }
 
-
+        $scope.data.details.templateBody = '';
         $scope.setMergeField = function(mergeField){
         	console.log('******************************');
         	console.log($scope.selection);
-
+        	mergeField = ' %' + formate(mergeField) + '% ';
         	//if the selection not defined
         	if(!$scope.selection || !$scope.selection.startContainer.data){
-        		$scope.data.details.templateBody = mergeField;
+        		$scope.data.details.templateBody += mergeField;
         		return; 
         	}
 
