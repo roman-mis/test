@@ -10,8 +10,8 @@ module.exports = function(){
 			templateType: 	req.body.templateType,
 			name: 			req.body.name,
 			subType: 		req.body.subType,
-			title: 			req.body.title,
-			templateBody: 	req.body.templateBody
+			templateBody: 	req.body.templateBody,
+			title: 			req.body.title
 		}
 		adminTemplatesService.saveTemplate(templateContent).then(
 			function(result){
@@ -38,6 +38,8 @@ module.exports = function(){
 		adminTemplatesService.getAdminTemplate(req.params.id)
 		.then(function(adminTemplate){
 			if(adminTemplate){
+				console.log("******************")
+				adminTemplate.x= "hello";
 				console.log(adminTemplate);
 				res.json({result:true, object: adminTemplate});
 			}else{

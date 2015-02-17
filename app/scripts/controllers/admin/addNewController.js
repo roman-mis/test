@@ -3,14 +3,9 @@ var app = angular.module('origApp.controllers');
 app.controller('addNewController',['$rootScope', '$interval','$scope', '$stateParams', '$location', 'HttpResource', 'adminTemplate','ConstantsResource',
 	function($rootScope, $interval, $scope, $stateParams, $location, HttpResource, adminTemplate, ConstantsResource){	
 		
-		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
-                              {link: '/admin/home', text: 'Admin'},
-                              {link: '/admin/templates', text: 'templates'},
-                              {link: '/admin/add_new/call_log', text: 'add new '+ $stateParams.type}
-                              ];
 
 		// defined values
-		var fields = ['templateType','name','subType','title','body','templateBody'];
+		var fields = ['templateType','name','subType','title','templateBody'];
 		var differentTypes =['call_log','task','document','email','payslip','invoice'];		
 		// initialization
 		$scope.data={details:{}};
@@ -19,9 +14,12 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 			if(!adminTemplate.details.name){
 				$location.path('admin/templates');
 			}
+			console.log(adminTemplate)
 			$scope.data=adminTemplate;
+			console.log(adminTemplate)
 		}else{
 			var definedType = false;
+			$scope.data.details.templateBody = '';
 			for(var i = 0; i < differentTypes.length; i++){
 				if($stateParams.type === differentTypes[i]){
 					$scope.data.details.templateType = $stateParams.type;
@@ -34,6 +32,14 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 			}
 		}
 		
+
+		$rootScope.breadcrumbs = [
+		{link:'/', text:'Home'},
+        {link: '/admin/home', text: 'Admin'},
+        {link: '/admin/templates', text: 'Templates'},
+        {link: '/admin/add_new/'+$scope.data.details.templateType, text: breadCrumbAddNewValue()}];
+
+        
 		$scope.data.details.current ={};
 		$scope.data.details.current.subType = $scope.data.details.subType
 
@@ -44,7 +50,22 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 					console.log($scope.templatesDropdowns);
 				});
         ////**////
+        function breadCrumbAddNewValue(){
+        	var s = (($stateParams.type === 'edite')?'Edite ' : 'Add New ' )
+				+ breadCrumbformate($scope.data.details.templateType)
+			return s;
+        }
 
+        function breadCrumbformate(s){
+        	ar = s.split('_');
+        	s = '';
+        	for(var i = 0; i< ar.length; i++){
+        		arr = ar[i].split('');
+				arr[0] = arr[0].toUpperCase();
+        		s = s+ arr.join('')+ ' ';
+        	}
+        	return s;
+        }
 
         // on select function
         $scope.selectSybType = function(selectedSubType){
@@ -94,7 +115,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	return s;
         }
 
-        $scope.data.details.templateBody = '';
+        
         $scope.setMergeField = function(mergeField){
         	console.log('******************************');
         	console.log($scope.selection);
@@ -147,8 +168,9 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		$scope.isNotEmpty = function(vars){
 			var isNotEmpty = true;
 			for(var i = 0; i < vars.length; i++){
+				console.log(vars[i])
 				if($scope.data.details[vars[i]] === undefined || $scope.data.details[vars[i]] === ''){
-					isEmpty = false;
+					isNotEmpty = false;
 					break;
 				}
 			}
@@ -192,6 +214,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 	      	.create(data).post().then(function(result){
 	        	console.log('*****');
 	        	console.log(result);
+	        	$location.path('admin/templates');
 	      	});
   	  	}
     };
