@@ -102,6 +102,11 @@
 			"description":"PAYE+",
 			"requirementList":["PAYE+ 1", "PAYE+ 2", "PAYE+ 3", "PAYE+ 4"],
 			"onboardingScript":"The PAYE+ Script"
+		},{
+			"code":"6",
+			"description":"CIS",
+			"requirementList":["CIS 1"],
+			"onboardingScript":"The CIS Script"
 		}],
 	"PaymentTerms":[{
 			"code":"1",
