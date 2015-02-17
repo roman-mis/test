@@ -47,15 +47,24 @@
 		}],
 	"HolidayPayRule":[{
 			"code":"1",
-			"description":"Holiday Pay Roled Up"
+			"description":"Roled Up on NMW"
 		},{
 			"code":"2",
-			"description":"Holiday Pay Retained"
+			"description":"Roled Up on Total Pay"
 		},{
 			"code":"3",
-			"description":"Holiday Pay Charged Back"
+			"description":"Retained on NMW"
 		},{
 			"code":"4",
+			"description":"Retained on Total Pay"
+		},{
+			"code":"5",
+			"description":"Charged Back on NMW"
+		},{
+			"code":"6",
+			"description":"Charged Back on Total Pay"
+		},{
+			"code":"7",
 			"description":"No Holiday Pay"
 		}],
 	"DerogationContract":[{
