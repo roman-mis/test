@@ -29,6 +29,7 @@ module.exports=function(){
 					var lines = [];
 					var net = 0, vat = 0, vatRate = 0;
 					_.forEach(timesheets, function(timesheet){
+						console.log(timesheet);
 						var elements = [];
 						_.forEach(timesheet.elements, function(_element){
 							var element = {
@@ -48,6 +49,10 @@ module.exports=function(){
 							elements: elements
 						};
 						lines.push(line);
+
+						//Update Timesheet
+						utils.updateSubModel(timesheet.payrollSettings, invoice.companyDefaults);
+						timesheetservice.saveTimesheet(timesheet._id, timesheet);
 					});
 					
 					// For Vat
@@ -74,8 +79,8 @@ module.exports=function(){
 							invoiceModel = new db.Invoice(invoiceInfo);
 							return Q.nfcall(invoiceModel.save.bind(invoiceModel))
 							.then(function(){
-									resolve(invoiceModel);
-								},reject);
+								resolve(invoiceModel);
+							},reject);
 						}, reject);
 					}else{
 						invoiceInfo = {
@@ -95,8 +100,8 @@ module.exports=function(){
 						invoiceModel = new db.Invoice(invoiceInfo);
 						return Q.nfcall(invoiceModel.save.bind(invoiceModel))
 						.then(function(){
-								resolve(invoiceModel);
-							},reject);
+							resolve(invoiceModel);
+						},reject);
 					}
 
 					
