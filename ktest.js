@@ -1,4 +1,8 @@
 describe('KTest', function() {
+  var selectSelector=function(selectAll,item){
+    selectAll.all(by.css('[ng-click="$select.toggle($event)"]')).get(0).click();
+    selectAll.all(by.css('[ng-click="$select.select(item,false,$event)"]')).get(item).click();
+  };
   
   it('should login', function() {
     browser.get('http://localhost:9000');
@@ -19,7 +23,8 @@ describe('KTest', function() {
   });
   
   it('should select an agency', function() {
-    element(by.cssContainingText('option', 'Marks')).click();
+    var select = element.all(by.model('expenseData.agency'));
+    selectSelector(select, 0);
     element(by.cssContainingText('button', 'Next')).click();
   });
   
