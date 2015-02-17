@@ -49,7 +49,8 @@ module.exports = function(){
 	        totalPreDeductions: timesheet.totalPreDeductions,
 	        deductions: timesheet.deductions,
 	        total: timesheet.total,
-	        imageUrl: timesheet.imageUrl
+	        imageUrl: timesheet.imageUrl,
+	        payrollSettings: timesheet.payrollSettings
 		};
 	}
 
