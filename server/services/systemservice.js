@@ -59,6 +59,27 @@ module.exports=function(){
 			}, resolve(0));
 		});
 	};
+    
+    service.getStatutoryValue = function(name){
+		return Q.Promise(function(resolve){
+			return service.getSystem()
+			.then(function(system){
+				if(system.statutoryTables[name]){
+					var currentDate = new Date();console.log(currentDate);
+					_.forEach(system.statutoryTables[name], function(_value){
+						console.log(_value);
+						if(currentDate >= _value.validFrom && currentDate <= _value.validTo){
+							resolve(_value);
+							return false;
+						}
+					});
+					resolve({});
+				}else{
+					resolve({});
+				}
+			}, resolve({}));
+		});
+	};
 
 	return service;
 };
