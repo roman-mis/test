@@ -182,35 +182,75 @@ describe('Checking Call Log', function() {
 */
 
 
-describe('Checking Call Log', function() {
+describe('checking expense wizard', function() {
 
-  it('should allow to create task', function () {
+  it('selecting wizard option', function () {
 
     clickFirstVisible(by.css('[ng-click="openAddExpensesWin()"]'),function(link) {
       link.click();
       expect($('.modal-content').isDisplayed()).toBeTruthy();
-      element(by.css('[ng-click="gotoNext()"]')).click();
-      element(by.css('.modal-content .select2-choice')).click();
-      element.all(by.css('#select2-results-2 li')).get(0).click();
-      element(by.css('[ng-click="gotoNext()"]')).click();
-      element(by.css('[ng-click="ok()"]')).click();
+    });
 
-      var days=element(by.model('addData.date'));
-      var startH=element(by.model('addData.startHours'));
-      var startM=element.all(by.model('addData.startMins'));
-      var endH=element.all(by.model('addData.endHours'));
-      var endM=element.all(by.model('addData.endMins'));
-      helper.selectSimpleSelect(days,2);
-      helper.selectSimpleSelect(startH,10);
-      helper.selectSimpleSelect(startM,2);
-      helper.selectSimpleSelect(endH,17);
-      helper.selectSimpleSelect(endM,3);
-      element(by.css('[ng-click="add()"]')).click();
+  });
+var okBtn=element(by.css('[ng-click="ok()"]'))
+  it('selecting agency and default date', function () {
+    element(by.css('[ng-click="gotoNext()"]')).click();
+    element(by.css('.modal-content .select2-choice')).click();
+    element.all(by.css('#select2-results-2 li')).get(0).click();
+    element(by.css('[ng-click="gotoNext()"]')).click();
+    okBtn.click();
+  });
+
+  var days = element(by.model('addData.date'));
+
+  it('adding dates', function () {
+    var startH = element(by.model('addData.startHours'));
+    var startM = element.all(by.model('addData.startMins'));
+    var endH = element.all(by.model('addData.endHours'));
+    var endM = element.all(by.model('addData.endMins'));
+    helper.selectSimpleSelect(days, 2);
+    helper.selectSimpleSelect(startH, 10);
+    helper.selectSimpleSelect(startM, 2);
+    helper.selectSimpleSelect(endH, 17);
+    helper.selectSimpleSelect(endM, 3);
+    element(by.css('[ng-click="add()"]')).click();
 
 
+    var rows = element.all(by.repeater('item in expenseData.times'));
+    rows.first().then(function (row) {
+      var rowElems = row.all(by.tagName('td'));
+      rowElems.then(function (cols) {
+
+        expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
+        cols[1].getText().then(function (str) {
+          expect(str.split(':')[0]).toContain(startH.all(by.tagName('option')).get(10).getText());
+          expect(str.split(':')[1]).toContain(startM.all(by.tagName('option')).get(2).getText());
+        });
+        cols[2].getText().then(function (str) {
+          expect(str.split(':')[0]).toContain(endH.all(by.tagName('option')).get(17).getText());
+          expect(str.split(':')[1]).toContain(endM.all(by.tagName('option')).get(3).getText());
+        });
+        okBtn.click();
+      });
     });
 
   });
 
+  it('adding location', function () {
+
+    element(by.model('addData.code')).sendKeys('E20 2BB');
+    helper.selectSimpleSelect(days, 2);
+    element(by.css('[ng-click="add()"]')).click();
+
+    var rows = element.all(by.repeater('item in expenseData.postCodes'));
+    rows.first().then(function (row) {
+      var rowElems = row.all(by.tagName('td'));
+      rowElems.then(function (cols) {
+        expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
+        expect(cols[1].getText()).toContain('E20 2BB');
+        okBtn.click();
+      });
+    });
+  });
 
 });
