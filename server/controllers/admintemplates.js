@@ -6,13 +6,13 @@ module.exports = function(){
 	controller.saveTemplate = function(req,res){
 		
 		var templateContent = {
-			templateTechnique: 	req.body.templateTechnique,
-			templateName: 		req.body.templateName,
-			templateType: 		req.body.templateType,
-			mergeFields: 		req.body.mergeFields,
-			templatTitle: 		req.body.templatTitle,
-			body: 				req.body.body
-		};
+
+			templateType: 	req.body.templateType,
+			name: 			req.body.name,
+			subType: 		req.body.subType,
+			title: 			req.body.title,
+			templateBody: 	req.body.templateBody
+		}
 		adminTemplatesService.saveTemplate(templateContent).then(
 			function(result){
 				console.log('done!');

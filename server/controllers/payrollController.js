@@ -3,13 +3,13 @@
 
 module.exports = function(){
 	var _=require('lodash'),
-		payrollservice=require('../services/payrollservice')(),
+		payrollService=require('../services/payrollservice')(),
 		Q = require('q');
 
 	var controller={};
 		 
 		controller.getAllPayrolls=function (req,res){
-			payrollservice.getAllPayrolls(req._restOptions)
+			payrollService.getAllPayrolls(req._restOptions)
 		  	.then(function(result){
 		  		
 			    var payrolls =_.map(result.rows, function(payroll){
@@ -33,7 +33,7 @@ module.exports = function(){
 		function savePayroll(req, res, type){
 			var newPayroll=req.body;
 
-			payrollservice.savePayroll((type==='patch'?req.params.id:null), newPayroll).then(function(payroll){
+			payrollService.savePayroll((type==='patch'?req.params.id:null), newPayroll).then(function(payroll){
 				buildPayrollVm(payroll, true)
 		        .then(function(_payroll){
 	          		res.json({result:true, object:_payroll});
@@ -44,12 +44,19 @@ module.exports = function(){
 		}
 
 		controller.getPayroll=function(req,res){
-			payrollservice.getPayroll(req.params.id, true)
+			payrollService.getPayroll(req.params.id, true)
 				.then(function(payroll){
 					var vm = getPayrollVm(payroll);
 					res.json({result:true, object:vm});
 				},res.sendFailureResponse);
 		};
+    
+        controller.runPayroll=function(req,res) {
+            payrollService.runPayroll(req)
+                .then(function(){
+                    res.json({});
+                });
+        };
 
 		function getPayrollVm(payroll){
 			var agenciesVm = [];
@@ -95,7 +102,7 @@ module.exports = function(){
 		function buildPayrollVm(payroll, reload){
 			return Q.Promise(function(resolve, reject){
 				if(reload){
-					return payrollservice.getPayroll(payroll._id, true)
+					return payrollService.getPayroll(payroll._id, true)
 		      		.then(function(payroll){
 		      			var payrollVm = getPayrollVm(payroll);
 		      			resolve({result:true, object: payrollVm});
@@ -105,7 +112,7 @@ module.exports = function(){
 				}
 			});
 		}
-
+    
  return controller;
 };
 

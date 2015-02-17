@@ -1,4 +1,8 @@
 describe('KTest', function() {
+  var selectSelector=function(selectAll,item){
+    selectAll.all(by.css('[ng-click="$select.toggle($event)"]')).get(0).click();
+    selectAll.all(by.css('[ng-click="$select.select(item,false,$event)"]')).get(item).click();
+  };
   
   it('should login', function() {
     browser.get('http://localhost:9000');
@@ -19,23 +23,42 @@ describe('KTest', function() {
   });
   
   it('should select an agency', function() {
-    element(by.cssContainingText('option', 'Marks')).click();
+    var select = element.all(by.model('expenseData.agency'));
+    selectSelector(select, 0);
     element(by.cssContainingText('button', 'Next')).click();
   });
   
   it('should select a date', function() {
-    element(by.cssContainingText('button', '12')).click();
+    element.all(by.cssContainingText('td', '15')).get(1).click();
     element(by.cssContainingText('button', 'Next')).click();
   });
   
   it('should add days', function() {
     element(by.cssContainingText('option', 'All dates')).click();
-    element(by.cssContainingText('.button', 'Add')).click();
+    element(by.cssContainingText('.btn-default.form-control', 'Add')).click();
     element(by.cssContainingText('button', 'Next')).click();
   });
   
+  it('should add travel', function() {
+    element(by.cssContainingText('button', 'Next')).click();
+  });
+  it('should add transport', function() {
+    element(by.cssContainingText('button', 'Next')).click();
+  });
+  it('should add subsistence', function() {
+    element.all(by.cssContainingText('button', 'Next')).get(0).click();
+  });
+  it('should add other', function() {
+    element(by.cssContainingText('option', 'Mon')).click();
+    element(by.cssContainingText('option', 'Training')).click();
+    element(by.model('addData.cost')).sendKeys('333');
+    element(by.cssContainingText('.btn-default.form-control', 'Add')).click();    
+    element.all(by.cssContainingText('button', 'Next')).get(0).click();
+    
+  });
+  
   it('should sleep', function() {
-    browser.sleep(100);
+    browser.sleep(1000000);
   });
   
 });

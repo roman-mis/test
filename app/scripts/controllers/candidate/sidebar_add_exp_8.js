@@ -25,9 +25,9 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            if ($scope.isAllDatesEntered($scope.expenseData.others)) {
+            //if ($scope.isAllDatesEntered($scope.expenseData.others)) {
               $scope.gotoNext();
-            }
+            //}
           };
 
           $scope.$watch('expenseData.others.length', function() {

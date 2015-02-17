@@ -6,7 +6,8 @@ module.exports=function(){
 		_=require('lodash'),
 		queryutils=require('../utils/queryutils')(db),
 		utils=require('../utils/utils'),
-		timesheetservice=require(__dirname+'/timesheetservice')();
+		timesheetservice=require(__dirname+'/timesheetservice')(),
+		systemservice=require(__dirname+'/systemservice')();
 
 	var service={};
 
@@ -28,6 +29,7 @@ module.exports=function(){
 					var lines = [];
 					var net = 0, vat = 0, vatRate = 0;
 					_.forEach(timesheets, function(timesheet){
+						console.log(timesheet);
 						var elements = [];
 						_.forEach(timesheet.elements, function(_element){
 							var element = {
@@ -47,33 +49,62 @@ module.exports=function(){
 							elements: elements
 						};
 						lines.push(line);
+
+						//Update Timesheet
+						utils.updateSubModel(timesheet.payrollSettings, invoice.companyDefaults);
+						timesheetservice.saveTimesheet(timesheet._id, timesheet);
 					});
 					
 					// For Vat
+					var invoiceInfo, invoiceModel;
 					var vatCharged = invoice.companyDefaults.vatCharged;
 					if(vatCharged){
 						// Find VAT
-					}
-
-					var invoiceInfo = {
-						agency: invoice.agency,
-						branch: invoice.branch,
-						timesheetBatch: invoice.timesheetBatch,
-						date: invoice.date,
-						dueDate: invoice.dueDate,
-						lines: lines,
-						companyDefaults: invoice.companyDefaults,
-						net: net,
-				        vatRate: vatRate,
-				        vat: vat,
-				        total: (net+vat).toFixed(2)
-					};
-					console.log(invoiceInfo.lines);
-					var invoiceModel = new db.Invoice(invoiceInfo);
-					return Q.nfcall(invoiceModel.save.bind(invoiceModel))
-					.then(function(){
+						return systemservice.getVat().then(function(amount){
+							console.log('With Vat');
+							invoiceInfo = {
+								agency: invoice.agency,
+								branch: invoice.branch,
+								timesheetBatch: invoice.timesheetBatch,
+								date: invoice.date,
+								dueDate: invoice.dueDate,
+								lines: lines,
+								companyDefaults: invoice.companyDefaults,
+								net: net,
+						        vatRate: amount,
+						        vat: net * amount,
+						        total: (net+vat).toFixed(2)
+							};
+							
+							invoiceModel = new db.Invoice(invoiceInfo);
+							return Q.nfcall(invoiceModel.save.bind(invoiceModel))
+							.then(function(){
+								resolve(invoiceModel);
+							},reject);
+						}, reject);
+					}else{
+						invoiceInfo = {
+							agency: invoice.agency,
+							branch: invoice.branch,
+							timesheetBatch: invoice.timesheetBatch,
+							date: invoice.date,
+							dueDate: invoice.dueDate,
+							lines: lines,
+							companyDefaults: invoice.companyDefaults,
+							net: net,
+					        vatRate: vatRate,
+					        vat: vat,
+					        total: (net+vat).toFixed(2)
+						};
+						
+						invoiceModel = new db.Invoice(invoiceInfo);
+						return Q.nfcall(invoiceModel.save.bind(invoiceModel))
+						.then(function(){
 							resolve(invoiceModel);
 						},reject);
+					}
+
+					
 				}, reject);
 			}else{
 				// Edit

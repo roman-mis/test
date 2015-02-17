@@ -1,9 +1,14 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('templatesController',['$scope','$location','HttpResource', 'adminTemplate',
-	function($scope,$location,HttpResource,adminTemplate){	
+app.controller('templatesController',['$rootScope', '$scope','$location','HttpResource', 'adminTemplate',
+	function($rootScope,$scope,$location,HttpResource,adminTemplate){	
 		console.log('hello');
 	
+  $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                              {link: '/admin/home', text: 'Admin'},
+                              {link: '/admin/templates', text: 'templates'},
+                              ];
+
 	$scope.getImage = function(v){
 		var img= '';
     switch(v){
@@ -28,8 +33,8 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
 		return img;
 	}
 	  $scope.gridOptions={
-		columns:["1" ,'Name','Type','Last edited','Created','Action'],
-		rowdata:['templateName','templateType','updatedDate','createdDate'],
+		columns:["1" ,'Name','Type','Last Edited','Created','Action'],
+		rowdata:['name','subType','updatedDate','createdDate'],
 		allData:[],
 		data:[],
     image:$scope.image,

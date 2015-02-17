@@ -58,10 +58,27 @@ module.exports = function(mongoose) {
         cis: {
         },
         statutoryTables: {
-            nmw: [
+            vat:[{
+                amount: Number,
+                validFrom: Date,
+                validTo: Date
+            }],
+            nmw: [{
+                ageLower: Number,
+                ageUpper: Number,
+                amount: Number,
+                validFrom: Date,
+                validTo: Date
+            }],
+            employersNiThreshold: [
                 {
-                    ageLower: Number,
-                    ageUpper: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            employersNiRate: [
+                {
                     amount: Number,
                     validFrom: Date,
                     validTo: Date

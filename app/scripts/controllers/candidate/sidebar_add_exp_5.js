@@ -60,9 +60,9 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            if ($scope.isAllDatesEntered($scope.expenseData.postCodes)) {
+            //if ($scope.isAllDatesEntered($scope.expenseData.postCodes)) {
               $scope.gotoNext();
-            }
+            //}
           };
 
         });

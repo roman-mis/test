@@ -59,7 +59,13 @@ module.exports = function(mongoose) {
             netPay: Number,
             niCategory: String,
             
-        }
+        },
+        payments: [
+            {
+                amount: Number,
+                date: Date
+            }
+        ]
     });
     
     return mongoose.model('PayrollWorker',schema);
