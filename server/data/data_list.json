@@ -47,10 +47,10 @@
 		}],
 	"HolidayPayRule":[{
 			"code":"1",
-			"description":"Roled Up on NMW"
+			"description":"Rolled Up on NMW"
 		},{
 			"code":"2",
-			"description":"Roled Up on Total Pay"
+			"description":"Rolled Up on Total Pay"
 		},{
 			"code":"3",
 			"description":"Retained on NMW"
