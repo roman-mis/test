@@ -42,16 +42,23 @@ describe('KTest', function() {
   it('should add travel', function() {
     element(by.cssContainingText('button', 'Next')).click();
   });
+  it('should add transport', function() {
+    element(by.cssContainingText('button', 'Next')).click();
+  });
   it('should add subsistence', function() {
     element.all(by.cssContainingText('button', 'Next')).get(0).click();
   });
   it('should add other', function() {
+    element(by.cssContainingText('option', 'Mon')).click();
+    element(by.cssContainingText('option', 'Training')).click();
+    element(by.model('addData.cost')).sendKeys('333');
+    element(by.cssContainingText('.btn-default.form-control', 'Add')).click();    
     element.all(by.cssContainingText('button', 'Next')).get(0).click();
     
   });
   
   it('should sleep', function() {
-    browser.sleep(10000000);
+    browser.sleep(1000000);
   });
   
 });
