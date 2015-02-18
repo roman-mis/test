@@ -2,7 +2,7 @@ var helper = require('./ui-helper.js');
 
 
 
-/* to remove ================================> */
+/* to remove ================================>
 
 describe('Navigate to candidates url', function () {
 
@@ -33,7 +33,7 @@ describe('Navigate to candidates url', function () {
 
   });
 });
-/* ====================  */
+ */
 
 var clickFirstVisible=function(locator,callback){
   element.all(locator).filter(function(elem, index) {
@@ -55,17 +55,11 @@ var testModal=function(locator){
 };
 
 
-/*
-
 
 describe('Checking DPA', function() {
 
-  //browser.get('/candidates/54d9edd6c6cb4d0c0a107b5e');
-
   it('should open DPA dialog', function () {
-
     clickFirstVisible(by.css('[ng-click="openDPAWin()"]'),function(link){
-
       link.click();
       expect($('.modal-content').isDisplayed()).toBeTruthy();
       $('.modal-content [ng-click="cancel()"]').click();
@@ -121,43 +115,6 @@ describe('Checking DPA', function() {
 
 });
 
-
-*/
-
-
-/*  DONT WORK
-
-describe('Checking ONBOARDING', function() {
-
-  it('should open onboarding dialog', function () {
-
-    clickFirstVisible(by.css('[ng-click="openOnboardingWin()"]'),function(link){
-      link.click();
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-      $('.modal-content [ng-click="cancel()"]').click();
-      expect($('.modal-content').isPresent()).toBeFalsy();
-      link.click();
-    })
-  });
-  it('should save data', function () {
-     helper.selectSelector(element.all(by.model('data.agency')),1);
-    element(by.model('data.agency_name')).sendKeys('Agency name from test');
-
-    helper.selectSelector(element.all(by.model('data.consultant')),1);
-    element(by.model('data.paye_rate')).sendKeys('10');
-    element(by.model('data.outsourced_rate')).sendKeys('11');
-
-    helper.selectSelector(element.all(by.model('data.service_used')),1);
-
-    element(by.css('[ng-click="save(true)"]')).click();
-  });
-
-});
-
-*/
-
-/*
-
 describe('Checking Call Log', function() {
 
   it('should allow to create task', function () {
@@ -178,9 +135,6 @@ describe('Checking Call Log', function() {
 
 
 });
-
-*/
-
 
 describe('checking expense wizard', function() {
 
@@ -226,12 +180,12 @@ describe('checking expense wizard', function() {
 
         expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
         cols[1].getText().then(function (str) {
-          expect(str.split(':')[0]).toContain(startH.all(by.tagName('option')).get(10).getText());
-          expect(str.split(':')[1]).toContain(startM.all(by.tagName('option')).get(2).getText());
+          expect(str.split(':')[0]+' ').toContain(startH.all(by.tagName('option')).get(10).getText());
+          expect(str.split(':')[1]+' ').toContain(startM.all(by.tagName('option')).get(2).getText());
         });
         cols[2].getText().then(function (str) {
-          expect(str.split(':')[0]).toContain(endH.all(by.tagName('option')).get(17).getText());
-          expect(str.split(':')[1]).toContain(endM.all(by.tagName('option')).get(3).getText());
+          expect(str.split(':')[0]+' ').toContain(endH.all(by.tagName('option')).get(17).getText());
+          expect(str.split(':')[1]+' ').toContain(endM.all(by.tagName('option')).get(3).getText());
         });
         okBtn.click();
       });
@@ -276,13 +230,15 @@ describe('checking expense wizard', function() {
   });
 
   it('vehicle info dialog', function () { //arbitrariry field
-    element(by.css('#myModalLabel')).getText().then(function(str){
-      if(str.indexOf('Vehicle Information')>-1){
+    element(by.model('vehicle.fuelType')).isPresent().then(function(bool){
+      if(bool){
         helper.selectSimpleSelect(element(by.model('vehicle.fuelType')), 1);
         element(by.model('vehicle.make')).sendKeys('Merzedes ml550');
         element(by.model('vehicle.registration')).sendKeys('12345678');
         helper.selectSimpleSelect(element(by.model('vehicle.engineSize')), 1);
         element(by.css('[ng-click="saveVehicleForm()"]')).click();
+      }else{
+        console.log('---vehicle info dialog has not be invoked');
       }
     });
 
@@ -345,3 +301,35 @@ describe('checking expense wizard', function() {
   });
 
 });
+
+
+/*  DONT WORK
+
+ describe('Checking ONBOARDING', function() {
+
+ it('should open onboarding dialog', function () {
+
+ clickFirstVisible(by.css('[ng-click="openOnboardingWin()"]'),function(link){
+ link.click();
+ expect($('.modal-content').isDisplayed()).toBeTruthy();
+ $('.modal-content [ng-click="cancel()"]').click();
+ expect($('.modal-content').isPresent()).toBeFalsy();
+ link.click();
+ })
+ });
+ it('should save data', function () {
+ helper.selectSelector(element.all(by.model('data.agency')),1);
+ element(by.model('data.agency_name')).sendKeys('Agency name from test');
+
+ helper.selectSelector(element.all(by.model('data.consultant')),1);
+ element(by.model('data.paye_rate')).sendKeys('10');
+ element(by.model('data.outsourced_rate')).sendKeys('11');
+
+ helper.selectSelector(element.all(by.model('data.service_used')),1);
+
+ element(by.css('[ng-click="save(true)"]')).click();
+ });
+
+ });
+
+ */
