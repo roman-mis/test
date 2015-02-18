@@ -1,4 +1,4 @@
-'use strict';
+	'use strict';
 
 module.exports=function(){
 	var db = require('../models'),
@@ -33,7 +33,7 @@ module.exports=function(){
 						var elements = [];
 						_.forEach(timesheet.elements, function(_element){
 							var element = {
-								text: _element.elementType + ' ' + _element.description,
+								text: _element.paymentRate.name,
 		                        weekEndingDate: timesheet.weekEndingDate,
 		                        units: _element.units,
 		                        rate: _element.chargeRate,

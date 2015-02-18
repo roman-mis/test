@@ -34,6 +34,32 @@ module.exports=function(){
 		});
 	};
 
+	service.savePaymentRates = function(id, paymentInfo){
+		return Q.Promise(function(resolve,reject){
+			return service.getSystem()
+				.then(function(systemModel){
+					if(systemModel){
+						if(id){
+							console.log('edit');
+							
+							utils.updateSubModel(systemModel.paymentRates.id(id), paymentInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel);
+								},reject);
+						}else{
+							console.log('add');console.log(paymentInfo);
+							systemModel.paymentRates.push(paymentInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel);
+								},reject);
+						}
+					}
+				}, reject);
+		});
+	};
+
 	service.getSystem=function(){
 		var q=db.System.findOne();
 		return Q.nfcall(q.exec.bind(q));

@@ -26,6 +26,34 @@ module.exports = function(){
 			});
 		};
 
+		controller.getPaymentRates=function (req,res){
+			systemservice.getSystem()
+		  	.then(function(result){
+		  		res.json({result:true, objects:result.paymentRates});
+		  	},function(err){
+		  		res.sendFailureResponse(err);
+		  	});
+		};
+
+		controller.postPaymentRates=function (req, res) {
+			savePaymentRates(req, res, 'post');
+		};
+
+		function savePaymentRates(req, res, type){
+			var paymentInfo=req.body;
+
+			systemservice.savePaymentRates(type==='patch'?req.params.id:null, paymentInfo)
+			.then(function(system){
+				res.json({result:true, object:system.paymentRates});
+			},function(err){
+			 	res.sendFailureResponse(err);
+			});
+		}
+
+		controller.patchPaymentRates=function (req, res) {
+			savePaymentRates(req, res, 'patch');
+		};
+
 		function getSystemVm(system){
 			return system;
 		}

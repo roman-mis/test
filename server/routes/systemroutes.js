@@ -12,3 +12,6 @@ module.exports = function(app){
 
 router.get('/', controller.getSystem);
 router.patch('/', controller.patchSystem);
+router.get('/paymentrates', controller.getPaymentRates);
+router.post('/paymentrates', controller.postPaymentRates);
+router.patch('/paymentrates/:id', controller.patchPaymentRates);
