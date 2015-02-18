@@ -13,7 +13,8 @@ angular.module('origApp.services')
             params: function(){
               return options.params;
             }
-          }
+          },
+          backdrop: options.backdrop || true
         };
         if(options.size){
           modalOptions.size = options.size;

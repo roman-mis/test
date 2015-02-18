@@ -69,7 +69,8 @@ angular.module('origApp.controllers')
             ModalService.open({
               templateUrl: 'views/candidate/_add_exp.html',
               parentScope: $scope,
-              controller: 'CandidateSidebarAddExpController'
+              controller: 'CandidateSidebarAddExpController',
+              backdrop: 'static'
             });
           };
 	

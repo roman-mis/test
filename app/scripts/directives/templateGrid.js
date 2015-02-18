@@ -23,17 +23,20 @@ angular.module('origApp.directives')
 
 
 
-              // $scope.$watch('options.limit', function(nValue, oValue) {
-              //   if (nValue !== oValue && $scope.options.onLimitChanged) {
-              //     $scope.options.onLimitChanged(nValue);
-              //   }
-              // });
+              $scope.$watch('options.limit', function(nValue, oValue) {
+                console.log("options.limit");
+                console.log(nValue);
+                console.log(oValue);
+                if (nValue !== oValue && $scope.options.onLimitChanged) {
+                  $scope.options.onLimitChanged(nValue);
+                }
+              });
 
-              // $scope.$watch('options.currentPage', function(nValue, oValue) {
-              //   if (nValue !== oValue && $scope.options.onPageChanged) {
-              //     $scope.options.onPageChanged(nValue);
-              //   }
-              // });
+              $scope.$watch('options.currentPage', function(nValue, oValue) {
+                if (nValue !== oValue && $scope.options.onPageChanged) {
+                  $scope.options.onPageChanged(nValue);
+                }
+              });
             },
             templateUrl: 'views/partials/templateGrid.html',
             replace: true,

@@ -82,6 +82,7 @@ module.exports = function(mongoose,autoIncrement) {
             margin:                      {type:String},
             marginFixed:                {type:Number},
             holidayPayRule:            {type:String},
+            holidayPayDays:             {type:String},
             derogationContract:         {type:String},
             derogationSpread:           {type:String},
             serviceUsed:                {type:String},
@@ -123,7 +124,10 @@ module.exports = function(mongoose,autoIncrement) {
                     } ]
                 } ]
             }                
-        ]
+        ],
+        payrollValues: {
+            holidayPayRetained: Number
+        }
       },
         documents:[{
             

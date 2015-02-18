@@ -6,6 +6,9 @@ function getFolderPath(req){
         folder=process.env.S3_RECEIPT_FOLDER;
         // console.log('process.env.S3_RECEIPT_FOLDER    '+process.env.S3_RECEIPT_FOLDER);
     }
+    else if(req.params.folder && req.params.folder.toLowerCase()==='timesheet'){
+        folder=process.env.S3_TIMESHEET_FOLDER;
+    }
 
     return folder;
 }
@@ -87,5 +90,34 @@ module.exports = function(){
         },res.sendFailureResponse);
     };
 
+    controller.getUploadDocSignedUrl=function(req,res){
+      
+      return controller.getUploadDocumentSignedUrl(req,res);
+      
+    };
+
+    controller.viewDoc=function(req,res){
+       var objectName=req.query.fileName;
+         
+            var folder=getFolderPath(req);
+
+        awsService.getS3SignedUrl('getObject', objectName,null,folder)
+        .then(function(returnData){
+            res.redirect(returnData.signedRequest);
+           
+        },res.sendFailureResponse);
+    };
+
+    controller.deleteDoc=function(req,res){
+       var objectName = req.params.fileName;
+           
+            var folder=getFolderPath(req);
+
+        awsService.deleteS3Object(objectName,folder)
+        .then(function(){
+            res.json({result:true});
+            
+        },res.sendFailureResponse);
+    };
   return controller;
 };

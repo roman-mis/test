@@ -15,8 +15,8 @@ module.exports=function(){
 				var orders=request.orderBy||{};
 				
 				_.forEach(request.filters,function(filter,filterName){
-					// console.log('=======================================================');
-					// console.log('searching for '+filterName+' = '+JSON.stringify(filter));
+					console.log('=======================================================');
+					console.log('searching for '+filterName+' = '+JSON.stringify(filter));
 					
 					// var filterObj={};
 					

@@ -83,6 +83,19 @@ module.exports = function(mongoose) {
                     validFrom: Date,
                     validTo: Date
                 }
+            ],
+            workPatterns: [
+                {
+                    monday: Boolean,
+                    tuesday: Boolean,
+                    wednesday: Boolean,
+                    thursday: Boolean,
+                    friday: Boolean,
+                    saturday: Boolean,
+                    sunday: Boolean,
+                    validFrom: Date,
+                    validTo: Date
+                }
             ]
         },
         paymentRates: [
