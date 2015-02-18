@@ -1,13 +1,22 @@
 'use strict';
 
-module.exports=function(){
-	var db = require('../models'),
+module.exports=function(dbs){
+	var db = dbs,
 		Q=require('q'),
 		utils=require('../utils/utils'),
 		_ = require('lodash');
 
 	var service={};
 
+	function createSystemModel(systemDetails){
+		var _systemModel = new db.System(systemDetails);
+		return Q.Promise(function(resolve,reject){
+			return Q.nfcall(_systemModel.save.bind(_systemModel))
+				.then(function(){
+						resolve(_systemModel);
+					},reject);
+		});
+	}
 	service.saveSystem = function(systemDetails){
 		return Q.Promise(function(resolve,reject){
 			return service.getSystem()
@@ -23,20 +32,87 @@ module.exports=function(){
 					}else{
 						// Add
 						console.log('add');
-						var _systemModel = new db.System(systemDetails);
-						return Q.nfcall(_systemModel.save.bind(_systemModel))
-						.then(function(){
-								resolve(_systemModel);
-							},reject);
+						
+						return createSystemModel(systemDetails)
+							.then(function(_systemModel){
+									resolve(_systemModel);
+								},reject);
 					}
 					
 				}, reject);
 		});
 	};
 
+
+	service.savePaymentRates = function(id, paymentInfo){
+		return Q.Promise(function(resolve,reject){
+			return service.getSystem()
+				.then(function(systemModel){
+					if(systemModel){
+						if(id){
+							console.log('edit');
+							
+							utils.updateSubModel(systemModel.paymentRates.id(id), paymentInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel.paymentRates.id(id));
+								},reject);
+						}else{
+							console.log('add');console.log(paymentInfo);
+							systemModel.paymentRates.push(paymentInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel.paymentRates[systemModel.paymentRates.length-1]);
+								},reject);
+						}
+					}
+				}, reject);
+		});
+	};
+
+	service.saveVat = function(id, vatInfo){
+		return Q.Promise(function(resolve,reject){
+			return service.getSystem()
+				.then(function(systemModel){
+					if(systemModel){
+						if(id){
+							console.log('edit');
+							
+							utils.updateSubModel(systemModel.statutoryTables.vat.id(id), vatInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel.statutoryTables.vat.id(id));
+								},reject);
+						}else{
+							console.log('add');
+							systemModel.statutoryTables.vat.push(vatInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel.statutoryTables.vat[systemModel.statutoryTables.vat.length-1]);
+								},reject);
+						}
+					}
+				}, reject);
+		});
+	};
+
 	service.getSystem=function(){
 		var q=db.System.findOne();
-		return Q.nfcall(q.exec.bind(q));
+		return Q.Promise(function(resolve,reject){
+			return Q.nfcall(q.exec.bind(q))
+				.then(function(system){
+					if(system){
+						resolve(system);
+					}
+					else{
+						return createSystemModel({})
+							.then(function(_system){
+								resolve(_system);
+							});
+					}
+				},reject);
+
+		});
 	};
 
 	service.getVat = function(){

@@ -4,7 +4,7 @@ module.exports=function(){
 	var db = require('../models'),
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
-        systemService=require('./systemservice')(),
+        systemService=require('./systemservice')(db),
 		utils=require('../utils/utils');
 
 	var service={};

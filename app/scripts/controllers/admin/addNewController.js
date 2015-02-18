@@ -58,6 +58,9 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         }
 
         function breadCrumbformate(s){
+        	if(!s){
+        		return;
+        	}
         	var ar = s.split('_');
         	s = '';
         	for(var i = 0; i< ar.length; i++){
