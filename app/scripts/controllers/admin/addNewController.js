@@ -14,9 +14,8 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 			if(!adminTemplate.details.name){
 				$location.path('admin/templates');
 			}
-			console.log(adminTemplate)
 			$scope.data=adminTemplate;
-			console.log(adminTemplate)
+
 		}else{
 			var definedType = false;
 			$scope.data.details.templateBody = '';
@@ -48,6 +47,8 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 			.customGet('/adminTemplatesData/'+$scope.data.details.templateType,{},
 				function(){
 					console.log($scope.templatesDropdowns);
+					$scope.selectSybType(adminTemplate.details.subType);
+        
 				});
         ////**////
         function breadCrumbAddNewValue(){
@@ -210,7 +211,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		  var id =adminTemplate.details._id;
 	      console.log(id)
 	      var data = $scope.getData(fields);
-	      t = HttpResource.model('admin/templates/'+id)
+	      HttpResource.model('admin/templates/'+id)
 	      	.create(data).post().then(function(result){
 	        	console.log('*****');
 	        	console.log(result);
