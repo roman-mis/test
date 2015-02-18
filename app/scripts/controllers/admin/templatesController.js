@@ -57,9 +57,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
 	  for (var i = 0;i<10;i++){
 		$scope.gridOptions.data[i]=[];
-		for(var j = 0; j < 4; j++){
-			$scope.gridOptions.data[i][j]='any data';
-		}
+		
 	  }
 
 
