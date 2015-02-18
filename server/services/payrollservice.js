@@ -158,11 +158,11 @@ module.exports=function(){
                                                    timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
                                                    totalHolidayPay+=holidayPay;
                                                }
-                                               
-                                               
+                                                                                              
                                                //endregion
                                            }
                                            
+                                           // It's a Holiday timesheet entry
                                            if(element.paymentRate.rateType==='Holiday') {
                                                var holidayPay = units*payRate;
                                                totalHolidayPay+=holidayPay;
@@ -202,6 +202,31 @@ module.exports=function(){
                                    log.push('Actual NMW: ' + actualNMW);
                                    
                                    //endregion
+                                   
+                                   //region TODO: Holiday Pay Taken
+                                   
+                                   var totalHolidayPayTaken = 0;
+                                   
+                                   if(totalHolidayPayTaken>_worker.worker.payrollValues.holidayPayRetained) {
+                                       log.push('SERIOUS PROBLEM: Holiday Pay requested to be taken is under the amount retained. Requested: ' + totalHolidayPayTaken + ' and only ' + _worker.worker.payrollValues.holidayPayRetained + ' retained');
+                                       totalHolidayPayTaken = _worker.worker.payrollValues.holidayPayRetained;
+                                   }
+                                   
+                                   //endregion
+                                   
+                                   // NMW Verification
+                                   if(totalPay+totalHolidayPayTaken>actualNMW) {
+                                   }
+                                   else {
+                                       log.push('SERIOUS PROBLEM: Under NMW. It''s ' + totalPay+totalHolidayPayTaken + ' which is not more than ' + actualNMW);
+                                   }
+                                   
+                                   //region Margin
+                                   
+                                   var margin = 20;
+                                   
+                                   //endregion
+                                   
                                    
                                }
                                else {
