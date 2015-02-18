@@ -24,6 +24,11 @@ module.exports = function(mongoose) {
                     name: String,
                     rateType: String,
                     hours: Number,
+                },
+                effectiveEarnings: Number,
+                holidayPay: {
+                    onActual: Number,
+                    onNMW: Number
                 }
             }
         ],

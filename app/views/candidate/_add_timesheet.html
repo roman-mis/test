@@ -1,5 +1,5 @@
-		<div class="modal-content add-tsh">
-
+		<div class="modal-content add-tsh" >
+		<!-- <button ng-click ="logMe()"> button</button> -->
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
 			</div><!-- /modal-header -->
@@ -10,13 +10,13 @@
 						Contractor Name
 					</div>
 					<div class="col-xs-6 col-sm-4 form-group">
-						Mark Gentry
+						{{candidate.firstName}} {{candidate.lastName}}
 					</div>
 					<div class="col-xs-6 col-sm-3 form-group">
 						Contractor ID
 					</div>
 					<div class="col-xs-6 col-sm-2 form-group">
-						900001
+						{{candidate._id}}
 					</div>
 				</div>
 				<div class="row">
@@ -27,25 +27,26 @@
 							</div>
 							<div class="col-xs-12 col-sm-7 form-group">
 								<select class="form-control">
-									<option>ComboBox</option>
+									<option ng-repeat = "product in payrollProducts">{{product.agency.name}}</option>
 								</select>
 							</div>
-							<div class="col-xs-12 col-sm-5 form-group no-padding-right">
+							<!-- <div class="col-xs-12 col-sm-5 form-group no-padding-right">
 								Select Assignment
 							</div>
 							<div class="col-xs-12 col-sm-7 form-group">
 								<select class="form-control">
-									<option>ComboBox</option>
+									<option ng-repeat = "product in payrollProducts">{{product.agency.name}}</option>
 								</select>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-5">
 						<!--Bootstrap datepicker-->
 						<div class="form-group">
 							<div class="input-group date" id="datepicker">
-								<input type="text" class="form-control" />
-								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							  <div orig-datepicker placeholder="Select Date" ng-model="seldate"></div>
+								<!--<input type="text" class="form-control" />
+								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>-->
 							</div>
 						</div>
 					</div>
@@ -55,10 +56,10 @@
 					<div class="col-md-3 col-sm-12 form-group">
 						<span>Rate Description</span>
 						<select class="col-sm-12 form-control">
-							<option value="1">Select type</option>
-							<option value="2">Standard Hourly Rate</option>
+							<option ng-repeat="rate in rates">{{rate.description}}</option>
+							<!-- <option value="2">Standard Hourly Rate</option>
 							<option value="2">Education Day Rate</option>
-							<option value="2">Standard Day rate</option>
+							<option value="2">Standard Day rate</option> -->
 						</select>
 					</div>
 					<div class="col-sm-12 form-group hidden-md hidden-lg">
@@ -68,12 +69,12 @@
 						<div class="row">
 							<div class="col-sm-12 no-padding-right">
 								 <div class="col-xs-2 form-group no-padding margin-8 text-center">
-									<span>Unit</span>
-									<input type="text" class="form-control" />
+									<span >Unit</span>
+									<input ng-model = "elements.unit" type="text" class="form-control" />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Pay Rate</span>
-									<input type="text" class="form-control" />
+									<input ng-model="elements.payRate" type="text" class="form-control" />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Charge Rate</span>
@@ -81,16 +82,16 @@
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Amount</span>
-									<input type="text" class="form-control" disabled />
+									<input ng-model="elements.amount" type="text" class="form-control" disabled />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>VAT</span>
 									<input type="text" class="form-control" disabled />
 								</div>
-								<div class="col-xs-1 form-group no-padding text-center">
+								<!-- <div class="col-xs-1 form-group no-padding text-center">
 									<span>CIS </span><br/>
 									<a href="#"><span class="glyphicon glyphicon-ok cisIconCheck"></span></a>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>
@@ -118,7 +119,7 @@
 									<th>Charge Rate</th>
 									<th>Amount</th>
 									<th>VAT</th>
-									<th>CIS</th>
+									<!-- <th>CIS</th> -->
 								</tr>
 							</thead>
 						 </table>
@@ -133,7 +134,7 @@
 										 <td style="width: 15%;">n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Education Day Rate</td>
@@ -143,7 +144,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Standard Day Rate</td>
@@ -153,7 +154,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									  <tr>
 										 <td style="width: 20%;">Standard Hourly Rate</td>
@@ -163,7 +164,7 @@
 										 <td style="width: 15%;">n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Education Day Rate</td>
@@ -173,7 +174,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Standard Day Rate</td>
@@ -183,7 +184,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									  <tr>
 										 <td style="width: 20%;">Standard Hourly Rate</td>
@@ -193,7 +194,7 @@
 										 <td style="width: 15%;">n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Education Day Rate</td>
@@ -203,7 +204,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Standard Day Rate</td>
@@ -213,7 +214,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									  <tr>
 										 <td style="width: 20%;">Standard Hourly Rate</td>
@@ -223,7 +224,7 @@
 										 <td style="width: 15%;">n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Education Day Rate</td>
@@ -233,7 +234,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
 									 </tr>
 									 <tr>
 										 <td>Standard Day Rate</td>
@@ -243,7 +244,7 @@
 										 <td>n/a</td>
 										 <td>00.00</td>
 										 <td>00.00</td>
-										 <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td>
+										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
 								 </tbody>
 							 </table>

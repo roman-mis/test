@@ -5,10 +5,10 @@ app.controller('payrollController',['$rootScope', '$scope', 'HttpResource',
 		console.log('hello');
 	
 	$scope.camelCaseFormate = function(s){
-    	ar = s.split(' ');
+    	var ar = s.split(' ');
     	s = '';
     	for(var i = 0; i< ar.length; i++){
-    		arr = ar[i].split('');
+    		var arr = ar[i].split('');
     		if(i === 0){
     			arr[0] = arr[0].toLowerCase();
     		}else{

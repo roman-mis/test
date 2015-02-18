@@ -69,14 +69,16 @@ angular.module('origApp.controllers')
             ModalService.open({
               templateUrl: 'views/candidate/_add_exp.html',
               parentScope: $scope,
-              controller: 'CandidateSidebarAddExpController'
+              controller: 'CandidateSidebarAddExpController',
+              backdrop: 'static'
             });
           };
 	
 		  $scope.openAddTimesheetWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/_add_timesheet.html',
-              parentScope: $scope
+              parentScope: $scope,
+              controller:'CandidateSidebarAddTimesheetController'
             });
           };
 		})

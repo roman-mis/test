@@ -57,10 +57,10 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         }
 
         function breadCrumbformate(s){
-        	ar = s.split('_');
+        	var ar = s.split('_');
         	s = '';
         	for(var i = 0; i< ar.length; i++){
-        		arr = ar[i].split('');
+        		var arr = ar[i].split('');
 				arr[0] = arr[0].toUpperCase();
         		s = s+ arr.join('')+ ' ';
         	}
@@ -101,10 +101,10 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	$scope.data.details.subType = $scope.data.details.current.subType;
         }
         var formate = function(s){
-        	ar = s.split(' ');
+        	var ar = s.split(' ');
         	s = '';
         	for(var i = 0; i< ar.length; i++){
-        		arr = ar[i].split('');
+        		var arr = ar[i].split('');
         		if(i === 0){
         			arr[0] = arr[0].toLowerCase();
         		}else{

@@ -160,5 +160,9 @@ module.exports = function(){
     controller.enginesizes=function(req,res){
       res.json(dataList.EngineSizes);
     };
+
+    controller.payRateTypes=function(req,res){
+      res.json(dataList.PayRateTypes);
+    };
   return controller;
 };

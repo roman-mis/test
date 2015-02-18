@@ -30,7 +30,9 @@
         <li><a href="#" tooltip data-placement="top"
                title="End client"
                tooltip-placement="top"><i class="fa fa-building"></i><span class="title">END CLIENT</span></a></li>
-        <li><a href="/payroll" tooltip data-placement="top"
+
+        <li ng-class="{active: isStateIncludes('payroll') || isStateIncludes('payroll')}">
+              <a href="/payroll" tooltip data-placement="top"
                title="payroll"
                tooltip-placement="top"><i class="fa fa-money"></i><span class="title">PAYROLL</span></a></li>
         <li><a href="#" tooltip data-placement="top"
