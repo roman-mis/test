@@ -1,29 +1,46 @@
 <div class="container payroll-home">
     <div class="span12">
+    <div>
+        {{payroll}}
+    </div>
         <div class="panel panel-default top-spacer">
             <div class="panel-heading">Payroll Overview</div>
             <div class="panel-body payroll-overview panel-custom">
 				<ul>
 					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Schedules Uploaded</h5><a ng-href="#">00</a>
+						<h5>Schedules Uploaded</h5><a ng-href="#">{{payroll.stats.schedulesUploaded}}</a>
 					</li>
 					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Validations Approved</h5><a ng-href="#">00</a>
+						<h5>Validations Approved</h5><a ng-href="#">{{payroll.stats.validationsApproved}}</a>
 					</li>
 					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Invoices sent</h5><a ng-href="#">00</a>
+						<h5>Invoices sent</h5><a ng-href="#">{{payroll.stats.invoicesSent}}</a>
 					</li>
 					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Invoices Receipted</h5><a ng-href="#">00</a>
+						<h5>Invoices Receipted</h5><a ng-href="#">{{payroll.stats.invoicesReceipted}}</a>
 					</li>
 					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Number of Payrolls Unpaid</h5><a ng-href="#">00</a>
+						<h5>Number of Payrolls Unpaid</h5><a ng-href="#">{{payroll.stats.payrollsUnpaid}}</a>
 					</li>
 					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Awaiting Payroll</h5><a ng-href="#">00</a>
+						<h5>Awaiting Payroll</h5><a ng-href="#">{{payroll.stats.awaitingPayroll}}</a>
 					</li>
 				</ul>
-                <div class="view-all" ><a ng-href="#">View All</a></div>
+                <div ng-hide="viewAll" style="cursor:pointer" class="view-all" ><a ng-click="viewAction()">view all</a></div>
+
+                <ul ng-show="viewAll">
+                    <li class="btn" ng-click="checkUncheck($index)" ng-repeat="checkElem in agencyCheckListLabels"><i class="fa fa-check-square-o fa-3x icon-center" ng-show="agencyCheckListValues [camelCaseFormate(agencyCheckListLabels[$index])]"></i>
+                    <i ng-hide="agencyCheckListValues [camelCaseFormate(agencyCheckListLabels[$index])]" class="fa fa-square-o fa-3x icon-center"></i>
+                        <h5>{{checkElem}}</h5>
+                    </li>
+                </ul>
+                <div ng-show="viewAll" style="cursor:pointer" class="view-all" ><a ng-click="viewAction()">view less</a></div>
+
+                <!-- <div ng-show="viewAll"  class="col-xs-12 row">
+                    <div align="left" ng-click="checkUncheck($index)"  class="col-xs-4" ng-repeat="checkElem in agencyCheckListLabels">
+                        <label  style="margin-top:20px" align="right"><input type="checkbox" ng-model="agencyCheckListValues [camelCaseFormate(agencyCheckListLabels[$index])]"> {{checkElem}} <i class="fa fa-check-square-o fa-3x icon-center"></i></label>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>

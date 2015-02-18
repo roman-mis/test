@@ -14,9 +14,8 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 			if(!adminTemplate.details.name){
 				$location.path('admin/templates');
 			}
-			console.log(adminTemplate)
 			$scope.data=adminTemplate;
-			console.log(adminTemplate)
+
 		}else{
 			var definedType = false;
 			$scope.data.details.templateBody = '';
@@ -48,6 +47,8 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 			.customGet('/adminTemplatesData/'+$scope.data.details.templateType,{},
 				function(){
 					console.log($scope.templatesDropdowns);
+					$scope.selectSybType(adminTemplate.details.subType);
+        
 				});
         ////**////
         function breadCrumbAddNewValue(){
@@ -57,10 +58,13 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         }
 
         function breadCrumbformate(s){
-        	ar = s.split('_');
+        	if(!s){
+        		return;
+        	}
+        	var ar = s.split('_');
         	s = '';
         	for(var i = 0; i< ar.length; i++){
-        		arr = ar[i].split('');
+        		var arr = ar[i].split('');
 				arr[0] = arr[0].toUpperCase();
         		s = s+ arr.join('')+ ' ';
         	}
@@ -101,10 +105,10 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	$scope.data.details.subType = $scope.data.details.current.subType;
         }
         var formate = function(s){
-        	ar = s.split(' ');
+        	var ar = s.split(' ');
         	s = '';
         	for(var i = 0; i< ar.length; i++){
-        		arr = ar[i].split('');
+        		var arr = ar[i].split('');
         		if(i === 0){
         			arr[0] = arr[0].toLowerCase();
         		}else{
@@ -210,7 +214,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		  var id =adminTemplate.details._id;
 	      console.log(id)
 	      var data = $scope.getData(fields);
-	      t = HttpResource.model('admin/templates/'+id)
+	      HttpResource.model('admin/templates/'+id)
 	      	.create(data).post().then(function(result){
 	        	console.log('*****');
 	        	console.log(result);

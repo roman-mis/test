@@ -158,7 +158,7 @@ module.exports = function (grunt) {
       options: {
         jshintrc: 'client.jshintrc',
         reporter: require('jshint-stylish'),
-		force : true
+		    force : true
       },
       client: {
         src: [
@@ -166,14 +166,14 @@ module.exports = function (grunt) {
           ['<%= yeoman.app %>/scripts/{,*/}*.js','!<%= yeoman.app %>/scripts/vendors/**/*']
         ]
       },
-	  server: {
-		  options: {
-			jshintrc: 'server.jshintrc',
-			reporter: require('jshint-stylish')
-		  },
-        src: [
-          'server/{,*/}*.js'
-        ]
+  	  server: {
+  		  options: {
+  			jshintrc: 'server.jshintrc',
+  			reporter: require('jshint-stylish')
+  		  },
+          src: [
+            'server/{,*/}*.js'
+          ]
       },
       test: {
         options: {
@@ -517,6 +517,7 @@ module.exports = function (grunt) {
       'connect:livereload',
       'configureProxies',
       'develop',
+      'jshint',
       'watch'
 
     ]);

@@ -1,6 +1,6 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('PayrollMainController',['$rootScope', '$scope', 'HttpResource',
+app.controller('payrollController',['$rootScope', '$scope', 'HttpResource',
 	function($rootScope,$scope,HttpResource){	
 		console.log('hello');
 	

@@ -57,9 +57,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
 	  for (var i = 0;i<10;i++){
 		$scope.gridOptions.data[i]=[];
-		for(var j = 0; j < 4; j++){
-			$scope.gridOptions.data[i][j]='any data';
-		}
+		
 	  }
 
 
@@ -120,7 +118,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
     $scope.gridOptions.loadAdminTemplate = function(index) {
     	var id = $scope.gridOptions.allData[index]._id;
-      t = HttpResource.model('admin/templates/'+id)
+      HttpResource.model('admin/templates/'+id)
       .query({},function(data) {
         console.log(data)
         adminTemplate.details = data.data.object;
