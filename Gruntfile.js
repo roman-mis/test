@@ -56,7 +56,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['jshint:client'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
           'server/**/*.json',
           'server/*.js'
         ],
-        tasks: ['env:all','develop'],
+        tasks: ['env:all','develop','jshint:server'],
         options: { nospawn: true }
       },
       jsTest: {
