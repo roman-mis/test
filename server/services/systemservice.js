@@ -45,14 +45,40 @@ module.exports=function(){
 							utils.updateSubModel(systemModel.paymentRates.id(id), paymentInfo);
 							return Q.nfcall(systemModel.save.bind(systemModel))
 							.then(function(){
-									resolve(systemModel);
+									resolve(systemModel.paymentRates.id(id));
 								},reject);
 						}else{
 							console.log('add');console.log(paymentInfo);
 							systemModel.paymentRates.push(paymentInfo);
 							return Q.nfcall(systemModel.save.bind(systemModel))
 							.then(function(){
-									resolve(systemModel);
+									resolve(systemModel.paymentRates[systemModel.paymentRates.length-1]);
+								},reject);
+						}
+					}
+				}, reject);
+		});
+	};
+
+	service.saveVat = function(id, vatInfo){
+		return Q.Promise(function(resolve,reject){
+			return service.getSystem()
+				.then(function(systemModel){
+					if(systemModel){
+						if(id){
+							console.log('edit');
+							
+							utils.updateSubModel(systemModel.statutoryTables.vat.id(id), vatInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel.statutoryTables.vat.id(id));
+								},reject);
+						}else{
+							console.log('add');
+							systemModel.statutoryTables.vat.push(vatInfo);
+							return Q.nfcall(systemModel.save.bind(systemModel))
+							.then(function(){
+									resolve(systemModel.statutoryTables.vat[systemModel.statutoryTables.vat.length-1]);
 								},reject);
 						}
 					}
