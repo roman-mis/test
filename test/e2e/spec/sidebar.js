@@ -275,15 +275,16 @@ describe('checking expense wizard', function() {
 
   });
 
-  it('vehicle info dialog', function () {
-
-    helper.selectSimpleSelect(element(by.model('vehicle.fuelType')), 1);
-    helper.selectSimpleSelect(element(by.model('vehicle.engineSize')), 0);
-    element(by.model('vehicle.make')).sendKeys('Merzedes ml550');
-    element(by.model('vehicle.registration')).sendKeys('12345678');
-    element(by.css('[ng-click="add()"]')).click();
-
-    okBtn.click();
+  it('vehicle info dialog', function () { //arbitrariry field
+    element(by.css('#myModalLabel')).getText().then(function(str){
+      if(str.indexOf('Vehicle Information')>-1){
+        helper.selectSimpleSelect(element(by.model('vehicle.fuelType')), 1);
+        element(by.model('vehicle.make')).sendKeys('Merzedes ml550');
+        element(by.model('vehicle.registration')).sendKeys('12345678');
+        helper.selectSimpleSelect(element(by.model('vehicle.engineSize')), 1);
+        element(by.css('[ng-click="saveVehicleForm()"]')).click();
+      }
+    });
 
   });
 
@@ -312,13 +313,13 @@ describe('checking expense wizard', function() {
     element(by.model('addData.cost')).sendKeys('100');
     element(by.css('[ng-click="add()"]')).click();
 
-    var rows = element.all(by.repeater('item in expenseData.subsistences'));
+    var rows = element.all(by.repeater('item in expenseData.others'));
     rows.first().then(function (row) {
       var rowElems = row.all(by.tagName('td'));
       rowElems.then(function (cols) {
         expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
         expect(cols[1].getText()).toContain(element(by.model('addData.type')).all(by.tagName('option')).get(1).getText());
-        expect(cols[2].getText()).toContain('100');
+        expect(cols[3].getText()).toContain('100');
         okBtn.click();
       });
     });
@@ -330,10 +331,17 @@ describe('checking expense wizard', function() {
   });
 
   it('Review & Confirm dialog', function () {
-    okBtn.click();
+    element.all(by.repeater('item in summaries')).count().then(function(count){
+      expect(count).toBeGreaterThan(0);
+      element(by.model('isAgreedOnTerms')).click();
+      okBtn.click();
+    });
   });
 
-
-
+  it('thank you screen', function () {
+    expect(element(by.model('expenseData.claimReference')).getAttribute('value')).toBeTruthy();
+    element(by.css('[ng-click="cancel()"]')).click();
+    expect($('.modal-content').isPresent()).toBeFalsy();
+  });
 
 });
