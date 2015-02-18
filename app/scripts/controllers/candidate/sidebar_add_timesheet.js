@@ -13,7 +13,6 @@ angular.module('origApp.controllers')
 
 	 // $scope.agencies = HttpResource.model('agencies').query({});
 	 $scope.payrollProducts = HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct').query({});
-
 	 $scope.rates = [
 
 	 {type: 'Hourly', description:'Standard Hourly Rate',hours:1},
@@ -24,22 +23,31 @@ angular.module('origApp.controllers')
 	 {type: 'Other', description:'Bonus', hours:0}
 	 ]
 	 
-	 $scope.elements = { unit:null	, payRate:null, chargeRate: null, amount:null, vat:null };
-	 $scope.$watch('$scope.elements.payRate', function(newVal,oldVal,scope) {
-       // console.log('hey, payRate has changed!',$scope.elements.payRate);
-       if(newVal !=oldVal){
-       	var parseFun = $parse(newVal);
-       	$scope.parsedValue = parseFun(scope)
-       }
-   });
-	 $scope.$watch('$scope.elements.unit', function(newVal,oldVal,scope) {
-       // console.log('hey, payRate has changed!',$scope.elements.payRate);
-       if(newVal !=oldVal){
-       	var parseFun = $parse(newVal);
-       	$scope.parsedValue = parseFun(scope)
-       }
-   });	 
+	 $scope.elements = { unit:0	, payRate:0, chargeRate: null, amount:0, vat:0 };
 
+	 $scope.$watch('elements.payRate',function (newVal) {
+	 	// body...
+	 	// console.log($scope.amount);
+	 	$scope.elements.amount = newVal * $scope.elements.unit;
+	 	$scope.elements.vat = $scope.elements.amount *20;
+
+	 });	
+	 $scope.$watch('elements.unit',function (newVal) {
+	 	// body...
+	 	// console.log($scope.amount);
+	 	$scope.elements.amount = $scope.elements.payRate * newVal;
+	 	$scope.elements.vat = $scope.elements.amount *20;
+
+	 });
+
+	 // $scope.$watch('$scope.elements.unit', function(newVal,oldVal,scope) {
+  //      // console.log('hey, payRate has changed!',$scope.elements.payRate);
+  //      if(newVal !=oldVal){
+  //      	var parseFun = $parse(newVal);
+  //      	$scope.parsedValue = parseFun(scope)
+  //      }
+  //  });	 
+	 $scope.elements.vat = $scope.elements.amount*0.20;
 
 	 	$scope.elements.amount = $scope.elements.unit * $scope.elements.payRate;
 	 $scope.cancel = function() {
