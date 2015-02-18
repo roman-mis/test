@@ -412,5 +412,49 @@
 				"code": "1",
 				"description":"Upto 1400 cc"
 			}]
+		}],
+
+	"PayRateTypes":[{
+			"Code":"1",
+			"Name":"Standard Hourly Rate",
+			"Type":"Hourly",
+			"Hours":1,
+			"Aliases":["Standard Hourly","Standard"]
+
+		},{
+			"Code":"2",
+			"Name":"Education Day Rate",
+			"Type":"Day",
+			"Hours":6,
+			"Aliases":["Education Day"]
+
+		},{
+			"Code":"3",
+			"Name":"Standard Day Rate",
+			"Type":"Day",
+			"Hours":7.5,
+			"Aliases":["Standard Day Rate"]
+
+		},{
+			"Code":"4",
+			"Name":"Billable Expenses",
+			"Type":"Expenses",
+			"Hours":0,
+			"Aliases":["Billable Expenses"]
+
+		},{
+			"Code":"5",
+			"Name":"Holiday Pay",
+			"Type":"Holiday",
+			"Hours":0,
+			"Aliases":["Holiday"]
+
+		},{
+			"Code":"6",
+			"Name":"Bonus",
+			"Type":"Other",
+			"Hours":0,
+			"Aliases":["Bonus"]
+
 		}]
 }
