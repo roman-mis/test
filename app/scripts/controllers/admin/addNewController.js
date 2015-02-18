@@ -57,13 +57,13 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         }
 
         function breadCrumbformate(s){
-        	var ar = s.split('_');
-        	s = '';
-        	for(var i = 0; i< ar.length; i++){
-        		var arr = ar[i].split('');
-				arr[0] = arr[0].toUpperCase();
-        		s = s+ arr.join('')+ ' ';
-        	}
+    //     	var ar = s.split('_');
+    //     	s = '';
+    //     	for(var i = 0; i< ar.length; i++){
+    //     		var arr = ar[i].split('');
+				// arr[0] = arr[0].toUpperCase();
+    //     		s = s+ arr.join('')+ ' ';
+    //     	}
         	return s;
         }
 
@@ -101,17 +101,17 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	$scope.data.details.subType = $scope.data.details.current.subType;
         }
         var formate = function(s){
-        	var ar = s.split(' ');
-        	s = '';
-        	for(var i = 0; i< ar.length; i++){
-        		var arr = ar[i].split('');
-        		if(i === 0){
-        			arr[0] = arr[0].toLowerCase();
-        		}else{
-					arr[0] = arr[0].toUpperCase();
-        		}
-        		s = s+ arr.join('');
-        	}
+     //    	var ar = s.split(' ');
+     //    	s = '';
+     //    	for(var i = 0; i< ar.length; i++){
+     //    		var arr = ar[i].split('');
+     //    		if(i === 0){
+     //    			arr[0] = arr[0].toLowerCase();
+     //    		}else{
+					// arr[0] = arr[0].toUpperCase();
+     //    		}
+     //    		s = s+ arr.join('');
+     //    	}
         	return s;
         }
 
