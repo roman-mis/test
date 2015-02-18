@@ -76,7 +76,8 @@ angular.module('origApp.controllers')
 		  $scope.openAddTimesheetWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/_add_timesheet.html',
-              parentScope: $scope
+              parentScope: $scope,
+              controller:'CandidateSidebarAddTimesheetController'
             });
           };
 		})
