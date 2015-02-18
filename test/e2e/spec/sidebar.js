@@ -192,11 +192,14 @@ describe('checking expense wizard', function() {
     });
 
   });
-var okBtn=element(by.css('[ng-click="ok()"]'))
+
+  var okBtn=element(by.css('[ng-click="ok()"]'))
+
   it('selecting agency and default date', function () {
     element(by.css('[ng-click="gotoNext()"]')).click();
-    element(by.css('.modal-content .select2-choice')).click();
-    element.all(by.css('#select2-results-2 li')).get(0).click();
+    /*element(by.css('.modal-content .select2-choice')).click();
+    element.all(by.css('#select2-results-2 li')).get(0).click();*/
+    helper.selectSelector(element(by.model('expenseData.agency')),1);
     element(by.css('[ng-click="gotoNext()"]')).click();
     okBtn.click();
   });
@@ -252,5 +255,85 @@ var okBtn=element(by.css('[ng-click="ok()"]'))
       });
     });
   });
+
+  it('transport dialog', function () {
+
+    helper.selectSimpleSelect(days, 2);
+    helper.selectSimpleSelect(element(by.model('addData.type')), 1);
+    element.all(by.model('addData.mileage')).get(0).sendKeys('100');
+    element(by.css('[ng-click="add()"]')).click();
+
+    var rows = element.all(by.repeater('item in expenseData.transports'));
+    rows.first().then(function (row) {
+      var rowElems = row.all(by.tagName('td'));
+      rowElems.then(function (cols) {
+        expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
+        expect(cols[1].getText()).toContain(element(by.model('addData.type')).all(by.tagName('option')).get(1).getText());
+        okBtn.click();
+      });
+    });
+
+  });
+
+  it('vehicle info dialog', function () {
+
+    helper.selectSimpleSelect(element(by.model('vehicle.fuelType')), 1);
+    helper.selectSimpleSelect(element(by.model('vehicle.engineSize')), 0);
+    element(by.model('vehicle.make')).sendKeys('Merzedes ml550');
+    element(by.model('vehicle.registration')).sendKeys('12345678');
+    element(by.css('[ng-click="add()"]')).click();
+
+    okBtn.click();
+
+  });
+
+  it('Subsistence dialog', function () {
+
+    helper.selectSimpleSelect(days, 2);
+    helper.selectSimpleSelect(element(by.model('addData.type')), 1);
+    element(by.css('[ng-click="add()"]')).click();
+
+    var rows = element.all(by.repeater('item in expenseData.subsistences'));
+    rows.first().then(function (row) {
+      var rowElems = row.all(by.tagName('td'));
+      rowElems.then(function (cols) {
+        expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
+        expect(cols[1].getText()).toContain(element(by.model('addData.type')).all(by.tagName('option')).get(1).getText());
+        okBtn.click();
+      });
+    });
+
+  });
+
+  it('Document other expenses', function () {
+
+    helper.selectSimpleSelect(days, 2);
+    helper.selectSimpleSelect(element(by.model('addData.type')), 1);
+    element(by.model('addData.cost')).sendKeys('100');
+    element(by.css('[ng-click="add()"]')).click();
+
+    var rows = element.all(by.repeater('item in expenseData.subsistences'));
+    rows.first().then(function (row) {
+      var rowElems = row.all(by.tagName('td'));
+      rowElems.then(function (cols) {
+        expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
+        expect(cols[1].getText()).toContain(element(by.model('addData.type')).all(by.tagName('option')).get(1).getText());
+        expect(cols[2].getText()).toContain('100');
+        okBtn.click();
+      });
+    });
+
+  });
+
+  it('Receipts dialog', function () {
+    okBtn.click();
+  });
+
+  it('Review & Confirm dialog', function () {
+    okBtn.click();
+  });
+
+
+
 
 });
