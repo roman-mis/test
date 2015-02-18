@@ -1,8 +1,8 @@
 'use strict';
 
 
-module.exports = function(){
-	var systemservice = require('../services/systemservice')(),
+module.exports = function(dbs){
+	var systemservice = require('../services/systemservice')(dbs),
 		_ = require('lodash');
 
 	var controller={};
@@ -28,12 +28,12 @@ module.exports = function(){
 		};
 
 		controller.getPaymentRates=function (req,res){
+			console.log('getting payment rates');
 			systemservice.getSystem()
 		  	.then(function(result){
 		  		res.json({result:true, objects:result.paymentRates});
-		  	},function(err){
-		  		res.sendFailureResponse(err);
-		  	});
+		  	})
+		  	.fail(res.sendFailureResponse);
 		};
 
 		controller.patchPaymentRates=function (req, res) {

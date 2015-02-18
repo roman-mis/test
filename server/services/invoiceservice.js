@@ -7,7 +7,7 @@ module.exports=function(){
 		queryutils=require('../utils/queryutils')(db),
 		utils=require('../utils/utils'),
 		timesheetservice=require(__dirname+'/timesheetservice')(),
-		systemservice=require(__dirname+'/systemservice')();
+		systemservice=require('./systemservice')(db);
 
 	var service={};
 

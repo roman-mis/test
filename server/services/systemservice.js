@@ -1,13 +1,22 @@
 'use strict';
 
-module.exports=function(){
-	var db = require('../models'),
+module.exports=function(dbs){
+	var db = dbs,
 		Q=require('q'),
 		utils=require('../utils/utils'),
 		_ = require('lodash');
 
 	var service={};
 
+	function createSystemModel(systemDetails){
+		var _systemModel = new db.System(systemDetails);
+		return Q.Promise(function(resolve,reject){
+			return Q.nfcall(_systemModel.save.bind(_systemModel))
+				.then(function(){
+						resolve(_systemModel);
+					},reject);
+		});
+	}
 	service.saveSystem = function(systemDetails){
 		return Q.Promise(function(resolve,reject){
 			return service.getSystem()
@@ -23,16 +32,17 @@ module.exports=function(){
 					}else{
 						// Add
 						console.log('add');
-						var _systemModel = new db.System(systemDetails);
-						return Q.nfcall(_systemModel.save.bind(_systemModel))
-						.then(function(){
-								resolve(_systemModel);
-							},reject);
+						
+						return createSystemModel(systemDetails)
+							.then(function(_systemModel){
+									resolve(_systemModel);
+								},reject);
 					}
 					
 				}, reject);
 		});
 	};
+
 
 	service.savePaymentRates = function(id, paymentInfo){
 		return Q.Promise(function(resolve,reject){
@@ -88,7 +98,21 @@ module.exports=function(){
 
 	service.getSystem=function(){
 		var q=db.System.findOne();
-		return Q.nfcall(q.exec.bind(q));
+		return Q.Promise(function(resolve,reject){
+			return Q.nfcall(q.exec.bind(q))
+				.then(function(system){
+					if(system){
+						resolve(system);
+					}
+					else{
+						return createSystemModel({})
+							.then(function(_system){
+								resolve(_system);
+							});
+					}
+				},reject);
+
+		});
 	};
 
 	service.getVat = function(){
