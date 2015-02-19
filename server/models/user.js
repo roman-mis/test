@@ -65,7 +65,7 @@ module.exports = function(mongoose,autoIncrement) {
             p45Uploaded:        {type:Boolean,required:false},
             p46Uploaded:        {type:Boolean,required:false},
             p45DocumentUrl:     {type:String,required:false},
-            employeesNIpaid:    {type:Boolean,required:true}
+            employeesNIpaid:    {type:Boolean,required:false}
         },
         payrollTax:{
             declaration:                 {type:String,trim:true},
