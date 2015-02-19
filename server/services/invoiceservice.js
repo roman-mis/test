@@ -83,6 +83,7 @@ module.exports=function(){
 							},reject);
 						}, reject);
 					}else{
+						console.log('Without Vat');
 						invoiceInfo = {
 							agency: invoice.agency,
 							branch: invoice.branch,

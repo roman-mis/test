@@ -141,7 +141,7 @@ module.exports=function(dbs){
 			return service.getSystem()
 			.then(function(system){
 				if(system.statutoryTables[name]){
-					var currentDate = new Date();console.log(currentDate);
+					var currentDate = new Date();
 					_.forEach(system.statutoryTables[name], function(_value){
 						console.log(_value);
 						if(currentDate >= _value.validFrom && currentDate <= _value.validTo){
