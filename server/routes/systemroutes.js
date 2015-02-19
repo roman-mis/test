@@ -24,5 +24,6 @@ router.patch('/vat/:id', controller.patchVat);
 
 //Expense Rates
 router.get('/expensesrate',controller.getAllExpensesRates);
+router.get('/expensesrate/:id',controller.getExpensesRates);
 router.post('/expensesrate',controller.postExpensesRate);
 router.patch('/expensesrate/:id',controller.patchExpensesRate);
