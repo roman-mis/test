@@ -122,6 +122,18 @@ module.exports = function(mongoose) {
                 hours: Number,
                 importAliases: [ String ]
             }
+        ],
+        expensesRate:[
+            {
+                name:String,
+                amount:Number,
+                taxApplicable:Boolean,
+                expensesRateType:String,
+                vat:Boolean,
+                dispensation:Boolean,
+                receipted:Boolean,
+                status:Boolean
+            }
         ]
     });
 

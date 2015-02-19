@@ -90,6 +90,34 @@ module.exports = function(dbs){
 			saveVat(req, res, 'post');
 		};
 
+		controller.postExpensesRate=function(req,res){
+			var expenseRate=req.body;
+			// console.log('expense rate post');
+			systemservice.addExpensesRate(expenseRate)
+				.then(function(result){
+					res.json({result:true,object:result.object.expensesRate});
+				})
+				.fail(res.sendFailureResponse);
+		};
+
+		controller.patchExpensesRate=function(req,res){
+			var expenseRate=req.body;
+
+			systemservice.updateExpensesRate(req.params.id,expenseRate)
+				.then(function(result){
+					res.json({result:true,object:result.object.expensesRate});
+				})
+				.fail(res.sendFailureResponse);
+		};
+
+		controller.getAllExpensesRates=function(req,res){
+			systemservice.getSystem()
+				.then(function(system){
+					res.json({result:true,objects:system.expensesRate});
+				})
+				.fail(res.sendFailureResponse);
+		};
+		
 		function saveVat(req, res, type){
 			var paymentInfo=req.body;
 
