@@ -65,7 +65,7 @@ module.exports = function(mongoose,autoIncrement) {
             p45Uploaded:        {type:Boolean,required:false},
             p46Uploaded:        {type:Boolean,required:false},
             p45DocumentUrl:     {type:String,required:false},
-            employeesNIpaid:    {type:Boolean,required:false}
+            employeesNIpaid:    {type:Boolean,required:false,default:true}
         },
         payrollTax:{
             declaration:                 {type:String,trim:true},
@@ -156,7 +156,19 @@ module.exports = function(mongoose,autoIncrement) {
        /* branchId:{type:Schema.Types.ObjectId,ref:'Agency.branches'}*/
 },{skipCreatedDate:false/*default false*/,skipUpdatedDate:false/*default false*/,skipUpdatedBy:false/*default false*/});
 schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,incrementBy:1});
-
+    schema.pre('save',function(next){
+        if(this.worker.taxDetail.employeesNIpaid===undefined){
+            this.worker.taxDetail.employeesNIpaid=true;
+        }
+       //  console.log('user saving heheheheee');
+       //  // console.log(this);
+       //  console.log(this.worker.taxDetail.currentP45===undefined);
+       // console.log(this.worker.taxDetail.currentP45===null);
+       // console.log(this.worker.taxDetail.employeesNIpaid===undefined);
+       // console.log(this.worker.taxDetail.employeesNIpaid===null);
+       next();
+         
+    });
   return mongoose.model('User',schema);
 
 };
