@@ -118,24 +118,29 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getVat = function(){
+	service.getVat = function(vatCharged){
 		return Q.Promise(function(resolve){
-			return service.getSystem()
-			.then(function(system){
-				if(system.statutoryTables.vat){
-					var currentDate = new Date();console.log(currentDate);
-					_.forEach(system.statutoryTables.vat, function(_vat){
-						console.log(_vat);
-						if(currentDate >= _vat.validFrom && currentDate <= _vat.validTo){
-							resolve(_vat.amount);
-							return false;
-						}
-					});
-					resolve(0);
-				}else{
-					resolve(0);
-				}
-			}, resolve(0));
+			if(vatCharged){
+				return service.getSystem()
+				.then(function(system){
+					if(system.statutoryTables.vat){
+						var currentDate = new Date();console.log(currentDate);
+						_.forEach(system.statutoryTables.vat, function(_vat){
+							console.log(_vat);
+							if(currentDate >= _vat.validFrom && currentDate <= _vat.validTo){
+								resolve(_vat.amount);
+								return false;
+							}
+						});
+						resolve(0);
+					}else{
+						resolve(0);
+					}
+				}, resolve(0));
+			}else{
+				resolve(0);
+			}
+			
 		});
 	};
     

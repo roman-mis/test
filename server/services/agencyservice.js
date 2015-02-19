@@ -1,16 +1,15 @@
  'use strict';
+ 
 var db = require('../models');
 var Q=require('q');
-// var Promise=require('promise');
 var _=require('lodash');
 var uuid = require('node-uuid');
-var service={};
 var utils=require('../utils/utils');
 var queryutils=require('../utils/queryutils')(db);
 var awsservice=require('../services/awsservice');
 var userservice=require('../services/userservice');
 var candidatecommonservice=require('../services/candidatecommonservice')(db);
-
+var service={};
 
 function updateConsultant(agency,consultant){
 	return Q.Promise(function(resolve,reject){
