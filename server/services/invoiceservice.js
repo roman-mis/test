@@ -22,7 +22,7 @@ module.exports=function(){
 
 	service.saveInvoice = function(invoiceId, invoice){
 		return Q.Promise(function(resolve,reject){
-			agencyservice.getAgency(invoice.agency).then(function(agency){
+			return agencyservice.getAgency(invoice.agency).then(function(agency){
 				if(agency.defaultInvoicing.invoiceMethod){
 					// Invoice Method (1: Consolidated, 2: Individual)
 					if(agency.defaultInvoicing.invoiceMethod.toString() === '2'){
@@ -35,6 +35,9 @@ module.exports=function(){
 							return systemservice.getVat(vatCharged).then(function(amount){
 								var lines = [];
 								var net = 0, vat = 0;
+								var timesheetsToUpdate=[];
+								var invoicesToSave=[];
+
 								_.forEach(timesheets, function(timesheet){
 									var elements = [];
 									_.forEach(timesheet.elements, function(_element){
@@ -58,7 +61,8 @@ module.exports=function(){
 
 									//Update Timesheet
 									utils.updateSubModel(timesheet.payrollSettings, invoice.companyDefaults);
-									timesheetservice.saveTimesheet(timesheet._id, timesheet);
+									//timesheetservice.saveTimesheet(timesheet._id, timesheet);
+									timesheetsToUpdate.push(timesheet);
 
 									// For Vat
 									var invoiceInfo, invoiceModel;
@@ -76,12 +80,45 @@ module.exports=function(){
 								        total: (net+vat).toFixed(2)
 									};
 									invoiceModel = new db.Invoice(invoiceInfo);
-									invoiceModel.save.bind(invoiceModel);
-									console.log(invoiceInfo);
-									console.log('here');
+									// invoiceModel.save.bind(invoiceModel);
+									invoicesToSave.push(invoiceModel);
+									// console.log(invoiceInfo);
+									// console.log('here');
 								});
-								console.log('end');
-								resolve({result:true});
+								console.log('stacking invoice promises');
+								var prom=Q(true);
+								_.forEach(invoicesToSave,function(invoiceModel){
+									prom=prom.then(function(){
+										console.log('saving invoice '+invoiceModel._id);
+										return Q.nfcall(invoiceModel.save.bind(invoiceModel));
+									});
+								});
+								
+								console.log('stacking timesheet');
+								_.forEach(timesheetsToUpdate,function(timesheet){
+									prom=prom.then(function(){
+										console.log('updating timesheet '+timesheet._id);
+										return timesheetservice.saveTimesheet(timesheet._id,timesheet);
+									});
+								});
+
+								console.log('stacking promise fialure');
+								prom.fail(function(){
+									//revert all invoicesToSave
+									_.forEach(invoicesToSave,function(invoiceModel){
+										console.log('removing invoiceModel   '+invoiceModel._id);
+										return Q.nfcall(invoiceModel.remove.bind(invoiceModel));
+										
+									});
+								});
+
+								return prom.then(function(){
+									resolve({result:true});
+								})
+								.fail(reject);
+
+								// console.log('end');
+								// resolve({result:true});
 							});
 						});
 					}else{
