@@ -1,6 +1,7 @@
 'use strict';
 
-var controller = {};
+var controller = {},
+	dec = require('decimalmath');
 module.exports = function(){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice'),
@@ -83,22 +84,34 @@ module.exports = function(){
 			submittedDate: new Date(),
 			days: expense.days
 		};
-		
+
+		//expense total
+		var total = 0;
+		expense.days.forEach(function(day){
+			day.expenses.forEach(function(ex) {
+				total = dec.sum(total, ex.value);
+			});
+		});
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
-          		if(request.vehicleInformation){
-          			// Adding Vehicle Information
-          			var vehicleInformation = req.body.vehicleInformation;
-          			candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
-				        .then(function(){
-				          res.json(_expense);
-				        },function(err){console.log(err);
-				         res.sendFailureResponse(err);
-			      	});
-          		}else{
-          			res.json(_expense);
-          		}
+				candidateservice.updateWorkerCurrentExpensesToUse(req.params.id, total)
+				.then(function() {
+					if(request.vehicleInformation){
+						// Adding Vehicle Information
+						var vehicleInformation = req.body.vehicleInformation;
+						candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
+							.then(function(){
+							  res.json(_expense);
+							},function(err){console.log(err);
+							 res.sendFailureResponse(err);
+						});
+					}else{
+						res.json(_expense);
+					}
+				}, function(err){
+					res.sendFailureResponse(err);
+				});
 	        },res.sendFailureResponse);
 		},function(err){
 		 	res.sendFailureResponse(err);
