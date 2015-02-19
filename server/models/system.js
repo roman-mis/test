@@ -84,6 +84,23 @@ module.exports = function(mongoose) {
                     validTo: Date
                 }
             ],
+            employeesNiRate: [
+                {
+                    lowerThreshold: Number,
+                    upperThreshold: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            employeesHighEarnerNiRate: [
+                {
+                    lowerThreshold: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
             workPatterns: [
                 {
                     monday: Boolean,
