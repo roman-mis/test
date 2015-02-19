@@ -1,12 +1,24 @@
 'use strict';
+var Q=require('q');
 
-module.exports=function(){
-	var db = require('../models'),
-		Q=require('q'),
+module.exports=function(dbs){
+	var db = dbs,
+		
 		utils=require('../utils/utils'),
 		_ = require('lodash');
 
 	var service={};
+
+	function createSystemModel(systemDetails){
+		var _systemModel = new db.System(systemDetails);
+		return Q.Promise(function(resolve,reject){
+			return Q.nfcall(_systemModel.save.bind(_systemModel))
+				.then(function(){
+						resolve(_systemModel);
+					},reject);
+		});
+	}
+
 
 	service.saveSystem = function(systemDetails){
 		return Q.Promise(function(resolve,reject){
@@ -23,16 +35,17 @@ module.exports=function(){
 					}else{
 						// Add
 						console.log('add');
-						var _systemModel = new db.System(systemDetails);
-						return Q.nfcall(_systemModel.save.bind(_systemModel))
-						.then(function(){
-								resolve(_systemModel);
-							},reject);
+						
+						return createSystemModel(systemDetails)
+							.then(function(_systemModel){
+									resolve(_systemModel);
+								},reject);
 					}
 					
 				}, reject);
 		});
 	};
+
 
 	service.savePaymentRates = function(id, paymentInfo){
 		return Q.Promise(function(resolve,reject){
@@ -88,36 +101,55 @@ module.exports=function(){
 
 	service.getSystem=function(){
 		var q=db.System.findOne();
-		return Q.nfcall(q.exec.bind(q));
+		return Q.Promise(function(resolve,reject){
+			return Q.nfcall(q.exec.bind(q))
+				.then(function(system){
+					if(system){
+						resolve(system);
+					}
+					else{
+						return createSystemModel({})
+							.then(function(_system){
+								resolve(_system);
+							});
+					}
+				},reject);
+
+		});
 	};
 
-	service.getVat = function(){
+	service.getVat = function(vatCharged){
 		return Q.Promise(function(resolve){
-			return service.getSystem()
-			.then(function(system){
-				if(system.statutoryTables.vat){
-					var currentDate = new Date();console.log(currentDate);
-					_.forEach(system.statutoryTables.vat, function(_vat){
-						console.log(_vat);
-						if(currentDate >= _vat.validFrom && currentDate <= _vat.validTo){
-							resolve(_vat.amount);
-							return false;
-						}
-					});
-					resolve(0);
-				}else{
-					resolve(0);
-				}
-			}, resolve(0));
+			if(vatCharged){
+				return service.getSystem()
+				.then(function(system){
+					if(system.statutoryTables.vat){
+						var currentDate = new Date();console.log(currentDate);
+						_.forEach(system.statutoryTables.vat, function(_vat){
+							console.log(_vat);
+							if(currentDate >= _vat.validFrom && currentDate <= _vat.validTo){
+								resolve(_vat.amount);
+								return false;
+							}
+						});
+						resolve(0);
+					}else{
+						resolve(0);
+					}
+				}, resolve(0));
+			}else{
+				resolve(0);
+			}
+			
 		});
 	};
     
     service.getStatutoryValue = function(name){
-		return Q.Promise(function(resolve){
+		return Q.Promise(function(resolve,reject){
 			return service.getSystem()
 			.then(function(system){
 				if(system.statutoryTables[name]){
-					var currentDate = new Date();console.log(currentDate);
+					var currentDate = new Date();
 					_.forEach(system.statutoryTables[name], function(_value){
 						console.log(_value);
 						if(currentDate >= _value.validFrom && currentDate <= _value.validTo){
@@ -129,9 +161,43 @@ module.exports=function(){
 				}else{
 					resolve({});
 				}
-			}, resolve({}));
+			}, reject);
+		});
+	};
+
+	service.addExpensesRate=function(expenseRateDetails){
+		return Q.Promise(function(resolve){
+			return service.getSystem()
+				.then(function(system){
+
+					var expenseRateModel=system.expensesRate.create(expenseRateDetails);
+					system.expensesRate.push(expenseRateModel);
+					return saveSystemModel(system)
+						.then(function(){
+							resolve({result:true,object:{system:system,expensesRate:expenseRateModel}});
+						});
+				});
+		});
+	};
+
+	service.updateExpensesRate=function(id,expenseRateDetails){
+		return Q.Promise(function(resolve){
+			return service.getSystem()
+				.then(function(system){
+
+					var expenseRateModel=system.expensesRate.id(id);
+					utils.updateSubModel(expenseRateModel,expenseRateDetails);
+					return saveSystemModel(system)
+						.then(function(){
+							resolve({result:true,object:{system:system,expensesRate:expenseRateModel}});
+						});
+				});
 		});
 	};
 
 	return service;
 };
+
+function saveSystemModel(systemModel){
+	return Q.nfcall(systemModel.save.bind(systemModel));
+}

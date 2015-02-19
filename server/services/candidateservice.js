@@ -14,6 +14,7 @@ var awsservice=require('../services/awsservice');
 var candidatecommonservice=require('./candidatecommonservice')(db);
 var enums=require('../utils/enums');
 var dataList=require('../data/data_list.json');
+var dec = require('decimalmath');
 // service.simpleTest=function(someparam){
 // 	return 'you sent me '+someparam;
 
@@ -311,6 +312,23 @@ service.updateVehicleInformation=function(userId, vehicleInformation){
 					if(!change){
 						user.worker.vehicleInformation.push(vehicleInformation);
 					}
+					return Q.nfcall(user.save.bind(user))
+						.then(function(){
+							resolve(user);
+						},reject);
+		   		} else {
+		   			reject({name:'NotFound',message:'No User found'});
+		   		}
+		},reject);
+	});
+};
+
+service.updateWorkerCurrentExpensesToUse=function(userId, total){
+	return Q.Promise(function(resolve,reject){
+		service.getUser(userId)
+		   .then(function(user){
+		   		if(user){
+	   				user.worker.currentExpensesToUse = dec.sum(user.worker.currentExpensesToUse || 0,  total);
 					return Q.nfcall(user.save.bind(user))
 						.then(function(){
 							resolve(user);

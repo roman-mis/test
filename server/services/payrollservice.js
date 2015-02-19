@@ -4,7 +4,7 @@ module.exports=function(){
 	var db = require('../models'),
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
-        systemService=require('./systemservice')(),
+        systemService=require('./systemservice')(db),
 		utils=require('../utils/utils');
 
 	var service={};
@@ -62,6 +62,8 @@ module.exports=function(){
             // Get the NI threshold
             var employersNiThreshold = getStatutoryValue('employersNiThreshold',system)
             var employersNiRate = getStatutoryValue('employersNiRate',system);
+            var employeesNiRate = getStatutoryValue('employeesNiRate',system);
+            var employeesHighEarnerNiRates = getStatutoryValue('employeesHighEarnerNiRate',system);
             
            req.body.workers.forEach(function(worker){
                            
@@ -158,11 +160,11 @@ module.exports=function(){
                                                    timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
                                                    totalHolidayPay+=holidayPay;
                                                }
-                                               
-                                               
+                                                                                              
                                                //endregion
                                            }
                                            
+                                           // It's a Holiday timesheet entry
                                            if(element.paymentRate.rateType==='Holiday') {
                                                var holidayPay = units*payRate;
                                                totalHolidayPay+=holidayPay;
@@ -203,6 +205,127 @@ module.exports=function(){
                                    
                                    //endregion
                                    
+                                   //region Holiday Pay Deducted (retained or rolled up)
+                                   
+                                   var totalPayForNMW = totalPay-totalHolidayPay;
+                                   log.push('Total pay for NMW: ' + totalPayForNMW);
+                                   
+                                   //endregion
+                                   
+                                   //region TODO: Holiday Pay Taken
+                                   
+                                   var totalHolidayPayTaken = 0;
+                                   
+                                   if(totalHolidayPayTaken>_worker.worker.payrollValues.holidayPayRetained) {
+                                       log.push('SERIOUS PROBLEM: Holiday Pay requested to be taken is under the amount retained. Requested: ' + totalHolidayPayTaken + ' and only ' + _worker.worker.payrollValues.holidayPayRetained + ' retained');
+                                       totalHolidayPayTaken = _worker.worker.payrollValues.holidayPayRetained;
+                                   }
+                                   
+                                   log.push('Holiday pay taken: ' + totalHolidayPayTaken);
+                                   
+                                   //endregion
+                                   
+                                   // NMW Verification
+                                   if(totalPay+totalHolidayPayTaken>actualNMW) {
+                                      
+                                       //region Margin
+                                       
+                                       var margin = 20;
+                                       
+                                       log.push('Margin: ' + margin);
+                                       
+                                       //endregion
+                                       
+                                       var totalPayAfterHPandMargin = totalPay-margin;
+                                       log.push('Total pay after HP and Margin: ' + totalPayAfterHPandMargin);
+                                       
+                                       //region Expenses
+                                       
+                                       var capacityForExpenses = totalPayAfterHPandMargin-actualNMW;
+                                       log.push('Capacity for expenses: ' + capacityForExpenses);
+                                       
+                                       
+                                       var totalExpenses = 50;
+                                       log.push('Total expenses: ' + totalExpenses);
+                                       
+                                       if(expenses>capacityForExpenses) {
+                                           totalExpenses = capacityForExpenses;
+                                           log.push('Expenses are more than the capacity so reducing it to capacity');
+                                       }
+                                       
+                                       //endregion
+                                       
+                                       //region Summary before taxes and NI
+                                       
+                                       log.push('SUMMARY BEFORE TAXES AND NI');
+                                       log.push('Gross pay: ' + totalPay);
+                                       log.push('Holiday pay accrued: ' + totalHolidayPay);
+                                       log.push('Holiday pay taken: ' + totalHolidayPayTaken);
+                                       log.push('Margin: ' + margin);
+                                       log.push('Expenses allowed: ' + totalExpenses);
+                                       
+                                       var payForTaxesAndNI = totalPay + totalHolidayPay + totalHolidayPayTaken + margin + totalExpenses;
+                                       
+                                       log.push('Pay available for taxes and NI: ' + payForTaxesAndNI);
+                                       
+                                       //endregion
+                                       
+                                       //region Employers NI
+                                       
+                                       var employersNI = 0;
+                                       
+                                       if(payForTaxesAndNI>employersNiThreshold) {
+                                           employersNI = (payForTaxesAndNI-employersNI) * (employersNiRate/(1+employersNiRate));
+                                           log.push('Pay under Employers NI Threshold so none due');
+                                       }
+                                       
+                                       log.push('Employers NI: ' + employersNI);
+                                       
+                                       //endregion
+                                       
+                                       //region Employees NI
+                                       
+                                       var paySubjectToEmployeesNI = payForTaxesAndNI+employersNI;
+                                       
+                                       log.push('Pay subject to Employees NI: ' + paySubjectToEmployeesNI);
+                                       
+                                       var employeesNI = 0;
+                                       
+                                       if(_worker.taxDetail.employeesNIpaid) {
+                                           // Main NI (12% in Feb 2015)
+                                           var mainNI = 0;
+                                           if(paySubjectToEmployeesNI>employeesNiRate.lowerThreshold) {
+                                               if(paySubjectToEmployeesNI>employeesNiRate.upperThreshold) {
+                                                   mainNI = employeesNiRate.upperThreshold-employeesNiRate.lowerThreshold;
+                                               }
+                                               else {
+                                                   mainNI = paySubjectToEmployeesNI-employeesNiRate.lowerThreshold;
+                                               }
+                                               
+                                               mainNI = (mainNI/100)*employeesNiRate.amount
+                                           }
+                                           log.push('Main NI: ' + mainNIlower);
+                                           
+                                           // High earners NI (2% in Feb 2015)
+                                           var highEarnerNI = 0;
+                                           if(paySubjectToEmployeesNI>employeesHighEarnerNiRates.lowerThreshold) {
+                                               highEarnerNI = ((paySubjectToEmployeesNI-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
+                                           }
+                                           log.push('High earner NI: ' + highEarnerNI);
+                                           
+                                           employeesNI = mainNI + highEarnerNI;
+                                           log.push('Employees NI: ' + employeesNI);
+                                       }
+                                       else {
+                                           log.push('This worker does not have to pay Employees NI');
+                                       }
+                                       
+                                       //endregion
+                                   }
+                                   else {
+                                       log.push('SERIOUS PROBLEM: Under NMW. It is ' + totalPay+totalHolidayPayTaken + ' which is not more than ' + actualNMW);
+                                   }
+                                   
                                }
                                else {
 
@@ -234,6 +357,6 @@ module.exports=function(){
             
             return;
         }
-
+    
 	return service;
 };

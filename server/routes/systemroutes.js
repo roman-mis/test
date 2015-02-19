@@ -7,7 +7,7 @@ var express = require('express'),
 	controller=require('../controllers/systemController')(db);
 
 module.exports = function(app){
-  app.use('/api/system', router);
+  app.use('/api/systems', router);
 };
 
 router.get('/', controller.getSystem);
@@ -21,3 +21,9 @@ router.get('/vat', controller.getVat);
 router.get('/vat/current', controller.getCurrentVat);
 router.post('/vat', controller.postVat);
 router.patch('/vat/:id', controller.patchVat);
+
+//Expense Rates
+router.get('/expensesrate',controller.getAllExpensesRates);
+router.get('/expensesrate/:id',controller.getExpensesRates);
+router.post('/expensesrate',controller.postExpensesRate);
+router.patch('/expensesrate/:id',controller.patchExpensesRate);
