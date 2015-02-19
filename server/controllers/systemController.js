@@ -117,6 +117,16 @@ module.exports = function(dbs){
 				})
 				.fail(res.sendFailureResponse);
 		};
+
+		controller.getExpensesRates=function(req,res){
+			systemservice.getSystem()
+				.then(function(system){
+					var expenseRate=system.expensesRate.id(req.params.id);
+					res.json({result:true,object:expenseRate});
+				})
+				.fail(res.sendFailureResponse);
+		};
+
 		
 		function saveVat(req, res, type){
 			var paymentInfo=req.body;
