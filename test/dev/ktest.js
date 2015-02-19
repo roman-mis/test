@@ -26,7 +26,7 @@ describe('KTest', function() {
     element(by.cssContainingText('button', 'Expenses wizard')).click();
   });
   
-  /*it('should select an agency', function() {
+  it('should select an agency', function() {
     var select = element.all(by.model('expenseData.agency'));
     selectSelector(select, 0);
     element(by.cssContainingText('button', 'Next')).click();
@@ -59,7 +59,7 @@ describe('KTest', function() {
     element(by.cssContainingText('.btn-default.form-control', 'Add')).click();    
     element.all(by.cssContainingText('button', 'Next')).get(0).click();
     
-  });*/
+  });
   
   it('should sleep', function() {
     browser.sleep(1000000);
