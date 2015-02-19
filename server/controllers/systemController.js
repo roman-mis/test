@@ -127,6 +127,7 @@ module.exports = function(dbs){
 				.fail(res.sendFailureResponse);
 		};
 
+
 		function saveVat(req, res, type){
 			var paymentInfo=req.body;
 
