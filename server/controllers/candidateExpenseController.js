@@ -1,7 +1,6 @@
 'use strict';
 
-var controller = {},
-	dec = require('decimalmath');
+var controller = {};
 module.exports = function(){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice'),
@@ -89,7 +88,7 @@ module.exports = function(){
 		var total = 0;
 		expense.days.forEach(function(day){
 			day.expenses.forEach(function(ex) {
-				total = dec.sum(total, ex.value);
+				total = total + ex.value;
 			});
 		});
 		expenseservice.saveExpenses(newExpense).then(function(response){

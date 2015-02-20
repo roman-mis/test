@@ -14,7 +14,6 @@ var awsservice=require('../services/awsservice');
 var candidatecommonservice=require('./candidatecommonservice')(db);
 var enums=require('../utils/enums');
 var dataList=require('../data/data_list.json');
-var dec = require('decimalmath');
 // service.simpleTest=function(someparam){
 // 	return 'you sent me '+someparam;
 
@@ -328,7 +327,7 @@ service.updateWorkerCurrentExpensesToUse=function(userId, total){
 		service.getUser(userId)
 		   .then(function(user){
 		   		if(user){
-	   				user.worker.currentExpensesToUse = dec.sum(user.worker.currentExpensesToUse || 0,  total);
+	   				user.worker.currentExpensesToUse = (user.worker.currentExpensesToUse || 0) +  total;
 					return Q.nfcall(user.save.bind(user))
 						.then(function(){
 							resolve(user);
