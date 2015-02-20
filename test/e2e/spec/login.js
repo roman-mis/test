@@ -1,8 +1,18 @@
+var helper = require('./ui-helper.js');
 loginData.userName=loginData.userName || 'originemtest_t568300';
 loginData.userEmail= loginData.userEmail || 'originemtest+t568300@yandex.com';
 loginData.userPassword= loginData.userPassword || 'andyboss';
 
+
 describe('Browse to sign in', function() {
+/*var count=0;
+  afterEach(function() {
+    count++;
+    console.log(jasmine.getEnv().currentSpec.description);
+    browser.takeScreenshot().then(function (png) {
+     helper.writeScreenShot(png, 'exception-'+count+'.png');
+     });
+  });*/
 
   var expectValid = function (element) {
     expect(element.getAttribute('class')).toContain('ng-valid');
@@ -48,6 +58,7 @@ describe('Browse to sign in', function() {
         return (url.indexOf('candidates') !== -1);
       });
     }, 5000);
+
   });
 
 });
