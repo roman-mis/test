@@ -132,7 +132,8 @@ module.exports = function(mongoose) {
                 vat:Boolean,
                 dispensation:Boolean,
                 receipted:Boolean,
-                status:Boolean
+                isEnabled:Boolean,
+                type: String // subsistence, other
             }
         ]
     });
