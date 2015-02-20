@@ -5,6 +5,7 @@ var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {
     var schema = new BaseSchema({
+        worker: { type: Schema.Types.ObjectId, ref:'User' },
         mileage: Number,
         taxableEarnings: Number,
         taxPaid: Number,

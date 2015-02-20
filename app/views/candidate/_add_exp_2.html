@@ -6,7 +6,7 @@
 		<div class="div-center">
           <ui-select ng-model="expenseData.agency" theme="select2" search-enabled="true">
             <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+            <ui-select-choices repeat="item in agencies | unique:'id' | filter: $select.search">{{item.name}}</ui-select-choices>
           </ui-select>
 		</div>
 	</div>

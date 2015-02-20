@@ -1,8 +1,9 @@
 'use strict';
+var Q=require('q');
 
 module.exports=function(dbs){
 	var db = dbs,
-		Q=require('q'),
+		
 		utils=require('../utils/utils'),
 		_ = require('lodash');
 
@@ -17,6 +18,8 @@ module.exports=function(dbs){
 					},reject);
 		});
 	}
+
+
 	service.saveSystem = function(systemDetails){
 		return Q.Promise(function(resolve,reject){
 			return service.getSystem()
@@ -115,33 +118,38 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getVat = function(){
+	service.getVat = function(vatCharged){
 		return Q.Promise(function(resolve){
-			return service.getSystem()
-			.then(function(system){
-				if(system.statutoryTables.vat){
-					var currentDate = new Date();console.log(currentDate);
-					_.forEach(system.statutoryTables.vat, function(_vat){
-						console.log(_vat);
-						if(currentDate >= _vat.validFrom && currentDate <= _vat.validTo){
-							resolve(_vat.amount);
-							return false;
-						}
-					});
-					resolve(0);
-				}else{
-					resolve(0);
-				}
-			}, resolve(0));
+			if(vatCharged){
+				return service.getSystem()
+				.then(function(system){
+					if(system.statutoryTables.vat){
+						var currentDate = new Date();console.log(currentDate);
+						_.forEach(system.statutoryTables.vat, function(_vat){
+							console.log(_vat);
+							if(currentDate >= _vat.validFrom && currentDate <= _vat.validTo){
+								resolve(_vat.amount);
+								return false;
+							}
+						});
+						resolve(0);
+					}else{
+						resolve(0);
+					}
+				}, resolve(0));
+			}else{
+				resolve(0);
+			}
+			
 		});
 	};
     
     service.getStatutoryValue = function(name){
-		return Q.Promise(function(resolve){
+		return Q.Promise(function(resolve,reject){
 			return service.getSystem()
 			.then(function(system){
 				if(system.statutoryTables[name]){
-					var currentDate = new Date();console.log(currentDate);
+					var currentDate = new Date();
 					_.forEach(system.statutoryTables[name], function(_value){
 						console.log(_value);
 						if(currentDate >= _value.validFrom && currentDate <= _value.validTo){
@@ -153,9 +161,43 @@ module.exports=function(dbs){
 				}else{
 					resolve({});
 				}
-			}, resolve({}));
+			}, reject);
+		});
+	};
+
+	service.addExpensesRate=function(expenseRateDetails){
+		return Q.Promise(function(resolve){
+			return service.getSystem()
+				.then(function(system){
+
+					var expenseRateModel=system.expensesRate.create(expenseRateDetails);
+					system.expensesRate.push(expenseRateModel);
+					return saveSystemModel(system)
+						.then(function(){
+							resolve({result:true,object:{system:system,expensesRate:expenseRateModel}});
+						});
+				});
+		});
+	};
+
+	service.updateExpensesRate=function(id,expenseRateDetails){
+		return Q.Promise(function(resolve){
+			return service.getSystem()
+				.then(function(system){
+
+					var expenseRateModel=system.expensesRate.id(id);
+					utils.updateSubModel(expenseRateModel,expenseRateDetails);
+					return saveSystemModel(system)
+						.then(function(){
+							resolve({result:true,object:{system:system,expensesRate:expenseRateModel}});
+						});
+				});
 		});
 	};
 
 	return service;
 };
+
+function saveSystemModel(systemModel){
+	return Q.nfcall(systemModel.save.bind(systemModel));
+}

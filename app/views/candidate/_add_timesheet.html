@@ -1,5 +1,5 @@
 		<div class="modal-content add-tsh" >
-		<!-- <button ng-click ="logMe()"> button</button> -->
+		<button ng-click ="logMe()"> button</button>
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
 			</div><!-- /modal-header -->
@@ -26,8 +26,8 @@
 								Select Agency
 							</div>
 							<div class="col-xs-12 col-sm-7 form-group">
-								<select class="form-control">
-									<option ng-repeat = "product in payrollProducts">{{product.agency.name}}</option>
+								<select class="form-control" ng-model = "saveAgency" ng-options="agency.agency.name for agency in agencies">
+									<!-- <option ng-model = "saveProduct" ng-repeat = "product in payrollProducts">{{product.agency.name}}</option> -->
 								</select>
 							</div>
 							<!-- <div class="col-xs-12 col-sm-5 form-group no-padding-right">
@@ -55,11 +55,12 @@
 				<div class="row">
 					<div class="col-md-3 col-sm-12 form-group">
 						<span>Rate Description</span>
-						<select class="col-sm-12 form-control">
-							<option ng-repeat="rate in rates">{{rate.description}}</option>
+						<select ng-model = "saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates">
+							<!-- <option ng-repeat="rate in paymentRates" ng-click ="save($index)" >{{rate.name}}</option> -->
 							<!-- <option value="2">Standard Hourly Rate</option>
 							<option value="2">Education Day Rate</option>
 							<option value="2">Standard Day rate</option> -->
+							
 						</select>
 					</div>
 					<div class="col-sm-12 form-group hidden-md hidden-lg">
@@ -78,7 +79,7 @@
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Charge Rate</span>
-									<input type="text" class="form-control" disabled />
+									<input ng-model = 'elements.chargeRate' type="text" class="form-control" disabled />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Amount</span>
@@ -99,12 +100,12 @@
 
 					<div class="col-md-2 col-sm-12 col-xs-12 form-group">
 						<br/>
-						<button type="button" class="btn btn-primary form-control btnSmall">Add</button>
+						<button ng-click = "populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
 				   </div>
 				</div>
 				<div class="row hidden-sm hidden-xs">
 					<div class="col-md-5 form-group">
-						<input type="text" class="form-control" placeholder="Enter description" />
+						<input ng-model = "userDescription" type="text" class="form-control" placeholder="Enter description" />
 					</div>
 				</div>
 				<div class="row">
@@ -126,126 +127,17 @@
 						 <div class="tableWrapper">
 							 <table class="table table-striped" id="tableBody">
 								 <tbody>
-									 <tr>
-										 <td style="width: 20%;">Standard Hourly Rate</td>
-										 <td style="width: 20%;">User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
+									 <tr ng-repeat ="element in finalElements">
+										 <td style="width: 20%;">{{element.elementType}}</td>
+										 <td style="width: 20%;">{{element.description}}</td>
+										 <td>{{element.units}}</td>
+										 <td>{{element.payRate}}</td>
 										 <td style="width: 15%;">n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
+										 <td>{{element.amount}}</td>
+										 <td>{{element.vat}}</td>
 										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
 									 </tr>
-									 <tr>
-										 <td>Education Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Standard Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									  <tr>
-										 <td style="width: 20%;">Standard Hourly Rate</td>
-										 <td style="width: 20%;">User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td style="width: 15%;">n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Education Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Standard Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									  <tr>
-										 <td style="width: 20%;">Standard Hourly Rate</td>
-										 <td style="width: 20%;">User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td style="width: 15%;">n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Education Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Standard Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									  <tr>
-										 <td style="width: 20%;">Standard Hourly Rate</td>
-										 <td style="width: 20%;">User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td style="width: 15%;">n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Education Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td> -->
-									 </tr>
-									 <tr>
-										 <td>Standard Day Rate</td>
-										 <td>User description</td>
-										 <td>00</td>
-										 <td>00.00</td>
-										 <td>n/a</td>
-										 <td>00.00</td>
-										 <td>00.00</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
+									 
 								 </tbody>
 							 </table>
 						</div>
@@ -280,31 +172,31 @@
 								<span>NET</span>
 							</div>
 							 <div class="col-xs-7 form-group">
-								 <input type="text" class="form-control" disabled />
+								 <input ng-model = "net" type="text" class="form-control" disabled />
 							</div>
 							<div class="col-xs-5 labelDisabledInput">
 								<span>VAT</span>
 							</div>
 							 <div class="col-xs-7  form-group">
-								 <input type="text" class="form-control" disabled />
+								 <input ng-model="totalVat" type="text" class="form-control" disabled />
 							</div>
-							<div class="col-xs-5 labelDisabledInput">
+							<!-- <div class="col-xs-5 labelDisabledInput">
 								<span>Total</span>
 							</div>
 							 <div class="col-xs-7  form-group">
 								 <input type="text" class="form-control" disabled />
-							</div>
-							<div class="col-xs-5 labelDisabledInput">
+							</div> -->
+							<!-- <div class="col-xs-5 labelDisabledInput">
 								<span>Deductions</span>
 							</div>
 							 <div class="col-xs-7 form-group">
 								 <input type="text" class="form-control" disabled />
-							</div>
+							</div> -->
 							<div class="col-xs-5 labelDisabledInput">
 								<span>Total</span>
 							</div>
 							 <div class="col-xs-7 form-group">
-								 <input type="text" class="form-control" disabled />
+								 <input ng-model = "total" type="text" class="form-control" disabled />
 							</div>
 						</div>
 					</div>

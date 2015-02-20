@@ -13,7 +13,7 @@ describe('KTest', function() {
     browser.setLocation('/register/home');
     element(by.model('emailAddress')).sendKeys('ishwor@makeitsimple.info');
     element(by.model('password')).sendKeys('passw0rd');
-    element(by.css('.btn-singin')).click();
+    element(by.css('.sign-in')).click();
   });
   
   it('should click first candidate', function() {

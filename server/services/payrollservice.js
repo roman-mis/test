@@ -60,7 +60,7 @@ module.exports=function(){
         .then(function(system) {
             
             // Get the NI threshold
-            var employersNiThreshold = getStatutoryValue('employersNiThreshold',system)
+            var employersNiThreshold = getStatutoryValue('employersNiThreshold',system);
             var employersNiRate = getStatutoryValue('employersNiRate',system);
             var employeesNiRate = getStatutoryValue('employeesNiRate',system);
             var employeesHighEarnerNiRates = getStatutoryValue('employeesHighEarnerNiRate',system);
@@ -77,18 +77,28 @@ module.exports=function(){
 
                        var nmw = 0;
 
-                       // Get the NMW for this worker's age
+                       //region Get the NMW for this worker's age
                        if(system.statutoryTables.nmw){
                            var currentDate = new Date();console.log(currentDate);
-                           _.forEach(system.statutoryTables.nmw, function(_value){
+                           system.statutoryTables.nmw.forEach(function(_value) {
                                console.log(_value);
-                               if(currentDate >= _value.validFrom && currentDate <= _value.validTo 
-                                  && _value.ageLower<age && _value.ageUpper>age) {
+                               if(currentDate >= _value.validFrom && currentDate <= _value.validTo && _value.ageLower<age && _value.ageUpper>age) {
                                    nmw = _value.amount;
                                }
                            });
                        }
-
+                       //endregion                    
+                       
+                       //region Get the PayrollWorkerYTD record
+                       
+                       var payrollWorkerYTD;
+                       
+                       db.PayrollWorkerYTD.findOne({ worker: worker._id },function(err,_payrollWorkerYTD) {
+                           payrollWorkerYTD = _payrollWorkerYTD;
+                       });
+                       
+                       //endregion
+                       
                        // Get all the timesheets for this worker that are status of receipted
                        db.Timesheet.find( { $and: [ { status: 'receipted' } , { worker: worker._id } ] })
                        .exec(function(timesheets,err) {
@@ -115,9 +125,12 @@ module.exports=function(){
 
                                        var timesheetElementIndex = 0;
                                        timesheet.elements.forEach(function(element) {
+                                           
+                                           var holidayPay = 0;
 
                                            log.push('Found timesheet element: ' + element);
 
+                                           //region Daily or Hourly
                                            if(element.paymentRate.rateType==='Daily' || element.paymentRate.rateType==='Hourly') {
 
                                                var hours = 0,
@@ -136,7 +149,7 @@ module.exports=function(){
                                                totalEffectiveEarnings+=effectiveEarnings;
                                                log.push('Effective earnings: ' + effectiveEarnings);
                                                
-                                               var pay = element.units*element.payRate;
+                                               pay = element.units*element.payRate;
                                                log.push('Adding ' + pay + ' of pay from this element');
                                                totalPay+=pay;
 
@@ -148,7 +161,6 @@ module.exports=function(){
                                                //region Holiday pay
                                                
                                                // Rolled up or retained but on Total Pay
-                                               var holidayPay = 0;
                                                if(_payrollProduct.holidayPayRule==='2' || _payrollProduct.holidayPayRule==='4') {
                                                    holidayPay = (_payrollProduct.holidayPayDays/260)*pay;
                                                    timesheet.elements[timesheetElementIndex].holidayPay.onActual = holidayPay;
@@ -163,10 +175,11 @@ module.exports=function(){
                                                                                               
                                                //endregion
                                            }
+                                           //endregion
                                            
-                                           // It's a Holiday timesheet entry
+                                           //region It's a Holiday timesheet entry
                                            if(element.paymentRate.rateType==='Holiday') {
-                                               var holidayPay = units*payRate;
+                                               holidayPay = element.units*element.payRate;
                                                totalHolidayPay+=holidayPay;
                                                
                                                totalPay+=holidayPay;
@@ -180,11 +193,11 @@ module.exports=function(){
                                                    timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
                                                }
                                            }
-                                           
+                                           //endregion
                                            timesheetElementIndex++;
                                        });
                                        
-                                       timesheet[timesheetIndex].save(function(err,user){
+                                       timesheet[timesheetIndex].save(function(err){
                                            log.push('Error saving timesheet: ' + err);
                                        });
                                        
@@ -195,12 +208,12 @@ module.exports=function(){
                                    
                                    var employersNiOnNmw = 0;
 
-                                   if(effectiveEarnings>=employersNiThreshold) {
-                                       employersNiOnNmw = ((effectiveEarnings-employersNiThreshold)/100)*employersNiRate;
+                                   if(totalEffectiveEarnings>=employersNiThreshold) {
+                                       employersNiOnNmw = ((totalEffectiveEarnings-employersNiThreshold)/100)*employersNiRate;
                                        log.push('Employers NI on NMW: ' + employersNiOnNmw);
                                    }
 
-                                   var actualNMW = effectiveEarnings+employersNiOnNmw;
+                                   var actualNMW = totalEffectiveEarnings+employersNiOnNmw;
                                    log.push('Actual NMW: ' + actualNMW);
                                    
                                    //endregion
@@ -244,14 +257,22 @@ module.exports=function(){
                                        var capacityForExpenses = totalPayAfterHPandMargin-actualNMW;
                                        log.push('Capacity for expenses: ' + capacityForExpenses);
                                        
+                                       var totalExpenses = 0;
+                                       log.push('Total expenses available to use: ' + _worker.worker.currentExpensesToUse);
                                        
-                                       var totalExpenses = 50;
-                                       log.push('Total expenses: ' + totalExpenses);
-                                       
-                                       if(expenses>capacityForExpenses) {
+                                       if(_worker.worker.currentExpensesToUse>capacityForExpenses) {
                                            totalExpenses = capacityForExpenses;
-                                           log.push('Expenses are more than the capacity so reducing it to capacity');
+                                           log.push('Plenty of expenses available so going for full capacity');
                                        }
+                                       else { // Use it all
+                                           totalExpenses = _worker.worker.currentExpensesToUse;
+                                           log.push('Not enough expenses so using all there is');
+                                       }
+                                       
+                                       log.push('Expenses used: ' + totalExpenses);
+                                       
+                                       // Remove the amount we used off the worker
+                                       _worker.worker.currentExpensesToUse=_worker.worker.currentExpensesToUse-totalExpenses;
                                        
                                        //endregion
                                        
@@ -302,9 +323,9 @@ module.exports=function(){
                                                    mainNI = paySubjectToEmployeesNI-employeesNiRate.lowerThreshold;
                                                }
                                                
-                                               mainNI = (mainNI/100)*employeesNiRate.amount
+                                               mainNI = (mainNI/100)*employeesNiRate.amount;
                                            }
-                                           log.push('Main NI: ' + mainNIlower);
+                                           log.push('Main NI: ' + mainNI);
                                            
                                            // High earners NI (2% in Feb 2015)
                                            var highEarnerNI = 0;
@@ -319,6 +340,59 @@ module.exports=function(){
                                        else {
                                            log.push('This worker does not have to pay Employees NI');
                                        }
+                                       
+                                       //endregion
+                                       
+                                       //region Income Tax
+                                       
+                                       var taxCode = '',
+                                           taxCodeUpper = '';
+                                       
+                                       taxCodeUpper = _worker.worker.payrollTax.taxCode.toUpperCase();
+                                       
+                                       //region Get Tax Code letter
+                                       
+                                       log.push('Tax code upper case: ' + taxCodeUpper);
+                                       
+                                       if(taxCodeUpper.indexOf('L')>-1) { taxCode = 'L'; }
+                                       else if(taxCodeUpper.indexOf('P')>-1) { taxCode = 'P'; }
+                                       else if(taxCodeUpper.indexOf('Y')>-1) { taxCode = 'Y'; }
+                                       else if(taxCodeUpper.indexOf('0T')>-1) { taxCode = '0T'; }
+                                       else if(taxCodeUpper.indexOf('T')>-1) { taxCode = 'T'; }
+                                       else if(taxCodeUpper.indexOf('BR')>-1) { taxCode = 'BR'; }
+                                       else if(taxCodeUpper.indexOf('D0')>-1) { taxCode = 'D0'; }
+                                       else if(taxCodeUpper.indexOf('D1')>-1) { taxCode = 'D1'; }
+                                       else if(taxCodeUpper.indexOf('NT')>-1) { taxCode = 'NT'; }
+                                       
+                                       log.push('Tax code minus numbers: ' + taxCode);
+                                       
+                                       //endregion
+                                       
+                                       //region Get Tax Code number
+                                       
+                                       var taxCodeNumber = parseInt(taxCodeUpper.substring(0,taxCodeUpper.indexOf(taxCode)));
+                                       
+                                       log.push('Tax code number: ' + taxCodeNumber);
+                                       
+                                       //endregion
+                                       
+                                       var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+totalPay;
+                                       log.push('Taxable earnings YTD inc this week: ' + taxableEarningsYTD);
+                                       
+                                       switch(taxCode) {
+                                               case 'L':
+                                               case 'P':
+                                               case 'T':
+                                               case 'Y':
+                                               case 'V':
+                                                var availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(taxCodeNumber/52);
+                                               
+                                                log.push('Available tax free allowance inc this week: ' + availableTaxFreeAllowanceIncThisWeek);
+                                               
+                                                var earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
+                                                log.push('Earnings YTD subject to tax: ' + earningsYTDsubjectToTax);
+                                       }
+                                       
                                        
                                        //endregion
                                    }
@@ -344,10 +418,10 @@ module.exports=function(){
     };
         
         function getStatutoryValue(name,system) {
-            var today = new Date();
+            var currentDate = new Date();
             
             if(system.statutoryTables[name]){
-               _.forEach(system.statutoryTables[name], function(_value){
+               system.statutoryTables[name].forEach(function(_value){
                    console.log(_value);
                    if(currentDate >= _value.validFrom && currentDate <= _value.validTo) {
                        return _value.amount;
