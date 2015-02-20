@@ -7,6 +7,7 @@
     "body-parser": "^1.9.0",
     "compression": "^1.1.0",
     "connect-busboy": "0.0.2",
+    "decimalmath": "^1.1.0",
     "express": "^4.9.5",
     "express-jwt": "^0.4.0",
     "glob": "^4.0.6",
@@ -31,7 +32,7 @@
     "blanket": "^1.1.6",
     "chai": "^1.10.0",
     "connect-modrewrite": "^0.7.9",
-    "grunt": "^0.4.1",
+    "grunt": "^0.4.5",
     "grunt-autoprefixer": "^0.7.3",
     "grunt-blanket": "0.0.8",
     "grunt-concurrent": "^0.5.0",
@@ -65,6 +66,7 @@
     "imagemin-optipng": "^4.0.0",
     "imagemin-pngquant": "^4.0.0",
     "jasmine-reporters": "^2.0.3",
+    "jasmine-spec-reporter": "^2.1.0",
     "jshint-stylish": "^0.2.0",
     "load-grunt-tasks": "^0.4.0",
     "mocha": "^2.1.0",
@@ -81,7 +83,7 @@
     "start": "node server/app.js",
     "test": "mocha test/server/**/*.js -w",
     "e2e_main": "protractor --suite=main test/e2e/conf.js",
-    "e2e_stage": "protractor --baseUrl=http://originempayroll-qa.elasticbeanstalk.com/ test/e2e/conf.js --suite stage",
+    "e2e_stage": "protractor --baseUrl=http://originempayroll-qa.elasticbeanstalk.com/ test/e2e/conf.js --suite=main",
     "e2e_remote": "protractor --baseUrl=http://originempayroll-qa.elasticbeanstalk.com/ test/e2e/conf.js --suite=remote",
     "debug": "protractor test/e2e/conf.js --suite dummy"
   }

@@ -72,4 +72,4 @@ router.get('/adminTemplatesData/:type',controller.getAdminTemplatesData);
 router.get('/fuels',controller.fuels);
 router.get('/enginesizes',controller.enginesizes);
 
-router.get('/payratetypes',controller.payRateTypes);
+router.get('/expensesratetypes',controller.expensesRateTypes);

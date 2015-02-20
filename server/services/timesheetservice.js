@@ -3,8 +3,10 @@
 module.exports=function(){
 	var db = require('../models'); 
 	var Q=require('q'),
-		queryutils=require('../utils/queryutils')(db);
+		queryutils=require('../utils/queryutils')(db),
+		_=require('lodash');
 	var utils=require('../utils/utils');
+	var systemservice=require('./systemservice')(db);
 	
 	var service={};
 
@@ -35,45 +37,76 @@ module.exports=function(){
 
 	service.saveTimesheet = function(id, timesheetDetails){
 		return Q.Promise(function(resolve,reject){
-			if(id === null){
-				var timesheetBatchDetail = {
-					agency: timesheetDetails.agency,
-        			branch: timesheetDetails.branch
-				};
-				var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
+			return systemservice.getSystem()
+			.then(function(system){
+				var paymentRates = system.paymentRates;
+				if(id === null){
+					var timesheetBatchDetail = {
+						agency: timesheetDetails.agency,
+	        			branch: timesheetDetails.branch
+					};
+					var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
 
-				var timesheetDetail = {
-					worker: timesheetDetails.worker,
-			        batch: timesheetBatchModel._id,
-			        status: timesheetDetails.status,
-			        weekEndingDate: timesheetDetails.weekEndingDate,
-			        elements: timesheetDetails.elements,
-			        net: timesheetDetails.net,
-			        vat: timesheetDetails.vat,
-			        totalPreDeductions: timesheetDetails.totalPreDeductions,
-			        deductions: timesheetDetails.deductions,
-			        total: timesheetDetails.total,
-			        imageUrl: timesheetDetails.imageUrl
-				};
-				var timesheetModel = new db.Timesheet(timesheetDetail);console.log(timesheetModel);
-				return Q.all([Q.nfcall(timesheetModel.save.bind(timesheetModel)), Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel))])
-					.then(function(){
-						resolve(timesheetModel);
-					},reject);
-			}else{
-				return service.getTimesheet(id)
-					.then(function(timesheet){
-						if(timesheet){
-							utils.updateSubModel(timesheet, timesheetDetails);
-							return Q.nfcall(timesheet.save.bind(timesheet))
-								.then(function(timesheet){
-									resolve(timesheet);
-								},reject);
-						}else{
-							reject({result:false,name:'NOTFOUND',message:'Timesheet not found'});
+					var elements = [];
+					_.forEach(timesheetDetails.elements, function(_element){
+						var paymentRate = {};
+						var _paymentRate = paymentRates.id(_element.elementType);
+						if(_paymentRate){
+							paymentRate = {
+			                    name: _paymentRate.name,
+			                    rateType: _paymentRate.rateType,
+			                    hours: _paymentRate.hours,
+			                };
 						}
-					}, reject);
-			}
+						
+						var element = {
+			                elementType: _element.elementType,
+			                description: _element.description,
+			                units: _element.units,
+			                payRate: _element.payRate,
+			                chargeRate: _element.chargeRate,
+			                amount: _element.amount,
+			                vat: _element.vat,
+			                isCis: _element.isCis,
+			                paymentRate: paymentRate
+			            };
+			            elements.push(element);
+					});
+
+					var timesheetDetail = {
+						worker: timesheetDetails.worker,
+				        batch: timesheetBatchModel._id,
+				        status: timesheetDetails.status,
+				        payFrequency: timesheetDetails.payFrequency,
+				        weekEndingDate: timesheetDetails.weekEndingDate,
+				        elements: elements,
+				        net: timesheetDetails.net,
+				        vat: timesheetDetails.vat,
+				        totalPreDeductions: timesheetDetails.totalPreDeductions,
+				        deductions: timesheetDetails.deductions,
+				        total: timesheetDetails.total,
+				        imageUrl: timesheetDetails.imageUrl
+					};
+					var timesheetModel = new db.Timesheet(timesheetDetail);console.log(timesheetModel);
+					return Q.all([Q.nfcall(timesheetModel.save.bind(timesheetModel)), Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel))])
+						.then(function(){
+							resolve(timesheetModel);
+						},reject);
+				}else{
+					return service.getTimesheet(id)
+						.then(function(timesheet){
+							if(timesheet){
+								utils.updateSubModel(timesheet, timesheetDetails);
+								return Q.nfcall(timesheet.save.bind(timesheet))
+									.then(function(timesheet){
+										resolve(timesheet);
+									},reject);
+							}else{
+								reject({result:false,name:'NOTFOUND',message:'Timesheet not found'});
+							}
+						}, reject);
+				}
+			}, reject);
 		});
 	};
 

@@ -1,6 +1,8 @@
+var helper = require('./ui-helper.js');
 loginData.userName=loginData.userName || 'originemtest_t568300';
 loginData.userEmail= loginData.userEmail || 'originemtest+t568300@yandex.com';
 loginData.userPassword= loginData.userPassword || 'andyboss';
+
 
 describe('Browse to sign in', function() {
 
@@ -17,7 +19,6 @@ describe('Browse to sign in', function() {
     browser.get('/');
   });
 
-
   it('should find login button ', function () {
     expect(logButton.isPresent()).toBe(true);
     logButton.click();
@@ -30,7 +31,7 @@ describe('Browse to sign in', function() {
     var pass = element(by.model('password'));
     expectInvalid(pass);
 
-    console.log('Login details right here ----->');
+    console.log('Login details:');
     console.log(loginData.userEmail);
     console.log(loginData.userPassword);
 
@@ -48,6 +49,7 @@ describe('Browse to sign in', function() {
         return (url.indexOf('candidates') !== -1);
       });
     }, 5000);
+
   });
 
 });

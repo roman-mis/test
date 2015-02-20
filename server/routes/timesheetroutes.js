@@ -8,7 +8,7 @@ var express = require('express'),
 	restMiddleware=require('../middlewares/restmiddleware');
 
 module.exports = function(app){
-  app.use('/api/timesheet', expressJwt({secret:process.env.JWT_SECRET}), router);
+  app.use('/api/timesheets', expressJwt({secret:process.env.JWT_SECRET}), router);
 };
 
 router.get('/', restMiddleware(db), controller.getTimesheets);
