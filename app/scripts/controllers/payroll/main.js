@@ -1,7 +1,7 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('PayrollMainController',['$rootScope', '$scope', 'HttpResource',
-	function($rootScope,$scope,HttpResource){	
+app.controller('PayrollMainController',['$location', '$rootScope', '$scope', 'HttpResource',
+	function($location,$rootScope,$scope,HttpResource){	
 		console.log('hello');
 	
 	$scope.camelCaseFormate = function(s){
@@ -44,6 +44,13 @@ app.controller('PayrollMainController',['$rootScope', '$scope', 'HttpResource',
 		$scope.agencyCheckListValues[$scope.camelCaseFormate($scope.agencyCheckListLabels[index])]		
 	}
 
+	$scope.test = function(){
+
+	        	// $location.path('admin/templates');
+		$location.path('test');
+		console.log('payroll/test');
+	}
+
 $scope.payroll =  {
 weekNumber: 1,
 monthNumber: 2,
@@ -84,9 +91,13 @@ console.log($scope.payroll);
 // 	              }
 // 	            });
 
-	// x = HttpResource.model('payroll').customGet('',{},function(data){
-	// 	console.log("done")
-	// 	console.log(x)
-	// 	console.log(data)
-	// });
+timesheetBatch = {
+	agency:"",
+	branch:""
+}
+
+
 }]);
+
+
+

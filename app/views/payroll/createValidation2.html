@@ -1,0 +1,52 @@
+
+<button ng-click="copy()">copy</button>
+<div id="allView">
+<table>
+
+<colgroup>
+	<col width="10%">
+    <col width="15%">
+    <col width="10%">
+    <col width="15%">
+    <col width="10%">
+    <col width="10%">
+    <col width="10%">
+    <col width="10%">
+ 	<col width="10%">
+        </colgroup>
+	<thead >
+	<div>hello world</div>
+		<tr><th ng-repeat="c in colHead" >{{c}}</th></tr>
+	</thead>
+
+	<tbody id="ignorePDF">
+	<tr id="ignorePDF" ng-repeat="timesheet in timesheets">
+		<td id="ignorePDF">0</td>
+		<td  >mostafa ahmed hassan mohamed</td>
+		<td  >1</td>
+		<td >description1</td>
+		<!-- <div class="col-xs-5 btn btn-success"> -->
+		<td >2</td>
+		<td >3</td>
+		<td>4</td>
+		<!-- </div> -->
+		<td >5</td>
+		<td id="ignorePDF">6</td>
+
+	</tr>
+	
+	<!-- <tr ng-repeat-end align="center" >
+		<td style="margin:2px" class="col-xs-2">description2</td>
+		<td style="margin:2px" class="col-xs-1">22</td>
+		<td style="margin:2px" class="col-xs-1">33</td>
+		<td style="margin:2px" class="col-xs-1">44</td>
+		<td style="margin:2px" class="col-xs-1">55</td>
+		<td style="margin:2px" class="col-xs-1">66</td>
+
+	<hr/>
+	</tr > -->
+	</tbody>
+</table>
+
+	
+</div>

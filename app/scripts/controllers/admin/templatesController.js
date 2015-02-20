@@ -138,7 +138,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
       }
     	var id =$scope.gridOptions.allData[index]._id;
     	console.log(id)
-      t = HttpResource.model('admin/templates')
+      HttpResource.model('admin/templates')
       .delete(id).then(function(result){
         console.log('*****');
         console.log(result);
