@@ -120,6 +120,7 @@ describe('Checking Call Log', function() {
   it('should allow to create task', function () {
 
     testModal(by.css('[ng-click="openCreateTaskWin({activityType: \'callLog\'})"]'));
+
     helper.selectSelector(element.all(by.model('data.agency')),0);
     helper.selectSelector(element.all(by.model('data.taskType')),3);
     helper.selectSelector(element.all(by.model('data.priority')),1);

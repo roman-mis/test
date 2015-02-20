@@ -164,5 +164,10 @@ module.exports = function(){
     controller.payRateTypes=function(req,res){
       res.json(dataList.PayRateTypes);
     };
+
+    controller.expensesRateTypes=function(req,res){
+      res.json(dataList.expensesRateTypes);
+    };
+
   return controller;
 };
