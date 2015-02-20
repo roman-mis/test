@@ -12,7 +12,7 @@ module.exports = function(mongoose) {
         weekEndingDate: Date,
         elements: [
             {
-                elementType: { type:Schema.Types.ObjectId, ref:'System.paymentRates' },
+                elementType: String,
                 description: String,
                 units: Number,
                 payRate: Number,
