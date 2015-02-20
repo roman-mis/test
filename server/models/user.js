@@ -104,6 +104,7 @@ module.exports = function(mongoose,autoIncrement) {
             updatedDate:                {type:Date}
         }],
         expensesMileageYtd: Number,
+        currentExpensesToUse: Number,
         unpaidExpenses: [
             { 
                 agency: { type: Schema.Types.ObjectId,ref:'Agency' },
