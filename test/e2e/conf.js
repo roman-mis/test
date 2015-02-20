@@ -1,5 +1,6 @@
 var jasmineReporters = require('jasmine-reporters');
-
+var SpecReporter = require('jasmine-spec-reporter');
+var fs = require('fs');
 
 
 exports.config = {
@@ -21,7 +22,6 @@ exports.config = {
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
     remote:  ['./spec/login_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js','./spec/sidebar.js'],
     dummy: ['./spec/dummy_data.js','./spec/login.js'/*,'./spec/candidates.js','./spec/sidebar.js'*/]
-  //  dummy: './spec/dummy.js'
   },
 
   onPrepare: function () {
@@ -43,36 +43,30 @@ exports.config = {
       userSurname:''
     };
 
-    var fs = require('fs');
-    var writeScreenShot=function (data, filename) {
-      var path='/test/e2e/screenshots/'+String(parseInt(new Date().getTime().toString().substr(-9,9)))+'.png';
-      var stream = fs.createWriteStream('.'+path);
+    /* SCREENSHOT SECTION START*/
+    var dir = './test/e2e/screenshots';
+    if (!fs.existsSync(dir)){
+      fs.mkdirSync(dir);
+    }
+    var writeScreenShot=function (data, path) {
+      var stream = fs.createWriteStream('./'+path);
       stream.write(new Buffer(data, 'base64'));
       stream.end();
-      console.log(browser.baseUrl+path);
     }
 
     var DisplayProcessor = require('./../../node_modules/jasmine-spec-reporter/src/display-processor');
-
-    function screenshotProcessor(options) {
-    }
+    function screenshotProcessor(options) {}
     screenshotProcessor.prototype = new DisplayProcessor();
-
-    screenshotProcessor.prototype.displaySuccessfulSpec = function (spec, log) {
-      browser.takeScreenshot().then(function (png) {
-        writeScreenShot(png);
-      });
-      return log;
-    };
     screenshotProcessor.prototype.displayFailedSpec = function (spec, log) {
-      return spec + " - " + log;
+      var path='test/e2e/screenshots/'+String(parseInt(new Date().getTime().toString().substr(-9,9)))+'.png';
+      var url=browser.baseUrl+path;
+      browser.takeScreenshot().then(function (png) {
+        writeScreenShot(png,path);
+      });
+      return log+'\r\n'+url;
     };
-
-    var SpecReporter = require('jasmine-spec-reporter');
-    // add jasmine spec reporter
-    jasmine.getEnv().addReporter(new SpecReporter({ customProcessors: [screenshotProcessor],displayStacktrace: true}));
-
-
+    jasmine.getEnv().addReporter(new SpecReporter({ customProcessors: [screenshotProcessor]/*,displayStacktrace: true*/}));
+    /* SCREENSHOT SECTION END*/
 
   },
   jasmineNodeOpts: {

@@ -5,14 +5,6 @@ loginData.userPassword= loginData.userPassword || 'andyboss';
 
 
 describe('Browse to sign in', function() {
-/*var count=0;
-  afterEach(function() {
-    count++;
-    console.log(jasmine.getEnv().currentSpec.description);
-    browser.takeScreenshot().then(function (png) {
-     helper.writeScreenShot(png, 'exception-'+count+'.png');
-     });
-  });*/
 
   var expectValid = function (element) {
     expect(element.getAttribute('class')).toContain('ng-valid');
@@ -27,7 +19,6 @@ describe('Browse to sign in', function() {
     browser.get('/');
   });
 
-
   it('should find login button ', function () {
     expect(logButton.isPresent()).toBe(true);
     logButton.click();
@@ -40,7 +31,7 @@ describe('Browse to sign in', function() {
     var pass = element(by.model('password'));
     expectInvalid(pass);
 
-    console.log('Login details right here ----->');
+    console.log('Login details:');
     console.log(loginData.userEmail);
     console.log(loginData.userPassword);
 
