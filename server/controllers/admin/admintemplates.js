@@ -1,16 +1,17 @@
 'use strict';
 var controller={};
 module.exports = function(){
-	var adminTemplatesService=require('../services/adminCompanyProfileContactservice');
+	var adminTemplatesService=require('../../services/admin/admintemplatesservice');
 
 	controller.saveTemplate = function(req,res){
 		
 		var templateContent = {
-			templateName: 	req.body.templateName,
-			templateType: 	req.body.templateType,
-			mergeFields: 	req.body.mergeFields,
-			templatTitle: 	req.body.templatTitle,
-			body: 			req.body.body
+			templateTechnique: 	req.body.templateTechnique,
+			templateName: 		req.body.templateName,
+			templateType: 		req.body.templateType,
+			mergeFields: 		req.body.mergeFields,
+			templatTitle: 		req.body.templatTitle,
+			body: 				req.body.body
 		}
 		adminTemplatesService.saveTemplate(templateContent).then(
 			function(result){
@@ -50,8 +51,30 @@ module.exports = function(){
 		},res.sendFailureResponse);
 	};
 
-	controller.getAllAdminCompanyProfileContact = function(req,res){
-		res.json('ahmed hashem');
+	controller.deleteAdminTemplate=function(req,res){
+		console.log(req.params.id)
+		adminTemplatesService.deleteAdminTemplate(req.params.id)
+			.then(function(response){
+				res.json(response);
+			},res.sendFailureResponse);
+	};
+
+
+	controller.updateAdminTemplate=function(req,res){
+		console.log('hello from updateAdminTemplate')
+		console.log(req.params.id)
+		var templateContent = {
+			templateTechnique: 	req.body.templateTechnique,
+			templateName: 		req.body.templateName,
+			templateType: 		req.body.templateType,
+			mergeFields: 		req.body.mergeFields,
+			templatTitle: 		req.body.templatTitle,
+			body: 				req.body.body
+		}
+		adminTemplatesService.updateAdminTemplate(req.params.id,templateContent)
+			.then(function(response){
+				res.json(response);
+			},res.sendFailureResponse);
 	};
 
 	return controller;

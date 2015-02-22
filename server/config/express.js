@@ -31,11 +31,11 @@ module.exports = function(app){
   app.use(responseHandler(app));
   app.use(urlhelper());
 
-  var routes = glob.sync(path.normalize(__dirname + '/..') + '/routes/*routes.js');
+  var routes = glob.sync(path.normalize(__dirname + '/..') + '/routes/**/*routes.js');
   routes.forEach(function(route){
     require(route)(app);
   });
-
+  
   //angular distribution server
   app.use('/scripts', gzippo.staticGzip(__dirname + '/../../dist/scripts'));
   app.use('/images', gzippo.staticGzip(__dirname + '/../../dist/images'));
