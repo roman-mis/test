@@ -5,9 +5,9 @@
 }
 
 @mixin box-green-shadow() {
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(189, 221, 158, 0.75);
-    -moz-box-shadow: 0px 2px 5px 0px rgba(189, 221, 158, 0.75);
-    box-shadow: 0px 2px 5px 0px rgba(189, 221, 158, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(189, 221, 158, 0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(189, 221, 158, 0.75);
+    box-shadow: 0px 0px 5px 0px rgba(189, 221, 158, 0.75);
 }
 
 html {
@@ -839,7 +839,12 @@ header {
             }
         }
         .agencies_wrapper {
-            .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+            .table > thead > tr > th, 
+            .table > thead > tr > td, 
+            .table > tbody > tr > th, 
+            .table > tbody > tr > td, 
+            .table > tfoot > tr > th, 
+            .table > tfoot > tr > td {
                 padding: 5px;
                 font-size: 14px;
             }

@@ -86,13 +86,16 @@ module.exports=function(){
 									// console.log('here');
 								});
 								console.log('stacking invoice promises');
-								var prom=Q(true);
+								var allInvoiceSavePromises = [];
+								var prom = new Q(true);
 								_.forEach(invoicesToSave,function(invoiceModel){
 									prom=prom.then(function(){
 										console.log('saving invoice '+invoiceModel._id);
-										return Q.nfcall(invoiceModel.save.bind(invoiceModel));
+										// return Q.nfcall(invoiceModel.save.bind(invoiceModel));
+										allInvoiceSavePromises.push(Q.nfcall(invoiceModel.save.bind(invoiceModel)));
 									});
 								});
+								Q.all([allInvoiceSavePromises]);
 								
 								console.log('stacking timesheet');
 								_.forEach(timesheetsToUpdate,function(timesheet){
