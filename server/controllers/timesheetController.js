@@ -42,6 +42,7 @@ module.exports = function(){
 			worker: {_id: worker.id, firstName: worker.firstName, lastName: worker.lastName},
 	        batch: timesheet.batch,
 	        status: timesheet.status,
+	        payFrequency: timesheet.payFrequency,
 	        weekEndingDate: timesheet.weekEndingDate,
 	        elements: timesheet.elements,
 	        net: timesheet.net,
@@ -49,7 +50,8 @@ module.exports = function(){
 	        totalPreDeductions: timesheet.totalPreDeductions,
 	        deductions: timesheet.deductions,
 	        total: timesheet.total,
-	        imageUrl: timesheet.imageUrl
+	        imageUrl: timesheet.imageUrl,
+	        payrollSettings: timesheet.payrollSettings
 		};
 	}
 
@@ -86,7 +88,7 @@ module.exports = function(){
 		timesheet.dateAdded = new Date();
 		timesheet.lastEditedBy = req.user.id;
 		timesheet.dateEdited = new Date();
-
+		console.log(timesheet);
 		timesheetservice.saveTimesheet(null, timesheet)
 			.then(function(response){
 				buildTimesheetVm(response, true)

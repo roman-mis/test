@@ -29,15 +29,15 @@ module.exports = function(mongoose,autoIncrement) {
         ],
         companyDefaults:{
             holidayPayIncluded: Boolean,
-            employeeNiIncluded: Boolean,
+            employersNiIncluded: Boolean,
             vatCharged: Boolean,
             invoiceDesign: { type: Schema.Types.ObjectId, ref:'InvoiceDesign' },
             marginAmount: Number,
             invoiceEmailPrimary: String,
             invoiceEmailSecondary: String,
             paymentTerms: String,
-            marginChargedToAgency: String,
-            holidayAmount: String
+            marginChargedToAgency: Boolean,
+            holidayPayDays: Number
         },
         net: Number,
         vatRate: Number,

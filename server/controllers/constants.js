@@ -4,7 +4,7 @@ module.exports = function(){
 
     var dataList=require('../data/data_list.json');
     var countries=require('../data/countries.json');
-    // var adminTemplatesData=require('../data/admin_templates_data.json');
+    var adminTemplatesData=require('../data/admin_templates_data.json');
 
     var controller={};
 
@@ -150,7 +150,7 @@ module.exports = function(){
     };
 
     controller.getAdminTemplatesData=function (req,res){
-      // res.json(adminTemplatesData[req.params.type]);
+      res.json(adminTemplatesData[req.params.type]);
     };
 
     controller.fuels=function(req,res){
@@ -160,5 +160,14 @@ module.exports = function(){
     controller.enginesizes=function(req,res){
       res.json(dataList.EngineSizes);
     };
+
+    controller.payRateTypes=function(req,res){
+      res.json(dataList.PayRateTypes);
+    };
+
+    controller.expensesRateTypes=function(req,res){
+      res.json(dataList.expensesRateTypes);
+    };
+
   return controller;
 };

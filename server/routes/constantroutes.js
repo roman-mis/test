@@ -71,3 +71,5 @@ router.get('/otherexpensetypes',controller.otherexpensetypes);
 router.get('/adminTemplatesData/:type',controller.getAdminTemplatesData);
 router.get('/fuels',controller.fuels);
 router.get('/enginesizes',controller.enginesizes);
+
+router.get('/expensesratetypes',controller.expensesRateTypes);

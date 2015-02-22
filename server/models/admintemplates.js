@@ -16,4 +16,4 @@ module.exports = function(mongoose) {
 		skipUpdatedBy:true
 	});
 	return mongoose.model('adminTemplates',schema);
-}
+};

@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/angular-notify/dist/angular-notify.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css" />
-    <link rel="stylesheet" href="bower_components/select2/select2.css" />
     <!-- endbower -->
 
     <!-- endbuild -->
@@ -70,8 +69,7 @@
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
     <script src="bower_components/angular-wysiwyg/angular-wysiwyg.js"></script>
-    <script src="bower_components/select2/select2.js"></script>
-    <script src="bower_components/angular-ui-select2/src/select2.js"></script>
+    <script src="bower_components/angular-filter/dist/angular-filter.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -79,6 +77,7 @@
 
     <!-- vendors -->
     <script src="scripts/vendors/tasty-resource.js"></script>
+    <script src="scripts/vendors/angular-wysiwyg.js"></script>
 
     <!-- routes -->
     <script src="scripts/routes/router.js"></script> 
@@ -86,6 +85,7 @@
     <script src="scripts/routes/candidate.js"></script>
     <script src="scripts/routes/agency.js"></script>
     <script src="scripts/routes/admin.js"></script>
+    <script src="scripts/routes/payroll.js"></script>
 
     <!-- constants -->
     <script src="scripts/constants/main.js"></script>
@@ -101,7 +101,6 @@
     <script src="scripts/services/msgservice.js"></script>
     <script src="scripts/services/modalservice.js"></script>
     <script src="scripts/services/validation_helper.js"></script>
-    <script src="scripts/services/admin/adminservice.js"></script>
 
     <!-- directives -->
     <script src="scripts/directives/main.js"></script>
@@ -121,6 +120,8 @@
     <script src="scripts/directives/ng-tags-input.js"></script>
     <script src="scripts/directives/fileread.js"></script>
     <script src="scripts/directives/templateGrid.js"></script>
+    
+
 
     <!-- filters -->
     <script src="scripts/filters/filters.js"></script>
@@ -170,7 +171,8 @@
     <script src="scripts/controllers/candidate/home.js"></script>
     <script src="scripts/controllers/candidate/maintab.js"></script>
     <script src="scripts/controllers/candidate/agencies.js"></script>
-    <script src="scripts/controllers/admin/cubeCtrl.js"></script>
+    <script src="scripts/controllers/candidate/sidebar_add_timesheet.js"></script>
+    <script src="scripts/controllers/admin/CubeCtrl.js"></script>
     <script src="scripts/controllers/admin/companyProfileController.js"></script>
     <script src="scripts/controllers/admin/contactController.js"></script>
     <script src="scripts/controllers/admin/accountsController.js"></script>
@@ -178,6 +180,7 @@
     <script src="scripts/controllers/admin/defaultsController.js"></script>
     <script src="scripts/controllers/admin/templatesController.js"></script>
     <script src="scripts/controllers/admin/addNewController.js"></script>
+    <script src="scripts/controllers/payroll/main.js"></script>
 
     <script src="scripts/controllers/agency/main.js"></script>
     <script src="scripts/controllers/agency/sidebar.js"></script>
@@ -187,6 +190,7 @@
     <script src="scripts/controllers/agency/consultants.js"></script>
     <script src="scripts/controllers/agency/payroll.js"></script>
     <script src="scripts/controllers/agency/sales.js"></script>
+    <script src="scripts/controllers/payroll/payrollController.js"></script>
     <!-- endbuild -->
   </body>
 </html>

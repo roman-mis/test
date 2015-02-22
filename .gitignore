@@ -13,3 +13,5 @@ local.env.js
 /protractor-results
 /coverage
 /coverage.html
+npm-debug.log
+/test/e2e/screenshots/

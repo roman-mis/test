@@ -6,6 +6,7 @@ var BaseSchema=require(__dirname+'/baseschema');
 module.exports = function(mongoose) {
   	
 	var schema= new BaseSchema({
+		name:String,
 		title:String,
 		templateBody:String,
 		templateType:String,

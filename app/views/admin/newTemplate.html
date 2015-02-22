@@ -3,60 +3,66 @@
 	<div class="col-xs-12 row" style="margin:5px">
 		<div class="col-xs-4 " >
 			<label style="align-text:right; width:34%">template name </label>
-			<input style="width:65%;color:black;" placeholder="template name" type="txt" ng-model="data.details.templateName"\>
+			<input style="width:65%;color:black;" placeholder="template name" type="txt" ng-model="data.details.name"\>
 		</div>
     
-		<div  class="dropdown col-xs-4">
-			<label style="align-text:right;width:34%">template type </label>
+		<div  class="dropdown col-xs-5">
+			<label  style="align-text:right;width:34%">template type </label>
 			<span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false">
-		    <input ng-model="data.details.type.type" ng-change="changeTemplateType()" style="color:black; width:65%; overflow:hidden; text-overflow:ellipsis;" placeholder="template type" type="txt"\>
+		    <input ng-model="data.details.current.subType" ng-change="changeTemplateSubType()" style="color:black; width:65%; overflow:hidden; text-overflow:ellipsis;" placeholder="template subType" type="txt"\>
 		  </span>
 		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 		  	<li role="presentation" class="divider"></li>
 		    <li role="presentation" class="disabled " disabled="disabled" ng-repeat-start="target in templatesDropdowns "><a role="menuitem" tabindex="-1" >{{target.target}}</a></li>
 		    <li role="presentation" class="divider"></li>
-		    <li style="cursor:pointer" role="presentation"  ng-repeat="data in target.data | filter:data.details.type"><a role="menuitem" tabindex="-1" ng-click="select(data.type)">{{data.type}}</a></li>
+		    <li style="cursor:pointer" role="presentation"  ng-repeat="data in target.data | filter: data.details.current "><a role="menuitem" tabindex="-1" ng-click="selectSybType(data.subType)">{{data.subType}}</a></li>
 		    <li role="presentation" ng-repeat-end class="divider"></li>
 		  </ul>
 		</div>	
 
-		<div  class="dropdown col-xs-4">
-			<label style="align-text:right width:34%">merge fields </label>
-			<span class="btn-default dropdown-toggle" type="button" id="dropdownMenu2" aria-expanded="false">
-		    <input ng-model="data.details.mergeFields" style=" width:65%" placeholder="merge fields" type="txt"\>
-		  </span>
-		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+		<div  style="position: absolute;right: 0px;" class="dropdown col-xs-3" align="right">
+		   	 <button id="dropdownMenu2" aria-expanded="false" ng-model="data.details.mergeFields" class="dropdown-toggle btn  btn-default">merge field <span class="caret"></span></button>
+    
+		  <ul  ng-show="mergeFields.length>0"  align="right" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 		    <li style="cursor:pointer" role="presentation" ng-click="setMergeField(mergeField)" ng-repeat="mergeField in mergeFields |filter : data.details.mergeFields"><a  role="menuitem" tabindex="-1" >{{mergeField}}</a></li>
 		  </ul>
-			
+		  <ul ng-show="mergeFields.length === 0" align="right" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+		    <li role="presentation" class="divider"></li>
+		    <li role="presentation" class="disabled " disabled="disabled"><a role="menuitem" tabindex="-1" >-- Empty List --</a></li>
+		    <li role="presentation" class="divider"></li>	
+		  
+		  </ul>
 		</div>	
 		
 	</div>
 
 	<div class="col-xs-12 row" style="margin:5px">
 		<div class="col-xs-4">
-			<label style="align-text:left;width:34%">template title</label>
-			<input style="width:65%;color:black" placeholder="templat title" type="txt" ng-model="data.details.templatTitle"\>
+			<label  style="align-text:left;width:34%">template title</label>
+			<input id="title"  style="width:65%;color:black" placeholder="templat title" type="txt" ng-model="data.details.title"\>
 		</div>
-			<div class="col-xs-7"></div>
-			<div class="col-xs-1 btn">
-				<button style="width:50%;align:center" class="" ng-click="paste()" ><i style="color:green" class="fa fa-clipboard"></i></button>
+			
+			<div align="right" class="col-xs-8">
+				<button  class="btn btn-default" ng-click="paste()" ><i style="color:green" class="fa fa-clipboard"></i></button>
 			</div>
 	</div>
 	</div>
 	<div style="margin:10px" class="col-xs-12 row" >
-		<wysiwyg textarea-id="question" 
+		<wysiwyg
+		 id="test"
+		 selection="selection"
+		 textarea-id="question" 
           textarea-class="form-control"  
           textarea-height="180px" 
           textarea-name="textareaQuestion" 
           textarea-required 
-          ng-model="data.details.body" 
+          ng-model="data.details.templateBody" 
           enable-bootstrap-title="true">
         </wysiwyg>
       
 	</div>
 
-	<div style="margin:10px" class="col-xs-12 row" >
+	<div align="right" style="margin:10px" class="col-xs-12 row" >
 		<div class="col-xs-8"></div>
 		<button class="col-xs-2 btn btn-success" ng-click="save()" >SAVE<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></span></button>
 	</div>

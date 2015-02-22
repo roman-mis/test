@@ -1,35 +1,40 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('templatesController',['$scope','$location','HttpResource', 'adminTemplate',
-	function($scope,$location,HttpResource,adminTemplate){	
+app.controller('templatesController',['$rootScope', '$scope','$location','HttpResource', 'adminTemplate',
+	function($rootScope,$scope,$location,HttpResource,adminTemplate){	
 		console.log('hello');
 	
+  $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                              {link: '/admin/home', text: 'Admin'},
+                              {link: '/admin/templates', text: 'Templates'},
+                              ];
+
 	$scope.getImage = function(v){
 		var img= '';
-    switch(v){
-			case 'call_log':
-				img='/images/64px/0101-database.png';
-			break;
-			case 'task':
-				img='/images/64px/0275-spell-check.png';
-			break;
-			case 'document':
-				img='/images/64px/0049-folder-open.png';
-			break;
-			case 'email':
-				img='/images/64px/0070-envelop.png';
-			break;
-			case 'invoice':
-				img='/images/64px/0039-file-text2.png';
-			break;
-			default:
-				img="";
-		}
+  //   switch(v){
+		// 	case 'call_log':
+		// 		img='/images/64px/0101-database.png';
+		// 	break;
+		// 	case 'task':
+		// 		img='/images/64px/0275-spell-check.png';
+		// 	break;
+		// 	case 'document':
+		// 		img='/images/64px/0049-folder-open.png';
+		// 	break;
+		// 	case 'email':
+		// 		img='/images/64px/0070-envelop.png';
+		// 	break;
+		// 	case 'invoice':
+		// 		img='/images/64px/0039-file-text2.png';
+		// 	break;
+		// 	default:
+		// 		img="";
+		// }
 		return img;
 	}
 	  $scope.gridOptions={
-		columns:["1" ,'Name','Type','Last edited','Created','Action'],
-		rowdata:['templateName','templateType','updatedDate','createdDate'],
+		columns:["1" ,'Name','Type','Last Edited','Created','Action'],
+		rowdata:['name','subType','updatedDate','createdDate'],
 		allData:[],
 		data:[],
     image:$scope.image,
@@ -38,10 +43,10 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
         totalItems: 0,
         isPagination: false,
         onLimitChanged: function() {
-          $scope.loadAdminTemplates();
+          $scope.loadAllAdminTemplates();
         },
         onPageChanged: function() {
-          $scope.loadAdminTemplates();
+          $scope.loadAllAdminTemplates();
         }
 	  };
 	  
@@ -52,9 +57,7 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
 
 	  for (var i = 0;i<10;i++){
 		$scope.gridOptions.data[i]=[];
-		for(var j = 0; j < 4; j++){
-			$scope.gridOptions.data[i][j]='any data';
-		}
+		
 	  }
 
 
@@ -66,11 +69,14 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
 	  $scope.onDelaySearch = function() {
 	    $timeout.cancel(searchTimerPromise);
 	    searchTimerPromise = $timeout(function() {
-	      $scope.loadAdminTemplates();
+	      $scope.loadAllAdminTemplates();
 	    }, 500);
 	  };
 
-
+    $scope.search = function(){
+      console.log("searching " + $scope.filterName)
+      $scope.loadAllAdminTemplates();
+    }
           // HTTP resource
     var acAPI = HttpResource.model('admin/templates');
 
@@ -84,9 +90,10 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
       } else {
         params._offset = 0;
       }
-      if ($scope.filterFirstName) {
-        params.firstName_contains = $scope.filterFirstName;
+      if ($scope.filterName) {
+        params.name_contains = $scope.filterName;
       }
+      console.log('params');
       console.log(params);
       console.log($scope.gridOptions.data);
 
@@ -111,9 +118,11 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
 
     $scope.gridOptions.loadAdminTemplate = function(index) {
     	var id = $scope.gridOptions.allData[index]._id;
-      t = HttpResource.model('admin/templates/'+id)
+      HttpResource.model('admin/templates/'+id)
       .query({},function(data) {
-        adminTemplate.details = t.object;
+        console.log(data)
+        adminTemplate.details = data.data.object;
+        console.log(adminTemplate.details)
         $location.path('/admin/add_new/edite');
       });
     };
@@ -124,7 +133,7 @@ app.controller('templatesController',['$scope','$location','HttpResource', 'admi
     };
 
      $scope.gridOptions.deleteAdminTemplate = function(index) {
-     	 if (!confirm('Are you sure to delete this branch?')) {
+     	 if (!confirm('Are you sure to delete this template?')) {
         return;
       }
     	var id =$scope.gridOptions.allData[index]._id;

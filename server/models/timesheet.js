@@ -8,6 +8,7 @@ module.exports = function(mongoose) {
         worker: { type:Schema.Types.ObjectId, ref:'User' },
         batch: { type:Schema.Types.ObjectId, ref:'TimesheetBatch' },
         status: String, // submitted, preValidation, validated, invoiced, receipted, approved, payrolled
+        payFrequency: String, // weekly, 2weekly etc.
         weekEndingDate: Date,
         elements: [
             {
@@ -18,7 +19,17 @@ module.exports = function(mongoose) {
                 chargeRate: Number,
                 amount: Number,
                 vat: Number,
-                isCis: Boolean
+                isCis: Boolean,
+                paymentRate: {
+                    name: String,
+                    rateType: String,
+                    hours: Number,
+                },
+                effectiveEarnings: Number,
+                holidayPay: {
+                    onActual: Number,
+                    onNMW: Number
+                }
             }
         ],
         net: Number,
@@ -26,7 +37,13 @@ module.exports = function(mongoose) {
         totalPreDeductions: Number,
         deductions: Number,
         total: Number,
-        imageUrl: String
+        imageUrl: String,
+        payrollSettings: {
+            holidayPayIncluded: Boolean,
+            holidayPayDays: Number,
+            employersNiIncluded: Boolean,
+            marginChargedToAgency: Boolean
+        }
     });
 
     return mongoose.model('Timesheet',schema);

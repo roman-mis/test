@@ -322,6 +322,23 @@ service.updateVehicleInformation=function(userId, vehicleInformation){
 	});
 };
 
+service.updateWorkerCurrentExpensesToUse=function(userId, total){
+	return Q.Promise(function(resolve,reject){
+		service.getUser(userId)
+		   .then(function(user){
+		   		if(user){
+	   				user.worker.currentExpensesToUse = (user.worker.currentExpensesToUse || 0) +  total;
+					return Q.nfcall(user.save.bind(user))
+						.then(function(){
+							resolve(user);
+						},reject);
+		   		} else {
+		   			reject({name:'NotFound',message:'No User found'});
+		   		}
+		},reject);
+	});
+};
+
 service.authenticateUser=function(emailAddress,password){
 	var deff=Q.defer();
 	console.log('authenticate user email address: '+emailAddress+' and password : '+password);

@@ -10,11 +10,11 @@ angular.module('origApp.controllers')
           ];
 
           $scope.agencies = HttpResource.model('agencies').query({});
-
           $scope.candidate = parentScope.candidate;
 
 
           $scope.cancel = function() {
+            console.log($scope.agencies)
             $modalInstance.dismiss('cancel');
           };
 

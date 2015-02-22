@@ -47,15 +47,24 @@
 		}],
 	"HolidayPayRule":[{
 			"code":"1",
-			"description":"Holiday Pay Roled Up"
+			"description":"Rolled Up on NMW"
 		},{
 			"code":"2",
-			"description":"Holiday Pay Retained"
+			"description":"Rolled Up on Total Pay"
 		},{
 			"code":"3",
-			"description":"Holiday Pay Charged Back"
+			"description":"Retained on NMW"
 		},{
 			"code":"4",
+			"description":"Retained on Total Pay"
+		},{
+			"code":"5",
+			"description":"Charged Back on NMW"
+		},{
+			"code":"6",
+			"description":"Charged Back on Total Pay"
+		},{
+			"code":"7",
 			"description":"No Holiday Pay"
 		}],
 	"DerogationContract":[{
@@ -93,6 +102,11 @@
 			"description":"PAYE+",
 			"requirementList":["PAYE+ 1", "PAYE+ 2", "PAYE+ 3", "PAYE+ 4"],
 			"onboardingScript":"The PAYE+ Script"
+		},{
+			"code":"6",
+			"description":"CIS",
+			"requirementList":["CIS 1"],
+			"onboardingScript":"The CIS Script"
 		}],
 	"PaymentTerms":[{
 			"code":"1",
@@ -398,5 +412,16 @@
 				"code": "1",
 				"description":"Upto 1400 cc"
 			}]
-		}]
+		}], 
+	"expensesRateTypes":[
+		{
+			"code":"1",
+			"name":"Billable"
+		},
+		{
+			"code":"2",
+			"name":"Non-Billable"
+		}
+
+	]
 }

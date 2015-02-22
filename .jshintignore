@@ -1,3 +1,10 @@
 node_modules/**
 bower_components/**
 test/**
+dist/**
+migrations/**
+nbproject/**
+coverage/**
+app/mockup/**
+app/scripts/vendors/**
+.tmp/**

@@ -56,7 +56,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['jshint:client'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
           'server/**/*.json',
           'server/*.js'
         ],
-        tasks: ['env:all','develop'],
+        tasks: ['env:all','develop','jshint:server'],
         options: { nospawn: true }
       },
       jsTest: {
@@ -158,7 +158,7 @@ module.exports = function (grunt) {
       options: {
         jshintrc: 'client.jshintrc',
         reporter: require('jshint-stylish'),
-		force : true
+		    force : true
       },
       client: {
         src: [
@@ -166,14 +166,14 @@ module.exports = function (grunt) {
           ['<%= yeoman.app %>/scripts/{,*/}*.js','!<%= yeoman.app %>/scripts/vendors/**/*']
         ]
       },
-	  server: {
-		  options: {
-			jshintrc: 'server.jshintrc',
-			reporter: require('jshint-stylish')
-		  },
-        src: [
-          'server/{,*/}*.js'
-        ]
+  	  server: {
+  		  options: {
+  			jshintrc: 'server.jshintrc',
+  			reporter: require('jshint-stylish')
+  		  },
+          src: [
+            'server/{,*/}*.js'
+          ]
       },
       test: {
         options: {
@@ -468,7 +468,7 @@ module.exports = function (grunt) {
         options:{
           reporter:'spec',
           captureFile:'server_results.txt',
-          require:['test/server/startup.js'],
+          require:[],
           quiet:false,
           clearRequireCache:false
         },
@@ -517,6 +517,7 @@ module.exports = function (grunt) {
       'connect:livereload',
       'configureProxies',
       'develop',
+      'jshint',
       'watch'
 
     ]);

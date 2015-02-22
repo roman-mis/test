@@ -58,11 +58,58 @@ module.exports = function(mongoose) {
         cis: {
         },
         statutoryTables: {
-            nmw: [
+            vat:[{
+                amount: Number,
+                validFrom: Date,
+                validTo: Date
+            }],
+            nmw: [{
+                ageLower: Number,
+                ageUpper: Number,
+                amount: Number,
+                validFrom: Date,
+                validTo: Date
+            }],
+            employersNiThreshold: [
                 {
-                    ageLower: Number,
-                    ageUpper: Number,
                     amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            employersNiRate: [
+                {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            employeesNiRate: [
+                {
+                    lowerThreshold: Number,
+                    upperThreshold: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            employeesHighEarnerNiRate: [
+                {
+                    lowerThreshold: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            workPatterns: [
+                {
+                    monday: Boolean,
+                    tuesday: Boolean,
+                    wednesday: Boolean,
+                    thursday: Boolean,
+                    friday: Boolean,
+                    saturday: Boolean,
+                    sunday: Boolean,
                     validFrom: Date,
                     validTo: Date
                 }
@@ -75,8 +122,22 @@ module.exports = function(mongoose) {
                 hours: Number,
                 importAliases: [ String ]
             }
+        ],
+        expensesRate:[
+            {
+                name:String,
+                amount:Number,
+                taxApplicable:Boolean,
+                expensesRateType:String,
+                vat:Boolean,
+                dispensation:Boolean,
+                receipted:Boolean,
+                isEnabled:Boolean,
+                type: String // subsistence, other
+            }
         ]
     });
 
     return mongoose.model('System', schema);
 };
+

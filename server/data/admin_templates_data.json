@@ -1,529 +1,455 @@
 {
   "document": [
     {
-      "target":"client",
+      "target":"worker",
       "data":[
-      //   {
-      //   "type":"Regulation 10 Contract"
-      //   // "entities":[
-      //   //     {
-      //   //         name: 'Worker',
-      //   //         fields: [
-      //   //             {
-      //   //                 display: 'Address 1',
-      //   //                 code: 'address1'
-      //   //             },
-      //   //             {
-      //   //                 display: 'First Name',
-      //   //                 code: 'firstName'
-      //   //             }
-      //   //         ]
-      //   //     }
-          
-      //     "First Name",
-      //     "Last Name",
-      //     "Address 1",
-      //     "Address 2",
-      //     "Address 3",
-      //     "Town",
-      //     "County",
-      //     "Postcode",
-      //     "Start Date",
-      //     "Creation Date",
-      //     "Job Title" 
-      //     ]
-      // },*/
       {
-        "type":"Regulation 5 Contract",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Address 1",
-          "Address 2",
-          "Address 3",
-          "Town",
-          "County",
-          "Postcode",
-          "Start Date",
-          "Creation Date",
-          "Job Title"
-          ]
+        "subType":"Regulation 5 Contract",
+        "mergeFieldsGroupNumber": ["1"]
       },
       {
-        "type":"PAYE Contract",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Address 1",
-          "Address 2",
-          "Address 3",
-          "Town",
-          "County",
-          "Postcode",
-          "Start Date",
-          "Creation Date",
-          "Job Title"
-          ]
+        "subType":"PAYE Contract",
+        "mergeFieldsGroupNumber": ["1"]
       },
       {
-        "type":"Hybrid Contract",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Address 1",
-          "Address 2",
-          "Address 3",
-          "Town",
-          "County",
-          "Postcode",
-          "Start Date",
-          "Creation Date",
-          "Job Title"
-          ]
+        "subType":"Hybrid Contract",
+        "mergeFieldsGroupNumber":[ "1"]
       },
        {
-        "type":"Low End Contract",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Address 1",
-          "Address 2",
-          "Address 3",
-          "Town",
-          "County",
-          "Postcode",
-          "Start Date",
-          "Creation Date",
-          "Job Title"
-          ]
+        "subType":"Low End Contract",
+        "mergeFieldsGroupNumber":["1"]
       },
        {
-        "type":"Assignment Schedule",
-        "mergeFields":[]
+        "subType":"Assignment Schedule",
+        "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"Welcome Letter - Umbrella regulation 5",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Company Name",
-          "Company Email Address",
-          "User Name",
-          "Company Portal Address"
-          ]
+        "subType":"Welcome Letter - Umbrella regulation 5",
+        "mergeFieldsGroupNumber":["2"]
       },
       {
-        "type":"Welcome Letter - Umbrella regulation 10",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Company Name",
-          "Company Email Address",
-          "User Name",
-          "Company Portal Address"
-          ]
+        "subType":"Welcome Letter - Umbrella regulation 10",
+        "mergeFieldsGroupNumber":["2"]
       },
       {
-        "type":"Welcome Letter - Hybrid",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Company Name",
-          "Company Email Address",
-          "User Name",
-          "Company Portal Address"
-          ]
+        "subType":"Welcome Letter - Hybrid",
+        "mergeFieldsGroupNumber":["2"]
       },
       {
-        "type":"Welcome Letter - Low End",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Company Name",
-          "Company Email Address",
-          "User Name",
-          "Company Portal Address"
-          ]
+        "subType":"Welcome Letter - Low End",
+        "mergeFieldsGroupNumber":["2"]
       },
       {
-        "type":"Welcome Letter - PAYE",
-        "mergeFields":[
-          "First Name",
-          "Last Name",
-          "Company Name",
-          "Company Email Address",
-          "User Name",
-          "Company Portal Address"
-          ]
+        "subType":"Welcome Letter - PAYE",
+        "mergeFieldsGroupNumber":["2"]
       },
       {
-        "type":"Payslip - Umbrella",
-        "mergeFields":[]
+        "subType":"Payslip - Umbrella",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"Payslip - Hybrid",
-        "mergeFields":[]
+        "subType":"Payslip - Hybrid",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"Payslip - Low paid",
-        "mergeFields":[]
+        "subType":"Payslip - Low paid",
+         "mergeFieldsGroupNumber":[]
       },{
-        "type":"P45",
-        "mergeFields":[]
+        "subType":"P45",
+        "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"P60",
-        "mergeFields":[]
+        "subType":"P60",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"Paternity Pay - Qualifies",
-        "mergeFields":[]
+        "subType":"Paternity Pay - Qualifies",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"Paternity Pay - Does Not Qualify",
-        "mergeFields":[]
+        "subType":"Paternity Pay - Does Not Qualify",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"Maternity Pay - Does Not Qualify",
-        "mergeFields":[]
+        "subType":"Maternity Pay - Does Not Qualify",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"SSP - Qualifies",
-        "mergeFields":[]
+        "subType":"SSP - Qualifies",
+         "mergeFieldsGroupNumber":[]
       },
       {
-        "type":"SSP - Does not Qualify",
-        "mergeFields":[]
+        "subType":"SSP - Does not Qualify",
+         "mergeFieldsGroupNumber":[]
       }
-    ]
+    ],
+	"mergeFieldsGroups":[
+	{
+  	"number": "1",
+  	"mergeFields": [
+  	  "First Name",
+      "Last Name",
+      "Address 1",
+      "Address 2",
+      "Address 3",
+      "Town",
+      "County",
+      "Postcode",
+      "Start Date",
+      "Creation Date",
+      "Job Title"
+  	]
+	},
+	{
+	"number": "2",
+	"mergeFields": [
+	  "First Name",
+    "Last Name",
+    "Company Name",
+    "Company Email Address",
+    "User Name",
+    "Company Portal Address"
+	]
+}
+	]
     },
     {
     "target":"agency",
     "data":[
       {
-        "type":"Validation Report",
-        "mergeFields":[
-          "Company Name",
-          "Company Address",
-          "Company Phone Number",
-          "Company Fax number",
-          "Validation Total",
-          "Validation VAT",
-          "Validation Gross",
-          "Validation Total contractors",
-          "Candidate Name",
-          "Description",
-          "Week End date",
-          "Unit",
-          "Rate",
-          "Total",
-          "VAT",
-          "Gross"
-        ]
+        "subType":"Validation Report",
+        "mergeFieldsGroupNumber":["1", "2", "3"]
       },
       {
-        "type":"Invoice",
-        "mergeFields":[
-          "Company Name",
-          "Company Address",
-          "Company Phone Number",
-          "Company Fax number",
-          "Company registration number",
-          "VAT Number",
-          "Agency Name",
-          "Agency Address",
-          "Invoice Total",
-          "Invoice VAT",
-          "Invoice Gross",
-          "Invoice Number",
-          "Candidate Name",
-          "Description",
-          "Week End date",
-          "Unit",
-          "Rate",
-          "Total",
-          "VAT",
-          "Gross"
-        ]
+        "subType":"Invoice",
+        "mergeFieldsGroupNumber":["1", "4", "5", "3"]
       },
       {
-        "type":"Credit Note",
-        "mergeFields":[
-          "Company Name",
-          "Company Address",
-          "Company Phone Number",
-          "Company Fax number",
-          "Company registration number",
-          "VAT Number",
-          "Agency Name",
-          "Agency Address",
-          "Credit Total",
-          "Credit VAT",
-          "Credit Gross",
-          "Credit Note Number",
-          "Candidate Name",
-          "Description",
-          "Week End date",
-          "Unit",
-          "Rate",
-          "Total",
-          "VAT",
-          "Gross"
-        ]
+        "subType":"Credit Note",
+        "mergeFieldsGroupNumber":["1", "4", "6", "3"]
       }
-    ]
+    ],
+    "mergeFieldsGroups":[
+	{
+  	"number": "1",
+  	"mergeFields": [
+  	  "Company Name",
+      "Company Address",
+      "Company Phone Number",
+      "Company Fax number"
+  	]
+	},
+	{
+	"number": "2",
+	"mergeFields": [
+	  "Validation Total",
+    "Validation VAT",
+    "Validation Gross",
+    "Validation Total contractors"
+	]
+  },
+  {
+	"number": "3",
+	"mergeFields": [
+	  "Candidate Name",
+    "Description",
+    "Week End date",
+    "Unit",
+    "Rate",
+    "Total",
+    "VAT",
+    "Gross"
+	]
+  },
+  {
+	"number": "4",
+	"mergeFields": [
+	  "Company registration number",
+    "VAT Number",
+    "Agency Name",
+    "Agency Address"
+	]
+  },
+  {
+	"number": "5",
+	"mergeFields": [
+	  "Invoice Total",
+    "Invoice VAT",
+    "Invoice Gross",
+    "Invoice Number"
+	]
+  },
+  {
+	"number": "6",
+	"mergeFields": [
+	  "Credit Total",
+    "Credit VAT",
+    "Credit Gross",
+    "Credit Note Number"
+	]
+  }
+	]
   }
   ],
   "email":[
     {
-      "target":"client",
+      "target":"worker",
       "data":[
         {
-          "type":"Welcome Email - Umbrella -Reg 10",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Company Name",
-            "Company Email Address",
-            "User Name",
-            "Company Portal Address"
-          ]
+          "subType":"Welcome Email - Umbrella -Reg 10",
+          "mergeFieldsGroupNumber":["1"]
         },
         {
-          "type":"Welcome Email - Umbrella -Reg 5",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Company Name",
-            "Company Email Address",
-            "User Name",
-            "Company Portal Address"
-          ]
+          "subType":"Welcome Email - Umbrella -Reg 5",
+          "mergeFieldsGroupNumber":["1"]
         },
         {
-          "type":"Assignment schedule",
+          "subType":"Assignment schedule",
+          "mergeFieldsGroupNumber":[]
+        },
+        {
+          "subType":"PAYE",
+          "mergeFieldsGroupNumber":[]
+        },
+        {
+          "subType":"Hybrid",
+          "mergeFieldsGroupNumber":[]
+        },
+        {
+          "subType":"Low End",
           "mergeFields":[]
         },
         {
-          "type":"PAYE",
-          "mergeFields":[]
+          "subType":"Expenses Rejection",
+          "mergeFieldsGroupNumber":["2", "3", "4"]
         },
         {
-          "type":"Hybrid",
-          "mergeFields":[]
+          "subType":"Expenses Approved",
+          "mergeFieldsGroupNumber":["2", "3"]
         },
         {
-          "type":"Low End",
-          "mergeFields":[]
+          "subType":"Expenses Reminder",
+          "mergeFieldsGroupNumber":["2"]
         },
         {
-          "type":"Expenses Rejection",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Expenses Claim Number",
-            "Expense Description",
-            "Amount",
-            "Reason"
-          ]
+          "subType":"Payslips",
+          "mergeFieldsGroupNumber":["2", "5"]
+          
         },
         {
-          "type":"Expenses Approved",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Expenses Claim Number",
-            "Expense Description",
-            "Amount"
-          ]
+          "subType":"Password Reset",
+         "mergeFieldsGroupNumber":["7"]
         },
         {
-          "type":"Expenses Reminder",
-          "mergeFields":[
-            "First Name",
-            "Last Name"
-          ]
+          "subType":"SSP - Does Qualify",
+          "mergeFieldsGroupNumber":["2", "8"]
         },
         {
-          "type":"Payslips",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Week Number",
-            "NET Pay"
-          ]
+          "subType":"SSP - Does Not Qualify",
+          "mergeFieldsGroupNumber":["2", "8"]
         },
         {
-          "type":"Password Reset",
-          "mergeFields":[
-            "Password Reset Link"
-          ]
+          "subType":"SMP - Does Qualify",
+          "mergeFieldsGroupNumber":["2", "9"]
         },
         {
-          "type":"SSP - Does Qualify",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Date Requested",
-            "First Day Sick",
-            "Qualifying Date",
-            "Length of sick note"
-          ]
+          "subType":"SMP - Does Not Qualify",
+          "mergeFieldsGroupNumber":["2", "9"]
         },
         {
-          "type":"SSP - Does Not Qualify",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Date Requested",
-            "First Day Sick",
-            "Qualifying Date",
-            "Length of sick note"
-          ]
+          "subType":"SSP - Does Not Qualify",
+          "mergeFieldsGroupNumber":["2", "9"]
         },
         {
-          "type":"SMP - Does Qualify",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Start Date",
-            "Expect Due Date",
-            "Last Working day",
-            "Qualifies - Yes / No"
-          ]
+          "subType":"SSP - Does Qualify",
+          "mergeFieldsGroupNumber":["2", "9"]
         },
         {
-          "type":"SMP - Does Not Qualify",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Start Date",
-            "Expect Due Date",
-            "Last Working day",
-            "Qualifies - Yes / No"
-          ]
+          "subType":"Holiday Pay request",
+          "mergeFieldsGroupNumber":[]
         },
         {
-          "type":"SSP - Does Not Qualify",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Start Date",
-            "Expect Due Date",
-            "Last Working day",
-            "Qualifies - Yes / No"
-          ]
+          "subType":"Salary Calculation - No Comparison",
+          "mergeFieldsGroupNumber":["2", "10"]
         },
         {
-          "type":"SSP - Does Qualify",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Start Date",
-            "Expect Due Date",
-            "Last Working day",
-            "Qualifies - Yes / No"
-          ]
+          "subType":"Salary Calculation - Comparison",
+          "mergeFieldsGroupNumber":["2", "10", "11"]
         },
         {
-          "type":"Holiday Pay request",
-          "mergeFields":[]
+          "subType":"EVS Welcome Letter",
+          "mergeFieldsGroupNumber":["12"]
         },
         {
-          "type":"Salary Calculation - No Comparison",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Tax Code",
-            "Unit",
-            "Rate",
-            "Gross",
-            "Expenses Total",
-            "Umbrella NET"
-          ]
+          "subType":"P45",
+          "mergeFieldsGroupNumber":["2", "13"]
         },
         {
-          "type":"Salary Calculation - Comparison",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Tax Code",
-            "Unit",
-            "Rate",
-            "Gross",
-            "Expenses Total",
-            "Umbrella NET",
-            "PAYE NET"
-          ]
+          "subType":"Removing Agency",
+          "mergeFieldsGroupNumber":["2", "14"]
         },
         {
-          "type":"EVS Welcome Letter",
-          "mergeFields":[
-            "TBC"
-          ]
+          "subType":"Adding Agency",
+          "mergeFieldsGroupNumber":["2", "14"]
         },
         {
-          "type":"P45",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Date Requested",
-            "User Name",
-            "Date left"
-          ]
+          "subType":"New Enquiries Call - Follow Up 1",
+          "mergeFieldsGroupNumber":["2", "14", "15"]
         },
         {
-          "type":"Removing Agency",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Agency Name"
-          ]
+          "subType":"New Enquiries Call - Follow Up 2",
+          "mergeFieldsGroupNumber":["2", "14", "15"]
         },
         {
-          "type":"Adding Agency",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Agency Name"
-          ]
-        },
-        {
-          "type":"New Enquiries Call - Follow Up 1",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Agency Name",
-            "Telephone",
-            "Mobile"
-          ]
-        },
-        {
-          "type":"New Enquiries Call - Follow Up 2",
-          "mergeFields":[
-            "First Name",
-            "Last Name",
-            "Agency Name",
-            "Telephone",
-            "Mobile"
-          ]
-        },
-        {
-          "type":"Thank you for Registering Online",
-          "mergeFields":[
-            "First Name",
-            "Last Name"
-          ]
+          "subType":"Thank you for Registering Online",
+          "mergeFieldsGroupNumber":["2"]
         }
-      ]
+      ],
+      "mergeFieldsGroups":[
+    	{
+      	"number": "1",
+      	"mergeFields": [
+      	  "First Name",
+            "Last Name",
+            "Company Name",
+            "Company Email Address",
+            "User Name",
+            "Company Portal Address"
+      	]
+    	},
+    	{
+    	"number": "2",
+    	"mergeFields": [
+    	 "First Name",
+       "Last Name"
+    	]
+      },
+      {
+    	"number": "3",
+    	"mergeFields": [
+    	  "Expenses Claim Number",
+        "Expense Description",
+        "Amount"
+    	]
+      },
+      {
+    	"number": "4",
+    	"mergeFields": [
+    	  "Reason"
+    	]
+      },
+      {
+    	"number": "5",
+    	"mergeFields": [
+    	  "Week Number",
+        "NET Pay"
+    	]
+      },
+      {
+    	"number": "6",
+    	"mergeFields": [
+    	  "Password Reset Link"
+    	]
+      },
+      {
+    	"number": "7",
+    	"mergeFields": [
+    	  "Password Reset Link"
+    	]
+      },
+      {
+    	"number": "8",
+    	"mergeFields": [
+    	  "Date Requested",
+        "First Day Sick",
+        "Qualifying Date",
+        "Length of sick note"
+    	]
+      },
+      {
+    	"number": "9",
+    	"mergeFields": [
+    	  "Start Date",
+        "Expect Due Date",
+        "Last Working day",
+        "Qualifies - Yes / No"
+    	]
+      },
+      {
+    	"number": "10",
+    	"mergeFields": [
+    	  "Tax Code",
+        "Unit",
+        "Rate",
+        "Gross",
+        "Expenses Total",
+        "Umbrella NET"
+    	]
+      },
+      {
+    	"number": "11",
+    	"mergeFields": [
+        "PAYE NET"
+    	]
+      },
+      {
+    	"number": "12",
+    	"mergeFields": [
+        "TBC"
+    	]
+      },
+      {
+    	"number": "13",
+    	"mergeFields": [
+        "Date Requested",
+        "User Name",
+        "Date left"
+    	]
+      },
+      {
+    	"number": "14",
+    	"mergeFields": [
+        "Agency Name"
+    	]
+      },
+      {
+    	"number": "15",
+    	"mergeFields": [
+        "Telephone",
+        "Mobile"
+    	]
+      }
+	  ]
     },
     {
       "target":"Agency",
       "data":[
         {
-          "type":"Validation Report",
-          "mergeFields":[
-            "Company Name",
+          "subType":"Validation Report",
+          "mergeFieldsGroupNumber":["1"]
+        },
+        {
+          "subType":"Invoice",
+          "mergeFieldsGroupNumber":["1", "2"]
+        },
+        {
+          "subType":"Credit Note",
+          "mergeFieldsGroupNumber":["3"]
+        },
+        {
+          "subType":"Payment Received",
+          "mergeFieldsGroupNumber":["4"]
+        },
+        {
+          "subType":"NET pay reports",
+          "mergeFieldsGroupNumber":["5"]
+        }
+      ],
+      "mergeFieldsGroups":[
+      	{
+        	"number": "1",
+        	"mergeFields": [
+        	  "Company Name",
             "User Name",
             "User Email",
             "Agency Name",
@@ -531,62 +457,57 @@
             "Validation VAT",
             "Validation Gross",
             "Validation Total contractors"
-          ]
+        	]
+      	},
+      	{
+      	"number": "2",
+      	"mergeFields": [
+      	  "Invoice Numbers (Generated from invoices being sent)",
+      	  "Total Number of Invoices"
+      	]
         },
         {
-          "type":"Invoice",
-          "mergeFields":[
-            "Company Name",
-            "User Name",
-            "User Email",
-            "Agency Name",
-            "Invoice Numbers (Generated from invoices being sent)",
-            "Invoice Total",
-            "Invoice VAT",
-            "Invoice Gross",
-            "Total Number of Invoices"
-          ]
+      	"number": "3",
+      	"mergeFields": [
+      	  "Company Name",
+          "User Name",
+          "User Email",
+          "Agency Name",
+          "Credit Total",
+          "Credit VAT",
+          "Credit Gross",
+          "Total Number of Credit Notes"
+      	]
         },
         {
-          "type":"Credit Note",
-          "mergeFields":[
-            "Company Name",
-            "User Name",
-            "User Email",
-            "Agency Name",
-            "Credit Total",
-            "Credit VAT",
-            "Credit Gross",
-            "Total Number of Credit Notes"
-          ]
+      	"number": "4",
+      	"mergeFields": [
+      	  "Total Payment"
+      	]
         },
         {
-          "type":"Payment Received",
-          "mergeFields":[
-            "Total Payment"]
-        },
-        {
-          "type":"NET pay reports",
-          "mergeFields":[
-            "TBC"
-          ]
+      	"number": "5",
+      	"mergeFields": [
+      	  "TBC"
+      	]
         }
-      ]
+    	]
     }
   ],
   "call_log":[
     {
-      "target":"all",
+      "target":"",
       "data":[
         {
-          "type":"New Enquires Call",
-          "mergeFields":[]
+          "subType":"New Enquires Call",
+          "mergeFieldsGroupNumber":[]
         },
         {
-          "type":"Payslip",
-          "mergeFields":[]
+          "subType":"Payslip",
+          "mergeFieldsGroupNumber":[]
         }
-      ]
+      ],
+      "mergeFieldsGroups":[]
     }
     ],
     "invoice":[],

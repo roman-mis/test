@@ -61,7 +61,7 @@ angular.module('origApp.controllers')
           };
 
           $scope.ok = function() {
-            if ($scope.isAllDatesEntered($scope.expenseData.transports)) {
+            //if ($scope.isAllDatesEntered($scope.expenseData.transports)) {
               var carvanItems = $scope.expenseData.transports.filter(function(item) {
                 return item.type.code === $scope.mainData.carvanTransportType;
               });
@@ -79,7 +79,7 @@ angular.module('origApp.controllers')
                   }
                 });
               }
-            }
+            //}
           };
 
 

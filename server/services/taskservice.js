@@ -8,7 +8,7 @@ module.exports=function(dbs){
 	var Q=require('q');
 	// var Promise=require('promise');
 	
-	var candidatecommonservice=require(__dirname+'/candidatecommonservice');
+	var candidatecommonservice=require('./candidatecommonservice')(db);
 
 	var service={};
 	
