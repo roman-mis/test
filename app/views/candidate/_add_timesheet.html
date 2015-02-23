@@ -72,15 +72,13 @@
 							<div class="col-sm-12 no-padding-right">
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span >Unit</span>
-									<input ng-model = "elements.unit" type="text" class="form-control" />
+									<input ng-model = "elements.unit" type="number" class="form-control" />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Pay Rate</span>
-									<input ng-model="elements.payRate" 
-									type="text" 
-									class="form-control"
-									name = "payRate"
-									ng-class="{error: form.payRate.$dirty}" />
+									<input min="0" ng-model="elements.payRate" 
+									type="number" 
+									class="form-control"/>
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Charge Rate</span>
@@ -88,7 +86,7 @@
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Amount</span>
-									<input ng-model="elements.amount" type="text" class="form-control" disabled />
+									<input ng-model="elements.amount" type="number" class="form-control" disabled />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>VAT</span>
@@ -101,7 +99,7 @@
 
 					<div class="col-md-2 col-sm-12 col-xs-12 form-group">
 						<br/>
-						<button ng-click = "populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
+						<button ng-disabled="!elements.payRate || !elements.unit" ng-click = "populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
 					</div>
 				</div>
 				<div class="row hidden-sm hidden-xs">
@@ -154,7 +152,6 @@
 									<!-- <div class="fileUpload btn btn-primary form-control"> -->
 									<button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
 									<input type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;"/>
-									
 								</div>
 								
 
@@ -194,7 +191,7 @@
 
 						<div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
 							<a ng-click = "cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>    
-							<button ng-click ="logMe()" ng-disabled = "elements.payRate.$invalid" type="button" class="btn btn-primary">Add Timesheet</button>
+							<button  ng-disabled="!uploadedImg.url" ng-click ="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
 						</div>
 					</div>
 				</div><!-- /modal footer -->
