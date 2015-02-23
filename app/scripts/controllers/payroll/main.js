@@ -7,6 +7,8 @@ app.controller('PayrollMainController',['$location', '$rootScope', '$scope', 'Ht
 	$scope.allPayrolls = [];
 	$scope.agencyIndex = -1;
 	$scope.comparingList = [];
+	$scope.periodTypeValues = ["weekly", "twoWeekly", "fourWeekly", "monthly"];
+	$scope.periodType = "weekly"
 	$scope.camelCaseFormate = function(s){
     	var ar = s.split(' ');
     	s = '';
@@ -37,22 +39,6 @@ app.controller('PayrollMainController',['$location', '$rootScope', '$scope', 'Ht
     	return s;
     }
 
-    HttpResource.model('payroll').customGet('',{},function(data){
-      	console.log('done !!');
-        console.log(data.data.objects);
-        $scope.allPayrolls = data.data.objects;
-        $scope.payroll =  $scope.allPayrolls[0];
-        console.log($scope.payroll.agencies)
-	});
-
-    $scope.selectAgency = function(index){
-    	$scope.agencyIndex = index;
-    }
-
-    $scope.addAgency = function(index){
-    	$scope.comparingList.push(index);
-    }
-
     $scope.getAgencyData = function(index){
     	console.log('index >>'+index)
     	if(!$scope.payroll.agencies || !$scope.payroll.agencies[index]){
@@ -67,6 +53,53 @@ app.controller('PayrollMainController',['$location', '$rootScope', '$scope', 'Ht
     	}
     	return data;
     }
+
+    $scope.getPayroll = function(){
+    	var params={periodType:$scope.periodType,isCurrent:true};
+    	console.log("test");
+    	console.log($scope.periodType);
+    	console.log(params);
+
+    	HttpResource.model('payroll').query(params,function(data){
+      	console.log('done !!');
+        console.log(data.data.objects);
+        $scope.allPayrolls = data.data.objects;
+        // if($scope.allPayrolls.length>0){
+        	$scope.payroll =  $scope.allPayrolls[0];
+        	console.log($scope.payroll.agencies)
+        	// $scope.getInformation();	
+        // }
+        
+		});	
+    }
+    $scope.getPayroll();
+
+	$scope.initeVariables = function(){
+
+	}
+
+    $scope.getInformation = function(){
+    	for(var i = 0; i < $scope.allPayrolls.length; i++){
+	    		var information ={};
+    		if($scope.allPayrolls[i].periodType === $scope.periodType){
+	    		var agencyData = $scope.getAgencyData(i);
+	    		for(key in agencyData){
+	    			information[key] = information[key]+1 || 0;
+	    		}
+    		}
+    	}
+    	console.log(information);
+    }
+
+    $scope.selectAgency = function(index){
+    	$scope.agencyIndex = index;
+    }
+
+    $scope.addAgency = function(index){
+    	$scope.comparingList.push(index);
+    }
+
+    
 	
 	$scope.viewAction = function(){
 		$scope.viewAll = ! $scope.viewAll;		
