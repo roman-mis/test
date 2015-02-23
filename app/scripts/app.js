@@ -20,7 +20,6 @@ angular.module('origApp', [
   'ui.bootstrap',
   'ui.select',
   'cgNotify',
-  'ngTagsInput',
   'angular-loading-bar',
   'origApp.controllers',
   'origApp.constants',
