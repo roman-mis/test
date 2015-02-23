@@ -12,14 +12,17 @@ angular.module('origApp.controllers')
 		//waiting for the data to return
 		$scope.agencies = data.data.objects;
 		$scope.saveAgency = $scope.agencies[0];
-		console.log('agencies', data.data.objects)
+		//console.log('agencies', data.data.objects)
 
 
 		//console.log('saveagency  ',$scope.saveAgency)
 
 		//must wait for saveAgency model to initialize
 		//watching saveAgency to change vat value to the current agency
+
 		$scope.$watch('saveAgency', function (newVal) {
+			if($scope.saveAgency == null)
+				return;
 			var _vat = HttpResource.model ('agencies/'+$scope.saveAgency.agency._id+'/payroll');
 			_vat.query({},function (data) {
 				$scope.isVat = data.data.object.defaultInvoicing.invoiceVatCharged;
