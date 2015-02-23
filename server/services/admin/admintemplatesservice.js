@@ -1,7 +1,7 @@
 'use strict';
-var db = require('../models');
+var db = require('../../models');
 var Q=require('q');
-var queryutils=require('../utils/queryutils')(db);
+var queryutils=require('../../utils/queryutils')(db);
 var service = {};
 
 

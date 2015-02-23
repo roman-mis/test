@@ -76,7 +76,10 @@ module.exports = function(){
 
 		timesheetservice.saveTimesheet(req.params.id, timesheet)
 			.then(function(response){
-				res.json(response);
+				buildTimesheetVm(response, true)
+		        .then(function(_timesheet){
+	          		res.json(_timesheet);
+		        },res.sendFailureResponse);
 			},function(err){
 			 	res.sendFailureResponse(err);
 			});
