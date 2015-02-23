@@ -69,6 +69,9 @@ router.get('/transportationmeans',controller.transportationmeans);
 router.get('/otherexpensetypes',controller.otherexpensetypes);
 
 router.get('/adminTemplatesData/:type',controller.getAdminTemplatesData);
+
+router.get('/adminCompanyProfileData',controller.getAdminCompanyProfileData);
+
 router.get('/fuels',controller.fuels);
 router.get('/enginesizes',controller.enginesizes);
 
