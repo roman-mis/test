@@ -27,7 +27,6 @@ angular.module('origApp', [
   'origApp.services',
   'origApp.directives',
   'origApp.filters',
-  'ngTagsInput',
   'colorpicker.module',
   'wysiwyg.module',
   'angular.filter'
