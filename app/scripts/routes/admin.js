@@ -1,3 +1,4 @@
+'use strict';
 angular.module("origApp").config(function($stateProvider) {
 	$stateProvider
 	.state('app.admin', {

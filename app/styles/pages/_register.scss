@@ -29,6 +29,7 @@ header .row-header {
     .header-inputs-wrapper {
         width: 100%;
         max-width: 445px;
+        height: 41px;
         form.login-form {
             display: flex;
             flex-flow: row nowrap;
@@ -70,6 +71,9 @@ header .row-header {
     background-color: $body-background-color;
     font-size: $font-size-base;
     font-family: $font-family-base;
+    @media (max-width: $grid-break) {
+        padding: 35px 35px;
+    }
     .row {
         margin-left: 0;
         margin-right: 0;
@@ -156,22 +160,23 @@ header .row-header {
         @media (max-width: $grid-break) {
             flex-flow: column wrap;
             justify-content: center;
-            .left-side, .right-side {
-                width: 100%;
-            }
-            .right-side {
-                margin-top: 35px;
-            }
         }
         .left-side {
             color: #808285;
             padding-left: 0;
+            @media (max-width: $grid-break) {
+                width: 100%;
+                padding-right: 0;
+            }
         }
         .right-side {
             text-align: right;
             padding-right: 0;
             @media (max-width: $grid-break) {
+                width: 100%;
                 text-align: center;
+                padding-left: 0;
+                margin-top: 35px;
             }
             .register-form {
                 display: inline-block;
@@ -252,7 +257,7 @@ header .row-header {
         justify-content: center;
         .step1btn-img {
             float: left;
-            height: 45px;
+            height: 45px; 
         }
         .step1btn {
             position: relative;
@@ -261,7 +266,6 @@ header .row-header {
             width: 100%;
             border-radius: 0px;
             background-color: #818386;
-            margin-bottom: 5px;
             font-size: $font-size-large;
             color: #fff;
             border-width: 0px;

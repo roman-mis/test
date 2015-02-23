@@ -1,5 +1,4 @@
 		<div class="modal-content add-tsh" >
-		<button ng-click ="logMe()"> button</button>
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
 			</div><!-- /modal-header -->
@@ -27,40 +26,42 @@
 							</div>
 							<div class="col-xs-12 col-sm-7 form-group">
 								<select class="form-control" ng-model = "saveAgency" ng-options="agency.agency.name for agency in agencies">
-									<!-- <option ng-model = "saveProduct" ng-repeat = "product in payrollProducts">{{product.agency.name}}</option> -->
 								</select>
 							</div>
-							<!-- <div class="col-xs-12 col-sm-5 form-group no-padding-right">
-								Select Assignment
-							</div>
-							<div class="col-xs-12 col-sm-7 form-group">
-								<select class="form-control">
-									<option ng-repeat = "product in payrollProducts">{{product.agency.name}}</option>
-								</select>
-							</div> -->
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-5">
 						<!--Bootstrap datepicker-->
 						<div class="form-group">
 							<div class="input-group date" id="datepicker">
-							  <div orig-datepicker placeholder="Select Date" ng-model="seldate"></div>
-								<!--<input type="text" class="form-control" />
-								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>-->
-							</div>
+								<div ng-show = "clicked == true" 
+								style = "position: absolute;left: 60px;top: 50px; z-index: 1000;
+								background-color:white;	outline: 1px solid grey">
+								<datepicker 
+								ng-model="claimDate" 
+								format-day="d" 
+								starting-day="weekEndingDay"
+								max-date="minDate" 
+								show-weeks="false" 
+								id="claim_datepicker" >
+							</datepicker>
+							<button class="btn btn-primary" ng-click="okay();clicked =false">
+								ok
+							</button>
 						</div>
+						<input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="clicked = true"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
 					</div>
 				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-3 col-sm-12 form-group">
-						<span>Rate Description</span>
-						<select ng-model = "saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates">
-							<!-- <option ng-repeat="rate in paymentRates" ng-click ="save($index)" >{{rate.name}}</option> -->
-							<!-- <option value="2">Standard Hourly Rate</option>
-							<option value="2">Education Day Rate</option>
-							<option value="2">Standard Day rate</option> -->
-							
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-3 col-sm-12 form-group">
+				<span>Rate Description</span>
+				<select ng-model = "saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates">
 						</select>
 					</div>
 					<div class="col-sm-12 form-group hidden-md hidden-lg">
@@ -69,13 +70,17 @@
 					<div class="col-md-7 col-sm-12">
 						<div class="row">
 							<div class="col-sm-12 no-padding-right">
-								 <div class="col-xs-2 form-group no-padding margin-8 text-center">
+								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span >Unit</span>
 									<input ng-model = "elements.unit" type="text" class="form-control" />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Pay Rate</span>
-									<input ng-model="elements.payRate" type="text" class="form-control" />
+									<input ng-model="elements.payRate" 
+									type="text" 
+									class="form-control"
+									name = "payRate"
+									ng-class="{error: form.payRate.$dirty}" />
 								</div>
 								<div class="col-xs-2 form-group no-padding margin-8 text-center">
 									<span>Charge Rate</span>
@@ -89,10 +94,6 @@
 									<span>VAT</span>
 									<input ng-model = 'elements.vat' type="text" class="form-control" disabled />
 								</div>
-								<!-- <div class="col-xs-1 form-group no-padding text-center">
-									<span>CIS </span><br/>
-									<a href="#"><span class="glyphicon glyphicon-ok cisIconCheck"></span></a>
-								</div> -->
 							</div>
 						</div>
 					</div>
@@ -101,7 +102,7 @@
 					<div class="col-md-2 col-sm-12 col-xs-12 form-group">
 						<br/>
 						<button ng-click = "populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
-				   </div>
+					</div>
 				</div>
 				<div class="row hidden-sm hidden-xs">
 					<div class="col-md-5 form-group">
@@ -120,26 +121,24 @@
 									<th>Charge Rate</th>
 									<th>Amount</th>
 									<th>VAT</th>
-									<!-- <th>CIS</th> -->
 								</tr>
 							</thead>
-						 </table>
-						 <div class="tableWrapper">
-							 <table class="table table-striped" id="tableBody">
-								 <tbody>
-									 <tr ng-repeat ="element in finalElements">
-										 <td style="width: 20%;">{{element.elementType}}</td>
-										 <td style="width: 20%;">{{element.description}}</td>
-										 <td>{{element.units}}</td>
-										 <td>{{element.payRate}}</td>
-										 <td style="width: 15%;">n/a</td>
-										 <td>{{element.amount}}</td>
-										 <td>{{element.vat}}</td>
-										 <!-- <td class="text-center"><a href="#"><span class="glyphicon glyphicon-ok"></span></a></td> -->
-									 </tr>
-									 
-								 </tbody>
-							 </table>
+						</table>
+						<div class="tableWrapper">
+							<table class="table table-striped" id="tableBody">
+								<tbody>
+									<tr ng-repeat ="element in finalElements">
+										<td style="width: 20%;">{{element.elementType}}</td>
+										<td style="width: 20%;">{{element.description}}</td>
+										<td>{{element.units}}</td>
+										<td>{{element.payRate}}</td>
+										<td style="width: 15%;">n/a</td>
+										<td>{{element.amount}}</td>
+										<td>{{element.vat}}</td>
+									</tr>
+
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
@@ -152,59 +151,51 @@
 							<legend>Upload Timesheet</legend>
 							<div class="row">
 								<div class="col-sm-12 form-group">
-								   <div class="fileUpload btn btn-primary form-control">
-										<span>Browse</span>
-										<input id="uploadBtn" type="file" class="upload" />
-									</div>
+									<!-- <div class="fileUpload btn btn-primary form-control"> -->
+									<button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
+									<input type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;"/>
+									
 								</div>
-								<div class="col-sm-12 form-group">
-									<button type="button" class="btn btn-primary form-control">Upload</button>
-								</div>
-								<div class="col-sm-12 col-uploadFile">
-									<input type="text" id="uploadFile" class="form-control" disabled />
-								</div>
-							</div>
-					  </fieldset>
-					</div>
-					<div class="col-xs-6 col-sm-4">
-						<div class="row">
-							<div class="col-xs-5 labelDisabledInput">
-								<span>NET</span>
-							</div>
-							 <div class="col-xs-7 form-group">
-								 <input ng-model = "net" type="text" class="form-control" disabled />
-							</div>
-							<div class="col-xs-5 labelDisabledInput">
-								<span>VAT</span>
-							</div>
-							 <div class="col-xs-7  form-group">
-								 <input ng-model="totalVat" type="text" class="form-control" disabled />
-							</div>
-							<!-- <div class="col-xs-5 labelDisabledInput">
-								<span>Total</span>
-							</div>
-							 <div class="col-xs-7  form-group">
-								 <input type="text" class="form-control" disabled />
-							</div> -->
-							<!-- <div class="col-xs-5 labelDisabledInput">
-								<span>Deductions</span>
-							</div>
-							 <div class="col-xs-7 form-group">
-								 <input type="text" class="form-control" disabled />
-							</div> -->
-							<div class="col-xs-5 labelDisabledInput">
-								<span>Total</span>
-							</div>
-							 <div class="col-xs-7 form-group">
-								 <input ng-model = "total" type="text" class="form-control" disabled />
+								
+
+							<div class="col-sm-12 form-group">
+								<button class="btn btn-primary btn-block" ng-disabled="isUploading || inSelectFile == false" ng-click="uploadFile()">
+									<div ng-show="!isUploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+									<div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
+
+								</button>
+
 							</div>
 						</div>
-					</div>
-
-					<div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
-						<a href="#" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>    
-						<button type="button" class="btn btn-primary">Add Timesheet</button>
-					</div>
+					</fieldset>
 				</div>
-			  </div><!-- /modal footer -->
+				<div class="col-xs-6 col-sm-4">
+					<div class="row">
+						<div class="col-xs-5 labelDisabledInput">
+							<span>NET</span>
+						</div>
+						<div class="col-xs-7 form-group">
+							<input ng-model = "net" type="text" class="form-control" disabled />
+						</div>
+						<div class="col-xs-5 labelDisabledInput">
+							<span>VAT</span>
+						</div>
+						<div class="col-xs-7  form-group">
+							<input ng-model="totalVat" type="text" class="form-control" disabled />
+						</div>
+								<div class="col-xs-5 labelDisabledInput">
+									<span>Total</span>
+								</div>
+								<div class="col-xs-7 form-group">
+									<input ng-model = "total" type="text" class="form-control" disabled />
+								</div>
+							</div>
+						</div>
+
+						<div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
+							<a ng-click = "cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>    
+							<button ng-click ="logMe()" ng-disabled = "elements.payRate.$invalid" type="button" class="btn btn-primary">Add Timesheet</button>
+						</div>
+					</div>
+				</div><!-- /modal footer -->
 		</div><!-- /modal content -->

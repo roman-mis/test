@@ -1,7 +1,7 @@
 'use strict';
 var controller={};
 module.exports = function(){
-	var adminTemplatesService=require('../services/admintemplatesservice');
+	var adminTemplatesService=require('../../services/admin/admintemplatesservice');
 
 	controller.saveTemplate = function(req,res){
 		
