@@ -25,6 +25,7 @@
 					</li>
 				</ul>
               </div>
+              <select ng-change="getPayroll()" ng-model="periodType" ng-options="option for option in periodTypeValues"></select>
               <div>
                 <div style="margin-top:30px" class="dropdown" ng-show="viewAll">
                   <div class="btn btn-success">
