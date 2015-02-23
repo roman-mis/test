@@ -98,7 +98,7 @@ module.exports=function(){
 							if(timesheet){
 								utils.updateSubModel(timesheet, timesheetDetails);
 								return Q.nfcall(timesheet.save.bind(timesheet))
-									.then(function(timesheet){
+									.then(function(){
 										resolve(timesheet);
 									},reject);
 							}else{
