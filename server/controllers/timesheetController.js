@@ -37,8 +37,11 @@ module.exports = function(){
 
 	function getTimesheetVm(timesheet){
 		var worker = timesheet.worker || {};
+		var batch = timesheet.batch || {};
 		return {
 			_id: timesheet._id,
+			agency: batch.agency,
+			branch: batch.branch,
 			worker: {_id: worker.id, firstName: worker.firstName, lastName: worker.lastName},
 	        batch: timesheet.batch,
 	        status: timesheet.status,
