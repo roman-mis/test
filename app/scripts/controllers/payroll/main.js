@@ -79,8 +79,8 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     		}
     	}};
     	console.log(params);
-    	// HttpResource.model('candidates').query(params,function(data){
-		HttpResource.model('users').customGet('',{},function(data){
+    	HttpResource.model('candidates').query(params,function(data){
+		// HttpResource.model('users').customGet('',{},function(data){
 			console.log('done !! candidates');
 	      	console.log(data.data.objects);
 	      	$scope.candidates = data.data.objects;
