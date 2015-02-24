@@ -14,11 +14,11 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 			bankDetails: {},
 			defaults: {}
 		};
+		
 		var docId = null;
 
 		// get dropdowns from the server
 		CompanyProfileService.getDropDownData().then(function(data){
-			console.log('dropdown')
 			$scope.dropDownLists = data;
             $scope.companyProfile.defaults.payFrequency = $scope.dropDownLists.payFrequency[0].code;
             $scope.companyProfile.defaults.holidayPayRule = $scope.dropDownLists.holidayPayRule[0].code;
@@ -31,11 +31,11 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		
 		// get company profile from the server
 		CompanyProfileService.getCompanyProfile().then(function(data){
-			console.log('companyProfile')
-			$scope.companyProfile = data.companyProfile;
+			if(data.companyProfile)
+				$scope.companyProfile = data.companyProfile;
 			docId = data._id;
-		}, function(){
-			console.log('!companyProfile')
+		}, function(reason){
+			console.log(reason);
 		});
 
 		$scope.save = function(){
