@@ -9,17 +9,17 @@
       
       <section class="tabs-wrapper row">
         <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
-          <li ng-class="{active: isTabActive('home')}">
-            <a ui-sref="app.admin.company_profile.contact">Contact</a>
+          <li ng-class="{active: tab == 'contact'}">
+            <a ng-click="tab = 'contact'" ui-sref="app.admin.company_profile.contact">Contact</a>
           </li>
-          <li ng-class="{active: isTabActive('contact')}">
-            <a ui-sref="app.admin.company_profile.accounts">Accounts</a>
+          <li ng-class="{active: tab == 'accounts'}">
+            <a ng-click="tab = 'accounts'" ui-sref="app.admin.company_profile.accounts">Accounts</a>
           </li>
-          <li ng-class="{active: isTabActive('payroll')}">
-            <a ui-sref="app.admin.company_profile.bank_details">Bank Details</a>
+          <li ng-class="{active: tab == 'bankDetails'}">
+            <a ng-click="tab = 'bankDetails'" ui-sref="app.admin.company_profile.bank_details">Bank Details</a>
           </li>
-          <li ng-class="{active: isTabActive('payslips')}">
-            <a ui-sref="app.admin.company_profile.defaults">Defaults</a>
+          <li ng-class="{active: tab == 'defaults'}">
+            <a ng-click="tab = 'defaults'" ui-sref="app.admin.company_profile.defaults">Defaults</a>
           </li>
           
         </ul>
