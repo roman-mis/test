@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="runPayroll-header">
+        <h4 class="runPayroll-header-title " id="myModalLabel">Run Payroll</h4>
+    </div>
+    <button ng-click="test()">log</button>
+    <div class="runPayroll-body">
+        <form class="form-horizontal">
+            <div class="row">
+				<div class="col-sm-5">
+					<div class="form-group">
+						<label class="col-xs-6 control-label">Pay Frequency</label>
+						<div class="col-xs-6">
+							<select ng-change="getPayrollRunWorker()" ng-model="pay.frequency" ng-options="option as option for option in periodTypeValues" class="form-control">
+								<option>Select</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<div class="form-group">
+						<label  class="col-xs-3 control-label">Agency</label>
+						<div class="col-xs-9">
+							<select ng-change="getPayrollRunWorker()" ng-model="agency.id" ng-options="option.agency._id as option.agency.name for option in payroll.agencies" class="form-control">
+								<option ng-selected="true">Select</option>
+							</select>
+						</div>
+					</div>
+				</div>
+            </div>
+		</form>
+		{{}}
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-striped scroll">
+                     <thead>
+                        <tr>
+                            <th class="text-center text-checkbox">
+                                <input ng-change="selectAll(selectionType)" ng-model="selection.type" type="checkbox" />
+                            </th>
+                            <th class="ref">Ref</th>
+                            <th class="fullName">Full Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="worker in candidates">
+                            <td class="text-center text-checkbox">
+                                <input ng-change="unselectHead()" ng-model="runPayroll.worker[$index]" type="checkbox" />
+                            </td>
+                            <td class="ref">000007</td>
+                            <td class="fullName">{{worker.firstName}} {{worker.lastName}}</td>
+                        </tr>
+						
+					</tbody>
+                </table>
+            </div>
+        </div>
+		
+        <div class="row">
+            <div class="col-xs-1 text-center">TS</div>
+            <div class="col-xs-1 text-center no-padding">Holiday</div>
+            <div class="col-xs-1 text-center">SSP</div>
+            <div class="col-xs-1 text-center">SMP</div>
+            <div class="col-xs-1 text-center">SPP</div>
+            <div class="col-xs-1 text-center">ASPP</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 text-center">0</div>
+            <div class="col-xs-1 text-center">0</div>
+            <div class="col-xs-1 text-center">0</div>
+            <div class="col-xs-1 text-center">0</div>
+            <div class="col-xs-1 text-center">0</div>
+            <div class="col-xs-1 text-center">0</div>
+        </div>
+    </div>
+				
+    <div class="runPayroll-footer">
+        <a ui-sref="app.payroll.home" class="btn">Cancel &#38; Return to Payroll Home</a>
+        <button ng-click="runPayroll" class="btn btn-primary">Run Payroll</button>
+    </div>
+				
+</div><!-- /container -->
+
+
