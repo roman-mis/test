@@ -1,14 +1,20 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('PayrollMainController',['$location', '$rootScope', '$scope', 'HttpResource',
-	function($location,$rootScope,$scope,HttpResource){	
+app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource',
+	function($state,$rootScope,$scope,HttpResource){	
 		console.log('hello');
 	$scope.payroll = {};
 	$scope.allPayrolls = [];
 	$scope.agencyIndex = -1;
 	$scope.comparingList = [];
-	$scope.periodTypeValues = ["weekly", "twoWeekly", "fourWeekly", "monthly"];
-	$scope.periodType = "weekly"
+	$scope.periodTypeValues = ['weekly', 'twoWeekly', 'fourWeekly', 'monthly'];
+	$scope.periodType = 'weekly'
+	$scope.pay = {frequency:''}
+	$scope.agency = {id:''}
+	$scope.runPayroll={};
+	$scope.selection = {type: false};
+
+
 	$scope.camelCaseFormate = function(s){
     	var ar = s.split(' ');
     	s = '';
@@ -39,76 +45,67 @@ app.controller('PayrollMainController',['$location', '$rootScope', '$scope', 'Ht
     	return s;
     }
 
-    $scope.getAgencyData = function(index){
-    	console.log('index >>'+index)
-    	if(!$scope.payroll.agencies || !$scope.payroll.agencies[index]){
-    		return
-    	}
-    	var data = {};
-    	for(key in $scope.payroll.agencies[index]){
-    		if(key === 'agency'){
-    			continue;
-    		}
-    		data[key] = $scope.payroll.agencies[index][key];
-    	}
-    	return data;
-    }
-
-    $scope.getPayroll = function(){
-    	var params={periodType:$scope.periodType,isCurrent:true};
-    	console.log("test");
-    	console.log($scope.periodType);
+    $scope.getPayroll = function(periodType){
+    	periodType = periodType || 'weekly';
+    	$scope.periodType = periodType;
+    	var params={periodType:periodType,isCurrent:true};
     	console.log(params);
 
     	HttpResource.model('payroll').query(params,function(data){
-      	console.log('done !!');
-        console.log(data.data.objects);
-        $scope.allPayrolls = data.data.objects;
-        // if($scope.allPayrolls.length>0){
-        	$scope.payroll =  $scope.allPayrolls[0];
-        	console.log($scope.payroll.agencies)
-        	// $scope.getInformation();	
-        // }
-        
-		});	
+	      	console.log('done !!');
+	        $scope.payroll =  data.data.objects[0];
+	    	console.log($scope.payroll);
+		});
     }
     $scope.getPayroll();
 
-	$scope.initeVariables = function(){
-
-	}
-
-    $scope.getInformation = function(){
-    	for(var i = 0; i < $scope.allPayrolls.length; i++){
-	    		var information ={};
-    		if($scope.allPayrolls[i].periodType === $scope.periodType){
-	    		var agencyData = $scope.getAgencyData(i);
-	    		for(key in agencyData){
-	    			information[key] = information[key]+1 || 0;
-	    		}
-    		}
+    function initWorkerSelection(limit){
+    	$scope.runPayroll.worker=[];
+    	for(var i = 0; i < limit; i++){
+    		$scope.runPayroll.worker[i] = false;	
     	}
-    	console.log(information);
     }
 
-    $scope.selectAgency = function(index){
-    	$scope.agencyIndex = index;
+    $scope.getPayrollRunWorker = function(){
+    	if($scope.pay.frequency === '' || $scope.agency.id === ''){
+    		return
+    	}
+    	var params={worker:{
+    		payrollTax:{
+    			payFrequency:$scope.pay.frequency
+    		},
+    		payrollProduct:{
+    			agency:$scope.agency.id
+    		}
+    	}};
+    	console.log(params);
+    	HttpResource.model('candidates').query(params,function(data){
+		// HttpResource.model('users').customGet('',{},function(data){
+			console.log('done !! candidates');
+	      	console.log(data.data.objects);
+	      	$scope.candidates = data.data.objects;
+	      	initWorkerSelection($scope.candidates.length);
+		});
     }
-
-    $scope.addAgency = function(index){
-    	$scope.comparingList.push(index);
-    }
-
-    
 	
 	$scope.viewAction = function(){
-		$scope.viewAll = ! $scope.viewAll;		
+		$state.go('app.payroll.viewAll')		
 	}
-	
 
-	$scope.checkUncheck = function(index){
-		$scope.agencyCheckListValues[$scope.camelCaseFormate($scope.agencyCheckListLabels[index])] = !		
-		$scope.agencyCheckListValues[$scope.camelCaseFormate($scope.agencyCheckListLabels[index])]		
+	$scope.unselectHead = function(){
+		$scope.selection.type = false;
+	}
+
+	$scope.selectAll = function(){
+		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
+    		$scope.runPayroll.worker[i] = $scope.selection.type;	
+    	}
+	}
+
+	$scope.test = function(){
+		console.log($scope.pay.frequency);
+		console.log($scope.agency.id);
+		console.log($scope.runPayroll.worker);
 	}
 
 
