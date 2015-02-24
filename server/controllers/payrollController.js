@@ -52,9 +52,10 @@ module.exports = function(){
 		};
     
         controller.runPayroll=function(req,res) {
+            console.log('here');
             payrollService.runPayroll(req)
-                .then(function(){
-                    res.json({});
+                .then(function(result){
+                    res.json(result);
                 });
         };
 

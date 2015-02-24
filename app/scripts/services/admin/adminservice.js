@@ -47,9 +47,19 @@ angular.module('origApp.services')
     return d.promise;
   }
 
+  function _getDropDownData(){
+    var d = $q.defer();
+    HttpResource.model('constants').customGet('/adminCompanyProfileData/', {},
+      function(data){
+        d.resolve(data.data);
+      });
+    return d.promise;
+  }
+
   return {
     getCompanyProfile: _getCompanyProfile,
-    saveCompanyProfile: _saveCompanyProfile
+    saveCompanyProfile: _saveCompanyProfile,
+    getDropDownData: _getDropDownData
   };
 
 });

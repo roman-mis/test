@@ -101,6 +101,41 @@ module.exports = function(mongoose) {
                     validTo: Date
                 }
             ],
+            incomeTaxHigherRateThreshold: [
+                 {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            incomeTaxAdditionalRateThreshold: [
+                 {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            incomeTaxBasicRate: [
+                 {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            incomeTaxHigherRate: [
+                 {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            incomeTaxAdditionalRate: [
+                {
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
             workPatterns: [
                 {
                     monday: Boolean,
