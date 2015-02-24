@@ -102,6 +102,11 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     	}
 	}
 
+	$scope.Runpayroll = function(){
+		
+	}
+
+
 	$scope.test = function(){
 		console.log($scope.pay.frequency);
 		console.log($scope.agency.id);
