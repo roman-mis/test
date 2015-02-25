@@ -3,7 +3,7 @@
 var express = require('express'),
     router = express.Router(),
 	db = require('../../models'),
-	controller=require('../../controllers/admin/adminRti')(),
+	controller=require('../../controllers/admin/adminRti')(db),
 	expressJwt = require('express-jwt'),
 	restMiddleware=require('../../middlewares/restmiddleware'),
 	routeskipper=require('../../middlewares/route-skipper');
@@ -23,4 +23,4 @@ module.exports = function(app){
 };
 
 router.get('/', controller.getRti);
-router.post('/', controller.saveRti);
+router.patch('/', controller.saveRti);

@@ -3,14 +3,14 @@
 var express = require('express'),
     router = express.Router(),
 	db = require('../../models'),
-	controller=require('../../controllers/admin/adminMileageRates')(),
+	controller=require('../../controllers/admin/adminMileageRates')(db),
 	expressJwt = require('express-jwt'),
 	restMiddleware=require('../../middlewares/restmiddleware'),
 	routeskipper=require('../../middlewares/route-skipper');
 
 module.exports = function(app){
   app.use(
-        '/api/admin/mileageRates',
+        '/api/admin/mileagerates',
       restMiddleware(db),
       routeskipper(
           expressJwt({
@@ -23,4 +23,4 @@ module.exports = function(app){
 };
 
 router.get('/', controller.getMileageRates);
-router.post('/', controller.saveMileageRates);
+router.patch('/', controller.saveMileageRates);
