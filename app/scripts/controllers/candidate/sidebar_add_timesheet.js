@@ -53,14 +53,14 @@ angular.module('origApp.controllers')
 
 	$scope.$watch('elements.payRate',function (newVal) {
 
-		$scope.elements.amount = newVal * $scope.elements.unit;	
+		$scope.elements.amount = Math.round((newVal * $scope.elements.unit)*100)/100;	
 		
 	});	
 
 
 
 	$scope.$watch('elements.unit',function (newVal) {
-		$scope.elements.amount = $scope.elements.payRate * newVal;
+		$scope.elements.amount = Math.round(($scope.elements.payRate * newVal)*100)/100;
 		if(isNaN($scope.elements.amount)){
 			$scope.elements.amount = null;
 		}
@@ -102,9 +102,12 @@ angular.module('origApp.controllers')
 
 
 		$scope.net += $scope.tableInfo.amount;
+		$scope.net = Math.round($scope.net *100)/100;
 		$scope.totalVat += $scope.tableInfo.vat;
+		$scope.totalVat = Math.round($scope.totalVat*100)/100;
 
 		$scope.total = $scope.net + $scope.totalVat;
+		$scope.total = Math.round($scope.total * 100)/100;
 		
 		$scope.userDescription = '';
 		$scope.elements.unit = 0;
