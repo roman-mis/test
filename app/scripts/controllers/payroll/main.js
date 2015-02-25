@@ -7,13 +7,27 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 	$scope.allPayrolls = [];
 	$scope.agencyIndex = -1;
 	$scope.comparingList = [];
+
 	$scope.periodTypeValues = ['weekly', 'twoWeekly', 'fourWeekly', 'monthly'];
+
+    $scope.periodTypeValues = [{
+            code:"weekly",
+            description:"Weekly"
+        },{
+            code:"twoWeekly",
+            description:"Bi-Weekly"
+        },{
+            code:"fourWeekly",
+            description:"4 Weekly"
+        },{
+            code:"monthly",
+            description:"Monthly"
+        }];
 	
 	$scope.periodType = 'weekly'
-	$scope.runPayroll={};
-	$scope.selection = {type: false};
-	$scope.agencyList = [];
-
+	// $scope.pay = {frequency:''}
+	// $scope.agency = {id:''}
+	
     $scope.openRunPayroll = function(){
         ModalService.open({
           templateUrl: 'views/payroll/runPayroll.html',
@@ -54,7 +68,8 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     }
 
     $scope.getPayroll = function(periodType){
-    	periodType = periodType || 'weekly';
+        periodType = periodType || 'weekly';
+        console.log(periodType)
     	$scope.periodType = periodType;
     	var params={periodType:periodType,isCurrent:true};
     	console.log(params);
@@ -114,6 +129,8 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 	$scope.viewAction = function(){
 		$state.go('app.payroll.viewAll')		
 	}
+
+	
 
 }]);
 

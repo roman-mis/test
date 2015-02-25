@@ -4,6 +4,10 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 	function($rootScope,$scope,HttpResource,ModalService,$http,payroll,$modalInstance){
 		$scope.pay = {frequency:''}
 		$scope.agency = {id:''}
+		$scope.runPayroll={};
+		$scope.selection = {type: false};
+		$scope.agencyList = [];
+
 	
 		$scope.PayFrequency = [{
 			code:"1",
