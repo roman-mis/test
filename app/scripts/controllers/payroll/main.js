@@ -169,15 +169,15 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 	}
 
 	$scope.runPayroll = function(){
-		console.log(0)
-		var runParollWorkers = [];
+		var runParollWorkers = {workers : []};
 		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
 			if($scope.runPayroll.worker[i]){
-				runParollWorkers.push($scope.candidates[i]._id);
+				runParollWorkers.workers.push({_id: $scope.candidates[i]._id});
 			}
 		}
 		console.log(runParollWorkers)
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
+            console.log(response);
           if (!HttpResource.flushError(response)) {
           	console.log('donePosting');
             console.log(response);
