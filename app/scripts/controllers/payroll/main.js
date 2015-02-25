@@ -182,6 +182,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
         ModalService.open({
           templateUrl: 'views/payroll/createInvoice.html',
           parentScope: $scope,
+          controller: 'createInvoiceController',
           size:'lg'
       });
     }

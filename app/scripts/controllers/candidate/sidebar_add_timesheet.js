@@ -1,6 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('CandidateSidebarAddTimesheetController', function ($scope, $modalInstance, parentScope, HttpResource,$http, s3Service) {
+.controller('CandidateSidebarAddTimesheetController',
+	function ($scope, $modalInstance, parentScope, HttpResource,$http, s3Service) {
 
 
 	//getting current candidate from parent scope
@@ -237,7 +238,7 @@ angular.module('origApp.controllers')
 			// if (HttpResource.flushError(response)) {
 			// 	}
 			
-				
+			
 		});
 		$modalInstance.close();
 	};
