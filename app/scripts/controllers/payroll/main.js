@@ -103,13 +103,6 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 
 
 		});
-  //   	HttpResource.model('candidates').query(params,function(data){
-		// // HttpResource.model('candidates/?worker.payrollTax.payFrequency=1&worker.payrollProduct.agency=54c8bb4b27df08b003488587').customGet('',{},function(data){
-		// 	console.log('done !! candidates');
-	 //      	console.log(data.data.objects);
-	 //      	$scope.candidates = data.data.objects;
-	 //      	initWorkerSelection($scope.candidates.length);
-		// });
     }
 
     $scope.viewCompanies = function(filter){
