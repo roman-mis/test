@@ -14,14 +14,14 @@ module.exports = function(mongoose) {
                 town: String,
                 country: String,
                 postcode: String,
-                telephone: Number,
-                fax: Number,
+                telephone: String,
+                fax: String,
                 email: String
             },
             accounts: {
-                vatNumber: Number,
-                companyRegNo: Number,
-                utrNumber: Number,
+                vatNumber: String,
+                companyRegNo: String,
+                utrNumber: String,
                 taxDistrictNo: String,
                 payeRef: String,
                 accountsOfficeRef: String
@@ -35,8 +35,8 @@ module.exports = function(mongoose) {
                 country: String,
                 postcode: String,
                 accountName: String,
-                accountNo: Number,
-                sortCode: Number,
+                accountNo: String,
+                sortCode: String,
                 payrollRef: String
             },
             defaults: {
@@ -52,10 +52,47 @@ module.exports = function(mongoose) {
             }
         },
         rti: {
+            userId: String,
+            password: String,
+            contact: String,
+            firstName: String,
+            lastName: String,
+            address1: String,
+            address2: String,
+            town: String,
+            country: String,
+            postCode: String,
+            telphone: String,
+            fax: String,
+            emailAddress: String,
+            eligibleSmallEmployerAllowance: Boolean,
+            claimEmploymentAllowance: Boolean
         },
         mileageRates: {
+            petrolUpTo1400: Number,
+            petrol1401to2000: Number,
+            petrolAbove2001: Number,
+            dieselUpTo1600: Number,
+            diesel1601to2000: Number,
+            dieselAbove2001: Number,
+            lpgUpTo1400: Number,
+            lpg1401to2000: Number,
+            lpgAbove2001: Number,
         },
         cis: {
+            userId: String,
+            password: String,
+            contact: String,
+            firstName: String,
+            lastName: String,
+            address1: String,
+            address2: String,
+            town: String,
+            country: String,
+            postCode: String,
+            telphone: String,
+            fax: String,
+            emailAddress: String
         },
         statutoryTables: {
             vat:[{

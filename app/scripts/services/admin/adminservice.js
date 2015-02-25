@@ -28,18 +28,16 @@ angular.module('origApp.services')
   function _saveCompanyProfile(data, docId){
     var d = $q.defer();
     companyProfile = data;
-    console.log(data);
     if (docId){
       HttpResource.model('admin/companyProfile/' + docId)
       .create(companyProfile).post().then(function(result){
-        console.log(result);
+        // console.log(result);
       });
     }
     else {
       acAPI.create(companyProfile).post().then(function(response) {
-        console.log(response);
         if (!HttpResource.flushError(response)) {
-          console.log('saved successfully');
+          // console.log('saved successfully');
         }
       });
     }
