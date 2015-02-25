@@ -25,45 +25,11 @@
 					</li>
 				</ul>
               </div>
-              <select ng-change="getPayroll()" ng-model="periodType" ng-options="option for option in periodTypeValues"></select>
-              <div>
-                <div style="margin-top:30px" class="dropdown" ng-show="viewAll">
-                  <div class="btn btn-success">
-                      <button  class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1"  aria-expanded="true">
-                        <span ng-show="agencyIndex === -1">Select Agency</span>
-                        <span ng-hide="agencyIndex === -1">{{payroll.agencies[agencyIndex].agency.name}}</span>
-                        <span class="caret"></span>
-                      </button>
-                      
-                  </div>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li style="cursor:pointer" ng-click="selectAgency($index)" ng-repeat="item in payroll.agencies" role="presentation"><a role="menuitem" tabindex="-1" >{{item.agency.name}}</a></li>
-                  </ul>
-                </div>
-              <div class="payroll-overview">
-                <ul  ng-show="viewAll">
-
-                    <li ng-repeat="(key,value) in getAgencyData(agencyIndex)">
-                        <span class="fa-stack fa-2x">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i ng-show="value" style="color:green" class="fa fa-check fa-stack-1x "></i>
-                          <i ng-hide="value" style="color:red" class="fa fa-close fa-stack-1x "></i>
-                        </span>
-                            <h5>{{unCamelCaseFormate(key)}}</h5>
-                    </li>
-                </ul>
-              </div>
-              </div>
+              <select ng-change="getPayroll(periodType)" ng-model="periodType" ng-options="option for option in periodTypeValues"></select>  
 
                <div class="payroll-overview">
-                <div  style="cursor:pointer" class="view-all" ><a ng-click="viewAction()">{{(viewAll)?'View less':'View All'}}</a></div>
+                <div  style="cursor:pointer" class="view-all" ><a ng-click="viewAction()">view All</a></div>
               </div>
-
-                <!-- <div ng-show="viewAll"  class="col-xs-12 row">
-                    <div align="left" ng-click="checkUncheck($index)"  class="col-xs-4" ng-repeat="checkElem in agencyCheckListLabels">
-                        <label  style="margin-top:20px" align="right"><input type="checkbox" ng-model="agencyCheckListValues [camelCaseFormate(agencyCheckListLabels[$index])]"> {{checkElem}} <i class="fa fa-check-square-o fa-3x icon-center"></i></label>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -76,7 +42,7 @@
 						<a ng-href="/payroll/createValidation">Create&nbsp;Validation</a>
                     </li>
                     <li>
-                    	<a ng-href="#">Create&nbsp;Invoice</a>
+                    	<a href ng-click="createInvoice()">Create&nbsp;Invoice</a>
                     </li>
                     <li>
                     	<a ng-href="#">Receipt&nbsp;Funds</a>
@@ -106,7 +72,7 @@
                     	<a ng-href="#">Approve&nbsp;Timesheets</a>
                     </li>
                     <li>
-                    	<a ng-href="#">Run&nbsp;Payroll</a>
+                    	<a ui-sref="app.payroll.runPayroll">Run&nbsp;Payroll</a>
                     </li>
                     <li>
                     	<a ng-href="#">NET&nbsp;Pay&nbsp;reports</a>

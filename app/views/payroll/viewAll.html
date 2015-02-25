@@ -1,0 +1,67 @@
+<div class="container-fluid"> 
+    <table class="table-striped table-bordered">
+        <thead>
+            <tr>
+                <th colspan="16" class="text-center"> Weekly Agency Check List </th> 
+                <th colspan="4" class="text-center">Week</th>
+                <th colspan="4"></th>
+            </tr>
+            <tr>
+                <th class="rotate">ID</th>
+                <th style="width:200px" class="text-center">Agency name</th>
+                <th class="rotate"><div><span>Schedule Received</span></div></th>
+                <th class="rotate"><div><span>Timesheet Upload</span></div></th>
+                <th class="rotate"><div><span>Expenses Upload</span></div></th>
+                <th class="rotate"><div><span>Margin Upload</span></div></th>
+                <th class="rotate"><div><span>Validation Created</span></div></th>
+                <th class="rotate"><div><span>Validation Sent</span></div></th>
+                <th class="rotate"><div><span>Validation Received</span></div></th>
+                <th class="rotate"><div><span>Invoice Raised</span></div></th>
+                <th class="rotate"><div><span>Invoice Sent</span></div></th>
+                <th class="rotate"><div><span>Money Received</span></div></th>
+                <th class="rotate"><div><span>Payroll Run</span></div></th>
+                <th class="rotate"><div><span>BACS upload</span></div></th>
+                <th class="rotate"><div><span>Payment confirmed</span></div></th>
+                <th class="rotate"><div><span>Reports Created</span></div></th>
+                <th class="rotate">1</th>
+                <th class="rotate">2</th>
+                <th class="rotate">3</th>
+                <th class="rotate">4</th>
+                <th class="rotate"><div><span></span></div></th>
+                <th class="rotate"><div><span>Total Schedules</span></div></th>
+                <th class="rotate"><div><span>Total Invoice</span></div></th>
+                <th class="rotate"><div><span>Total Candidates</span></div></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="agency in payroll.agencies">
+                <td></td>
+                <td><span style="margin:5px">{{agency.agency.name}}</span></td>
+                <td class="text-center textContent"><i ng-show="agency.scheduleReceived" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.timesheetsUploaded" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.expensesUploaded" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.marginUploaded" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.validationCreated" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.validationSent" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.validationReceived" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.invoiceRaised" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.invoiceSent" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.moneyReceived" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.payrollRun" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.bacsUploaded" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.paymentConfirmed" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <td class="text-center textContent"><i ng-show="agency.reportsCreated" style="color:green" class="fa fa-check fa-1x "></i></td>
+                <!-- week number -->
+                <td class="text-center textContent"><div ng-show="payroll.weekNumber === 1" style="background-color:green;width=100%;height:100%">&nbsp;</div></td>
+                <td class="text-center textContent"><div ng-show="payroll.weekNumber === 2" style="background-color:green;width=100%;height:100%">&nbsp;</div></td>
+                <td class="text-center textContent"><div ng-show="payroll.weekNumber === 3" style="background-color:green;width=100%;height:100%">&nbsp;</div></td>
+                <td class="text-center textContent"><div ng-show="payroll.weekNumber === 4" style="background-color:green;width=100%;height:100%">&nbsp;</div></td>
+                <!-- end week number -->
+                <td class="text-center textContent"></td>
+                <td class="text-center textContent"></td>
+                <td class="text-center textContent"></td>
+                <td class="text-center textContent"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

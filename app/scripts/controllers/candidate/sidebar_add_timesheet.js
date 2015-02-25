@@ -49,7 +49,6 @@ angular.module('origApp.controllers')
 
 	//user inputs
 	$scope.elements = { unit:0	, payRate:0, chargeRate: 'N/A', amount:0, vat:0 };
-	$scope.isAllowed = true;
 
 
 	$scope.$watch('elements.payRate',function (newVal) {
@@ -72,7 +71,7 @@ angular.module('origApp.controllers')
 
 	$scope.$watch('elements.amount', function (newVal) {
 		if($scope.isVat == true){
-			$scope.elements.vat = newVal * $scope.currentVat.object.amount;	
+			$scope.elements.vat = Math.round((newVal * $scope.currentVat.object.amount/100)*100)/100;	
 		}
 		else
 			$scope.elements.vat = 0;
@@ -86,8 +85,9 @@ angular.module('origApp.controllers')
 	$scope.totalVat = 0;
 	$scope.net = 0;
 	$scope.total = 0;
+	$scope.addClicked = false;
 	$scope.populateTable = function () {
-		
+		$scope.addClicked = true;
 		$scope.tableInfo = {
 			elementType: $scope.saveRate.name,
 			description: $scope.userDescription,
@@ -123,6 +123,7 @@ angular.module('origApp.controllers')
 	$scope.files = '';
 	$scope.uploadedImg = {url:null, name:''};
 
+
 	$scope.onSelectFile = function(fileInput) {
 		$scope.files = fileInput;
 		$scope.inSelectFile = true;
@@ -150,7 +151,7 @@ angular.module('origApp.controllers')
 			$scope.isUploading = false;
 			$scope.uploadedImg.url = data.url;
 		}, function() {
-			alert('error');
+			// alert('error');
 		});
 
 	};
@@ -206,6 +207,8 @@ angular.module('origApp.controllers')
 		$scope.daysInRange = daysInRange;
 		$scope.times = [];
 		$scope.dateHolder=daysInRange[1].label + " to " + daysInRange[7].label;
+
+		$scope.weekEndingDate = daysInRange[6];
 	};
 
 
@@ -215,24 +218,22 @@ angular.module('origApp.controllers')
 		var timesheet = {
 			agency: $scope.saveAgency.agency._id,
 			worker: $scope.candidate._id,
+			weekEndingDate: $scope.weekEndingDate,
 			status: 'submitted',
-			payFrequency: null,
+			net:$scope.net,
 			vat: $scope.totalVat,
-			totalPreDeductions: null,
-			deductions: null,
 			elements: $scope.finalElements,
 			total: $scope.total,
-			imgUrl: $scope.uploadedImg.url
+			imageUrl: $scope.uploadedImg.url
 		}
 
 		
 		HttpResource.model('timesheets').create(timesheet).post()
 		.then(function(response) {
-			if (HttpResource.flushError(response)) {
-					alert('Error Uploading');
-				}
-			else
-				alert('Successfully Uploaded')
+			console.log(response)
+			// if (HttpResource.flushError(response)) {
+			// 	}
+			
 				
 		});
 		$modalInstance.close();
