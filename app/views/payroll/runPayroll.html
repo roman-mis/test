@@ -10,7 +10,7 @@
 					<div class="form-group">
 						<label class="col-xs-6 control-label">Pay Frequency</label>
 						<div class="col-xs-6">
-							<select ng-change="getPayrollRunWorker()" ng-model="pay.frequency" ng-options="option.code as option.description for option in PayFrequency" class="form-control">
+							<select ng-change="getPayrollRunWorker()" ng-model="pay.frequency" ng-options="option as option for option in periodTypeValues" class="form-control">
 								<option>Select</option>
 							</select>
 						</div>
@@ -28,6 +28,7 @@
 				</div>
             </div>
 		</form>
+		{{}}
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped scroll">
@@ -41,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="worker in candidates track by $index">
+                        <tr ng-repeat="worker in candidates">
                             <td class="text-center text-checkbox">
                                 <input ng-change="unselectHead()" ng-model="runPayroll.worker[$index]" type="checkbox" />
                             </td>

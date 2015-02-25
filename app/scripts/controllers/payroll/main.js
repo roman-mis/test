@@ -115,8 +115,6 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 		$state.go('app.payroll.viewAll')		
 	}
 
-	
-
 }]);
 
 

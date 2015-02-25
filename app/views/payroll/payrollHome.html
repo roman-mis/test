@@ -5,43 +5,24 @@
             <div class="panel-body  panel-custom ">
             <div class="payroll-overview">
 				<ul >
-					<li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Schedules Uploaded</h5><a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" ng-click="viewCompanies('Schedules Uploaded')" style="cursor:pointer">{{payroll.stats.schedulesUploaded}}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="agency in agencyList track by $index" role="presentation" ><a role="menuitem" tabindex="-1" style="pointer:cursor">{{agency}}</a></li>
-                      </ul>
+					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
+						<h5>Schedules Uploaded</h5><a ng-href="#">{{payroll.stats.schedulesUploaded}}</a>
 					</li>
-					<li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Validations Approved</h5><a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" ng-click="viewCompanies('Validations Approved')" style="cursor:pointer">{{payroll.stats.validationsApproved}}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="agency in agencyList track by $index" role="presentation" ><a role="menuitem" tabindex="-1" style="pointer:cursor">{{agency}}</a></li>
-                      </ul>
+					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
+						<h5>Validations Approved</h5><a ng-href="#">{{payroll.stats.validationsApproved}}</a>
 					</li>
-					<li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Invoices sent</h5><a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" ng-click="viewCompanies('Invoices sent')" style="cursor:pointer">{{payroll.stats.invoicesSent}}</a>
-
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="agency in agencyList track by $index" role="presentation" ><a role="menuitem" tabindex="-1" style="pointer:cursor">{{agency}}</a></li>
-                      </ul>
+					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
+						<h5>Invoices sent</h5><a ng-href="#">{{payroll.stats.invoicesSent}}</a>
 					</li>
-					<li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Invoices Receipted</h5><a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" ng-click="viewCompanies('Invoices Receipted')" style="cursor:pointer">{{payroll.stats.invoicesReceipted}}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="agency in agencyList track by $index" role="presentation" ><a role="menuitem" tabindex="-1" style="pointer:cursor">{{agency}}</a></li>
-                      </ul>
+					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
+						<h5>Invoices Receipted</h5><a ng-href="#">{{payroll.stats.invoicesReceipted}}</a>
 					</li>
-					<li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-						<h5>Awaiting Payroll</h5><a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" ng-click="viewCompanies('Awaiting Payroll')" style="cursor:pointer">{{payroll.stats.awaitingPayroll}}</a> 
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="agency in agencyList track by $index" role="presentation" ><a role="menuitem" tabindex="-1" style="pointer:cursor">{{agency}}</a></li>
-                      </ul>
+					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
+						<h5>Number of Payrolls Unpaid</h5><a ng-href="#">{{payroll.stats.payrollsUnpaid}}</a>
 					</li>
-                    <li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
-                        <h5>Number of Payrolls Unpaid</h5><a id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" ng-click="viewCompanies('Number of Payrolls Unpaid')" style="cursor:pointer">{{payroll.stats.payrollsUnpaid}}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="agency in agencyList track by $index" role="presentation" ><a role="menuitem" tabindex="-1" style="pointer:cursor">{{agency}}</a></li>
-                      </ul>
-                    </li>
+					<li><i class="fa fa-file-excel-o fa-3x icon-center"></i>
+						<h5>Awaiting Payroll</h5><a ng-href="#">{{payroll.stats.awaitingPayroll}}</a>
+					</li>
 				</ul>
               </div>
               <select ng-change="getPayroll(periodType)" ng-model="periodType" ng-options="option for option in periodTypeValues"></select>  
@@ -61,7 +42,7 @@
 						<a ng-href="/payroll/createValidation">Create&nbsp;Validation</a>
                     </li>
                     <li>
-                    	<a ng-href="#">Create&nbsp;Invoice</a>
+                    	<a href ng-click="createInvoice()">Create&nbsp;Invoice</a>
                     </li>
                     <li>
                     	<a ng-href="#">Receipt&nbsp;Funds</a>
