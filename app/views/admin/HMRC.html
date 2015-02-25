@@ -1,0 +1,303 @@
+<div class="container" ng-app="myApp">
+    <div class="wrapper-tabs" role="tabpanel">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#RTISubmissions" aria-controls="RTISubmissions" role="tab" data-toggle="tab">RTI Submissions</a></li>
+        <li role="presentation"><a href="#approvedMileageRates" aria-controls="approvedMileageRates" role="tab" data-toggle="tab">Approved Mileage Rates</a></li>
+        <li role="presentation"><a href="#verification" aria-controls="verification" role="tab" data-toggle="tab">CIS Verification</a></li>
+    </ul>
+
+    <!-- Tab panels -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="RTISubmissions">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                     <label class="col-xs-4  control-label">Enable RTI</label>
+                                     <div class="col-xs-8 ">
+                                        <div class="make-switch control-label">
+                                            <label class="switch_wrap pull-right" for="field">
+                                                <input id="field" type="checkbox" />
+                                                <div class="switch"><span class="bullet"></span></div>
+                                           </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label class="col-xs-4 control-label">User ID</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Password</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                     <div class="form-group">
+                                    <label class="col-xs-4 control-label">First Name</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Last Name</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Address 1</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Address 2</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Town</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Country</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Post Code</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Phone</label>
+                                    <div class="col-xs-8 no-padding-left">
+										<input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Fax</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Email</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+								<div class="form-group">
+                                    <label class="col-xs-12 control-label">Eligible small employer allowance
+                                        <div class="pull-right">
+                                            <div class="make-switch">
+                                                <label class="switch_wrap pull-right" for="field2">
+                                                    <input id="field2" type="checkbox" />
+                                                    <div class="switch"><span class="bullet"></span></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+								<div class="form-group">
+                                    <label class="col-xs-12 control-label">Claim Employment allowance
+                                        <div class="pull-right">
+                                            <div class="make-switch">
+                                                <label class="switch_wrap pull-right" for="field3">
+                                                    <input id="field3" type="checkbox" />
+                                                    <div class="switch"><span class="bullet"></span></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+							<div class="col-sm-12 text-right"><button class="btn btn-primary">Employer Alignment submissions</button>
+								<button class="btn btn-primary">Get Data</button>
+                                <button class="btn btn-primary"><i class="fa fa-floppy-o"></i>&#160; Save</button>
+							</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="approvedMileageRates" ng-controller="MyCtrl">
+            <div class="row">
+                <div class="col-xs-12">
+                     <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Restriction</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Petrol</td>
+                                <td>Up to 1400 cc</td>
+                                <td class="col-xs-5">
+                                    <div edit-text="" ng-model="myvar" save-function="save()"></div>
+                                   </td>
+                            </tr>
+                            <tr>
+                                <td>Petrol</td>
+                                <td>Between 1401 cc and 2000 cc</td>
+                                <td>0.1500</td>
+                            </tr>
+                            <tr>
+                                <td>Petrol</td>
+                                <td>2001 cc and above</td>
+                                <td>0.2600</td>
+                            </tr>
+                            <tr>
+                                <td>Diesel</td>
+                                <td>Up to 1600 cc</td>
+                                <td>0.1200</td>
+                            </tr>
+                            <tr>
+                                <td>Diesel</td>
+                                <td>Between 1601 cc and 2000 cc</td>
+                                <td>0.1500</td>
+                            </tr>
+                            <tr>
+                                <td>LPG</td>
+                                <td>Upto 1400 cc</td>
+                                <td>0.1000</td>
+                            </tr>
+                            <tr>
+                                <td>LPG</td>
+                                <td>Between 1401 cc and 2000 cc</td>
+                                <td>0.1200</td>
+                            </tr>
+                            <tr>
+                                <td>LPG</td>
+                                <td>Above 2001 cc</td>
+                                <td>0.1800</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+            
+        <div role="tabpanel" class="tab-pane" id="verification">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label class="col-xs-4 control-label">User ID</label>
+                                    <div class="col-xs-8  no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Password</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                     <div class="form-group">
+                                    <label class="col-xs-4 control-label">First Name</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Last Name</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Address 1</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Address 2</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Town</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Country</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Post Code</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Phone</label>
+                                    <div class="col-xs-8 no-padding-left">
+										<input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Fax</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">Email</label>
+                                    <div class="col-xs-8 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6 col-xs-offset-6 pull-right text-right">
+                                    <button class="btn btn-primary form-control"><i class="fa fa-floppy-o"></i>&#160; Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /tab-pane -->
+    </div><!-- /tab-content -->
+    </div><!-- /wrapper-tabs -->
+</div><!-- /container -->

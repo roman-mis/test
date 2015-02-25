@@ -93,16 +93,16 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     		}
     	}};
     	console.log(params);
-    	$http.get('/api/candidates?worker.payrollTax.payFrequency='+$scope.pay.frequency+'&worker.payrollProduct.agency='+$scope.agency.id).
-  success(function(data, status, headers, config) {
-  	 console.log(data); 
-  	 $scope.candidates = data.objects;
-  	 console.log($scope.candidates); 
-  	 
-  }).
-  error(function(data, status, headers, config) {
-    
-  });
+    	$http.get('/api/candidates?worker.payrollTax.payFrequency='+$scope.pay.frequency+'&worker.payrollProduct.agency='+$scope.agency.id)
+    	.success(function(data, status, headers, config) {
+		  	 console.log(data); 
+		  	 $scope.candidates = data.objects;
+		  	 console.log($scope.candidates); 
+		  	 initWorkerSelection($scope.candidates.length);
+		}).error(function(data, status, headers, config) {
+
+
+		});
   //   	HttpResource.model('candidates').query(params,function(data){
 		// // HttpResource.model('candidates/?worker.payrollTax.payFrequency=1&worker.payrollProduct.agency=54c8bb4b27df08b003488587').customGet('',{},function(data){
 		// 	console.log('done !! candidates');
@@ -168,8 +168,21 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     	}
 	}
 
-	$scope.Runpayroll = function(){
-		
+	$scope.runPayroll = function(){
+		console.log(0)
+		var runParollWorkers = [];
+		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
+			if($scope.runPayroll.worker[i]){
+				runParollWorkers.push($scope.candidates[i]._id);
+			}
+		}
+		console.log(runParollWorkers)
+		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
+          if (!HttpResource.flushError(response)) {
+          	console.log('donePosting');
+            console.log(response);
+          }
+        });
 	}
 
 

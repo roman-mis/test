@@ -43,5 +43,10 @@ angular.module('origApp').config(function($stateProvider) {
     	url: '/add_new/:type',
     	controller:'addNewController',
     	templateUrl: 'views/admin/newTemplate.html'
+  	})
+  	.state('app.admin.HMRC', {
+    	url: '/HMRC',
+    	controller:'HMRCMainController',
+    	templateUrl: 'views/admin/HMRC.html'
   	});
 });
