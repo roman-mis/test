@@ -4,35 +4,8 @@ var helper = require('./ui-helper.js');
 
 /* to remove ================================>*/
 
-describe('Navigate to candidates url', function () {
 
-  it('should navigate to page with login options ', function () {
-    browser.get('/candidates');
-  });
-
-  it('should have working search engine', function () {
-    var items = element.all(by.repeater('row in options.data'));
-    var initCount = items.count();
-
-    var searchInput = element(by.model('filterFirstName'));
-    searchInput.sendKeys(loginData.userName);
-
-    expect(items.count()).toBeGreaterThan(0);
-    expect(items.count()).toBeLessThan(initCount);
-
-  });
-
-  it('should take to tabs', function () {
-    element(by.repeater('row in options.data').row(0)).element(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).click()
-
-    browser.wait(function () {
-      return browser.getCurrentUrl().then(function (url) {
-        return (url.match(/candidates\/.{24}/g));
-      });
-    }, 3000);
-
-  });
-});
+/* to remove ================^^ ABOVE  ^^ ================>*/
 
 
 var clickFirstVisible=function(locator,callback){
@@ -55,7 +28,39 @@ var testModal=function(locator){
 };
 
 
+describe('Checking ONBOARDING', function() {
 
+  it('should open onboarding dialog', function () {
+
+    clickFirstVisible(by.css('[ng-click="openOnboardingWin()"]'),function(link){
+      link.click();
+      expect($('.modal-content').isDisplayed()).toBeTruthy();
+      $('.modal-content [ng-click="cancel()"]').click();
+      expect($('.modal-content').isPresent()).toBeFalsy();
+      link.click();
+    })
+  });
+  it('should save data', function () {
+    helper.selectSelector(element.all(by.model('data.agency')),1);
+    element(by.model('data.agencyName')).sendKeys('Agency name from test');
+
+    //helper.selectSelector(element.all(by.model('data.consultant')),1);
+    element(by.model('data.payeRate')).sendKeys('10');
+    element(by.model('data.outsourcedRate')).sendKeys('9');
+
+    helper.selectSelector(element.all(by.model('data.serviceUsed')),1);
+    browser.executeScript("document.getElementsByClassName('btn-primary')[0].click();");
+
+    browser.wait(function(){
+      return !$('.modal-content').isPresent();
+    },3000);
+    expect($('.modal-content').isPresent()).toBeFalsy();
+
+  });
+
+});
+
+/*
 
 describe('Checking Activity', function() {
 
@@ -66,7 +71,7 @@ describe('Checking Activity', function() {
     });
   });
 
-  it('should open Call-log dialog', function () {
+  it('should upload file and save', function () {
     helper.selectSelector(element(by.model('data.agency')),1);
     helper.selectSelector(element(by.model('data.documentType')),1);
     helper.selectSelector(element(by.model('data.documentType')),1);
@@ -75,20 +80,20 @@ describe('Checking Activity', function() {
     var path = require('path');
     var fileToUpload = '../1.png';
     var absolutePath = path.resolve(__dirname, fileToUpload);
-    console.log(absolutePath);
     $('[ng-model="data.file"]').sendKeys(absolutePath);
     $('[ng-click="uploadFile()"]').click();
 
+
     element.all(by.repeater('file in files')).count().then(function(n){
-      console.log('count='+n);
       expect(n).toBeGreaterThan(0);
+      $('[ng-click="save()"]').click();
+      expect($('.modal-content').isPresent()).toBeFalsy();
     });
 
   });
 
 });
 
-/*
 describe('Checking Activity', function() {
    var openActivityDialog=function(){
    clickFirstVisible(by.css('[ng-click="openAddActivityWin()"]'),function(link){
@@ -391,31 +396,6 @@ describe('checking expense wizard', function() {
 
 /*  DONT WORK
 
- describe('Checking ONBOARDING', function() {
 
- it('should open onboarding dialog', function () {
-
- clickFirstVisible(by.css('[ng-click="openOnboardingWin()"]'),function(link){
- link.click();
- expect($('.modal-content').isDisplayed()).toBeTruthy();
- $('.modal-content [ng-click="cancel()"]').click();
- expect($('.modal-content').isPresent()).toBeFalsy();
- link.click();
- })
- });
- it('should save data', function () {
- helper.selectSelector(element.all(by.model('data.agency')),1);
- element(by.model('data.agency_name')).sendKeys('Agency name from test');
-
- helper.selectSelector(element.all(by.model('data.consultant')),1);
- element(by.model('data.paye_rate')).sendKeys('10');
- element(by.model('data.outsourced_rate')).sendKeys('11');
-
- helper.selectSelector(element.all(by.model('data.service_used')),1);
-
- element(by.css('[ng-click="save(true)"]')).click();
- });
-
- });
 
  */
