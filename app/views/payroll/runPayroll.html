@@ -2,7 +2,7 @@
     <div class="runPayroll-header">
         <h4 class="runPayroll-header-title " id="myModalLabel">Run Payroll</h4>
     </div>
-    <button ng-click="test()">log</button>
+    
     <div class="runPayroll-body">
         <form class="form-horizontal">
             <div class="row">
@@ -45,7 +45,7 @@
                             <td class="text-center text-checkbox">
                                 <input ng-change="unselectHead()" ng-model="runPayroll.worker[$index]" type="checkbox" />
                             </td>
-                            <td class="ref">000007</td>
+                            <td class="ref">{{worker.candidateRef}}</td>
                             <td class="fullName">{{worker.firstName}} {{worker.lastName}}</td>
                         </tr>
 						
@@ -73,7 +73,7 @@
     </div>
 				
     <div class="runPayroll-footer">
-        <a ui-sref="app.payroll.home" class="btn">Cancel &#38; Return to Payroll Home</a>
+        <a ng-click="close()" class="btn">Cancel &#38; Return to Payroll Home</a>
         <button ng-click="runPayroll()" class="btn btn-primary">Run Payroll</button>
     </div>
 				
