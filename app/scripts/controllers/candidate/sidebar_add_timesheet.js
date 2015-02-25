@@ -85,8 +85,9 @@ angular.module('origApp.controllers')
 	$scope.totalVat = 0;
 	$scope.net = 0;
 	$scope.total = 0;
+	$scope.addClicked = false;
 	$scope.populateTable = function () {
-		
+		$scope.addClicked = true;
 		$scope.tableInfo = {
 			elementType: $scope.saveRate.name,
 			description: $scope.userDescription,

@@ -1,7 +1,7 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource',
-	function($state,$rootScope,$scope,HttpResource){	
+app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource','ModalService',
+	function($state,$rootScope,$scope,HttpResource, ModalService){	
 		console.log('hello');
 	$scope.payroll = {};
 	$scope.allPayrolls = [];
@@ -105,6 +105,14 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 	$scope.Runpayroll = function(){
 		
 	}
+
+    $scope.createInvoice = function () {
+        ModalService.open({
+          templateUrl: 'views/payroll/createInvoice.html',
+          parentScope: $scope,
+          size:'lg'
+      });
+    }
 
 
 	$scope.test = function(){
