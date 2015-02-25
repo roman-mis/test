@@ -27,10 +27,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 	$scope.periodType = 'weekly'
 	// $scope.pay = {frequency:''}
 	// $scope.agency = {id:''}
-	$scope.runPayroll={};
-	$scope.selection = {type: false};
-	$scope.agencyList = [];
-
+	
     $scope.openRunPayroll = function(){
         ModalService.open({
           templateUrl: 'views/payroll/runPayroll.html',
