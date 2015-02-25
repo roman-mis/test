@@ -12,7 +12,7 @@ module.exports = function(app){
 };
 
 router.get('/', restMiddleware(db), controller.getAllPayrolls);
-router.get('/run', controller.runPayroll);
+router.post('/run', controller.runPayroll);
 router.post('/:id', controller.getPayroll);
 router.post('/', controller.postPayroll);
 router.patch('/:id', controller.patchPayroll);

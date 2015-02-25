@@ -28,7 +28,6 @@
 				</div>
             </div>
 		</form>
-		{{}}
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped scroll">
@@ -42,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="worker in candidates">
+                        <tr ng-repeat="worker in candidates track by $index">
                             <td class="text-center text-checkbox">
                                 <input ng-change="unselectHead()" ng-model="runPayroll.worker[$index]" type="checkbox" />
                             </td>
