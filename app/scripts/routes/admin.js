@@ -48,5 +48,25 @@ angular.module('origApp').config(function($stateProvider) {
         url: '/payment_rate',
         templateUrl: 'views/admin/payment_rate.html',
         controller: 'PaymentRateController'
+    })
+    .state('app.admin.mileageRates', {
+        url: '/mileage_rates',
+        templateUrl: 'views/admin/mileage_rates.html',
+        controller: 'MileageRatesController'
+    })
+    .state('app.admin.cisVerification', {
+        url: '/cis_verification',
+        templateUrl: 'views/admin/cis_verification.html',
+        controller: 'CISVerificationController'
+    })
+    .state('app.admin.rti', {
+        url: '/rti',
+        templateUrl: 'views/admin/rti.html',
+        controller: 'RTIController'
+    })
+    .state('app.admin.expenseRates', {
+        url: '/expense_rates',
+        templateUrl: 'views/admin/expense_rates.html',
+        controller: 'ExpenseRatesController'
     });
 });
