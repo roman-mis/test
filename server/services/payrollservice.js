@@ -105,8 +105,11 @@ module.exports=function(){
                                db.PayrollWorkerYTD.findOne({ worker: worker._id },function(err,_payrollWorkerYTD) {
                                    payrollWorkerYTD = _payrollWorkerYTD;
                                    
+                                   // TODO - Change status to receipted
+                                   
+                                   
                                    // Get all the timesheets for this worker that are status of receipted
-                                   db.Timesheet.find( { $and: [ { status: 'receipted' } , { worker: worker._id } ] })
+                                   db.Timesheet.find( { $and: [ { status: 'submitted' } , { worker: worker._id } ] })
                                    .exec(function(timesheets,err) {
                                        if(!err) {
                                            if(timesheets.count>0) {
