@@ -10,7 +10,7 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 
 	
 		$scope.PayFrequency = [{
-			code:"1",
+			code:"weekly",
 			description:"Weekly"
 		},{
 			code:"2",
