@@ -8,7 +8,6 @@ module.exports = function(){
 		.then(function(result){
 			var pagination = req._restOptions.pagination||{};
 			var resp = {result:true,objects:result.rows, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
-			console.log('----   here --------', resp.objects[0].statutoryTables);
 			res.json({result: true, statutoryRates: resp.objects[0].statutoryTables, id: resp.objects[0]._id});
 		},function(){
 			res.sendFailureResponse;
