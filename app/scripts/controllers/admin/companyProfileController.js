@@ -1,7 +1,7 @@
 var app = angular.module('origApp.controllers');
 
-app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfileService',
-	function($scope, $rootScope, CompanyProfileService){
+app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfileService', 'HttpResource',
+	function($scope, $rootScope, CompanyProfileService, HttpResource){
 
 		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
 			{link: '/admin/home', text: 'Admin'},
@@ -9,11 +9,19 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		];
 
 		$scope.companyProfile = {};
+		$scope.tab = 'contact';
 		var docId = null;
 
+		// get dropdowns from the server
+		CompanyProfileService.getDropDownData().then(function(data){
+			$scope.dropDownLists = data;
+		});
+		
+		// get company profile from the server
 		CompanyProfileService.getCompanyProfile().then(function(data){
-			$scope.companyProfile = data.companyProfile;
-			docId = data._id;
+			if(data.companyProfile)
+				$scope.companyProfile = data.companyProfile;
+			docId = data.id;
 		});
 
 		$scope.save = function(){

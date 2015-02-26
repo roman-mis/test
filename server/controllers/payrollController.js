@@ -53,8 +53,8 @@ module.exports = function(){
     
         controller.runPayroll=function(req,res) {
             payrollService.runPayroll(req)
-                .then(function(){
-                    res.json({});
+                .then(function(result){
+                    res.json(result);
                 });
         };
 

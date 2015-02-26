@@ -2,33 +2,33 @@
 
 module.exports = function(){
 
-    var dataList=require('../data/data_list.json');
-    var countries=require('../data/countries.json');
-    var adminTemplatesData=require('../data/admin_templates_data.json');
+    var dataList = require('../data/data_list.json');
+    var countries = require('../data/countries.json');
+    var adminTemplatesData = require('../data/admin_templates_data.json');
 
-    var controller={};
+    var controller = {};
 
 
-    controller.nationalities=function(req,res){
+    controller.nationalities = function(req,res){
       var nationalitesData = require('../data/nationalities.json');
       res.json(nationalitesData);
     };
-    controller.starterdeclarations =function(req,res){
+    controller.starterdeclarations = function(req,res){
 
       res.json(dataList.StarterDeclarations);
     };
 
-    controller.payfrequencies =function(req,res){
+    controller.payfrequencies = function(req,res){
 
       res.json(dataList.PayFrequency);
     };
 
-    controller.taxbasis =function(req,res){
+    controller.taxbasis = function(req,res){
 
       res.json(dataList.TaxBasis);
     };
 
-    controller.margins=function(req,res){
+    controller.margins = function(req,res){
 
       res.json(dataList.Margin);
     };
@@ -124,48 +124,61 @@ module.exports = function(){
       res.json(dataList.StatusList);
     };
 
-    controller.countries=function(req,res){
+    controller.countries = function(req,res){
       res.json(countries);
 
     };
 
-    controller.margintypes=function(req,res){
+    controller.margintypes = function(req,res){
       res.json(dataList.MarginTypes);
     };
 
-    controller.roleslist=function(req,res){
+    controller.roleslist = function(req,res){
       res.json(dataList.RolesList);
     };
 
-    controller.mealslist=function(req,res){
+    controller.mealslist = function(req,res){
       res.json(dataList.MealsList);
     };
 
-    controller.transportationmeans=function(req,res){
+    controller.transportationmeans = function(req,res){
       res.json(dataList.TransportationMeans);
     };
 
-    controller.otherexpensetypes=function(req,res){
+    controller.otherexpensetypes = function(req,res){
       res.json(dataList.OtherExpenseTypes);
     };
 
-    controller.getAdminTemplatesData=function (req,res){
+    controller.getAdminTemplatesData = function (req,res){
       res.json(adminTemplatesData[req.params.type]);
     };
 
-    controller.fuels=function(req,res){
+    controller.getAdminCompanyProfileData = function (req, res){
+      var companyProfileData = {
+        payFrequency: dataList.PayFrequency,
+        holidayPayRule: dataList.Holidays,
+        paymentMethod: dataList.PaymentMethod,
+        adminFee: dataList.AdminFee,
+        derogationContract: dataList.DerogationContract,
+        communicationMethod: dataList.CommunicationMethod,
+        contractorStatus: dataList.ContractorStatus
+      };
+      res.json(companyProfileData);
+    };
+
+    controller.fuels = function(req,res){
       res.json(dataList.Fuels);
     };
 
-    controller.enginesizes=function(req,res){
+    controller.enginesizes = function(req,res){
       res.json(dataList.EngineSizes);
     };
 
-    controller.payRateTypes=function(req,res){
+    controller.payRateTypes = function(req,res){
       res.json(dataList.PayRateTypes);
     };
 
-    controller.expensesRateTypes=function(req,res){
+    controller.expensesRateTypes = function(req,res){
       res.json(dataList.expensesRateTypes);
     };
 

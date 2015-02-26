@@ -936,3 +936,18 @@ header {
 .edit-panel {
     display: none !important;
 }
+
+th.rotate {
+    height: 160px;
+    white-space: nowrap;
+    padding: 5px 10px;
+}
+th.rotate div {
+    transform: translate(0px, 0px) rotate(90deg);
+    width: 10px;
+    margin-top: -77px;
+    margin-left: 0px;
+}
+th.rotate div span {
+    padding: 5px 10px;
+}

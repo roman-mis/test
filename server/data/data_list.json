@@ -15,16 +15,16 @@
 		}],
 
 	"PayFrequency":[{
-			"code":"1",
+			"code":"weekly",
 			"description":"Weekly"
 		},{
-			"code":"2",
+			"code":"twoWeekly",
 			"description":"Bi-Weekly"
 		},{
-			"code":"3",
+			"code":"fourWeekly",
 			"description":"4 Weekly"
 		},{
-			"code":"4",
+			"code":"monthly",
 			"description":"Monthly"
 		}],
 	"TaxBasis":[{
@@ -134,6 +134,36 @@
 		},{
 			"code":"3",
 			"description":"no holiday pay"
+		}],
+	"AdminFee":[{
+			"code": "1",
+			"description": "Use Agency rule"
+		},{
+			"code": "2",
+			"description": "Fixed Fee"
+		}],
+	"CommunicationMethod": [{
+			"code": "1",
+			"description": "Email"
+		},{
+			"code": "2",
+			"description": "Text"
+		},{
+			"code": "3",
+			"description": "Post"
+		},{
+			"code": "4",
+			"description": "Telephone"
+		}],
+	"ContractorStatus": [{
+			"code": "1",
+			"description": "New Contractor"
+		},{
+			"code": "2",
+			"description": "Pending"
+		},{
+			"code": "3",
+			"description": "New Enquiry"
 		}],
 	"VehicleTypes":[{
 			"code":"1",

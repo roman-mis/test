@@ -265,41 +265,37 @@ describe('navigate to payroll tabs', function () {
     var number = helper.getDefaultNumber();
 
     var agency = element(by.model('product.agency'));
-    helper.selectSelector(agency, 1);
-
     var margin = element(by.model('product.margin'));
-    helper.selectSelector(margin, 1);
-
-
     var fixed = element(by.model('product.marginFixed'));
-    fixed.clear();
-    fixed.sendKeys(number.substr(-3, 3));
-
     var rule = element(by.model('product.holidayPayRule'));
-    helper.selectSelector(rule, 1);
-
     var contract = element(by.model('product.derogationContract'));
-    helper.selectSelector(contract, 1);
-
-
     var spread = element(by.model('product.derogationSpread'));
-    spread.clear();
-    spread.sendKeys(number.substr(-3, 3));
-
     var used = element(by.model('product.serviceUsed'));
-    helper.selectSelector(used, 1);
-
     var terms = element(by.model('product.paymentTerms'));
-    helper.selectSelector(terms, 1);
-
     var method = element(by.model('product.paymentMethod'));
-    helper.selectSelector(method, 1);
-
     var desc = element(by.model('product.jobDescription'));
-    desc.clear();
-    desc.sendKeys('desc' + number.substr(-3, 3));
 
-    $('[ng-click="saveProduct()"]').click();
+    var addNew=function(agencyIndex){
+      helper.selectSelector(agency, agencyIndex);
+      helper.selectSelector(margin, 1);
+      fixed.clear();
+      fixed.sendKeys(number.substr(-3, 3));
+      helper.selectSelector(rule, 1);
+      helper.selectSelector(contract, 1);
+      spread.clear();
+      spread.sendKeys(number.substr(-3, 3));
+      helper.selectSelector(used, 1);
+      helper.selectSelector(terms, 1);
+      helper.selectSelector(method, 1);
+      desc.clear();
+      desc.sendKeys('desc' + number.substr(-3, 3));
+
+      $('[ng-click="saveProduct()"]').click();
+
+
+    };
+
+    addNew(0);
 
 
     expect(agency.getText()).toBe('');
@@ -315,6 +311,7 @@ describe('navigate to payroll tabs', function () {
 
     var rows = by.repeater('row in options.data');
     var count = 0;
+    var minNumber=3;
 
     element.all(rows).count().then(function (i) {
 
@@ -335,10 +332,28 @@ describe('navigate to payroll tabs', function () {
 
 
       element(rows.row(i - 1)).element(by.css('[ng-click="getExternalScope().deleteProduct(row)"]')).click();
-      expect(element.all(rows).count()).toBe(i - 1);
-    });
+      $('[ng-click="cancelEdit()"]').click();
 
+      element.all(rows).count().then(function(count){
+        expect(count).toBe(i - 1);
+        if(count<minNumber)
+          for(var k=0;k<minNumber-count;k++){
+            addNew(k);
+          }
+
+        expect(element.all(rows).count()).toBeGreaterThan(2);
+      });
+
+
+    });
 
   });
 
 });
+
+describe('Checking agencies tab',function(){
+  it('Sufficient agency count',function(){
+    links.get(4).click();
+    expect(element.all(by.repeater('product in payrollProducts')).count()).toBeGreaterThan(2);
+  });
+})

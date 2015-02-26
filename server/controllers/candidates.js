@@ -344,7 +344,8 @@ module.exports = function(dbs){
               p45Uploaded:req.body.p45Uploaded,
               p46Uploaded:req.body.p46Uploaded,
               niNumber:      req.body.niNumber,
-              p45DocumentUrl:req.body.p45DocumentUrl
+              p45DocumentUrl:req.body.p45DocumentUrl,
+              employeesNIpaid:req.body.employeesNIpaid
           };
 
           var worker={
