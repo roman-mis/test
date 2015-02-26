@@ -10,7 +10,7 @@ var express = require('express'),
 
 module.exports = function(app){
   app.use(
-        '/api/admin/rti',
+        '/api/systems/rti',
       restMiddleware(db),
       routeskipper(
           expressJwt({
