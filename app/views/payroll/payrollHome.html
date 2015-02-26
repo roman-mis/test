@@ -44,7 +44,7 @@
                     </li>
 				</ul>
               </div>
-              <select ng-change="getPayroll(periodType)" ng-model="periodType" ng-options="option for option in periodTypeValues"></select>  
+              <select ng-change="getPayroll(periodType)" ng-model="periodType" ng-options="option.code as option.description for option in periodTypeValues"></select>  
 
                <div class="payroll-overview">
                 <div  style="cursor:pointer" class="view-all" ><a ng-click="viewAction()">view All</a></div>
@@ -61,7 +61,7 @@
 						<a ng-href="/payroll/createValidation">Create&nbsp;Validation</a>
                     </li>
                     <li>
-                    	<a ng-href="#">Create&nbsp;Invoice</a>
+                    	<a href ng-click="createInvoice()">Create&nbsp;Invoice</a>
                     </li>
                     <li>
                     	<a ng-href="#">Receipt&nbsp;Funds</a>
@@ -91,7 +91,7 @@
                     	<a ng-href="#">Approve&nbsp;Timesheets</a>
                     </li>
                     <li>
-                    	<a ui-sref="app.payroll.runPayroll">Run&nbsp;Payroll</a>
+                    	<a style="cursor:pointer" ng-click="openRunPayroll()">Run&nbsp;Payroll</a>
                     </li>
                     <li>
                     	<a ng-href="#">NET&nbsp;Pay&nbsp;reports</a>

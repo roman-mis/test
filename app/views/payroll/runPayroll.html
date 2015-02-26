@@ -2,7 +2,7 @@
     <div class="runPayroll-header">
         <h4 class="runPayroll-header-title " id="myModalLabel">Run Payroll</h4>
     </div>
-    <button ng-click="test()">log</button>
+    
     <div class="runPayroll-body">
         <form class="form-horizontal">
             <div class="row">
@@ -21,14 +21,13 @@
 						<label  class="col-xs-3 control-label">Agency</label>
 						<div class="col-xs-9">
 							<select ng-change="getPayrollRunWorker()" ng-model="agency.id" ng-options="option.agency._id as option.agency.name for option in payroll.agencies" class="form-control">
-								<option ng-selected="true">Select</option>
-							</select>
+                                <option ng-selected="true">Select</option>
+                            </select>
 						</div>
 					</div>
 				</div>
             </div>
 		</form>
-		{{}}
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped scroll">
@@ -42,11 +41,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="worker in candidates">
+                        <tr ng-repeat="worker in candidates track by $index">
                             <td class="text-center text-checkbox">
                                 <input ng-change="unselectHead()" ng-model="runPayroll.worker[$index]" type="checkbox" />
                             </td>
-                            <td class="ref">000007</td>
+                            <td class="ref">{{worker.candidateRef}}</td>
                             <td class="fullName">{{worker.firstName}} {{worker.lastName}}</td>
                         </tr>
 						
@@ -74,8 +73,8 @@
     </div>
 				
     <div class="runPayroll-footer">
-        <a ui-sref="app.payroll.home" class="btn">Cancel &#38; Return to Payroll Home</a>
-        <button ng-click="runPayroll" class="btn btn-primary">Run Payroll</button>
+        <a ng-click="close()" class="btn">Cancel &#38; Return to Payroll Home</a>
+        <button ng-click="runPayroll()" class="btn btn-primary">Run Payroll</button>
     </div>
 				
 </div><!-- /container -->

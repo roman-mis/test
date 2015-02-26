@@ -36,4 +36,3 @@ module.exports = function(){
 
  return controller;
 };
-

@@ -14,14 +14,14 @@ module.exports = function(mongoose) {
                 town: String,
                 country: String,
                 postcode: String,
-                telephone: String,
-                fax: String,
+                telephone: Number,
+                fax: Number,
                 email: String
             },
             accounts: {
-                vatNumber: String,
-                companyRegNo: String,
-                utrNumber: String,
+                vatNumber: Number,
+                companyRegNo: Number,
+                utrNumber: Number,
                 taxDistrictNo: String,
                 payeRef: String,
                 accountsOfficeRef: String
@@ -35,8 +35,8 @@ module.exports = function(mongoose) {
                 country: String,
                 postcode: String,
                 accountName: String,
-                accountNo: String,
-                sortCode: String,
+                accountNo: Number,
+                sortCode: Number,
                 payrollRef: String
             },
             defaults: {
