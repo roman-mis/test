@@ -74,9 +74,7 @@ module.exports=function(){
             var incomeTaxAdditionalRate = getStatutoryValue('incomeTaxAdditionalRate',system);
             
             var statutoryValuesOK = false;
-        
-            console.log(employersNiThreshold);
-            
+                    
             if(employersNiThreshold) {
                 if(employersNiRate) {
                     if(employeesNiRate) {
@@ -171,16 +169,19 @@ module.exports=function(){
 
                                    //region Get the PayrollWorkerYTD record
 
-                                   var payrollWorkerYTD;
+                               //    var payrollWorkerYTD;
 
-                                   db.PayrollWorkerYTD.findOne({ worker: worker._id },function(err,_payrollWorkerYTD) {
+                                   db.PayrollWorkerYTD.findOne({ worker: worker._id },function(err,payrollWorkerYTD) {
 
                                        if(!err) {
 
                                            log('Retreived Payroll YTD record');
 
-                                           payrollWorkerYTD = _payrollWorkerYTD;
-
+                                           payrollWorkerYTD = payrollWorkerYTD||new db.PayrollWorkerYTD( {
+                                               taxableEarnings: 0,
+                                               taxPaid: 0
+                                           });
+                                        
                                            // TODO - Change status to receipted
 
                                            log('Looking up Worker ID: ' + worker._id);
@@ -610,6 +611,11 @@ module.exports=function(){
                                                    log('Error retrieving timesheet records: ' + err);
                                                }
                                            });
+                                           payrollWorkerYTD.save(function(err,payrollWorkerYTD) {
+                                               if(err) {
+                                                   log('Error saving Payroll Worker YTD:' + err);
+                                               }
+                                           });
                                        }
                                        else {
                                            log('Error retrieving Payroll TYD record: ' + err);
@@ -641,16 +647,16 @@ module.exports=function(){
         
         function getStatutoryValue(name,system) {
             
-            log('Looking for Statutory Value: ' + name);
+        //    log('Looking for Statutory Value: ' + name);
             
             var currentDate = new Date();
             var returnValue;
             if(system.statutoryTables[name]){
                system.statutoryTables[name].forEach(function(_value){
-                   console.log(_value);
+              //     console.log(_value);
                    
                    if(currentDate >= _value.validFrom && currentDate <= _value.validTo) {
-                       log('Found it!');
+                //       log('Found it!');
                        returnValue = _value;
                        return false;
                    }
@@ -658,7 +664,7 @@ module.exports=function(){
                return returnValue;
             } 
             else {
-                log('Cannot find this value!');
+                //log('Cannot find this value!');
                 return;
             }
         }
