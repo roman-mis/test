@@ -13,7 +13,7 @@ describe('taskservice',function(){
 	
 	//declaration for mocks and test data
 	var taskService, dbMock, candidateCommonMock;
-	var  taskSaveStub,historySaveStub;
+	var  taskSaveStub,historySaveStub, fakes;
 
 	//before function is called for each test suite inside this test suite
 	before(function(){
@@ -34,6 +34,7 @@ describe('taskservice',function(){
 		mockery.registerMock('./candidatecommonservice',function(){ return candidateCommonMock});
 
 		taskService=require('../../../server/services/taskservice')(dbMock);
+		//getUserStub=sinon.stub(candidateCommonMock,'getUser');	
 		
 	});	
 
@@ -43,12 +44,21 @@ describe('taskservice',function(){
 	
 	beforeEach(function () {
         sinon.stub(process, 'nextTick').yields();
+	fakes = sinon.collection;
+	//console.log("fakes are..");
+	//console.log(fakes);
    	 });
 
    	 afterEach(function () {
+	 //console.log("after fakes are...");
+	 //console.log(fakes);
+	 fakes.restore();
+	 //sinon.stub.restore();
         process.nextTick.restore();
     	});
-	
+	//it('should restore stubs', function(){
+	//	getUserStub=fakes.stub(candidateCommonMock, 'getUser');
+	//});
 	describe('#getTaskDetails', function(){
 		var tasks,taskFindStub,taskQueryMock,userId;
 		
@@ -101,7 +111,7 @@ describe('taskservice',function(){
 
 	describe('#postTaskDetails', function(){
 		var x, userId, tasks, historyDetails;
-		var getUserStub, taskDetails;	
+		var postGetUserStub, taskDetails;	
 		before(function(){
 			userId='5556fafabasdfaszy55';
 			//lets create some test data to be used later on
@@ -115,14 +125,14 @@ describe('taskservice',function(){
 			dbMock.Task=testHelpers.getTaskModelMock();
 			dbMock.History=testHelpers.getHistoryModelMock();
 
-			getUserStub=sinon.stub(candidateCommonMock,'getUser');
-			taskSaveStub=sinon.stub(dbMock.Task.prototype,'save');
-			historySaveStub=sinon.stub(dbMock.History.prototype,'save');
+			postGetUserStub=fakes.stub(candidateCommonMock,'getUser');
+			taskSaveStub=fakes.stub(dbMock.Task.prototype,'save');
+			historySaveStub=fakes.stub(dbMock.History.prototype,'save');
 
 		});
 		
 		beforeEach(function(){
-			getUserStub.reset();
+			postGetUserStub.reset();
 			taskSaveStub.reset();
 			historySaveStub.reset();
 			//taskSaveStub={save:function(){}};
@@ -130,7 +140,7 @@ describe('taskservice',function(){
 		});
 		it('should save the task and create history', function(done){
 			var dummyUser=testHelpers.getDummyUser();
-			getUserStub.returns(dummyUser);
+			postGetUserStub.returns(dummyUser);
 			taskSaveStub.yields(null,taskDetails);
 			historySaveStub.yields(null,historyDetails);
 			//var a=Q.all();
@@ -138,7 +148,7 @@ describe('taskservice',function(){
 			var d=Q.defer();
 			var p=d.promise;
 
-			getUserStub.returns(p);
+			postGetUserStub.returns(p);
 			x = taskService.postTaskDetails(userId, taskDetails, historyDetails);
 			d.resolve(dummyUser);
 		
@@ -159,7 +169,7 @@ describe('taskservice',function(){
 
 		it('should not save the task if no user found', function(done){
 			var dummyUser=testHelpers.getDummyUser();
-			getUserStub.returns(dummyUser);
+			postGetUserStub.returns(dummyUser);
 			taskSaveStub.yields(null,taskDetails);
 			historySaveStub.yields(null,historyDetails);
 			//var a=Q.all();
@@ -167,7 +177,7 @@ describe('taskservice',function(){
 			var d=Q.defer();
 			var p=d.promise;
 
-			getUserStub.returns(p);
+			postGetUserStub.returns(p);
 			x = taskService.postTaskDetails(userId, taskDetails, historyDetails);
 			d.resolve(null);
 		
@@ -181,7 +191,134 @@ describe('taskservice',function(){
 		});
 		
 	});
+	
+	describe('#getCalllogDetails', function(){
+		var tasks,taskFindStub,taskQueryMock,userId;
+		var callLogFindStub, callLogQueryMock;	
+		before(function(){
+			userId='5556fafabasdfaszy55';
+			//lets create some test data to be used later on
+			tasks=[{assignee:'assignee',owner:'',user:'',agency:'',priority:'P',taskType:'TASK',status:'1',templateHtml:'template html',template:'templateid',templateTitle:'template title',followUpTaskDate:Date(),notifyMe:false,completedDate:Date(),taskCategory:'CAT1'},
+			{assignee:'assignee',owner:'',user:'',agency:'',priority:'P',taskType:'TASK',status:'1',templateHtml:'template html task 2',template:'templateid',templateTitle:'template title',followUpTaskDate:Date(),notifyMe:false,completedDate:Date(),taskCategory:'CAT1'}];
+			dbMock.Task=testHelpers.getTaskModelMock();
+			callLogFindStub=fakes.stub(dbMock.Task, 'find');
+			callLogQueryMock={exec:function(){}};
+			
 
+		});
+		
+		beforeEach(function(){
+			callLogFindStub.reset();
+			
+			callLogQueryMock={exec:function(){}};
+			
+		});
+		//test case
+		it('should result an array of tasks',function(done){
 
+			callLogFindStub.returns(callLogQueryMock);
+			callLogQueryMock.exec=function(cb){
+				
+				cb(null,tasks);
+				
+			};
+			
+			var p=taskService.getCalllogDetails(userId);
+			
+			p.then(function(allTasks){
+				
+				expect(allTasks).to.be.ok();
+				//add further tests here..
+				expect(allTasks).to.have.length(2);
+				done();
+			}).fail(function(err){
+				
+				done(err);
+			});
+			
+		
+		});
+	});
 
+	describe('#postCalllogDetails', function(){
+		var x, userId, tasks, taskDetails, historyDetails;
+		var callGetUserStub, postCalllogDetails;	
+		before(function(){
+			userId='5556fafabasdfaszy55';
+			//lets create some test data to be used later on
+			tasks=[{assignee:'assignee',owner:'',user:'',agency:'',priority:'P',taskType:'TASK',status:'1',templateHtml:'template html',template:'templateid',templateTitle:'template title',followUpTaskDate:Date(),notifyMe:false,completedDate:Date(),taskCategory:'CAT1'},
+			{assignee:'assignee',owner:'',user:'',agency:'',priority:'P',taskType:'TASK',status:'1',templateHtml:'template html task 2',template:'templateid',templateTitle:'template title',followUpTaskDate:Date(),notifyMe:false,completedDate:Date(),taskCategory:'CAT1'}];
+
+			taskDetails={'user':'54c6699cb50b1f740f5a7d30','assignee':'54c8ab3a409b43bc13170654','agency':'54c8bb4b27df08b003488587', 'priority':'2','taskType':'2','status':'2','templateHtml':'Payslip for  the candidate template body','template':'54c8f8a73b417dfc00ae9c9b', 'templateTitle':'Payslip Task template title','followUpTaskDate':'2015-01-04T18:15:00.000Z','notifyMe':true,'completedDate':null,'taskCategory':'CALL_LOG'};
+    		
+			historyDetails={ "eventType" : "CREATE_TASK","historyBy" :"54c6699cb50b1f740f5a7d30", "user" : "54c6699cb50b1f740f5a7d30","eventData" : null,"notes" : "DPA updated by ishwor m","eventDate" : "2015-01-28T14:59:04.611Z"};
+
+			dbMock.Task=testHelpers.getTaskModelMock();
+			dbMock.History=testHelpers.getHistoryModelMock();
+
+			callGetUserStub=fakes.stub(candidateCommonMock,'getUser');
+			taskSaveStub=fakes.stub(dbMock.Task.prototype,'save');
+			historySaveStub=fakes.stub(dbMock.History.prototype,'save');
+
+		});
+		
+		beforeEach(function(){
+			callGetUserStub.reset();
+			taskSaveStub.reset();
+			historySaveStub.reset();
+			//taskSaveStub={save:function(){}};
+			
+		});
+		it('should save the task and create history', function(done){
+			var dummyUser=testHelpers.getDummyUser();
+			callGetUserStub.returns(dummyUser);
+			taskSaveStub.yields(null,taskDetails);
+			historySaveStub.yields(null, historyDetails);
+
+			var d = Q.defer();
+			var p = d.promise;
+			var x;
+
+			callGetUserStub.returns(p);
+			x = taskService.postCalllogDetails(userId, taskDetails, historyDetails);
+			d.resolve(dummyUser);
+
+			x.then(function(returned){
+				expect(returned).to.be.ok();
+				expect(returned).to.have.property('user');
+				//expect(returned).to.have.length(2);
+				done();
+			}).fail(function(){
+				done();
+			});
+
+		//it('should reurn rejected promise...', function(done){
+		});
+
+		it('should not save the task if no user found', function(done){
+			var dummyUser=testHelpers.getDummyUser();
+			callGetUserStub.returns(dummyUser);
+			taskSaveStub.yields(null,taskDetails);
+			historySaveStub.yields(null,historyDetails);
+			//var a=Q.all();
+			//var p=Q.promise();
+			var d=Q.defer();
+			var p=d.promise;
+
+			callGetUserStub.returns(p);
+			x = taskService.postCalllogDetails(userId, taskDetails, historyDetails);
+			d.resolve(null);
+		
+			x.then(function(result){
+				
+				done('Should not resolve');
+			}).fail(function(err){
+				
+				done();
+			});
+		});
+
+	});
+
+	
 });			
