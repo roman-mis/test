@@ -11,16 +11,20 @@ header .row-header {
         align-items: center;
     }
     .header-logo-wrapper {
-        min-width: 210px;
-        height: 41px;
+        min-width: 168px;
+        height: 33px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
         img {
-            height: 41px;
-            max-height: 41px;
-            margin-top: -7px;
+            height: 33px;
+            max-height: 33px;
+            margin-right: 5px;
         }
         p {
             word-break: keep-all;
-            display: inline-block;
+            margin: 0;
         }
         @media (max-width: $grid-break) {
             margin-bottom: 5px;
@@ -28,32 +32,31 @@ header .row-header {
     }
     .header-inputs-wrapper {
         width: 100%;
-        max-width: 445px;
-        height: 41px;
+        max-width: 356px;
+        height: 33px;
         form.login-form {
             display: flex;
             flex-flow: row nowrap;
             justify-content: flex-end;
             input {
-                height: 40px;
+                height: 32px;
                 width: 100%;
             }
             .sign-in {
                 background-image: url(/images/signin.png);
                 background-size: 100% 100%;
-                width: 43px;
+                width: 34px;
             }
             .form-group:not(:last-child) {
                 width: 100%;
-                max-width: 440px;
+                max-width: 352px;
             }
-            .form-group:not(:last-child):not(:first-child) {
-                margin-left: 5px;
+            .form-group:not(:first-child) {
+                margin-left: 3px;
             }
             .form-group:last-child {
-                max-width: 43px;
-                min-width: 43px;
-                margin-left: 5px;
+                max-width: 34px;
+                min-width: 34px;
             }
         }
     }
@@ -63,16 +66,16 @@ header .row-header {
 .register-container {
     min-width: $min-width;
     box-sizing: border-box;
-    min-height: 475px;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 40px 50px;
-    border: solid 2px $body-border-color;
+    min-height: 380px;
+    max-width: 640px;
+    margin: 16px auto;
+    padding: 32px 40px;
+    border: solid 1px $body-border-color;
     background-color: $body-background-color;
     font-size: $font-size-base;
     font-family: $font-family-base;
     @media (max-width: $grid-break) {
-        padding: 35px 35px;
+        padding: 28px 28px;
     }
     .row {
         margin-left: 0;
@@ -80,27 +83,27 @@ header .row-header {
     }
     .form-header {
         .from-title {
-            border-bottom: solid 2px #808285;
+            border-bottom: solid 1px #808285;
             color: #279b59;
             font-size: $font-size-large;
-            margin-bottom: 12px;
-            padding-bottom: 3px;
+            margin-bottom: 10px;
+            padding-bottom: 2px;
         }
         color: #8dc044;
         font-size: $font-size-large;
         .wizard-status-bar {
-            $radius: 30px;
+            $radius: 24px;
             width: 100%;
             position: relative;
             .step {
                 position: absolute;
                 width: $radius;
                 height: $radius;
-                line-height: 26px;
+                line-height: 23px;
                 border-radius: $radius;
                 text-align: center;
                 background-color: #f0f1f2;
-                border: solid 2px #a6a8aa;
+                border: solid 1px #a6a8aa;
                 font-size: $font-size-base;
                 color: #808285;
             }
@@ -116,16 +119,16 @@ header .row-header {
                     position: absolute;
                     display: inline-block;
                     background: rgba(0, 0, 0, 0);
-                    border: solid 2px #f0f1f2;
+                    border: solid 1px #f0f1f2;
                     border-radius: $radius;
                 }
             }
             &::after {
                 content: " ";
                 top: 50%;
-                margin-left: 1%;
-                margin-top: -1px;
-                height: 2px;
+                margin-left: 1%; 
+                margin-top: 2px;
+                height: 1px;
                 display: inline-block;
                 width: 98%;
                 background-color: #a6a8aa;
@@ -154,7 +157,7 @@ header .row-header {
     }
     .form-body {
         color: #808285;
-        margin-top: 35px;
+        margin-top: 28px;
         display: flex;
         flex-flow: row nowrap;
         @media (max-width: $grid-break) {
@@ -176,11 +179,11 @@ header .row-header {
                 width: 100%;
                 text-align: center;
                 padding-left: 0;
-                margin-top: 35px;
+                margin-top: 28px;
             }
             .register-form {
                 display: inline-block;
-                max-width: 295px;
+                max-width: 236px;
                 width: 100%;
                 .form-group {
                     display: flex;
@@ -189,12 +192,31 @@ header .row-header {
                     align-items: center;
                     align-content: center;
                     text-align: left;
+                    div.select2.select2-container {
+                        height: 25px; 
+                        .select2-choice {
+                            height: 23px; 
+                            .select2-chosen {
+                                line-height: 23px;
+                                font-size: 14px; 
+                            }
+                        }
+                    }
                     .register_button {
                         text-align: left;
                     }
+                    .btn-default {
+                        height: 28px;
+                    }
+                    .orig-datepicker > ul.dropdown-menu {
+                        left: -58px !important;
+                        padding: 3px;
+                    }
+                    table {
+                        outline: 0;
+                    }
                 }
             }
-            .form-home {}
             .register-form.form-step5 {
                 .form-group {
                     flex-flow: row nowrap;
@@ -203,29 +225,29 @@ header .row-header {
                             cursor: pointer;
                         }
                         .input-group-addon {
-                            border: 2px solid #a6a4a2;
+                            border: 1px solid #a6a4a2;
                             border-left: 0;
                         }
                     }
                 }
                 .p45-buttons > div:first-child .btn {
-                    width: calc(100% - 3px);
-                    margin-right: 3px;
+                    width: calc(100% - 2px);
+                    margin-right: 2px;
                 }
                 .p45-buttons > div:last-child .btn {
-                    width: calc(100% - 3px);
-                    margin-left: 3px;
+                    width: calc(100% - 2px);
+                    margin-left: 2px;
                 }
                 .form-chech-header {
-                    margin-top: -15px;
+                    margin-top: -12px;
                 }
                 .form-checkbox {
                     justify-content: flex-start;
-                    margin: 12px 0;
+                    margin: 10px 0;
                     div.checkbox-wrapper {
                         margin: 0;
                         display: inline-block;
-                        height: 18px;
+                        height: 14px;
                         input {
                             margin: 0;
                         }
@@ -239,10 +261,7 @@ header .row-header {
         }
     }
     .form-bot-logo {
-        margin-top: 90px;
-        @media (max-width: $screen-sm) {
-            margin-top: 25px;
-        }
+        margin-top: 72px;
         @media (max-width: $grid-break) {
             margin-top: 0px;
         }
@@ -251,22 +270,23 @@ header .row-header {
     
     .register_button {
         display: block;
-        max-width: 300px;
+        max-width: 240px;
         width: 100%;
         display: flex;
         justify-content: center;
         .step1btn-img {
             float: left;
-            height: 45px; 
+            height: 36px; 
         }
         .step1btn {
             position: relative;
-            height: 45px;
-            max-width: 245px;
+            height: 36px;
+            max-width: 196px;
             width: 100%;
             border-radius: 0px;
             background-color: #818386;
-            font-size: $font-size-large;
+            font-size: $font-size-large - 2px;
+            line-height: 18px;
             color: #fff;
             border-width: 0px;
             float: left;
@@ -276,30 +296,27 @@ header .row-header {
                 position: absolute;
                 bottom: 0px;
                 left: 0px;
-                max-width: 245px;
+                max-width: 196px;
                 width: 100%;
-                height: 8px;
+                height: 6px;
                 background-color: #a7a9aa;
             }
         }
         .fa {
             color: #fff;
-            line-height: 45px;
+            line-height: 36px;
         }
         .fa-lg {
             vertical-align: 0;
-            line-height: 45px;
+            line-height: 36px;
         }
         .i-sq {
             position: relative;
             float: left;
             width: 50px;
-            height: 45px;
-            line-height: 45px;
+            height: 36px;
+            line-height: 36px;
             text-align: center;
-            @media (max-width: 355px) {
-                display: none;
-            }
         }
         .i-sq > i {
             position: relative;
@@ -318,34 +335,7 @@ header .row-header {
         }
         .reg {
             background: #8ec045;
-        }
-        @media (max-width: $screen-xs-max) {
-            width: 255px;
-            .step1btn {
-                max-width: 195px;
-                &::after {
-                    max-width: 195px;
-                }
-            }
-        }
-        @media (max-width: $grid-break) {
-            width: 300px;
-            .step1btn {
-                max-width: 245px;
-                &::after {
-                    max-width: 245px;
-                }
-            }
-        }
-        @media (max-width: 420px) {
-            width: 255px;
-            .step1btn {
-                font-size: 17px;
-                max-width: 185px;
-                &::after {
-                    max-width: 185px;
-                }
-            }
+            padding: 0;
         }
     }
     input[required] {
@@ -375,12 +365,12 @@ header .row-header {
         background-color: #cb270b;
     }
     input[type=checkbox] {
-        width: 18px;
-        height: 18px;
+        width: 14px;
+        height: 14px;
     }
     @media(max-width: $screen-sm-max) {
         .addtionalinfo-container {
-            padding-top: 18px;
+            padding-top: 14px;
             padding-left: 0;
             padding-right: 0;
             .left-content {
@@ -396,18 +386,19 @@ header .row-header {
     @media (min-width: $screen-md-min) {
         .addtionalinfo-container {
             position: relative;
-            top: -338px;
-            margin-bottom: -338px;
+            top: -248px; //-------
+            margin-bottom: -338px; //----------
             padding-left: 0px;
             .left-content {
-                padding: 14px 14px;
+                padding: 11px 11px;
                 background-color: #f0f1f3;
-                border: solid 4px #d4d4d4;
+                border: solid 1px #a6a4a2;
                 input[type=text], input[type=email], input[type=url], input[type=number] {
                     background-color: #fff;
                 }
                 .input-group-btn button {
                     background: #fff;
+                    height: 25px; 
                 }
                 .from-title {
                     margin-bottom: 0;
@@ -418,7 +409,7 @@ header .row-header {
             }
         }
         .addtionalinfo-container.postcodeerror {
-            top: -407px;
+            top: -407px; //---------------
         }
     }
     /*------confirm-----*/
@@ -427,10 +418,10 @@ header .row-header {
         background: #8dc044;
         color: #fff;
         display: inline-block;
-        width: 14px;
-        height: 14px;
-        line-height: 14px;
-        border-radius: 7px;
+        width: 11px;
+        height: 11px;
+        line-height: 11px;
+        border-radius: 6px;
         text-align: center;
     }
     .nav_button-wrapper {
@@ -439,30 +430,30 @@ header .row-header {
         .nav_button {
             display: inline-block;
             text-align: right;
-            margin-top: 10px;
+            margin-top: 8px;
             font-size: 0;
             width: 100%;
-            max-width: 295px;
+            max-width: 236px;
             a {
                 color: #fff;
-                width: 150px;
+                width: 120px;
                 display: inline-block;
             }
             .btn-prev {
                 background-color: #f08323;
-                width: calc(50% - 3px);
-                margin-right: 3px;
+                width: calc(50% - 2px);
+                margin-right: 2px;
             }
             .btn-next {
                 background-color: #8dc044;
-                width: calc(50% - 3px);
-                margin-left: 3px;
+                width: calc(50% - 2px);
+                margin-left: 2px;
             }
             .btn-submit {
                 background-color: #8dc044;
             }
             .indicatetext {
-                padding-top: 3px;
+                padding-top: 2px;
                 color: #8dc044;
                 font-size: $font-size-small;
             }
@@ -470,10 +461,15 @@ header .row-header {
         @media (max-width: $grid-break) {
             width: 100%;
             text-align: center;
+            padding-left: 0;
         }
     }
     .nav_image {
         padding-left: 0;
+        img {
+            width: 112px;
+            height: 44px; 
+        }
         @media (max-width: $grid-break) {
             display: none;
         }
