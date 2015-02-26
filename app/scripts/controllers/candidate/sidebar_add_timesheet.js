@@ -90,7 +90,8 @@ angular.module('origApp.controllers')
 	$scope.populateTable = function () {
 		$scope.addClicked = true;
 		$scope.tableInfo = {
-			elementType: $scope.saveRate.name,
+			elementType: $scope.saveRate._id,
+			elementName: $scope.saveRate.name,
 			description: $scope.userDescription,
 			units: $scope.elements.unit,
 			payRate: $scope.elements.payRate,
@@ -234,7 +235,6 @@ angular.module('origApp.controllers')
 		
 		HttpResource.model('timesheets').create(timesheet).post()
 		.then(function(response) {
-			console.log(response)
 			// if (HttpResource.flushError(response)) {
 			// 	}
 			
