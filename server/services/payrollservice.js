@@ -644,16 +644,18 @@ module.exports=function(){
             log('Looking for Statutory Value: ' + name);
             
             var currentDate = new Date();
-            
+            var returnValue;
             if(system.statutoryTables[name]){
                system.statutoryTables[name].forEach(function(_value){
                    console.log(_value);
                    
                    if(currentDate >= _value.validFrom && currentDate <= _value.validTo) {
                        log('Found it!');
-                       return _value;
+                       returnValue = _value;
+                       return false;
                    }
                });
+               return returnValue;
             } 
             else {
                 log('Cannot find this value!');
