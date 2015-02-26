@@ -7,6 +7,7 @@ module.exports = function(mongoose) {
     var schema = new BaseSchema({
         worker: { type:Schema.Types.ObjectId, ref:'User' },
         batch: { type:Schema.Types.ObjectId, ref:'TimesheetBatch' },
+        agency: { type:Schema.Types.ObjectId, ref:'Agency' },
         status: String, // submitted, preValidation, validated, invoiced, receipted, approved, payrolled
         payFrequency: String, // weekly, 2weekly etc.
         weekEndingDate: Date,

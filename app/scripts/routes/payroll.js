@@ -18,5 +18,6 @@ angular.module('origApp').config(function($stateProvider) {
   .state('app.payroll.runPayroll', {
     url: '/runPayroll',
     templateUrl: 'views/payroll/runPayroll.html',
+    controller: 'runPayrollController'
   });
 });
