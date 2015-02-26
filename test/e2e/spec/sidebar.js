@@ -28,39 +28,45 @@ var testModal=function(locator){
 };
 
 
-describe('Checking ONBOARDING', function() {
 
-  it('should open onboarding dialog', function () {
-
-    clickFirstVisible(by.css('[ng-click="openOnboardingWin()"]'),function(link){
-      link.click();
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-      $('.modal-content [ng-click="cancel()"]').click();
-      expect($('.modal-content').isPresent()).toBeFalsy();
-      link.click();
-    })
-  });
-  it('should save data', function () {
-    helper.selectSelector(element.all(by.model('data.agency')),1);
-    element(by.model('data.agencyName')).sendKeys('Agency name from test');
-
-    //helper.selectSelector(element.all(by.model('data.consultant')),1);
-    element(by.model('data.payeRate')).sendKeys('10');
-    element(by.model('data.outsourcedRate')).sendKeys('9');
-
-    helper.selectSelector(element.all(by.model('data.serviceUsed')),1);
-    browser.executeScript("document.getElementsByClassName('btn-primary')[0].click();");
-
-    browser.wait(function(){
-      return !$('.modal-content').isPresent();
-    },3000);
-    expect($('.modal-content').isPresent()).toBeFalsy();
-
-  });
-
-});
 
 /*
+ describe('Checking ONBOARDING', function() {
+
+ it('should open onboarding dialog', function () {
+
+ clickFirstVisible(by.css('[ng-click="openOnboardingWin()"]'),function(link){
+ link.click();
+ expect($('.modal-content').isDisplayed()).toBeTruthy();
+ $('.modal-content [ng-click="cancel()"]').click();
+ expect($('.modal-content').isPresent()).toBeFalsy();
+ link.click();
+ })
+ });
+ it('should save data', function () {
+ helper.selectSelector(element.all(by.model('data.agency')),1);
+ element(by.model('data.agencyName')).clear().sendKeys('Agency name from test');
+
+ //helper.selectSelector(element.all(by.model('data.consultant')),1);
+ element(by.model('data.payeRate')).clear().sendKeys('10');
+ element(by.model('data.outsourcedRate')).clear().sendKeys('9');
+
+ helper.selectSelector(element.all(by.model('data.serviceUsed')),1);
+ element.all(by.model('checked')).get(0).getAttribute('checked').then(function(str){
+ console.log(str);
+ if(!str){
+ element.all(by.model('checked')).get(0).click();
+ }
+ });
+
+ $('.modal-content [ng-click="save(true)"]').click();
+
+
+ expect($('.modal-content').isPresent()).toBeFalsy();
+
+ });
+
+ });
 
 describe('Checking Activity', function() {
 
@@ -394,8 +400,4 @@ describe('checking expense wizard', function() {
 
 */
 
-/*  DONT WORK
 
-
-
- */
