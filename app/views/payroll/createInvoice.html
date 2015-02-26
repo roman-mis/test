@@ -18,7 +18,7 @@
                                     <label class="col-xs-4 control-label">Select agency</label>
                                     <div class="col-xs-6 no-padding-left">
                                         <select class="form-control">
-                                            <option>Select</option>
+                                            <option ng-repeat="agency in agenciesWithTimesheets">{{agency}}</option>
                                         </select>
                                     </div>
                                 </div>
