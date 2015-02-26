@@ -21,7 +21,7 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		CompanyProfileService.getCompanyProfile().then(function(data){
 			if(data.companyProfile)
 				$scope.companyProfile = data.companyProfile;
-			docId = data._id;
+			docId = data.id;
 		});
 
 		$scope.save = function(){

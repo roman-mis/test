@@ -17,7 +17,7 @@ angular.module('origApp').config(function($stateProvider) {
 	})
 	.state('app.admin.company_profile', {
 		url: '/company_profile',
-		templateUrl: 'views/admin/company_profile/company_profile.html',
+		templateUrl: 'views/admin/company_profile/index.html',
 		controller: 'companyProfileController'
 	})
 	.state('app.admin.company_profile.contact', {
@@ -43,5 +43,10 @@ angular.module('origApp').config(function($stateProvider) {
     	url: '/add_new/:type',
     	controller:'addNewController',
     	templateUrl: 'views/admin/newTemplate.html'
+  	})
+  	.state('app.admin.statutoryRates', {
+    	url: '/statutory_rates',
+    	controller:'statutoryRatesController',
+    	templateUrl: 'views/admin/statutory_rates/index.html'
   	});
 });
