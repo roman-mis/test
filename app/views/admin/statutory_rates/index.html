@@ -7,7 +7,7 @@
                         <tr>
                             <th>Type</th>
                             <th>Amount</th>
-                            <th>Other Fields</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -15,9 +15,8 @@
                         <span ng-show="statutoryRates.nmw">
                             <tr ng-repeat="elem in statutoryRates.nmw">
                                 <td>NMW</td>
-                                <td>£{{elem.amount}}</td>
+                                <td>-</td>
                                 <td>
-                                    <span ng-show="elem.ageLower || elem.ageUpper"> Age: {{elem.ageLower}} - {{elem.ageUpper}} </span>
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -28,7 +27,6 @@
                                 <td>Employees NI main rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <span ng-show="elem.lowerThreshold"> Lower Threshold (£{{elem.lowerThreshold}}) & Upper Threshold (£{{elem.upperThreshold}}) </span>
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -59,7 +57,6 @@
                                 <td>Employees NI high earner rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <span ng-show="elem.lowerThreshold"> Lower Threshold (£{{elem.lowerThreshold}}) </span>
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -131,7 +128,6 @@
                                 <td>SSP Rate</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                    <span ng-show="elem.length"> Length: {{elem.length}} Weeks max </span>
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -142,7 +138,6 @@
                                 <td>SMP Rate</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                <span ng-show="elem.length"> Length: {{elem.length}} Weeks max </span>
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -154,7 +149,6 @@
                                 <td>£{{elem.amount}}</td>
                                 </td>
                                 <td>
-                                <span ng-show="elem.length"> Length: {{elem.length}} Weeks max </span>
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -165,7 +159,6 @@
                                 <td>Work patterns</td>
                                 <td></td>
                                 <td>
-                                    <!-- <span ng-show="elem."> {{elem.length}} </span> -->
                                     <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
@@ -173,10 +166,6 @@
 
                     </tbody>
                 </table>
-            </div>
-            <div class="col-sm-12 text-right">
-                <a href="#" class="btn">Cancel</a>
-                <button class="btn btn-primary"><i class="fa fa-save"></i> &nbsp; Save</button>
             </div>
         </div>
     </div><!-- /wrapper-tabs -->
