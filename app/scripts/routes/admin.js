@@ -43,5 +43,15 @@ angular.module("origApp").config(function($stateProvider) {
     	url: '/add_new/:type',
     	controller:'addNewController',
     	templateUrl: 'views/admin/newTemplate.html'
+  	})
+  	.state('app.admin.Import&Export', {
+    	url: '/import&export',
+    	controller:'importExportController',
+    	templateUrl: 'views/admin/importExport.html'
+  	})
+  	.state('app.admin.addNewImEx', {
+    	url: '/addNewImEx/:type',
+    	controller:'addNewImExTemplatesController',
+    	templateUrl: 'views/admin/addNewImExTemplates.html'
   	});
 });

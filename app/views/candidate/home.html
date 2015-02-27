@@ -1,1 +1,5 @@
 <h3>Home</h3>
+
+<div ng-repeat='item in payrollProduct'>
+	<span ><a style="color:green;margin:20px;font-weight: bold" ui-sref="app.agency.home({agencyId:item.agency._id})">{{item.agency.name}}</a></span>
+</div>
