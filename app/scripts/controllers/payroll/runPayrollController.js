@@ -69,7 +69,8 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 	}
 
 	$scope.runPayroll = function(){
-		var runParollWorkers = {workers : []};
+		var runParollWorkers = {workers : [],
+			weekNo:'fourWeekly'};
 		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
 			if($scope.runPayroll.worker[i]){
 				runParollWorkers.workers.push({_id: $scope.candidates[i]._id});
