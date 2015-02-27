@@ -13,8 +13,8 @@ angular.module('origApp.services')
     }
     else {
       acAPI.query({}, function(data) {
-        if(data.data.objects.length > 0){
-          companyProfile = data.data.objects[0];
+        if(data.data.companyProfile){
+          companyProfile = data.data;
           d.resolve(companyProfile);
         }
         else 

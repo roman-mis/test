@@ -3,28 +3,28 @@ var app = angular.module('origApp.controllers');
 app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll',
 	function($state,$rootScope,$scope,HttpResource,ModalService,$http,payroll){	
 		console.log('hello');
-	$scope.payroll = {};
-	$scope.allPayrolls = [];
-	$scope.agencyIndex = -1;
-	$scope.comparingList = [];
+       $scope.payroll = {};
+       $scope.allPayrolls = [];
+       $scope.agencyIndex = -1;
+       $scope.comparingList = [];
 
-	$scope.periodTypeValues = ['weekly', 'twoWeekly', 'fourWeekly', 'monthly'];
+       $scope.periodTypeValues = ['weekly', 'twoWeekly', 'fourWeekly', 'monthly'];
 
-    $scope.periodTypeValues = [{
-            code:"weekly",
-            description:"Weekly"
-        },{
-            code:"twoWeekly",
-            description:"Bi-Weekly"
-        },{
-            code:"fourWeekly",
-            description:"4 Weekly"
-        },{
-            code:"monthly",
-            description:"Monthly"
-        }];
-	
-	$scope.periodType = 'weekly'
+       $scope.periodTypeValues = [{
+        code:"weekly",
+        description:"Weekly"
+    },{
+        code:"twoWeekly",
+        description:"Bi-Weekly"
+    },{
+        code:"fourWeekly",
+        description:"4 Weekly"
+    },{
+        code:"monthly",
+        description:"Monthly"
+    }];
+
+    $scope.periodType = 'weekly'
 	// $scope.pay = {frequency:''}
 	// $scope.agency = {id:''}
 	
@@ -34,10 +34,10 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           parentScope: $scope,
           controller: 'runPayrollController',
           size: 'lg'
-        });
+      });
     }
 
-	$scope.camelCaseFormate = function(s){
+    $scope.camelCaseFormate = function(s){
     	var ar = s.split(' ');
     	s = '';
     	for(var i = 0; i< ar.length; i++){
@@ -45,11 +45,11 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     		if(i === 0){
     			arr[0] = arr[0].toLowerCase();
     		}else{
-				arr[0] = arr[0].toUpperCase();
-    		}
-    		s = s+ arr.join('');
-    	}
-    	return s;
+                arr[0] = arr[0].toUpperCase();
+            }
+            s = s+ arr.join('');
+        }
+        return s;
     }
 
     $scope.unCamelCaseFormate = function(s){
@@ -70,16 +70,16 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     $scope.getPayroll = function(periodType){
         periodType = periodType || 'weekly';
         console.log(periodType)
-    	$scope.periodType = periodType;
-    	var params={periodType:periodType,isCurrent:true};
-    	console.log(params);
+        $scope.periodType = periodType;
+        var params={periodType:periodType,isCurrent:true};
+        console.log(params);
 
-    	HttpResource.model('payroll').query(params,function(data){
-	      	console.log('done !!');
+        HttpResource.model('payroll').query(params,function(data){
+            console.log('done !!');
             $scope.payroll =  data.data.objects[0];
-	        payroll.details =  data.data.objects[0];
-	    	console.log(payroll);
-		});
+            payroll.details =  data.data.objects[0];
+            console.log(payroll);
+        });
     }
     $scope.getPayroll();
 
@@ -89,49 +89,56 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     	var state = '';
     	switch(filter){
     		case 'Schedules Uploaded':
-    			state = 'scheduleReceived';
-    		break;
-    		
-    		case 'Validations Approved':
-    			state = 'validationReceived';
-    		break;
-    		
-    		case 'Invoices sent':
-    			state = 'invoiceSent';
-    		break;
-    		
-    		case 'Invoices Receipted':
-    			state = 'invoiceRaised';
-    		break;
+         state = 'scheduleReceived';
+         break;
 
-    		case 'Awaiting Payroll':
-    			state = 'moneyReceived';
-    		break;
-    		
-    		case 'Number of Payrolls Unpaid':
-    			state = 'paymentConfirmed';
-    		break;
-    	}
-    	for(var i = 0; i < $scope.payroll.agencies.length; i++){
-    		if($scope.payroll.agencies[i][state]){
-    			$scope.agencyList.push($scope.payroll.agencies[i].agency.name);
-    			console.log($scope.agencyList);
-    		}
-    	}    	
+         case 'Validations Approved':
+         state = 'validationReceived';
+         break;
+
+         case 'Invoices sent':
+         state = 'invoiceSent';
+         break;
+
+         case 'Invoices Receipted':
+         state = 'invoiceRaised';
+         break;
+
+         case 'Awaiting Payroll':
+         state = 'moneyReceived';
+         break;
+
+         case 'Number of Payrolls Unpaid':
+         state = 'paymentConfirmed';
+         break;
+     }
+     for(var i = 0; i < $scope.payroll.agencies.length; i++){
+      if($scope.payroll.agencies[i][state]){
+         $scope.agencyList.push($scope.payroll.agencies[i].agency.name);
+         console.log($scope.agencyList);
+     }
+ }    	
 
     	// ModalService.open({
      //          templateUrl: 'views/partials/agencyList.html',
      //          inputs: $scope.agencyList,
      //          size: 'sm'
      //        });
+}
+
+    $scope.viewAction = function(){
+      $state.go('app.payroll.viewAll')		
     }
-	
-	$scope.viewAction = function(){
-		$state.go('app.payroll.viewAll')		
-	}
 
-	
-
+    
+    $scope.createInvoice = function () {
+        ModalService.open({
+          templateUrl: 'views/payroll/createInvoice.html',
+          parentScope: $scope,
+          controller: 'createInvoiceController',
+          size:'lg'
+      });
+    }
 }]);
 
 
