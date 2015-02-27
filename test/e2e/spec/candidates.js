@@ -12,39 +12,9 @@ var checkTabUrl = function (path) {
 };
 
 
-describe('Navigate to candidates url', function () {
-
-  it('should navigate to page with login options ', function () {
-    browser.get('/candidates');
-  });
-
-  it('should have working search engine', function () {
-    var items = element.all(by.repeater('row in options.data'));
-    var initCount = items.count();
-
-    var searchInput = element(by.model('filterFirstName'));
-    searchInput.sendKeys(loginData.userName);
-
-    expect(items.count()).toBeGreaterThan(0);
-    expect(items.count()).toBeLessThan(initCount);
-
-  });
-
-  it('should take to tabs', function () {
-    element(by.repeater('row in options.data').row(0)).element(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).click()
-
-    browser.wait(function () {
-      return browser.getCurrentUrl().then(function (url) {
-        return (url.match(/candidates\/.{24}/g));
-      });
-    }, 3000);
-
-  });
-});
 
 
-
-describe('navigate to users tabs', function () {
+describe('Navigate to users tabs', function () {
 
   it('check if tabs working', function () {
 
@@ -52,7 +22,7 @@ describe('navigate to users tabs', function () {
 
 
     expect(tabs.get(0).getText()).toBe('Home');
-    links.get(0).click();
+ //   links.get(0).click();
     expect(tabs.get(0).getAttribute('class')).toContain('active');
     checkTabUrl('');
 
