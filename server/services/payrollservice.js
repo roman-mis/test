@@ -123,7 +123,9 @@ module.exports=function(){
             }
             
             if(statutoryValuesOK) {
-
+                console.log(req.body.weekNo);
+                console.log('------------------------------------------------------------');
+                console.log(req.body);
                 db.Payroll.findOne({ isCurrent: true, weekNo: req.body.weekNo },function(err,payroll) {
 
                     if(!err) {
