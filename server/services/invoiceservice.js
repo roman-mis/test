@@ -183,7 +183,7 @@ module.exports=function(){
 										return Q.nfcall(invoiceModel.save.bind(invoiceModel))
 										.then(function(){
 											var invoiceModels = [];
-											invoiceModels.push(invoiceModel); console.log(invoiceModels);
+											invoiceModels.push(invoiceModel);
 											resolve(invoiceModels);
 										},reject);
 									}, reject);
@@ -207,7 +207,7 @@ module.exports=function(){
 									return Q.nfcall(invoiceModel.save.bind(invoiceModel))
 									.then(function(){
 										var invoiceModels = [];
-										invoiceModels.push(invoiceModel); console.log(invoiceModels);
+										invoiceModels.push(invoiceModel);
 										resolve(invoiceModels);
 									},reject);
 								}
