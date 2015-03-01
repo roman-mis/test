@@ -223,7 +223,7 @@ angular.module('origApp.controllers')
 		var timesheet = {
 			agency: $scope.saveAgency.agency._id,
 			worker: $scope.candidate._id,
-			weekEndingDate: $scope.weekEndingDate,
+			weekEndingDate: $scope.weekEndingDate.object,
 			status: 'submitted',
 			net:$scope.net,
 			vat: $scope.totalVat,
@@ -240,11 +240,19 @@ angular.module('origApp.controllers')
 			
 			
 		});
+		HttpResource.model('timesheets').query({}, function  (res) {
+			
+			console.log(res);
+			
+		})
 		$modalInstance.close();
 	};
 
 
-
+	$scope.logDis = function () {
+		// body...
+		console.log($scope.weekEndingDate.object)
+	}
 
 	$scope.cancel = function() {
 		if (!confirm('Are you sure you want to cancel?')) {
