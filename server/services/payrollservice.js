@@ -50,7 +50,7 @@ module.exports=function(){
 		return Q.nfcall(q.exec.bind(q));
 	};
     
-    service.runPayroll=function(req) {
+    service.runPayroll=function(payrollRequest) {
         var logs=[];    
         log('Starting a payroll run!',logs);
         
@@ -124,19 +124,19 @@ module.exports=function(){
               }
               
               if(statutoryValuesOK) {
-                  console.log(req.body.payFrequency);
+                  console.log(payrollRequest.payFrequency);
                   console.log('------------------------------------------------------------');
-                  console.log(req.body);
-                  req.body.payFrequency='weekly';
-                  return db.Payroll.findOne({ isCurrent: true, periodType: req.body.payFrequency }).exec()
+                  console.log(payrollRequest);
+                  // payrollRequest.payFrequency='weekly';
+                  return db.Payroll.findOne({ isCurrent: true, periodType: payrollRequest.payFrequency }).exec()
                   .then(function(payroll) {
 
                       if(payroll) {
 
                           log('Retrieved payroll record',logs);
-                          var promises=Q(true);
+                          var promises= new Q(true);
 
-                          req.body.workers.forEach(function(worker){
+                          payrollRequest.workers.forEach(function(worker){
 
                              
                              promises=promises.then(function(){
@@ -171,7 +171,7 @@ module.exports=function(){
                                          log('NMW: ' + nmw,logs);
                                          return db.PayrollWorkerYTD.findOne({ worker: worker._id }).exec()
                                             .then(function(payrollWorkerYTD) {
-                                                if(payrollWorkerYTD){
+                                                
                                                     log('Retreived Payroll YTD record',logs);
 
                                                      payrollWorkerYTD = payrollWorkerYTD||new db.PayrollWorkerYTD( {
@@ -191,7 +191,7 @@ module.exports=function(){
 
                                                                
 
-                                                              var timesheetPromises=Q(true);
+                                                              var timesheetPromises= new Q(true);
 
                                                                 var totalHours = 0;
                                                                var totalPay = 0;
@@ -308,7 +308,9 @@ module.exports=function(){
                                                                            });
 
                                                                           log('saving timesheet',logs);
-                                                                          return true;//Q.nfcall(timesheet.save.bind(timesheet));
+                                                                          // throw {message:'just a test'};
+                                                                          // return true;
+                                                                          return Q.nfcall(timesheet.save.bind(timesheet));
                                                                     });
 
                                                                    //region Earnings
@@ -502,7 +504,9 @@ module.exports=function(){
 
                                                                            var taxInPeriod = 0,
                                                                                availableTaxFreeAllowanceIncThisWeek = 0,
-                                                                               earningsYTDsubjectToTax = 0;
+                                                                               earningsYTDsubjectToTax = 0,
+                                                                               higherTax = 0,
+                                                                               additionalTax = 0;
 
                                                                            switch(taxCode) {
                                                                                    case 'L':
@@ -521,7 +525,7 @@ module.exports=function(){
                                                                                    break;
                                                                                 case 'D0':
 
-                                                                                   var higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate;
+                                                                                   higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate;
                                                                                    log('Higher tax: ' + higherTax, logs);
 
                                                                                    taxInPeriod = higherTax-payrollWorkerYTD.taxPaid;
@@ -529,7 +533,7 @@ module.exports=function(){
                                                                                    break;
                                                                                 case 'D1':
 
-                                                                                   var additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate;
+                                                                                   additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate;
                                                                                    log('Additional tax: ' + additionalTax, logs);
 
                                                                                    taxInPeriod = additionalTax-payrollWorkerYTD.taxPaid;
@@ -571,13 +575,13 @@ module.exports=function(){
                                                                                    var higherRateUpperLimit = (earningsYTDsubjectToTax>higherRateYTD ? higherRateYTD : earningsYTDsubjectToTax);
                                                                                    log('Higher rate upper limit: ' + higherRateUpperLimit, logs);
 
-                                                                                   var higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate) : 0);
+                                                                                   higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate) : 0);
                                                                                    log('Higher tax: ' + higherTax, logs);
 
                                                                                    var additionalAmountToTax = (earningsYTDsubjectToTax>additionalRateYTD ? earningsYTDsubjectToTax-additionalRateYTD : 0);
                                                                                    log('Additional amount to tax: ' + additionalAmountToTax, logs);
 
-                                                                                   var additionalTax = additionalAmountToTax*incomeTaxAdditionalRate;
+                                                                                   additionalTax = additionalAmountToTax*incomeTaxAdditionalRate;
                                                                                    log('Additional tax: ' + additionalTax, logs);
 
                                                                                    var taxYTD = basicTax + higherTax + additionalTax;
@@ -604,7 +608,7 @@ module.exports=function(){
 
                                                                     
 //region Earnings
-                                                                });
+                                                                }, reject);
 
                                                               return timesheetPromises;
                                                           }
@@ -614,14 +618,12 @@ module.exports=function(){
                                                           }
 
                                                       }).then(function(){
-                                                           log('payrollworkerYTD saved');return true;//return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
+                                                           log('saving payrollworkerYTD');
+                                                           // return true;
+                                                           return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
                                                           
                                                       });
-                                                }
-                                                else{
-                                                    throw {name:'InvalidData',message:'Payroll Worker YTD not found'};
-                                                    // log('Payroll Worker YTD not found');
-                                                }
+                                                
                                             });
                                        }
                                        else{

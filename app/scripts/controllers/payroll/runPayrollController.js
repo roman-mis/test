@@ -4,10 +4,13 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 	function($rootScope,$scope,HttpResource,ModalService,$http,payroll,$modalInstance){
 		$scope.pay = {frequency:''}
 		$scope.agency = {id:''}
-		$scope.runPayroll = {};
+		$scope.p = {};
+		$scope.p.worker=[];
 		$scope.selection = {type: false};
 		$scope.agencyList = [];
 		$scope.PayFrequency = [];
+		$scope.firstStep = true;
+		$scope.secondStep = false;
 
 
 
@@ -23,9 +26,9 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 		console.log($scope.payroll);
 
 		    function initWorkerSelection(limit){
-    	$scope.runPayroll.worker=[];
+    	$scope.p.worker=[];
     	for(var i = 0; i < limit; i++){
-    		$scope.runPayroll.worker[i] = false;	
+    		$scope.p.worker[i] = false;	
     	}
     }
 
@@ -59,32 +62,47 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 	}
 
 	$scope.selectAll = function(){
-		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
-    		$scope.runPayroll.worker[i] = $scope.selection.type;	
+		for(var i = 0; i < $scope.p.worker.length; i++){
+    		$scope.p.worker[i] = $scope.selection.type;	
     	}
+	}
+
+	// $scope.closeModal = function() {
+
+ //    //  Manually hide the modal using bootstrap.
+ //    $element.modal('hide');
+
+ //    //  Now close as normal, but give 500ms for bootstrap to animate
+ //    close(null, 500);
+ //  };
+
+	$scope.close = function(){
+		$modalInstance.close();
 	}
 
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
-			weekNo:'fourWeekly'};
-		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
-			if($scope.runPayroll.worker[i]){
+			payFrequency:$scope.pay.frequency};
+			console.log($scope.pay.frequency)
+		for(var i = 0; i < $scope.p.worker.length; i++){
+			if($scope.p.worker[i]){
 				runParollWorkers.workers.push({_id: $scope.candidates[i]._id});
 			}
 		}
 		console.log(runParollWorkers)
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
-            console.log(response);
-          if (!HttpResource.flushError(response)) {
-          	console.log('donePosting');
-            console.log(response);
-            $modalInstance.close();
-          }
-        });
+	    if(!response.data.result){
+	    	$scope.response = response.data.logs;
+	    	console.log($scope.response);
+				$scope.firstStep = false;
+				$scope.secondStep = true;
+	    }else{
+	    	$scope.close();
+	    }
+    });
 	}
 
-	$scope.close = function(){
-		$modalInstance.dismiss('cancel');
-	}
+
+
 
 }]);	

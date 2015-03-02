@@ -1,68 +1,24 @@
-// header
 header .row-header {
-    color: #d6d7d8;
-    font-size: $font-size-base;
-    font-family: $font-family-base;
-    display: flex;
-    justify-content: space-between;
-    flex-flow: row nowrap;
-    @media (max-width: $grid-break) {
-        flex-flow: column wrap;
-        align-items: center;
-    }
-    .header-logo-wrapper {
-        min-width: 168px;
-        height: 33px;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        align-items: center;
-        img {
-            height: 33px;
-            max-height: 33px;
-            margin-right: 5px;
+    form.login-form {
+        .sign-in {
+            background-image: url(/images/signin.png);
+            background-size: 100% 100%;
+            width: 34px;
         }
-        p {
-            word-break: keep-all;
-            margin: 0;
+        .form-group:not(:last-child) {
+            width: 100%;
+            max-width: 352px;
         }
-        @media (max-width: $grid-break) {
-            margin-bottom: 5px;
+        .form-group:not(:first-child) {
+            margin-left: 3px;
         }
-    }
-    .header-inputs-wrapper {
-        width: 100%;
-        max-width: 356px;
-        height: 33px;
-        form.login-form {
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: flex-end;
-            input {
-                height: 32px;
-                width: 100%;
-            }
-            .sign-in {
-                background-image: url(/images/signin.png);
-                background-size: 100% 100%;
-                width: 34px;
-            }
-            .form-group:not(:last-child) {
-                width: 100%;
-                max-width: 352px;
-            }
-            .form-group:not(:first-child) {
-                margin-left: 3px;
-            }
-            .form-group:last-child {
-                max-width: 34px;
-                min-width: 34px;
-            }
+        .form-group:last-child {
+            max-width: 34px;
+            min-width: 34px;
         }
     }
 }
 
-//body
 .register-container {
     min-width: $min-width;
     box-sizing: border-box;
@@ -82,7 +38,7 @@ header .row-header {
         margin-right: 0;
     }
     .form-header {
-        .from-title {
+        .form-title {
             border-bottom: solid 1px #808285;
             color: #279b59;
             font-size: $font-size-large;
@@ -114,8 +70,8 @@ header .row-header {
                     content: " ";
                     width: 100%;
                     height: 100%;
-                    top: 0px;
-                    left: 0px;
+                    top: 0;
+                    left: 0;
                     position: absolute;
                     display: inline-block;
                     background: rgba(0, 0, 0, 0);
@@ -126,7 +82,7 @@ header .row-header {
             &::after {
                 content: " ";
                 top: 50%;
-                margin-left: 1%; 
+                margin-left: 1%;
                 margin-top: 2px;
                 height: 1px;
                 display: inline-block;
@@ -192,28 +148,11 @@ header .row-header {
                     align-items: center;
                     align-content: center;
                     text-align: left;
-                    div.select2.select2-container {
-                        height: 25px; 
-                        .select2-choice {
-                            height: 23px; 
-                            .select2-chosen {
-                                line-height: 23px;
-                                font-size: 14px; 
-                            }
-                        }
-                    }
                     .register_button {
                         text-align: left;
                     }
                     .btn-default {
                         height: 28px;
-                    }
-                    .orig-datepicker > ul.dropdown-menu {
-                        left: -58px !important;
-                        padding: 3px;
-                    }
-                    table {
-                        outline: 0;
                     }
                 }
             }
@@ -263,10 +202,10 @@ header .row-header {
     .form-bot-logo {
         margin-top: 72px;
         @media (max-width: $grid-break) {
-            margin-top: 0px;
+            margin-top: 0;
         }
     }
-    /*-------home-----------*/
+    /*Home*/
     
     .register_button {
         display: block;
@@ -276,26 +215,26 @@ header .row-header {
         justify-content: center;
         .step1btn-img {
             float: left;
-            height: 36px; 
+            height: 36px;
         }
         .step1btn {
             position: relative;
             height: 36px;
             max-width: 196px;
             width: 100%;
-            border-radius: 0px;
+            border-radius: 0;
             background-color: #818386;
             font-size: $font-size-large - 2px;
             line-height: 18px;
             color: #fff;
-            border-width: 0px;
+            border-width: 0;
             float: left;
             &::after {
                 content: "";
                 display: block;
                 position: absolute;
-                bottom: 0px;
-                left: 0px;
+                bottom: 0;
+                left: 0;
                 max-width: 196px;
                 width: 100%;
                 height: 6px;
@@ -348,13 +287,13 @@ header .row-header {
         color: #9fc968;
         font-size: $font-size-small;
     }
-    /*--------step2----------*/
+    /*Step 2*/
     
     .gender,
     .national {
         padding: 0;
     }
-    /*--------step5----------*/
+    /*Step 5*/
     
     .btn-yes {
         color: #fff;
@@ -374,7 +313,7 @@ header .row-header {
             padding-left: 0;
             padding-right: 0;
             .left-content {
-                .from-title {
+                .form-title {
                     margin-bottom: 0;
                 }
                 .comment {
@@ -386,9 +325,9 @@ header .row-header {
     @media (min-width: $screen-md-min) {
         .addtionalinfo-container {
             position: relative;
-            top: -248px; //-------
-            margin-bottom: -338px; //----------
-            padding-left: 0px;
+            top: -248px;
+            margin-bottom: -338px;
+            padding-left: 0;
             .left-content {
                 padding: 11px 11px;
                 background-color: #f0f1f3;
@@ -398,9 +337,9 @@ header .row-header {
                 }
                 .input-group-btn button {
                     background: #fff;
-                    height: 25px; 
+                    height: 25px;
                 }
-                .from-title {
+                .form-title {
                     margin-bottom: 0;
                 }
                 .comment {
@@ -409,21 +348,39 @@ header .row-header {
             }
         }
         .addtionalinfo-container.postcodeerror {
-            top: -407px; //---------------
+            top: -407px;
         }
     }
-    /*------confirm-----*/
+    /*Confirm*/
     
+    .form-confirm {
+        display: inline-block;
+        max-width: 236px;
+        text-align: left;
+        > .form-group {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            > span:last-child {
+                line-height: 18px;
+            }
+        }
+        .notice {
+            text-align: left;
+        }
+    }
     .accepterms-lastchar {
         background: #8dc044;
         color: #fff;
         display: inline-block;
-        width: 11px;
-        height: 11px;
-        line-height: 11px;
-        border-radius: 6px;
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+        border-radius: 50%;
         text-align: center;
     }
+    /*General*/
+    
     .nav_button-wrapper {
         text-align: right;
         padding-right: 0;
@@ -444,7 +401,8 @@ header .row-header {
                 width: calc(50% - 2px);
                 margin-right: 2px;
             }
-            .btn-next {
+            .btn-next,
+            .btn-submit {
                 background-color: #8dc044;
                 width: calc(50% - 2px);
                 margin-left: 2px;
@@ -468,7 +426,7 @@ header .row-header {
         padding-left: 0;
         img {
             width: 112px;
-            height: 44px; 
+            height: 44px;
         }
         @media (max-width: $grid-break) {
             display: none;

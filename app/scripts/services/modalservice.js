@@ -6,6 +6,7 @@ angular.module('origApp.services')
         var modalOptions = {
           templateUrl: options.templateUrl,
           controller: options.controller,
+          scope: options.scope,
           resolve: {
             parentScope: function() {
               return options.parentScope;

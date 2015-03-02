@@ -52,7 +52,8 @@ module.exports = function(){
 		};
     
         controller.runPayroll=function(req,res) {
-            payrollService.runPayroll(req)
+        	var payrollRequest=req.body;
+            payrollService.runPayroll(payrollRequest)
                 .then(function(result){
                     res.json(result);
                 },res.sendFailureResponse);
