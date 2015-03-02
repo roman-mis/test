@@ -3,8 +3,8 @@
 
 module.exports = function(){
 	var _=require('lodash'),
-		invoiceservice=require('../services/invoiceservice')(),
-		Q = require('q');
+		invoiceservice=require('../services/invoiceservice')();
+		// Q = require('q');
 
 	var controller={};
 		 

@@ -1,6 +1,6 @@
 'use strict';
 //var utils=require('../utils/utils');
-var Schema=require('mongoose').Schema;
+// var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose) {

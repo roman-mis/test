@@ -289,6 +289,7 @@ module.exports=service={
 		    		resolve(data);
 		    	}
 		    });
+		    console.log(response);
 		    // response.on('error',reject)
 		    // .on('httpDone',function(err){
 		    // 	resolve(response.createReadStream());	

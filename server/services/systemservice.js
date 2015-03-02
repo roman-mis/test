@@ -1,6 +1,10 @@
 'use strict';
 var Q=require('q');
 
+function saveSystemModel(systemModel){
+	return Q.nfcall(systemModel.save.bind(systemModel));
+}
+
 module.exports=function(dbs){
 	var db = dbs,
 		
@@ -198,6 +202,4 @@ module.exports=function(dbs){
 	return service;
 };
 
-function saveSystemModel(systemModel){
-	return Q.nfcall(systemModel.save.bind(systemModel));
-}
+
