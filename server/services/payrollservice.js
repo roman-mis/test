@@ -134,7 +134,7 @@ module.exports=function(){
                       if(payroll) {
 
                           log('Retrieved payroll record',logs);
-                          var promises=Q(true);
+                          var promises= new Q(true);
 
                           req.body.workers.forEach(function(worker){
 
@@ -191,7 +191,7 @@ module.exports=function(){
 
                                                                
 
-                                                              var timesheetPromises=Q(true);
+                                                              var timesheetPromises= new Q(true);
 
                                                                 var totalHours = 0;
                                                                var totalPay = 0;
@@ -503,7 +503,9 @@ module.exports=function(){
 
                                                                            var taxInPeriod = 0,
                                                                                availableTaxFreeAllowanceIncThisWeek = 0,
-                                                                               earningsYTDsubjectToTax = 0;
+                                                                               earningsYTDsubjectToTax = 0,
+                                                                               higherTax = 0,
+                                                                               additionalTax = 0;
 
                                                                            switch(taxCode) {
                                                                                    case 'L':
@@ -522,7 +524,7 @@ module.exports=function(){
                                                                                    break;
                                                                                 case 'D0':
 
-                                                                                   var higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate;
+                                                                                   higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate;
                                                                                    log('Higher tax: ' + higherTax, logs);
 
                                                                                    taxInPeriod = higherTax-payrollWorkerYTD.taxPaid;
@@ -530,7 +532,7 @@ module.exports=function(){
                                                                                    break;
                                                                                 case 'D1':
 
-                                                                                   var additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate;
+                                                                                   additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate;
                                                                                    log('Additional tax: ' + additionalTax, logs);
 
                                                                                    taxInPeriod = additionalTax-payrollWorkerYTD.taxPaid;
@@ -572,13 +574,13 @@ module.exports=function(){
                                                                                    var higherRateUpperLimit = (earningsYTDsubjectToTax>higherRateYTD ? higherRateYTD : earningsYTDsubjectToTax);
                                                                                    log('Higher rate upper limit: ' + higherRateUpperLimit, logs);
 
-                                                                                   var higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate) : 0);
+                                                                                   higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate) : 0);
                                                                                    log('Higher tax: ' + higherTax, logs);
 
                                                                                    var additionalAmountToTax = (earningsYTDsubjectToTax>additionalRateYTD ? earningsYTDsubjectToTax-additionalRateYTD : 0);
                                                                                    log('Additional amount to tax: ' + additionalAmountToTax, logs);
 
-                                                                                   var additionalTax = additionalAmountToTax*incomeTaxAdditionalRate;
+                                                                                   additionalTax = additionalAmountToTax*incomeTaxAdditionalRate;
                                                                                    log('Additional tax: ' + additionalTax, logs);
 
                                                                                    var taxYTD = basicTax + higherTax + additionalTax;
@@ -605,7 +607,7 @@ module.exports=function(){
 
                                                                     
 //region Earnings
-                                                                });
+                                                                }, reject);
 
                                                               return timesheetPromises;
                                                           }

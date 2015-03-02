@@ -3,7 +3,8 @@
 module.exports = function(){
 	var _=require('lodash'),
 		timesheetservice=require('../services/timesheetservice')(),
-		Q=require('q');
+		Q=require('q'),
+		utils=require('../utils/utils');
 
 	var controller = {};
 
@@ -106,52 +107,13 @@ module.exports = function(){
 			});
 	};
 
-
-	var fs = require('fs');
-	var sys = require('sys');
 	controller.uploadTimesheet = function(req, res){
-		// var objectName=req.query.fileName;
-		// console.log(objectName);
-		console.log(req.files.fileName);
-		var fileName = req.files.fileName;
+		var uploadedFile = req.files.file;
 
-		var csvData = parseCsvFile(fileName.path, function(rowData){
-			console.log(rowData);
+		utils.readCsvFromFile(uploadedFile.path).then(function(data){
+			res.json({result:false, objects: data});
 		});
-
-		res.json({result:true, object:csvData});
 	};
-
-	function parseCsvFile(fileName, callback){
-		var stream = fs.createReadStream(fileName);
-		var iteration = 0, header = [], buffer = '';
-		var pattern = /(?:^|,)("(?:[^"]+)*"|[^,]*)/g;
-		stream.addListener('data', function(data){
-			buffer+=data.toString();
-			var parts = buffer.split('\r\n');
-			parts.forEach(function(d, i){
-				if(i === parts.length-1){
-					return;
-				}
-				if(iteration++ === 0 && i === 0){
-					header = d.split(pattern);
-				}else{
-					callback(buildRecord(d));
-				}
-			});
-			buffer = parts[parts.length-1];
-		});
-
-		function buildRecord(str){
-			var record = {};
-			str.split(pattern).forEach(function(value, index){
-				if(header[index] !== ''){
-					record[header[index].toLowerCase()] = value.replace(/"/g, '');
-				}
-			});
-			return record;
-		}
-	}
 
 	return controller;
 };
