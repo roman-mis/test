@@ -50,7 +50,7 @@ module.exports=function(){
 		return Q.nfcall(q.exec.bind(q));
 	};
     
-    service.runPayroll=function(req) {
+    service.runPayroll=function(payrollRequest) {
         var logs=[];    
         log('Starting a payroll run!',logs);
         
@@ -124,11 +124,11 @@ module.exports=function(){
               }
               
               if(statutoryValuesOK) {
-                  console.log(req.body.payFrequency);
+                  console.log(payrollRequest.payFrequency);
                   console.log('------------------------------------------------------------');
-                  console.log(req.body);
-                  req.body.payFrequency='weekly';
-                  return db.Payroll.findOne({ isCurrent: true, periodType: req.body.payFrequency }).exec()
+                  console.log(payrollRequest);
+                  // payrollRequest.payFrequency='weekly';
+                  return db.Payroll.findOne({ isCurrent: true, periodType: payrollRequest.payFrequency }).exec()
                   .then(function(payroll) {
 
                       if(payroll) {
@@ -136,7 +136,7 @@ module.exports=function(){
                           log('Retrieved payroll record',logs);
                           var promises= new Q(true);
 
-                          req.body.workers.forEach(function(worker){
+                          payrollRequest.workers.forEach(function(worker){
 
                              
                              promises=promises.then(function(){
@@ -308,6 +308,7 @@ module.exports=function(){
                                                                            });
 
                                                                           log('saving timesheet',logs);
+                                                                          // throw {message:'just a test'};
                                                                           // return true;
                                                                           return Q.nfcall(timesheet.save.bind(timesheet));
                                                                     });
