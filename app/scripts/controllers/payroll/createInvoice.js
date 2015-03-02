@@ -64,6 +64,7 @@ angular.module('origApp.controllers')
 
 			$scope.agenciesWithTimesheets=uniq_fast(validAgencies);
 			$scope.agencies = [];
+			$scope.branches = [];
 			
 			for(var i = 0; i<$scope.agenciesWithTimesheets.length; ++i){
 				HttpResource.model('agencies/' + $scope.agenciesWithTimesheets[i])
@@ -71,6 +72,16 @@ angular.module('origApp.controllers')
 
 					$scope.agencies.push({name: res.data.object.name, id: res.data.object._id});
 					$scope.displayAgencies = $scope.agencies[0];
+					
+					$scope.branches.push(res.data.object.branches);
+					$scope.displayBranches = $scope.branches[0][name];
+					// $scope.branches = [];
+					// for(var i = 0; i<$scope.agencies.length; ++i){
+					// 	$scope.branches.push($scope.agencies[i].branches[i]);
+					 	
+					// }
+					
+					//console.log('agenciessss',$scope.displayBranches)
 				})
 			}
 
@@ -89,7 +100,8 @@ angular.module('origApp.controllers')
 				$scope.batchParams = {agency: $scope.displayAgencies.id};
 				$scope.batchParams = {
 					agency: newVal.id
-				}	
+				}
+				//$scope.displayBranches = $scope.displayAgencies[0].branches[0];
 				HttpResource.model('timesheetbatches')
 				.query($scope.batchParams, function (response) {
 
@@ -170,7 +182,8 @@ angular.module('origApp.controllers')
 
 				 	for (var i = 0; i < $scope.invoiceDesigns.length; i++) {
 				 		$scope.invoiceDesignArray.push($scope.invoiceDesigns[i]);
-				 		//if($scope.invoiceDesignArray[0]. == )
+				 		if($scope.invoiceDesignArray[0]._id == $scope.invoiceDesigns[i]._id)
+				 			$scope.invoiceDesignArray.splice(-1);
 				 	};/////////////////////////////heeeeeeeeeeeeeeeeeerrrrrrrrrre
 
 				 	$scope.invoiceDesignModel = $scope.invoiceDesignArray[0];
@@ -259,8 +272,8 @@ angular.module('origApp.controllers')
 						"agency":$scope.batchParams.agency,
 						"branch":null,
 						"timesheetBatch":$scope.batchId,
-						"date":"2015-01-02",
-						"dueDate":"2015-01-02",
+						// "date":"2015-01-02",
+						// "dueDate":"2015-01-02",
 						"companyDefaults":{
 											"holidayPayIncluded":$scope.holidayPayIncluded,
 											"employeeNiIncluded":$scope.employersNiIncluded,
@@ -281,7 +294,7 @@ angular.module('origApp.controllers')
 
 			console.log('postingggg')
 			
-		 	console.log('the saved invoice',invoice);
+		 	console.log('the saved invoice',response);
 		 	 	// console.log(response);
 		 	HttpResource.model('invoice').query({},function (res) {
 		 		console.log('getting all invoices check',res)
@@ -326,6 +339,7 @@ angular.module('origApp.controllers')
 		console.log('ptermzz',$scope.paymentTermsArray)
 		$scope.paymentTermsArray.splice(0,1);
 		console.log('ptermzz',$scope.paymentTermsArray)
+		console.log('agencies' , $scope.branches)
 		//console.log('margin',$scope.marginChargedToAgency)
 	}
 
