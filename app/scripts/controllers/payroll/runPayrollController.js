@@ -91,14 +91,14 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 		}
 		console.log(runParollWorkers)
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
-	    if(!response.data.result){
+	    // if(!response.data.result){
 	    	$scope.response = response.data.logs;
 	    	console.log($scope.response);
 				$scope.firstStep = false;
 				$scope.secondStep = true;
-	    }else{
-	    	$scope.close();
-	    }
+	    // }else{
+	    // 	$scope.close();
+	    // }
     });
 	}
 
