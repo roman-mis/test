@@ -995,3 +995,198 @@ th.rotate div {
 th.rotate div span {
     padding: 5px 10px;
 }
+
+@import url(http://fonts.googleapis.com/css?family=Questrial);
+body {
+    font-family: 'Questrial';
+}
+.modal::-webkit-scrollbar { 
+    display: none; 
+}
+.runPayroll-header {
+    min-height: 16.428571429px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.runPayroll-header-title {
+    margin: 0;
+    line-height: 1.428571429;
+}
+.runPayroll-body {
+    position: relative;
+    padding: 20px;
+}
+.runPayroll-footer {
+    padding: 19px 20px 20px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+select.form-control,
+input.form-control {
+    padding: 6px 2px;
+}
+.form-group {
+    margin-bottom: 8px;
+}
+.form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: left;
+    font-weight: normal;
+}
+.no-padding {
+    padding: 0;
+}
+table.scroll tbody {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;  
+  }
+table.scroll tbody,
+table.scroll thead {
+    display: block;
+  }
+table.scroll tbody tr,
+table.scroll thead tr {
+    width: 100%;
+    display: block;
+  }
+table.scroll thead tr th {
+    border-bottom: none;
+}
+table.scroll thead tr th,
+table.scroll tbody tr td {
+    display: inline-block;
+  }
+table.scroll thead tr th input[type="checkbox"],
+table.scroll tbody tr td input[type="checkbox"] {
+    margin: 0;
+}
+table.scroll thead tr th.ref,
+table.scroll tbody tr td.ref {
+    width: 45%;
+}
+table.scroll thead tr th.fullName,
+table.scroll tbody tr td.fullName {
+    width: 45%;
+}
+table.scroll thead tr th.text-checkbox,
+table.scroll tbody tr td.text-checkbox {
+    width: 8.2%;
+}
+
+@media screen and (max-width: 580px) {
+    table.scroll tbody, table.scroll thead {
+        display: table-row-group;
+    }
+    table.scroll tbody tr, table.scroll thead tr {
+        display: table-row;
+    }
+    table.scroll thead tr th, table.scroll tbody tr td {
+        display: table-cell;
+    }
+}
+
+@import url(http://fonts.googleapis.com/css?family=Questrial);
+body {
+    font-family: 'Questrial';
+}
+.modal::-webkit-scrollbar { 
+    display: none; 
+}
+.tab-pane {
+    padding: 10px 0;
+}
+.importExpensesh4 {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+table.scroll tbody {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;  
+  }
+table.scroll tbody,
+table.scroll thead {
+    display: block;
+  }
+table.scroll tbody tr,
+table.scroll thead tr {
+    width: 100%;
+    display: block;
+  }
+table.scroll thead tr th {
+    border-bottom: none;
+}
+table.scroll thead tr th,
+table.scroll tbody tr td {
+    display: inline-block;
+  }
+table.scroll thead tr th.name {
+    width: 38.7%;
+} 
+table.scroll tbody tr td.name {
+    width: 40%;
+}
+table.scroll thead tr th.icons {
+    width: 4.9%;
+    text-align: center;
+}
+table.scroll tbody tr td.icons {
+    width: 5%;
+}
+table.scroll thead tr th.lastEdited {
+    width: 21.3%;
+} 
+table.scroll tbody tr td.lastEdited {
+    width: 22%;
+}
+table.scroll thead tr th.created {
+    width: 19.4%;
+} 
+table.scroll tbody tr td.created {
+    width: 20%;
+}
+
+@media screen and (max-width: 580px) {
+    table.scroll tbody, table.scroll thead {
+        display: table-row-group;
+    }
+    table.scroll tbody tr, table.scroll thead tr {
+        display: table-row;
+    }
+    table.scroll thead tr th, table.scroll tbody tr td {
+        display: table-cell;
+    }
+}
+
+@import url(http://fonts.googleapis.com/css?family=Questrial);
+body {
+    font-family: 'Questrial'
+}
+.no-padding {
+    padding: 0;
+}
+.dragAndDropList {
+    list-style: none;   
+    padding-left: 0;
+    width:100%;
+}
+.dragAndDropList li {
+    color: #333;
+    background-color: #fff;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    cursor: move;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+     overflow:hidden;
+}
+.dragAndDropList li:hover {
+    color: #333;
+    background-color: #ebebeb;
+    border-color: #adadad;
+}

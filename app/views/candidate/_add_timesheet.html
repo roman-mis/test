@@ -1,4 +1,5 @@
 		<div class="modal-content add-tsh" >
+		<button ng-click="logDis()">logDis</button>
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
 			</div><!-- /modal-header -->
@@ -191,7 +192,7 @@
 
 						<div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
 							<a ng-click = "cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>    
-							<button  ng-disabled="addClicked == false" ng-click ="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
+							<button  ng-disabled="addClicked == false || weekEndingDate == null" ng-click ="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
 						</div>
 					</div>
 				</div><!-- /modal footer -->

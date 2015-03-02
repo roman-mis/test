@@ -6,7 +6,6 @@ var fs = require('fs');
 exports.config = {
 
   framework: 'jasmine2',
-
   seleniumAddress: 'http://localhost:4444/wd/hub',
   baseUrl: 'http://localhost:9000',
   capabilities: {
@@ -18,10 +17,10 @@ exports.config = {
     'browserName': 'chrome'
   }],*/
   suites: {
-    main:['./spec/login_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js','./spec/sidebar.js'],
+    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    remote:  ['./spec/login_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js','./spec/sidebar.js'],
-    dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/candidates.js','./spec/sidebar.js']
+    remote:  ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
+    dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js']
   },
 
   onPrepare: function () {
@@ -55,10 +54,13 @@ exports.config = {
     }
 
     var DisplayProcessor = require('./../../node_modules/jasmine-spec-reporter/src/display-processor');
+    var count=0;
     function screenshotProcessor(options) {}
+
     screenshotProcessor.prototype = new DisplayProcessor();
     screenshotProcessor.prototype.displayFailedSpec = function (spec, log) {
-      var path='test/e2e/screenshots/'+String(parseInt(new Date().getTime().toString().substr(-9,9)))+'.png';
+      count++;
+      var path='test/e2e/screenshots/screenshot-'+count+'.png';
       var url=browser.baseUrl+path;
       browser.takeScreenshot().then(function (png) {
         writeScreenShot(png,path);

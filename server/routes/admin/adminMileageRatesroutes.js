@@ -10,7 +10,7 @@ var express = require('express'),
 
 module.exports = function(app){
   app.use(
-        '/api/admin/mileagerates',
+        '/api/systems/mileagerates',
       restMiddleware(db),
       routeskipper(
           expressJwt({

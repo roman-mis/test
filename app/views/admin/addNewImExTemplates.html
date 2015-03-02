@@ -1,0 +1,42 @@
+<div class="content">
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="">
+            <div class="modal-content">
+			
+                <div class="modal-header">
+                    
+                        <label>Template Name </label>
+                        <input type="text" style="width:50%" ng-model="templateName"/>
+                        <button class="btn btn-default" ng-click="paste()" ><i style="color:green" class="fa fa-clipboard"></i></button>
+
+                </div>
+                    
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="optList" ng-options="opt as opt.label group by opt.group for opt in options"></select>
+                            
+                        </div>
+                        <div class="col-xs-1 no-padding">
+                             <button class="btn btn-primary form-control" ng-click="add(optList.label)"><i class="fa fa-plus"></i></button>
+                        </div>
+                        <div class="col-xs-5" >
+                             <ul class="dragAndDropList" ng-model="items"  ui-sortable="sortableOptions">
+                                <li ng-repeat="item in items track by $index">{{ item }} <a href="#" class="pull-right" ng-click="removeItem($index)"><i class="fa fa-close"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+                <div class="modal-footer">
+                    <button ng-click="close()" class="btn btn-default">Cancel</button>
+                    <button ng-click="saveNew()" class="btn btn-primary">Create Template</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

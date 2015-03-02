@@ -1,32 +1,23 @@
 var app = angular.module('origApp.controllers');
+app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','payroll',
+	function($state,$rootScope,$scope,HttpResource,ModalService,payroll){	
 
-app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll',
-	function($state,$rootScope,$scope,HttpResource,ModalService,$http,payroll){	
-		console.log('hello');
-       $scope.payroll = {};
-       $scope.allPayrolls = [];
-       $scope.agencyIndex = -1;
-       $scope.comparingList = [];
+   $scope.payroll = {};
+   $scope.allPayrolls = [];
+   $scope.agencyIndex = -1;
+   $scope.comparingList = [];
+   $scope.periodTypeValues = [];
+   $scope.periodType = 'weekly'
 
-       $scope.periodTypeValues = ['weekly', 'twoWeekly', 'fourWeekly', 'monthly'];
 
-       $scope.periodTypeValues = [{
-        code:"weekly",
-        description:"Weekly"
-    },{
-        code:"twoWeekly",
-        description:"Bi-Weekly"
-    },{
-        code:"fourWeekly",
-        description:"4 Weekly"
-    },{
-        code:"monthly",
-        description:"Monthly"
-    }];
+    HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
+        if(data.statusText === 'OK' ){
+            console.log('data');
+            console.log(data);
+            $scope.periodTypeValues = data.data;
+        }
+    });
 
-    $scope.periodType = 'weekly'
-	// $scope.pay = {frequency:''}
-	// $scope.agency = {id:''}
 	
     $scope.openRunPayroll = function(){
         ModalService.open({

@@ -98,6 +98,8 @@ module.exports = function(dbs){
     };
 
     controller.postAvatar=function (req,res){
+      //busboy has been removed. use multer instead
+      //should be changed to upload the avatar from client side by providing signed url instead
       //console.log(req.busboy);
       if(req.busboy){
         /////

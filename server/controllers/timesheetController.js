@@ -3,7 +3,8 @@
 module.exports = function(){
 	var _=require('lodash'),
 		timesheetservice=require('../services/timesheetservice')(),
-		Q=require('q');
+		Q=require('q'),
+		utils=require('../utils/utils');
 
 	var controller = {};
 
@@ -88,7 +89,7 @@ module.exports = function(){
 			});
 	};
 
-	controller.postTimesheet=function (req, res) {	
+	controller.postTimesheet = function (req, res) {	
 		var timesheet = req.body;		
 		timesheet.addedBy = req.user.id;
 		timesheet.dateAdded = new Date();
@@ -104,6 +105,14 @@ module.exports = function(){
 			},function(err){
 			 	res.sendFailureResponse(err);
 			});
+	};
+
+	controller.uploadTimesheet = function(req, res){
+		var uploadedFile = req.files.file;
+
+		utils.readCsvFromFile(uploadedFile.path).then(function(data){
+			res.json({result:false, objects: data});
+		});
 	};
 
 	return controller;
