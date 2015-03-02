@@ -652,6 +652,7 @@ module.exports=function(){
               
           })
           .then(function(){
+            logs.push('Success.......');
               resolve({result:true,logs:logs});
           },function(err){
             
