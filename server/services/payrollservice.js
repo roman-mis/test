@@ -395,7 +395,7 @@ module.exports=function(){
                                                                            log('Margin: ' + margin, logs);
                                                                            log('Expenses allowed: ' + totalExpenses, logs);
 
-                                                                           var payForTaxesAndNI = totalPay + totalHolidayPay + totalHolidayPayTaken + margin + totalExpenses;
+                                                                           var payForTaxesAndNI = totalPay - totalHolidayPay + totalHolidayPayTaken - margin - totalExpenses;
 
                                                                            log('Pay available for taxes and NI: ' + payForTaxesAndNI, logs);
 
