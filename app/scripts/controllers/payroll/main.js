@@ -25,7 +25,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           parentScope: $scope,
           controller: 'runPayrollController',
           size: 'lg'
-      });
+      })
     }
 
     $scope.camelCaseFormate = function(s){
