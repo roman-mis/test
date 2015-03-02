@@ -1,11 +1,11 @@
-<!-- <div class="container"> -->
+<!-- <div class="container"> --> 
 	<!-- Large modal -->
     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button> -->
     
     <!-- <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"> -->
       <!-- <div class="modal-dialog modal-lg"> -->
 			<div class="modal-content">
-			
+			<button ng-click="logMe()">logMe</button>
 				<div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Create Invoice</h4>
 				</div><!-- /modal-header -->
@@ -17,8 +17,8 @@
                                 <div class="form-group">
                                     <label class="col-xs-4 control-label">Select agency</label>
                                     <div class="col-xs-6 no-padding-left">
-                                        <select class="form-control">
-                                            <option ng-repeat="agency in agenciesWithTimesheets">{{agency}}</option>
+                                        <select ng-model = "displayAgencies" ng-options="agency.name for agency in agencies" class="form-control">
+                                            <!-- <option ng-click = "getBatch($index)" >{{agency}}</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -42,8 +42,14 @@
                             <div class="tableWrapper tableWrapperHeight140">
                                  <table class="table table-striped">
                                      <tbody>
+                                         <tr ng-click="clicked = true" ng-repeat="batch in timeBatches">
+                                             <td>
+                                             <a href ng-click="sendBatch(batch._id)" >{{batch._id}}</a>
+                                             </td>
+                                             <!-- <td>1000001</td> -->
+                                         </tr>
                                          <tr>
-                                             <td>Mon 10/11/2014</td>
+                                          <!--    <td>Mon 10/11/2014</td>
                                              <td>1000001</td>
                                          </tr>
                                          <tr>
@@ -77,11 +83,7 @@
                                          <tr>
                                              <td>Mon 10/11/2014</td>
                                              <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
+                                         </tr> -->
                                      </tbody>
                                 </table>
                             </div>
@@ -99,41 +101,49 @@
                                 <div class="form-group">
                                     <label class="col-xs-6 control-label">Holiday pay included</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select ng-model = "holidayPayIncluded"  class="form-control">
+                                            <option ng-show="select.$pristine" value="
+                                            {{holidayPayIncluded}}">{{holidayPayOption}}</option>
+                                            <option value="true" >Yes</option>
+                                            <option value="false" >No</option>
                                         </select>
                                     </div>
                                  </div>
                                  <div class="form-group">
                                     <label class="col-xs-6 control-label">Employers NI included</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select ng-model = "employersNiIncluded" class="form-control">
+                                            <option ng-show="select.$pristine" value="{{employersNiIncluded}}">{{employersNiOption}}</option>
+                                            <option value = "true">Yes</option>
+                                            <option value = "false">No</option>
                                         </select>
                                     </div>
                                  </div>
                                  <div class="form-group">
                                     <label class="col-xs-6 control-label">VAT charged</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select ng-model = "invoiceVatCharged" class="form-control">
+                                            <option ng-show="select.$pristine" value="{{invoiceVatCharged}}">{{invoiceVatOption}}</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
                                         </select>
                                     </div>
                                  </div>
                                  <div class="form-group">
                                     <label class="col-xs-6 control-label">Invoice design</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select ng-model = "invoiceDesignModel" ng-options = "item.name for item in invoiceDesignArray" class="form-control">
+                                           <!--  <option>Select</option> -->
                                         </select>
                                     </div>
                                  </div>
                                  <div class="form-group">
                                     <label class="col-xs-6 control-label">Margin amount</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
+                                        <!-- <select class="form-control">
                                             <option>Select</option>
-                                        </select>
+                                        </select> -->
+                                        <input ng-model = "marginAmount" type="number" class="form-control" placeholder = "{{marginAmount}}">
                                     </div>
                                  </div>
                             </div>
@@ -141,32 +151,34 @@
                             <div class="col-sm-12 col-md-6">
                                 <div class="form-group form-group-email">
                                     <label class="col-xs-6 control-label">Invoice email primary</label>
-                                    <div class="col-xs-6 control-label">mark@originem.co.uk</div>
+                                    <div class="col-xs-6 control-label">{{invoiceEmailPrimary}}</div>
                                 </div>
                                 <div class="form-group form-group-email">
                                     <label class="col-xs-6 control-label">Invoice email secondary</label>
-                                    <div class="col-xs-6 control-label">mark@originem.co.uk</div>
+                                    <div class="col-xs-6 control-label">{{invoiceEmailSecondary}}</div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-6 control-label">Payment terms</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select ng-model="paymentTermsModel" ng-options="item.description for item in paymentTermsArray" class="form-control">
+                                            <!-- <option>Select</option> -->
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-6 control-label">Margin charged to agency</label>
                                     <div class="col-xs-6">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select ng-model="marginChargedToAgency" class="form-control">
+                                            <option value="marginChargedToAgency" ng-show="select.$pristine">{{marginChargedToAgencyOption}}</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-6 control-label">Holiday amount</label>
                                     <div class="col-xs-6">
-                                        <input type="text" class="form-control" placeholder="12.5%"/>
+                                        <input ng-model = "holidayAmount" type="number" class="form-control" placeholder="{{holidayAmount}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -180,13 +192,13 @@
                                 <a href="#" type="button" class="btn pull-left">Cancel</a>
                             </div>
                              <div class="col-xs-6 no-padding-left">
-                                 <div class="checkbox footerCheckbox">
-                                     <small>Checked and confirmed the above details?
-                                     <input type="checkbox" style="margin-left:5px;"/></small>
+                                 <div>
+                                     Checked and confirmed the above details?
+                                     <input ng-model = "checkbox" type="checkbox" style="margin-left:5px;"/>
                                  </div>
                              </div>
                              <div class="col-xs-4 no-padding-left">
-                                 <a href="#" type="button" class="btn">Proceed and Generate&#160;<i class="fa fa-chevron-right"></i></a>
+                                 <a href ng-disabled="checkbox == false" ng-click="proceed(); invoiceOverview()" type="button" class="btn">Proceed and Generate&#160;<i class="fa fa-chevron-right"></i></a>
                             </div>
                         </div>
                   </div><!-- /modal footer -->
@@ -194,4 +206,4 @@
 		 	</div><!-- /modal content -->
 		<!-- </div>/modal-dialog -->
 	<!-- /modal -->
-<!-- /container -->
+<!-- /container

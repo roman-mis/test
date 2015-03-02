@@ -1,0 +1,73 @@
+<div class="modal-content">
+
+    <div class="modal-header"> 
+        <h4 class="modal-title">VAT</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#currentAndFuture" aria-controls="currentAndFuture" role="tab" data-toggle="tab">Current &#38; Future</a></li>
+                    <li role="presentation"><a href="#historic" aria-controls="historic" role="tab" data-toggle="tab">Historic</a></li>
+                </ul>
+                <!-- Tab panels -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="currentAndFuture">
+                        <div class="row form-group">
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" placeholder="Rate"/>
+                            </div>
+                            <div class="col-xs-4 no-padding-left">
+                                <div class="input-group date" id="datepickerFrom">
+                                    <input type="text" class="form-control" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 no-padding-left">
+                                <div class="input-group date" id="datepickerTo">
+                                    <input type="text" class="form-control" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-1 no-padding-left">
+                                <button class="btn btn-primary form-control"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Rate</th>
+                                    <th>Valid From</th>
+                                    <th>Valid To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="elem in data">
+                                    <td>{{elem.amount}}%</td>
+                                    <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
+                                    <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="text-right">
+                            <button ng-click="cancel()" class="btn btn-default">Cancel</button>
+                            <button ng-click="ok()" class="btn btn-primary" style="margin-left:12px;"><i class="fa fa-save"></i> &nbsp; Save</button>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="historic">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- /modal-body -->
+
+    <!-- <div class="modal-footer"> </div>  -->
+
+</div><!-- /modal content -->

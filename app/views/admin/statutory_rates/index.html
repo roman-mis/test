@@ -7,7 +7,7 @@
                         <tr>
                             <th>Type</th>
                             <th>Amount</th>
-                            <th>Other Fields</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -15,10 +15,9 @@
                         <span ng-show="statutoryRates.nmw">
                             <tr ng-repeat="elem in statutoryRates.nmw">
                                 <td>NMW</td>
-                                <td>£{{elem.amount}}</td>
+                                <td>-</td>
                                 <td>
-                                    <span ng-show="elem.ageLower || elem.ageUpper"> Age: {{elem.ageLower}} - {{elem.ageUpper}} </span>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('nmw')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -28,8 +27,7 @@
                                 <td>Employees NI main rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <span ng-show="elem.lowerThreshold"> Lower Threshold (£{{elem.lowerThreshold}}) & Upper Threshold (£{{elem.upperThreshold}}) </span>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('employeesNiRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -39,7 +37,7 @@
                                 <td>Employers NI threshold</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('employersNiThreshold')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -49,7 +47,7 @@
                                 <td>Employers NI rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('employersNiRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -59,8 +57,7 @@
                                 <td>Employees NI high earner rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <span ng-show="elem.lowerThreshold"> Lower Threshold (£{{elem.lowerThreshold}}) </span>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('employeesHighEarnerNiRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -71,7 +68,7 @@
                                 <td>Income Tax Higher Rate Threshold</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('incomeTaxHigherRateThreshold')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -81,7 +78,7 @@
                                 <td>Income Tax Additional Rate Threshold</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('incomeTaxAdditionalRateThreshold')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -91,7 +88,7 @@
                                 <td>Income Tax Basic Rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('incomeTaxBasicRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -101,17 +98,17 @@
                                 <td>Income Tax Higher Rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('incomeTaxHigherRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
                         
                         <span ng-show="statutoryRates.incomeTaxAdditionalRate">
                             <tr ng-repeat="elem in statutoryRates.incomeTaxAdditionalRate">
-                                <td>Income Tax Additional Rate Threshold</td>
+                                <td>Income Tax Additional Rate</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('incomeTaxAdditionalRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -121,7 +118,7 @@
                                 <td>VAT</td>
                                 <td>{{elem.amount}}%</td>
                                 <td>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('vat')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -131,8 +128,7 @@
                                 <td>SSP Rate</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                    <span ng-show="elem.length"> Length: {{elem.length}} Weeks max </span>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('sspRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -142,8 +138,7 @@
                                 <td>SMP Rate</td>
                                 <td>£{{elem.amount}}</td>
                                 <td>
-                                <span ng-show="elem.length"> Length: {{elem.length}} Weeks max </span>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('smpRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -154,8 +149,7 @@
                                 <td>£{{elem.amount}}</td>
                                 </td>
                                 <td>
-                                <span ng-show="elem.length"> Length: {{elem.length}} Weeks max </span>
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('sppRate')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
@@ -165,18 +159,13 @@
                                 <td>Work patterns</td>
                                 <td></td>
                                 <td>
-                                    <!-- <span ng-show="elem."> {{elem.length}} </span> -->
-                                    <a href="#" class="pull-right"><i class="fa fa-eye"></i></a>
+                                    <a href="" ng-click="openModal('workPatterns')" class="pull-right"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         </span>
 
                     </tbody>
                 </table>
-            </div>
-            <div class="col-sm-12 text-right">
-                <a href="#" class="btn">Cancel</a>
-                <button class="btn btn-primary"><i class="fa fa-save"></i> &nbsp; Save</button>
             </div>
         </div>
     </div><!-- /wrapper-tabs -->

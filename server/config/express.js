@@ -9,7 +9,7 @@ var glob = require('glob'),
     responseHandler=require('../middlewares/responsehandler'),
     urlhelper=require('../middlewares/urlhelper'),
     multer=require('multer');
-    var busboy=require('connect-busboy');
+    // var busboy=require('connect-busboy');
 
 
 module.exports = function(app){
@@ -19,7 +19,7 @@ module.exports = function(app){
   
   app.use(logger('dev'));
   
-  app.use(busboy());
+  // app.use(busboy());
   app.use(multer({ inMemory:true}));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
