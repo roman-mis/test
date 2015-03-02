@@ -55,7 +55,7 @@ module.exports = function(){
             payrollService.runPayroll(req)
                 .then(function(result){
                     res.json(result);
-                });
+                },res.sendFailureResponse);
         };
 
 		function getPayrollVm(payroll){

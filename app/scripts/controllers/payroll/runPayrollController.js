@@ -4,24 +4,20 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 	function($rootScope,$scope,HttpResource,ModalService,$http,payroll,$modalInstance){
 		$scope.pay = {frequency:''}
 		$scope.agency = {id:''}
-		$scope.runPayroll={};
+		$scope.runPayroll = {};
 		$scope.selection = {type: false};
 		$scope.agencyList = [];
+		$scope.PayFrequency = [];
 
-	
-		$scope.PayFrequency = [{
-			code:"weekly",
-			description:"Weekly"
-		},{
-			code:"2",
-			description:"Bi-Weekly"
-		},{
-			code:"3",
-			description:"4 Weekly"
-		},{
-			code:"4",
-			description:"Monthly"
-		}];
+
+
+    HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
+      if(data.statusText === 'OK' ){
+          console.log('data');
+          console.log(data);
+          $scope.PayFrequency = data.data;
+      }
+    });
 
 		$scope.payroll = payroll.details;
 		console.log($scope.payroll);
