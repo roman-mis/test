@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('createInvoiceController', ['$scope','$modalInstance','HttpResource', 'ModalService', 
-	function($scope, $modalInstance, HttpResource, ModalService){
+.controller('createInvoiceController', ['$scope','$modalInstance','HttpResource', 'ModalService', 'ConstantsResource',
+	function($scope, $modalInstance, HttpResource, ModalService, ConstantsResource){
 		
 		var params = {
 			agency: '54cbaea74732c9f41ebb16e7'
@@ -98,7 +98,8 @@ angular.module('origApp.controllers')
 				})
 				//console.log(batchParams.agency)
 
-
+				$scope.paymentTermsConstant = ConstantsResource.get('paymentterms');
+				$scope.invoiceDesigns = HttpResource.model('invoicedesigns').query({});
 				HttpResource.model('agencies/' + $scope.batchParams.agency + '/payroll')
 				 .query({},function (payrollResponse) {
 				 	$scope.payrollRes = payrollResponse.data;
@@ -166,7 +167,16 @@ angular.module('origApp.controllers')
 				 	$scope.invoiceDesignArray = [];
 				 	$scope.invoiceDesign = $scope.payroll.invoiceDesign;
 				 	$scope.invoiceDesignArray.push($scope.invoiceDesign)
+
+				 	for (var i = 0; i < $scope.invoiceDesigns.length; i++) {
+				 		$scope.invoiceDesignArray.push($scope.invoiceDesigns[i]);
+				 		//if($scope.invoiceDesignArray[0]. == )
+				 	};/////////////////////////////heeeeeeeeeeeeeeeeeerrrrrrrrrre
+
 				 	$scope.invoiceDesignModel = $scope.invoiceDesignArray[0];
+
+
+
 
 
 				 	$scope.invoiceEmailPrimary = $scope.payroll.invoiceEmailPrimary;
@@ -175,11 +185,23 @@ angular.module('origApp.controllers')
 
 				 	$scope.paymentTermsArray = [];
 				 	$scope.paymentTerms = $scope.payroll.paymentTerms;
-				 	$scope.paymentTermsArray.push($scope.paymentTerms)
+				 	$scope.paymentTermsArray.push($scope.paymentTerms);
+				 	for(var i = 0; i< $scope.paymentTermsConstant.length; ++i){
+				 		$scope.paymentTermsArray.push($scope.paymentTermsConstant[i]);
+				 		if($scope.paymentTermsArray[0].code == $scope.paymentTermsConstant[i].code)
+				 			$scope.paymentTermsArray.splice(-1);	
+				 	}
+				 	
+
+
+				 	
+				 		console.log('pushhhhhhing');
+				 		
+				 	
 				 	$scope.paymentTermsModel = $scope.paymentTermsArray[0];
+				 	
 
-
-
+				 	//$scope.paymentTermsModel = $scope.paymentTerms.description($scope.paymentTermsArray[0])
 				 	$scope.marginAmount = $scope.payrollRes.object.defaultPayroll.marginAmount;
 				 	$scope.holidayAmount = $scope.payrollRes.object.defaultPayroll.holidayAmount;
 				 	
@@ -193,11 +215,12 @@ angular.module('origApp.controllers')
 
 
 		$scope.clicked = false;
-		$scope.sendBatch = function (id) {
+		$scope.sendBatch = function (id,index) {
 			
 			//console.log(id)
 			$scope.batchId = id;
 			console.log($scope.batchId);
+			$scope.selected = index;
 		}
 
 		$scope.setHolidayPay = function () {
@@ -214,7 +237,7 @@ angular.module('origApp.controllers')
 
 		$scope.checkbox = false;
 		$scope.proceed = function () {
-
+					//incoming values from the html are strings -_-
 					if($scope.marginChargedToAgency == "false")
 						$scope.marginChargedToAgency = false;
 					else
@@ -242,7 +265,7 @@ angular.module('origApp.controllers')
 											"holidayPayIncluded":$scope.holidayPayIncluded,
 											"employeeNiIncluded":$scope.employersNiIncluded,
 											"vatCharged":$scope.invoiceVatCharged,
-											"invoiceDesign":$scope.invoiceDesignModel.name,
+											"invoiceDesign":$scope.invoiceDesignModel,
 											"marginAmount":$scope.marginAmount,
 											"invoiceEmailPrimary":$scope.payroll.invoiceEmailPrimary,
 											"invoiceEmailSecondary":$scope.payroll.invoiceEmailSecondary,
@@ -285,7 +308,7 @@ angular.module('origApp.controllers')
 				templateUrl: 'views/payroll/invoiceOverview.html',
 				parentScope: $scope,
 				controller: 'invoiceOverviewController',
-				size:'lg'
+				size:'md'
 			});
 		}
 
@@ -298,7 +321,11 @@ angular.module('origApp.controllers')
 		//console.log('default logDIs',$scope.logDis)
 		//console.log('payrollRes', $scope.payrollRes)
 		//console.log('id', $scope.batchId)
-		console.log($scope.holidayPayIncluded);
+		console.log($scope.payroll);
+		console.log($scope.invoiceDesignModel)
+		console.log('ptermzz',$scope.paymentTermsArray)
+		$scope.paymentTermsArray.splice(0,1);
+		console.log('ptermzz',$scope.paymentTermsArray)
 		//console.log('margin',$scope.marginChargedToAgency)
 	}
 

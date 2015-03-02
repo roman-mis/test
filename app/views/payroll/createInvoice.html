@@ -1,9 +1,4 @@
-<!-- <div class="container"> --> 
-	<!-- Large modal -->
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button> -->
-    
-    <!-- <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"> -->
-      <!-- <div class="modal-dialog modal-lg"> -->
+
 			<div class="modal-content">
 			<button ng-click="logMe()">logMe</button>
 				<div class="modal-header">
@@ -15,10 +10,11 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label">Select agency</label>
+                                    <label class="col-xs-6 control-label">Select agency</label>
                                     <div class="col-xs-6 no-padding-left">
-                                        <select ng-model = "displayAgencies" ng-options="agency.name for agency in agencies" class="form-control">
-                                            <!-- <option ng-click = "getBatch($index)" >{{agency}}</option> -->
+                                        <select ng-model = "displayAgencies" 
+                                                ng-options="agency.name for agency in agencies" 
+                                                class="form-control">
                                         </select>
                                     </div>
                                 </div>
@@ -43,47 +39,13 @@
                                  <table class="table table-striped">
                                      <tbody>
                                          <tr ng-click="clicked = true" ng-repeat="batch in timeBatches">
-                                             <td>
-                                             <a href ng-click="sendBatch(batch._id)" >{{batch._id}}</a>
+                                             <td style="cursor:pointer;" 
+                                                 ng-mouseleave = "hover = false"ng-mouseover = "hover = true" 
+                                                 ng-class="{'info':$index == selected || hover}" 
+                                                 ng-click="sendBatch(batch._id,$index)" >
+                                                 {{batch._id}}
                                              </td>
-                                             <!-- <td>1000001</td> -->
                                          </tr>
-                                         <tr>
-                                          <!--    <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr>
-                                         <tr>
-                                             <td>Mon 10/11/2014</td>
-                                             <td>1000001</td>
-                                         </tr> -->
                                      </tbody>
                                 </table>
                             </div>
@@ -102,8 +64,10 @@
                                     <label class="col-xs-6 control-label">Holiday pay included</label>
                                     <div class="col-xs-6">
                                         <select ng-model = "holidayPayIncluded"  class="form-control">
-                                            <option ng-show="select.$pristine" value="
-                                            {{holidayPayIncluded}}">{{holidayPayOption}}</option>
+                                            <option ng-show="select.$pristine" 
+                                                    value="{{holidayPayIncluded}}">
+                                                    {{holidayPayOption}}
+                                            </option>
                                             <option value="true" >Yes</option>
                                             <option value="false" >No</option>
                                         </select>
@@ -113,7 +77,8 @@
                                     <label class="col-xs-6 control-label">Employers NI included</label>
                                     <div class="col-xs-6">
                                         <select ng-model = "employersNiIncluded" class="form-control">
-                                            <option ng-show="select.$pristine" value="{{employersNiIncluded}}">{{employersNiOption}}</option>
+                                            <option ng-show="select.$pristine" value="{{employersNiIncluded}}">        {{employersNiOption}}
+                                            </option>
                                             <option value = "true">Yes</option>
                                             <option value = "false">No</option>
                                         </select>
@@ -123,7 +88,8 @@
                                     <label class="col-xs-6 control-label">VAT charged</label>
                                     <div class="col-xs-6">
                                         <select ng-model = "invoiceVatCharged" class="form-control">
-                                            <option ng-show="select.$pristine" value="{{invoiceVatCharged}}">{{invoiceVatOption}}</option>
+                                            <option ng-show="select.$pristine" value="{{invoiceVatCharged}}">        {{invoiceVatOption}}
+                                            </option>
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
                                         </select>
@@ -132,18 +98,19 @@
                                  <div class="form-group">
                                     <label class="col-xs-6 control-label">Invoice design</label>
                                     <div class="col-xs-6">
-                                        <select ng-model = "invoiceDesignModel" ng-options = "item.name for item in invoiceDesignArray" class="form-control">
-                                           <!--  <option>Select</option> -->
+                                        <select ng-model = "invoiceDesignModel" 
+                                                ng-options = "item.name for item in invoiceDesignArray" 
+                                                class="form-control">
+                                           
                                         </select>
                                     </div>
                                  </div>
                                  <div class="form-group">
                                     <label class="col-xs-6 control-label">Margin amount</label>
                                     <div class="col-xs-6">
-                                        <!-- <select class="form-control">
-                                            <option>Select</option>
-                                        </select> -->
-                                        <input ng-model = "marginAmount" type="number" class="form-control" placeholder = "{{marginAmount}}">
+                                        
+                                        <input ng-model = "marginAmount" type="number" min="0" 
+                                               class="form-control" placeholder = "{{marginAmount}}">
                                     </div>
                                  </div>
                             </div>
@@ -160,7 +127,9 @@
                                 <div class="form-group">
                                     <label class="col-xs-6 control-label">Payment terms</label>
                                     <div class="col-xs-6">
-                                        <select ng-model="paymentTermsModel" ng-options="item.description for item in paymentTermsArray" class="form-control">
+                                        <select ng-model="paymentTermsModel" 
+                                                ng-options="item.description for item in paymentTermsArray" 
+                                                class="form-control">
                                             <!-- <option>Select</option> -->
                                         </select>
                                     </div>
@@ -169,7 +138,8 @@
                                     <label class="col-xs-6 control-label">Margin charged to agency</label>
                                     <div class="col-xs-6">
                                         <select ng-model="marginChargedToAgency" class="form-control">
-                                            <option value="marginChargedToAgency" ng-show="select.$pristine">{{marginChargedToAgencyOption}}</option>
+                                            <option value="marginChargedToAgency" ng-show="select.$pristine">        {{marginChargedToAgencyOption}}
+                                            </option>
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
                                         </select>
@@ -178,7 +148,8 @@
                                 <div class="form-group">
                                     <label class="col-xs-6 control-label">Holiday amount</label>
                                     <div class="col-xs-6">
-                                        <input ng-model = "holidayAmount" type="number" class="form-control" placeholder="{{holidayAmount}}"/>
+                                        <input ng-model = "holidayAmount" type="number" min="0" 
+                                               class="form-control" placeholder="{{holidayAmount}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -198,12 +169,10 @@
                                  </div>
                              </div>
                              <div class="col-xs-4 no-padding-left">
-                                 <a href ng-disabled="checkbox == false" ng-click="proceed(); invoiceOverview()" type="button" class="btn">Proceed and Generate&#160;<i class="fa fa-chevron-right"></i></a>
+                                 <a href ng-disabled="checkbox == false" ng-click="proceed(); invoiceOverview()"   type="button" class="btn">Proceed and Generate&#160;
+                                    <i class="fa fa-chevron-right"></i>
+                                 </a>
                             </div>
                         </div>
                   </div><!-- /modal footer -->
-                        
 		 	</div><!-- /modal content -->
-		<!-- </div>/modal-dialog -->
-	<!-- /modal -->
-<!-- /container
