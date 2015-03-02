@@ -27,7 +27,7 @@ table {
     display: -moz-deck;
 }
 
-a, 
+a,
 i,
 li {
     transition: color .2s;
@@ -38,7 +38,7 @@ li.active,
 li.active a,
 .dropdown-menu a > i {
     transition-duration: 0;
-} 
+}
 
 .pointer {
     cursor: pointer;
@@ -459,15 +459,14 @@ header {
         }
         .sidebar-menu-inner {
             padding-right: 0;
-            margin-top: -66px; 
+            margin-top: -66px;
             padding: 0 8px 12px 12px;
             #left-menu {
                 @media(min-width: $screen-lg) {
                     display: none;
                 }
-                
             }
-        } 
+        }
         .main-menu {
             padding-right: 0;
             @media(max-width: $screen-md-max) {
@@ -1000,89 +999,110 @@ th.rotate div span {
 body {
     font-family: 'Questrial';
 }
-.modal::-webkit-scrollbar { 
-    display: none; 
+
+.modal::-webkit-scrollbar {
+    display: none;
 }
+
 .runPayroll-header {
     min-height: 16.428571429px;
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .runPayroll-header-title {
     margin: 0;
     line-height: 1.428571429;
 }
+
 .runPayroll-body {
     position: relative;
     padding: 20px;
 }
+
 .runPayroll-footer {
     padding: 19px 20px 20px;
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
+
 select.form-control,
 input.form-control {
     padding: 6px 2px;
 }
+
 .form-group {
     margin-bottom: 8px;
 }
+
 .form-horizontal .control-label {
     padding-top: 7px;
     margin-bottom: 0;
     text-align: left;
     font-weight: normal;
 }
+
 .no-padding {
     padding: 0;
 }
+
 table.scroll tbody {
     height: 300px;
     overflow-y: auto;
-    overflow-x: hidden;  
-  }
+    overflow-x: hidden;
+}
+
 table.scroll tbody,
 table.scroll thead {
     display: block;
-  }
+}
+
 table.scroll tbody tr,
 table.scroll thead tr {
     width: 100%;
     display: block;
-  }
+}
+
 table.scroll thead tr th {
     border-bottom: none;
 }
+
 table.scroll thead tr th,
 table.scroll tbody tr td {
     display: inline-block;
-  }
+}
+
 table.scroll thead tr th input[type="checkbox"],
 table.scroll tbody tr td input[type="checkbox"] {
     margin: 0;
 }
+
 table.scroll thead tr th.ref,
 table.scroll tbody tr td.ref {
     width: 45%;
 }
+
 table.scroll thead tr th.fullName,
 table.scroll tbody tr td.fullName {
     width: 45%;
 }
+
 table.scroll thead tr th.text-checkbox,
 table.scroll tbody tr td.text-checkbox {
     width: 8.2%;
 }
 
 @media screen and (max-width: 580px) {
-    table.scroll tbody, table.scroll thead {
+    table.scroll tbody,
+    table.scroll thead {
         display: table-row-group;
     }
-    table.scroll tbody tr, table.scroll thead tr {
+    table.scroll tbody tr,
+    table.scroll thead tr {
         display: table-row;
     }
-    table.scroll thead tr th, table.scroll tbody tr td {
+    table.scroll thead tr th,
+    table.scroll tbody tr td {
         display: table-cell;
     }
 }
@@ -1091,12 +1111,15 @@ table.scroll tbody tr td.text-checkbox {
 body {
     font-family: 'Questrial';
 }
-.modal::-webkit-scrollbar { 
-    display: none; 
+
+.modal::-webkit-scrollbar {
+    display: none;
 }
+
 .tab-pane {
     padding: 10px 0;
 }
+
 .importExpensesh4 {
     padding-bottom: 5px;
     border-bottom: 1px solid #ccc;
@@ -1105,58 +1128,73 @@ body {
 table.scroll tbody {
     height: 200px;
     overflow-y: auto;
-    overflow-x: hidden;  
-  }
+    overflow-x: hidden;
+}
+
 table.scroll tbody,
 table.scroll thead {
     display: block;
-  }
+}
+
 table.scroll tbody tr,
 table.scroll thead tr {
     width: 100%;
     display: block;
-  }
+}
+
 table.scroll thead tr th {
     border-bottom: none;
 }
+
 table.scroll thead tr th,
 table.scroll tbody tr td {
     display: inline-block;
-  }
+}
+
 table.scroll thead tr th.name {
     width: 38.7%;
-} 
+}
+
 table.scroll tbody tr td.name {
     width: 40%;
 }
+
 table.scroll thead tr th.icons {
     width: 4.9%;
     text-align: center;
 }
+
 table.scroll tbody tr td.icons {
     width: 5%;
 }
+
 table.scroll thead tr th.lastEdited {
     width: 21.3%;
-} 
+}
+
 table.scroll tbody tr td.lastEdited {
     width: 22%;
 }
+
 table.scroll thead tr th.created {
     width: 19.4%;
-} 
+}
+
 table.scroll tbody tr td.created {
     width: 20%;
 }
 
 @media screen and (max-width: 580px) {
-    table.scroll tbody, table.scroll thead {
+    table.scroll tbody,
+    table.scroll thead {
         display: table-row-group;
     }
-    table.scroll tbody tr, table.scroll thead tr {
+    table.scroll tbody tr,
+    table.scroll thead tr {
         display: table-row;
     }
-    table.scroll thead tr th, table.scroll tbody tr td {
+    table.scroll thead tr th,
+    table.scroll tbody tr td {
         display: table-cell;
     }
 }
@@ -1165,14 +1203,17 @@ table.scroll tbody tr td.created {
 body {
     font-family: 'Questrial'
 }
+
 .no-padding {
     padding: 0;
 }
+
 .dragAndDropList {
-    list-style: none;   
+    list-style: none;
     padding-left: 0;
-    width:100%;
+    width: 100%;
 }
+
 .dragAndDropList li {
     color: #333;
     background-color: #fff;
@@ -1181,12 +1222,48 @@ body {
     cursor: move;
     border: 1px solid #ccc;
     border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-     overflow:hidden;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    overflow: hidden;
 }
+
 .dragAndDropList li:hover {
     color: #333;
     background-color: #ebebeb;
     border-color: #adadad;
+}
+/*Dropdown calendar*/
+
+.orig-datepicker {
+    > ul.dropdown-menu {
+        padding: 3px;
+        > li:first-child {
+            thead tr:first-child button {
+                border: none;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+            tbody td > button {
+                border: none;
+                transition-duration: .1s;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+            tbody td > button.active {
+                background-color: $green;
+                span {
+                    color: #fff;
+                }
+            }
+        }
+        > li:nth-child(2) {
+            display: none;
+        }
+    }
+}
+
+table {
+    outline: 0;
 }
