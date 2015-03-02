@@ -82,7 +82,7 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
-			weekNo:$scope.pay.frequency};
+			payFrequency:$scope.pay.frequency};
 			console.log($scope.pay.frequency)
 		for(var i = 0; i < $scope.p.worker.length; i++){
 			if($scope.p.worker[i]){
@@ -91,14 +91,14 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 		}
 		console.log(runParollWorkers)
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
-	    if(!response.data.result){
+	    // if(!response.data.result){
 	    	$scope.response = response.data.logs;
 	    	console.log($scope.response);
 				$scope.firstStep = false;
 				$scope.secondStep = true;
-	    }else{
-	    	$scope.close();
-	    }
+	    // }else{
+	    // 	$scope.close();
+	    // }
     });
 	}
 
