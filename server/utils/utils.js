@@ -184,6 +184,29 @@ module.exports=utils={
 		res.write(data.Body);
 		res.end();
   	console.log('file sent');
+	},
+	readCsvFromFile: function(filePath){
+		var csv = require('fast-csv');
+		return Q.Promise(function(resolve){
+			var csvData = [], header=[], headerFlag=false;
+			csv
+			 .fromPath(filePath)
+			 .on('data', function(data){
+				if(!headerFlag){
+					header = data;
+					headerFlag = true;
+				}else{
+					var record = {};
+					data.forEach(function(value, index){
+						if(header[index] !== ''){
+							record[header[index].toLowerCase()] = value.replace(/"/g, '');
+						}
+					});
+					csvData.push(record);
+				}
+			 }).on('end', function(){
+			     resolve(csvData);
+			 });
+		});
 	}
-	
 };

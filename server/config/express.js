@@ -20,7 +20,7 @@ module.exports = function(app){
   app.use(logger('dev'));
   
   // app.use(busboy());
-  app.use(multer({ inMemory:true}));
+  app.use(multer({ inMemory:false}));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true
