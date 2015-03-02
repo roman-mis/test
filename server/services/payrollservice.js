@@ -50,7 +50,7 @@ module.exports=function(){
 		return Q.nfcall(q.exec.bind(q));
 	};
     
-    service.runPayroll=function(req) {
+    service.runPayroll=function(payrollRequest) {
         var logs=[];    
         log('Starting a payroll run!',logs);
         
@@ -124,11 +124,11 @@ module.exports=function(){
               }
               
               if(statutoryValuesOK) {
-                  console.log(req.body.payFrequency);
+                  console.log(payrollRequest.payFrequency);
                   console.log('------------------------------------------------------------');
-                  console.log(req.body);
-                  req.body.payFrequency='weekly';
-                  return db.Payroll.findOne({ isCurrent: true, periodType: req.body.payFrequency }).exec()
+                  console.log(payrollRequest);
+                  // payrollRequest.payFrequency='weekly';
+                  return db.Payroll.findOne({ isCurrent: true, periodType: payrollRequest.payFrequency }).exec()
                   .then(function(payroll) {
 
                       if(payroll) {
@@ -136,7 +136,7 @@ module.exports=function(){
                           log('Retrieved payroll record',logs);
                           var promises= new Q(true);
 
-                          req.body.workers.forEach(function(worker){
+                          payrollRequest.workers.forEach(function(worker){
 
                              
                              promises=promises.then(function(){
@@ -171,7 +171,7 @@ module.exports=function(){
                                          log('NMW: ' + nmw,logs);
                                          return db.PayrollWorkerYTD.findOne({ worker: worker._id }).exec()
                                             .then(function(payrollWorkerYTD) {
-                                                if(payrollWorkerYTD){
+                                                
                                                     log('Retreived Payroll YTD record',logs);
 
                                                      payrollWorkerYTD = payrollWorkerYTD||new db.PayrollWorkerYTD( {
@@ -308,7 +308,9 @@ module.exports=function(){
                                                                            });
 
                                                                           log('saving timesheet',logs);
-                                                                          return true;//Q.nfcall(timesheet.save.bind(timesheet));
+                                                                          // throw {message:'just a test'};
+                                                                          // return true;
+                                                                          return Q.nfcall(timesheet.save.bind(timesheet));
                                                                     });
 
                                                                    //region Earnings
@@ -616,14 +618,12 @@ module.exports=function(){
                                                           }
 
                                                       }).then(function(){
-                                                           log('payrollworkerYTD saved');return true;//return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
+                                                           log('saving payrollworkerYTD');
+                                                           // return true;
+                                                           return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
                                                           
                                                       });
-                                                }
-                                                else{
-                                                    throw {name:'InvalidData',message:'Payroll Worker YTD not found'};
-                                                    // log('Payroll Worker YTD not found');
-                                                }
+                                                
                                             });
                                        }
                                        else{
