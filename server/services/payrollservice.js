@@ -171,7 +171,7 @@ module.exports=function(){
                                          log('NMW: ' + nmw,logs);
                                          return db.PayrollWorkerYTD.findOne({ worker: worker._id }).exec()
                                             .then(function(payrollWorkerYTD) {
-                                                if(payrollWorkerYTD){
+                                                
                                                     log('Retreived Payroll YTD record',logs);
 
                                                      payrollWorkerYTD = payrollWorkerYTD||new db.PayrollWorkerYTD( {
@@ -308,7 +308,8 @@ module.exports=function(){
                                                                            });
 
                                                                           log('saving timesheet',logs);
-                                                                          return true;//Q.nfcall(timesheet.save.bind(timesheet));
+                                                                          // return true;
+                                                                          return Q.nfcall(timesheet.save.bind(timesheet));
                                                                     });
 
                                                                    //region Earnings
@@ -614,14 +615,12 @@ module.exports=function(){
                                                           }
 
                                                       }).then(function(){
-                                                           log('payrollworkerYTD saved');return true;//return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
+                                                           log('saving payrollworkerYTD');
+                                                           // return true;
+                                                           return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
                                                           
                                                       });
-                                                }
-                                                else{
-                                                    throw {name:'InvalidData',message:'Payroll Worker YTD not found'};
-                                                    // log('Payroll Worker YTD not found');
-                                                }
+                                                
                                             });
                                        }
                                        else{
