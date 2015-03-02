@@ -9,7 +9,7 @@ var express = require('express'),
 	routeskipper=require('../../middlewares/route-skipper');
 
 module.exports = function(app){
-  app.use('/api/admin/companyProfile',restMiddleware(db),routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[]), router);
+  app.use('/api/systems/companyProfile',restMiddleware(db),routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[]), router);
 };
 
 router.get('/', controller.getAllAdminCompanyProfile);
