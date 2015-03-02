@@ -154,39 +154,6 @@ header .row-header {
                     .btn-default {
                         height: 28px;
                     }
-                    .orig-datepicker {
-                        > ul.dropdown-menu {
-                            left: -42px !important;
-                            padding: 3px;
-                            > li:first-child {
-                                thead tr:first-child button {
-                                    border: none;
-                                    &:hover {
-                                        box-shadow: none;
-                                    }
-                                }
-                                tbody td > button {
-                                    border: none;
-                                    transition-duration: .1s;
-                                    &:hover {
-                                        box-shadow: none;
-                                    }
-                                }
-                                tbody td > button.active {
-                                    background-color: $green;
-                                span {
-                                    color: #fff;
-                                }
-                            }
-                            }
-                            > li:nth-child(2) {
-                                display: none;
-                            }
-                        }
-                    }
-                    table {
-                        outline: 0;
-                    }
                 }
             }
             .register-form.form-step5 {

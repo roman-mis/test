@@ -82,7 +82,7 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
-			weekNo:$scope.pay.frequency};
+			payFrequency:$scope.pay.frequency};
 			console.log($scope.pay.frequency)
 		for(var i = 0; i < $scope.p.worker.length; i++){
 			if($scope.p.worker[i]){
