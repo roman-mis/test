@@ -1,7 +1,8 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfileService', 'HttpResource',
-	function($scope, $rootScope, CompanyProfileService, HttpResource){
+app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfileService',
+	function($scope, $rootScope, CompanyProfileService){
 
 		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
 			{link: '/admin/home', text: 'Admin'},
@@ -19,8 +20,9 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		
 		// get company profile from the server
 		CompanyProfileService.getCompanyProfile().then(function(data){
-			if(data.companyProfile)
+			if(data.companyProfile){
 				$scope.companyProfile = data.companyProfile;
+			}
 			docId = data.id;
 		});
 

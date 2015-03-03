@@ -69,7 +69,7 @@
 		}],
 	"DerogationContract":[{
 			"code":"1",
-			"description":"Not Appliccable"
+			"description":"Not Applicable"
 		},{
 			"code":"2",
 			"description":"Opt-in"

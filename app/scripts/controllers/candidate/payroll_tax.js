@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidatePayrollTaxController', function($scope, $stateParams, HttpResource, ConstantsResource) {
+        .controller('CandidatePayrollTaxController', function($scope, $stateParams, HttpResource) {
           $scope.candidateId = $stateParams.candidateId;
 
           //define private variables

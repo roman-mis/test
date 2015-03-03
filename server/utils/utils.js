@@ -193,13 +193,19 @@ module.exports=utils={
 			 .fromPath(filePath)
 			 .on('data', function(data){
 				if(!headerFlag){
-					header = data;
+					header = data; console.log(header);
 					headerFlag = true;
 				}else{
 					var record = {};
 					data.forEach(function(value, index){
 						if(header[index] !== ''){
-							record[header[index].toLowerCase()] = value.replace(/"/g, '');
+							// Converting to Camel Case
+							var headerName = header[index]
+								.toLowerCase()
+								.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+						        .replace(/\s/g, '')
+						        .replace(/^(.)/, function($1) { return $1.toLowerCase(); }); 
+							record[headerName] = value.replace(/"/g, '') || null;
 						}
 					});
 					csvData.push(record);
@@ -208,5 +214,12 @@ module.exports=utils={
 			     resolve(csvData);
 			 });
 		});
+	},
+	camelize: function(randomString){
+		return randomString
+	        .toLowerCase()
+	        .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+	        .replace(/\s/g, '')
+	        .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
 	}
 };

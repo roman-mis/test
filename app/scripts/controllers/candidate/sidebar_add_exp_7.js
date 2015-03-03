@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp7Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
+        .controller('CandidateSidebarAddExp7Controller', function($scope, HttpResource, ConstantsResource) {
           $scope.expenseData.subsistences = $scope.expenseData.subsistences || [];
           $scope.mealTypes = ConstantsResource.get('mealslist');
 

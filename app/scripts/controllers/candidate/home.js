@@ -7,7 +7,7 @@ angular.module('origApp.controllers')
           HttpResource.model('candidates/'+$scope.candidateId+'/payrollProduct').customGet('',{},function(data){
           	console.log('done !!');
             console.log(data);
-            $scope.payrollProduct = data.data.objects
+            $scope.payrollProduct = data.data.objects;
 		  });
           //share this data over all sub pages
           $scope.addSubBreadcrumb(null);
