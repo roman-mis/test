@@ -1,6 +1,5 @@
 
 			<div class="modal-content">
-			<button ng-click="logMe()">logMe</button>
 				<div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Create Invoice</h4>
 				</div><!-- modal-header -->
@@ -26,8 +25,6 @@
                                         <select ng-model = "displayBranches"
                                                 ng-options="item.name for item in branches"
                                                 class="form-control">
-                                            <!-- <option ng-show="!item.name">{{displayBranches[0].name}}</option> -->
-                                            <!-- <option ng-repeat="item in branches" ng-bind="item.name"></option> -->
                                             
                                         </select>
                                     </div>
@@ -173,7 +170,7 @@
                                  </div>
                              </div>
                              <div class="col-xs-4 no-padding-left">
-                                 <a href ng-disabled="checkbox == false || !batchId" ng-click="proceed(); invoiceOverview()"   type="button" class="btn">Proceed and Generate&#160;
+                                 <a href ng-disabled="checkbox == false || !batchId" ng-click="proceed();"   type="button" class="btn">Proceed and Generate&#160;
                                     <i class="fa fa-chevron-right"></i>
                                  </a>
                             </div>

@@ -103,10 +103,10 @@
                                     <legend class="scheduler-border">Action</legend>
                                     <div class="row">
                                         <div class="col-xs-12 form-group no-padding">
-                                            <button ng-disabled="confirm != totalInvoiceValue || !confirm" type="button" class="btn btn-primary pull-right">Save &#38; Send Invoices</button>
+                                            <button ng-click="ok()"ng-disabled="confirm != totalInvoiceValue || !confirm" type="button" class="btn btn-primary pull-right">Save &#38; Send Invoices</button>
                                         </div>
                                         <div class="col-xs-12 form-group no-padding">
-                                            <button ng-disabled="confirm != totalInvoiceValue || !confirm" type="button" class="btn btn-primary pull-right">Save to Invoice List and Close</button>
+                                            <button ng-click="ok()" ng-disabled="confirm != totalInvoiceValue || !confirm" type="button" class="btn btn-primary pull-right">Save to Invoice List and Close</button>
                                         </div>
                                     </div>
                                 </fieldset>
