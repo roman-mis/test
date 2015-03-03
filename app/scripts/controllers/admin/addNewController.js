@@ -1,7 +1,8 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('addNewController',['$rootScope', '$interval','$scope', '$stateParams', '$location', 'HttpResource', 'adminTemplate','ConstantsResource',
-	function($rootScope, $interval, $scope, $stateParams, $location, HttpResource, adminTemplate, ConstantsResource){	
+app.controller('addNewController',['$rootScope', '$interval','$scope', '$stateParams', '$location', 'HttpResource', 'adminTemplate',
+	function($rootScope, $interval, $scope, $stateParams, $location, HttpResource, adminTemplate){	
 		
 
 		// defined values
@@ -9,7 +10,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		var differentTypes =['call_log','task','document','email','payslip','invoice'];		
 		// initialization
 		$scope.data={details:{}};
-		$scope.mergeFields = ['please select type first']
+		$scope.mergeFields = ['please select type first'];
 		if($stateParams.type === 'edite'){
 			if(!adminTemplate.details.name){
 				$location.path('admin/templates');
@@ -32,6 +33,11 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		}
 		
 
+		function breadCrumbAddNewValue(){
+        	var s = (($stateParams.type === 'edite')?'Edite ' : 'Add New ')+ breadCrumbformate($scope.data.details.templateType);
+			return s;
+        }
+        
 		$rootScope.breadcrumbs = [
 		{link:'/', text:'Home'},
         {link: '/admin/home', text: 'Admin'},
@@ -40,7 +46,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 
         
 		$scope.data.details.current ={};
-		$scope.data.details.current.subType = $scope.data.details.subType
+		$scope.data.details.current.subType = $scope.data.details.subType;
 
 		// get dropdowns from the server
 		$scope.templatesDropdowns = HttpResource.model('constants')
@@ -51,11 +57,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         
 				});
         ////**////
-        function breadCrumbAddNewValue(){
-        	var s = (($stateParams.type === 'edite')?'Edite ' : 'Add New ' )
-				+ breadCrumbformate($scope.data.details.templateType)
-			return s;
-        }
+        
 
         function breadCrumbformate(s){
         	if(!s){
@@ -82,7 +84,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 	        				for(var m = 0; m < $scope.templatesDropdowns[i].mergeFieldsGroups.length; m++){
 	        					if($scope.templatesDropdowns[i].data[j].mergeFieldsGroupNumber[k] ===
 	        						$scope.templatesDropdowns[i].mergeFieldsGroups[m].number){
-	        						$scope.mergeFields = $scope.mergeFields.concat($scope.templatesDropdowns[i].mergeFieldsGroups[m].mergeFields)
+	        						$scope.mergeFields = $scope.mergeFields.concat($scope.templatesDropdowns[i].mergeFieldsGroups[m].mergeFields);
 	        						break;
 	        					}
 	        					
@@ -92,18 +94,18 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 	        			// $scope.mergeFields= $scope.templatesDropdowns[i].data[j].mergeFields;
 	        			$scope.data.details.current.subType = selectedSubType;
 	        			
-	        			$scope.data.details.mergeFields="";
-	        			$scope.data.details.subType = $scope.data.details.current.subType
+	        			$scope.data.details.mergeFields='';
+	        			$scope.data.details.subType = $scope.data.details.current.subType;
 	        		}
         		}
         	}
-        }
+        };
 
 
         // on change function
         $scope.changeTemplateSubType = function(){
         	$scope.data.details.subType = $scope.data.details.current.subType;
-        }
+        };
         var formate = function(s){
         	var ar = s.split(' ');
         	s = '';
@@ -117,7 +119,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         		s = s+ arr.join('');
         	}
         	return s;
-        }
+        };
 
         
         $scope.setMergeField = function(mergeField){
@@ -155,36 +157,36 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         			mergeField);
 
         	}      	
-        }
+        };
 
         $scope.assign = function(container,startOffset,endOffset,data){
         	var ar = $scope.selection[container].data.split('');
 			ar.splice(startOffset,
 				endOffset-startOffset,data);
 			$scope.selection[container].data = ar.join('');
-        }
+        };
 
 		$scope.paste = function(){
 			$scope.data=adminTemplate;
 			
-		}
+		};
 
 		$scope.isNotEmpty = function(vars){
 			var isNotEmpty = true;
 			for(var i = 0; i < vars.length; i++){
-				console.log(vars[i])
+				console.log(vars[i]);
 				if($scope.data.details[vars[i]] === undefined || $scope.data.details[vars[i]] === ''){
 					isNotEmpty = false;
 					break;
 				}
 			}
 			return isNotEmpty;
-		}
+		};
 
-		$scope.clear = function(vars){
+		$scope.clear = function(){
 			$scope.data.details={};
 			adminTemplate.details={};
-		}
+		};
 
 		$scope.getData = function(fields){
 			var data = {};
@@ -192,7 +194,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 				data[fields[i]] = $scope.data.details[fields[i]];
 			}
 			return data;
-		}
+		};
 
 		$scope.saveNew = function(){
 			if($scope.isNotEmpty(fields)){
@@ -205,14 +207,14 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 	              }
 	            });
 			}
-		}
+		};
 
 
 	$scope.updateAdminTemplate = function() {
 		if($scope.isNotEmpty(fields)){
 		  console.log(adminTemplate);
 		  var id =adminTemplate.details._id;
-	      console.log(id)
+	      console.log(id);
 	      var data = $scope.getData(fields);
 	      HttpResource.model('admin/templates/'+id)
 	      	.create(data).post().then(function(result){
@@ -225,10 +227,10 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 
     $scope.save = function(){
 		if($stateParams.type === 'edite'){
-			$scope.updateAdminTemplate()
+			$scope.updateAdminTemplate();
 		}else{
-			$scope.saveNew()
+			$scope.saveNew();
 		}
-	}
+	};
 
 }]);

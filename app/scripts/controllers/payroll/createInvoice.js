@@ -29,7 +29,7 @@ angular.module('origApp.controllers')
 			$scope.agenciesWithTimesheets=uniqFast(validAgencies);
 			$scope.agencies = [];
 			
-			for(var i = 0; i<$scope.agenciesWithTimesheets.length; ++i){
+			for(i = 0; i<$scope.agenciesWithTimesheets.length; ++i){
 				HttpResource.model('agencies/' + $scope.agenciesWithTimesheets[i])
 				.query({},function (res) {
 
@@ -37,7 +37,7 @@ angular.module('origApp.controllers')
 					$scope.displayAgencies = $scope.agencies[0];
 					
 					
-				});
+				}); //dont change for jshint
 			}
 
 
@@ -46,7 +46,7 @@ angular.module('origApp.controllers')
 
 		
 		$scope.$watch('displayAgencies', function (newVal) {
-			if($scope.displayAgencies != null){
+			if($scope.displayAgencies != null){ //dont change this for jshint
 				$scope.batchParams = {agency: $scope.displayAgencies.id};
 				$scope.batchParams = {
 					agency: newVal.id
@@ -152,7 +152,7 @@ angular.module('origApp.controllers')
 				 	$scope.paymentTermsArray = [];
 				 	$scope.paymentTerms = $scope.payroll.paymentTerms;
 				 	$scope.paymentTermsArray.push($scope.paymentTerms);
-				 	for(var i = 0; i< $scope.paymentTermsConstant.length; ++i){
+				 	for(i = 0; i< $scope.paymentTermsConstant.length; ++i){
 				 		$scope.paymentTermsArray.push($scope.paymentTermsConstant[i]);
 				 		if($scope.paymentTermsArray[0].code === $scope.paymentTermsConstant[i].code){
 				 			$scope.paymentTermsArray.splice(-1);	
@@ -249,10 +249,6 @@ angular.module('origApp.controllers')
 		 	 	
 		 		 $scope.posting = false;
 		 	});
-
-
-
-
 
 			/// close modal instance
 			$scope.$watch('posting', function () {

@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('accountsController',['$scope', '$location', 'HttpResource', '$rootScope',

@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('defaultsController',['$scope', '$rootScope',
