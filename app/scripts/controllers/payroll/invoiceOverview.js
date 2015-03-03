@@ -1,24 +1,53 @@
+'use strict';
 angular.module('origApp.controllers')
 	.controller('invoiceOverviewController',['$scope','HttpResource','$modalInstance', 'parentScope',
 	 function ($scope, HttpResource, $modalInstance, parentScope) {
 		
-	 	    $(document).ready(function() {
-        var $tableBody = $('#tableBody'),
-            $tableHeader = $('#tableHeader'),
-            thTr = $tableHeader.find('tr')[0],
-            $ths = $(thTr).find('th'),
-            tr0 = $tableBody.find('tr')[0],
-            $tds = $(tr0).children();
+        
+        $scope.totalInvoiceValue = 0;
+        $scope.totalVat = 0;
+        $scope.marginValue = 0;
+        $scope.displayDetails = [];
+        $scope.holidayAmount = 0;
+        $scope.totalNumberOfContractors = 0;
+        $scope.displayInvoice = parentScope.saveInvoice.data.object;
 
-        function normalizeTables () {
-            $($ths[0]).css('width', $($tds[0]).width() + 16 + 'px');
-            $($ths[1]).css('width', $($tds[1]).width() + 16 + 'px'); 
-            $($ths[2]).css('width', $($tds[2]).width() + 16 + 'px'); 
-            $($ths[3]).css('width', $($tds[3]).width() + 16 + 'px'); 
-            $($ths[4]).css('width', $($tds[4]).width() + 16 + 'px');
+        console.log($scope.displayInvoice);
+        for(var i = 0; i< $scope.displayInvoice.length;++i){
+
+            $scope.totalInvoiceValue += $scope.displayInvoice[i].total;
+            //console.log($scope.displayInvoice[i].vat);
+            $scope.totalVat += $scope.displayInvoice[i].vat;
+
+            if($scope.displayInvoice[i].companyDefaults.marginChargedToAgency === true){
+                $scope.marginValue += $scope.displayInvoice[i].companyDefaults.marginAmount;
+            }
+
+            if($scope.displayInvoice[i].companyDefaults.holidayPayIncluded === true){
+                $scope.holidayAmount += $scope.displayInvoice[i].companyDefaults.holidayPayDays;
+            }
+            $scope.totalNumberOfContractors += $scope.displayInvoice[i].lines.length;
+
+            $scope.displayObject = {
+                date:$scope.displayInvoice[i].createdDate,
+                invoiceNo: $scope.displayInvoice[i].invoiceNumber,
+                net: $scope.displayInvoice[i].net,
+                vat: $scope.displayInvoice[i].vat,
+                total: $scope.displayInvoice[i].total,
+            };
+            $scope.displayDetails.push($scope.displayObject);
+
         }
-        $('#myModal').on('shown.bs.modal', normalizeTables);
-        $(window).on('resize', normalizeTables);
-    });
+            
 
-	}])
+        $scope.logMe = function () {
+            // body...
+            console.log(parentScope.saveInvoice.data,$scope.totalVat);
+            console.log('display details',$scope.displayDetails);
+            console.log('totalInvoiceValue: ',$scope.totalInvoiceValue,'/n total vat', $scope.totalVat, '/n details'
+                , $scope.displayDetails, '/n holidayAmount',$scope.holidayAmount, '/n contractors', $scope.totalNumberOfContractors);
+                       // console.table($scope.displayInvoice.data.object);
+
+        };
+
+	}]);
