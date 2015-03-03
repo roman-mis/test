@@ -1,8 +1,9 @@
 'use strict';
 
-module.exports = function(){
+module.exports = function(dbs){
 	var _=require('lodash'),
-		timesheetservice=require('../services/timesheetservice')(),
+		timesheetservice=require('../services/timesheetservice')(dbs),
+		systemservice = require('../services/systemservice')(dbs),
 		Q=require('q'),
 		utils=require('../utils/utils');
 
@@ -109,10 +110,46 @@ module.exports = function(){
 
 	controller.uploadTimesheet = function(req, res){
 		var uploadedFile = req.files.file;
+		if(uploadedFile){
+			utils.readCsvFromFile(uploadedFile.path).then(function(data){
+				systemservice.getSystem()
+			  	.then(function(system){
+			  		var paymentRates = system.paymentRates;
+			  		if(Object.keys(data[0]).length === 15){
+			  			// Format 1 : Column Count = 15
+				  		console.log('Format 1');
+				  		_.forEach(data, function(row){
+				  			if(row.rateDescription){
+				  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
+				  				row.elementType = paymentRate._id || null;
+				  				row.paymentRate = paymentRate;
+				  			}
+				  			row.units = row.noOfUnits;
+				  			row.payRate = row.unitRate;
+	                		row.chargeRate = row.unitRate;
+						});
+						res.json({result:true, objects: data});
+			  		}else{
+						res.json({result:false, message:'Invalid CSV File.'});
+			  		}
+			  	})
+			  	.fail(res.sendFailureResponse);
+			});
+		}else{
+			res.json({result:false, message:'No File Attached.'});
+		}
+		
 
-		utils.readCsvFromFile(uploadedFile.path).then(function(data){
-			res.json({result:false, objects: data});
-		});
+		function findPaymentRate(paymentRates, search){
+			var paymentRate = {};
+			_.forEach(paymentRates, function(_paymentRate){
+				if(_paymentRate.name.toString().trim().toLowerCase() === search.trim().toLowerCase() || (_paymentRate.importAliases.indexOf(search) > 0)){
+					paymentRate = _paymentRate;
+					return false;
+				}
+			});
+			return paymentRate;
+		}
 	};
 
 	return controller;
