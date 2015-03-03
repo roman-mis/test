@@ -416,7 +416,7 @@ module.exports=function(){
 
                                                                            //region Employees NI
 
-                                                                           var paySubjectToEmployeesNI = payForTaxesAndNI+employersNI;
+                                                                           var paySubjectToEmployeesNI = payForTaxesAndNI-employersNI;
 
                                                                            log('Pay subject to Employees NI: ' + paySubjectToEmployeesNI, logs);
 
