@@ -2,14 +2,14 @@
 
 // var adminExpenseRatesService = require('../../services/admin/adminExpenseRatesSerivce');
 
-// module.exports = function() {
+module.exports = function() {
     
-//     return {
-//         getExpenseRates: function(req, res) {
+    return {
+        getExpenseRates: function() {
             
-//         },
-//         saveExpenseRates: function(req, res) {
+        },
+        saveExpenseRates: function() {
             
-//         }
-//     };
-// };
+        }
+    };
+};
