@@ -46,7 +46,7 @@ angular.module('origApp.controllers')
 
 		
 		$scope.$watch('displayAgencies', function (newVal) {
-			if($scope.displayAgencies != null){ //dont change this for jshint
+			if($scope.displayAgencies !== null){ //dont change this for jshint
 				$scope.batchParams = {agency: $scope.displayAgencies.id};
 				$scope.batchParams = {
 					agency: newVal.id

@@ -12,9 +12,9 @@ module.exports = function(){
 			subType: 		req.body.subType,
 			templateBody: 	req.body.templateBody,
 			title: 			req.body.title
-		}
+		};
 		adminTemplatesService.saveTemplate(templateContent).then(
-			function(result){
+			function(){
 				console.log('done!');
 				res.json({result:true, object:'vm'});
 			},
@@ -38,8 +38,8 @@ module.exports = function(){
 		adminTemplatesService.getAdminTemplate(req.params.id)
 		.then(function(adminTemplate){
 			if(adminTemplate){
-				console.log("******************")
-				adminTemplate.x= "hello";
+				console.log('******************');
+				adminTemplate.x= 'hello';
 				console.log(adminTemplate);
 				res.json({result:true, object: adminTemplate});
 			}else{

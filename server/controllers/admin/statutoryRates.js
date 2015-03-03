@@ -9,19 +9,19 @@ module.exports = function(){
 			var pagination = req._restOptions.pagination||{};
 			var resp = {result:true,objects:result.rows, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
 			res.json({result: true, statutoryRates: resp.objects[0].statutoryTables, id: resp.objects[0]._id});
-		},function(){
-			res.sendFailureResponse;
+		},function(err){
+			res.sendFailureResponse(err);
 		});
 	};
 
 	controller.saveAdminStatutoryRates = function(req, res){
 		adminStatutoryRatesService.saveAdminStatutoryRates(req.body).then(
-			function(result){
-				res.json({result:true, object:"vm"});
+			function(){
+				res.json({result:true, object:'vm'});
 			},
 			function(err){
 				console.log(err + 'err');
-				res.sendFailureResponse;
+				res.sendFailureResponse(err);
 			});
 	};
 
@@ -37,4 +37,4 @@ module.exports = function(){
 	};
 
 	return controller;
-}
+};
