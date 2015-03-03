@@ -3,39 +3,6 @@ angular.module('origApp.controllers')
 .controller('createInvoiceController', ['$scope','$modalInstance','HttpResource', 'ModalService', 'ConstantsResource',
 	function($scope, $modalInstance, HttpResource, ModalService, ConstantsResource){
 		
-		
-
-
-		
-
-
-		
-
-		// var agencies = {};
-		// var agency = [];
-		// HttpResource.model('agencies').query({},function (response) {
-			
-		// 	 agencies=response.data.objects;
-		// 	 console.log('agencies',agencies)
-
-		// 	 for(var i = 0; i<agencies.length; ++i){
-		// 	//agency.push(agencies[i]._id);
-
-		// 		HttpResource.model('agencies/' + agencies[i]._id + '/payroll').query({},function (response) {
-			
-		// 	//console.log('agencydata',response.data)
-		// })
-		// 	}
-		// 	console.log('agenc', agency)
-
-
-
-		// })	
-
-
-
-
-
 		function uniqFast(a) { //getting unique values for agencies with timesheets
 			var seen = {};
 			var out = [];
@@ -53,7 +20,7 @@ angular.module('origApp.controllers')
 
 		var validAgencies = [];
 		HttpResource.model('timesheets').query({},function (response) {
-			//console.log(response.data.objects)
+			
 			for (var i =0; i< response.data.objects.length; ++i){
 				validAgencies.push(response.data.objects[i].agency);	
 			}
@@ -69,22 +36,12 @@ angular.module('origApp.controllers')
 					$scope.agencies.push({name: res.data.object.name, id: res.data.object._id});
 					$scope.displayAgencies = $scope.agencies[0];
 					
-					// $scope.branches = [];
-					// for(var i = 0; i<$scope.agencies.length; ++i){
-					// 	$scope.branches.push($scope.agencies[i].branches[i]);
 					
-					// }
-					
-					//console.log('agenciessss',$scope.displayBranches)
 				});
 			}
 
-			console.log('vA',validAgencies);
-			console.log('dA', $scope.displayAgencies);
 
-				//$scope.agenciesWithTimesheets=uniq_fast(validAgencies);
-
-			});
+		});
 
 
 		
@@ -106,9 +63,7 @@ angular.module('origApp.controllers')
 				.query($scope.batchParams, function (response) {
 
 					$scope.timeBatches = response.data.objects;
-					console.log($scope.timeBatches);
 				});
-				//console.log(batchParams.agency)
 
 				$scope.paymentTermsConstant = ConstantsResource.get('paymentterms');
 				$scope.invoiceDesigns = HttpResource.model('invoicedesigns').query({});
@@ -122,16 +77,8 @@ angular.module('origApp.controllers')
 					else{
 						$scope.marginToAgency = false;
 					}
-					console.log($scope.payroll);
 
-				 	// function turthy (something){
-				 	// 	if(something){
-				 	// 		something = "Yes";
-				 	// 	} else {
-				 	// 		something = "No"
-				 	// 	}
-				 	//}
-				 	
+				 
 				 	$scope.holidayPayIncluded = $scope.payroll.holidayPayIncluded;
 				 	if(!$scope.payroll.holidayPayIncluded){
 				 		$scope.holidayPayIncluded = false;
@@ -190,7 +137,7 @@ angular.module('origApp.controllers')
 				 		if($scope.invoiceDesignArray[0]._id === $scope.invoiceDesigns[i]._id){
 				 			$scope.invoiceDesignArray.splice(-1);
 				 		}
-				 	}/////////////////////////////heeeeeeeeeeeeeeeeeerrrrrrrrrre
+				 	}
 
 				 	$scope.invoiceDesignModel = $scope.invoiceDesignArray[0];
 
@@ -214,32 +161,26 @@ angular.module('origApp.controllers')
 				 	
 
 
-				 	
-				 	console.log('pushhhhhhing');
-				 	
+
 				 	
 				 	$scope.paymentTermsModel = $scope.paymentTermsArray[0];
 				 	
-
-				 	//$scope.paymentTermsModel = $scope.paymentTerms.description($scope.paymentTermsArray[0])
 				 	$scope.marginAmount = $scope.payrollRes.object.defaultPayroll.marginAmount;
 				 	$scope.holidayAmount = $scope.payrollRes.object.defaultPayroll.holidayAmount;
 				 	
 
 
 				 });
-}
-});
+			}
+		});
 
 
 
 
-$scope.clicked = false;
-$scope.sendBatch = function (id,index) {
-	
-			//console.log(id)
+		$scope.clicked = false;
+		$scope.sendBatch = function (id,index) {
+
 			$scope.batchId = id;
-			console.log($scope.batchId);
 			$scope.selected = index;
 		};
 
@@ -287,8 +228,6 @@ $scope.sendBatch = function (id,index) {
 						agency:$scope.batchParams.agency,
 						branch:null,
 						timesheetBatch:$scope.batchId,
-						// "date":"2015-01-02",
-						// "dueDate":"2015-01-02",
 						companyDefaults:{
 							holidayPayIncluded:$scope.holidayPayIncluded,
 							employersNiIncluded:$scope.employersNiIncluded,
@@ -304,83 +243,36 @@ $scope.sendBatch = function (id,index) {
 					};
 
 					
-					$scope.posting = true;
-					HttpResource.model('invoice').create(invoice).post().then(function (response) {
+			$scope.posting = true;
+			HttpResource.model('invoice').create(invoice).post().then(function (response) {
 
-						console.log('postingggg');
-			//$scope.posting = true;
-			console.log('the saved invoice',response);
-			$scope.saveInvoice = response;
-		 	 	// console.log(response);
+				$scope.saveInvoice = response;
 		 	 	
-		 	 	$scope.posting = false;
-		 	 	
-		 	 	HttpResource.model('invoice').query({},function (res) {
-		 	 		console.log('getting all invoices check',res);
-		 	 	});
-
-		 	 	
-		 	 	
-		 	 });
+		 		 $scope.posting = false;
+		 	});
 
 
 
-					
+
 
 			/// close modal instance
 			$scope.$watch('posting', function () {
-				// body...
+				
 				if($scope.posting === false){
-					console.log('savedInvoice',$scope.saveInvoice);
 					$modalInstance.close();
-					//$scope.invoiceOverview = function () {
-						
-							//open the second modal
-							
-							ModalService.open({
-								templateUrl: 'views/payroll/invoiceOverview.html',
-								parentScope: $scope,
-								controller: 'invoiceOverviewController',
-								size:'md'
-							});
-						//};
-					}
-				});
+					//open the second modal
+					ModalService.open({
+						templateUrl: 'views/payroll/invoiceOverview.html',
+						parentScope: $scope,
+						controller: 'invoiceOverviewController',
+						size:'md'
+					});
+					
+
+				}
+			});
 			
 		};
-
-
-
-
-		$scope.logMe= function () {
-			
-		//console.log($scope.displayAgencies)
-		//console.log($scope.holidayPayIncluded);
-		//console.log($scope.invoiceVatCharged)
-		//console.log($scope.logDis);
-		//console.log('default logDIs',$scope.logDis)
-		//console.log('payrollRes', $scope.payrollRes)
-		//console.log('id', $scope.batchId)
-		console.log($scope.payroll);
-		console.log($scope.invoiceDesignModel);
-		console.log('ptermzz',$scope.paymentTermsArray);
-		$scope.paymentTermsArray.splice(0,1);
-		console.log('ptermzz',$scope.paymentTermsArray);
-		console.log('agencies' , $scope.agencies[0]);
-		console.log('branches' , $scope.branches);
-		console.log('displayBranches', $scope.displayBranches);
-		//console.log('margin',$scope.marginChargedToAgency)
-	};
-
-
-
-
-
-
-
-
-
-
 
 
 

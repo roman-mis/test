@@ -38,16 +38,5 @@ angular.module('origApp.controllers')
             $scope.displayDetails.push($scope.displayObject);
 
         }
-            
-
-        $scope.logMe = function () {
-            // body...
-            console.log(parentScope.saveInvoice.data,$scope.totalVat);
-            console.log('display details',$scope.displayDetails);
-            console.log('totalInvoiceValue: ',$scope.totalInvoiceValue,'/n total vat', $scope.totalVat, '/n details'
-                , $scope.displayDetails, '/n holidayAmount',$scope.holidayAmount, '/n contractors', $scope.totalNumberOfContractors);
-                       // console.table($scope.displayInvoice.data.object);
-
-        };
 
 	}]);
