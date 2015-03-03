@@ -134,6 +134,7 @@ module.exports=function(){
                       if(payroll) {
 
                           log('Retrieved payroll record',logs);
+                          log('Payroll week number '+payroll.weekNumber,logs);
                           var promises= new Q(true);
 
                           payrollRequest.workers.forEach(function(worker){
