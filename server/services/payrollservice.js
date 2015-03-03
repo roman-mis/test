@@ -406,7 +406,7 @@ module.exports=function(){
                                                                            var employersNI = 0;
 
                                                                            if(payForTaxesAndNI>employersNiThreshold.amount) {
-                                                                               employersNI = (payForTaxesAndNI-employersNI) * (employersNiRate.amount/(1+employersNiRate.amount));
+                                                                               employersNI = (payForTaxesAndNI-employersNIThreshold) * (employersNiRate.amount/(1+employersNiRate.amount));
                                                                                log('Pay under Employers NI Threshold so none due', logs);
                                                                            }
 
