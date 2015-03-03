@@ -405,9 +405,10 @@ module.exports=function(){
                                                                            //region Employers NI
 
                                                                            var employersNI = 0;
+                                                                           
 
                                                                            if(payForTaxesAndNI>employersNiThreshold.amount) {
-                                                                               employersNI = (payForTaxesAndNI-employersNIThreshold) * (employersNiRate.amount/(1+employersNiRate.amount));
+                                                                               employersNI = (payForTaxesAndNI-employersNiThreshold.amount) * (employersNiRate.amount/(1+employersNiRate.amount));
                                                                                log('Pay under Employers NI Threshold so none due', logs);
                                                                            }
 
