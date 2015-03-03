@@ -488,10 +488,10 @@ module.exports=function(){
 
                                                                            //region Get YTD basic, higher and additional
 
-                                                                           var basicRateYTD = (incomeTaxHigherRateThreshold*payroll.weekNo)/52;
+                                                                           var basicRateYTD = (incomeTaxHigherRateThreshold*payroll.weekNumber)/52;
                                                                            log('Basic rate YTD: ' + basicRateYTD, logs);
 
-                                                                           var higherRateYTD = (incomeTaxAdditionalRateThreshold*payroll.weekNo)/52;
+                                                                           var higherRateYTD = (incomeTaxAdditionalRateThreshold*payroll.weekNumber)/52;
                                                                            log('Higher rate YTD: ' + higherRateYTD, logs);
 
                                                                            var additionalRateYTD = higherRateYTD;
@@ -515,7 +515,7 @@ module.exports=function(){
                                                                                    case 'Y':
                                                                                    case 'V':
 
-                                                                                   availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(payroll.weekNo/52);
+                                                                                   availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(payroll.weekNumber/52);
 
                                                                                    log('Available tax free allowance inc this week: ' + availableTaxFreeAllowanceIncThisWeek, logs);
 
@@ -542,7 +542,7 @@ module.exports=function(){
 
                                                                                 case 'K' :
 
-                                                                                   availableTaxFreeAllowanceIncThisWeek = -((taxCodeNumber*10)-9)*(payroll.weekNo/52);
+                                                                                   availableTaxFreeAllowanceIncThisWeek = -((taxCodeNumber*10)-9)*(payroll.weekNumber/52);
                                                                                    log('Available tax free allowance incl this week: ' + availableTaxFreeAllowanceIncThisWeek, logs);
 
                                                                                    earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
