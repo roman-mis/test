@@ -12,11 +12,10 @@ angular.module('origApp.controllers')
         $scope.totalNumberOfContractors = 0;
         $scope.displayInvoice = parentScope.saveInvoice.data.object;
 
-        console.log($scope.displayInvoice);
         for(var i = 0; i< $scope.displayInvoice.length;++i){
 
             $scope.totalInvoiceValue += $scope.displayInvoice[i].total;
-            //console.log($scope.displayInvoice[i].vat);
+            
             $scope.totalVat += $scope.displayInvoice[i].vat;
 
             if($scope.displayInvoice[i].companyDefaults.marginChargedToAgency === true){
@@ -38,5 +37,11 @@ angular.module('origApp.controllers')
             $scope.displayDetails.push($scope.displayObject);
 
         }
+
+
+        $scope.ok = function () {
+          
+          $modalInstance.close();  
+        };
 
 	}]);

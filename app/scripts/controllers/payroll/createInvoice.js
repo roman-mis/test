@@ -226,7 +226,7 @@ angular.module('origApp.controllers')
 
 					var invoice = {
 						agency:$scope.batchParams.agency,
-						branch:null,
+						branch:$scope.displayBranches._id,
 						timesheetBatch:$scope.batchId,
 						companyDefaults:{
 							holidayPayIncluded:$scope.holidayPayIncluded,
@@ -242,7 +242,6 @@ angular.module('origApp.controllers')
 						}
 					};
 
-					
 			$scope.posting = true;
 			HttpResource.model('invoice').create(invoice).post().then(function (response) {
 
@@ -273,10 +272,5 @@ angular.module('origApp.controllers')
 			});
 			
 		};
-
-
-
-
-
 
 }]);
