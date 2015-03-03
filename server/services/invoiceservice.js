@@ -131,7 +131,7 @@ module.exports=function(){
 							return timesheetservice.getTimesheetsByBatchId(invoice.timesheetBatch)
 							.then(function(timesheets){
 								var lines = [];
-								var net = 0, vat = 0, vatRate = 0;
+								var net = 0, vat = 0;
 								_.forEach(timesheets, function(timesheet){
 									var elements = [];
 									_.forEach(timesheet.elements, function(_element){
@@ -161,34 +161,7 @@ module.exports=function(){
 								// For Vat
 								var invoiceInfo, invoiceModel;
 								var vatCharged = invoice.companyDefaults.vatCharged;
-								if(vatCharged){
-									// Find VAT
-									return systemservice.getVat().then(function(amount){
-										console.log('With Vat');
-										invoiceInfo = {
-											agency: invoice.agency,
-											branch: invoice.branch,
-											timesheetBatch: invoice.timesheetBatch,
-											date: invoice.date,
-											dueDate: invoice.dueDate,
-											lines: lines,
-											companyDefaults: invoice.companyDefaults,
-											net: net,
-									        vatRate: amount,
-									        vat: net * amount,
-									        total: (net+vat).toFixed(2)
-										};
-										
-										invoiceModel = new db.Invoice(invoiceInfo);
-										return Q.nfcall(invoiceModel.save.bind(invoiceModel))
-										.then(function(){
-											var invoiceModels = [];
-											invoiceModels.push(invoiceModel);
-											resolve(invoiceModels);
-										},reject);
-									}, reject);
-								}else{
-									console.log('Without Vat');
+								return systemservice.getVat(vatCharged).then(function(amount){
 									invoiceInfo = {
 										agency: invoice.agency,
 										branch: invoice.branch,
@@ -198,19 +171,19 @@ module.exports=function(){
 										lines: lines,
 										companyDefaults: invoice.companyDefaults,
 										net: net,
-								        vatRate: vatRate,
-								        vat: vat,
+								        vatRate: amount,
+								        vat: net * amount,
 								        total: (net+vat).toFixed(2)
 									};
-									
+
 									invoiceModel = new db.Invoice(invoiceInfo);
-									return Q.nfcall(invoiceModel.save.bind(invoiceModel))
-									.then(function(){
-										var invoiceModels = [];
-										invoiceModels.push(invoiceModel);
-										resolve(invoiceModels);
-									},reject);
-								}
+										return Q.nfcall(invoiceModel.save.bind(invoiceModel))
+										.then(function(){
+											var invoiceModels = [];
+											invoiceModels.push(invoiceModel);
+											resolve(invoiceModels);
+										},reject);
+								}, reject);
 							}, reject);
 						}
 					}else{
