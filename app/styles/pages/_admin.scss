@@ -66,15 +66,28 @@
 	opacity: 0;
 }
 .admin-icon {
-    width: 95px;
-    height: 95px;
+    width: 76px;
+    height: 76px;
     background-color: $gray-lighter;
     border: 1px solid $gray-light;
     text-align: center;
-    line-height: 95px;
+    line-height: 76px;
     border-radius: 4px;
     margin: 0 auto;
+    img {
+        height: 51px;
+        width: 51px;
+    }
     &:hover {
         opacity: 0.8; 
+    }
+}
+
+.firstLevel-menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    > div {
+        width: 135px;
     }
 }

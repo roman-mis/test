@@ -134,6 +134,7 @@ module.exports=function(){
                       if(payroll) {
 
                           log('Retrieved payroll record',logs);
+                          log('Payroll week number '+payroll.weekNumber,logs);
                           var promises= new Q(true);
 
                           payrollRequest.workers.forEach(function(worker){
@@ -318,8 +319,8 @@ module.exports=function(){
                                                                    timesheetPromises=timesheetPromises.then(function(){
                                                                         var employersNiOnNmw = 0;
 
-                                                                       if(totalEffectiveEarnings>=employersNiThreshold) {
-                                                                           employersNiOnNmw = ((totalEffectiveEarnings-employersNiThreshold)/100)*employersNiRate;
+                                                                       if(totalEffectiveEarnings>=employersNiThreshold.amount) {
+                                                                           employersNiOnNmw = ((totalEffectiveEarnings-employersNiThreshold.amount)/100)*employersNiRate.amount;
                                                                            log('Employers NI on NMW: ' + employersNiOnNmw,logs);
                                                                        }
 
@@ -395,7 +396,7 @@ module.exports=function(){
                                                                            log('Margin: ' + margin, logs);
                                                                            log('Expenses allowed: ' + totalExpenses, logs);
 
-                                                                           var payForTaxesAndNI = totalPay + totalHolidayPay + totalHolidayPayTaken + margin + totalExpenses;
+                                                                           var payForTaxesAndNI = totalPay - totalHolidayPay + totalHolidayPayTaken - margin - totalExpenses;
 
                                                                            log('Pay available for taxes and NI: ' + payForTaxesAndNI, logs);
 
@@ -404,9 +405,10 @@ module.exports=function(){
                                                                            //region Employers NI
 
                                                                            var employersNI = 0;
+                                                                           
 
-                                                                           if(payForTaxesAndNI>employersNiThreshold) {
-                                                                               employersNI = (payForTaxesAndNI-employersNI) * (employersNiRate/(1+employersNiRate));
+                                                                           if(payForTaxesAndNI>employersNiThreshold.amount) {
+                                                                               employersNI = (payForTaxesAndNI-employersNiThreshold.amount) * (employersNiRate.amount/(100+employersNiRate.amount));
                                                                                log('Pay under Employers NI Threshold so none due', logs);
                                                                            }
 
@@ -416,21 +418,21 @@ module.exports=function(){
 
                                                                            //region Employees NI
 
-                                                                           var paySubjectToEmployeesNI = payForTaxesAndNI+employersNI;
+                                                                           var PaySubjectToEmployeesNIandTax = payForTaxesAndNI-employersNI;
 
-                                                                           log('Pay subject to Employees NI: ' + paySubjectToEmployeesNI, logs);
+                                                                           log('Pay subject to Employees NI: ' + PaySubjectToEmployeesNIandTax, logs);
 
                                                                            var employeesNI = 0;
 
                                                                            if(_worker.worker.taxDetail.employeesNIpaid) {
                                                                                // Main NI (12% in Feb 2015)
                                                                                var mainNI = 0;
-                                                                               if(paySubjectToEmployeesNI>employeesNiRate.lowerThreshold) {
-                                                                                   if(paySubjectToEmployeesNI>employeesNiRate.upperThreshold) {
+                                                                               if(PaySubjectToEmployeesNIandTax>employeesNiRate.lowerThreshold) {
+                                                                                   if(PaySubjectToEmployeesNIandTax>employeesNiRate.upperThreshold) {
                                                                                        mainNI = employeesNiRate.upperThreshold-employeesNiRate.lowerThreshold;
                                                                                    }
                                                                                    else {
-                                                                                       mainNI = paySubjectToEmployeesNI-employeesNiRate.lowerThreshold;
+                                                                                       mainNI = PaySubjectToEmployeesNIandTax-employeesNiRate.lowerThreshold;
                                                                                    }
 
                                                                                    mainNI = (mainNI/100)*employeesNiRate.amount;
@@ -439,8 +441,8 @@ module.exports=function(){
 
                                                                                // High earners NI (2% in Feb 2015)
                                                                                var highEarnerNI = 0;
-                                                                               if(paySubjectToEmployeesNI>employeesHighEarnerNiRates.lowerThreshold) {
-                                                                                   highEarnerNI = ((paySubjectToEmployeesNI-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
+                                                                               if(PaySubjectToEmployeesNIandTax>employeesHighEarnerNiRates.lowerThreshold) {
+                                                                                   highEarnerNI = ((PaySubjectToEmployeesNIandTax-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
                                                                                }
                                                                                log('High earner NI: ' + highEarnerNI, logs);
 
@@ -487,11 +489,11 @@ module.exports=function(){
                                                                            //endregion
 
                                                                            //region Get YTD basic, higher and additional
-
-                                                                           var basicRateYTD = (incomeTaxHigherRateThreshold*payroll.weekNo)/52;
+                                                                           
+                                                                           var basicRateYTD = (incomeTaxHigherRateThreshold.amount*payroll.weekNumber)/52;
                                                                            log('Basic rate YTD: ' + basicRateYTD, logs);
 
-                                                                           var higherRateYTD = (incomeTaxAdditionalRateThreshold*payroll.weekNo)/52;
+                                                                           var higherRateYTD = (incomeTaxAdditionalRateThreshold.amount*payroll.weekNumber)/52;
                                                                            log('Higher rate YTD: ' + higherRateYTD, logs);
 
                                                                            var additionalRateYTD = higherRateYTD;
@@ -499,7 +501,7 @@ module.exports=function(){
 
                                                                            //endregion
 
-                                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+totalPay;
+                                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+PaySubjectToEmployeesNIandTax;
                                                                            log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD, logs);
 
                                                                            var taxInPeriod = 0,
@@ -515,7 +517,7 @@ module.exports=function(){
                                                                                    case 'Y':
                                                                                    case 'V':
 
-                                                                                   availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(payroll.weekNo/52);
+                                                                                   availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(payroll.weekNumber/52);
 
                                                                                    log('Available tax free allowance inc this week: ' + availableTaxFreeAllowanceIncThisWeek, logs);
 
@@ -525,7 +527,7 @@ module.exports=function(){
                                                                                    break;
                                                                                 case 'D0':
 
-                                                                                   higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate;
+                                                                                   higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate.amount;
                                                                                    log('Higher tax: ' + higherTax, logs);
 
                                                                                    taxInPeriod = higherTax-payrollWorkerYTD.taxPaid;
@@ -533,7 +535,7 @@ module.exports=function(){
                                                                                    break;
                                                                                 case 'D1':
 
-                                                                                   additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate;
+                                                                                   additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate.amount;
                                                                                    log('Additional tax: ' + additionalTax, logs);
 
                                                                                    taxInPeriod = additionalTax-payrollWorkerYTD.taxPaid;
@@ -542,7 +544,7 @@ module.exports=function(){
 
                                                                                 case 'K' :
 
-                                                                                   availableTaxFreeAllowanceIncThisWeek = -((taxCodeNumber*10)-9)*(payroll.weekNo/52);
+                                                                                   availableTaxFreeAllowanceIncThisWeek = -((taxCodeNumber*10)-9)*(payroll.weekNumber/52);
                                                                                    log('Available tax free allowance incl this week: ' + availableTaxFreeAllowanceIncThisWeek, logs);
 
                                                                                    earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
@@ -566,7 +568,7 @@ module.exports=function(){
                                                                                    var basicAmountToTax = (earningsYTDsubjectToTax>basicRateYTD ? basicRateYTD : earningsYTDsubjectToTax);
                                                                                    log('Basic amount to tax: ' + basicAmountToTax, logs);
 
-                                                                                   var basicTax = basicAmountToTax*incomeTaxBasicRate;
+                                                                                   var basicTax = (basicAmountToTax*incomeTaxBasicRate.amount)/100;
                                                                                    log('Basic tax: ' + basicTax, logs);
 
                                                                                    var higherRateLowerLimit = (earningsYTDsubjectToTax>basicRateYTD ? basicRateYTD : 0);
@@ -575,13 +577,13 @@ module.exports=function(){
                                                                                    var higherRateUpperLimit = (earningsYTDsubjectToTax>higherRateYTD ? higherRateYTD : earningsYTDsubjectToTax);
                                                                                    log('Higher rate upper limit: ' + higherRateUpperLimit, logs);
 
-                                                                                   higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate) : 0);
+                                                                                   higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate.amount)/100 : 0);
                                                                                    log('Higher tax: ' + higherTax, logs);
 
                                                                                    var additionalAmountToTax = (earningsYTDsubjectToTax>additionalRateYTD ? earningsYTDsubjectToTax-additionalRateYTD : 0);
                                                                                    log('Additional amount to tax: ' + additionalAmountToTax, logs);
 
-                                                                                   additionalTax = additionalAmountToTax*incomeTaxAdditionalRate;
+                                                                                   additionalTax = (additionalAmountToTax*incomeTaxAdditionalRate.amount)/100;
                                                                                    log('Additional tax: ' + additionalTax, logs);
 
                                                                                    var taxYTD = basicTax + higherTax + additionalTax;
@@ -652,6 +654,7 @@ module.exports=function(){
               
           })
           .then(function(){
+            logs.push('Success.......');
               resolve({result:true,logs:logs});
           },function(err){
             

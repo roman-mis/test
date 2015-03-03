@@ -17,8 +17,9 @@ angular.module('origApp.services')
           companyProfile = data.data;
           d.resolve(companyProfile);
         }
-        else 
-          d.reject("no data");
+        else {
+          d.reject('no data');
+        }
       });
     }
     

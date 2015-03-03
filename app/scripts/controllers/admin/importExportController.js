@@ -1,4 +1,4 @@
-
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('importExportController',['$rootScope', '$scope', 'HttpResource', 'imExTemplates', '$state',
@@ -22,19 +22,19 @@ app.controller('importExportController',['$rootScope', '$scope', 'HttpResource',
 
     $scope.showTemplate = function(index){
     	imExTemplates.details = $scope.templates[index];
-    	$state.go("app.admin.addNewImEx", { "type": 'Edite'});
-    }
+    	$state.go('app.admin.addNewImEx', { 'type': 'Edite'});
+    };
 
 	$scope.copy = function(index){
     	imExTemplates.details.items = $scope.templates[index].items;
-    }    
+    };
 
     $scope.deleteTemplate = function(index) {
-     	 if (!confirm('Are you sure to delete this template?')) {
+     	 if (!window.confirm('Are you sure to delete this template?')) {
         return;
       }
     	var id =$scope.templates[index]._id;
-    	console.log(id)
+    	console.log(id);
       HttpResource.model('imExTeplates')
       .delete(id).then(function(result){
         console.log('*****');

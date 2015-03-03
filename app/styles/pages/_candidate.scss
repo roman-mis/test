@@ -135,8 +135,10 @@
         }
     }
     .pie-chat {
-        height: 200px;
+        height: 120px;
         background: url('../images/mark-chat.png') transparent center center no-repeat;
+        background-size: contain;
+        margin: 20px 0;
     }
     .beta {
         color: $brand-warning-light;
@@ -261,6 +263,8 @@
     width: 240px;
     li {
         float: left;
+        height: 35px; 
+        margin-bottom: 5px; 
     }
     a {
         text-decoration: none;

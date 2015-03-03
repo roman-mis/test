@@ -1,17 +1,18 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('addNewImExTemplatesController',['$rootScope', '$scope','$state','$stateParams','HttpResource', 'imExTemplates',
 	function($rootScope,$scope,$state,$stateParams,HttpResource,imExTemplates){
 		var fields = ['templateType', 'templateName', 'items'];
-console.log($stateParams)
+console.log($stateParams);
 		var valideTypes = ['Schedule','Expenses','Contractor','Assignment','BACS','Invoices'];
 		$scope.items =[];
 		
 		if($stateParams.type === 'Edite'){
-			console.log(imExTemplates)
+			console.log(imExTemplates);
 
 			$scope.templateType = imExTemplates.details.templateType;
-			console.log($scope.templateType)
+			console.log($scope.templateType);
 			$scope.templateName = imExTemplates.details.templateName;
 			$scope.items = imExTemplates.details.items;
 			imExTemplates.details = {};
@@ -40,7 +41,7 @@ console.log($stateParams)
         	if(imExTemplates.details.items){
         		$scope.items = imExTemplates.details.items;
         	}
-        }
+        };
         
         $scope.sortableOptions = {};
         
@@ -71,25 +72,25 @@ console.log($stateParams)
             var l = $scope.items.length;
             while (l--) {
                 if ($scope.items[l] === selectedOption) {
-                    alert('Item is already added');
+                    window.alert('Item is already added');
                     return false;
                 }
             }
             $scope.items.push(selectedOption);
             console.log($scope.items);
-        }
+        };
 
         $scope.isNotEmpty = function(fields){
 			var isNotEmpty = true;
 			for(var i = 0; i < fields.length; i++){
-				console.log(fields[i])
+				console.log(fields[i]);
 				if($scope[fields[i]] === undefined || $scope[fields[i]] === ''){
 					isNotEmpty = false;
 					break;
 				}
 			}
 			return isNotEmpty;
-		}
+		};
 
         $scope.getData = function(fields){
 			var data = {};
@@ -97,7 +98,7 @@ console.log($stateParams)
 				data[fields[i]] = $scope[fields[i]];
 			}
 			return data;
-		}
+		};
 
         $scope.saveNew = function(){
 			if($scope.isNotEmpty(fields)){
@@ -106,13 +107,13 @@ console.log($stateParams)
 				HttpResource.model('imExTeplates').create(data).post().then(function(response) {
 	              if (!HttpResource.flushError(response)) {
 	                $scope.clear();
-	                $console.log(response)
+	                console.log(response);
 	              }
 	            });
 			}
-		}
+		};
 
 		$scope.close = function(){
 			$state.go('app.admin.Import&Export');
-		}
+		};
 }]);

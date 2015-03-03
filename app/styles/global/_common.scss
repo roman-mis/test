@@ -208,6 +208,7 @@ header {
         padding: 5px $grid-gutter-width-md;
     }
     .search-wrapper {
+        max-width: 237px !important;
         .search-group {
             position: relative;
             height: 32px;
@@ -324,6 +325,11 @@ header {
             li {
                 list-style: none;
                 float: left;
+                &:hover {
+                    a i {
+                        background-color: $green;
+                    }
+                }
             }
             a {
                 text-decoration: none;
@@ -341,9 +347,6 @@ header {
                 i {
                     width: 40px;
                     background-color: $green-light;
-                    &:hover {
-                        background-color: $green;
-                    }
                 }
                 span.title {
                     width: 160px;
@@ -379,7 +382,7 @@ header {
                 .user-date {
                     padding-top: 23px;
                     @media(max-width: $screen-sm-max) {
-                        padding-top: 0;
+                        padding-top: 5px;
                     }
                     p {
                         margin: 0;
@@ -422,15 +425,15 @@ header {
                 }
             }
             .tooltip {
-                left: 8px!important; //-------------
-                margin-top: 4px!important;
+                left: 6px!important; 
+                margin-top: 3px!important;
                 .tooltip-arrow {
-                    left: 25%!important; //-----------------
+                    left: 25%!important; 
                     border-top-color: transparent;
                     width: 14px;
                     height: 15px;
                     background: url('../images/tooltip_trailer.png') transparent center center no-repeat;
-                    bottom: -11px; //----------------
+                    bottom: -9px; 
                 }
                 .tooltip-inner {
                     font-size: 13px;
@@ -500,7 +503,7 @@ header {
                     padding-bottom: 4px;
                     i {
                         position: relative;
-                        top: 4px; //--------- bulo 5
+                        top: 4px;
                     }
                 }
                 ul {
@@ -597,7 +600,7 @@ header {
                 background: url('../images/breadcrumb_sep.png') transparent center center no-repeat;
                 margin: 0 10px;
                 position: relative;
-                top: 4px; //-------------------------
+                top: 3px; 
             }
         }
         .meta-box {
@@ -751,7 +754,7 @@ header {
                         border-radius: 0;
                         border-color: transparent;
                         margin: 0;
-                        line-height: 16px;
+                        line-height: 19px;
                         &:hover {
                             background-color: transparent;
                             color: $gray-lightest;
@@ -1028,7 +1031,7 @@ body {
 
 select.form-control,
 input.form-control {
-    padding: 6px 2px;
+    padding: 0 2px;
 }
 
 .form-group {

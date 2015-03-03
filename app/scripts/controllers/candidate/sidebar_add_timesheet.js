@@ -8,7 +8,8 @@ angular.module('origApp.controllers')
 	$scope.candidate = parentScope.candidate;
 
 	//getting agencies related to the current candidate
-	 HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct')
+
+	HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct')
 	.query({},function (data) {
 		//waiting for the data to return
 		$scope.agencies = data.data.objects;
@@ -213,7 +214,8 @@ angular.module('origApp.controllers')
 		}
 		$scope.daysInRange = daysInRange;
 		$scope.times = [];
-		$scope.dateHolder=daysInRange[1].label + ' to ' + daysInRange[7].label;
+
+		$scope.dateHolder=daysInRange[1].label +  'to'  + daysInRange[7].label;
 
 		$scope.weekEndingDate = daysInRange[6];
 	};

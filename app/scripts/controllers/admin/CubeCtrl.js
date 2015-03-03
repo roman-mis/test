@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 
@@ -7,6 +8,6 @@ app.controller('CubeCtrl', function($scope, $rootScope, $location) {
 
   $scope.go = function(path) {
   $location.path(path);
- }
+ };
 
 });
