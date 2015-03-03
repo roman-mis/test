@@ -1,5 +1,5 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp1Controller', function($scope) {
+        .controller('CandidateSidebarAddExp1Controller', function() {
         });
 

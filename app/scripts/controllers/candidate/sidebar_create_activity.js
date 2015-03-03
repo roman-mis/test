@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddActivityController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, params) {
+        .controller('CandidateSidebarAddActivityController', function($scope, $modalInstance, parentScope, HttpResource) {
           $scope.data = {};
 
           $scope.activityTypes = [
@@ -19,7 +19,7 @@ angular.module('origApp.controllers')
 
 
           $scope.cancel = function() {
-            console.log($scope.agencies)
+            console.log($scope.agencies);
             $modalInstance.dismiss('cancel');
           };
 

@@ -27,7 +27,7 @@ angular.module('origApp.controllers')
             });
           };
 
-          $scope.viewFile = function(fileName, $event) {
+          $scope.viewFile = function(fileName) {
             HttpResource.model('documents').customGet('signTempViewdocS3', {
               fileName: fileName
             }, function(response) {
@@ -83,7 +83,7 @@ angular.module('origApp.controllers')
                 url: signedRequest,
                 data: file,
                 headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
-              }).success(function(data) {
+              }).success(function() {
                 //get view url of file
                 $scope.isUploading = false;
                 $scope.data.generatedName = fileName;

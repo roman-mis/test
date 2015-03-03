@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','payroll',
 	function($state,$rootScope,$scope,HttpResource,ModalService,payroll){	
@@ -7,7 +8,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
    $scope.agencyIndex = -1;
    $scope.comparingList = [];
    $scope.periodTypeValues = [];
-   $scope.periodType = 'weekly'
+   $scope.periodType = 'weekly';
 
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
@@ -25,8 +26,8 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           parentScope: $scope,
           controller: 'runPayrollController',
           size: 'lg'
-      })
-    }
+      });
+    };
 
     $scope.camelCaseFormate = function(s){
     	var ar = s.split(' ');
@@ -41,7 +42,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
             s = s+ arr.join('');
         }
         return s;
-    }
+    };
 
     $scope.unCamelCaseFormate = function(s){
     	if(!s || s.length === 0){
@@ -53,14 +54,14 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     		if(ar[i] === ar[i].toUpperCase()){
     			s += ' ';
     		}
-    		s += ar[i]
+    		s += ar[i];
     	}
     	return s;
-    }
+    };
 
     $scope.getPayroll = function(periodType){
         periodType = periodType || 'weekly';
-        console.log(periodType)
+        console.log(periodType);
         $scope.periodType = periodType;
         var params={periodType:periodType,isCurrent:true};
         console.log(params);
@@ -71,7 +72,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
             payroll.details =  data.data.objects[0];
             console.log(payroll);
         });
-    }
+    };
     $scope.getPayroll();
 
 
@@ -115,11 +116,11 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
      //          inputs: $scope.agencyList,
      //          size: 'sm'
      //        });
-}
+};
 
     $scope.viewAction = function(){
-      $state.go('app.payroll.viewAll')		
-    }
+      $state.go('app.payroll.viewAll');	
+    };
 
     
     $scope.createInvoice = function () {
@@ -129,7 +130,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           controller: 'createInvoiceController',
           size:'lg'
       });
-    }
+    };
 }]);
 
 
