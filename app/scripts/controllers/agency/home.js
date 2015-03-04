@@ -65,7 +65,7 @@ angular.module('origApp.controllers')
                 url: signedRequest,
                 data: file,
                 headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
-              }).success(function(data) {
+              }).success(function() {
                 HttpResource.model('agencies/' + $scope.agencyId).create({logo: fileName})
                     .patch('contact')
                     .then(function(response) {

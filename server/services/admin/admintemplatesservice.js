@@ -8,9 +8,9 @@ var service = {};
 service.saveTemplate = function(templateContent){
 	return Q.Promise(function(resolve,reject){
 
-		console.log(templateContent)
+		console.log(templateContent);
 		var template = db.Template(templateContent);
-		console.log(template)
+		console.log(template);
 
 		return Q.all([Q.nfcall(template.save.bind(template))])
 			.then(function(){

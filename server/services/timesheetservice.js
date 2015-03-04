@@ -1,7 +1,6 @@
 'use strict';
 
-module.exports=function(){
-	var db = require('../models'); 
+module.exports=function(db){
 	var Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		_=require('lodash');
@@ -20,7 +19,6 @@ module.exports=function(){
 	};
 
 	service.getTimesheetsByBatchId = function(id){
-		console.log(id);
 		var q=db.Timesheet.find({'batch':id});
 		return Q.nfcall(q.exec.bind(q));
 	};

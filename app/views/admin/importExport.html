@@ -1,0 +1,125 @@
+<div class="content">
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="	">
+            <div class="modal-content">
+			
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+				    </button>
+                    <h4 class="modal-title" id="myModalLabel">Import | Export Templates</h4>
+                </div>
+                    
+                <div class="modal-body">
+                    <div role="tabpanel">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" ng-click="loadAllTemplates('Schedule')">
+                                <a  role="tab" data-toggle="tab">
+                                    <i class="fa fa-book"></i>
+                                </a>
+                            </li>
+                            <li role="presentation"  ng-click="loadAllTemplates('Expenses')">
+                                <a  role="tab" data-toggle="tab">
+                                    <i class="fa fa-gbp"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" ng-click="loadAllTemplates('Contractor')">
+                                <a  role="tab" data-toggle="tab" >
+                                    <i class="fa fa-user"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" ng-click="loadAllTemplates('Assignment')">
+                                <a  role="tab" data-toggle="tab" >
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" ng-click="loadAllTemplates('BACS')">
+                                <a  role="tab" data-toggle="tab">
+                                    <i class="fa fa-desktop"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" ng-click="loadAllTemplates('Invoices')">
+                                <a  role="tab" data-toggle="tab">
+                                    <i class="fa fa-file-text-o"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" class="active" ng-click="loadAllTemplates('')">
+                                <a  role="tab" data-toggle="tab">All</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            
+                            <div role="tabpanel" class="tab-pane active" id="expenses">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h4 class="importExpensesh4">Expenses</h4>
+                                        
+                                    </div>
+                                     <div class="dropdown">
+										  <button class="btn btn-default" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+										    <i class="fa fa-plus"></i>
+										    <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+										    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="app.admin.addNewImEx({type:'Schedule'})"><i  class="fa fa-book"></i>Schedule</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="app.admin.addNewImEx({type:'Expenses'})"><i class="fa fa-gbp"></i>Expenses</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="app.admin.addNewImEx({type:'Contractor'})"><i class="fa fa-user"></i>Contractor</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="app.admin.addNewImEx({type:'Assignment'})"><i class="fa fa-wrench"></i>Assignment</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="app.admin.addNewImEx({type:'BACS'})"><i class="fa fa-desktop"></i>BACS</a></li>
+										    <li role="presentation"><a role="menuitem" tabindex="-1" ui-sref="app.admin.addNewImEx({type:'Invoices'})"><i class="fa fa-file-text-o"></i>Invoices</a></li>
+										  </ul>
+										</div>
+                                     <div class="col-xs-12 text-right">
+
+                                        
+                                    </div>
+                                    
+                                    <div class="col-xs-12">
+                                        <table class="table table-striped  ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="name">Name</th>
+                                                    <th class="lastEdited">Last Edited</th>
+                                                    <th class="created">Created</th>
+                                                    <th class="icons">.</th>
+                                                    <th class="icons">.</th>
+                                                    <th class="icons">.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="template in templates">
+                                                    <td class="name">{{template.templateName}}</td>
+                                                    <td class="lastEdited">{{template.updatedDate | date:'yyyy-MM-dd'}}</td>
+                                                    <td class="created">{{template.createdDate | date:'yyyy-MM-dd'}}</td>
+                                                    <td class="icons text-center">
+                                                        <a ng-click="showTemplate($index)"><i class="fa fa-eye"></i></a>
+                                                    </td>
+                                                    <td class="icons text-center">
+                                                         <a ng-click="copy($index)"><i class="fa fa-files-o"></i></a>
+                                                    </td>
+                                                    <td class="icons text-center">
+                                                         <a ng-click="deleteTemplate($index)"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    
+                </div>
+				
+                <!-- <div class="modal-footer"></div> -->
+				
+            </div>
+        </div>
+    </div>
+</div><!-- /content -->
+
+
+

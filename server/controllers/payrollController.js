@@ -1,9 +1,9 @@
 'use strict';
 
 
-module.exports = function(){
+module.exports = function(db){
 	var _=require('lodash'),
-		payrollService=require('../services/payrollservice')(),
+		payrollService=require('../services/payrollservice')(db),
 		Q = require('q');
 
 	var controller={};
@@ -52,10 +52,11 @@ module.exports = function(){
 		};
     
         controller.runPayroll=function(req,res) {
-            payrollService.runPayroll(req)
+        	var payrollRequest=req.body;
+            payrollService.runPayroll(payrollRequest)
                 .then(function(result){
                     res.json(result);
-                });
+                },res.sendFailureResponse);
         };
 
 		function getPayrollVm(payroll){

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp6Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
+        .controller('CandidateSidebarAddExp6Controller', function($scope, HttpResource, ConstantsResource) {
           $scope.expenseData.transports = $scope.expenseData.transports || [];
           $scope.transportTypes = ConstantsResource.get('transportationmeans');
           $scope.fuelTypes = ConstantsResource.get('fuels');

@@ -93,7 +93,7 @@ angular.module('origApp.controllers')
                 url: signedRequest,
                 data: file,
                 headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
-              }).success(function(data) {
+              }).success(function() {
                 //get view url of file
                 $scope.isUploading = false;
                 if (callback) {

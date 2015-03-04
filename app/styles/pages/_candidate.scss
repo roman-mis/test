@@ -1,280 +1,248 @@
-.candidate-layout{
-  display: table;
-  width: 100%;
-
-  .candidate-center{
-    display: table-cell;
-  }
-
-  .candidate-right-sidebar{
-    width: 280px;
-    @media(max-width: $screen-md-max){
-      width: 232px;
+.candidate-layout {
+    display: table;
+    width: 100%;
+    .candidate-center {
+        display: table-cell;
     }
-    @media(max-width: $screen-sm-max){
-      width: 56px;
-      padding-top: 150px;
-    }
-    .sidebar-menu-inner{
-      padding-right: 0px;
-      margin-top: -82px;    
-      padding: 15px 10px 15px 15px;
-      ul#left-menu {
-        @media(min-width:  $screen-lg) {
-            display: none;
+    .candidate-right-sidebar {
+        width: 232px;
+        @media(max-width: $screen-sm-max) {
+            width: 56px;
         }
-      }
-    }
-    .main-menu{
-      padding-right: 0px;
-      @media(max-width: $screen-md-max){
-        padding: 0px;
-      }
-      a{
-        span.title{
-          i{
-            background: none;
-            text-align: center;
-            width: 20px;
-            float: none;
-            display: inline-block;
-          }
-          @media(max-width: $screen-md-max){
-            width: 157px;
-          }
-          @media(max-width: $screen-sm-max){
-            display: none;
-          }
+        .sidebar-menu-inner {
+            padding-right: 0px;
+            padding: 0 10px 15px 15px;
+            width: 100%;
         }
-      }
-
-      .menu-wrapper{
-         @media(max-width:  $screen-md-max){
-           display: none;
-         } 
-        .entry-title{
-          color: $gray;
-          border-bottom: 1px solid $gray;
-          text-align: center;
-          padding-bottom: 5px;
-          i{
-            position: relative;
-            top: 5px;
-          }
-        }
-
-        ul{
-          padding-left: $grid-gutter-width;
-          @media(max-width: $screen-md-max){
-            padding-elft: $grid-gutter-width-md;
-          }
-          li{
-            list-style: none;
-            float: none;
-            a{
-              text-decoration: underline;
-              padding: 0px;
+        .main-menu {
+            padding-right: 0;
+            @media(max-width: $screen-md-max) {
+                padding: 0;
             }
-          }
+            a {
+                span.title {
+                    width: 167px;
+                    i {
+                        background: none;
+                        text-align: center;
+                        width: 20px;
+                        float: none;
+                        display: inline-block;
+                    }
+                    @media(max-width: $screen-sm-max) {
+                        display: none;
+                    }
+                }
+            }
         }
-        &.green-light-color a{
-          color: $green-light;
+        .search-wrapper {
+            margin-bottom: 15px;
+            @media(max-width: $screen-sm-max) {
+                display: none;
+            }
+            .select2-container a {
+                background: #fff;
+                color: $gray;
+                @media(max-width: $screen-md-max) {
+                    text-align: left;
+                }
+            }
         }
-        &.green-color a{
-          color: $green;
+        .company-logo {
+            padding: $grid-gutter-width 0px;
+            display: none;
+            @media(max-width: $screen-sm-max) {
+                display: none;
+            }
+            img {
+                max-width: 100%;
+            }
         }
-      }
-
-      .btn-success{
-        font-size: 20px;
-        background: $green-light;
-        border-color: $green-light;
-        &:hover{
-          background: $green;
-          border-color: $green;
-          -webkit-box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
-          -moz-box-shadow:    1px 1px 3px 0px rgba(50, 50, 50, 0);
-          box-shadow:         1px 1px 3px 0px rgba(50, 50, 50, 0);
-        }
-      }
     }
-
-    .search-wrapper{
-      margin-top: 16px;
-      @media(max-width: $screen-sm-max){
-         display: none;
-       }           
-      *{
-        background: #fff!important;
-        color: $gray;
-        @media(max-width: $screen-md-max){
-          text-align: left;
-        }
-      }
-    }
-    .company-logo{
-      padding: $grid-gutter-width 0px;
-      @media(max-width: $screen-sm-max){
-         display: none;
-       }        
-      img{
-        max-width: 100%;
-      }
-    }
-  }
 }
 
+.candidate-meta,
+.candidate-meta-sm {
+    .alpha {
+        margin-top: 25px;
+        @media(max-width: $screen-md-max) {
+            margin-top: 0px;
+        }
+        .candidate-name {
+            font-size: 29px;
+            color: $green;
+            padding: 0px;
+            margin: 0px;
+            text-transform: capitalize;
+        }
+        .candidate-ref {
+            color: $gray;
+        }
+    }
+    .pie-chat {
+        height: 120px;
+        background: url('../images/mark-chat.png') transparent center center no-repeat;
+        background-size: contain;
+        margin: 20px 0;
+        display: none;
+    }
+    .beta {
+        color: $brand-warning-light;
+        width: 70px;
+        text-align: center;
+        span:first-child {
+            font-size: 29px;
+        }
+        span:last-child {
+            position: relative;
+            text-transform: uppercase;
+            font-size: 10px;
+            top: -5px;
+        }
+    }
+}
 
-.candidate-meta, .candidate-meta-sm{
-  .alpha{
-    margin-top: 25px;
-    @media(max-width: $screen-md-max){
-      margin-top: 0px;
+.candidate-meta-sm {
+    .msg-box {
+        padding: 0px $grid-gutter-width / 2 0px $grid-gutter-width;
+        height: 40px;
+        margin-bottom: 6px;
+        @media(max-width: $screen-md-max) {
+            padding: 0px $grid-gutter-width-md / 2 0px $grid-gutter-width-md;
+        }
+        > * {
+            line-height: 40px;
+            display: inline-block;
+            float: left;
+        }
+        .message {
+            padding: 0px $grid-gutter-width / 2;
+        }
     }
-    .candidate-name{
-      font-size: 36px;
-      color: $green;
-      padding: 0px;
-      margin: 0px;
-      text-transform: capitalize;
+}
+
+.candidate-main {
+    border: 1px solid $gray-lighter;
+    border-bottom: none;
+    padding-top: 5px;
+    @media(max-width: $screen-sm-max) {
+        padding-top: 0px;
+        border: none;
     }
-    .candidate-ref{
-      color: $gray;
+    .top-search-row {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        .candidate-search, .candidate-search-btn {
+            margin-bottom: 7px;
+        }
+        .candidate-search {
+            width: 300px;
+        }
+        .candidate-search-btn {
+            .btn {
+                width: 70px;
+                padding: 6px;
+                margin-left: 10px;
+            }
+        }
     }
-  }
-  .pie-chat{
-    height: 200px;
-    background: url('../images/mark-chat.png') transparent center center no-repeat;
-  }
-  .beta{
-    color: $brand-warning-light;
-    width: 70px;
+    &.padding-10 {
+        padding-top: 10px;
+        border: 1px solid $gray-lighter;
+        margin-right: 10px;
+        .table >thead >tr >th {
+            width: 9em;
+        }
+        .table >thead >tr >th:first-child {
+            width: 15em;
+        }
+        .table >thead >tr >th:last-child {
+            width: 5em;
+        }
+    }
+    .payroll {
+        .history {
+            padding-top: 40px;
+        }
+    }
+    .tabs-payroll,
+    .agencies {
+        .btn {
+            text-align: left;
+            max-width: 200px;
+            float: right;
+            i {
+                float: right;
+                line-height: 1.2;
+            }
+        }
+    }
+    .history {
+        .meta-box-content {
+            margin-top: 20px;
+        }
+    }
+    .agencies {
+        .agencies_wrapper {
+            padding-top: 20px;
+        }
+    }
+}
+
+.messages {
+    padding-top: $grid-gutter-width;
+    .message-item {
+        height: 22px;
+        > div:first-child {
+            color: $green;
+        }
+    }
+}
+
+.expenses-wizard {
+    padding: $grid-gutter-width 0px;
+    margin: 0px auto;
+    list-style: none;
     text-align: center;
-    margin-top: 10px;
-    span:first-child{
-      font-size: 35px;
+    width: 240px;
+    li {
+        float: left;
+        height: 35px;
+        margin-bottom: 5px;
     }
-    span:last-child{
-      position: relative;
-      top: -15px;
-      text-transform: uppercase;
-      font-size: 12px;
+    a {
+        text-decoration: none;
+        display: block;
+        padding: 6px 0px;
+        color: $gray-lightest;
+        * {
+            text-align: center;
+            text-transform: uppercase;
+            display: block;
+            height: 36px;
+            line-height: 36px;
+            margin-bottom: 5px;
+            float: left;
+        }
+        i {
+            width: 40px;
+        }
+        span.title {
+            width: 200px;
+            background-color: $gray;
+            border-left: 1px solid #7f8f7a;
+        }
     }
-  }
-}
-.candidate-meta-sm{
-  .msg-box{
-    padding: 0px $grid-gutter-width / 2 0px $grid-gutter-width;
-    height: 40px;
-    margin-bottom: 6px;
-    @media(max-width: $screen-md-max){
-      padding: 0px $grid-gutter-width-md / 2 0px $grid-gutter-width-md;
-    }
-    > *{
-      line-height: 40px;
-      display: inline-block;
-      float: left;
-    }
-    .message{
-      padding: 0px $grid-gutter-width / 2;
-    }
-  }
-}
-
-.candidate-main{
-  border: 2px solid $gray-lighter;
-  border-bottom: none;
-  padding-top: 5px;
-  @media(max-width: $screen-sm-max) {   
-    padding-top: 0px;
-    border: none; 
-  }
-  &.padding-10{
-    padding-top: 10px;
-    border: 2px solid $gray-lighter;
-    margin-right: 10px;  
-    .table >thead >tr >th {
-      width: 9em;
-    }
-    .table >thead >tr >th:first-child {
-      width: 15em;
-    }      
-    .table >thead >tr >th:last-child {
-      width: 5em;
-    }
-  }
-
-  .payroll{
-    .history{
-      padding-top: 40px;
-    }
-  }
-  .tabs-payroll, .agencies{
-    .btn{
-      text-align: left;
-      max-width: 200px;
-      float: right;
-      i{
-        float:right;
-        line-height: 1.2;
-      }
-    }
-  }
-  .history{
-    .meta-box-content{
-      margin-top: 20px;
-    }
-  }
-  .agencies{
-    .agencies_wrapper{
-      padding-top: 20px;
-    }
-  }
 }
 
-.messages{
-  padding-top: $grid-gutter-width;
-  .message-item{
-    margin-bottom: 20px;
-    > div:first-child{
-      color: $green;
-    }
-  }
+.agencies_wrapper {
+    padding-top: 20px;
 }
 
-.expenses-wizard{
-  padding: $grid-gutter-width 0px;
-  margin: 0px auto;
-  list-style: none;
-  text-align: center;
-  width: 300px;
-  li{
-    float:left;
-  }
-  a{
-    text-decoration: none;
-    display: block;
-    padding: 6px 0px;
-    color: $gray-lightest;
-    *{
-      text-align: center;
-      text-transform: uppercase;
-      display: block;
-      height: 45px;
-      line-height: 45px;
-      margin-bottom: 5px;
-      float: left;
+.payroll-product-form > .row .form-group {
+    line-height: 28px;
+    .btn {
+        height: 28px;
     }
-    i{
-      width: 50px;
-    }
-    span.title{
-      width: 249px;
-      background-color: $gray;
-      border-left: 1px solid #7f8f7a;
-    }
-  }
-}
-.agencies_wrapper{
-  padding-top: 20px; 
 }

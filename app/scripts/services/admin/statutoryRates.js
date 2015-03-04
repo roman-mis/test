@@ -3,7 +3,7 @@ angular.module('origApp.services')
 .factory('StatutoryRatesService', function(HttpResource, $q) {
 
   var statutoryRates = {};
-  var acAPI = HttpResource.model('admin/statutoryRates');
+  var acAPI = HttpResource.model('systems/statutoryRates');
 
   function _getStatutoryRates(){
     var d = $q.defer();
@@ -18,7 +18,7 @@ angular.module('origApp.services')
           d.resolve(statutoryRates);
         }
         else {
-          d.reject("no data");
+          d.reject('no data');
         }
       });
     }
@@ -30,7 +30,7 @@ angular.module('origApp.services')
     var d = $q.defer();
     statutoryRates = data;
     if (docId){
-      HttpResource.model('admin/statutoryRates/' + docId)
+      HttpResource.model('systems/statutoryRates/' + docId)
       .create(statutoryRates).post().then(function(result){
         console.log(result);
       });

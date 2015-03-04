@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateContactController', function($scope, $stateParams, HttpResource, ConstantsResource, ModalService, MsgService) {
+        .controller('CandidateContactController', function($scope, $stateParams, HttpResource, ConstantsResource, ModalService) {
 
           //define public properties and functions
           $scope.candidateId = $stateParams.candidateId;
@@ -8,9 +8,9 @@ angular.module('origApp.controllers')
 
           $scope.getNationality = function(code) {
             var na = $scope.nationalities.filter(function(val) {
-              return val.code == code;
+              return val.code === code;
             });
-            if (na.length == 0) {
+            if (na.length === 0) {
               return null;
             }
             return na[0];

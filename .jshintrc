@@ -21,7 +21,7 @@
   "globals": {
     "angular": false,
     "moment": false,
-    "_": false,
+    "_": true,
     "$": false,
     "ListHelper": false,
     "tinyMCE": false

@@ -4,6 +4,7 @@
     </div>
     
     <div class="runPayroll-body">
+    <div ng-show="firstStep">
         <form class="form-horizontal">
             <div class="row">
 				<div class="col-sm-5">
@@ -43,7 +44,7 @@
                     <tbody>
                         <tr ng-repeat="worker in candidates track by $index">
                             <td class="text-center text-checkbox">
-                                <input ng-change="unselectHead()" ng-model="runPayroll.worker[$index]" type="checkbox" />
+                                <input ng-change="unselectHead()" ng-model="p.worker[$index]" type="checkbox" />
                             </td>
                             <td class="ref">{{worker.candidateRef}}</td>
                             <td class="fullName">{{worker.firstName}} {{worker.lastName}}</td>
@@ -71,12 +72,21 @@
             <div class="col-xs-1 text-center">0</div>
         </div>
     </div>
-				
-    <div class="runPayroll-footer">
+    <div ng-show="secondStep">
+        <div style="margin:15px;font-weight: bold;" ng-repeat="r in response track by $index">
+            <span style="margin-right:15px;"><i class="fa fa-circle"></i></span>{{r}}
+        </div>
+    </div>
+	</div>
+    <div ng-show="firstStep" class="runPayroll-footer">
         <a ng-click="close()" class="btn">Cancel &#38; Return to Payroll Home</a>
         <button ng-click="runPayroll()" class="btn btn-primary">Run Payroll</button>
     </div>
-				
+	
+    <div ng-show="secondStep" class="runPayroll-footer">
+        <a ng-click="close()" class="btn">close &#38; Return to Payroll Home</a>
+    </div>
+    			
 </div><!-- /container -->
 
 

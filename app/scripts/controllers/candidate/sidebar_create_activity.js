@@ -1,12 +1,17 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddActivityController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, params) {
+        .controller('CandidateSidebarAddActivityController', function($scope, $modalInstance, parentScope, HttpResource) {
           $scope.data = {};
 
           $scope.activityTypes = [
             {key: 'callLog', label: 'Call Log'},
             {key: 'task', label: 'Create Task'},
-            {key: 'document', label: 'Create Document'}
+            {key: 'document', label: 'Upload Document'},
+            {key: 'document', label: 'Create Document'},
+            {key: 'email', label: 'Create Email'},
+            {key: 'textMessage', label: 'Create Text Message'},
+            {key: 'timesheet', label: 'Add Timesheet'},
+            {key: 'expenses', label: 'Add Expenses'}
           ];
 
           $scope.agencies = HttpResource.model('agencies').query({});
@@ -14,7 +19,7 @@ angular.module('origApp.controllers')
 
 
           $scope.cancel = function() {
-            console.log($scope.agencies)
+            console.log($scope.agencies);
             $modalInstance.dismiss('cancel');
           };
 

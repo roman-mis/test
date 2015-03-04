@@ -3,7 +3,7 @@ angular.module('origApp.services')
 .factory('CompanyProfileService', function(HttpResource, $q) {
 
   var companyProfile = {};
-  var acAPI = HttpResource.model('admin/companyProfile');
+  var acAPI = HttpResource.model('systems/companyProfile');
 
   function _getCompanyProfile(){
     var d = $q.defer();
@@ -17,8 +17,9 @@ angular.module('origApp.services')
           companyProfile = data.data;
           d.resolve(companyProfile);
         }
-        else 
-          d.reject("no data");
+        else {
+          d.reject('no data');
+        }
       });
     }
     
@@ -30,7 +31,7 @@ angular.module('origApp.services')
     companyProfile = data;
     console.log(data);
     if (docId){
-      HttpResource.model('admin/companyProfile/' + docId)
+      HttpResource.model('systems/companyProfile/' + docId)
       .create(companyProfile).post().then(function(result){
         console.log(result);
       });

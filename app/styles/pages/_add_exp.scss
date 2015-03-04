@@ -1,120 +1,118 @@
-.candidate-modal{
-  .modal-headerExpenses {
-    padding: 20px 15px;
-  }
-  .selectTime{
-    width: 20%;
-    display: inline-block;
-    padding: 6px 2px;
-  }
-  .sortCaret {
-    display: block;
-    margin-bottom: -5px;
-    margin-top: -13px;
-  }
-  .postcodeInput {
-    display: inline-flex;
-  }
-  .postcodeInfo {
-    margin-left: 5px;
-  }
-  .underlineText {
-    border-bottom: 1px solid #ddd;
-  }
-  p.underlineText{
-    margin-bottom: 10px;
-  }
-  .inline-datepicker-center > table{
-    margin: 0px auto;
-  }
-
-  .postcodeInput {
-    display: inline-flex;
-  }
-  .postcodeInfo {
-    margin-left: 5px;
-  }
-
-  #tableHeader, #tableBody{
-    margin-bottom: 0px;
-  }
-  .tableWrapper {
-    width: 100%; 
-    max-height: 320px;
-    overflow-y: auto;
-    display: block;
-    margin-bottom: 15px;
-  }
-  @media screen and (max-width: 598px) {
+.candidate-modal {
+    .modal-headerExpenses {
+        padding: 20px 15px;
+    }
+    .selectTime {
+        width: 20%;
+        display: inline-block;
+        padding: 6px 2px;
+    }
+    .sortCaret {
+        display: block;
+        margin-bottom: -5px;
+        margin-top: -13px;
+    }
+    .postcodeInput {
+        display: inline-flex;
+    }
+    .postcodeInfo {
+        margin-left: 5px;
+    }
+    .underlineText {
+        border-bottom: 1px solid #ddd;
+    }
+    p.underlineText {
+        margin-bottom: 10px;
+    }
+    .inline-datepicker-center > table {
+        margin: 0px auto;
+    }
+    .postcodeInput {
+        display: inline-flex;
+    }
+    .postcodeInfo {
+        margin-left: 5px;
+    }
+    #tableHeader,
+    #tableBody {
+        margin-bottom: 0px;
+    }
     .tableWrapper {
-      display: table;
+        width: 100%;
+        max-height: 320px;
+        overflow-y: auto;
+        display: block;
+        margin-bottom: 15px;
     }
-    #tableHeader, #tableBody {
-      table-layout: fixed;
-      word-wrap: break-word;
+    @media screen and (max-width: 598px) {
+        .tableWrapper {
+            display: table;
+        }
+        #tableHeader,
+        #tableBody {
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
     }
-  }
-
-  .alert-info.complete-exp { 
-    margin-bottom: 0px;
-    margin-top: 60px; 
-  }
-
-  .ovalButton {
-    border-radius: 50%;
-    color: #E4E4E4;
-    width: 105px;
-    margin: 6px;
-  }
-  .redDark, .redDark:hover {
-    background: #991818;    
-  } 
-  .greyDark, .greyDark:hover {
-    background: #4c4c4c;
-  }
-  .blueDark,.blueDark:hover {
-    background: #7fc6d4;
-  }
-
-  .fileUpload {
-    position: relative;
-    overflow: hidden;
-  }
-  .fileUpload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
-  }
-  .filter {
-    margin: 0;
-    display: block;
-    padding-top: 15px;
-    text-align: center;
-    line-height: 1em;
-  }
-  .rowhighlight {
-    background-color: #f5f5f5;
-    cursor: pointer;
-  }
-
-  @media screen and (max-width: 768px) {
-    .fuelType {
-      margin-bottom: 15px;
+    .alert-info.complete-exp {
+        margin-bottom: 0px;
+        margin-top: 60px;
     }
-  }
-  select.form-control {
-    padding: 6px 2px;
-  }
-  label {
-    font-weight: normal; 
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 7px;
-  }
+    .ovalButton {
+        border-radius: 50%;
+        color: #E4E4E4;
+        width: 105px;
+        margin: 6px;
+    }
+    .redDark,
+    .redDark:hover {
+        background: #991818;
+    }
+    .greyDark,
+    .greyDark:hover {
+        background: #4c4c4c;
+    }
+    .blueDark,
+    .blueDark:hover {
+        background: #7fc6d4;
+    }
+    .fileUpload {
+        position: relative;
+        overflow: hidden;
+    }
+    .fileUpload input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .filter {
+        margin: 0;
+        display: block;
+        padding-top: 15px;
+        text-align: center;
+        line-height: 1em;
+    }
+    .rowhighlight {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+    @media screen and (max-width: 768px) {
+        .fuelType {
+            margin-bottom: 15px;
+        }
+    }
+    select.form-control {
+        padding: 6px 2px;
+    }
+    label {
+        font-weight: normal;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }

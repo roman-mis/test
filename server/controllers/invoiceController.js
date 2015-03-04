@@ -3,8 +3,8 @@
 
 module.exports = function(){
 	var _=require('lodash'),
-		invoiceservice=require('../services/invoiceservice')(),
-		Q = require('q');
+		invoiceservice=require('../services/invoiceservice')();
+		// Q = require('q');
 
 	var controller={};
 		 
@@ -72,19 +72,19 @@ module.exports = function(){
 			};
 		}
 
-		function buildInvoiceVm(invoice, reload){
-			return Q.Promise(function(resolve, reject){
-				if(reload){
-					return invoiceservice.getInvoice(invoice._id, true)
-		      		.then(function(invoice){
-		      			var invoiceVm = getInvoiceVm(invoice);
-		      			resolve({result:true, object: invoiceVm});
-		      		},reject);
-				}else{
-					getInvoiceVm(invoice);
-				}
-			});
-		}
+		// function buildInvoiceVm(invoice, reload){
+		// 	return Q.Promise(function(resolve, reject){
+		// 		if(reload){
+		// 			return invoiceservice.getInvoice(invoice._id, true)
+		//       		.then(function(invoice){
+		//       			var invoiceVm = getInvoiceVm(invoice);
+		//       			resolve({result:true, object: invoiceVm});
+		//       		},reject);
+		// 		}else{
+		// 			getInvoiceVm(invoice);
+		// 		}
+		// 	});
+		// }
 
  return controller;
 };

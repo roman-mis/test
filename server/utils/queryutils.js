@@ -59,7 +59,8 @@ module.exports=function(){
 						Q.nfcall(q.exec.bind(q))
 							.then(function(allRecords){
 								console.log('Found : '+allRecords.length);
-				
+								console.log('allRecords');
+								console.log(allRecords);
 								resolve({count:totalcount,rows:allRecords});
 				
 							},reject);

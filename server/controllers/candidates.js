@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(dbs){
-  var candidateservice=require('../services/candidateservice'),
+  var candidateservice=require('../services/candidateservice')(dbs),
     utils=require('../utils/utils'),
     candidatecommonservice = require('../services/candidatecommonservice')(dbs),
     dataList=require('../data/data_list.json');
@@ -98,6 +98,8 @@ module.exports = function(dbs){
     };
 
     controller.postAvatar=function (req,res){
+      //busboy has been removed. use multer instead
+      //should be changed to upload the avatar from client side by providing signed url instead
       //console.log(req.busboy);
       if(req.busboy){
         /////

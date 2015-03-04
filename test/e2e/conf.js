@@ -17,10 +17,10 @@ exports.config = {
     'browserName': 'chrome'
   }],*/
   suites: {
-    main:['./spec/login_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
+    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    remote:  ['./spec/login_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js','./spec/sidebar.js'],
-    dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js']
+    remote:  ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
+    dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js']
   },
 
   onPrepare: function () {

@@ -174,7 +174,7 @@ describe('Checking Activity', function () {
     helper.selectSelector(element(by.model('data.activityType')), 2);
     $('.modal-content [ng-click="next()"]').click();
 
-    expect($('.modal-title').getText()).toContain('documents wizard');
+    expect($('.modal-title').getText()).toContain('Upload Documents');
     expect($('.modal-title').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
     expect($('.modal-content').isPresent()).toBeFalsy();

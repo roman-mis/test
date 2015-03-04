@@ -14,6 +14,7 @@ select.form-control {
     border: 1px solid $gray-light;
     background-color: $gray-lightest;
     outline: none;
+    transition: background-color .2s;
     input {
         height: 27px;
     }
@@ -33,8 +34,9 @@ select.form-control {
 }
 
 button {
+    transition: background-color .2s;
     &:focus {
-        outline: none;
+        outline: none !important;
         border-color: $gray-light;
         box-shadow: none;
     }
@@ -54,6 +56,7 @@ span.text-muted {
     border-radius: 0px;
     background-color: $gray-lightest;
     border: 1px solid $gray-light;
+    height: 28px;
 }
 
 .input-group .input-group-addon {
@@ -73,6 +76,7 @@ span.text-muted {
     .input-group-btn {
         z-index: 10;
         button {
+            height: 28px; 
             border-left: 1px solid $gray-light;
         }
     }
