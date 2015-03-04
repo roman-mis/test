@@ -1,8 +1,7 @@
 'use strict';
 
-module.exports=function(){
-	var db = require('../models'),
-		Q=require('q'),
+module.exports=function(db){
+	var Q=require('q'),
 		queryutils=require('../utils/queryutils')(db);
 
 	var service={};
