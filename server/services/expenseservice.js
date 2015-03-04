@@ -45,8 +45,4 @@ module.exports = function(dbs){
 	};
 
 	return service;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/dev
 };
