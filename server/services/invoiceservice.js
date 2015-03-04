@@ -6,7 +6,7 @@ module.exports=function(){
 		_=require('lodash'),
 		queryutils=require('../utils/queryutils')(db),
 		utils=require('../utils/utils'),
-		timesheetservice=require(__dirname+'/timesheetservice')(),
+		timesheetservice=require(__dirname+'/timesheetservice')(db),
 		systemservice=require('./systemservice')(db),
 		agencyservice=require('./agencyservice');
 
@@ -90,13 +90,19 @@ module.exports=function(){
 									var allInvoiceSavePromises = [];
 									var prom = new Q(true);
 									_.forEach(invoicesToSave,function(invoiceModel){
-										prom=prom.then(function(){
-											console.log('saving invoice '+invoiceModel._id);
-											// return Q.nfcall(invoiceModel.save.bind(invoiceModel));
-											allInvoiceSavePromises.push(Q.nfcall(invoiceModel.save.bind(invoiceModel)));
-										});
+										// prom=prom.then(function(){
+										// 	
+										// console.log('saving invoice '+invoiceModel._id);
+										// 	return Q.nfcall(invoiceModel.save.bind(invoiceModel));
+										// 	// allInvoiceSavePromises.push(Q.nfcall(invoiceModel.save.bind(invoiceModel)));
+										// });
+										console.log('saving invoice '+invoiceModel._id);
+										allInvoiceSavePromises.push(invoiceModel.save.bind(invoiceModel));
 									});
-									Q.all([allInvoiceSavePromises]);
+									// Q.all([allInvoiceSavePromises]);
+									prom=prom.then(function(){
+										return Q.all([allInvoiceSavePromises]);
+									});
 									
 									console.log('stacking timesheet');
 									_.forEach(timesheetsToUpdate,function(timesheet){
@@ -128,8 +134,9 @@ module.exports=function(){
 						}else{
 							// Invoice Method: Consolidated
 							console.log('Consolidated');
+							var timesheetsToUpdate=[];
 							return timesheetservice.getTimesheetsByBatchId(invoice.timesheetBatch)
-							.then(function(timesheets){
+							.then(function(timesheets){console.log('here');
 								var lines = [];
 								var net = 0, vat = 0;
 								_.forEach(timesheets, function(timesheet){
@@ -155,7 +162,8 @@ module.exports=function(){
 
 									//Update Timesheet
 									utils.updateSubModel(timesheet.payrollSettings, invoice.companyDefaults);
-									timesheetservice.saveTimesheet(timesheet._id, timesheet);
+									// timesheetservice.saveTimesheet(timesheet._id, timesheet);
+									timesheetsToUpdate.push(timesheet);
 								});
 								
 								// For Vat
@@ -179,18 +187,22 @@ module.exports=function(){
 									invoiceModel = new db.Invoice(invoiceInfo);
 										return Q.nfcall(invoiceModel.save.bind(invoiceModel))
 										.then(function(){
-											var invoiceModels = [];
-											invoiceModels.push(invoiceModel);
-											resolve(invoiceModels);
-										},reject);
+											_.forEach(timesheetsToUpdate,function(timesheet){
+												console.log('updating timesheet '+timesheet._id);
+												return timesheetservice.saveTimesheet(timesheet._id,timesheet);
+											});
+										},reject)
+										.then(function(){
+											resolve([invoiceModel]);
+										});
 								}, reject);
 							}, reject);
 						}
 					}else{
-						reject.json({result:false,message:'Agency Invoice Method not set'});
+						resolve.json({result:false,message:'Agency Invoice Method not set.'});
 					}
 				}else{
-					reject.json({result:false,message:'Agency not found.'});
+					resolve.json({result:false,message:'Agency not found.'});
 				}
 			});
 			
