@@ -453,9 +453,9 @@ header {
         @media(max-width: $screen-md-max) {
             padding: $grid-gutter-width-md 0;
         }
-        &:hover {
-            z-index: 15;
-        }
+//        &:hover {
+//            z-index: 15;
+//        }
         .breadcrumb {
             padding-left: 0;
             background: $gray-lightest;
