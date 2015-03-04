@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports=function(){
-	var db = require('../models'),
+module.exports=function(dbs){
+	var db = dbs,
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
         systemService=require('./systemservice')(db),
@@ -418,21 +418,21 @@ module.exports=function(){
 
                                                                            //region Employees NI
 
-                                                                           var PaySubjectToEmployeesNIandTax = payForTaxesAndNI-employersNI;
+                                                                           var paySubjectToEmployeesNIandTax = payForTaxesAndNI-employersNI;
 
-                                                                           log('Pay subject to Employees NI: ' + PaySubjectToEmployeesNIandTax, logs);
+                                                                           log('Pay subject to Employees NI: ' + paySubjectToEmployeesNIandTax, logs);
 
                                                                            var employeesNI = 0;
 
                                                                            if(_worker.worker.taxDetail.employeesNIpaid) {
                                                                                // Main NI (12% in Feb 2015)
                                                                                var mainNI = 0;
-                                                                               if(PaySubjectToEmployeesNIandTax>employeesNiRate.lowerThreshold) {
-                                                                                   if(PaySubjectToEmployeesNIandTax>employeesNiRate.upperThreshold) {
+                                                                               if(paySubjectToEmployeesNIandTax>employeesNiRate.lowerThreshold) {
+                                                                                   if(paySubjectToEmployeesNIandTax>employeesNiRate.upperThreshold) {
                                                                                        mainNI = employeesNiRate.upperThreshold-employeesNiRate.lowerThreshold;
                                                                                    }
                                                                                    else {
-                                                                                       mainNI = PaySubjectToEmployeesNIandTax-employeesNiRate.lowerThreshold;
+                                                                                       mainNI = paySubjectToEmployeesNIandTax-employeesNiRate.lowerThreshold;
                                                                                    }
 
                                                                                    mainNI = (mainNI/100)*employeesNiRate.amount;
@@ -441,8 +441,8 @@ module.exports=function(){
 
                                                                                // High earners NI (2% in Feb 2015)
                                                                                var highEarnerNI = 0;
-                                                                               if(PaySubjectToEmployeesNIandTax>employeesHighEarnerNiRates.lowerThreshold) {
-                                                                                   highEarnerNI = ((PaySubjectToEmployeesNIandTax-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
+                                                                               if(paySubjectToEmployeesNIandTax>employeesHighEarnerNiRates.lowerThreshold) {
+                                                                                   highEarnerNI = ((paySubjectToEmployeesNIandTax-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
                                                                                }
                                                                                log('High earner NI: ' + highEarnerNI, logs);
 
@@ -501,7 +501,7 @@ module.exports=function(){
 
                                                                            //endregion
 
-                                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+PaySubjectToEmployeesNIandTax;
+                                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
                                                                            log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD, logs);
 
                                                                            var taxInPeriod = 0,

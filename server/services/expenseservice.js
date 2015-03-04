@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports=function(db){
-	var Q=require('q'),
+module.exports = function(dbs){
+
+	var db = dbs,
+		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		service={};
 
@@ -43,4 +45,8 @@ module.exports=function(db){
 	};
 
 	return service;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/dev
 };

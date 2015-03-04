@@ -4,7 +4,7 @@ var controller = {};
 module.exports = function(db){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice')(db),
-	candidateservice=require('../services/candidateservice'),
+	candidateservice=require('../services/candidateservice')(db),
 	Q = require('q');
 
 	function getExpenseVm(expense, reload){
