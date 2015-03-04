@@ -5,10 +5,7 @@
         display: table-cell;
     }
     .candidate-right-sidebar {
-        width: 280px;
-        @media(max-width: $screen-md-max) {
-            width: 232px;
-        }
+        width: 232px;
         @media(max-width: $screen-sm-max) {
             width: 56px;
         }
@@ -16,19 +13,15 @@
             padding-right: 0px;
             padding: 0 10px 15px 15px;
             width: 100%;
-            #left-menu {
-                @media(min-width: $screen-lg) {
-                    display: none;
-                }
-            }
         }
         .main-menu {
-            padding-right: 0px;
+            padding-right: 0;
             @media(max-width: $screen-md-max) {
-                padding: 0px;
+                padding: 0;
             }
             a {
                 span.title {
+                    width: 167px;
                     i {
                         background: none;
                         text-align: center;
@@ -36,59 +29,9 @@
                         float: none;
                         display: inline-block;
                     }
-                    @media(max-width: $screen-md-max) {
-                        width: 167px;
-                    }
                     @media(max-width: $screen-sm-max) {
                         display: none;
                     }
-                }
-            }
-            .menu-wrapper {
-                @media(max-width: $screen-md-max) {
-                    display: none;
-                }
-                .entry-title {
-                    color: $gray;
-                    border-bottom: 1px solid $gray;
-                    text-align: center;
-                    padding-bottom: 5px;
-                    i {
-                        position: relative;
-                    }
-                }
-                ul {
-                    padding-left: $grid-gutter-width;
-                    @media(max-width: $screen-md-max) {
-                        padding-elft: $grid-gutter-width-md;
-                    }
-                    li {
-                        list-style: none;
-                        float: none;
-                        line-height: 18px;
-                        a {
-                            text-decoration: underline;
-                            padding: 0px;
-                        }
-                    }
-                }
-                &.green-light-color a {
-                    color: $green-light;
-                }
-                &.green-color a {
-                    color: $green;
-                }
-            }
-            .btn-success {
-                font-size: 16px;
-                background: $green-light;
-                border-color: $green-light;
-                &:hover {
-                    background: $green;
-                    border-color: $green;
-                    -webkit-box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
-                    -moz-box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
-                    box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
                 }
             }
         }
@@ -97,7 +40,7 @@
             @media(max-width: $screen-sm-max) {
                 display: none;
             }
-            .select2-container a { 
+            .select2-container a {
                 background: #fff;
                 color: $gray;
                 @media(max-width: $screen-md-max) {
@@ -190,8 +133,7 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
-        .candidate-search,
-        .candidate-search-btn {
+        .candidate-search, .candidate-search-btn {
             margin-bottom: 7px;
         }
         .candidate-search {
@@ -266,8 +208,8 @@
     width: 240px;
     li {
         float: left;
-        height: 35px; 
-        margin-bottom: 5px; 
+        height: 35px;
+        margin-bottom: 5px;
     }
     a {
         text-decoration: none;
@@ -299,8 +241,8 @@
 }
 
 .payroll-product-form > .row .form-group {
-    line-height: 28px;   
+    line-height: 28px;
     .btn {
-        height: 28px; 
+        height: 28px;
     }
 }
