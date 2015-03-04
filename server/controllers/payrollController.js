@@ -1,9 +1,9 @@
 'use strict';
 
 
-module.exports = function(){
+module.exports = function(db){
 	var _=require('lodash'),
-		payrollService=require('../services/payrollservice')(),
+		payrollService=require('../services/payrollservice')(db),
 		Q = require('q');
 
 	var controller={};
