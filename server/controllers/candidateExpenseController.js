@@ -1,9 +1,9 @@
 'use strict';
 
 var controller = {};
-module.exports = function(){
+module.exports = function(db){
 	var _ = require('lodash'),
-	expenseservice = require('../services/expenseservice'),
+	expenseservice = require('../services/expenseservice')(db),
 	candidateservice=require('../services/candidateservice'),
 	Q = require('q');
 
