@@ -1,8 +1,8 @@
 'use strict';
 
 
-module.exports = function(){
-	var timesheetBatchService=require('../services/timesheetbatchservice')();
+module.exports = function(db){
+	var timesheetBatchService=require('../services/timesheetbatchservice')(db);
 
 	var controller={};
 		 

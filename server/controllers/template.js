@@ -1,9 +1,9 @@
 'use strict';
 
 
-module.exports = function(){
+module.exports = function(db){
 	var _=require('lodash');
-	var templateservice=require('../services/templateservice');
+	var templateservice=require('../services/templateservice')(db);
 	var controller={};
 
 	controller.getAllTemplates=function (req,res){

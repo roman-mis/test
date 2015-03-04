@@ -3,9 +3,9 @@
 var Q=require('q'),
 _=require('lodash');
 
-module.exports = function(){
-  var candidatepayrollservice=require('../services/payrollproductservice'),
-    candidateservice=require('../services/candidateservice');
+module.exports = function(db){
+  var candidatepayrollservice=require('../services/payrollproductservice')(db),
+    candidateservice=require('../services/candidateservice')(db);
     var controller={};
 
 
