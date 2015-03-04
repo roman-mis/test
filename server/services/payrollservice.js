@@ -501,8 +501,9 @@ module.exports=function(dbs){
 
                                                                            //endregion
 
-                                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
+                                                                           var taxableEarningsYTD =tax.p45GrossTax+ payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
                                                                            log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD, logs);
+                                                                           log('Taxable earnings YTD P45: ' + tax.P45GrossTax, logs);
 
                                                                            var taxInPeriod = 0,
                                                                                availableTaxFreeAllowanceIncThisWeek = 0,
@@ -591,7 +592,7 @@ module.exports=function(dbs){
 
                                                                                    log('Tax already paid YTP: ' + payrollWorkerYTD.taxPaid, logs);
 
-                                                                                   taxInPeriod = taxYTD-payrollWorkerYTD.taxPaid; 
+                                                                                   taxInPeriod = tax.p45TaxDeducted +taxYTD-payrollWorkerYTD.taxPaid; 
                                                                                    log('Tax in period: ' + taxInPeriod, logs);
 
                                                                                    break;
