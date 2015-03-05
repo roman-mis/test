@@ -83,6 +83,7 @@ angular.module('origApp.directives')
             template: '{{cellValue}}',
             link: function($scope, ele) {
               $scope.cellValue = $scope.row[$scope.column.field];
+              console.log($scope.cellValue);
               if ($scope.column.cellTemplate) {
                 ele.html($scope.column.cellTemplate);
                 $compile(ele.contents())($scope);
