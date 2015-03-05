@@ -593,7 +593,7 @@ module.exports=function(dbs){
 
                                                                                    log('Tax already paid YTP: ' + payrollWorkerYTD.taxPaid, logs);
 
-                                                                                   taxInPeriod = workerPayrollTax.p45TaxDeducted +taxYTD-payrollWorkerYTD.taxPaid; 
+                                                                                   taxInPeriod = taxYTD-payrollWorkerYTD.taxPaid; 
                                                                                    log('Tax in period: ' + taxInPeriod, logs);
 
                                                                                    break;
