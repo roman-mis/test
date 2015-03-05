@@ -145,6 +145,7 @@ module.exports=function(dbs){
                                     return db.User.findById(worker._id).exec().then(function(_worker) {
                                        if(_worker){
                                           log('Retrieved worker record',logs);
+                                          var workerPayrollTax=_worker.worker.payrollTax||{};
 
                                          // Get the worker's age
                                          var diff = today-worker.birthDate;
@@ -501,8 +502,9 @@ module.exports=function(dbs){
 
                                                                            //endregion
 
-                                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
+                                                                           var taxableEarningsYTD =workerPayrollTax.p45GrossTax+ payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
                                                                            log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD, logs);
+                                                                           log('Taxable earnings YTD P45: ' + workerPayrollTax.p45GrossTax, logs);
 
                                                                            var taxInPeriod = 0,
                                                                                availableTaxFreeAllowanceIncThisWeek = 0,
