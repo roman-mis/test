@@ -145,6 +145,7 @@ module.exports=function(dbs){
                                     return db.User.findById(worker._id).exec().then(function(_worker) {
                                        if(_worker){
                                           log('Retrieved worker record',logs);
+                                          var workerPayrollTax=_worker.worker.payrollTax||{};
 
                                          // Get the worker's age
                                          var diff = today-worker.birthDate;
@@ -501,9 +502,9 @@ module.exports=function(dbs){
 
                                                                            //endregion
 
-                                                                           var taxableEarningsYTD =tax.p45GrossTax+ payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
+                                                                           var taxableEarningsYTD =workerPayrollTax.p45GrossTax+ payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
                                                                            log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD, logs);
-                                                                           log('Taxable earnings YTD P45: ' + tax.P45GrossTax, logs);
+                                                                           log('Taxable earnings YTD P45: ' + workerPayrollTax.p45GrossTax, logs);
 
                                                                            var taxInPeriod = 0,
                                                                                availableTaxFreeAllowanceIncThisWeek = 0,
@@ -592,7 +593,7 @@ module.exports=function(dbs){
 
                                                                                    log('Tax already paid YTP: ' + payrollWorkerYTD.taxPaid, logs);
 
-                                                                                   taxInPeriod = tax.p45TaxDeducted +taxYTD-payrollWorkerYTD.taxPaid; 
+                                                                                   taxInPeriod = workerPayrollTax.p45TaxDeducted +taxYTD-payrollWorkerYTD.taxPaid; 
                                                                                    log('Tax in period: ' + taxInPeriod, logs);
 
                                                                                    break;
