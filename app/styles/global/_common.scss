@@ -119,7 +119,6 @@ input[disabled] {
 .green-light-color {
     color: $green-light;
 }
-
 .sky-color {
     color: $sky;
 }
@@ -154,7 +153,6 @@ input[disabled] {
 /*Header Section*/
 
 header {
-    min-width: $min-width;
     box-sizing: border-box;
     padding: 12px $grid-gutter-width;
     background-color: $gray;
@@ -303,7 +301,6 @@ header {
     border-collapse: collapse;
     border-spacing: 0;
     table-layout: fixed;
-    min-width: $min-width;
     .left-sidebar, .candidate-right-sidebar, .right-sidebar {
         display: table-cell;
         position: relative;
@@ -316,47 +313,46 @@ header {
             overflow: hidden;
             color: $gray-lightest;
             float: left;
-        }
-        .main-menu {
-            padding: 0;
-            margin: 0;
-            float: left;
-            width: 100%;
-            li {
-                list-style: none;
+            .main-menu {
+                padding: 0;
+                margin: 0;
                 float: left;
-                &:hover {
-                    a i {
-                        background-color: $green;
+                width: 100%;
+                li {
+                    height: 35px;
+                    margin-bottom: 5px;
+                    list-style: none;
+                    float: left;
+                    &:hover {
+                        @include box-shadow-hover();
                     }
                 }
-            }
-            a {
-                text-decoration: none;
-                display: block;
-                color: $gray-lightest;
-                * {
-                    text-align: center;
-                    text-transform: uppercase;
+                a {
+                    text-decoration: none;
                     display: block;
-                    height: 36px;
-                    line-height: 36px;
-                    margin-bottom: 4px;
-                    float: left;
+                    color: $gray-lightest;
+                    i, span {
+                        text-transform: uppercase;
+                        display: block;
+                        height: 36px;
+                        line-height: 36px;
+                        margin-bottom: 4px;
+                        float: left;
+                    }
+                    i {
+                        text-align: center;
+                        width: 40px;
+                        background-color: $green-light;
+                    }
+                    span.title {
+                        padding-left: 10px;
+                        text-align: left;
+                        width: 160px;
+                        background-color: $gray;
+                        border-bottom: 4px solid $gray-light;
+                    }
                 }
-                i {
-                    width: 40px;
-                    background-color: $green-light;
-                }
-                span.title {
-                    width: 160px;
-                    background-color: $gray;
-                    border-left: 1px solid #7f8f7a;
-                    border-bottom: 4px solid $gray-light;
-                }
-            }
-            .active a {
-                i {
+                .active > a > i {
                     background-color: $green;
                 }
             }
@@ -364,14 +360,7 @@ header {
     }
     .left-sidebar {
         @media(max-width: $screen-md-max) {
-            width: 186px;
-        }
-        @media(max-width: $screen-md-max) {
             width: 66px;
-        }
-        @media(max-width: $screen-sm-max) {
-            width: 66px;
-            padding-top: $grid-gutter-width;
         }
         .sidebar-menu-inner {
             @media(max-width: $screen-md-max) {
@@ -379,11 +368,15 @@ header {
                 text-align: center;
             }
             .user-meta-box {
+                height: 60px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                @media (min-width: $screen-lg) {
+                    height: 64px;
+                    padding: 0 4px;
+                }
                 .user-date {
-                    padding-top: 23px;
-                    @media(max-width: $screen-sm-max) {
-                        padding-top: 5px;
-                    }
                     p {
                         margin: 0;
                         padding: 0;
@@ -394,7 +387,7 @@ header {
                     .week-info {
                         color: $green-light;
                         @media(max-width: $screen-md-max) {
-                            font-size: 10px;
+                            font-size: 11px;
                         }
                     }
                 }
@@ -402,6 +395,7 @@ header {
                     text-align: center;
                     margin-top: 24px;
                     margin-bottom: 43px;
+                    display: none;
                     .user-photo {
                         width: 120px;
                         height: 120px;
@@ -411,147 +405,79 @@ header {
                     }
                 }
             }
-        }
-        .main-menu {
-            padding-left: 12px;
-            a {
-                span.title {
-                    @media(max-width: $screen-md-max) {
-                        width: 120px;
-                    }
+            .main-menu {
+                padding-left: 12px;
+                a span.title {
                     @media(max-width: $screen-md-max) {
                         display: none;
                     }
                 }
-            }
-            .tooltip {
-                left: 6px!important; 
-                margin-top: 3px!important;
-                .tooltip-arrow {
-                    left: 25%!important; 
-                    border-top-color: transparent;
-                    width: 14px;
-                    height: 15px;
-                    background: url('../images/tooltip_trailer.png') transparent center center no-repeat;
-                    bottom: -9px; 
-                }
-                .tooltip-inner {
-                    font-size: 13px;
-                    color: $gray;
-                    padding: 2px 24px;
-                    text-transform: uppercase;
-                    background-color: $gray-lightest;
-                    border: 1px solid $gray-light;
-                    border-radius: 0;
-                    @include box-shadow-hover();
-                }
-                @media(max-width: $screen-md-max) {
-                    display: none!important;
+                .tooltip {
+                    left: 6px!important;
+                    margin-top: 3px!important;
+                    .tooltip-arrow {
+                        left: 25%!important;
+                        border-top-color: transparent;
+                        width: 14px;
+                        height: 15px;
+                        background: url('../images/tooltip_trailer.png') transparent center center no-repeat;
+                        bottom: -9px;
+                    }
+                    .tooltip-inner {
+                        font-size: 13px;
+                        color: $gray;
+                        padding: 2px 24px;
+                        text-transform: uppercase;
+                        background-color: $gray-lightest;
+                        border: 1px solid $gray-light;
+                        border-radius: 0;
+                        @include box-shadow-hover();
+                    }
+                    @media(max-width: $screen-md-max) {
+                        display: none!important;
+                    }
                 }
             }
         }
     }
     .right-sidebar {
-        width: 224px;
-        @media(max-width: $screen-md-max) {
-            width: 186px;
-        }
         @media(max-width: $screen-sm-max) {
-            width: 66px;
-            padding-top: 149px;
+            width: 56px;
         }
         .sidebar-menu-inner {
-            padding-right: 0;
-            margin-top: -66px;
-            padding: 0 8px 12px 12px;
-            #left-menu {
-                @media(min-width: $screen-lg) {
-                    display: none;
-                }
-            }
+            padding: 0 12px 12px 12px;
+            width: 100%;
         }
         .main-menu {
-            padding-right: 0;
-            @media(max-width: $screen-md-max) {
-                padding: 0;
-            }
-            a {
-                span.title {
-                    i {
-                        background: none;
-                        text-align: center;
-                        width: 16px;
-                        float: none;
-                        display: inline-block;
-                    }
-                    @media(max-width: $screen-md-max) {
-                        width: 126px;
-                    }
-                    @media(max-width: $screen-sm-max) {
-                        display: none;
-                    }
-                }
-            }
-            .menu-wrapper {
-                @media(max-width: $screen-md-max) {
+            a span.title {
+                @media(max-width: $screen-sm-max) {
                     display: none;
                 }
-                .entry-title {
-                    color: $gray;
-                    border-bottom: 1px solid $gray;
-                    text-align: center;
-                    padding-bottom: 4px;
-                    i {
-                        position: relative;
-                        top: 4px;
-                    }
-                }
-                ul {
-                    padding-left: $grid-gutter-width;
-                    @media(max-width: $screen-md-max) {
-                        padding-elft: $grid-gutter-width-md;
-                    }
-                    li {
-                        list-style: none;
-                        float: none;
-                        a {
-                            text-decoration: underline;
-                            padding: 0;
-                        }
-                    }
-                }
-                &.green-light-color a {
-                    color: $green-light;
-                }
-                &.green-color a {
-                    color: $green;
-                }
-            }
-            .btn-success {
-                font-size: 16px;
-                background: $green-light;
-                border-color: $green-light;
-                &:hover {
-                    background: $green;
-                    border-color: $green;
-                    -webkit-box-shadow: 1px 1px 3px 0 rgba(50, 50, 50, 0);
-                    -moz-box-shadow: 1px 1px 3px 0 rgba(50, 50, 50, 0);
-                    box-shadow: 1px 1px 3px 0 rgba(50, 50, 50, 0);
+                i {
+                    background: none;
+                    text-align: left;
+                    width: 20px;
+                    float: none;
+                    display: inline-block;
                 }
             }
         }
         .search-wrapper {
+            margin-bottom: 12px;
             @media(max-width: $screen-sm-max) {
                 display: none;
             }
-            * {
+            .select2-container a {
+                background: #fff;
+                color: $gray;
                 @media(max-width: $screen-md-max) {
                     text-align: left;
                 }
             }
         }
         .company-logo {
-            padding: $grid-gutter-width 0;
+            padding: $grid-gutter-width 0px;
+            display: none;
             @media(max-width: $screen-sm-max) {
                 display: none;
             }
@@ -572,9 +498,9 @@ header {
         @media(max-width: $screen-md-max) {
             padding: $grid-gutter-width-md 0;
         }
-        &:hover {
-            z-index: 15;
-        }
+        //        &:hover {
+        //            z-index: 15;
+        //        }
         .breadcrumb {
             padding-left: 0;
             background: $gray-lightest;
@@ -600,7 +526,7 @@ header {
                 background: url('../images/breadcrumb_sep.png') transparent center center no-repeat;
                 margin: 0 10px;
                 position: relative;
-                top: 3px; 
+                top: 3px;
             }
         }
         .meta-box {
@@ -648,7 +574,7 @@ header {
                 padding: 0;
                 i {
                     width: 20px;
-                    margin-right: 16px;
+                    margin-right: 5px;
                     text-align: center;
                     display: inline-block;
                 }
@@ -665,6 +591,9 @@ header {
                     float: right;
                     color: #417EAB;
                     font-size: 13px;
+                }
+                > li {
+                    height: 22px;
                 }
             }
             .edit-panel {
@@ -693,22 +622,27 @@ header {
             margin-right: -1px;
             .navbar-toggle {
                 padding: 1px 8px;
+                margin: 0;
+                height: 38px;
+                border: none;
                 .icon-bar {
                     background-color: $gray-lightest;
                 }
             }
             .navbar-brand {
-                height: 30px;
-                padding: 6px 9px;
+                height: 38px;
+                line-height: 38px;
+                padding: 0 9px;
             }
         }
-        @media(max-width: $screen-sm-max) {
+        @media(max-width: $screen-xs-max) {
             .tabs-wrapper {
                 > .nav-tabs {
                     padding: 0;
                     overflow: hidden;
                     border-left: 1px solid transparent;
                     border-right: 1px solid transparent;
+                    margin-top: 0;
                     > li {
                         float: none;
                         background: #fff!important;

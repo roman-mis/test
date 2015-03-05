@@ -46,7 +46,7 @@ angular.module('origApp.controllers')
 
 		
 		$scope.$watch('displayAgencies', function (newVal) {
-			if($scope.displayAgencies !== null){ //dont change this for jshint
+			if($scope.displayAgencies){
 				$scope.batchParams = {agency: $scope.displayAgencies.id};
 				$scope.batchParams = {
 					agency: newVal.id
@@ -224,6 +224,10 @@ angular.module('origApp.controllers')
 						$scope.holidayPayIncluded = true;
 					}
 
+					if(!$scope.displayBranches){
+						$scope.displayBranches = {_id:null};
+					}
+
 					var invoice = {
 						agency:$scope.batchParams.agency,
 						branch:$scope.displayBranches._id,
@@ -261,12 +265,8 @@ angular.module('origApp.controllers')
 						parentScope: $scope,
 						controller: 'invoiceOverviewController',
 						size:'md'
-					});
-					
-
+					});			
 				}
-			});
-			
+			});		
 		};
-
 }]);

@@ -4,116 +4,6 @@
     .candidate-center {
         display: table-cell;
     }
-    .candidate-right-sidebar {
-        width: 280px;
-        @media(max-width: $screen-md-max) {
-            width: 232px;
-        }
-        @media(max-width: $screen-sm-max) {
-            width: 56px;
-        }
-        .sidebar-menu-inner {
-            padding-right: 0px;
-            padding: 0 10px 15px 15px;
-            #left-menu {
-                @media(min-width: $screen-lg) {
-                    display: none;
-                }
-            }
-        }
-        .main-menu {
-            padding-right: 0px;
-            @media(max-width: $screen-md-max) {
-                padding: 0px;
-            }
-            a {
-                span.title {
-                    i {
-                        background: none;
-                        text-align: center;
-                        width: 20px;
-                        float: none;
-                        display: inline-block;
-                    }
-                    @media(max-width: $screen-md-max) {
-                        width: 167px;
-                    }
-                    @media(max-width: $screen-sm-max) {
-                        display: none;
-                    }
-                }
-            }
-            .menu-wrapper {
-                @media(max-width: $screen-md-max) {
-                    display: none;
-                }
-                .entry-title {
-                    color: $gray;
-                    border-bottom: 1px solid $gray;
-                    text-align: center;
-                    padding-bottom: 5px;
-                    i {
-                        position: relative;
-                    }
-                }
-                ul {
-                    padding-left: $grid-gutter-width;
-                    @media(max-width: $screen-md-max) {
-                        padding-elft: $grid-gutter-width-md;
-                    }
-                    li {
-                        list-style: none;
-                        float: none;
-                        line-height: 18px;
-                        a {
-                            text-decoration: underline;
-                            padding: 0px;
-                        }
-                    }
-                }
-                &.green-light-color a {
-                    color: $green-light;
-                }
-                &.green-color a {
-                    color: $green;
-                }
-            }
-            .btn-success {
-                font-size: 16px;
-                background: $green-light;
-                border-color: $green-light;
-                &:hover {
-                    background: $green;
-                    border-color: $green;
-                    -webkit-box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
-                    -moz-box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
-                    box-shadow: 1px 1px 3px 0px rgba(50, 50, 50, 0);
-                }
-            }
-        }
-        .search-wrapper {
-            margin-bottom: -6px;
-            @media(max-width: $screen-sm-max) {
-                display: none;
-            }
-            .select2-container a { 
-                background: #fff;
-                color: $gray;
-                @media(max-width: $screen-md-max) {
-                    text-align: left;
-                }
-            }
-        }
-        .company-logo {
-            padding: $grid-gutter-width 0px;
-            @media(max-width: $screen-sm-max) {
-                display: none;
-            }
-            img {
-                max-width: 100%;
-            }
-        }
-    }
 }
 
 .candidate-meta,
@@ -121,7 +11,7 @@
     .alpha {
         margin-top: 25px;
         @media(max-width: $screen-md-max) {
-            margin-top: 0px;
+            margin-top: 0;
         }
         .candidate-name {
             font-size: 29px;
@@ -139,6 +29,7 @@
         background: url('../images/mark-chat.png') transparent center center no-repeat;
         background-size: contain;
         margin: 20px 0;
+        display: none;
     }
     .beta {
         color: $brand-warning-light;
@@ -187,14 +78,13 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
-        .candidate-search,
-        .candidate-search-btn {
+        .candidate-search {
+            width: 205px;
+            margin-left: 1px;
             margin-bottom: 7px;
         }
-        .candidate-search {
-            width: 300px;
-        }
         .candidate-search-btn {
+            margin-bottom: 7px;
             .btn {
                 width: 70px;
                 padding: 6px;
@@ -205,7 +95,6 @@
     &.padding-10 {
         padding-top: 10px;
         border: 1px solid $gray-lighter;
-        margin-right: 10px;
         .table >thead >tr >th {
             width: 9em;
         }
@@ -216,10 +105,8 @@
             width: 5em;
         }
     }
-    .payroll {
-        .history {
-            padding-top: 40px;
-        }
+    .payroll .history {
+        padding-top: 40px;
     }
     .tabs-payroll,
     .agencies {
@@ -248,7 +135,7 @@
 .messages {
     padding-top: $grid-gutter-width;
     .message-item {
-        margin-bottom: 20px;
+        height: 22px;
         > div:first-child {
             color: $green;
         }
@@ -263,8 +150,8 @@
     width: 240px;
     li {
         float: left;
-        height: 35px; 
-        margin-bottom: 5px; 
+        height: 35px;
+        margin-bottom: 5px;
     }
     a {
         text-decoration: none;
@@ -293,4 +180,11 @@
 
 .agencies_wrapper {
     padding-top: 20px;
+}
+
+.payroll-product-form > .row .form-group {
+    line-height: 28px;
+    .btn {
+        height: 28px;
+    }
 }

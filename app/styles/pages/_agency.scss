@@ -1,41 +1,35 @@
-/*Common Style*/
-.has-feedback{
-        margin-bottom: 0;
-        margin-right: 10px;
-    .form-control{
+.has-feedback {
+    margin-bottom: 0;
+    margin-right: 10px;
+    .form-control {
         border-radius: 16px;
         padding-left: 42px;
         padding-right: 0;
     }
-    .form-control-feedback{
+    .form-control-feedback {
         left: 0;
         top: 0;
         font-size: 14px;
-        color:$gray;
+        color: $gray;
     }
 }
 
-.switch_wrap{
+.switch_wrap {
     input[type="checkbox"] {
         display: none;
     }
-
     input[type="checkbox"]:checked + .switch {
-      background-color: #6cbc43;
+        background-color: #6cbc43;
     }
-
     input[type="checkbox"]:checked + .switch::before {
-      display: block;
+        display: block;
     }
-
     input[type="checkbox"]:checked + .switch::after {
-      display: none;
+        display: none;
     }
-
     input[type="checkbox"]:checked + .switch .bullet {
-      left: 33px;
+        left: 33px;
     }
-
     .switch {
         position: relative;
         display: inline-block;
@@ -48,9 +42,8 @@
         background-color: #c1272d;
         border-radius: 3px;
         border: 1px solid rgba(0, 0, 0, 0.2);
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgb(255,255,255);
-         &::before,
-         &::after {
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgb(255, 255, 255);
+        &::before, &::after {
             content: 'YES';
             display: none;
             width: 50%;
@@ -82,8 +75,7 @@
             border-radius: 3px;
             box-shadow: 0 1px 0 white inset, 0 1px 1px rgba(0, 0, 0, 0.25);
             transition: left 0.1s linear;
-            &::before,
-            &::after {
+            &::before, &::after {
                 content: '';
                 display: block;
                 height: 15px;
@@ -102,50 +94,51 @@
         }
     }
 }
-
 /*Agency Body Section*/
-.page-container-agency{
-   .select-company{
-       width: 250px;
-       margin: -16px 0px 15px 15px;
-   }
-    .left-sidebar{
-        .sidebar-menu-inner{
-            .user-meta-box{
-                .user-photo-wrapper{
-                    margin-top: 70px;
-                    margin-bottom: 25px;
-                }
-            }
-        }
-    }
-    .right-sidebar{
-        .sidebar-menu-inner{
-            padding: 0;
-            margin-top: 0;
-        }
-        .company-logo{
-            padding: 15px;
-            @media(max-width: $screen-md-max){
-                padding-top: 25px;
-            }
-        }
-        .add-agency {
-            padding: 0px 15px;
-        }
-        .main-menu{
-            padding-left: 15px;
-            padding-top: 100px;
-            @media(max-width: $screen-md-max){
-                padding-top: 22px;
-            }
-            @media(max-width: $screen-sm-max){
-                padding-top: 17px;
-            }
-            .menu-wrapper ul li {
-                float: right;
-                padding-right: 15px;
-             }
-        }
-    } 
-}
+
+//.page-container-agency{
+//   .select-company{
+//       width: 250px;
+//       margin: -16px 0px 15px 15px;
+//   }
+//    .left-sidebar{
+//        .sidebar-menu-inner{
+//            .user-meta-box{
+//                .user-photo-wrapper{
+//                    margin-top: 70px;
+//                    margin-bottom: 25px;
+//                }
+//            }
+//        }
+//    }
+//    .right-sidebar{
+//        .sidebar-menu-inner{
+//            padding: 0;
+//            margin-top: 0;
+//        }
+//        .company-logo{
+//            padding: 15px;
+//            display: none;
+//            @media(max-width: $screen-md-max){
+//                padding-top: 25px;
+//            }
+//        }
+//        .add-agency {
+//            padding: 0px 15px;
+//        }
+//        .main-menu{
+//            padding-left: 15px;
+//            padding-top: 100px;
+//            @media(max-width: $screen-md-max){
+//                padding-top: 22px;
+//            }
+//            @media(max-width: $screen-sm-max){
+//                padding-top: 17px;
+//            }
+//            .menu-wrapper ul li {
+//                float: right;
+//                padding-right: 15px;
+//             }
+//        }
+//    } 
+//}

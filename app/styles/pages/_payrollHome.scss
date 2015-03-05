@@ -9,7 +9,6 @@
         color: #fff!important;
         background-color: #8dc044!important;
         border-bottom: 1px solid #019246;
-        ;
         border-radius: 0px!important;
     }
     .panel-default {
@@ -29,15 +28,30 @@
 }
 
 .payroll-overview {
-    ul {
+    > ul {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
         text-align: center;
         padding: 0px;
         margin: 0px;
-    }
-    li {
-        display: inline-block;
-        margin: 5px 4px 10px;
-        width: 136px;
+        > .dropdown {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 5px;
+            width: 136px;
+            height: 105px;
+            h5 { 
+                margin: 12px 0;
+                width: 100%;
+            }
+            a {
+                width: 100%;
+                align-self: flex-end;
+            }
+        }
     }
     .view-all {
         display: block;
@@ -75,7 +89,7 @@
     button {
         width: 110px;
         padding: 6px 0;
-        margin: 0 0 3px; 
+        margin: 0 0 3px;
         background-color: #8dc044!important;
         border: none;
     }
