@@ -19,7 +19,7 @@ angular.module('origApp.controllers')
 		//watching saveAgency to change vat value to the current agency
 
 		$scope.$watch('saveAgency', function () {
-			if($scope.saveAgency === null){
+			if(!$scope.saveAgency){
 				return;
 			}
 			var _vat = HttpResource.model ('agencies/'+$scope.saveAgency.agency._id+'/payroll');
@@ -244,22 +244,11 @@ angular.module('origApp.controllers')
 			
 			
 		});
-		HttpResource.model('timesheets').query({}, function  (res) {
-			
-			console.log(res);
-			
-		});
 		$modalInstance.close();
 	};
 
-
-	$scope.logDis = function () {
-		// body...
-		console.log($scope.weekEndingDate.object);
-	};
-
 	$scope.cancel = function() {
-		if (!confirm('Are you sure you want to cancel?')) {
+		if (!window.confirm('Are you sure you want to cancel?')) {
 			return;
 		}
 		$modalInstance.dismiss('cancel');
