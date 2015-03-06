@@ -11,33 +11,33 @@ angular.module('origApp.controllers')
         $scope.holidayAmount = 0;
         $scope.totalNumberOfContractors = 0;
         $scope.displayInvoice = parentScope.saveInvoice.data.object;
+        if($scope.displayInvoice){
+            for(var i = 0; i< $scope.displayInvoice.length;++i){
 
-        for(var i = 0; i< $scope.displayInvoice.length;++i){
+                $scope.totalInvoiceValue += $scope.displayInvoice[i].total;
+                
+                $scope.totalVat += $scope.displayInvoice[i].vat;
 
-            $scope.totalInvoiceValue += $scope.displayInvoice[i].total;
-            
-            $scope.totalVat += $scope.displayInvoice[i].vat;
+                if($scope.displayInvoice[i].companyDefaults.marginChargedToAgency === true){
+                    $scope.marginValue += $scope.displayInvoice[i].companyDefaults.marginAmount;
+                }
 
-            if($scope.displayInvoice[i].companyDefaults.marginChargedToAgency === true){
-                $scope.marginValue += $scope.displayInvoice[i].companyDefaults.marginAmount;
+                if($scope.displayInvoice[i].companyDefaults.holidayPayIncluded === true){
+                    $scope.holidayAmount += $scope.displayInvoice[i].companyDefaults.holidayPayDays;
+                }
+                $scope.totalNumberOfContractors += $scope.displayInvoice[i].lines.length;
+
+                $scope.displayObject = {
+                    date:$scope.displayInvoice[i].createdDate,
+                    invoiceNo: $scope.displayInvoice[i].invoiceNumber,
+                    net: $scope.displayInvoice[i].net,
+                    vat: $scope.displayInvoice[i].vat,
+                    total: $scope.displayInvoice[i].total,
+                };
+                $scope.displayDetails.push($scope.displayObject);
+
             }
-
-            if($scope.displayInvoice[i].companyDefaults.holidayPayIncluded === true){
-                $scope.holidayAmount += $scope.displayInvoice[i].companyDefaults.holidayPayDays;
-            }
-            $scope.totalNumberOfContractors += $scope.displayInvoice[i].lines.length;
-
-            $scope.displayObject = {
-                date:$scope.displayInvoice[i].createdDate,
-                invoiceNo: $scope.displayInvoice[i].invoiceNumber,
-                net: $scope.displayInvoice[i].net,
-                vat: $scope.displayInvoice[i].vat,
-                total: $scope.displayInvoice[i].total,
-            };
-            $scope.displayDetails.push($scope.displayObject);
-
         }
-
 
         $scope.ok = function () {
           

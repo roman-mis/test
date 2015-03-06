@@ -141,8 +141,7 @@ module.exports = function(dbs){
 					  			var contractor = candidate || {};
 					  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
 					  			row.units = row.noOfUnits;
-					  			row.payRate = row.unitRate;
-		                		row.chargeRate = row.unitRate;
+					  			row.chargeRate = row.unitRate;
 		                		finishData.push(row);
 			  				}).then(function(){
 			  					if(Object.keys(data).length === Object.keys(finishData).length){

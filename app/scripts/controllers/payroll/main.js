@@ -131,6 +131,16 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           size:'lg'
       });
     };
+
+
+    $scope.importTimesheets = function () {
+        ModalService.open({
+          templateUrl: 'views/payroll/importTimesheets.html',
+          parentScope: $scope,
+          controller: 'importTimesheetsController',
+          size:'md'
+      });
+    };
 }]);
 
 
