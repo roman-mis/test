@@ -46,7 +46,7 @@ module.exports=function(){
 												text: _element.paymentRate.name,
 						                        weekEndingDate: timesheet.weekEndingDate,
 						                        units: _element.units,
-						                        rate: _element.chargeRate,
+						                        rate: _element.payRate,
 						                        total: (_element.amount+_element.vat).toFixed(2)
 											};
 											net += _element.units * _element.chargeRate;
