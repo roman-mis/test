@@ -21,6 +21,13 @@ module.exports=function(dbs){
 
 	};
 
+	service.getUserByRef=function(ref){
+		console.log('finding by candidateRef '+ref);
+		ref = Number(ref);
+		var query=db.User.findOne({candidateNo:ref});
+		return Q.nfcall(query.exec.bind(query));
+	};
+
 	service.getDocumentViewModel=function(document){
 		return {_id:document._id,agency:document.agency,documentType:document.documentType,
 			documentName:document.documentName,generatedName:document.generatedName,mimeType:document.mimeType};
