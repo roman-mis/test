@@ -32,9 +32,8 @@ angular.module('origApp.controllers')
               {field: 'contactNumber', display: 'Contact number'},
               {field: 'address1', display: 'Address'},
               {field: 'emailAddress', display: 'Email', cellTemplate: '<a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a>'},
-              {field: 'phone', display: 'Phone'}
-              // ,
-              // {field: 'view', display: 'View', cellTemplate: '<a href="javascript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
+              {field: 'phone', display: 'Phone'},
+              {field: 'view', display: 'View', cellTemplate: '<a href="javascript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
             ],
             data: []
           };
