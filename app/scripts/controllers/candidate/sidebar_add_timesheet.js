@@ -136,9 +136,7 @@ angular.module('origApp.controllers')
 		$scope.files = fileInput;
 		$scope.inSelectFile = true;
 
-		$scope.$apply(function() {
-
-		});
+		$scope.$apply();
 	};
 	//upload file to s3
 
@@ -150,14 +148,17 @@ angular.module('origApp.controllers')
 
 
 		$scope.isUploading = true;
-
+		var str = $scope.files.files[0].name;
+		str = str.replace(/ /g, '_');
 		s3Service.upload({
-			fileName: new Date().getTime().toString() + $scope.files.files[0].name,
+			fileName: new Date().getTime().toString() + str,
 			file: $scope.files.files[0]
 
 		}).then(function(data) {
 			$scope.isUploading = false;
 			$scope.uploadedImg.url = data.url;
+
+			console.log(data.url)
 		}, function() {
 			// alert('error');
 		});
