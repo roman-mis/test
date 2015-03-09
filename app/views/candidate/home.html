@@ -1,4 +1,29 @@
 <h3>Home</h3>
+<div class="row">
+<div class='col-md-6'>
+  <ul class="entry-content">
+    <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactdetail.phone}}</span></li>
+    <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">{{contactdetail.mobile}}</span></li>
+     <li class="clearfix"><i class="fa fa-mobile-phone"></i>Contact Number<span class="meta">{{contactdetail.contactNumber}}</span></li>
+    <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<span class="meta">{{contactdetail.emailAddress}}</span></li>
+        <li class="clearfix"><i class="fa fa-envelope-o"></i>Alternate Email<span class="meta">{{contactdetail.altEmail}}</span></li>
+
+    <li class="clearfix"><i class="fa fa-location-arrow"></i>Address-1<span class="meta">{{contactdetail.address1}}</span></li>
+    <li class="clearfix"><i class="fa fa-location-arrow"></i>Address-2<span class="meta">{{contactdetail.address2}}</span></li>
+      <li class="clearfix"><i class="fa fa-location-arrow"></i>Address-3<span class="meta">{{contactdetail.address3}}</span></li>
+       <li class="clearfix"><i class="fa fa-location-arrow"></i>Nationality<span class="meta">{{contactdetail.nationality}}</span></li>
+        <li class="clearfix"><i class="fa fa-location-arrow"></i>Country<span class="meta">{{contactdetail.county}}</span></li>
+         <li class="clearfix"><i class="fa fa-location-arrow"></i>Postal code<span class="meta">{{contactdetail.postCode}}</span></li>
+     <li class="clearfix"><i class="fa fa-facebook-official"></i>Facebook<span class="meta">{{contactdetail.facebook}}</span></li>
+     <li class="clearfix"><i class="fa fa-linkedin-square"></i>Linkedin<span class="meta">{{contactdetail.linkedin}}</span></li>
+
+         
+  </ul>
+</div>
+<div class="cold-md-6">
+  <p>othere</p>
+</div>
+</div>
 
 <div ng-repeat='item in payrollProduct'>
 	<span ><a style="color:green;margin:20px;font-weight: bold" ui-sref="app.agency.home({agencyId:item.agency._id})">{{item.agency.name}}</a></span>

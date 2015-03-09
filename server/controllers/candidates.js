@@ -281,6 +281,7 @@ module.exports = function(dbs){
 
         candidateservice.getUser(req.params.id)
           .then(function(user){
+        
             if(user){
               var vm=getContactInformationViewModel(user,user.contactDetail);
               res.json({result:true,object:vm});

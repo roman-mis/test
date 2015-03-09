@@ -4,11 +4,11 @@ var express = require('express'),
     router = express.Router(),
     expressJwt = require('express-jwt'),
     db = require('../models'),
+    util=require('util'),
     controller=require('../controllers/users')(db),
     restMiddleware=require('../middlewares/restmiddleware'),
 	routeskipper=require('../middlewares/route-skipper')
   ;
-
 
 module.exports = function(app){
   app.use('/api/users', routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[

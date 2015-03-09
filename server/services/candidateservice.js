@@ -19,6 +19,7 @@ var dataList=require('../data/data_list.json');
 
 // }
 
+
 service.getUserAgencies=function(id){
 	var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 	return Q.nfcall(query.exec.bind(query));
@@ -135,8 +136,10 @@ service.signup=function(opt,user,worker){
 
 			userModel.worker=worker;
 			
-			console.log('going for validations');
 			
+			console.log('going for validations');
+			 console.log(userModel.validate.bind(userModel));
+			 
 			Q.allSettled([Q.nfcall(userModel.validate.bind(userModel))])
 			.spread(function(userPromise){
 				console.log('------------my validate result.......');
@@ -350,7 +353,24 @@ service.authenticateUser=function(emailAddress,password){
 				utils.compareSecureString(user.password,password)
 				.then(function(result){
 					if(result){
+						var now=new Date();
+						console.log(now);
+					   setTimeOut(function(){
+
+   
+
+						db.User.updateLastLogin(user._id,now,function(res){
+					      console.log('from updateloagin');
+					      console.log(res);
+					 
+						})
+
+
+					   },100);
+					    user.lastlogin=now;
+					    console.log('i am called here');
 						deff.resolve(user);
+						
 					}
 					else{
 						deff.reject({name:'InvalidLogin',message:'User not found',detail:'passwords do not match'});

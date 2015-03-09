@@ -26,6 +26,7 @@ module.exports = function(mongoose,autoIncrement) {
     lockedUnlockedBy:      {type:Schema.Types.ObjectId,ref:'User'},
     activatedDate:     {type:Date,required:false},
     avatarFileName:   {type:String,default:''},
+    lastLogin:{type:Date,default:Date.now},
     worker:{
         contactNumber:      {type:String,required:false,trim:true},
         birthDate:          {type:Date,required:false},
@@ -170,6 +171,21 @@ schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,i
        next();
          
     });
+    schema.methods.updateLastLogin = function (id,date,cb) {
+        console.log('calling in mongoose middleware');
+        console.log(id,date);
+      this.update({"_id":id},{$set:{"lastLogin":date}},function(err){
+        if(err){
+
+            cb(err);
+        }else{
+
+            cb();
+        }
+
+      })
+    
+   }
   return mongoose.model('User',schema);
 
 };

@@ -11,6 +11,7 @@ module.exports = function(){
 
   controller.authenticate =function(req, res) {
 
+
     candidateservice.authenticateUser(req.body.emailAddress,req.body.password)
     .then(function(user){
       var vm=getUserViewModel(user);
