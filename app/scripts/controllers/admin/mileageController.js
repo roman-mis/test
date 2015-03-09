@@ -125,6 +125,7 @@ angular.module('origApp.controllers')
 	    $scope.showWarning = false;
     	if(event.keyCode === 13){
 	    	$scope.addRow();
+             $scope.save();
     	}
     };
     $scope.save = function(){
@@ -132,6 +133,12 @@ angular.module('origApp.controllers')
 	    	console.log('posting');
 	    	console.log(response);
 	    });
+    };
+
+    $scope.delete = function(index){
+        console.log(index)
+        $scope.data.splice(index,1);
+        $scope.save();
     };
 
 });

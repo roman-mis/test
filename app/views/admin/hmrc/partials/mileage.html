@@ -9,10 +9,10 @@
                                 <th class="col-xs-3">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr ng-repeat="d in data" ng-init="xi=$index">
-                                <td class="dropdown" >
-                                    <div style="width:100%;cursor:pointer" ng-click="showEdit('type',$index)" ng-hide="r.type.editeRaw[$index]">{{d.type}}</div>
+                        <tbody >
+                            <tr class=""  ng-repeat="d in data" ng-init="xi=$index">
+                                <td  class="dropdown" >
+                                    <div class=" " style="width:100%;cursor:pointer" ng-click="showEdit('type',$index)" ng-hide="r.type.editeRaw[$index]"><span>{{d.type}}</span></div>
                                     <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" ng-show="r.type.editeRaw[$index]">
                                         <input style="width:100%;" ng-model="r.type.temp" ng-keydown="keyDown('type',$index,$event)"/>
                                     </span>
@@ -29,7 +29,8 @@
                                 </td>
 
                                  <td >
-                                    <div style="width:100%;cursor:pointer" ng-click="showEdit('amount',$index) " ng-hide="r.amount.editeRaw[$index]">{{d.amount}}</div>
+                                    <div style="width:100%;cursor:pointer;display:inline-block" ng-click="showEdit('amount',$index) " ng-hide="r.amount.editeRaw[$index]"><span>{{d.amount}}</span><span ng-click="delete($index)" style="position:absolute;right:20px;z-index: 10;"><i class="fa fa-times"></i></span></div>
+
                                     <span ng-show="r.amount.editeRaw[$index]">
                                         <input style="width:100%;" ng-model="r.amount.temp" ng-keydown="keyDown('amount',$index,$event)"/>
                                     </span>
@@ -49,7 +50,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div align='right' style="margin:10px"><button ng-click="save()" class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save </button></div>
+                   <!--  <div align='right' style="margin:10px"><button ng-click="save()" class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save </button></div> -->
                     <div align="center" class="warning" ng-repeat="w in warning" ><span style="color:red" class="warning" ng-show="showWarning">{{w}}</span></div>
                 </div>
             </div>
