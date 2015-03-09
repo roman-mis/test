@@ -3,6 +3,7 @@
 
 
 module.exports = function(db){
+  
   var jwt = require('jsonwebtoken'),
     candidateservice=require('../services/candidateservice')(db);
 
