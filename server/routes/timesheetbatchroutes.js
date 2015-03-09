@@ -2,7 +2,6 @@
 
 var express = require('express'),
     router = express.Router(),
-
     db = require('../models'),
 	router = express.Router(),
 	controller=require('../controllers/timesheetBatchController')(db),

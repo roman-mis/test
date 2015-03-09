@@ -1,0 +1,148 @@
+<div class="modal-content">
+<button ng-click="log()">log</button>
+    <div class="modal-header">
+        <h4 class="modal-title">Import Timesheets</h4>
+    </div>
+        
+    <div class="modal-body modal-body-ImTimesheets">
+	
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Select Agency</label>
+                        <div class="col-xs-8">
+                            <select ng-model ='saveAgency' class="form-control"
+                                    ng-options="agency.name for agency in agency">
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Import Template</label>
+                        <div class="col-xs-8">
+                            <select ng-model = 'saveTemp' class="form-control"
+                                    ng-options="temp.name for temp in templates">
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <div class="col-xs-8">
+                            <input type="text" id="uploadFile" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-4 ">
+                            <div class="fileUpload btn btn-primary form-control">
+                                <span>Browse</span>
+                                <input ng-file-select = "onSelectFile($files)" accept=".csv" id="uploadBtn" type="file" class="upload" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <button ng-click ="uploadClicked = true" class="btn btn-primary form-control">Upload</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button ng-click="preProcess()" class="btn btn-primary form-control">Pre-Process</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Batch Number</label>
+                        <div class="col-xs-8">
+                             <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Number of Timesheets <span class="pull-right">{{timesheets[timesheets.length-1].numberOfTimesheets}}</span></label>
+                        <label class="col-xs-6 control-label">Number of Errors <span class="pull-right">1</span></label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-striped table-ImTimesheets" id="tableHeader">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th style="padding: 8px;">Name</th>
+                            <th>Unit</th>
+                            <th>Rate</th>
+                            <th>Total</th>
+                            <th>Import Status</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="tableWrapper tableWrapper-140">
+                    <table class="table table-striped" id="tableBody">
+                        <tbody>
+                            <tr ng-repeat="timesheet in timesheets">
+                                <td>{{timesheet.contractorRefNum}}</td>
+                                <td>{{timesheet.contractorForename}} {{timesheet.contractorSurename}}</td>
+                                <td>{{timesheet.noUnits}}</td>
+                                <td>{{timesheet.unitRate}}</td>
+                                <td>{{timesheet.totalNet}}</td>
+                                <td>{{timesheet.importStatus}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-8 text-right">
+                Total
+            </div>
+            <div class="col-xs-4">
+                1600.00
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-8 text-right">
+                Total
+            </div>
+            <div class="col-xs-4">
+                320.00
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-8 text-right">
+                Total
+            </div>
+            <div class="col-xs-4">
+                1920.00
+            </div>
+        </div>
+
+    </div>
+	
+    <div class="modal-footer">
+        <a href ng-click="cancel()" class="btn" data-dismiss="modal" aria-label="Close">Cancel</a>
+        <button ng-disabled="!addSheet" ng-click="uploadFile()" class="btn btn-primary">Upload File</button>
+    </div>
+	
+</div>
+
+
+

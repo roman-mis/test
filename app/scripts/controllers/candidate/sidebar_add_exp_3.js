@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp3Controller', function($scope, HttpResource) {
+        .controller('CandidateSidebarAddExp3Controller', function($scope) {
           var currentDate = new Date();
           $scope.minDate = currentDate;
           $scope.expenseData.claimDate = $scope.expenseData.claimDate || currentDate;

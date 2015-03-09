@@ -14,7 +14,7 @@ angular.module('origApp.directives')
                 maxVisiblePages: 5
               };
               console.log($scope.options);
-              console.log($scope.options.getImage("task"));
+              console.log($scope.options.getImage('task'));
               $scope.img = $scope.options.columns.splice(0,1)[0];
 
               for(var k in defaultOptions){
@@ -24,7 +24,7 @@ angular.module('origApp.directives')
 
 
               $scope.$watch('options.limit', function(nValue, oValue) {
-                console.log("options.limit");
+                console.log('options.limit');
                 console.log(nValue);
                 console.log(oValue);
                 if (nValue !== oValue && $scope.options.onLimitChanged) {

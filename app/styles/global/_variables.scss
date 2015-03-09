@@ -5,8 +5,7 @@ $screen-lg: 1280px;
 $screen-md: 1024px;
 $screen-sm: 768px;
 $screen-xs: 568px;
-$min-width: 300px;
-$grid-float-breakpoint: $screen-xs;
+$grid-float-breakpoint: $screen-sm;
 $grid-break: ($screen-xs - 1);
 
 $screen-xs-max: ($screen-sm - 1);
@@ -17,12 +16,12 @@ $grid-gutter-width-md: 13px;
 
 /*Color*/
 $gray-darker: #555;
-$gray: #7c7e7f;
+$gray: #616161; // #7c7e7f;
 $gray-light: #a6a4a2;
 $gray-lighter: #d5d2cf;
 $gray-lightest: #f1efef;
 
-$green: #009646;
+$green: #059347; // #009646;
 $green-light: #79c44a;
 
 $sky: #9ad3ef;

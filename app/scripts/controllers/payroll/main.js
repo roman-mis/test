@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','payroll',
 	function($state,$rootScope,$scope,HttpResource,ModalService,payroll){	
@@ -7,13 +8,13 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
    $scope.agencyIndex = -1;
    $scope.comparingList = [];
    $scope.periodTypeValues = [];
-   $scope.periodType = 'weekly'
+   $scope.periodType = 'weekly';
 
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
         if(data.statusText === 'OK' ){
-            console.log('data');
-            console.log(data);
+            // console.log('data');
+            // console.log(data);
             $scope.periodTypeValues = data.data;
         }
     });
@@ -25,8 +26,8 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           parentScope: $scope,
           controller: 'runPayrollController',
           size: 'lg'
-      })
-    }
+      });
+    };
 
     $scope.camelCaseFormate = function(s){
     	var ar = s.split(' ');
@@ -41,7 +42,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
             s = s+ arr.join('');
         }
         return s;
-    }
+    };
 
     $scope.unCamelCaseFormate = function(s){
     	if(!s || s.length === 0){
@@ -53,25 +54,25 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     		if(ar[i] === ar[i].toUpperCase()){
     			s += ' ';
     		}
-    		s += ar[i]
+    		s += ar[i];
     	}
     	return s;
-    }
+    };
 
     $scope.getPayroll = function(periodType){
         periodType = periodType || 'weekly';
-        console.log(periodType)
+        // console.log(periodType);
         $scope.periodType = periodType;
         var params={periodType:periodType,isCurrent:true};
-        console.log(params);
+        // console.log(params);
 
         HttpResource.model('payroll').query(params,function(data){
-            console.log('done !!');
+            // console.log('done !!');
             $scope.payroll =  data.data.objects[0];
             payroll.details =  data.data.objects[0];
-            console.log(payroll);
+            // console.log(payroll);
         });
-    }
+    };
     $scope.getPayroll();
 
 
@@ -106,7 +107,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
      for(var i = 0; i < $scope.payroll.agencies.length; i++){
       if($scope.payroll.agencies[i][state]){
          $scope.agencyList.push($scope.payroll.agencies[i].agency.name);
-         console.log($scope.agencyList);
+         // console.log($scope.agencyList);
      }
  }    	
 
@@ -115,11 +116,11 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
      //          inputs: $scope.agencyList,
      //          size: 'sm'
      //        });
-}
+};
 
     $scope.viewAction = function(){
-      $state.go('app.payroll.viewAll')		
-    }
+      $state.go('app.payroll.viewAll');	
+    };
 
     
     $scope.createInvoice = function () {
@@ -129,7 +130,17 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           controller: 'createInvoiceController',
           size:'lg'
       });
-    }
+    };
+
+
+    $scope.importTimesheets = function () {
+        ModalService.open({
+          templateUrl: 'views/payroll/importTimesheets.html',
+          parentScope: $scope,
+          controller: 'importTimesheetsController',
+          size:'md'
+      });
+    };
 }]);
 
 

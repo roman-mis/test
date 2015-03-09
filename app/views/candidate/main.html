@@ -3,7 +3,7 @@
     <div ng-include="'views/candidate/_meta.html'"></div>
 
     <div class="candidate-main meta-box container-fluid">
-      <div class="row visible-sm visible-xs">
+      <div class="row hidden-lg hidden-md hidden-sm">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" ng-click="tab.isMenuCollapsed = !tab.isMenuCollapsed">
             <span class="sr-only">Toggle navigation</span>
@@ -11,7 +11,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <span class="navbar-brand visible-sm visible-xs">{{tab.caption}}</span>
+          <span class="navbar-brand hidden-lg hidden-md hidden-sm">{{tab.caption}}</span>
         </div>
       </div>
       <section class="tabs-wrapper row">
@@ -56,7 +56,7 @@
 
   </div>
 
-  <div class="sidemenu candidate-right-sidebar">
+  <div class="sidemenu right-sidebar">
     <div ng-include="'views/candidate/_rightmenu.html'"></div> 
   </div>
 </div>

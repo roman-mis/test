@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-  .controller('CandidatetabController', function($scope) {
+  .controller('CandidatetabController', function() {
     this.tabCaptions = ['', 'Home', 'Contact', 'Payroll', 'Payslips', 'Agencies', 'Compliance', 'History'];
     this.isCollapsed = true;
     this.tab = 1;

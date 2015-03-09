@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp8Controller', function($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
+        .controller('CandidateSidebarAddExp8Controller', function($scope, HttpResource, ConstantsResource) {
           $scope.expenseData.others = $scope.expenseData.others || [];
           $scope.types = ConstantsResource.get('otherexpensetypes');
 
