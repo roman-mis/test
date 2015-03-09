@@ -23,13 +23,13 @@ angular.module('origApp.controllers')
   			$scope.data = data.data.object;
   			console.log($scope.data);
   		}
-  			$scope.data = [
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'}
-    ];
+  		// 	$scope.data = [
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'}
+    // ];
     
   	});
 
