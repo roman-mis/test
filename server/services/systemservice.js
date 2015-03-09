@@ -108,6 +108,9 @@ module.exports=function(dbs){
 		return Q.Promise(function(resolve,reject){
 			return Q.nfcall(q.exec.bind(q))
 				.then(function(system){
+					console.log('====================================================================')
+					console.log(system);
+					console.log('====================================================================')
 					if(system){
 						resolve(system);
 					}

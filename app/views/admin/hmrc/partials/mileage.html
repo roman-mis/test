@@ -36,22 +36,21 @@
                                 </td>
 
                             </tr>
-                            <tr>
-                                <td>
+                            <tr >
+                                <td >
                                    <input style="width:100%;" ng-model="new.type" ng-keydown="addNew()"/>
                                 </td>
                                 <td>
                                    <input style="width:100%;" ng-model="new.restriction" ng-keydown="addNew()"/>
                                 </td>
                                 <td>
-                                   <span><input style="width:100%;" ng-model="new.amount" ng-keydown="addNew()"/>
+                                   <input style="width:80%;display: inline-block;" ng-model="new.amount" ng-keydown="addNew()"/><div align='right' style="width:20%;display: inline-block;" ><i ng-click="addRow()" style="position:relative;color:green;font-size:25px;top: 5px;cursor:pointer" class="fa fa-plus"></i></div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div   align="right"><span ng-click="addRow()" style="cursor:pointer" align="right"><i style="color:green;font-size:40px" class="fa fa-plus"></i></span></div>
+                    <div align='right' style="margin:10px"><button ng-click="save()" class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save </button></div>
                     <div align="center" class="warning" ng-repeat="w in warning" ><span style="color:red" class="warning" ng-show="showWarning">{{w}}</span></div>
                 </div>
             </div>
         </div>
-       {{x}}

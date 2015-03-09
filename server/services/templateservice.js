@@ -10,6 +10,7 @@ module.exports = function(dbs){
 	var service = {};
 
 	service.getAllTemplates = function(request){
+		db.test += 1;
 		return Q.Promise(function(resolve,reject){
 			var q=db.Template.find();
 			queryutils.applySearch(q,db.Template,request)
@@ -19,6 +20,9 @@ module.exports = function(dbs){
 	};
 
 	service.addTemplate = function(template){
+
+		console.log('22222222222222222222222222222222222222222222222222222222222222222222222222');
+		console.log(db.test);
 		var deff = Q.defer();
 		var templateModel;
 		templateModel = new db.Template(template);
