@@ -17,7 +17,7 @@
       <section class="tabs-wrapper row">
         <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
           <li ng-class="{active: isTabActive('home')}">
-            <a ng-href="/candidates/{{candidateId}}/home">Home</a>
+            <a ui-sref="app.candidate.home">Home</a>
           </li>
           <li ng-class="{active: isTabActive('contact')}">
             <a href="/candidates/{{candidateId}}/contact">Contact</a>

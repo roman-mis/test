@@ -23,4 +23,4 @@ module.exports = function(app){
 };
 
 router.get('/', controller.getMileageRates);
-router.patch('/', controller.saveMileageRates);
+router.post('/', controller.saveMileageRates);

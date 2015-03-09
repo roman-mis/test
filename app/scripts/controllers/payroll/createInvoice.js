@@ -269,4 +269,8 @@ angular.module('origApp.controllers')
 				}
 			});		
 		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
 }]);

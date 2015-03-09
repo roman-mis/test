@@ -5,7 +5,8 @@ module.exports=function(db){
 		queryutils=require('../utils/queryutils')(db),
 		_=require('lodash');
 	var utils=require('../utils/utils');
-	var systemservice=require('./systemservice')(db);
+	var systemservice=require('./systemservice')(db),
+	candidatecommonservice=require('./candidatecommonservice')(db);
 	
 	var service={};
 
@@ -32,6 +33,78 @@ module.exports=function(db){
 
 		return Q.nfcall(q.exec.bind(q));
 	};
+
+	service.getCSVFile = function(code, file){
+		console.log(code);
+		switch(code){
+			case '1':
+				return getStandardTemplate(file);
+			case '2':
+				break;
+		}
+	};
+
+	function findPaymentRate(paymentRates, search){
+		var paymentRate = {};
+		_.forEach(paymentRates, function(_paymentRate){
+			if(_paymentRate.name.toString().trim().toLowerCase() === search.trim().toLowerCase() || (_paymentRate.importAliases.indexOf(search) > 0)){
+				paymentRate = _paymentRate;
+				return false;
+			}
+		});
+		return paymentRate;
+	}
+
+	function getStandardTemplate(file){
+		return Q.Promise(function(resolve,reject){
+			return utils.readCsvFromFile(file.path).then(function(data){
+				return systemservice.getSystem()
+			  	.then(function(system){
+			  		var paymentRates = system.paymentRates;
+			  			console.log('Format 1');
+				  		var finishData = [];
+				  		_.forEach(data, function(row){
+			  				candidatecommonservice.getUserByRef(row.contractorReferenceNumber)
+			  				.then(function(candidate){
+			  					row.validationErrors = [];
+					  			if(row.rateDescription){
+					  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
+					  				row.elementType = paymentRate._id || null;
+					  				row.paymentRate = paymentRate;
+					  				// Add No Matching Payrment Rate validation if not matching
+					  				if(!row.elementType){
+		  								row.validationErrors.push('No Matching Payment Rate Found.');
+					  				}
+					  			}
+					  			
+					  			// Add No Matching Candidate validation if not matching
+					  			if(!candidate){
+					  				row.validationErrors.push('No Matching Contractor Found.');
+					  			}else{
+					  				if(candidate.firstName !== row.contractorForename){
+					  					row.validationErrors.push('Contractor First Name Mismatch.');
+					  				}
+					  				if(candidate.lastName !== row.contractorSurname){
+					  					row.validationErrors.push('Contractor Last Name Mismatch.');
+					  				}
+					  			}
+					  			var contractor = candidate || {};
+					  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
+					  			row.units = row.noOfUnits;
+					  			row.chargeRate = row.unitRate;
+		                		finishData.push(row);
+			  				}).then(function(){
+			  					if(Object.keys(data).length === Object.keys(finishData).length){
+			  						resolve(finishData);
+			  					}
+			  				});
+						});
+			  	}, reject);
+			}, function(err){
+				resolve({result:false, error: err});
+			});
+		});
+	}
 
 	service.saveTimesheet = function(id, timesheetDetails){
 		return Q.Promise(function(resolve,reject){

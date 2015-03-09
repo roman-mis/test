@@ -4,56 +4,54 @@
                      <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Type</th>
-                                <th>Restriction</th>
-                                <th>Amount</th>
+                                <th class="col-xs-3">Type</th>
+                                <th class="col-xs-6">Restriction</th>
+                                <th class="col-xs-3">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Petrol</td>
-                                <td>Up to 1400 cc</td>
-                                <td class="col-xs-5">
-                                    <div edit-text="" ng-model="myvar" save-function="save()"></div>
-                                   </td>
+                        <tbody >
+                            <tr class=""  ng-repeat="d in data" ng-init="xi=$index">
+                                <td  class="dropdown" >
+                                    <div class=" " style="width:100%;cursor:pointer" ng-click="showEdit('type',$index)" ng-hide="r.type.editeRaw[$index]"><span>{{d.type}}</span></div>
+                                    <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" ng-show="r.type.editeRaw[$index]">
+                                        <input style="width:100%;" ng-model="r.type.temp" ng-keydown="keyDown('type',$index,$event)"/>
+                                    </span>
+                                     <ul ng-show="r.type.editeRaw[$index]" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                        <li style="cursor:pointer" role="presentation"  ng-repeat="x in typeSuggestion "><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none" ng-click="selectType(xi,x)">{{x}}</a></li>
+                                    </ul>
+                                </td>
+
+                                 <td >
+                                    <div style="width:100%;cursor:pointer" ng-click="showEdit('restriction',$index)" ng-hide="r.restriction.editeRaw[$index]">{{d.restriction}}</div>
+                                    <span ng-show="r.restriction.editeRaw[$index]">
+                                        <input style="width:100%;" ng-model="r.restriction.temp" ng-keydown="keyDown('restriction',$index,$event)"/>
+                                    </span>
+                                </td>
+
+                                 <td >
+                                    <div style="width:100%;cursor:pointer;display:inline-block" ng-click="showEdit('amount',$index) " ng-hide="r.amount.editeRaw[$index]"><span>{{d.amount}}</span><span ng-click="delete($index)" style="position:absolute;right:20px;z-index: 10;"><i class="fa fa-times"></i></span></div>
+
+                                    <span ng-show="r.amount.editeRaw[$index]">
+                                        <input style="width:100%;" ng-model="r.amount.temp" ng-keydown="keyDown('amount',$index,$event)"/>
+                                    </span>
+                                </td>
+
                             </tr>
-                            <tr>
-                                <td>Petrol</td>
-                                <td>Between 1401 cc and 2000 cc</td>
-                                <td>0.1500</td>
-                            </tr>
-                            <tr>
-                                <td>Petrol</td>
-                                <td>2001 cc and above</td>
-                                <td>0.2600</td>
-                            </tr>
-                            <tr>
-                                <td>Diesel</td>
-                                <td>Up to 1600 cc</td>
-                                <td>0.1200</td>
-                            </tr>
-                            <tr>
-                                <td>Diesel</td>
-                                <td>Between 1601 cc and 2000 cc</td>
-                                <td>0.1500</td>
-                            </tr>
-                            <tr>
-                                <td>LPG</td>
-                                <td>Upto 1400 cc</td>
-                                <td>0.1000</td>
-                            </tr>
-                            <tr>
-                                <td>LPG</td>
-                                <td>Between 1401 cc and 2000 cc</td>
-                                <td>0.1200</td>
-                            </tr>
-                            <tr>
-                                <td>LPG</td>
-                                <td>Above 2001 cc</td>
-                                <td>0.1800</td>
+                            <tr >
+                                <td >
+                                   <input style="width:100%;" ng-model="new.type" ng-keydown="addNew()"/>
+                                </td>
+                                <td>
+                                   <input style="width:100%;" ng-model="new.restriction" ng-keydown="addNew()"/>
+                                </td>
+                                <td>
+                                   <input style="width:80%;display: inline-block;" ng-model="new.amount" ng-keydown="addNew()"/><div align='right' style="width:20%;display: inline-block;" ><i ng-click="addRow()" style="position:relative;color:green;font-size:25px;top: 5px;cursor:pointer" class="fa fa-plus"></i></div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+                   <!--  <div align='right' style="margin:10px"><button ng-click="save()" class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save </button></div> -->
+                    <div align="center" class="warning" ng-repeat="w in warning" ><span style="color:red" class="warning" ng-show="showWarning">{{w}}</span></div>
                 </div>
             </div>
         </div>

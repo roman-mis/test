@@ -53,8 +53,7 @@ module.exports = function(mongoose) {
         },
         rti: {
         },
-        mileageRates: {
-        },
+        mileageRates: Array,
         cis: {
         },
         statutoryTables: {

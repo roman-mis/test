@@ -1199,3 +1199,17 @@ body {
 table {
     outline: 0;
 }
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.mileAge :hover{
+    display: inline;
+}
+
+.mileAge span {
+    display: none;
+} 

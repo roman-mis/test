@@ -18,6 +18,10 @@ var conn=mongoose.createConnection(process.env.DATABASE_URL);
 // var conn=mongoose;
 autoIncrement.initialize(conn);
 
+// conn.connection.on('connected', function () {
+// console.log('conn connected to ');
+// });
+
 //console.log('here is mongoose');
 //console.log(mongoose.connections[0].db);
 
@@ -37,6 +41,8 @@ fs.readdirSync(__dirname).filter(function (file) {
   // else{console.log(model);}
   
 });
+
+db.test =1;
 
 // Object.keys(db).forEach(function (modelName) {
 //   if ('associate' in db[modelName]) {

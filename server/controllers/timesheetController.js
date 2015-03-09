@@ -3,10 +3,7 @@
 module.exports = function(dbs){
 	var _=require('lodash'),
 		timesheetservice=require('../services/timesheetservice')(dbs),
-		systemservice = require('../services/systemservice')(dbs),
-		candidatecommonservice=require('../services/candidatecommonservice')(dbs),
-		Q=require('q'),
-		utils=require('../utils/utils');
+		Q=require('q');
 
 	var controller = {};
 
@@ -110,67 +107,11 @@ module.exports = function(dbs){
 	};
 
 	controller.uploadTimesheet = function(req, res){
+		var timesheetTemplate = req.body.timesheettemplate;
 		var uploadedFile = req.files.file;
-		if(uploadedFile){
-			utils.readCsvFromFile(uploadedFile.path).then(function(data){
-				return systemservice.getSystem()
-			  	.then(function(system){
-			  		var paymentRates = system.paymentRates;
-			  		if(Object.keys(data[0]).length === 15){
-			  			// Format 1 : Column Count = 15
-				  		console.log('Format 1');
-				  		var finishData = [];
-				  		_.forEach(data, function(row){
-			  				candidatecommonservice.getUserByRef(row.contractorReferenceNumber)
-			  				.then(function(candidate){
-			  					row.validationErrors = [];
-					  			if(row.rateDescription){
-					  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
-					  				row.elementType = paymentRate._id || null;
-					  				row.paymentRate = paymentRate;
-					  				// Add No Matching Payrment Rate validation if not matching
-					  				if(!row.elementType){
-		  								row.validationErrors.push('No Matching Payment Rate Found.');
-					  				}
-					  			}
-					  			
-					  			// Add No Matching Candidate validation if not matching
-					  			if(!candidate){
-					  				row.validationErrors.push('No Matching Contractor Found.');
-					  			}
-					  			var contractor = candidate || {};
-					  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
-					  			row.units = row.noOfUnits;
-					  			row.payRate = row.unitRate;
-		                		row.chargeRate = row.unitRate;
-		                		finishData.push(row);
-			  				}).then(function(){
-			  					if(Object.keys(data).length === Object.keys(finishData).length){
-			  						res.json({result:true, objects: finishData});
-			  					}
-			  				});
-						});
-			  		}else{
-						res.json({result:false, message:'Invalid CSV File.'});
-			  		}
-			  	})
-			  	.fail(res.sendFailureResponse);
-			});
-		}else{
-			res.json({result:false, message:'No File Attached.'});
-		}
-		
-
-		function findPaymentRate(paymentRates, search){
-			var paymentRate = {};
-			_.forEach(paymentRates, function(_paymentRate){
-				if(_paymentRate.name.toString().trim().toLowerCase() === search.trim().toLowerCase() || (_paymentRate.importAliases.indexOf(search) > 0)){
-					paymentRate = _paymentRate;
-					return false;
-				}
-			});
-			return paymentRate;
-		}
+		return timesheetservice.getCSVFile(timesheetTemplate, uploadedFile).then(function(result){
+			res.json({result:true, objects: result});
+		});
 	};
 
 	return controller;

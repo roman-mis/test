@@ -28,11 +28,20 @@ angular.module('origApp.controllers')
               $scope.loadCandidates();
             },
             columns: [
+<<<<<<< HEAD
               {field: 'name', display: 'Name', cellTemplate: '{{row.title}}. {{row.firstName}} {{row.lastName}}'},
               {field: 'contactNumber', display: 'Contact number'},
               {field: 'address1', display: 'Address'},
               {field: 'emailAddress', display: 'Email', cellTemplate: '<a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a>'},
               {field: 'phone', display: 'Phone'}
+=======
+              {field: 'name', display: 'Name', cellTemplate: '<div style="cursor:pointer;width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.title}}. {{row.firstName}} {{row.lastName}}</div>'},
+              {field: 'contactNumber', display: 'Contact number', cellTemplate: '<div style="cursor:pointer;width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.contactNumber}}</div>'},
+              {field: 'address1', display: 'Address', cellTemplate: '<div style="cursor:pointer;width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.address1}}</div>'},
+              {field: 'emailAddress', display: 'Email', cellTemplate: '<div style="cursor:pointer;width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; <a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a></div>'},
+              {field: 'phone', display: 'Phone', cellTemplate: '<div style="cursor:pointer;width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.phone}}</div>'}
+              // {field: 'view', display: 'View', cellTemplate: '<a href="javascript:void(0)" ng-click="getExternalScope().viewDetails(row)"><i class="fa fa-eye"></i></a>', textAlign: 'center'}
+>>>>>>> fcfead0f1df165e296114d642950ed17b4ce96f2
             ],
             data: []
           };

@@ -13,8 +13,8 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
         if(data.statusText === 'OK' ){
-            console.log('data');
-            console.log(data);
+            // console.log('data');
+            // console.log(data);
             $scope.periodTypeValues = data.data;
         }
     });
@@ -61,16 +61,16 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 
     $scope.getPayroll = function(periodType){
         periodType = periodType || 'weekly';
-        console.log(periodType);
+        // console.log(periodType);
         $scope.periodType = periodType;
         var params={periodType:periodType,isCurrent:true};
-        console.log(params);
+        // console.log(params);
 
         HttpResource.model('payroll').query(params,function(data){
-            console.log('done !!');
+            // console.log('done !!');
             $scope.payroll =  data.data.objects[0];
             payroll.details =  data.data.objects[0];
-            console.log(payroll);
+            // console.log(payroll);
         });
     };
     $scope.getPayroll();
@@ -107,7 +107,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
      for(var i = 0; i < $scope.payroll.agencies.length; i++){
       if($scope.payroll.agencies[i][state]){
          $scope.agencyList.push($scope.payroll.agencies[i].agency.name);
-         console.log($scope.agencyList);
+         // console.log($scope.agencyList);
      }
  }    	
 
@@ -129,6 +129,16 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           parentScope: $scope,
           controller: 'createInvoiceController',
           size:'lg'
+      });
+    };
+
+
+    $scope.importTimesheets = function () {
+        ModalService.open({
+          templateUrl: 'views/payroll/importTimesheets.html',
+          parentScope: $scope,
+          controller: 'importTimesheetsController',
+          size:'md'
       });
     };
 }]);
