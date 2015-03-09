@@ -71,8 +71,7 @@
     border-bottom: none;
     padding-top: 5px;
     @media(max-width: $screen-sm-max) {
-        padding-top: 0px;
-        border: none;
+        padding-top: 0;
     }
     .top-search-row {
         display: flex;
@@ -173,7 +172,6 @@
         span.title {
             width: 200px;
             background-color: $gray;
-            border-left: 1px solid #7f8f7a;
         }
     }
 }

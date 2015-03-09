@@ -119,6 +119,7 @@ input[disabled] {
 .green-light-color {
     color: $green-light;
 }
+
 .sky-color {
     color: $sky;
 }
@@ -152,9 +153,9 @@ input[disabled] {
 }
 /*Header Section*/
 
-header {
+header.container-fluid {
     box-sizing: border-box;
-    padding: 12px $grid-gutter-width;
+    padding: 12px $grid-gutter-width-md;
     background-color: $gray;
     color: $gray-lightest;
     .row-header {
@@ -205,51 +206,67 @@ header {
     @media(max-width: $screen-md-max) {
         padding: 5px $grid-gutter-width-md;
     }
-    .search-wrapper {
-        max-width: 237px !important;
-        .search-group {
-            position: relative;
-            height: 32px;
-        }
-        .fa-search {
-            position: absolute;
-            display: inline-block;
-            right: 0;
-            top: 0;
-            transition: all .2s;
-        }
-        .search-group input {
-            padding-right: 32px;
-            &:focus {
-                padding-right: 2px;
-                +.fa-search {
-                    opacity: 0;
-                }
-            }
-        }
-        .search-form > div,
+    .header-inputs-wrapper.search-wrapper {
+        $st-length: 32px;
+        max-width: 200px;
+        width: 100%;
+        height: $st-length;
+        
+        .search-form > .form-group, 
         .search-form .dropdown-menu {
             color: $gray;
             background-color: $gray-lightest;
         }
-        input {
-            width: 205px !important;
-            border-right: 0;
+        .search-form {
+            height: $st-length; 
+        }
+        .search-group {
+            position: relative;
+            width: calc(100% - #{$st-length});
             &:hover {
                 background-color: #fff;
             }
+            > .form-control {
+                border-right: 0;
+                padding-right: $st-length;
+                &:focus {
+                    padding-right: 2px;
+                    +.fa-search {
+                        opacity: 0;
+                    }
+                }
+            }
+            .fa-search {
+                position: absolute;
+                display: inline-block;
+                right: 0;
+                top: 0;
+                width: $st-length;
+                line-height: $st-length;
+                text-align: center;
+                transition: all .2s;
+            }
         }
-        i {
-            width: 32px;
-            height: 32px;
-            line-height: 30px;
-            text-align: center;
+        .button-group {
+            width: $st-length;
+            .fa {
+                width: 100%;
+                line-height: $st-length;
+                text-align: center;
+            }
         }
         .sitemenu {
             position: relative;
-            i.fa, button {
+            .fa, button {
                 background-color: inherit;
                 color: inherit;
+            }
+            > button {
+                padding: 0;
+                margin: 0;
+                border: 1px solid $gray-light;
+                height: $st-length;
+                width: 100%; 
             }
             .dropdown-menu {
                 right: 0;
@@ -262,7 +279,7 @@ header {
                         &:hover {
                             background-color: #fff;
                         }
-                        i {
+                        .fa {
                             display: inline-block;
                             width: 20px;
                         }
@@ -277,16 +294,6 @@ header {
                 .dropdown-menu {
                     display: block;
                 }
-            }
-        }
-        button {
-            padding: 0;
-            margin: 0;
-            border: 1px solid $gray-light;
-            height: 32px;
-            width: 32px;
-            &:hover {
-                background-color: #fff;
             }
         }
     }
@@ -498,18 +505,10 @@ header {
         @media(max-width: $screen-md-max) {
             padding: $grid-gutter-width-md 0;
         }
-        //        &:hover {
-        //            z-index: 15;
-        //        }
         .breadcrumb {
             padding-left: 0;
             background: $gray-lightest;
-            @media(max-width: $screen-md-max) {
-                font-size: 16px;
-            }
-            @media(max-width: $screen-sm-max) {
-                font-size: 14px;
-            }
+            font-size: 14px;
             a {
                 color: $green-light;
                 border-bottom: 1px solid $green-light;
@@ -662,13 +661,13 @@ header {
             margin-right: -($grid-gutter-width / 2 + 2);
             position: relative;
             .nav-tabs {
-                cursor: pointer;
                 border-bottom: 1px solid $green;
                 padding-left: 0;
                 padding-right: 0;
                 margin-left: 1px;
                 margin-right: 1px;
                 > li {
+                    cursor: pointer;
                     background: $green-light;
                     margin-bottom: -1px;
                     border-top: 1px solid $gray;
@@ -684,17 +683,13 @@ header {
                         border-bottom: 1px solid $green;
                     }
                     a {
-                        color: $gray-lightest;
+                        color: $white;
                         border-radius: 0;
                         border-color: transparent;
                         margin: 0;
                         line-height: 19px;
                         &:hover {
                             background-color: transparent;
-                            color: $gray-lightest;
-                        }
-                        &:focus {
-                            color: $gray-lightest;
                         }
                     }
                     > a {
@@ -756,7 +751,6 @@ header {
                             background: $green;
                             a {
                                 background: transparent;
-                                color: $gray-lightest;
                             }
                         }
                     }
@@ -789,8 +783,9 @@ header {
                     th {
                         border: none;
                         background-color: $green-light;
-                        color: $gray-lightest;
+                        color: $white;
                         text-transform: uppercase;
+                        font-weight: normal;
                         a {
                             color: $gray-lightest;
                         }

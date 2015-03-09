@@ -6,7 +6,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr orig-grid-row grid-options="options" row="row" ng-repeat="row in options.data"></tr>
+      <tr orig-grid-row grid-options="options" row="row" ng-repeat="row in options.data" ng-click="getExternalScope().viewDetails(row)"></tr>
     </tbody>
   </table>
   <div class="orig-grid-pagination-wrapper" ng-if="options.isPagination">

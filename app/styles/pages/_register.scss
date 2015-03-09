@@ -222,12 +222,13 @@ header .row-header {
             max-width: 196px;
             width: 100%;
             border-radius: 0;
-            background-color: #818386;
+            background-color: $gray;
             font-size: $font-size-large - 2px;
-            line-height: 18px;
-            color: #fff;
+            line-height: 21px;
+            color: $gray-lightest;
             border-width: 0;
             float: left;
+            text-align: left;
             &::after {
                 content: "";
                 display: block;
@@ -236,8 +237,8 @@ header .row-header {
                 left: 0;
                 max-width: 196px;
                 width: 100%;
-                height: 6px;
-                background-color: #a7a9aa;
+                height: 4px;
+                background-color: $gray-light;
             }
         }
         .fa {
