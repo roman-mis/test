@@ -74,12 +74,21 @@ angular.module('origApp.controllers')
             });
           };
 	
-		  $scope.openAddTimesheetWin = function() {
+		      $scope.openAddTimesheetWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/_add_timesheet.html',
               parentScope: $scope,
               controller:'CandidateSidebarAddTimesheetController',
-              size:'lg'
+              size:'lg',
+              backdrop: 'static'
+            });
+          };
+          $scope.openSSP = function () {
+            ModalService.open({
+              templateUrl: 'views/candidate/sidebar_statuary_sick_pay.html',
+              parentScope: $scope,
+              controller: 'statuarySickPayCtrl',
+              size:'md'
             });
           };
 		})

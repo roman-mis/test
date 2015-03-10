@@ -14,12 +14,13 @@ angular.module('origApp.controllers')
   			
   		});
 
-  		HttpResource.model('admin/templates').query({},function (response) {
+  		HttpResource.model('constants/timesheettemplates').query({},function (response) {
   			$scope.templates = [];
-  			for (var i = 0; i < response.data.objects.length; ++i) {
-  					$scope.templates.push({id: response.data.objects[i]._id, name: response.data.objects[i].name});
-  				}	
-  				$scope.saveTemp = $scope.templates[0];
+  			console.log(response);
+  			// for (var i = 0; i < response.data.objects.length; ++i) {
+  			// 		$scope.templates.push({id: response.data.objects[i]._id, name: response.data.objects[i].name});
+  			// 	}	
+  			// 	$scope.saveTemp = $scope.templates[0];
   		});
 
   		$scope.uploadClicked = false;
@@ -175,7 +176,7 @@ angular.module('origApp.controllers')
   			$modalInstance.dismiss('cancel');	
   		};
   		$scope.log = function () {
-  			console.log($scope.uploadClicked)
+  			console.log($scope.uploadClicked);
   		};
  	
  }]);

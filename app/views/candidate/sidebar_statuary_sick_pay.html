@@ -1,0 +1,128 @@
+<div class="modal-content">
+	<div class="modal-header">
+        <h4 class="modal-title">Request Statutory Sick Pay</h4>
+	</div><!-- /modal-header -->
+	
+	<div class="modal-body">
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 form-group control-label">Contractor Name</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">Mark Gentry</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">Contractor ID</div>
+            <div class="col-xs-6 col-sm-2 form-group control-label">900001</div>
+        </div>
+        <div class="line-horizontal"></div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 form-group control-label">Date Informed</div>
+             <div class="col-xs-6 col-sm-8 form-group no-padding-left">
+                 <div class="input-group date" id="datepickerDate">
+                     <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                     <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 form-group control-label">Date of Sick Note</div>
+            <div class="col-xs-6 col-sm-2 form-group control-label" style="text-align: right;">From</div>
+             <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                 <div class="input-group date" id="datepickerFrom">
+                     <input type="text" class="form-control" />
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                 </div>
+            </div>
+            <div class="col-xs-6 col-sm-1 form-group control-label" style="text-align: right;">To</div>
+             <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                 <div class="input-group date" id="datepickerTo">
+                     <input type="text" class="form-control" />
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                 </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-xs-12 form-group">
+                <button type="button" class="btn btn-primary form-control">Check if qualifies</button>
+            </div>
+         </div>
+        <div class="line-horizontal"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p>&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You do qualify for SSP your amount due is: </p>
+            </div>
+            <div class="col-xs-12">
+                 <div class="wrapTable-scroll">
+                     <table class="table table-striped">
+                         <tbody>
+                             <tr>
+                                 <td>Week 1:</td>
+                                 <td>&pound;87.55</td>
+                                 <td class="text-right">
+                                     <a href="#"><i class="fa fa-pause"></i></a>&nbsp;
+                                     <a href="#"><i class="fa fa-trash"></i></a>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>Week 2:</td>
+                                 <td>&pound;87.55</td>
+                                 <td class="text-right">
+                                     <a href="#"><i class="fa fa-pause"></i></a>&nbsp;
+                                     <a href="#"><i class="fa fa-trash"></i></a>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>Week 3:</td>
+                                 <td>&pound;87.55</td>
+                                 <td class="text-right">
+                                     <a href="#"><i class="fa fa-pause"></i></a>&nbsp;
+                                     <a href="#"><i class="fa fa-trash"></i></a>
+                                 </td>
+                             </tr>
+                             <tr>
+                                 <td>Week 4:</td>
+                                 <td>&pound;87.55</td>
+                                 <td class="text-right">
+                                     <a href="#"><i class="fa fa-pause"></i></a>&nbsp;
+                                     <a href="#"><i class="fa fa-trash"></i></a>
+                                 </td>
+                             </tr>
+                         </tbody>
+                     </table>
+                </div>
+            </div>
+        </div>
+	</div><!-- /modal-body -->
+	    
+	<div class="modal-footer" id="modal-footer-left">
+       <div class="row rowFooter">
+            <div class="col-xs-6 col-sm-6">
+                <fieldset class="fieldsetRequestP45">
+                    <legend>Upload Timesheet</legend>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 form-group">
+                           <div class="fileUpload btn btn-primary form-control">
+                                <span>Browse</span>
+                                <input id="uploadBtn" type="file" class="upload" />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 form-group">
+                            <button type="button" class="btn btn-primary form-control">Upload</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <input type="text" id="uploadFile" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 control-label">
+                            <i class="fa fa-check"></i>
+                        </div>
+                    </div>
+				</fieldset>
+            </div>
+           
+            <div class="col-xs-6 col-sm-6 text-right btnFooter form-group">
+                <a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>    
+		        <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div><!-- /modal footer -->
+</div><!-- /modal content -->
