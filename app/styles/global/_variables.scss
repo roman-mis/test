@@ -12,14 +12,15 @@ $screen-xs-max: ($screen-sm - 1);
 $screen-sm-max: ($screen-md - 1);
 $screen-md-max: ($screen-lg - 1);
 $grid-gutter-width: 18px;
-$grid-gutter-width-md: 13px;
+$grid-gutter-width-md: 12px;
 
 /*Color*/
 $gray-darker: #555;
 $gray: #616161; // #7c7e7f;
-$gray-light: #a6a4a2;
+$gray-light: #9e9e9e; //#a6a4a2;
 $gray-lighter: #d5d2cf;
-$gray-lightest: #f1efef;
+$gray-lightest: #eee; // #f1efef
+$white: #fafafa;
 
 $green: #059347; // #009646;
 $green-light: #79c44a;

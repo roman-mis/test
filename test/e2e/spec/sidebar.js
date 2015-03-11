@@ -104,7 +104,7 @@ describe('Checking ONBOARDING', function () {
 });
 
 
-describe('Checking Activity', function () {
+describe('Checking ACTION REQUEST', function () {
 
   it('should open Call-log dialog', function () {
     clickFirstVisible(by.css('[ng-click="openCreateDocumentWin({})"]'), function (link) {
@@ -120,7 +120,7 @@ describe('Checking Activity', function () {
     element(by.model('data.documentName')).clear().sendKeys('asd');
 
     var path = require('path');
-    var fileToUpload = '../1.png';
+    var fileToUpload = '../sample.png';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     $('[ng-model="data.file"]').sendKeys(absolutePath);
     $('[ng-click="uploadFile()"]').click();

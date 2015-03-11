@@ -40,6 +40,7 @@ angular.module('origApp.services')
         var defer = $q.defer();
         HttpResource.model('authenticate').customPost('', {emailAddress: emailAddress, password: password}).then(
           function(response) {
+            
             var data = response.data;
             if (data.result === true) {
               $window.sessionStorage.isLoggedIn = 1;

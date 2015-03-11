@@ -46,12 +46,16 @@ module.exports=function(dbs){
 		return Q.Promise(function(resolve,reject){
 			candidatecommonservice.getUser(userId)
 			   .then(function(user){
+			   	console.log(user);
+			   	console.log('post call logs detail');
 			   		if(user){
 		   				var taskModel, historyModel;
 						taskModel = new db.Task(taskDetails);
 	   					historyModel = new db.History(historyDetails);
 	   					return Q.all([Q.nfcall(taskModel.save.bind(taskModel)), Q.nfcall(historyModel.save.bind(historyModel))])
-	   					.then(function(){
+	   					.then(function(t){
+	   						
+	   					
 							resolve({object:taskModel});						
 						}, reject);
 		   			}
