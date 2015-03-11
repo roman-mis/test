@@ -17,10 +17,10 @@ angular.module('origApp.controllers')
   		HttpResource.model('constants/timesheettemplates').query({},function (response) {
   			$scope.templates = [];
   			console.log(response);
-  			// for (var i = 0; i < response.data.objects.length; ++i) {
-  			// 		$scope.templates.push({id: response.data.objects[i]._id, name: response.data.objects[i].name});
-  			// 	}	
-  			// 	$scope.saveTemp = $scope.templates[0];
+  			for (var i = 0; i < response.data.length; ++i) {
+  					$scope.templates.push({code: response.data[i].code, name: response.data[i].name});
+  				}	
+  				$scope.saveTemp = $scope.templates[0];
   		});
 
   		$scope.uploadClicked = false;
@@ -136,10 +136,16 @@ angular.module('origApp.controllers')
 	        if ($scope.addSheet) {
 	        	var str = $scope.files[0].name;
 	        	str = str.replace(/ /g, '_');
+	        	var uploadCsv = {
+	        		file: $scope.files[0],
+	        		timesheettemplate: $scope.saveTemp.code
+	        	};
+	                /*
 	                $upload.upload({
 	                    url: 'api/timesheets/uploadcsv',
 	                    //fields: {'username': $scope.username},
-	                    file: $scope.files[0]
+	                    file: $scope.files[0],
+	                    timesheettemplate: $scope.saveTemp.code
 	                // }).progress(function (evt) {
 	                //     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 	                //     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
@@ -148,7 +154,12 @@ angular.module('origApp.controllers')
 	                    console.log(data);
 	                    $modalInstance.close();
 	                });
-					
+					*/
+
+		HttpResource.model('timesheets/uploadcsv').create(uploadCsv).post().then(function (res) {
+			//console.log(uploadCsv.timesheettemplate);
+			console.log('res', res);
+		});
 				// var fileName = new Date().getTime().toString() + '_' + $scope.files[0].name;
 	   //          var mimeType = $scope.files[0].type || 'text/plain';
 	   //          $scope.isUploading = true;

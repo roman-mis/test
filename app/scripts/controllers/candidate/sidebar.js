@@ -85,14 +85,6 @@ angular.module('origApp.controllers')
               backdrop: 'static'
             });
           };
-          $scope.openSSP = function () {
-            ModalService.open({
-              templateUrl: 'views/candidate/sidebar_statuary_sick_pay.html',
-              parentScope: $scope,
-              controller: 'statuarySickPayCtrl',
-              size:'md'
-            });
-          };
 		})
 
         //DPA questions
