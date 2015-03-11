@@ -127,7 +127,7 @@ module.exports=function(db){
 				timesheetDetail.batch = timesheetBatchModel._id;
 				var timesheetModel = new db.Timesheet(timesheetDetail);
 				timesheetsToSave.push(timesheetModel);
-				timesheetsToSavePromise.push(timesheetModel.save.bind(timesheetModel));
+				timesheetsToSavePromise.push(Q.nfcall(timesheetModel.save.bind(timesheetModel)));
 			});
 
 			return Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel)).then(function(){
