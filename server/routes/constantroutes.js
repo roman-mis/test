@@ -76,3 +76,5 @@ router.get('/fuels',controller.fuels);
 router.get('/enginesizes',controller.enginesizes);
 
 router.get('/expensesratetypes',controller.expensesRateTypes);
+
+router.get('/timesheettemplates',controller.getTimesheetTemplates);

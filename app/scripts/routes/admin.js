@@ -69,5 +69,10 @@ angular.module('origApp').config(function($stateProvider) {
 		url: '/mileage',
 		templateUrl: 'views/admin/hmrc/partials/mileage.html',
 		controller: 'MileageController'
+	})
+	.state('app.admin.hmrc.expensesRate', {
+		url: '/expensesRates',
+		templateUrl: 'views/admin/expensesRate.html',
+		controller: 'expensesRateController'
 	});
 });

@@ -10,45 +10,47 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
                               {link: '/admin/templates', text: 'Templates'},
                               ];
 
-	$scope.getImage = function(){
+	$scope.getImage = function(v){
+    // console.log('v ==========> ' + v)
 		var img= '';
-  //   switch(v){
-		// 	case 'call_log':
-		// 		img='/images/64px/0101-database.png';
-		// 	break;
-		// 	case 'task':
-		// 		img='/images/64px/0275-spell-check.png';
-		// 	break;
-		// 	case 'document':
-		// 		img='/images/64px/0049-folder-open.png';
-		// 	break;
-		// 	case 'email':
-		// 		img='/images/64px/0070-envelop.png';
-		// 	break;
-		// 	case 'invoice':
-		// 		img='/images/64px/0039-file-text2.png';
-		// 	break;
-		// 	default:
-		// 		img="";
-		// }
+    switch(v){
+			case 'call_log':
+				img='/images/64px/0101-database.png';
+			break;
+			case 'task':
+				img='/images/64px/0275-spell-check.png';
+			break;
+			case 'document':
+				img='/images/64px/0049-folder-open.png';
+			break;
+			case 'email':
+				img='/images/64px/0070-envelop.png';
+			break;
+			case 'invoice':
+				img='/images/64px/0039-file-text2.png';
+			break;
+			default:
+				img="";
+		}
+    // console.log('img ==========> ' + img)
 		return img;
 	};
 	  $scope.gridOptions={
-		columns:['1' ,'Name','Type','Last Edited','Created','Action'],
-		rowdata:['name','subType','updatedDate','createdDate'],
-		allData:[],
-		data:[],
-    image:$scope.image,
-		getImage:$scope.getImage,
-		limit: 20,
-        totalItems: 0,
-        isPagination: false,
-        onLimitChanged: function() {
-          $scope.loadAllAdminTemplates();
-        },
-        onPageChanged: function() {
-          $scope.loadAllAdminTemplates();
-        }
+  		columns:['1' ,'Name','Type','Last Edited','Created','Action'],
+  		rowdata:['name','subType','updatedDate','createdDate'],
+  		allData:[],
+  		data:[],
+      image:$scope.image,
+  		getImage:$scope.getImage,
+  		limit: 20,
+      totalItems: 0,
+      isPagination: false,
+      onLimitChanged: function() {
+        $scope.loadAllAdminTemplates();
+      },
+      onPageChanged: function() {
+        $scope.loadAllAdminTemplates();
+      }
 	  };
 	  
 	  $scope.go = function(path) {
@@ -56,10 +58,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
  		$location.path(path);
 	  };
 
-	  for (var i = 0;i<10;i++){
-		$scope.gridOptions.data[i]=[];
-		
-	  }
+	  
 
 
       $scope.ableLoadMore = false;
@@ -84,6 +83,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
     $scope.loadAllAdminTemplates = function() {
       var params = {};
+      console.log('$scope.gridOptions.limit ==> ' + $scope.gridOptions.limit);
       if ($scope.gridOptions.limit) {
         params._limit = $scope.gridOptions.limit;
       }
@@ -100,6 +100,10 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
       console.log($scope.gridOptions.data);
 
       $scope.gridOptions.allData = acAPI.query(params, function() {
+        console.log('*************************');
+        console.log($scope.gridOptions.allData.meta.totalCount);
+        $scope.gridOptions.totalItems = $scope.gridOptions.allData.meta.totalCount;
+
         $scope.gridOptions.data = [];
         for(var i = 0; i < $scope.gridOptions.allData.length; i++){
         	$scope.gridOptions.data[i] =[];

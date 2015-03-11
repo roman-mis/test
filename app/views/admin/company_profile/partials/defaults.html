@@ -1,52 +1,58 @@
-<table>
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="meta-box-content">
+<table class="table history">
 	<tr>
-		<td> Default Pay Frequency </td>
+		<td class="text-center"> Default Pay Frequency </td>
 		<td>
 			<select ng-model="companyProfile.defaults.payFrequency" ng-options="opt.code as opt.description for opt in dropDownLists.payFrequency"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Default Holiday Pay Rule </td>
+		<td class="text-center"> Default Holiday Pay Rule </td>
 		<td>
 			<select ng-model="companyProfile.defaults.holidayPayRule" ng-options="opt.code as opt.description for opt in dropDownLists.holidayPayRule"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Default Payment Method </td>
+		<td class="text-center"> Default Payment Method </td>
 		<td>
 			<select ng-model="companyProfile.defaults.paymentMethod" ng-options="opt.code as opt.description for opt in dropDownLists.paymentMethod"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Default Admin Fee </td>
+		<td class="text-center"> Default Admin Fee </td>
 		<td>
 			<select ng-model="companyProfile.defaults.adminFee" ng-options="opt.code as opt.description for opt in dropDownLists.adminFee"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Derogation Contract </td>
+		<td class="text-center"> Derogation Contract </td>
 		<td>
 			<select ng-model="companyProfile.defaults.derogationContract" ng-options="opt.code as opt.description for opt in dropDownLists.derogationContract"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Derogation Spread Weeks </td>
+		<td class="text-center"> Derogation Spread Weeks </td>
 		<td> <input ng-model="companyProfile.defaults.derogationSpreadWeeks" type="number" /> </td>
 	</tr>
 	<tr>
-		<td> Communication Method </td>
+		<td class="text-center"> Communication Method </td>
 		<td>
 			<select ng-model="companyProfile.defaults.communicationMethod" ng-options="opt.code as opt.description for opt in dropDownLists.communicationMethod"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Contractor Status </td>
+		<td class="text-center"> Contractor Status </td>
 		<td>
 			<select ng-model="companyProfile.defaults.contractorStatus" ng-options="opt.code as opt.description for opt in dropDownLists.contractorStatus"></select>
 		</td>
 	</tr>
 	<tr>
-		<td> Default Tax Code Contractors &nbsp;</td>
+		<td class="text-center"> Default Tax Code Contractors &nbsp;</td>
 		<td> <input ng-model="companyProfile.defaults.taxCodeContractors" type="text" /> </td>
 	</tr>
 </table>
+</div>
+</div>
+</div>

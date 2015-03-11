@@ -1,5 +1,7 @@
 .orig-grid-wrapper {
-    .orig-grid {}
+    .orig-grid > tbody > tr {
+        cursor: pointer;
+    }
     .orig-grid-pagination-wrapper {
         margin: 5px;
         font-size: 14px;

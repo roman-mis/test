@@ -7,7 +7,7 @@ angular.module('origApp.controllers')
         {link: '/admin/hmrc/mileage', text: 'Mileage Rates'}
     ];   
     $scope.$parent.tab = 'mileage';
-
+    $scope.data = [];
     $scope.typeSuggestion = [];
     $scope.new={};
     $scope.r = {
@@ -16,18 +16,24 @@ angular.module('origApp.controllers')
     	amount:{editeRaw:[]}
     };
 
-    HttpResource.model('/api/systems/mileagerates').customGet('',{},function(data){
-    		console.log('mileage');
-    		console.log(data);
-    });
+    HttpResource.model('systems/mileagerates').customGet('',{},function(data){
+  		console.log('mileage');
+  		console.log(data);
+  		if(data.data.object){
+  			$scope.data = data.data.object;
+  			console.log($scope.data);
+  		}
+  		// 	$scope.data = [
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'},
+    // {type:'test',restriction:'test restriction',amount:'5'}
+    // ];
+    
+  	});
 
-    $scope.data = [
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'},
-    {type:'test',restriction:'test restriction',amount:'5'}
-    ];
+    
 
 
     $scope.showEdit = function(col,index2){
@@ -85,7 +91,7 @@ angular.module('origApp.controllers')
     };
 
     $scope.addRow = function(){
-	    $scope.showWarning = false
+	    $scope.showWarning = false;
     	$scope.warning = [];
     	if(!$scope.new.type ||  $scope.new.type === ''){
     		$scope.warning.push('you must enter a type before adding new raw');
@@ -119,6 +125,20 @@ angular.module('origApp.controllers')
 	    $scope.showWarning = false;
     	if(event.keyCode === 13){
 	    	$scope.addRow();
+             $scope.save();
     	}
     };
+    $scope.save = function(){
+	    HttpResource.model('systems/mileagerates').create({data:$scope.data}).post().then(function(response) {
+	    	console.log('posting');
+	    	console.log(response);
+	    });
+    };
+
+    $scope.delete = function(index){
+        console.log(index)
+        $scope.data.splice(index,1);
+        $scope.save();
+    };
+
 });

@@ -1,6 +1,7 @@
 var jasmineReporters = require('jasmine-reporters');
 var SpecReporter = require('jasmine-spec-reporter');
 var fs = require('fs');
+var awsservice=require('./awsservice');
 
 
 exports.config = {
@@ -19,8 +20,8 @@ exports.config = {
   suites: {
     main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    remote:  ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
-    dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/check_agency.js']
+    remote: ['./spec/dummy_data.js','./spec/login.js','./spec/check_agency.js'],
+    dummy: ['./spec/dummy_data.js','./spec/login.js']
   },
 
   onPrepare: function () {
@@ -43,7 +44,7 @@ exports.config = {
     };
 
     /* SCREENSHOT SECTION START*/
-    var dir = './test/e2e/screenshots';
+   /* var dir = './test/e2e/screenshots';
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
     }
@@ -51,7 +52,8 @@ exports.config = {
       var stream = fs.createWriteStream('./'+path);
       stream.write(new Buffer(data, 'base64'));
       stream.end();
-    }
+    }*/
+
 
     var DisplayProcessor = require('./../../node_modules/jasmine-spec-reporter/src/display-processor');
     var count=0;
@@ -60,10 +62,12 @@ exports.config = {
     screenshotProcessor.prototype = new DisplayProcessor();
     screenshotProcessor.prototype.displayFailedSpec = function (spec, log) {
       count++;
-      var path='test/e2e/screenshots/screenshot-'+count+'.png';
-      var url=browser.baseUrl+path;
-      browser.takeScreenshot().then(function (png) {
-        writeScreenShot(png,path);
+      var url='https://originem-payroll-dev.s3.amazonaws.com/screenshots/screenshot-'+count+'.png';
+      browser.takeScreenshot().then(function (data) {
+       // writeScreenShot(data,path);
+       awsservice.putS3Object(new Buffer(data, 'base64'),'screenshot-'+count+'.png','image/png','screenshots/').then(function(str){
+         url=str;
+       })
       });
       return log+'\r\n'+url;
     };

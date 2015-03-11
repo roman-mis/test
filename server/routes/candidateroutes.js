@@ -32,6 +32,8 @@ router.post('/', candidatecontroller.postCandidate );
 
 router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
 
+/*router.get('/:id/lastLog',candidatecontroller.getLastLog); */
+
 //TODO: should be authenticated
 router.patch('/:id/contactdetail', candidatecontroller.updateContactDetail);
 

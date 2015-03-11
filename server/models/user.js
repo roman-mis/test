@@ -26,6 +26,7 @@ module.exports = function(mongoose,autoIncrement) {
     lockedUnlockedBy:      {type:Schema.Types.ObjectId,ref:'User'},
     activatedDate:     {type:Date,required:false},
     avatarFileName:   {type:String,default:''},
+    lastLogin:{type:String,default:'none'},
     worker:{
         contactNumber:      {type:String,required:false,trim:true},
         birthDate:          {type:Date,required:false},
@@ -170,6 +171,7 @@ schema.plugin(autoIncrement.plugin,{model:'User',field:'candidateNo',startAt:1,i
        next();
          
     });
+
   return mongoose.model('User',schema);
 
 };

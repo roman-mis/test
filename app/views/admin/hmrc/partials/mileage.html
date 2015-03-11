@@ -9,10 +9,10 @@
                                 <th class="col-xs-3">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr ng-repeat="d in data" ng-init="xi=$index">
-                                <td class="dropdown" >
-                                    <div style="width:100%;cursor:pointer" ng-click="showEdit('type',$index)" ng-hide="r.type.editeRaw[$index]">{{d.type}}</div>
+                        <tbody >
+                            <tr class=""  ng-repeat="d in data" ng-init="xi=$index">
+                                <td  class="dropdown" >
+                                    <div class=" " style="width:100%;cursor:pointer" ng-click="showEdit('type',$index)" ng-hide="r.type.editeRaw[$index]"><span>{{d.type}}</span></div>
                                     <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" ng-show="r.type.editeRaw[$index]">
                                         <input style="width:100%;" ng-model="r.type.temp" ng-keydown="keyDown('type',$index,$event)"/>
                                     </span>
@@ -29,29 +29,29 @@
                                 </td>
 
                                  <td >
-                                    <div style="width:100%;cursor:pointer" ng-click="showEdit('amount',$index) " ng-hide="r.amount.editeRaw[$index]">{{d.amount}}</div>
+                                    <div style="width:100%;cursor:pointer;display:inline-block" ng-click="showEdit('amount',$index) " ng-hide="r.amount.editeRaw[$index]"><span>{{d.amount}}</span><span ng-click="delete($index)" style="position:absolute;right:20px;z-index: 10;"><i class="fa fa-times"></i></span></div>
+
                                     <span ng-show="r.amount.editeRaw[$index]">
                                         <input style="width:100%;" ng-model="r.amount.temp" ng-keydown="keyDown('amount',$index,$event)"/>
                                     </span>
                                 </td>
 
                             </tr>
-                            <tr>
-                                <td>
+                            <tr >
+                                <td >
                                    <input style="width:100%;" ng-model="new.type" ng-keydown="addNew()"/>
                                 </td>
                                 <td>
                                    <input style="width:100%;" ng-model="new.restriction" ng-keydown="addNew()"/>
                                 </td>
                                 <td>
-                                   <span><input style="width:100%;" ng-model="new.amount" ng-keydown="addNew()"/>
+                                   <input style="width:80%;display: inline-block;" ng-model="new.amount" ng-keydown="addNew()"/><div align='right' style="width:20%;display: inline-block;" ><i ng-click="addRow()" style="position:relative;color:green;font-size:25px;top: 5px;cursor:pointer" class="fa fa-plus"></i></div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div   align="right"><span ng-click="addRow()" style="cursor:pointer" align="right"><i style="color:green;font-size:40px" class="fa fa-plus"></i></span></div>
+                    <div align='right' style="margin:10px"><button ng-click="save()" class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save </button></div>
                     <div align="center" class="warning" ng-repeat="w in warning" ><span style="color:red" class="warning" ng-show="showWarning">{{w}}</span></div>
                 </div>
             </div>
         </div>
-       {{x}}

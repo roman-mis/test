@@ -216,6 +216,8 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		  var id =adminTemplate.details._id;
 	      console.log(id);
 	      var data = $scope.getData(fields);
+	      // data.updatedDate = Date.now();
+	      console.log(data);
 	      HttpResource.model('admin/templates/'+id)
 	      	.create(data).post().then(function(result){
 	        	console.log('*****');
@@ -225,7 +227,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
   	  	}
     };
 
-    $scope.save = function(){
+  $scope.save = function(){
 		if($stateParams.type === 'edite'){
 			$scope.updateAdminTemplate();
 		}else{
