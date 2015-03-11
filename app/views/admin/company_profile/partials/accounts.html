@@ -1,32 +1,46 @@
-  <div class="row">
-    <div class="col-xs-12">
-        <div class="meta-box-content">
-<table class="table history">
-	<tr>
-		<td class="text-center"> Vat Number </td>
-		<td> <input type="number" ng-model="companyProfile.accounts.vatNumber" /> </td>
-	</tr>
-	<tr>
-		<td class="text-center"> Company Registration Number &nbsp;</td>
-		<td> <input type="number" ng-model="companyProfile.accounts.companyRegNo" /> </td>
-	</tr>
-	<tr>
-		<td class="text-center"> UTR Number </td>
-		<td> <input type="number" ng-model="companyProfile.accounts.utrNumber" /> </td>
-	</tr>
-	<tr>
-		<td class="text-center"> Tax District Number </td>
-		<td> <input type="text" ng-model="companyProfile.accounts.taxDistrictNo" /> </td>
-	</tr>
-	<tr>
-		<td class="text-center"> PAYE Reference </td>
-		<td> <input type="text" ng-model="companyProfile.accounts.payeRef" /> </td>
-	</tr>
-	<tr>
-		<td class="text-center"> Accounts Office Reference </td>
-		<td> <input type="text" ng-model="companyProfile.accounts.accountsOfficeRef" /> </td>
-	</tr>
-</table>
-</div>
-</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="row text-center meta-box-content">
+			<div class="col-xs-12 col-md-offset-2 col-md-8">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-xs-6">Vat Number</label>
+						<div class="col-xs-6">
+							<input type="number" class="form-control" ng-model="companyProfile.accounts.vatNumber" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Company Registration Number</label>
+						<div class="col-xs-6">
+							<input type="number" class="form-control" ng-model="companyProfile.accounts.companyRegNo" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">UTR Number</label>
+						<div class="col-xs-6">
+							<input type="number" class="form-control" ng-model="companyProfile.accounts.utrNumber" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Tax District Number</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.accounts.taxDistrictNo" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">PAYE Reference</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.accounts.payeRef" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Accounts Office Reference</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control"  ng-model="companyProfile.accounts.accountsOfficeRef" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>		
+	</div>
 </div>
