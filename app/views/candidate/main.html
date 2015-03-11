@@ -17,25 +17,25 @@
       <section class="tabs-wrapper row">
         <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
           <li ng-class="{active: isTabActive('home')}">
-            <a ui-sref="app.candidate.home">Home</a>
+            <a ui-sref="app.candidate.home({candidateId: candidateId })">Home</a>
           </li>
           <li ng-class="{active: isTabActive('contact')}">
-            <a href="/candidates/{{candidateId}}/contact">Contact</a>
+            <a ui-sref="app.candidate.contact({candidateId: candidateId })">Contact</a>
           </li>
           <li ng-class="{active: isTabActive('payroll')}">
-            <a href="/candidates/{{candidateId}}/payroll">Payroll</a>
+            <a ui-sref="app.candidate.payroll({candidateId: candidateId })">Payroll</a>
           </li>
           <li ng-class="{active: isTabActive('payslips')}">
-            <a href="/candidates/{{candidateId}}/payslips">Payslips</a>
+            <a ui-sref="app.candidate.payslips({candidateId: candidateId })">Payslips</a>
           </li>
           <li ng-class="{active: isTabActive('agencies')}">
-            <a href="/candidates/{{candidateId}}/agencies">Agencies</a>
+            <a ui-sref="app.candidate.agencies({candidateId: candidateId })">Agencies</a>
           </li>
           <li ng-class="{active: isTabActive('compliance')}">
-            <a href="/candidates/{{candidateId}}/compliance">Compliance</a>
+            <a ui-sref="app.candidate.compliance({candidateId: candidateId })">Compliance</a>
           </li>
           <li ng-class="{active: isTabActive('history')}">
-            <a href="/candidates/{{candidateId}}/history">History</a>
+            <a ui-sref="app.candidate.history({candidateId: candidateId })">History</a>
           </li>
         </ul>
         <div class="tab-content col-xs-12">

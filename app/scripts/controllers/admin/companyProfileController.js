@@ -1,9 +1,9 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfileService',
-	function($scope, $rootScope, CompanyProfileService){
-
+app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfileService','$state',
+	function($scope, $rootScope, CompanyProfileService,$state){
+        
 		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
 			{link: '/admin/home', text: 'Admin'},
 			{link: '/admin/company_profile/contact', text: 'Company Profile'}
@@ -25,6 +25,9 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 			}
 			docId = data.id;
 		});
+		 $scope.isTabActive = function(stateKey) {
+            return $state.includes('app.admin.' + stateKey);
+          };
 
 		$scope.save = function(){
 			CompanyProfileService.saveCompanyProfile($scope.companyProfile, docId);

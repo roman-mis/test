@@ -35,7 +35,6 @@ module.exports=function(db){
 	};
 
 	service.getCSVFile = function(code, file){
-		console.log(code);
 		switch(code){
 			case '1':
 				return getStandardTemplate(file);
@@ -90,8 +89,13 @@ module.exports=function(db){
 					  			}
 					  			var contractor = candidate || {};
 					  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
+					  			row.worker = contractor._id;
+					  			row.total = row['total(gross)'];
+					  			row.net = row['total(net)'];
 					  			row.units = row.noOfUnits;
-					  			row.chargeRate = row.unitRate;
+					  			row.payRate = row.unitRate;
+					  			row.holidayPayIncluded = row.holidayPayRule;
+					  			row.holidayPayDays = row.holidayPayRate;
 		                		finishData.push(row);
 			  				}).then(function(){
 			  					if(Object.keys(data).length === Object.keys(finishData).length){
@@ -105,6 +109,35 @@ module.exports=function(db){
 			});
 		});
 	}
+
+	service.saveBulkTimesheet = function(timesheetData){
+		return Q.Promise(function(resolve,reject){
+			
+			// Create Timesheet Batch
+			var timesheetBatchDetail = {
+				agency: timesheetData[0].agency,
+    			branch: timesheetData[0].branch
+			};
+			var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
+			
+			var timesheetsToSave = [];
+			var timesheetsToSavePromise = [];
+			// Loop through timesheetData
+			_.forEach(timesheetData, function(timesheetDetail){
+				timesheetDetail.batch = timesheetBatchModel._id;
+				var timesheetModel = new db.Timesheet(timesheetDetail);
+				timesheetsToSave.push(timesheetModel);
+				timesheetsToSavePromise.push(Q.nfcall(timesheetModel.save.bind(timesheetModel)));
+			});
+
+			return Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel)).then(function(){
+				return Q.all(timesheetsToSavePromise).then(function(){
+					console.log(timesheetsToSave);
+					resolve(timesheetsToSave);
+				}, reject);
+			});
+		});
+	};
 
 	service.saveTimesheet = function(id, timesheetDetails){
 		return Q.Promise(function(resolve,reject){
@@ -147,6 +180,7 @@ module.exports=function(db){
 					var timesheetDetail = {
 						worker: timesheetDetails.worker,
 				        batch: timesheetBatchModel._id,
+				        agency: timesheetDetails.agency,
 				        status: timesheetDetails.status,
 				        payFrequency: timesheetDetails.payFrequency,
 				        weekEndingDate: timesheetDetails.weekEndingDate,
@@ -158,7 +192,7 @@ module.exports=function(db){
 				        total: timesheetDetails.total,
 				        imageUrl: timesheetDetails.imageUrl
 					};
-					var timesheetModel = new db.Timesheet(timesheetDetail);console.log(timesheetModel);
+					var timesheetModel = new db.Timesheet(timesheetDetail);
 					return Q.all([Q.nfcall(timesheetModel.save.bind(timesheetModel)), Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel))])
 						.then(function(){
 							resolve(timesheetModel);

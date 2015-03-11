@@ -1,11 +1,14 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('accountsController',['$scope', '$location', 'HttpResource', '$rootScope',
-	function($scope, $location, HttpResource, $rootScope){
-    $rootScope.breadcrumbs = [{link:'/', text:'Home'},
-                              {link: '/admin/home', text: 'Admin'},
-                              {link: '/admin/company_profile/contact', text: 'Company Profile'},
-                              {link: '/admin/home/company_profile/accounts', text: 'Accounts'}
-                              ];
+app.controller('accountsController',['$scope', '$location', 'HttpResource', '$rootScope','$state',
+	function($scope, $location, HttpResource, $rootScope,$state){
+         
+		$rootScope.breadcrumbs.splice(3,$rootScope.breadcrumbs.length-1);
+
+		$rootScope.breadcrumbs.push({link: '/admin/home/company_profile/accounts', text: 'Accounts'})
+
+      $scope.isTabActive = function(stateKey) {
+            return $state.includes('app.admin.' + stateKey);
+          };
 }]);

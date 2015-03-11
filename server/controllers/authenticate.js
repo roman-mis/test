@@ -35,4 +35,3 @@ module.exports = function(db){
 
   return controller;
 };
-

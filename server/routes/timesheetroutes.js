@@ -14,5 +14,6 @@ module.exports = function(app){
 router.get('/', restMiddleware(db), controller.getTimesheets);
 router.get('/:id', controller.getTimesheet);
 router.post('/', controller.postTimesheet);
-router.post('/uploadcsv', controller.uploadTimesheet);
+router.post('/uploadcsv', controller.uploadCsv);
+router.post('/bulk', controller.postBulkTimesheet);
 router.post('/:id', controller.patchTimesheet);

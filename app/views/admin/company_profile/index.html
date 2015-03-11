@@ -9,16 +9,16 @@
       
       <section class="tabs-wrapper row">
         <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
-          <li ng-class="{active: isTabActive('home')}">
+          <li ng-class="{active: isTabActive('company_profile.contact')}">
             <a ui-sref="app.admin.company_profile.contact">Contact</a>
           </li>
-          <li ng-class="{active: isTabActive('contact')}">
+          <li ng-class="{active: isTabActive('company_profile.accounts')}">
             <a ui-sref="app.admin.company_profile.accounts">Accounts</a>
           </li>
-          <li ng-class="{active: isTabActive('payroll')}">
+          <li ng-class="{active: isTabActive('company_profile.bank_details')}">
             <a ui-sref="app.admin.company_profile.bank_details">Bank Details</a>
           </li>
-          <li ng-class="{active: isTabActive('payslips')}">
+          <li ng-class="{active: isTabActive('company_profile.defaults')}">
             <a ui-sref="app.admin.company_profile.defaults">Defaults</a>
           </li>
           
@@ -26,7 +26,7 @@
         <div class="tab-content col-xs-12">
           <div ui-view></div>
           <br />
-          <button class="btn btn-success" ng-click="save()"> Save </button>
+          <button class="btn btn-success col-md-offset-6" ng-click="save()"> Save </button>
         </div>
       </section>
     </div>

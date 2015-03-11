@@ -29,6 +29,8 @@ angular.module('origApp.controllers')
            };*/
 
           $scope.openCreateTaskWin = function(params) {
+            console.log(params);
+            console.log('open create task win');
             ModalService.open({
               templateUrl: 'views/candidate/_create_task.html',
               parentScope: $scope,
