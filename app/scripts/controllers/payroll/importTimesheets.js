@@ -27,6 +27,14 @@ angular.module('origApp.controllers')
   		$scope.onSelectFile = function ($files) {
   			console.log('im hereeeee');
   			$scope.files = $files;
+  			var uploadCsv = {
+	        		file: $scope.files[0],
+	        		timesheettemplate: $scope.saveTemp.code
+	        	};
+  			HttpResource.model('timesheets/uploadcsv').create(uploadCsv).post().then(function (res) {
+			//console.log(uploadCsv.timesheettemplate);
+			console.log('res', res);
+		});
   			$scope.preProcessChecker = 0;
   			parseCSV.get($files[0]).then(function (response) {
   				console.log(response);
@@ -136,10 +144,7 @@ angular.module('origApp.controllers')
 	        if ($scope.addSheet) {
 	        	var str = $scope.files[0].name;
 	        	str = str.replace(/ /g, '_');
-	        	var uploadCsv = {
-	        		file: $scope.files[0],
-	        		timesheettemplate: $scope.saveTemp.code
-	        	};
+	        	
 	                /*
 	                $upload.upload({
 	                    url: 'api/timesheets/uploadcsv',
