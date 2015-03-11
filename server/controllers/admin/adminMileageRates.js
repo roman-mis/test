@@ -8,6 +8,8 @@ module.exports = function(dbs){
     controller.getMileageRates= function(req, res) {
         systemservice.getSystem()
 	  	.then(function(system){
+	  		console.log('system');
+	  		console.log(system);
 	  		var mileageRatesVm=getMileageRatesVm(system);
 		    res.json({result:true, object:mileageRatesVm});
 	  	},function(err){
@@ -15,8 +17,8 @@ module.exports = function(dbs){
 	  	});    
     };
     controller.saveMileageRates= function(req, res) {
-        var mileageRatesInfo=req.body;
-
+        var mileageRatesInfo=req.body.data;
+        console.log(mileageRatesInfo);
 		adminMileageRatesService.saveMileageRates(mileageRatesInfo).then(function(system){
 			var mileageRatesVm=getMileageRatesVm(system);
 		    res.json({result:true, object:mileageRatesVm});
@@ -26,6 +28,8 @@ module.exports = function(dbs){
     };
 
     function getMileageRatesVm(system){
+    	console.log('-----------------------------------------------------------------------------**');
+    	console.log(system.mileageRates.amount);
     	return system.mileageRates;
     }
 

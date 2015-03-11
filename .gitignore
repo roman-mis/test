@@ -14,5 +14,4 @@ local.env.js
 /coverage
 /coverage.html
 npm-debug.log
-/test/e2e/screenshots/
 test/e2e/.idea

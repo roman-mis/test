@@ -451,7 +451,9 @@
 		{
 			"code":"2",
 			"name":"Non-Billable"
-		}
-
-	]
+		}],
+	"templateTypes":[{
+			"code":"1",
+			"name":"Standard"
+		}]
 }

@@ -83,7 +83,6 @@ module.exports=utils={
 		var props=[];
 		model=model||{};
 		_.forEach(viewmodel,function(val,key){
-					
 					if(val!==undefined && key!=='_id'){
 						model[key]=val;
 						props.push(key);
