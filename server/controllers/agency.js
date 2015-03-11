@@ -82,6 +82,7 @@ module.exports = function(){
 	};
 
 	controller.getAgency=function(req,res){
+		console.log('i am here called');
 		agencyservice.getAgency(req.params.id, true)
 			.then(function(agency){
 				//console.log('agency is ');

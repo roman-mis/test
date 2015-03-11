@@ -291,6 +291,13 @@ module.exports = function(dbs){
             }
           },res.sendFailureResponse);
     };
+    controller.getLastLog=function(req,res){
+
+      candidateservice.getLogs(req.params.id).then(function(doc){
+          res.json(doc);
+
+      },res.sendFailureResponse)
+    }
 
     controller.getBankDetail=function (req, res){
       candidateservice.getUser(req.params.id)

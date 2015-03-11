@@ -14,14 +14,23 @@
        <li class="clearfix"><i class="fa fa-location-arrow"></i>Nationality<span class="meta">{{contactdetail.nationality}}</span></li>
         <li class="clearfix"><i class="fa fa-location-arrow"></i>Country<span class="meta">{{contactdetail.county}}</span></li>
          <li class="clearfix"><i class="fa fa-location-arrow"></i>Postal code<span class="meta">{{contactdetail.postCode}}</span></li>
-     <li class="clearfix"><i class="fa fa-facebook-official"></i>Facebook<span class="meta">{{contactdetail.facebook}}</span></li>
+     <li class="clearfix"><i class="fa fa-facebook-square"></i>Facebook<span class="meta">{{contactdetail.facebook}}</span></li>
      <li class="clearfix"><i class="fa fa-linkedin-square"></i>Linkedin<span class="meta">{{contactdetail.linkedin}}</span></li>
 
          
   </ul>
 </div>
-<div class="cold-md-6">
-  <p>othere</p>
+<div class="col-md-6">
+<ul class="entry-content">
+
+    <li ng-repeat="i in lastLogs">
+   <div ng-if="i.object.lastLogin">Last login: {{i.object.lastLogin | date:'MM/dd/yyyy @ h:mma'}}</div>
+   <div ng-if="i.object.lastCallLog">Last calllog: {{i.object.lastCallLog | date:'MM/dd/yyyy @ h:mma'}}</div>
+   <div ng-if="i.object.lastExpense">Last expense: {{i.object.lastExpense | date:'MM/dd/yyyy @ h:mma'}}</div>
+    </li>
+ 
+</ul>
+ 
 </div>
 </div>
 

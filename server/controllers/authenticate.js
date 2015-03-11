@@ -3,7 +3,6 @@
 
 
 module.exports = function(db){
-  
   var jwt = require('jsonwebtoken'),
     candidateservice=require('../services/candidateservice')(db);
 
@@ -11,7 +10,6 @@ module.exports = function(db){
 
 
   controller.authenticate =function(req, res) {
-
 
     candidateservice.authenticateUser(req.body.emailAddress,req.body.password)
     .then(function(user){
@@ -37,4 +35,3 @@ module.exports = function(db){
 
   return controller;
 };
-

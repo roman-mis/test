@@ -77,6 +77,8 @@ module.exports = function(dbs){
 		};
 
 		controller.postCalllogDetails = function(req, res){
+			console.log('posting call logs');
+			console.log(req.params);
 			var taskDetails = {
 				user: req.params.id,
 				assignee:req.body.assignee,

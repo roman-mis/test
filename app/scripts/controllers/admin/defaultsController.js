@@ -1,11 +1,12 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('defaultsController',['$scope', '$rootScope',
-	function($scope, $rootScope){
-		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
-		{link: '/admin/home', text: 'Admin'},
-		{link: '/admin/company_profile/contact', text: 'Company Profile'},
-		{link: '/admin/home/company_profile/defaults', text: 'Defaults'}
-		];
+app.controller('defaultsController',['$scope', '$rootScope','$state',
+	function($scope, $rootScope,$state){
+		$rootScope.breadcrumbs.splice(3,$rootScope.breadcrumbs.length-1);
+		$rootScope.breadcrumbs.push(
+		{link: '/admin/home/company_profile/defaults', text: 'Defaults'});
+		 $scope.isTabActive = function(stateKey) {
+            return $state.includes('app.admin.' + stateKey);
+          };
 	}]);

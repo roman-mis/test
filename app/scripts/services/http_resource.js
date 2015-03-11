@@ -16,9 +16,9 @@ angular.module('origApp.services')
     };
 
     var formatFactory = function(TastyResource, modelName) {
-      console.log(baseUrl);
-      console.log('here here');
+        console.log(modelName);
       var resource = baseUrl + '' + modelName + '/';
+      console.log(resource);
       //console.log(resource)
       return new TastyResource({
         url: resource,
