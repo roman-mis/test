@@ -11,7 +11,8 @@ angular.module('origApp.controllers')
             {key: 'email', label: 'Create Email'},
             {key: 'textMessage', label: 'Create Text Message'},
             {key: 'timesheet', label: 'Add Timesheet'},
-            {key: 'expenses', label: 'Add Expenses'}
+            {key: 'expenses', label: 'Add Expenses'},
+            {key: 'AOE', label: 'Attachment of Earnings'}
           ];
 
           $scope.agencies = HttpResource.model('agencies').query({});
@@ -33,6 +34,9 @@ angular.module('origApp.controllers')
               case 'document':
                 parentScope.openCreateDocumentWin(params);
                 break;
+              case 'AOE':
+                parentScope.openAOEWin();
+              break;
             }
             $modalInstance.close();
           };
