@@ -110,7 +110,7 @@ module.exports = function(dbs){
 		var timesheetTemplate = req.body.timesheettemplate;
 		var uploadedFile = req.files.file;
 		return timesheetservice.getCSVFile(timesheetTemplate, uploadedFile).then(function(result){
-			res.json({result:true, objects: result});
+			res.json({result:true, url: result.url, objects: result.data});
 		});
 	};
 
