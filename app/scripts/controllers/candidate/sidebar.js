@@ -85,13 +85,13 @@ angular.module('origApp.controllers')
             });
           };
   
-
-		  $scope.openAddTimesheetWin = function() {
+		      $scope.openAddTimesheetWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/AOE.html',
               parentScope: $scope,
-              controller:'AOEController',
-              size:'lg'
+              controller:'CandidateSidebarAddTimesheetController',
+              size:'lg',
+              backdrop: 'static'
             });
           };
 		})

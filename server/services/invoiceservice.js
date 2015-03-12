@@ -97,7 +97,7 @@ module.exports=function(){
 										// 	// allInvoiceSavePromises.push(Q.nfcall(invoiceModel.save.bind(invoiceModel)));
 										// });
 										console.log('saving invoice '+invoiceModel._id);
-										allInvoiceSavePromises.push(invoiceModel.save.bind(invoiceModel));
+										allInvoiceSavePromises.push(Q.nfcall(invoiceModel.save.bind(invoiceModel)));
 									});
 									// Q.all([allInvoiceSavePromises]);
 									prom=prom.then(function(){

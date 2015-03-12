@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('CandidateSidebarAddTimesheetController',
+.controller('CandidateSidebarAddTimesheetController', ['$scope','$modalInstance', 'parentScope', 'HttpResource','$http','s3Service',
 	function ($scope, $modalInstance, parentScope, HttpResource,$http, s3Service) {
 
 
@@ -255,4 +255,4 @@ angular.module('origApp.controllers')
 		$modalInstance.dismiss('cancel');
 	};
 	
-});
+}]);

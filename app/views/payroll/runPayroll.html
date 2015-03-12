@@ -1,9 +1,8 @@
-<div class="container">
-    <div class="runPayroll-header">
-        <h4 class="runPayroll-header-title " id="myModalLabel">Run Payroll</h4>
-    </div>
+<div class="modal-header">
+    <h4 class="modal-title " id="myModalLabel">Run Payroll</h4>
+</div>
     
-    <div class="runPayroll-body">
+<div class="modal-body">
     <div ng-show="firstStep">
         <form class="form-horizontal">
             <div class="row">
@@ -77,16 +76,18 @@
             <span style="margin-right:15px;"><i class="fa fa-circle"></i></span>{{r}}
         </div>
     </div>
-	</div>
-    <div ng-show="firstStep" class="runPayroll-footer">
+</div>
+
+<div class="modal-footer">
+    <div ng-show="firstStep">
         <a ng-click="close()" class="btn">Cancel &#38; Return to Payroll Home</a>
         <button ng-click="runPayroll()" class="btn btn-primary">Run Payroll</button>
     </div>
 	
-    <div ng-show="secondStep" class="runPayroll-footer">
+    <div ng-show="secondStep">
         <a ng-click="close()" class="btn">close &#38; Return to Payroll Home</a>
     </div>
-    			
-</div><!-- /container -->
+</div>	
+
 
 

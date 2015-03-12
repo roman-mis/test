@@ -94,7 +94,7 @@ module.exports = function(dbs){
 		timesheet.dateAdded = new Date();
 		timesheet.lastEditedBy = req.user.id;
 		timesheet.dateEdited = new Date();
-		console.log(timesheet);
+		
 		timesheetservice.saveTimesheet(null, timesheet)
 			.then(function(response){
 				buildTimesheetVm(response, true)
@@ -106,12 +106,23 @@ module.exports = function(dbs){
 			});
 	};
 
-	controller.uploadTimesheet = function(req, res){
+	controller.uploadCsv = function(req, res){
 		var timesheetTemplate = req.body.timesheettemplate;
 		var uploadedFile = req.files.file;
 		return timesheetservice.getCSVFile(timesheetTemplate, uploadedFile).then(function(result){
-			res.json({result:true, objects: result});
+			res.json({result:true, url: result.url, objects: result.data});
 		});
+	};
+
+	controller.postBulkTimesheet = function(req, res){
+		var timesheetData = req.body;
+
+		timesheetservice.saveBulkTimesheet(timesheetData)
+			.then(function(response){
+				res.json({result:true, objects:response});
+			},function(err){
+			 	res.sendFailureResponse(err);
+			});
 	};
 
 	return controller;
