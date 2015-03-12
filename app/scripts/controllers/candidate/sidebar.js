@@ -87,7 +87,7 @@ angular.module('origApp.controllers')
   
 		      $scope.openAddTimesheetWin = function() {
             ModalService.open({
-              templateUrl: 'views/candidate/AOE.html',
+              templateUrl: 'views/candidate/_add_timesheet.html',
               parentScope: $scope,
               controller:'CandidateSidebarAddTimesheetController',
               size:'lg',
