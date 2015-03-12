@@ -141,30 +141,57 @@ module.exports=function(db){
 		});
 	}
 
+	function getTimesheetBatch(timesheetData){
+		return Q.Promise(function(resolve,reject){
+			if(timesheetData.batchNumber){
+				console.log(timesheetData.batchNumber);
+				return db.TimesheetBatch.findOne({ batchNumber: timesheetData.batchNumber }).exec()
+  				.then(function(timesheetBatch) {
+					resolve(timesheetBatch);
+  				}, reject);
+			}else{
+				var timesheetBatchDetail = {
+					agency: timesheetData.timesheets[0].agency,
+	    			branch: timesheetData.timesheets[0].branch
+				};
+				var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
+				resolve(timesheetBatchModel);
+			}
+		});
+	}
+
 	service.saveBulkTimesheet = function(timesheetData){
 		return Q.Promise(function(resolve,reject){
 			
-			// Create Timesheet Batch
-			var timesheetBatchDetail = {
-				agency: timesheetData[0].agency,
-    			branch: timesheetData[0].branch
-			};
-			var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
-			
-			var timesheetsToSave = [];
-			var timesheetsToSavePromise = [];
-			// Loop through timesheetData
-			_.forEach(timesheetData, function(timesheetDetail){
-				timesheetDetail.batch = timesheetBatchModel._id;
-				var timesheetModel = new db.Timesheet(timesheetDetail);
-				timesheetsToSave.push(timesheetModel);
-				timesheetsToSavePromise.push(Q.nfcall(timesheetModel.save.bind(timesheetModel)));
-			});
+			return getTimesheetBatch(timesheetData).then(function(timesheetBatchModel){
+				console.log(timesheetBatchModel);
+				var timesheetsToSave = [];
+				var timesheetsToSavePromise = [];
+				// Loop through timesheetData
+				_.forEach(timesheetData.timesheets, function(timesheetDetail){
+					timesheetDetail.batch = timesheetBatchModel._id;
+					timesheetDetail.imageUrl = timesheetData.filename;
+					timesheetDetail.createdBy = timesheetData.addedBy;
+					timesheetDetail.createdDate = new Date();
+					timesheetDetail.updatedBy = timesheetData.addedBy;
+					timesheetDetail.updatedDate = new Date();
 
-			return Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel)).then(function(){
-				return Q.all(timesheetsToSavePromise).then(function(){
-					console.log(timesheetsToSave);
-					resolve(timesheetsToSave);
+					var timesheetModel = new db.Timesheet(timesheetDetail);
+					timesheetsToSave.push(timesheetModel);
+					timesheetsToSavePromise.push(Q.nfcall(timesheetModel.save.bind(timesheetModel)));
+				});
+
+				// Move file from temp to Timesheet folder
+				var fileName = timesheetData.filename;
+				return awsservice.moveS3Object(process.env.S3_TEMP_FOLDER+fileName,fileName,process.env.S3_TIMESHEET_FOLDER)
+				.then(function(){
+					// Save Timesheet Batch
+					return Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel)).then(function(){
+						// Save all timesheets
+						return Q.all(timesheetsToSavePromise).then(function(){
+							resolve(timesheetsToSave);
+						}, reject);
+					});
 				}, reject);
 			});
 		});
