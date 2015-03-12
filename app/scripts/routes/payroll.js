@@ -20,14 +20,14 @@ angular.module('origApp').config(function($stateProvider) {
     templateUrl: 'views/payroll/runPayroll.html',
     controller: 'runPayrollController'
   })
-  .state('app.payroll.AOE', {
-    url: '/AOE',
-    templateUrl: 'views/payroll/AOE.html',
-    controller: 'AOEController'
-  })
   .state('app.payroll.endPeriod', {
     url:'/endPeriod',
     templateUrl: 'views/payroll/endPeriod.html'
   });
+  // .state('app.payroll.AOE', {
+  //   url: '/AOE',
+  //   templateUrl: 'views/payroll/AOE.html',
+  //   controller: 'AOEController'
+  // });
 
 });

@@ -186,5 +186,9 @@ module.exports = function(){
       res.json(dataList.templateTypes);
     };
 
+    controller.getAOE = function(req,res){
+      res.json(dataList.AOE);
+    };
+
   return controller;
 };

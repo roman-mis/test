@@ -1,0 +1,181 @@
+<div class="candidate-modal">
+<div class="">
+<div class="modal-header">
+	<h2 class="modal-title" style="color:green;margin-bottom:30px">
+		Adding an attachement of Earnings
+	</h2>
+</div>
+<div class="modal-body">
+	<BUTTON ng-click="calculate()">calculate</BUTTON>
+<form class="form-horizontal">
+	<div class="row form-group">
+    <label class="col-xs-3 control-label">Candidate Name</label>
+    <div class="col-xs-4 no-padding-left">
+        <!-- <input type="text" readonly class="form-control"/> -->
+        <div type="text" class="form-control" readonly>{{candidate.firstName}} {{candidate.lastName}}</div>
+    </div>
+
+    <label class="col-xs-3  control-label">Candidate ID</label>
+    <div class="col-xs-2 no-padding-left">
+      <!-- <input type="text" readonly class="form-control" /> -->
+        <div type="text" class="form-control" readonly>{{candidate.candidateRef}}</div>
+
+    </div>
+	</div>
+	<div class="col-xs-12"><hr class="divder" style="margin-bottom:50px"></div>
+
+	<div class="row form-group">
+		    <div class="col-xs-4">
+						<label class="control-label">Type</label>
+		        <select class="form-control"  ng-change="selectType(type)" ng-model="type" ng-options="type.orderType as type.orderType group by type.country for type in AOETypes">
+		        	
+		        </select>
+		    </div>
+
+		    <div class="col-xs-3 ">
+						<label class="control-label">Priority</label>
+		        <select class="form-control " ng-model="priorityType" ng-options="p.carriedForward as p.value for p in priority">
+		        </select>
+		    </div>
+		    <div class="col-xs-4">
+						<label class="control-label">Deduction Type</label>
+		        <select class="form-control " ng-model="deductionType" ng-options="d.reference as d.value for d in deductionTypes">
+		        </select>
+		    </div>
+	</div>
+	<div class="row col-xs-12" style="width:100%;margin-bottom:20px"></div>
+	<div class="row form-group">
+		<label class="col-xs-4 control-label ">Effective Date</label>
+    <div class="col-xs-3 no-padding-left" >
+        <div class="input-group" ng-model="AOEData.effectiveDate" orig-datepicker required/>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">End Date</label>
+    <div class="col-xs-3 no-padding-left">
+        <div class="input-group" ng-model="AOEData.endDate" orig-datepicker required/>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Protected Value</label>
+    <div class="col-xs-3 no-padding-left">
+        <input type="text" style="color:green" class="form-control" ng-model="AOEData.protectedValue">
+        <span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span>
+        <!-- <div class="input-group">
+			    <input type="text" class="form-control" ng-model="AOEData.protectedValue">
+			    <span class="input-group-addon" ><span><i class="fa fa-eur"></i></span></span>
+			  </div> -->
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Deduction (or) rate</label>
+    <div class="col-xs-3 no-padding-left">
+			  <input type="text" class="form-control" style="color:green" ng-model="AOEData.deduction">
+        <span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span>
+        <!-- <div class="input-group">
+			    <input type="text" class="form-control" ng-model="AOEData.deduction">
+			    <span class="input-group-addon" ><span ng-if="deductionType === 'Percentage'">%</span><span ng-if="deductionType !== 'Percentage'"><i class="fa fa-eur"></i></span></span>
+			  </div> -->
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Admin Fee</label>
+    <div class="col-xs-3 no-padding-left">
+        <input ng-model="AOEData.adminFee" type="text" style="color:green" class="form-control"/>
+        <span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"1></i></span>
+        <!--<div class="input-group"> 
+			    <input type="text" class="form-control" ng-model="AOEData.adminFee">
+			    <span class="input-group-addon" ><span><i class="fa fa-eur"></i></span></span>
+			  </div> -->
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Order Reference</label>
+    <div class="col-xs-3 no-padding-left">
+        <input ng-model="AOEData.OrderReference" type="text" style="color:green" class="form-control"/>
+
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Total Attachment</label>
+    <div class="col-xs-3 no-padding-left">
+        <input ng-model="AOEData.totalAttachment" type="text" style="color:green" class="form-control"/>
+        <span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span>
+        <!--<div class="input-group"> 
+			    <input type="text" class="form-control" ng-model="AOEData.totalAttachment">
+			    <span class="input-group-addon" ><span><i class="fa fa-eur"></i></span></span>
+			  </div> -->
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Deduction This Period</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.deductonThisModel" type="text" class="form-control" readonly /> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" class="form-control" style="color:green" readonly>{{AOEData.deductonThisPeriod}}<span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span></div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Deducation Carried Forwards</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.deductonCarriedForwards" type="text" class="form-control" readonly/> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" style="color:green" class="form-control" readonly>{{AOEData.deductonCarriedForwards}}<span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span></div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Protectted Minimum Carried Forwards</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.protectedMinimumCarriedForwards" type="text" class="form-control" readonly/> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" style="color:green" class="form-control" readonly>{{AOEData.protectedMinimumCarriedForwards}}<span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span></div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Deduction so far</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.DeductionSoFar" type="text" class="form-control" readonly/> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" class="form-control" style="color:green" readonly>{{AOEData.DeductionSoFar}}<span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span></div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Deduction Brought Forwards</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.deductonBroughtForWards" type="text" class="form-control" readonly/> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" class="form-control" style="color:green" readonly>{{AOEData.deductonBroughtForWards}}<span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span></div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Protected Minimum Brought Forwards</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.ProtectedMinimumBroughtForward" type="text" class="form-control" readonly/> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" class="form-control" style="color:green" readonly>{{AOEData.ProtectedMinimumBroughtForward}}<span style="position:absolute;right:20px;z-index:10;top:8px;color:green"><i class="fa fa-eur"></i></span></div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+		<label class="col-xs-4 control-label ">Last Paid Date</label>
+    <div class="col-xs-3 no-padding-left">
+        <!-- <input ng-model="AOEData.lastPaidDate" type="text" class="form-control" readonly/> -->
+        <div ng-model="AOEData.lastPaidDate" type="text" class="form-control" style="color:green" readonly>{{AOEData.lastPaidDate}}<span style="position:absolute;right:20px;z-index:10;top:8px"><i class="fa fa-calendar"></i></span></div>
+    </div>
+  </div>
+
+  
+	</form>
+  </div>
+</div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+    <button class="btn btn-primary" ng-click="save()" ng-disabled="true"><div> <i class="fa fa-save"></i> &nbsp; Save</div></button>
+  </div>
+</div>
