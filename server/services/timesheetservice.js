@@ -63,41 +63,62 @@ module.exports=function(db){
 			  			console.log('Format 1');
 				  		var finishData = [];
 				  		_.forEach(data, function(row){
-			  				candidatecommonservice.getUserByRef(row.contractorReferenceNumber)
+
+			  				// Get Candidate/Worker by Reference Number
+			  				return candidatecommonservice.getUserByRef(row.contractorReferenceNumber)
 			  				.then(function(candidate){
-			  					row.validationErrors = [];
-					  			if(row.rateDescription){
-					  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
-					  				row.elementType = paymentRate._id || null;
-					  				row.paymentRate = paymentRate;
-					  				// Add No Matching Payrment Rate validation if not matching
-					  				if(!row.elementType){
-		  								row.validationErrors.push('No Matching Payment Rate Found.');
+			  					
+			  					// Check for previous timesheet for worker
+			  					var worker = (candidate?candidate._id:null);
+			  					var weekEndingDate = row.periodEndDate || null;
+			  					
+			  					return db.Timesheet.findOne({ worker: worker, weekEndingDate: weekEndingDate }).exec()
+                  				.then(function(prevTimesheet) {
+									
+									row.failMessages = [];
+				  					row.warningMessages = [];
+						  			
+						  			if(prevTimesheet){
+		  								row.failMessages.push('Duplicate Entry.');
 					  				}
-					  			}
-					  			
-					  			// Add No Matching Candidate validation if not matching
-					  			if(!candidate){
-					  				row.validationErrors.push('No Matching Contractor Found.');
-					  			}else{
-					  				if(candidate.firstName !== row.contractorForename){
-					  					row.validationErrors.push('Contractor First Name Mismatch.');
-					  				}
-					  				if(candidate.lastName !== row.contractorSurname){
-					  					row.validationErrors.push('Contractor Last Name Mismatch.');
-					  				}
-					  			}
-					  			var contractor = candidate || {};
-					  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
-					  			row.worker = contractor._id;
-					  			row.total = row['total(gross)'];
-					  			row.net = row['total(net)'];
-					  			row.units = row.noOfUnits;
-					  			row.payRate = row.unitRate;
-					  			row.holidayPayIncluded = row.holidayPayRule;
-					  			row.holidayPayDays = row.holidayPayRate;
-		                		finishData.push(row);
-			  				}).then(function(){
+
+						  			if(row.rateDescription){
+						  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
+						  				row.elementType = paymentRate._id || null;
+						  				row.paymentRate = paymentRate;
+						  				// Add No Matching Payrment Rate validation if not matching
+						  				if(!row.elementType){
+			  								row.failMessages.push('No Matching Payment Rate Found.');
+						  				}
+						  			}
+						  			
+						  			// Add No Matching Candidate validation if not matching
+						  			if(!candidate){
+						  				row.failMessages.push('No Matching Contractor Found.');
+						  			}else{
+						  				if(candidate.firstName !== row.contractorForename){
+						  					row.failMessages.push('Contractor First Name Mismatch.');
+						  				}
+						  				if(candidate.lastName !== row.contractorSurname){
+						  					row.failMessages.push('Contractor Last Name Mismatch.');
+						  				}
+						  			}
+						  			
+						  			var contractor = candidate || {};
+						  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
+						  			row.worker = contractor._id;
+						  			row.total = row['total(gross)'];
+						  			if(parseFloat(row.total) <= 0){
+						  				row.failMessages.push('Timesheet Value is less than or equal to 0.');
+						  			}
+						  			row.net = row['total(net)'];
+						  			row.units = row.noOfUnits;
+						  			row.payRate = row.unitRate;
+						  			row.holidayPayIncluded = row.holidayPayRule;
+						  			row.holidayPayDays = row.holidayPayRate;
+			                		finishData.push(row);
+                  				}, reject);
+			  				}, reject).then(function(){
 			  					if(Object.keys(data).length === Object.keys(finishData).length){
 			  						resolve(finishData);
 			  					}
