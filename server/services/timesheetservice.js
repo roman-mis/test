@@ -3,10 +3,11 @@
 module.exports=function(db){
 	var Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
-		_=require('lodash');
-	var utils=require('../utils/utils');
-	var systemservice=require('./systemservice')(db),
-	candidatecommonservice=require('./candidatecommonservice')(db);
+		_=require('lodash'),
+		utils=require('../utils/utils'),
+		systemservice=require('./systemservice')(db),
+		candidatecommonservice=require('./candidatecommonservice')(db),
+		awsservice=require('./awsservice');
 	
 	var service={};
 
@@ -103,7 +104,7 @@ module.exports=function(db){
 						  					row.failMessages.push('Contractor Last Name Mismatch.');
 						  				}
 						  			}
-						  			
+
 						  			var contractor = candidate || {};
 						  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
 						  			row.worker = contractor._id;
@@ -120,7 +121,16 @@ module.exports=function(db){
                   				}, reject);
 			  				}, reject).then(function(){
 			  					if(Object.keys(data).length === Object.keys(finishData).length){
-			  						resolve(finishData);
+			  						
+			  						var s3ObjectName = new Date().getTime().toString() + '_' + file.name;
+									var folder=process.env.S3_TEMP_FOLDER;
+									var s3ObjectType = file.mimetype || 'text/plain';
+									var body = require('fs').readFileSync(file.path);
+
+									return awsservice.putS3Object(body,s3ObjectName,s3ObjectType,folder)
+									.then(function(){
+										resolve({url: s3ObjectName, data: finishData});
+									},reject);
 			  					}
 			  				});
 						});
