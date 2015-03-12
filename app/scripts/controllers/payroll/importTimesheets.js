@@ -27,85 +27,101 @@ angular.module('origApp.controllers')
   		$scope.onSelectFile = function ($files) {
   			console.log('im hereeeee');
   			$scope.files = $files;
-  			var uploadCsv = {
-	        		file: $scope.files[0],
-	        		timesheettemplate: $scope.saveTemp.code
-	        	};
-  			HttpResource.model('timesheets/uploadcsv').create(uploadCsv).post().then(function (res) {
-			//console.log(uploadCsv.timesheettemplate);
-			console.log('res', res);
-		});
-  			$scope.preProcessChecker = 0;
-  			parseCSV.get($files[0]).then(function (response) {
-  				console.log(response);
-  				$scope.response = response;
-  				$scope.addSheet = false;
-  				//$scope.preProcess = function () {
-				var counter =0;
-				for (var i = 0; i < $scope.response.length; i++) {
-					if(!$scope.response[i].contractorRefNum || !$scope.response[i].contractorForename ||
-					   !$scope.response[i].contractorSurename || $scope.response[i].totalNet<=0){
-						$scope.response[i].importStatus = 'Import Fail';
-					} else {
-						for (var j = 0; j < $scope.response.length; j++) {
-							if($scope.response[i].contractorRefNum === $scope.response[j].contractorRefNum){
-								counter ++;
-								if(counter > 1){
-									$scope.duplicate = true;
-								}
-							}
-						}
-						counter =0;
+  			console.log($files);
 
-						if ($scope.duplicate) {
-							$scope.response[i].importStatus = 'Warning';
-							$scope.preProcessChecker ++;
-							$scope.duplicate = false;
+	        	
+
+  		// 	$scope.preProcessChecker = 0;
+  		// 	parseCSV.get($files[0]).then(function (response) {
+  		// 		console.log(response);
+  		// 		$scope.response = response;
+  		// 		$scope.addSheet = false;
+  		// 		//$scope.preProcess = function () {
+				// var counter =0;
+				// for (var i = 0; i < $scope.response.length; i++) {
+				// 	if(!$scope.response[i].contractorRefNum || !$scope.response[i].contractorForename ||
+				// 	   !$scope.response[i].contractorSurename || $scope.response[i].totalNet<=0){
+				// 		$scope.response[i].importStatus = 'Import Fail';
+				// 	} else {
+				// 		for (var j = 0; j < $scope.response.length; j++) {
+				// 			if($scope.response[i].contractorRefNum === $scope.response[j].contractorRefNum){
+				// 				counter ++;
+				// 				if(counter > 1){
+				// 					$scope.duplicate = true;
+				// 				}
+				// 			}
+				// 		}
+				// 		counter =0;
+
+				// 		if ($scope.duplicate) {
+				// 			$scope.response[i].importStatus = 'Warning';
+				// 			$scope.preProcessChecker ++;
+				// 			$scope.duplicate = false;
 							
-						}
+				// 		}
 
 						
-					}
-					if($scope.response[i].importStatus ===''){
-						$scope.response[i].importStatus = 'Import Successful';
-						$scope.preProcessChecker ++;
-					}
-					if($scope.response[i].importStatus ==='Import Fail'){
-						$scope.preProcessChecker --;
-					}
+				// 	}
+				// 	if($scope.response[i].importStatus ===''){
+				// 		$scope.response[i].importStatus = 'Import Successful';
+				// 		$scope.preProcessChecker ++;
+				// 	}
+				// 	if($scope.response[i].importStatus ==='Import Fail'){
+				// 		$scope.preProcessChecker --;
+				// 	}
 
-					if($scope.preProcessChecker === $scope.response.length){
-						$scope.ready = true;
-					}
-					else{
-						$scope.ready = false;
-					}
-				}
+				// 	if($scope.preProcessChecker === $scope.response.length){
+				// 		$scope.ready = true;
+				// 	}
+				// 	else{
+				// 		$scope.ready = false;
+				// 	}
+				// }
 
-  				//};
+  		// 		//};
 
-  				$scope.preProcess = function () {
-					if($scope.ready){
-						$scope.addSheet = true;
-					}
-					else{
-						$scope.addSheet = false;
-					}
-				};
+
+
+
+
+
   				
-  			});
+  				
+  			//});
 
-  			$scope.$watch('uploadClicked', function () {
-  					// body...
-  					if($scope.uploadClicked === true){
-  						$scope.timesheets = $scope.response;
-  						$scope.uploadClicked = false;
-  						//$scope.preProcess = false;
-  					}
-  				});
+  			
 
   			//$scope.$apply();
   		};
+
+  		$scope.upload = function  () {
+  			// body...
+  					// body...
+  					
+  						$upload.upload({
+		                    url: 'api/timesheets/uploadcsv',
+		                    fields: {'timesheettemplate': $scope.saveTemp.code},
+		                    file: $scope.files[0],
+		                // }).progress(function (evt) {
+		                //     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+		                //     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+		                }).success(function (data, status, headers, config) {
+		                    console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
+		                    console.log(data);
+		                    $scope.data = data.objects;
+		                    //$modalInstance.close();
+		                });
+  						$scope.timesheets = $scope.response;
+  						//$scope.preProcess = false;
+  					
+  		
+  		};
+
+  		$scope.preProcess = function () {
+			for(var i = 0; i<$scope.data.length; ++i){
+				
+			}
+		};
 
   		
   		//console.log('im here now')
@@ -145,26 +161,11 @@ angular.module('origApp.controllers')
 	        	var str = $scope.files[0].name;
 	        	str = str.replace(/ /g, '_');
 	        	
-	                /*
-	                $upload.upload({
-	                    url: 'api/timesheets/uploadcsv',
-	                    //fields: {'username': $scope.username},
-	                    file: $scope.files[0],
-	                    timesheettemplate: $scope.saveTemp.code
-	                // }).progress(function (evt) {
-	                //     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	                //     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-	                }).success(function (data, status, headers, config) {
-	                    console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
-	                    console.log(data);
-	                    $modalInstance.close();
-	                });
-					*/
+	                
+	                
+					
 
-		HttpResource.model('timesheets/uploadcsv').create(uploadCsv).post().then(function (res) {
-			//console.log(uploadCsv.timesheettemplate);
-			console.log('res', res);
-		});
+		
 				// var fileName = new Date().getTime().toString() + '_' + $scope.files[0].name;
 	   //          var mimeType = $scope.files[0].type || 'text/plain';
 	   //          $scope.isUploading = true;
