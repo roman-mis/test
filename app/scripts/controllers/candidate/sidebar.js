@@ -76,6 +76,15 @@ angular.module('origApp.controllers')
             });
           };
 	
+          $scope.openAOEWin = function() {
+            ModalService.open({
+              templateUrl: 'views/candidate/AOE.html',
+              parentScope: $scope,
+              controller: 'AOEController',  
+              size: 'lg'
+            });
+          };
+  
 		      $scope.openAddTimesheetWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/_add_timesheet.html',

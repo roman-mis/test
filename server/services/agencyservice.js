@@ -278,10 +278,24 @@ service.getBranches=function(filter,populate){
 	_.forEach(populate,function(p){
 		q.populate(p);
 	});
-	// console.log('filters');
-	// console.log(filter);
-	// console.log('populate');console.log(populate);
-	return Q.nfcall(q.exec.bind(q));
+	console.log('getting from last call');
+	 console.log(filter);
+	return Q.nfcall(q.exec.bind(q))
+		.then(function(branches){
+			console.log('after pulling all the branches');
+			var consultantList=_.map(branches,function(branch){
+				return branch.consultants||[];
+			});
+			console.log('after all consultants');
+			return db.Consultant.populate(consultantList,'user')
+				
+				.then(function(){
+					console.log('after populate');
+					return branches;
+				});
+				
+
+		});
 
 };
 
