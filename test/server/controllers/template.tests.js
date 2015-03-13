@@ -33,7 +33,7 @@ describe('template',function(){
 	sendFailureResponseStub=sinon.stub(responseMock,'sendFailureResponse');
 
 	templateServiceMock={'getAllTemplates':function(){}, 'addTemplate':function(){},'getTemplate':function(){}};
-	mockery.registerMock('../services/templateservice',templateServiceMock);
+	mockery.registerMock('../services/templateservice',function(){return templateServiceMock;});
 	templateController=require('../../../server/controllers/template')(null);
 	getTemplateRequestMock={body:{},params:{"_id" : "54c8f8a73b417dfc00ae9c9b"}};
 	postTemplateMock={body:{
