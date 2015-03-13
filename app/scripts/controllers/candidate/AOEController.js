@@ -1,5 +1,4 @@
 'use strict';
-console.log(1)
 var app = angular.module('origApp.controllers');
 app.controller('AOEController',['$state', '$rootScope', '$scope', '$modalInstance', 'parentScope', 'HttpResource',
 	function($state,$rootScope,$scope,$modalInstance,parentScope,HttpResource){
