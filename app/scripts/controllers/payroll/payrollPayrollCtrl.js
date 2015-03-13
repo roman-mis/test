@@ -1,9 +1,14 @@
 var app = angular.module('origApp.controllers');
 
-app.controller("payrollPayrollCtrl", ['$scope', '$http', '$modal', function ($scope, $http, $modal) {
+app.controller("payrollPayrollCtrl", ['$scope', '$http', '$modal', '$rootScope', function ($scope, $http, $modal, $rootScope) {
     // $http.get("random.json").success(function (data) {
     //     $scope.fields = data;
     // });
+
+    $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                              {link: '/payroll/home', text: 'Payroll'},
+                              {link: '/payroll/payroll', text: 'Payroll'}
+                              ];
 
     $scope.fields= [
                       {
