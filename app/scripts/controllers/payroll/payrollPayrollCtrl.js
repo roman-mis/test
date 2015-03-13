@@ -1,6 +1,8 @@
 var app = angular.module('origApp.controllers');
 
-app.controller("payrollPayrollCtrl", ['$scope', '$http', '$modal', '$rootScope', function ($scope, $http, $modal, $rootScope) {
+app.controller("payrollPayrollCtrl",
+    ['$scope', '$http', '$modal', '$rootScope', 'HttpResource',
+    function ($scope, $http, $modal, $rootScope, HttpResource) {
     // $http.get("random.json").success(function (data) {
     //     $scope.fields = data;
     // });
@@ -9,6 +11,11 @@ app.controller("payrollPayrollCtrl", ['$scope', '$http', '$modal', '$rootScope',
                               {link: '/payroll/home', text: 'Payroll'},
                               {link: '/payroll/payroll', text: 'Payroll'}
                               ];
+
+    // HttpResource.model('payroll').customGet('',{},function(timeSheetsData){
+    //     console.log('done !!');
+    //     console.log(timeSheetsData);
+    // });
 
     $scope.fields= [
                       {
