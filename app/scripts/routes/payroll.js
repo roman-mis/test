@@ -25,7 +25,9 @@ angular.module('origApp').config(function($stateProvider) {
     templateUrl: 'views/payroll/endPeriod.html'
   })
   .state('app.payroll.payroll', {
-    url:'/payroll'
+    url:'/payroll',
+    templateUrl:'views/payroll/payrollpayroll.html',
+    controller:'payrollPayrollCtrl'
   });
   // .state('app.payroll.AOE', {
   //   url: '/AOE',

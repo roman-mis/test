@@ -1213,3 +1213,44 @@ table {
 .mileAge span {
     display: none;
 } 
+
+.payroll_payroll_unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.payroll_payroll_header {
+    background-color: green;
+    color: white;
+    text-align: left;
+    padding: 15px;
+}
+
+.payroll_payroll_nav {
+    line-height: 30px;
+    background-color: #eeeeee;
+    height: 300px;
+    width: 100px;
+    float: left;
+    padding: 15px;
+}
+
+.payroll_payroll_section {
+    padding: 15px;
+}
+
+.payroll_payroll_footer {
+    background-color: green;
+    color: white;
+    clear: both;
+    text-align: center;
+    padding: 5px;
+}
+
+.thumbnail {
+    display: inline-block;
+}
