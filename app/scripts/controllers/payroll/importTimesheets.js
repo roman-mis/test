@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
- .controller('importTimesheetsController', ['$scope', '$modalInstance', 'HttpResource', 'parseCSV', '$http', '$upload',
-  	function($scope, $modalInstance, HttpResource, parseCSV, $http,$upload){
+ .controller('importTimesheetsController', ['$scope', '$modalInstance', 'HttpResource', '$http', '$upload',
+  	function($scope, $modalInstance, HttpResource, $http,$upload){
 
   		HttpResource.model('agencies').query({}, function (response) {
   			
@@ -106,6 +106,7 @@ angular.module('origApp.controllers')
 	        }).success(function (data, status, headers, config) {
 	            console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
 	            console.log(data);
+	            $scope.fileUrl = data.url;
 	            $scope.timesheets = data.objects;
 	            //$modalInstance.close();
 	        });
@@ -131,6 +132,7 @@ angular.module('origApp.controllers')
   			$scope.importStatus = [];
   			$scope.timesheetTable = [];
   			$scope.displayTimesheets = [];
+  			$scope.errors = 0;
   			$scope.preProcessClicked = true;
   			console.log('in preProcess');
 			for(var i = 0; i< $scope.timesheets.length; ++i){
@@ -199,11 +201,11 @@ angular.module('origApp.controllers')
 	  		for(var i = 0; i<$scope.timesheets.length;++i){
 	  			bulkTimesheets[i] = {
 	  				worker: $scope.timesheets[i].worker,
-	  				agency: $scope.id,
+	  				agency: $scope.saveAgency.id,
 	  				status: 'submitted',
 	  				payFrequency: 'weekly',
-	  				weekEndingDate: '2015-01-02',
-	  				net: $scope.timesheets[i]['total(net)'],
+	  				weekEndingDate: $scope.timesheets[i].periodEndDate,
+	  				net: $scope.timesheets[i].net,
 	  				vat: $scope.timesheets[i].vat,
 	  				totalPreDeductions:0,
 	  				deductions:0,
@@ -217,8 +219,8 @@ angular.module('origApp.controllers')
 	  					vat: ($scope.timesheets[i].noOfUnits* $scope.timesheets[i].payRate * ($scope.timesheets[i].vat)/100).toFixed(2),
 	  					isCis:false,
 	  					paymentRate:{
-	  						name: $scope.timesheets[i].paymentRate.importAliases.name,
-	  						rateType: $scope.timesheets[i].paymentRate.importAliases.rateType,
+	  						name: $scope.timesheets[i].paymentRate.name,
+	  						rateType: $scope.timesheets[i].paymentRate.rateType,
 	  						hours: $scope.timesheets[i].paymentRate.hours
 	  					}
 
@@ -232,14 +234,14 @@ angular.module('origApp.controllers')
   		
   		$scope.uploadFile = function () {
   			if(!$scope.errors){
-  				HttpResource.model('timesheets/bulk').create(
-  					{	
-  						filename:$scope.timesheets.url,
+  				var saveTimesheets = {	
+  						filename:$scope.fileUrl,
   						batchNumber:$scope.batch,
   						timesheets: savingBulkSheets()
-  					}
-  				).post().then(function (response) {
-  					
+  					};
+
+  				HttpResource.model('timesheets/bulk').create(saveTimesheets).post().then(function (response) {
+  					console.log(saveTimesheets);
   					console.log('this is sparta',response);
   				});
 
