@@ -19,7 +19,7 @@ var testModal = function (locator) {
   })
 };
 
-
+/*
 describe('Checking Timesheet dialog', function () {
 
   it('should open-cancel Timesheet dialog', function () {
@@ -66,7 +66,7 @@ describe('Checking Timesheet dialog', function () {
 
   });
 
-});
+});*/
 
 describe('Checking ONBOARDING', function () {
 
