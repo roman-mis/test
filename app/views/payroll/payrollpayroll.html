@@ -1,0 +1,135 @@
+<div class="container-fluid candidate-main meta-box padding-10 ng-scope"> <!-- Can use class container-fluid & payroll-home -->
+        <div align="right">
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Status <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li style="cursor:pointer"><a>Action</a></li>
+                    <li style="cursor:pointer"><a>Another action</a></li>
+                    <li style="cursor:pointer"><a>Something else here</a></li>
+                </ul>
+            </div>
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Agency <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li style="cursor:pointer"><a>Action</a></li>
+                    <li style="cursor:pointer"><a>Another action</a></li>
+                    <li style="cursor:pointer"><a>Something else here</a></li>
+                </ul>
+            </div>
+
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Invoice <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li style="cursor:pointer"><a>Action</a></li>
+                    <li style="cursor:pointer"><a>Another action</a></li>
+                    <li style="cursor:pointer"><a>Something else here</a></li>
+                </ul>
+            </div>
+            <!-- Single button -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Status <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li style="cursor:pointer"><a>Action</a></li>
+                    <li style="cursor:pointer"><a>Another action</a></li>
+                    <li style="cursor:pointer"><a>Something else here</a></li>
+                </ul>
+            </div>
+            <!-- Single button -->
+            <button type="button" class="btn btn-success">&nbsp;&nbsp;Go&nbsp;&nbsp;</button>
+            <!--font-->
+            <font size="3">Current period | Wk 2 | M 12</font>
+        </div>
+
+        <hr style="height: 1px; background-color: #b6ff00;" />
+
+        <div id="content_table">
+            <table class="table orig-grid payroll_payroll_unselectable">
+                <thead>
+                    <tr>
+                        <th style="width:60px">ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th style="width:80px">Tax code</th>
+                        <th>Wk no.</th>
+                        <th>Unit</th>
+                        <th>Rate</th>
+                        <th>Ded.</th>
+                        <th>Tax NI</th>
+                        <th>ERNI</th>
+                        <th style="width:140px">Pensions</th>
+                        <th>Holiday</th>
+                        <th>Margin</th>
+                        <th>NET</th>
+                        <th style="width:30px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in fields" ng-dblclick="editItem($index)" style="cursor:pointer">
+                        <td>{{item.id}}</td>
+                        <td>{{item.firstname}}</td>
+                        <td>{{item.lastname}}</td>
+                        <td>{{item.taxcode}}</td>
+                        <td>{{item.wkno}}</td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.rate}}</td>
+                        <td>{{item.ded}}</td>
+                        <td>{{item.taxni}}</td>
+                        <td>{{item.erni}}</td>
+                        <td>{{item.pensions}}</td>
+                        <td>{{item.holiday}}</td>
+                        <td>{{item.margin}}</td>
+                        <td>{{item.net}}</td>
+                        <td>
+                            <div class="dropdown text-left" style="cursor:pointer">
+                                <a data-toggle="dropdown">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown pull-right" role="menu">
+                                    <li>
+                                        <a style="cursor:pointer">Re-Run</a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor:pointer">View Payslip</a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor:pointer">View Timesheet</a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor:pointer">View Expenses</a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor:pointer">Hold</a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor:pointer">Roll Back</a>
+                                    </li>
+                                    <li ng-click="editItem($index)">
+                                        <a style="cursor:pointer">Edit</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr style="height: 1px; background-color: #b6ff00;" />
+
+
+    </div>
+    <!-- <div class="payroll_payroll_footer">
+        Payroll under development
+    </div> -->
+</div>

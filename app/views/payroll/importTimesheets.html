@@ -49,10 +49,10 @@
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <button ng-click ="uploadClicked = true" class="btn btn-primary form-control">Upload</button>
+                            <button ng-disabled = "!files" ng-click ="upload()" class="btn btn-primary form-control">Upload</button>
                         </div>
                         <div class="col-xs-6">
-                            <button ng-click="preProcess()" class="btn btn-primary form-control">Pre-Process</button>
+                            <button ng-disabled = "!timesheets" ng-click="preProcess()" class="btn btn-primary form-control">Pre-Process</button>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <label class="col-xs-4 control-label">Batch Number</label>
                         <div class="col-xs-8">
-                             <input type="text" class="form-control" />
+                             <input ng-model = "batch"type="text" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -72,8 +72,8 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <label class="col-xs-6 control-label">Number of Timesheets <span class="pull-right">{{timesheets[timesheets.length-1].numberOfTimesheets}}</span></label>
-                        <label class="col-xs-6 control-label">Number of Errors <span class="pull-right">1</span></label>
+                        <label class="col-xs-6 control-label">Number of Timesheets <span class="pull-right">{{displayTimesheets.length}}</span></label>
+                        <label class="col-xs-6 control-label">Number of Errors <span class="pull-right">{{errors}}</span></label>
                     </div>
                 </div>
             </div>
@@ -97,12 +97,12 @@
                 <div class="tableWrapper tableWrapper-140">
                     <table class="table table-striped" id="tableBody">
                         <tbody>
-                            <tr ng-repeat="timesheet in timesheets">
-                                <td>{{timesheet.contractorRefNum}}</td>
-                                <td>{{timesheet.contractorForename}} {{timesheet.contractorSurename}}</td>
-                                <td>{{timesheet.noUnits}}</td>
-                                <td>{{timesheet.unitRate}}</td>
-                                <td>{{timesheet.totalNet}}</td>
+                            <tr ng-repeat="timesheet in displayTimesheets">
+                                <td>{{timesheet.id}}</td>
+                                <td>{{timesheet.name}}</td>
+                                <td>{{timesheet.unit}}</td>
+                                <td>{{timesheet.rate}}</td>
+                                <td>{{timesheet.total}}</td>
                                 <td>{{timesheet.importStatus}}</td>
                             </tr>
                         </tbody>
@@ -139,7 +139,7 @@
 	
     <div class="modal-footer">
         <a href ng-click="cancel()" class="btn" data-dismiss="modal" aria-label="Close">Cancel</a>
-        <button ng-disabled="!addSheet" ng-click="uploadFile()" class="btn btn-primary">Upload File</button>
+        <button ng-disabled="!uploadValidation()" ng-click="uploadFile()" class="btn btn-primary">Upload File</button>
     </div>
 	
 </div>

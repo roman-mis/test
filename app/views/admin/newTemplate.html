@@ -1,7 +1,7 @@
-<div class="container ">
-<div class="btn btn-success" style="cursor:initial">
-	<div class="col-xs-12 row" style="margin:5px">
-		<div class="col-xs-4 " >
+<div class="container-fluid ">
+<div class="btn btn-success col-xs-12" style="cursor:initial">
+	<div class="col-xs-12" style="margin:5px">
+		<div class="col-xs-4">
 			<label style="align-text:right; width:34%">template name </label>
 			<input style="width:65%;color:black;" placeholder="template name" type="txt" ng-model="data.details.name"\>
 		</div>
@@ -33,21 +33,23 @@
 		  
 		  </ul>
 		</div>	
-		
 	</div>
 
-	<div class="col-xs-12 row" style="margin:5px">
-		<div class="col-xs-4">
-			<label  style="align-text:left;width:34%">template title</label>
-			<input id="title"  style="width:65%;color:black" placeholder="templat title" type="txt" ng-model="data.details.title"\>
-		</div>
-			
+	<div class="col-xs-12" style="margin:5px">
+		<div class="row">
+			<div class="col-xs-4">
+				<label  style="align-text:left;width:34%">template title</label>
+				<input id="title"  style="width:65%;color:black" placeholder="templat title" type="txt" ng-model="data.details.title"\>
+			</div>
+				
 			<div align="right" class="col-xs-8">
 				<button  class="btn btn-default" ng-click="paste()" ><i style="color:green" class="fa fa-clipboard"></i></button>
 			</div>
+		</div>
 	</div>
-	</div>
-	<div style="margin:10px" class="col-xs-12 row" >
+</div>
+
+	<div style="padding:10px 0px;" class="col-xs-12">
 		<wysiwyg
 		 id="test"
 		 selection="selection"
@@ -62,8 +64,8 @@
       
 	</div>
 
-	<div align="right" style="margin:10px" class="col-xs-12 row" >
-		<div class="col-xs-8"></div>
-		<button class="col-xs-2 btn btn-success" ng-click="save()" >SAVE<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></span></button>
+	<div style="padding:10px 0px;" class="col-xs-12 text-right" >
+		<button class="btn btn-success" ng-click="save()" >SAVE<span class="hidden-xs">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></span></button>
 	</div>
+
 </div>

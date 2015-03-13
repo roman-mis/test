@@ -158,7 +158,7 @@ angular.module('origApp.controllers')
 			$scope.isUploading = false;
 			$scope.uploadedImg.url = data.url;
 
-			console.log(data.url)
+			console.log(data.url);
 		}, function() {
 			// alert('error');
 		});
