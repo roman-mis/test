@@ -3,6 +3,10 @@ var app = angular.module('origApp.controllers');
 app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','payroll',
 	function($state,$rootScope,$scope,HttpResource,ModalService,payroll){	
 
+    $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                          {link: '/payroll/home', text: 'Payroll'}
+                          ];
+
    $scope.payroll = {};
    $scope.allPayrolls = [];
    $scope.agencyIndex = -1;
@@ -25,6 +29,16 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
           templateUrl: 'views/payroll/runPayroll.html',
           parentScope: $scope,
           controller: 'runPayrollController',
+          size: 'lg'
+      });
+    };
+
+    $scope.openCreateValidation = function(){
+        console.log(220);
+        ModalService.open({
+          templateUrl: 'views/payroll/createValidation.html',
+          parentScope: $scope,
+          controller: 'createValidationController',
           size: 'lg'
       });
     };

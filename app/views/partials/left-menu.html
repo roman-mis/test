@@ -13,36 +13,24 @@
     </div>
     <ul id='main-menu' class='main-menu'>
         <li>
-            <a href="#" tooltip data-placement="top"
-               title="Home"
-               tooltip-placement="top"><i class="fa fa-home"></i><span class="title">Home</span></a>
+            <a><i class="fa fa-home"></i><span class="title">Home</span></a>
         </li>
         <li ng-class="{active: isStateIncludes('candidates') || isStateIncludes('candidate')}">
-          <a href="/candidates" tooltip data-placement="top" title ="CANDIDATE" tooltip-placement="top">
+          <a href="/candidates">
             <i class="fa fa-user"></i><span class="title">CANDIDATE</span>
           </a>
         </li>
         <li ng-class="{active: isStateIncludes('agencies') || isStateIncludes('agency')}">
-          <a href="/agencies" tooltip data-placement="top" title="AGENCY" tooltip-placement="top">
+          <a href="/agencies">
             <i class="fa fa-users"></i><span class="title">AGENCY</span>
           </a>
         </li>
-        <li><a href="#" tooltip data-placement="top"
-               title="End client"
-               tooltip-placement="top"><i class="fa fa-building"></i><span class="title">END CLIENT</span></a></li>
+        <li><a href="#"><i class="fa fa-building"></i><span class="title">END CLIENT</span></a></li>
 
         <li ng-class="{active: isStateIncludes('payroll') || isStateIncludes('payroll')}">
-              <a ui-sref="app.payroll.home" tooltip data-placement="top"
-               title="payroll"
-               tooltip-placement="top"><i class="fa fa-money"></i><span class="title">PAYROLL</span></a></li>
-        <li><a href="#" tooltip data-placement="top"
-               title="reports"
-               tooltip-placement="top"><i class="fa fa-newspaper-o"></i><span class="title">REPORTS</span></a></li>
-        <li><a href="#" tooltip data-placement="top"
-               title="activity"
-               tooltip-placement="top"><i class="fa fa-clock-o"></i><span class="title">Activity</span></a></li>
-        <li><a ui-sref="app.admin.home" tooltip data-placement="top"
-               title="admin"
-               tooltip-placement="top"><i class="fa fa-tachometer"></i><span class="title">admin</span></a></li>
+              <a ui-sref="app.payroll.home"><i class="fa fa-money"></i><span class="title">PAYROLL</span></a></li>
+        <li><a href="#"><i class="fa fa-newspaper-o"></i><span class="title">REPORTS</span></a></li>
+        <li><a href="#"><i class="fa fa-clock-o"></i><span class="title">Activity</span></a></li>
+        <li ng-class="{active: isStateIncludes('admin') || isStateIncludes('admin')}"><a ui-sref="app.admin.home"><i class="fa fa-tachometer"></i><span class="title">Admin</span></a></li>
     </ul>
 </div>
