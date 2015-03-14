@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('origApp.constants')
-        .factory('adminTemplate', function() {
+        .value('adminTemplate', {
             // Public API here
-            var adminTemlpate = {
-                details : {}
-            };
-            return adminTemlpate;
+            details: {}
+
         });

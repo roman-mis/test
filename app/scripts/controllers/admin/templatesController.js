@@ -124,13 +124,13 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
     $scope.gridOptions.loadAdminTemplate = function(index) {
     	var id = $scope.gridOptions.allData[index]._id;
-      HttpResource.model('admin/templates/'+id)
-      .query({},function(data) {
-        console.log(data);
-        adminTemplate.details = data.data.object;
-        console.log(adminTemplate.details);
+    	adminTemplate.details = $scope.gridOptions.allData[index];
         $location.path('/admin/add_new/edite');
-      });
+      //HttpResource.model('admin/templates/'+id)
+      //.query({},function(data) {
+      //  console.log(data);
+      //  console.log(adminTemplate.details);
+      //});
     };
 
     $scope.gridOptions.clone = function(index) {
