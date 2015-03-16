@@ -223,10 +223,7 @@ angular.module('origApp.controllers')
 	  						rateType: $scope.timesheets[i].paymentRate.rateType,
 	  						hours: $scope.timesheets[i].paymentRate.hours
 	  					}
-
 	  				}]
-
-
 	  			};
 	  		}
 	  		return bulkTimesheets;

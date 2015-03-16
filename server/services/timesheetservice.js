@@ -12,6 +12,7 @@ module.exports=function(db){
 	var service={};
 
 	service.getTimesheets = function(request){
+		console.log('#####################@@@@@@@@@@@@@@@@@@')
 		return Q.Promise(function(resolve,reject){
 			var q=db.Timesheet.find().populate('worker').populate('batch');
 
