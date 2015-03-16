@@ -38,7 +38,7 @@ router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
 router.patch('/:id/contactdetail', candidatecontroller.updateContactDetail);
 
 router.get('/:id/bankdetail', candidatecontroller.getBankDetail);
-router.get('/:id/taxdetail', candidatecontroller.getTaxDetail);
+
 router.patch('/:id/bankdetail', candidatecontroller.updateBankDetails);
 
 

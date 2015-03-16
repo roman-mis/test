@@ -314,18 +314,6 @@ module.exports = function(dbs){
          },res.sendFailureResponse);
     };
 
-    controller.getTaxDetail=function (req, res){
-      candidateservice.getUser(req.params.id)
-         .then(function(user){
-            if(user){
-              res.json({result:true, object: user.worker.taxDetail});
-            }
-            else {
-               res.status(404).json({result:false, message:'Bank details not found'});
-            }
-         },res.sendFailureResponse);
-    };
-
     controller.postCandidate=function (req, res) {
       
           console.log('post candidate started');
