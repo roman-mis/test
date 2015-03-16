@@ -10,17 +10,17 @@ app.controller('createValidationController',['$state', '$rootScope', '$scope', '
 	$scope.timesheetbatches = {};
 	
 		
-	// HttpResource.model('agencies/with/timesheetBatches').customGet('',{},function(agencies){
- //  	console.log('agencies done !!');
- //    console.log(agencies);
- //    $scope.agencies = agencies.data.objects;
-	// });
-
-	HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('',{},function(agencies){
+	HttpResource.model('agencies/with/timesheetBatches').customGet('',{},function(agencies){
   	console.log('agencies done !!');
     console.log(agencies);
     $scope.agencies = agencies.data.objects;
 	});
+
+	// HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('',{},function(agencies){
+ //  	console.log('agencies done !!');
+ //    console.log(agencies);
+ //    $scope.agencies = agencies.data.objects;
+	// });
 	
 	$scope.selectAgency  = function(id){
 		for (var i =  0; i < $scope.agencies.length; i++) {
@@ -43,7 +43,7 @@ app.controller('createValidationController',['$state', '$rootScope', '$scope', '
 			}
 		}
 		if($scope.branch.name){
-			$scope.timesheetbatches = $scope.agencies[i].timesheetBatches;
+			
 			// $scope.getTimeSheets(true);
 		}
 	};
