@@ -231,6 +231,7 @@ angular.module('origApp.controllers')
   		
   		$scope.uploadFile = function () {
   			if(!$scope.errors){
+  				console.log($scope.batch);
   				var saveTimesheets = {	
   						filename:$scope.fileUrl,
   						batchNumber:$scope.batch,

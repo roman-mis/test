@@ -29,8 +29,15 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
             return $state.includes('app.admin.' + stateKey);
           };
 
-		$scope.save = function(){
+		$scope.save = function(val){
+			if(val){
+
+
 			CompanyProfileService.saveCompanyProfile($scope.companyProfile, docId);
+		}else{
+
+			$scope.submitted=true;
+		}
 		};
 
 	}]);

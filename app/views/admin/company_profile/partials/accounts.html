@@ -1,30 +1,60 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="row text-center">
-			<div class="col-xs-12 col-md-offset-2 col-md-8">
-				<form class="form-horizontal">
+				<form name="vat" ng-submit="save(vat.$valid)" novalidate class="form-horizontal">
+			<div class="col-xs-8">
+			
 					<div class="form-group">
 						<label class="control-label col-xs-6">Vat Number</label>
 						<div class="col-xs-6">
-							<input type="number" class="form-control" ng-model="companyProfile.accounts.vatNumber" />
+							<input type="number" class="form-control" ng-model="companyProfile.accounts.vatNumber" name="vatNumber" required ng-pattern="/^(GB)?(\ )?[0-9]\d{2}(\ )?[0-9]\d{3}(\ )?(0[0-9]|[1-8][0-9]|9[0-6])(\ )?([0-9]\d{2})?|(GB)?(\ )?GD(\ )?([0-4][0-9][0-9])|(GB)?(\ )?HA(\ )?([5-9][0-9][0-9])$/" />
+							<div ng-show="vat.vatNumber.$invalid && submitted">
+                              <p ng-show="vat.vatNumber.$error.required">Please enter vat number</p>
+                              <p ng-show="vat.vatNumber.$error.pattern">
+                                 Please enter valid vat number.
+                              </p>
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-xs-6">Company Registration Number</label>
 						<div class="col-xs-6">
-							<input type="number" class="form-control" ng-model="companyProfile.accounts.companyRegNo" />
+							<input type="number" class="form-control" ng-model="companyProfile.accounts.companyRegNo" name="reg" ng-maxlength=8 required />
+							<div ng-show="vat.reg.$invalid && submitted">
+                             <p ng-show="vat.reg.$error.required">Please enter company registration number.</p>
+                             <p ng-show="vat.reg.$error.maxlength">
+                             	Enter less than 8 digits.
+                             </p>
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-xs-6">UTR Number</label>
 						<div class="col-xs-6">
-							<input type="number" class="form-control" ng-model="companyProfile.accounts.utrNumber" />
+							<input type="number" name="utr" class="form-control" ng-model="companyProfile.accounts.utrNumber" ng-maxlength=10 required />
+                            <div ng-show="vat.utr.$invalid && submitted">
+                             <p ng-show="vat.utr.$error.required">Please enter UTR Number.</p>
+                             <p ng-show="vat.utr.$error.maxlength">
+                             	Enter less than 10 digits.
+                             </p>
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-xs-6">Tax District Number</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control" ng-model="companyProfile.accounts.taxDistrictNo" />
+							<input type="text" class="form-control" name="dist" ng-maxlength=10 required ng-pattern="/^\d{3}[A-Z]{2}\d{5}/" ng-model="companyProfile.accounts.taxDistrictNo" />
+							<div ng-show="vat.dist.$invalid && submitted">
+                              <p ng-show="vat.dist.$error.required">
+                               Please enter tax district number.</p>
+                              </p>
+                              <p ng-show="vat.dist.$error.pattern">
+                               Please enter valid tax district number
+                              </p>
+                              <p ng-show="vat.dist.$error.maxlength">
+                                Please enter 10 characters.
+                              </p>
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -36,11 +66,30 @@
 					<div class="form-group">
 						<label class="control-label col-xs-6">Accounts Office Reference</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control"  ng-model="companyProfile.accounts.accountsOfficeRef" />
+							<input type="text" class="form-control" name="ref" required ng-maxlength=10 required ng-pattern="/^\d{3}[A-Z]{2}\d{5}/"  ng-model="companyProfile.accounts.accountsOfficeRef" />
+							<div ng-show="vat.ref.$invalid && submitted">
+                              <p ng-show="vat.ref.$error.required">
+                               Please enter account office reference.</p>
+                              </p>
+                              <p ng-show="vat.ref.$error.pattern">
+                               Please enter valid account office reference.
+                              </p>
+                              <p ng-show="vat.ref.$error.maxlength">
+                                Please enter 10 characters.
+                              </p>
+							</div>
 						</div>
 					</div>
-				</form>
+				
+				
 			</div>
+			<div class="col-xs-4">
+		       <button type="submit" class="btn btn-success form-control"  ng-disabled="taxForm.$invalid || isTaxSaving">
+		        <div>Save  <i class="fa fa-save"></i></div>
+		      
+		      </button>
+			</div>
+		</form>
 		</div>		
 	</div>
 </div>
