@@ -1,8 +1,9 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="row text-center">
-			<div class="col-xs-12 col-md-offset-2 col-md-8">
 				<form name="vat" ng-submit="save(vat.$valid)" novalidate class="form-horizontal">
+			<div class="col-xs-8">
+			
 					<div class="form-group">
 						<label class="control-label col-xs-6">Vat Number</label>
 						<div class="col-xs-6">
@@ -68,10 +69,10 @@
 							<input type="text" class="form-control" name="ref" required ng-maxlength=10 required ng-pattern="/^\d{3}[A-Z]{2}\d{5}/"  ng-model="companyProfile.accounts.accountsOfficeRef" />
 							<div ng-show="vat.ref.$invalid && submitted">
                               <p ng-show="vat.ref.$error.required">
-                               Please enter tax refdistrict number.</p>
+                               Please enter account office reference.</p>
                               </p>
                               <p ng-show="vat.ref.$error.pattern">
-                               Please enter valid tax district number
+                               Please enter valid account office reference.
                               </p>
                               <p ng-show="vat.ref.$error.maxlength">
                                 Please enter 10 characters.
@@ -79,14 +80,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
-
-                     <div class="col-xs-6">
-                      <input type="submit" class="btn btn-success" value="save" name="save">
-                     </div>
-					</div>
-				</form>
+				
+				
 			</div>
+			<div class="col-xs-4">
+		       <button type="submit" class="btn btn-success form-control"  ng-disabled="taxForm.$invalid || isTaxSaving">
+		        <div>Save  <i class="fa fa-save"></i></div>
+		      
+		      </button>
+			</div>
+		</form>
 		</div>		
 	</div>
 </div>
