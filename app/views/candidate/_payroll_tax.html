@@ -61,7 +61,10 @@
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Employee's NI Paid</div>
     <div class="col-xs-4">
-      <input class="form-control" type="text" placeholder="" ng-model="tax.niNumber">
+      <select class="form-control" ng-model="employeesNIpaid.value" 
+              ng-options="option.code as option.value for option in employeesNIpaidOptions ">
+      </select>
+      {{asdfg.e}}
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
