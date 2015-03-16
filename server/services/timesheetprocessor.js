@@ -55,7 +55,7 @@ module.exports=function(db){
 				  					row.warningMessages = [];
 						  			
 						  			if(prevTimesheet){
-		  								row.failMessages.push('Duplicate Entry.');
+		  								row.warningMessages.push('Duplicate Entry.');
 					  				}
 
 						  			if(row.rateDescription){
@@ -65,6 +65,13 @@ module.exports=function(db){
 						  				// Add No Matching Payrment Rate validation if not matching
 						  				if(!row.elementType){
 			  								row.failMessages.push('No Matching Payment Rate Found.');
+						  				}else{
+						  					if(paymentRate.rateType === 'Hourly' && row.noOfUnits > 100){
+						  						row.warningMessages.push('Hours > 100');
+						  					}
+						  					if(paymentRate.rateType === 'Day' && row.noOfUnits > 10){
+						  						row.warningMessages.push('Day > 10');
+						  					}
 						  				}
 						  			}
 						  			
