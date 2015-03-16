@@ -29,6 +29,8 @@ angular.module('origApp.controllers')
               controller: 'AgencyEditController'
             });
           };
+
+          
           
           $scope.openContactEdit = function() {
             ModalService.open({

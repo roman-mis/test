@@ -1,6 +1,6 @@
-<!doctype html>
+﻿<!doctype html>
 <html class="no-js">
-  <head>
+<head>
     <base href="/" />
     <meta charset="utf-8">
     <title></title>
@@ -17,18 +17,17 @@
     <link rel="stylesheet" href="bower_components/angular-notify/dist/angular-notify.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css" />
     <!-- endbower -->
-
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="origApp">
+</head>
+<body ng-app="origApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div ui-view="header"></div>
-    <div ui-view="body" class="page-container container-fluid lty-body"></div>       
+    <div ui-view="body" class="page-container container-fluid lty-body"></div>
 
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
@@ -36,7 +35,6 @@
     <script src="bower_components/json3/lib/json3.js"></script>
     <![endif]-->
     <!-- endbuild -->
-
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -85,12 +83,13 @@
     <script src="scripts/vendors/jquery-ui.min.js"></script>
 
     <!-- routes -->
-    <script src="scripts/routes/router.js"></script> 
+    <script src="scripts/routes/router.js"></script>
     <script src="scripts/routes/register.js"></script>
     <script src="scripts/routes/candidate.js"></script>
     <script src="scripts/routes/agency.js"></script>
     <script src="scripts/routes/admin.js"></script>
     <script src="scripts/routes/payroll.js"></script>
+    <script src="scripts/routes/activity.js"></script>
 
     <!-- constants -->
     <script src="scripts/constants/main.js"></script>
@@ -114,15 +113,15 @@
     <script src="scripts/services/payroll/parseCSV.js"></script>
     <!-- directives -->
     <script src="scripts/directives/main.js"></script>
-    <script src="scripts/directives/origni.js"></script>        
+    <script src="scripts/directives/origni.js"></script>
     <script src="scripts/directives/origuniqueemail.js"></script>
-    <script src="scripts/directives/origpostcode.js"></script>       
+    <script src="scripts/directives/origpostcode.js"></script>
     <script src="scripts/directives/origmatch.js"></script>
     <script src="scripts/directives/origvalidateform.js"></script>
     <script src="scripts/directives/tooltip.js"></script>
     <script src="scripts/directives/origtabbar.js"></script>
-    <script src="scripts/directives/origwidget.js"></script>        
-    <script src="scripts/directives/origs3fileupload.js"></script>        
+    <script src="scripts/directives/origwidget.js"></script>
+    <script src="scripts/directives/origs3fileupload.js"></script>
     <script src="scripts/directives/origdatepicker.js"></script>
     <script src="scripts/directives/origgrid.js"></script>
     <script src="scripts/directives/checklist_model.js"></script>
@@ -132,9 +131,6 @@
     <script src="scripts/directives/templateGrid.js"></script>
     <!-- <script src="scripts/directives/autoComplete.js"></script> -->
     <!-- <script src="scripts/directives/ngKeydown.js"></script> -->
-    
-
-
     <!-- filters -->
     <script src="scripts/filters/filters.js"></script>
 
@@ -159,11 +155,11 @@
     <script src="scripts/controllers/candidate/list.js"></script>
     <script src="scripts/controllers/candidate/main.js"></script>
     <script src="scripts/controllers/candidate/sidebar.js"></script>
-    <script src="scripts/controllers/candidate/sidebar_dpa.js"></script>       
-    <script src="scripts/controllers/candidate/sidebar_onboarding.js"></script>       
-    <script src="scripts/controllers/candidate/sidebar_create_activity.js"></script>       
-    <script src="scripts/controllers/candidate/sidebar_create_task.js"></script>       
-    <script src="scripts/controllers/candidate/sidebar_create_document.js"></script>     
+    <script src="scripts/controllers/candidate/sidebar_dpa.js"></script>
+    <script src="scripts/controllers/candidate/sidebar_onboarding.js"></script>
+    <script src="scripts/controllers/candidate/sidebar_create_activity.js"></script>
+    <script src="scripts/controllers/candidate/sidebar_create_task.js"></script>
+    <script src="scripts/controllers/candidate/sidebar_create_document.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_1.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_2.js"></script>
@@ -176,10 +172,10 @@
     <script src="scripts/controllers/candidate/sidebar_add_exp_9.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_10.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_11.js"></script>
-    <script src="scripts/controllers/candidate/contact.js"></script>       
-    <script src="scripts/controllers/candidate/payroll.js"></script>       
-    <script src="scripts/controllers/candidate/payroll_tax.js"></script>       
-    <script src="scripts/controllers/candidate/payroll_product.js"></script>       
+    <script src="scripts/controllers/candidate/contact.js"></script>
+    <script src="scripts/controllers/candidate/payroll.js"></script>
+    <script src="scripts/controllers/candidate/payroll_tax.js"></script>
+    <script src="scripts/controllers/candidate/payroll_product.js"></script>
     <script src="scripts/controllers/candidate/home.js"></script>
     <script src="scripts/controllers/candidate/maintab.js"></script>
     <script src="scripts/controllers/candidate/agencies.js"></script>
@@ -207,6 +203,7 @@
     <script src="scripts/controllers/payroll/invoiceOverview.js"></script>
     <script src="scripts/controllers/payroll/importTimesheets.js"></script>
     <script src="scripts/controllers/payroll/createValidationController.js"></script>
+    <script src="scripts/controllers/activity/expensesAuthorizationCtrl.js"></script>
 
     <script src="scripts/controllers/agency/main.js"></script>
     <script src="scripts/controllers/agency/sidebar.js"></script>
@@ -220,5 +217,5 @@
     <script src="scripts/controllers/payroll/payrollPayrollCtrl.js"></script>
     <script src="scripts/controllers/payroll/payrollPayrollEditCtrl.js"></script>
     <!-- endbuild -->
-  </body>
+</body>
 </html>
