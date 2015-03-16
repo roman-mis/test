@@ -152,7 +152,7 @@ angular.module('origApp.controllers')
 					name: $scope.timesheets[i].contractorForename +' '+ $scope.timesheets[i].contractorSurname,
 					unit: $scope.timesheets[i].noOfUnits,
 					rate: $scope.timesheets[i].payRate,
-					total: $scope.timesheets[i]['total(net)'],
+					total: $scope.timesheets[i].total,
 					importStatus: $scope.importStatus[i]
 				};
 
