@@ -13,6 +13,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
    $scope.comparingList = [];
    $scope.periodTypeValues = [];
    $scope.periodType = 'weekly';
+   $scope.payroll = {};
 
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
@@ -91,7 +92,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
 
 
     $scope.viewCompanies = function(filter){
-    	$scope.agencyList=[];
+    	$scope.payroll.agencyList=[];
     	var state = '';
     	switch(filter){
     		case 'Schedules Uploaded':
@@ -120,20 +121,19 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
      }
      for(var i = 0; i < $scope.payroll.agencies.length; i++){
       if($scope.payroll.agencies[i][state]){
-         $scope.agencyList.push($scope.payroll.agencies[i].agency.name);
-         // console.log($scope.agencyList);
+         $scope.payroll.agencyList.push($scope.payroll.agencies[i]);
      }
- }    	
-
-    	// ModalService.open({
-     //          templateUrl: 'views/partials/agencyList.html',
-     //          inputs: $scope.agencyList,
-     //          size: 'sm'
-     //        });
+    }
+    console.log(111111111111)
+  $state.go('app.payroll.view',{type:state});
 };
 
     $scope.viewAction = function(){
-      $state.go('app.payroll.viewAll');	
+      $scope.payroll.agencyList = [];
+      for(var i = 0; i < $scope.payroll.agencies.length; i++){
+       $scope.payroll.agencyList.push($scope.payroll.agencies[i]);
+      }
+      $state.go('app.payroll.view',{type:'All'});	
     };
 
     
@@ -141,7 +141,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
         ModalService.open({
           templateUrl: 'views/payroll/createInvoice.html',
           parentScope: $scope,
-          controller: 'createInvoiceController',
+          controller: 'createInvoiceController2',
           size:'lg'
       });
     };
