@@ -29,69 +29,6 @@ angular.module('origApp.controllers')
   			$scope.files = $files;
   			console.log($files);
 
-	        	
-
-  		// 	$scope.preProcessChecker = 0;
-  		// 	parseCSV.get($files[0]).then(function (response) {
-  		// 		console.log(response);
-  		// 		$scope.response = response;
-  		// 		$scope.addSheet = false;
-  		// 		//$scope.preProcess = function () {
-				// var counter =0;
-				// for (var i = 0; i < $scope.response.length; i++) {
-				// 	if(!$scope.response[i].contractorRefNum || !$scope.response[i].contractorForename ||
-				// 	   !$scope.response[i].contractorSurename || $scope.response[i].totalNet<=0){
-				// 		$scope.response[i].importStatus = 'Import Fail';
-				// 	} else {
-				// 		for (var j = 0; j < $scope.response.length; j++) {
-				// 			if($scope.response[i].contractorRefNum === $scope.response[j].contractorRefNum){
-				// 				counter ++;
-				// 				if(counter > 1){
-				// 					$scope.duplicate = true;
-				// 				}
-				// 			}
-				// 		}
-				// 		counter =0;
-
-				// 		if ($scope.duplicate) {
-				// 			$scope.response[i].importStatus = 'Warning';
-				// 			$scope.preProcessChecker ++;
-				// 			$scope.duplicate = false;
-							
-				// 		}
-
-						
-				// 	}
-				// 	if($scope.response[i].importStatus ===''){
-				// 		$scope.response[i].importStatus = 'Import Successful';
-				// 		$scope.preProcessChecker ++;
-				// 	}
-				// 	if($scope.response[i].importStatus ==='Import Fail'){
-				// 		$scope.preProcessChecker --;
-				// 	}
-
-				// 	if($scope.preProcessChecker === $scope.response.length){
-				// 		$scope.ready = true;
-				// 	}
-				// 	else{
-				// 		$scope.ready = false;
-				// 	}
-				// }
-
-  		// 		//};
-
-
-
-
-
-
-  				
-  				
-  			//});
-
-  			
-
-  			//$scope.$apply();
   		};
   		$scope.uploadClicked = false;
   		$scope.upload = function  () {
@@ -100,18 +37,14 @@ angular.module('origApp.controllers')
 	            url: 'api/timesheets/uploadcsv',
 	            fields: {'timesheettemplate': $scope.saveTemp.code},
 	            file: $scope.files[0],
-	        // }).progress(function (evt) {
-	        //     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-	        //     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+	        
 	        }).success(function (data, status, headers, config) {
 	            console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
 	            console.log(data);
 	            $scope.fileUrl = data.url;
 	            $scope.timesheets = data.objects;
-	            //$modalInstance.close();
+	            
 	        });
-				//$scope.timesheets = $scope.response;
-				//$scope.preProcess = false;
   					
   		
   		};
@@ -122,9 +55,9 @@ angular.module('origApp.controllers')
   				return false;
   			}
   		};
+
   		$scope.importStatus = [];
   		$scope.timesheetTable = [];
-
   		$scope.errors = 0;
   		$scope.preProcessClicked = false;
 
@@ -154,6 +87,7 @@ angular.module('origApp.controllers')
 					rate: $scope.timesheets[i].payRate,
 					total: $scope.timesheets[i].total,
 					importStatus: $scope.importStatus[i]
+
 				};
 
 
@@ -165,36 +99,6 @@ angular.module('origApp.controllers')
 		};
 
   		
-  		//console.log('im here now')
-
-  		/*
-  			Validation
-			Fail
-			Agency ID
-			Contractor ID
-			First Name
-			Last Name
-			 
-			Timesheet value >0.00
-			 
-			Warning
-			Duplicate timesheet
-			Above unit amounts
-			            	>10 days
-			            	>100 hours
-
-
-  		*/
-  		
-
-  			
-
-  		// $scope.onSelectFile = function ($file) {
-  		// 	parseCSV.get($file, function (res) {
-  		// 		console.log(res);
-  		// 		// body...
-  		// 	})
-  		// }
   		function savingBulkSheets () {
   			
 	  		var bulkTimesheets = [];
@@ -210,7 +114,7 @@ angular.module('origApp.controllers')
 	  				totalPreDeductions:0,
 	  				deductions:0,
 	  				total: $scope.timesheets[i].total,
-	  				imageUrl: 'blablabla',
+	  				imageUrl: 'test_url',
 	  				elements: [{
 	  					elementType:$scope.timesheets[i].elementType,
 	  					units:$scope.timesheets[i].noOfUnits,
@@ -250,46 +154,10 @@ angular.module('origApp.controllers')
   			}
 
 
-
-
-  			// console.log($scope.files);
-	    //     if ($scope.addSheet) {
-	    //     	var str = $scope.files[0].name;
-	    //     	str = str.replace(/ /g, '_');
-	        	
-	                
-	                
-					
-
-		
-				// var fileName = new Date().getTime().toString() + '_' + $scope.files[0].name;
-	   //          var mimeType = $scope.files[0].type || 'text/plain';
-	   //          $scope.isUploading = true;
-	   //          HttpResource.model('documents/timesheets').customGet('signedUrl', {
-	   //            mimeType: mimeType,
-	   //            fileName: fileName
-	   //          }, function(response) {
-	   //            var signedRequest = response.data.signedRequest;
-	   //            $http({
-	   //              method: 'PUT',
-	   //              url: signedRequest,
-	   //              data: $scope.files[0],
-	   //              headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
-	   //            }).success(function() {
-	   //              //get view url of file
-	   //              $scope.isUploading = false;
-	   //              console.log(response.data.signedRequest);
-
-	   //            });
-	   //          });
-	        //}
 		};
   		
   		$scope.cancel = function () {
   			$modalInstance.dismiss('cancel');	
-  		};
-  		$scope.log = function () {
-  			console.log($scope.uploadClicked);
   		};
  	
  }]);
