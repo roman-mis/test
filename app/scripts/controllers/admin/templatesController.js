@@ -125,7 +125,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
     $scope.gridOptions.loadAdminTemplate = function(index) {
     	var id = $scope.gridOptions.allData[index]._id;
     	adminTemplate.details = $scope.gridOptions.allData[index];
-        $location.path('/admin/add_new/edite');
+        $location.path('/admin/add_new/edit');
       //HttpResource.model('admin/templates/'+id)
       //.query({},function(data) {
       //  console.log(data);

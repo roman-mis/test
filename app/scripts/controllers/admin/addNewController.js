@@ -11,7 +11,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		// initialization
 		$scope.data={details:{}};
 		$scope.mergeFields = ['please select type first'];
-		if($stateParams.type === 'edite'){
+		if($stateParams.type === 'edit'){
 			if(!adminTemplate.details.name){
 				$location.path('admin/templates');
 			}
@@ -34,7 +34,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		
 
 		function breadCrumbAddNewValue(){
-        	var s = (($stateParams.type === 'edite')?'Edite ' : 'Add New ')+ breadCrumbformate($scope.data.details.templateType);
+        	var s = (($stateParams.type === 'edit')?'Edit ' : 'Add New ')+ breadCrumbformate($scope.data.details.templateType);
 			return s;
         }
         
@@ -228,7 +228,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
     };
 
   $scope.save = function(){
-		if($stateParams.type === 'edite'){
+		if($stateParams.type === 'edit'){
 			$scope.updateAdminTemplate();
 		}else{
 			$scope.saveNew();
