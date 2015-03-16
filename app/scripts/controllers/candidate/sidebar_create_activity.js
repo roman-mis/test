@@ -28,6 +28,7 @@ angular.module('origApp.controllers')
             var params = {agency: $scope.data.agency, activityType: $scope.data.activityType};
             switch ($scope.data.activityType) {
               case 'task':
+                break;
               case 'callLog':
                 parentScope.openCreateTaskWin(params);
                 break;

@@ -52,7 +52,6 @@ module.exports=function(){
 											net += _element.units * _element.payRate;
 											elements.push(element);
 										});
-
 										var line = {
 											worker: timesheet.worker,
 											lineType: 'timesheet',
@@ -121,7 +120,6 @@ module.exports=function(){
 											
 										});
 									});
-
 									return prom.then(function(){
 										resolve(invoicesToSave);
 									})
@@ -152,7 +150,6 @@ module.exports=function(){
 										net += _element.units * _element.payRate;
 										elements.push(element);
 									});
-
 									var line = {
 										worker: timesheet.worker,
 										lineType: 'timesheet',
@@ -183,6 +180,7 @@ module.exports=function(){
 								        vat: net * amount,
 								        total: (net+vat).toFixed(2)
 									};
+				console.log('88888888888888888888888888888888')
 
 									invoiceModel = new db.Invoice(invoiceInfo);
 										return Q.nfcall(invoiceModel.save.bind(invoiceModel))
@@ -196,7 +194,7 @@ module.exports=function(){
 											resolve([invoiceModel]);
 										});
 								}, reject);
-							}, reject);
+							}, reject); 
 						}
 					}else{
 						resolve.json({result:false,message:'Agency Invoice Method not set.'});

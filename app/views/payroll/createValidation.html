@@ -14,8 +14,8 @@
                                 <div class="form-group">
                                     <label class="col-xs-5 control-label">Select agency</label>
                                     <div class="col-xs-7 no-padding-left">
-                                        <select class="form-control">
-                                            <option>Select</option>
+                                        <select class="form-control" ng-change="selectAgency(agency.id)" ng-model="agency.id" ng-options="agency._id as agency.name for agency in agencies">
+                                            <option>-- Select --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label class="col-xs-5 control-label">Select branch</label>
                                     <div class="col-xs-7 no-padding-left">
-                                        <select class="form-control">
+                                        <select class="form-control" ng-change="selectBranch(branch.id)" ng-model="branch.id" ng-options="branch._id as branch.name for branch in branches">
                                             <option>Select</option>
                                         </select>
                                     </div>
@@ -35,50 +35,17 @@
                     <br/>
                     <div class="row"> 
                         <div class="col-sm-12">
-                            <h4>Select timesheet batch to validate:</h4>
+                            <h4><input type="checkbox" ng-model="r.sAll" ng-change="selectAll(r.sAll)"/> Select timesheet batch to validate:</h4>
+                            {{sAll}}
                             <div class="tableWrapper tableWrapperHeight140">
                                  <table class="table table-striped">
                                      <tbody>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000001</td>
+                                         <tr ng-repeat="timesheetbatch in timesheetbatches">
+                                             <td><input type="checkbox" ng-model="timesheetbatch.select" ng-click="r.sAll='false';console.log(1)"/></td>
+                                             <td>{{timesheetbatch.batchNumber}}</td>
+                                             <!-- <td>{{timesheetbatch.select}}</td> -->
                                          </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000002</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000003</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000004</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000005</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000006</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000007</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000008</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000009</td>
-                                         </tr>
-                                         <tr>
-                                             <td><input type="checkbox" /></td>
-                                             <td>1000010</td>
-                                         </tr>
+                                         
                                      </tbody>
                                 </table>
                             </div>
@@ -96,14 +63,14 @@
                             <div class="col-xs-12 col-md-6">
                                 <div class="form-group">
                                     <label class="col-xs-12 control-label">
-                                        Total number of timesheets <span class="pull-right">1234</span>
+                                        Total number of timesheets <span class="pull-right">{{timesheetbatches.length}}</span>
                                     </label>
                                 </div>
 							</div>
                             <div class="col-xs-12 col-md-6">
                                 <div class="form-group">
                                     <label class="col-xs-12 control-label">
-                                        Validations to generate <span class="pull-right">1234</span>
+                                        Validations to generate <span class="pull-right">{{count(timesheetbatches)}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -113,8 +80,8 @@
 				</div><!-- /modal-body -->
 				    
                 <div class="modal-footer">
-                    <a href="#" type="button" class="btn pull-left">Cancel</a>
-                    <button class="btn btn-primary">Procced and Validate</button> 
+                    <a href type="button" class="btn pull-left" ng-click="close()">Cancel</a>
+                    <button class="btn btn-primary" ng-click="validate()">Procced and Validate</button> 
                 </div><!-- /modal footer -->
                         
 		 	</div><!-- /modal content -->
