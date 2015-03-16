@@ -9,4 +9,14 @@ app.controller('bankDetailsController',['$scope', '$location', 'HttpResource', '
         $scope.isTabActive = function(stateKey) {
             return $state.includes('app.admin.' + stateKey);
           };
+     $scope.save=function(val){
+
+       	if(val){
+          console.log('valid inputs');
+
+       	}else{
+
+       		$scope.submitted=true;
+       	}
+       }
 }]);

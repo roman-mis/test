@@ -724,10 +724,11 @@ describe('candidates-payroll',function(){
 			
 			getPrProductDetailsStub.returns(p);
 			candidatesPayrollController.getPayrollProduct(req, responseMock);
-			d.resolve(pr_product);
-			x.resolve({result:true,object:pr_product});
+			d.resolve([pr_product]);
+			//x.resolve({result:true,object:pr_product});
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub, sinon.match(pr_product));
+			sinon.assert.calledWith(jsonStub, sinon.match({result:true}));
+      sinon.assert.calledWith(jsonStub, sinon.match({object:pr_product}));
 			done();
 		});
 

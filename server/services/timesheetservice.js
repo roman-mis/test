@@ -6,8 +6,8 @@ module.exports=function(db){
 		_=require('lodash'),
 		utils=require('../utils/utils'),
 		systemservice=require('./systemservice')(db),
-		candidatecommonservice=require('./candidatecommonservice')(db),
-		awsservice=require('./awsservice');
+		awsservice=require('./awsservice'),
+		processor=require('./timesheetprocessor')(db);
 	
 	var service={};
 
@@ -36,110 +36,27 @@ module.exports=function(db){
 	};
 
 	service.getCSVFile = function(code, file){
-		switch(code){
-			case '1':
-				return getStandardTemplate(file);
-			case '2':
-				break;
-		}
-	};
-
-	function findPaymentRate(paymentRates, search){
-		var paymentRate = {};
-		_.forEach(paymentRates, function(_paymentRate){
-			if(_paymentRate.name.toString().trim().toLowerCase() === search.trim().toLowerCase() || (_paymentRate.importAliases.indexOf(search) > 0)){
-				paymentRate = _paymentRate;
-				return false;
-			}
-		});
-		return paymentRate;
-	}
-
-	function getStandardTemplate(file){
 		return Q.Promise(function(resolve,reject){
-			return utils.readCsvFromFile(file.path).then(function(data){
-				return systemservice.getSystem()
-			  	.then(function(system){
-			  		var paymentRates = system.paymentRates;
-			  			console.log('Format 1');
-				  		var finishData = [];
-				  		_.forEach(data, function(row){
+			console.log('here');
+			return processor.getCSVFile(code, file)
+			.then(function(finishData){
+				if(finishData.validationFailError){
+					resolve({data: finishData});
+				}else{
+					var s3ObjectName = new Date().getTime().toString() + '_' + file.name;
+					var folder=process.env.S3_TEMP_FOLDER;
+					var s3ObjectType = file.mimetype || 'text/plain';
+					var body = require('fs').readFileSync(file.path);
 
-			  				// Get Candidate/Worker by Reference Number
-			  				return candidatecommonservice.getUserByRef(row.contractorReferenceNumber)
-			  				.then(function(candidate){
-			  					
-			  					// Check for previous timesheet for worker
-			  					var worker = (candidate?candidate._id:null);
-			  					var weekEndingDate = row.periodEndDate || null;
-			  					
-			  					return db.Timesheet.findOne({ worker: worker, weekEndingDate: weekEndingDate }).exec()
-                  				.then(function(prevTimesheet) {
-									
-									row.failMessages = [];
-				  					row.warningMessages = [];
-						  			
-						  			if(prevTimesheet){
-		  								row.failMessages.push('Duplicate Entry.');
-					  				}
-
-						  			if(row.rateDescription){
-						  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
-						  				row.elementType = paymentRate._id || null;
-						  				row.paymentRate = paymentRate;
-						  				// Add No Matching Payrment Rate validation if not matching
-						  				if(!row.elementType){
-			  								row.failMessages.push('No Matching Payment Rate Found.');
-						  				}
-						  			}
-						  			
-						  			// Add No Matching Candidate validation if not matching
-						  			if(!candidate){
-						  				row.failMessages.push('No Matching Contractor Found.');
-						  			}else{
-						  				if(candidate.firstName !== row.contractorForename){
-						  					row.failMessages.push('Contractor First Name Mismatch.');
-						  				}
-						  				if(candidate.lastName !== row.contractorSurname){
-						  					row.failMessages.push('Contractor Last Name Mismatch.');
-						  				}
-						  			}
-
-						  			var contractor = candidate || {};
-						  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
-						  			row.worker = contractor._id;
-						  			row.total = row['total(gross)'];
-						  			if(parseFloat(row.total) <= 0){
-						  				row.failMessages.push('Timesheet Value is less than or equal to 0.');
-						  			}
-						  			row.net = row['total(net)'];
-						  			row.units = row.noOfUnits;
-						  			row.payRate = row.unitRate;
-						  			row.holidayPayIncluded = row.holidayPayRule;
-						  			row.holidayPayDays = row.holidayPayRate;
-			                		finishData.push(row);
-                  				}, reject);
-			  				}, reject).then(function(){
-			  					if(Object.keys(data).length === Object.keys(finishData).length){
-			  						
-			  						var s3ObjectName = new Date().getTime().toString() + '_' + file.name;
-									var folder=process.env.S3_TEMP_FOLDER;
-									var s3ObjectType = file.mimetype || 'text/plain';
-									var body = require('fs').readFileSync(file.path);
-
-									return awsservice.putS3Object(body,s3ObjectName,s3ObjectType,folder)
-									.then(function(){
-										resolve({url: s3ObjectName, data: finishData});
-									},reject);
-			  					}
-			  				});
-						});
-			  	}, reject);
-			}, function(err){
-				resolve({result:false, error: err});
-			});
+					return awsservice.putS3Object(body,s3ObjectName,s3ObjectType,folder)
+					.then(function(){
+						resolve({url: s3ObjectName, data: finishData});
+					},reject);
+				}
+				
+			}, reject);
 		});
-	}
+	};
 
 	function getTimesheetBatch(timesheetData){
 		return Q.Promise(function(resolve,reject){

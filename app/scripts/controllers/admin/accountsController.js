@@ -11,4 +11,14 @@ app.controller('accountsController',['$scope', '$location', 'HttpResource', '$ro
       $scope.isTabActive = function(stateKey) {
             return $state.includes('app.admin.' + stateKey);
           };
+       $scope.save=function(val){
+
+       	if(val){
+          console.log('valid inputs');
+
+       	}else{
+
+       		$scope.submitted=true;
+       	}
+       }
 }]);

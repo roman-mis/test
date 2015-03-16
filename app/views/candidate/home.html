@@ -22,11 +22,13 @@
 <div class="col-md-6">
 <ul class="entry-content">
 
-    <li ng-repeat="i in lastLogs" >
+    <li ng-repeat-start="i in lastLogs" >
+     
    <span ng-if="i.object.lastLogin" >Last Logged In: {{i.object.lastLogin | date:'MM/dd/yyyy @ h:mma'}}</span>
    <span ng-if="i.object.lastCallLog">Last Call Log: {{i.object.lastCallLog | date:'MM/dd/yyyy @ h:mma'}}</span>
    <span ng-if="i.object.lastExpense">Last Expenses: {{i.object.lastExpense | date:'MM/dd/yyyy @ h:mma'}}</span>
     </li>
+    <li ng-repeat-end=''></li>
  
 </ul>
  
