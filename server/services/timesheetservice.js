@@ -40,20 +40,15 @@ module.exports=function(db){
 			console.log('here');
 			return processor.getCSVFile(code, file)
 			.then(function(finishData){
-				if(finishData.validationFailError){
-					resolve({data: finishData});
-				}else{
-					var s3ObjectName = new Date().getTime().toString() + '_' + file.name;
-					var folder=process.env.S3_TEMP_FOLDER;
-					var s3ObjectType = file.mimetype || 'text/plain';
-					var body = require('fs').readFileSync(file.path);
+				var s3ObjectName = new Date().getTime().toString() + '_' + file.name;
+				var folder=process.env.S3_TEMP_FOLDER;
+				var s3ObjectType = file.mimetype || 'text/plain';
+				var body = require('fs').readFileSync(file.path);
 
-					return awsservice.putS3Object(body,s3ObjectName,s3ObjectType,folder)
-					.then(function(){
-						resolve({url: s3ObjectName, data: finishData});
-					},reject);
-				}
-				
+				return awsservice.putS3Object(body,s3ObjectName,s3ObjectType,folder)
+				.then(function(){
+					resolve({url: s3ObjectName, data: finishData});
+				},reject);
 			}, reject);
 		});
 	};

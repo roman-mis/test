@@ -38,7 +38,6 @@ module.exports=function(db){
 			  		var paymentRates = system.paymentRates;
 			  			console.log('Format 1');
 				  		var finishData = [];
-				  		var validationFailError = false;
 				  		_.forEach(data, function(row){
 
 			  				// Get Candidate/Worker by Reference Number
@@ -101,15 +100,9 @@ module.exports=function(db){
 						  			row.holidayPayIncluded = row.holidayPayRule;
 						  			row.holidayPayDays = row.holidayPayRate;
 			                		finishData.push(row);
-
-			                		if(Object.keys(row.failMessages).length > 0 || row.warningMessages.length > 0){
-			                			validationFailError=true;
-			                		}
-
                   				}, reject);
 			  				}, reject).then(function(){
 			  					if(Object.keys(data).length === Object.keys(finishData).length){
-			  						finishData.validationFailError = validationFailError;
 			  						resolve(finishData);
 			  					}
 			  				});
