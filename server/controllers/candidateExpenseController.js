@@ -52,6 +52,7 @@ module.exports = function(db){
 	};
 
 	controller.getExpenses = function(req, res){
+
 		return expenseservice.getExpenses(req._restOptions)
 		.then(function(expenses){
 			
@@ -61,7 +62,7 @@ module.exports = function(db){
 		  		var expense = build(_expense);
 		  		expensesVms.push(expense);
 			});
-		  	console.log('expensesssss');
+		  	
 		  		// console.log(expenses);
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
@@ -73,6 +74,8 @@ module.exports = function(db){
 
 	controller.postExpense=function (req, res) {	
 		var request = req.body;
+		console.log('requesting');
+		console.log(req.body);
 		var expense = request.expense;
 
 		var newExpense = {
@@ -91,6 +94,8 @@ module.exports = function(db){
 				total = total + ex.value;
 			});
 		});
+		console.log(newExpense);
+		console.log('expensesessssss');
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
@@ -115,6 +120,23 @@ module.exports = function(db){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
+	};
+	controller.getCandidateExpenses=function(req,res){
+
+
+          return Q.promise(function(resolve,reject){
+
+                expenseservice.getExpenseByUserId(req.params.id).then(function(d){
+                   res.json({result:true,object:d});
+
+                },function(err){
+
+                	res.sendFailureResponse(err);
+                });
+
+          });
+			
+	
 	};
   	return controller;
 };
