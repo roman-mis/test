@@ -8,7 +8,7 @@ console.log($stateParams);
 		var valideTypes = ['Schedule','Expenses','Contractor','Assignment','BACS','Invoices'];
 		$scope.items =[];
 		
-		if($stateParams.type === 'Edite'){
+		if($stateParams.type === 'Edit'){
 			console.log(imExTemplates);
 
 			$scope.templateType = imExTemplates.details.templateType;

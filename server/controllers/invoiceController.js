@@ -34,12 +34,14 @@ module.exports = function(){
 			var newInvoice=req.body;
 
 			invoiceservice.saveInvoice((type==='patch'?req.params.id:null), newInvoice).then(function(invoice){
+				console.log('controller true')
 				// buildInvoiceVm(invoice, true)
 		  //       .then(function(_invoice){
 	   //        		res.json({result:true, object:_invoice});
 		  //       },res.sendFailureResponse);
 				res.json({result:true, object:invoice});
 			},function(err){
+				console.log('controller false')
 			 	res.sendFailureResponse(err);
 			});
 		}

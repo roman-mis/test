@@ -23,6 +23,7 @@ angular.module('origApp.controllers')
             $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId);
           };
 
+          
           $scope.addSubBreadcrumb = function(crumb) {
             var ary = JSON.parse(JSON.stringify($scope.baseBreadcrumbs));
             if (crumb) {

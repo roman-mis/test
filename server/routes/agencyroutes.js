@@ -50,3 +50,6 @@ router.get('/:id/file_signed_url/:fileName',controller.getFileSignedUrl);
 router.get('/:id/file_redirect_url/:fileName',controller.getFileRedirectUrl);
 router.patch('/consultants/:id/lockunlock/:flag',controller.lockUnlockConsultant);
 router.post('/consultants/:id/changepassword',controller.changeConsultantPassword);
+
+router.get('/with/timesheetBatches',restMiddleware(db),controller.agenciesWithTimesheetBatches);
+router.get('/with/timesheets',restMiddleware(db),controller.agenciesWithTimesheets);

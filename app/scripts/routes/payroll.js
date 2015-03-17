@@ -10,9 +10,10 @@ angular.module('origApp').config(function($stateProvider) {
   .state('app.payroll.home', {
     url: '/home',
     templateUrl: 'views/payroll/payrollHome.html',
+    controller: 'PayrollHomeController'
   })
-  .state('app.payroll.viewAll', {
-    url: '/viewAll',
+  .state('app.payroll.view', {
+    url: 'view/:type',
     templateUrl: 'views/payroll/viewAll.html',
   })
   .state('app.payroll.runPayroll', {

@@ -8,6 +8,7 @@ module.exports=function(dbs){
 	var service={};
 
 	service.getAllTimesheetBatches = function(request){
+		console.log('5555555555555555555555555555555555555555555')
 		return Q.Promise(function(resolve,reject){
 			var q=db.TimesheetBatch.find();
 			queryutils.applySearch(q,db.TimesheetBatch,request)

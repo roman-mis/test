@@ -22,7 +22,7 @@ app.controller('importExportController',['$rootScope', '$scope', 'HttpResource',
 
     $scope.showTemplate = function(index){
     	imExTemplates.details = $scope.templates[index];
-    	$state.go('app.admin.addNewImEx', { 'type': 'Edite'});
+    	$state.go('app.admin.addNewImEx', { 'type': 'Edit'});
     };
 
 	$scope.copy = function(index){

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidatePayrollProductController', function($scope, $stateParams, HttpResource, ConstantsResource) {
+        .controller('CandidatePayrollProductController', function($scope, $stateParams, HttpResource, ConstantsResource, Notification) {
 
           //define private variables
           var productResource = HttpResource.model('candidates/' + $scope.candidateId + '/payrollproduct');
@@ -44,7 +44,8 @@ angular.module('origApp.controllers')
             var params = {};
             $scope.gridOptions.data = productResource.query(params, function() {
               //success callback
-              //console.log($scope.gridOptions.data);
+              // console.log('$scope.gridOptions.data');
+              // console.log($scope.gridOptions.data);
             });
           };
 
@@ -67,14 +68,27 @@ angular.module('origApp.controllers')
                 $scope.product = {};
               }
             };
-            $scope.isSaving = true;
             if ($scope.product._id) {
+              $scope.isSaving = true;
               $scope.product.patch()
                       .then(successCallback);
             } else {
-              $scope.product = productResource.create($scope.product);
-              $scope.product.post()
-                      .then(successCallback);
+              var notExistedCompany = true;
+              for(var i = 0; i < $scope.gridOptions.data.length; i++){
+                if($scope.gridOptions.data[i].agency){
+                  if($scope.product.agency === $scope.gridOptions.data[i].agency._id){
+                    notExistedCompany = false;
+                    Notification.error('Agency already linked to this candidate');
+                    break;
+                  }
+                }
+              }
+              if(notExistedCompany === true){
+                $scope.isSaving = true;
+                $scope.product = productResource.create($scope.product);
+                $scope.product.post()
+                        .then(successCallback);
+              }
             }
           };
 
