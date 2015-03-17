@@ -10,7 +10,7 @@ module.exports = function(){
 
 	var agencyservice=require('../services/agencyservice'),
 	db = require('../models'),
-	timesheetBatchservice = require('../services/timesheetBatchservice')(db),
+	timesheetBatchservice = require('../services/timesheetbatchservice')(db),
 	timesheetservice = require('../services/timesheetservice')(db),
 	utils=require('../utils/utils'),
 	dataList=require('../data/data_list.json'),
