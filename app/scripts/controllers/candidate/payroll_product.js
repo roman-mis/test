@@ -78,8 +78,7 @@ angular.module('origApp.controllers')
                 if($scope.gridOptions.data[i].agency){
                   if($scope.product.agency === $scope.gridOptions.data[i].agency._id){
                     notExistedCompany = false;
-                    Notification.error('this agency is already exist');
-                    Notification.error('can\'t add this product');
+                    Notification.error('Agency already linked to this candidate');
                     break;
                   }
                 }
