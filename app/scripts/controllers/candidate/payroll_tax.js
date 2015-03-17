@@ -6,10 +6,6 @@ angular.module('origApp.controllers')
 
           //define private variables
           var candidateResource = HttpResource.model('candidates/' + $scope.candidateId);
-          HttpResource.model('candidates/' + $scope.candidateId + '/taxdetail').query({}, function (res) {
-            $scope.employeesNIpaid.value = res.data.object.employeesNIpaid;
-          });
-
           $scope.employeesNIpaidOptions = [
               {value:'Yes',code: true},
               {value: 'No',code: false}
