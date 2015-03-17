@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('AgencyListController', function($scope, $rootScope, HttpResource, $location, $timeout) {
+        .controller('AgencyListController', function($scope, $rootScope, HttpResource, $location, $timeout, ModalService) {
           $scope.$scope = $scope;
           $rootScope.breadcrumbs = [
             {link: '/', text: 'Home'},
@@ -17,6 +17,15 @@ angular.module('origApp.controllers')
             searchTimerPromise = $timeout(function() {
               $scope.loadAgencies();
             }, 500);
+          };
+
+
+          $scope.addNewAgency = function() {
+            ModalService.open({
+              templateUrl: 'views/agency/_modal_agency.html',
+              parentScope: $scope,
+              controller: 'AgencyEditController'
+            });
           };
 
 

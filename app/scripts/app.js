@@ -30,7 +30,8 @@ angular.module('origApp', [
   'wysiwyg.module',
   'angular.filter',
   'ui.sortable',
-  'angularFileUpload'
+  'angularFileUpload',
+  'ui-notification'
   //,
  // 'gm.datepickerMultiSelect'
 ])

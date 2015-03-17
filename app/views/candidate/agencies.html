@@ -1,7 +1,8 @@
 <div class="pure-g">
   <div class="agencies_wrapper pure-u-1">
-    <accordion close-others="true">
-      <accordion-group is-open="" ng-class="{'active' : product.isOpen}" ng-repeat="product in payrollProducts">
+    <accordion close-others="true" >
+    <div ng-repeat="product in payrollProducts" ng-init="x[0] = true">
+      <accordion-group is-open="x[$index]" ng-class="{'active' : x[$index]}" >
         <accordion-heading>
           {{product.agency.name}} <i class="pull-right fa" ng-class="{'fa-chevron-up': status.open, 'fa-chevron-down': !status.open}"></i>
         </accordion-heading>
@@ -88,6 +89,9 @@
           </div>
         </div>
       </accordion-group>
+
+
+      </div>
     </accordion>
   </div>
 </div>

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('AgencyMainController', function($scope, $rootScope, $state, $stateParams, HttpResource,ModalService) {
+        .controller('AgencyMainController', function($scope, $rootScope, $state, $stateParams, HttpResource) {
           $scope.selectedAgencyId = $stateParams.agencyId;
 
           var agencyAPI = HttpResource.model('agencies');
@@ -23,15 +23,7 @@ angular.module('origApp.controllers')
             $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId);
           };
 
-          $scope.addNewAgency = function() {
-            console.log(111111111111111112)
-            ModalService.open({
-              templateUrl: 'views/agency/_modal_agency.html',
-              parentScope: $scope,
-              controller: 'AgencyEditController'
-            });
-          };
-
+          
           $scope.addSubBreadcrumb = function(crumb) {
             var ary = JSON.parse(JSON.stringify($scope.baseBreadcrumbs));
             if (crumb) {
