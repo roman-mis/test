@@ -95,7 +95,7 @@ module.exports=function(dbs){
 		   .then(function(user){
 		   		if(user){
 
-	   				utils.updateSubModel(user.worker.taxDetail,{niNumber:payrollTaxDetails.niNumber});
+	   				utils.updateSubModel(user.worker.taxDetail,{niNumber:payrollTaxDetails.niNumber, employeesNIpaid:payrollTaxDetails.employeesNIpaid});
 	   				utils.updateSubModel(user.worker,{startDate:payrollTaxDetails.startDate});
 	   				utils.updateSubModel(user.worker.payrollTax, payrollTaxDetails);
 
