@@ -728,19 +728,20 @@ header.container-fluid {
                     margin-right: -10px;
                     margin-left: -10px;
                     li {
-                        width: 120px;
-                        height: 20px;
+               //         width: 120px;
+                        padding: 0 15px;
+                       // height: 20px;
                         text-align: center;
-                        border: none;
+//                        border: none;
                         background: $gray-light;
-                        border-radius: 16px;
-                        margin-right: 3px;
+//                        border-radius: 16px;
+//                        margin-right: 3px;
                         &:hover, &:focus {
                             background: $green;
                         }
                         a {
                             padding: 0;
-                            font-size: 13px;
+//                            font-size: 13px;
                             color: $gray-lightest;
                             &:hover, &:focus {
                                 background-color: transparent;
@@ -751,6 +752,7 @@ header.container-fluid {
                             background: $green;
                             a {
                                 background: transparent;
+                                color: $gray-darker;
                             }
                         }
                     }

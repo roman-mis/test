@@ -119,6 +119,14 @@
             }
         }
     }
+    .tabs-payroll .nav-tabs.nav.row {
+        padding: 0;
+        margin-bottom: -1px;
+        >li.active {
+            background: #fff;
+            border-bottom: 1px solid transparent; 
+        }
+    }
     .history {
         .meta-box-content {
             margin-top: 20px;
