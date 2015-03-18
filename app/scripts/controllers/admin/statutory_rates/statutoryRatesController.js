@@ -15,14 +15,15 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 		
 		// ge statutory rates from the server
 		StatutoryRatesService.getStatutoryRates().then(function(data){
-			if(data.statutoryRates)
+			if(data.statutoryRates){
 				$scope.statutoryRates = data.statutoryRates;
+			}
 			docId = data.id;
 			console.log(docId, $scope.statutoryRates);
 		});
 
 		$scope.openModal = function(type) {
-			console.log(type)
+			console.log(type);
 			var modalInstance = ModalService.open({
 				templateUrl: 'views/admin/statutory_rates/partials/' + type + '.html',
 				controller: 'statutoryRatesModalController',

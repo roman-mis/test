@@ -15,29 +15,29 @@ angular.module('origApp').config(function($stateProvider) {
 		templateUrl: 'views/admin/templates.html',
 		controller: 'templatesController'
 	})
-	.state('app.admin.company_profile', {
-		url: '/company_profile',
-		templateUrl: 'views/admin/company_profile/index.html',
+	.state('app.admin.companyProfile', {
+		url: '/companyProfile',
+		templateUrl: 'views/admin/companyProfile/index.html',
 		controller: 'companyProfileController'
 	})
-	.state('app.admin.company_profile.contact', {
+	.state('app.admin.companyProfile.contact', {
 		url: '/contact',
-		templateUrl: 'views/admin/company_profile/partials/contact.html',
+		templateUrl: 'views/admin/companyProfile/partials/contact.html',
 		controller: 'contactController'
 	})
-    .state('app.admin.company_profile.accounts', {
+    .state('app.admin.companyProfile.accounts', {
 		url: '/accounts',
-		templateUrl: 'views/admin/company_profile/partials/accounts.html',
+		templateUrl: 'views/admin/companyProfile/partials/accounts.html',
 		controller: 'accountsController'
 	})
-	.state('app.admin.company_profile.bank_details', {
-		url: '/bank_details',
-		templateUrl: 'views/admin/company_profile/partials/bank_details.html',
+	.state('app.admin.companyProfile.bankDetails', {
+		url: '/bankDetails',
+		templateUrl: 'views/admin/companyProfile/partials/bankdetails.html',
 		controller: 'bankDetailsController'
 	})
-	.state('app.admin.company_profile.defaults', {
+	.state('app.admin.companyProfile.defaults', {
 		url: '/defaults',
-		templateUrl: 'views/admin/company_profile/partials/defaults.html',
+		templateUrl: 'views/admin/companyProfile/partials/defaults.html',
 		controller: 'defaultsController'
 	})
 	.state('app.admin.addNew', {
@@ -70,6 +70,11 @@ angular.module('origApp').config(function($stateProvider) {
 		templateUrl: 'views/admin/hmrc/partials/mileage.html',
 		controller: 'MileageController'
 	})
+        .state('app.admin.paymentRates', {
+            url: '/paymentrates',
+            templateUrl: 'views/admin/payment_rates/index.html',
+            controller: 'PaymentRatesController'
+        })
 	.state('app.admin.hmrc.expensesRate', {
 		url: '/expensesRates',
 		templateUrl: 'views/admin/expensesRate.html',
