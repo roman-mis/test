@@ -17,6 +17,7 @@ module.exports = function(mongoose) {
 		companyRegNo: 	   {type:String},
 		companyVatNo: 	   {type:String},
     logoFileName:      {type:String},
+    status:            {type:String},
 		contactInformation:{
 			phone1: 			    {type:String},
   		phone2: 			    {type:String},

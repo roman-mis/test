@@ -1,0 +1,60 @@
+<div class="candidate-modal">
+    <div class="modal-header">
+        <h3 class="modal-title">Welcome to the {{ title }} Payment Rates</h3>
+    </div>
+
+        <div class="modal-body">
+            <form name="addPaymentForm"  class="form-horizontal row" role="form" novalidate>
+
+                <div class="form-group col-sm-12">
+                    <label class="col-sm-4">Payment Rate Name</label>
+                    <div class="col-sm-8">
+                        <input name="name" type="text" class="form-control" ng-model="paymentRates.name" value="{{paymentRates.name}}" required>
+                            <span ng-show="addPaymentForm.name.$invalid && (addPaymentForm.name.$dirty || submitted) && addPaymentForm.name" class="clearfix danger">
+                                <span ng-show="addPaymentForm.name.$error.required">Rate Type cannont be empty.</span>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    <label class="col-sm-4">Rate Type</label>
+                    <div class="col-sm-8">
+                        <ui-select name="rateType" ng-model="paymentRates.rateType" theme="select2" search-enabled="false" required>
+                            <ui-select-match value="" placeholder="Select a payment rate">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="item in rateTypes">{{ item  }}</ui-select-choices>
+                        </ui-select>
+                            <span ng-show="addPaymentForm.rateType.$invalid && (addPaymentForm.rateType.$dirty  || submitted) && addPaymentForm.rateType" class="clearfix danger">
+                                <span ng-show="addPaymentForm.rateType.$error.required" class="clearfix danger">Rate Type cannot be empty.</span>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12">
+                    <label class="col-sm-4">Hours</label>
+                    <div class="col-sm-8">
+                        <input type="number" min="0" class="form-control" name="hours" ng-model="paymentRates.hours" value="{{paymentRates.hours}}" required>
+                            <span ng-show="addPaymentForm.hours.$invalid && (addPaymentForm.hours.$dirty || submitted)  && addPaymentForm.hours" class="clearfix danger">
+                                <span ng-show="addPaymentForm.hours.$error.required" class="clearfix danger">Hours cannot be empty.</span>
+                                <span ng-show="addPaymentForm.hours.$error.min" class="clearfix danger">Hours cannot be negative.</span>
+                                <span ng-show="addPaymentForm.hours.$error.number" class="clearfix danger">Please enter a number</span>
+                            </span>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12" ng-repeat="(key, elem) in paymentRates.importAliases track by $index">
+                    <label class="col-sm-4"><span ng-if="$first">Import Alises</span></label>
+                    <div class="col-sm-8">
+                        <input ng-if="paymentRates.importAliases[0] == ''" type="text" class="form-control" ng-model="paymentRates.importAliases[$index+1]" ng-change="change(paymentRates.importAliases[$index+1], 'add')">
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+            <button class="btn btn-primary" ng-click="save(addPaymentForm.$valid)"><i class="fa fa-arrow-right"></i> &nbsp; Save</button>
+        </div>
+    </form>
+</div>

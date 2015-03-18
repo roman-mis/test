@@ -45,6 +45,7 @@ module.exports = function(mongoose,autoIncrement) {
         sector:             {type:String},
         jobTitle:           {type:String,required:false,trim:true},
         startDate:          {type:Date,required:false},
+        status:             {type:String},
         vehicleInformation: [{
             vehicleCode:    {type:String,required:false,trim:true},
             fuelType:       {type:String,required:false,trim:true},

@@ -642,5 +642,27 @@
 		"reference":"Band"
 	}
 ]
-	}
+	},
+	"agencyStatus":[{
+			"code":1,
+			"value":"Submitted"
+		},
+		{
+			"code":2,
+			"value":"Live"
+			}],
+			"candidateStatus":[{
+			"code":1,
+			"value":"Submitted"
+		},
+		{
+			"code":2,
+			"value":"Live"
+			},
+			{
+			"code":3,
+			"value":"P45 Out"
+			}]
 }
+
+
