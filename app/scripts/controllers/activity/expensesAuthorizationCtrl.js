@@ -10,6 +10,13 @@ app.controller("expensesAuthorizationCtrl",
                                   { link: '/activity/expensesAuthorization', text: 'Expenses' }
         ];
 
+
+        HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('', {}, function (agencies) {
+            console.log('agencies done !!');
+            console.log(agencies);
+            $scope.agencies = agencies.data.objects;
+        });
+
         var catCount;
         initialize();
 
@@ -136,6 +143,20 @@ app.controller("expensesAuthorizationCtrl",
                 } else catCount[$scope.categories.indexOf($scope.data[i].category)]++;
             }
 
+            $scope.users = ['first', 'second'];
+            $scope.editing = {};
+            $scope.checked = {};
+
+        }
+
+        $scope.editSelected = function (location) {
+            console.log($scope.checked[location.user][location.cat]);
+            $scope.editing[location.user] = {};
+            $scope.editing[location.user][location.cat] = $scope.checked[location.user][location.cat];
+            console.log($scope.editing);
+            //for (var i = 0; i < $scope.checked[location.user][location.cat].length; i++) {
+            //    $scope.editing[location.user][location.cat][i]= 
+            //}
         }
 
     }]);
