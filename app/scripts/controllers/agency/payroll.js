@@ -40,6 +40,9 @@ angular.module('origApp.controllers')
         .controller('_EditAgencyDefaultInvoicing', function ($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
             $scope.data = {};
             $scope.status = parentScope.$parent.agencyStatus;
+            $scope.emailPat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+            $scope.options = [{ code: true, value: 'Yes' }, { code: false, value: 'No' }];
+
             angular.copy(parentScope.payrollData.defaultInvoicing, $scope.data);
             for (var key in $scope.data) {
                 if ($scope.data[key]) {
@@ -78,6 +81,9 @@ angular.module('origApp.controllers')
         //Edit Agency Default Payroll
         .controller('_EditAgencyDefaultPayroll', function ($scope, $modalInstance, parentScope, HttpResource, ConstantsResource) {
             $scope.data = {};
+            $scope.status = parentScope.$parent.agencyStatus;
+            $scope.options = [{ code: true, value: 'Yes' }, { code: false, value: 'No' }];
+
             angular.copy(parentScope.payrollData.defaultPayroll, $scope.data);
             for (var key in $scope.data) {
                 if ($scope.data[key]) {
