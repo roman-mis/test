@@ -8,27 +8,27 @@ var utils=require('../../utils/utils');
 var systemservice = require('../../services/systemservice')(db);
 var service = {};
 
-service.updateAdminCompanyProfile = function(id,name,val){
-console.log(val);
+service.updateAdminCompanyProfile = function(name,val){
+
     var q=Q.defer();
     systemservice.getSystem()
     	.then(function(system){
-    		
-    		////console.log(system);
-    		if(name.toLowerCase()==='profile'){
-    			utils.updateSubModel(system.contact,val);
+             
+    		if(name==='contact'){
 
-		    }else if(name.toLowerCase() === 'accounts'){
-				utils.updateSubModel(system.accounts,val);		    	
-		    }else if(name.toLowerCase() === 'bankdetails'){
-				utils.updateSubModel(system.bankDetails,val);		    	
+    			utils.updateSubModel(system.companyProfile.contact,val);
+
+		    }else if(name === 'accounts'){
+				utils.updateSubModel(system.companyProfile.accounts,val);	
+
+		    }else if(name === 'bankDetails'){
+				utils.updateSubModel(system.companyProfile.bankDetails,val);		    	
 		    	
-		    }else if(name.toLowerCase() === 'defaults'){
-		    	utils.updateSubModel(system.defaults,val);		    	
+		    }else if(name === 'defaults'){
+		    	utils.updateSubModel(system.companyProfile.defaults,val);		    	
 			}
-			//console.log('system.save');
 				console.log('------system-------');
-			 return Q.nfcall(system.save.bind(system));
+			 return Q.nfcall(system.save.bind(system)); 
 			
     	})
     	 .then(q.resolve,q.reject);
@@ -37,10 +37,9 @@ console.log(val);
 	return q.promise;
 };
 
-service.saveAdminCompanyProfile = function(id,name,companyProfile){
-	console.log(id);
+service.saveAdminCompanyProfile = function(name,companyProfile){
 	return Q.Promise(function(resolve,reject){
-		service.updateAdminCompanyProfile(id,name,companyProfile).then(function(){
+		service.updateAdminCompanyProfile(name,companyProfile).then(function(){
            resolve({});
 		},reject);		
 	});

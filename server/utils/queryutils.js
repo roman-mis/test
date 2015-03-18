@@ -6,7 +6,8 @@ var _=require('lodash');
 module.exports=function(){
 	return {
 		applySearch:function(q,Model,request){
-			console.log(request);
+			
+	
 			// var q=Model.find();
 			return Q.Promise(function(resolve,reject){
 				
@@ -15,11 +16,8 @@ module.exports=function(){
 				var orders=request.orderBy||{};
 				
 				_.forEach(request.filters,function(filter,filterName){
-					console.log('=======================================================');
-					console.log(filter);
-					console.log(filterName);
 
-					console.log('searching for '+filterName+' = '+JSON.stringify(filter));
+				
 					
 					// var filterObj={};
 					
@@ -43,7 +41,7 @@ module.exports=function(){
 						}
 				});
 
-				console.log('querying count');
+			
 				Q.nfcall(q.count.bind(q))
 					.then(function(totalcount){
 				
@@ -56,11 +54,9 @@ module.exports=function(){
 				
 						});
 
-						console.log('querying records');
 						Q.nfcall(q.exec.bind(q))
 							.then(function(allRecords){
-								console.log('Found : '+allRecords.length);
-								console.log('allRecords');
+						
 								// console.log(allRecords);
 								
 
