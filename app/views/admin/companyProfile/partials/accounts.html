@@ -7,9 +7,8 @@
 					<div class="form-group">
 						<label class="control-label col-xs-6">Vat Number</label>
 						<div class="col-xs-6">
-							<input type="number" class="form-control" ng-model="companyProfile.accounts.vatNumber" name="vatNumber" required ng-pattern="/^(GB)?(\ )?[0-9]\d{2}(\ )?[0-9]\d{3}(\ )?(0[0-9]|[1-8][0-9]|9[0-6])(\ )?([0-9]\d{2})?|(GB)?(\ )?GD(\ )?([0-4][0-9][0-9])|(GB)?(\ )?HA(\ )?([5-9][0-9][0-9])$/" />
+							<input type="number" class="form-control" ng-model="companyProfile.accounts.vatNumber" name="vatNumber"  ng-pattern="/^(GB)?(\ )?[0-9]\d{2}(\ )?[0-9]\d{3}(\ )?(0[0-9]|[1-8][0-9]|9[0-6])(\ )?([0-9]\d{2})?|(GB)?(\ )?GD(\ )?([0-4][0-9][0-9])|(GB)?(\ )?HA(\ )?([5-9][0-9][0-9])$/" />
 							<div ng-show="vat.vatNumber.$invalid && submitted">
-                              <p ng-show="vat.vatNumber.$error.required">Please enter vat number</p>
                               <p ng-show="vat.vatNumber.$error.pattern">
                                  Please enter valid vat number.
                               </p>
@@ -21,7 +20,6 @@
 						<div class="col-xs-6">
 							<input type="number" class="form-control" ng-model="companyProfile.accounts.companyRegNo" name="reg" ng-maxlength=8 required />
 							<div ng-show="vat.reg.$invalid && submitted">
-                             <p ng-show="vat.reg.$error.required">Please enter company registration number.</p>
                              <p ng-show="vat.reg.$error.maxlength">
                              	Enter less than 8 digits.
                              </p>
@@ -31,9 +29,8 @@
 					<div class="form-group">
 						<label class="control-label col-xs-6">UTR Number</label>
 						<div class="col-xs-6">
-							<input type="number" name="utr" class="form-control" ng-model="companyProfile.accounts.utrNumber" ng-maxlength=10 required />
+							<input type="number" name="utr" class="form-control" ng-model="companyProfile.accounts.utrNumber" ng-maxlength=10 />
                             <div ng-show="vat.utr.$invalid && submitted">
-                             <p ng-show="vat.utr.$error.required">Please enter UTR Number.</p>
                              <p ng-show="vat.utr.$error.maxlength">
                              	Enter less than 10 digits.
                              </p>

@@ -117,7 +117,8 @@ module.exports = function(){
 	  		postCode: req.body.postCode,		
 	  		companyRegNo: req.body.companyRegNo,	
 	  		companyVatNo: req.body.companyVatNo,
-	  		logoFileName:req.body.logoFileName
+	  		logoFileName:req.body.logoFileName,
+	  		status:req.body.status
 		};
 
 

@@ -1,40 +1,33 @@
 'use strict';
 var controller={};
-module.exports = function(){
-	var adminCompanyProfileService = require('../../services/admin/adminCompanyProfileservice');
+module.exports = function(db){
+	var Q = require('q');
+	var db = require('../../models');
+	var systemservice = require('../../services/systemservice')(db),
+	adminCompanyProfileService = require('../../services/admin/adminCompanyProfileservice')(db);
+	
 
-	controller.getAllAdminCompanyProfile = function(req, res){
-		adminCompanyProfileService.getAllAdminCompanyProfile(req._restOptions)
-		.then(function(result){
-			var pagination=req._restOptions.pagination||{};
-			var resp={result:true,objects:result.rows, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
-			res.json({result: true, companyProfile: resp.objects[0].companyProfile, id: resp.objects[0]._id});
-		},function(err){
-			res.sendFailureResponse(err);
-		});
-	};
+	controller.getAdminCompanyProfile= function(req, res) {
+        systemservice.getSystem()
+	  	.then(function(system){
+		    res.json({result:true, companyProfile:system});
+	  	},function(err){
+	  		res.sendFailureResponse(err);
+	  	});    
+    };
+
 
 	controller.saveAdminCompanyProfile = function(req, res){
-		adminCompanyProfileService.saveAdminCompanyProfile(req.body).then(
-			function(){
-				res.json({result:true, object:'vm'});
-			},
-			function(err){
-				console.log(err + 'err');
-				res.sendFailureResponse(err);
-			});
-	};
-
-	controller.editAdminCompanyProfile = function(req,res){
-		adminCompanyProfileService.editAdminCompanyProfile(req.params.id,req.body)
-			.then(function(response){
-				res.json(response);
-			},res.sendFailureResponse);
-	};
-
-	controller.deleteAdminCompanyProfile = function(req, res){
-		res.json({'x': 'y'});
-	};
+		adminCompanyProfileService.saveAdminCompanyProfile(req.params.name,req.body)
+		.then(function(system){
+		    res.json({result:true});
+		},function(err){
+			console.log(err + 'err');
+			res.sendFailureResponse(err);
+		});
+	};       
 
 	return controller;
 };
+
+

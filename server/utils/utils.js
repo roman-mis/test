@@ -80,6 +80,8 @@ module.exports=utils={
 		return props;
 	},
 	updateSubModel:function(model,viewmodel){
+		console.log(model);
+		console.log(viewmodel);
 		var props=[];
 		model=model||{};
 		_.forEach(viewmodel,function(val,key){
