@@ -15,7 +15,7 @@ app.controller('bankDetailsController',['$scope', '$location', 'HttpResource', '
 
      $scope.save=function(val){
        	if(val){
-         CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/bankDetails');
+         CompanyProfileService.saveCompanyProfile($scope.companyProfile, 'bankDetails');
        	}else{
        		$scope.submitted=true;
        	}

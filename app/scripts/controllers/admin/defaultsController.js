@@ -15,7 +15,7 @@ app.controller('defaultsController',['$scope', '$rootScope','$state','CompanyPro
 
         $scope.save=function(val){
 	       if(val){    	
-	         CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/defaults');
+	         CompanyProfileService.saveCompanyProfile($scope.companyProfile, 'defaults');
 	       }else{
 	        $scope.submitted=true;
 	       }

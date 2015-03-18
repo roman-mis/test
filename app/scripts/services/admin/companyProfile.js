@@ -26,33 +26,23 @@ angular.module('origApp.services')
     return d.promise;
   }
 
-  function _saveCompanyProfile(data, docId, tab){
-    console.log(docId);
+  function _saveCompanyProfile(data, tab){
     var d = $q.defer();
-  //  var data='data.'+tab;
-  if(tab==='/contact'){
+  if(tab==='contact'){
+  
     companyProfile=data.contact;
-  }else if(tab==='/accounts'){
+  }else if(tab==='accounts'){
     companyProfile=data.accounts;
-  }else if(tab ==='/bankDetails'){
+  }else if(tab ==='bankDetails'){
     companyProfile = data.bankDetails;
-  }else if(tab ==='/defaults'){
+  }else if(tab ==='defaults'){
     companyProfile = data.defaults;
   }
-  console.log(companyProfile);
-    console.log(data);
-    if (docId){
-      HttpResource.model('systems/companyProfile/' + docId + tab)
+
+    if (data){
+      HttpResource.model('systems/companyProfile/' + tab)
       .create(companyProfile).post().then(function(result){
         console.log(result);
-      });
-    }
-    else {
-      acAPI.create(companyProfile).post().then(function(response) {
-        console.log(response);
-        if (!HttpResource.flushError(response)) {
-          console.log('saved successfully');
-        }
       });
     }
     d.resolve('saved successfully');

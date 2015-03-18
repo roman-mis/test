@@ -11,7 +11,6 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 
 		$scope.companyProfile = {};
 		$scope.tab = 'contact';
-		var docId = null;
 
 		// get dropdowns from the server
 		CompanyProfileService.getDropDownData().then(function(data){
@@ -21,19 +20,24 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		// get company profile from the server
 		CompanyProfileService.getCompanyProfile().then(function(data){
 			if(data.companyProfile){
-				$scope.companyProfile =data.companyProfile[0].companyProfile;
+				$scope.companyProfile =data.companyProfile.companyProfile;
+				console.log('company profile.....');
+				console.log($scope.companyProfile);
 			}
 
-			$scope.docId = data.companyProfile[0]._id;
+
 		});
 		 $scope.isTabActive = function(stateKey) {
             return $state.includes('app.admin.' + stateKey);
           };
 
 		$scope.save = function(val){
-			console.log(val);
-			console.log($scope.companyProfile);
-			CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/contact');
+		    if(val){
+               
+               	CompanyProfileService.saveCompanyProfile($scope.companyProfile,'contact');
+
+		    }
+		
 		
 		};
 

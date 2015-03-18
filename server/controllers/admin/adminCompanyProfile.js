@@ -18,7 +18,7 @@ module.exports = function(db){
 
 
 	controller.saveAdminCompanyProfile = function(req, res){
-		adminCompanyProfileService.saveAdminCompanyProfile(req.params.id,req.params.name,req.body)
+		adminCompanyProfileService.saveAdminCompanyProfile(req.params.name,req.body)
 		.then(function(system){
 		    res.json({result:true});
 		},function(err){
