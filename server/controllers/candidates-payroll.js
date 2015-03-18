@@ -34,7 +34,8 @@ module.exports = function(db){
         taxCode: req.body.taxCode,
         taxBasis: req.body.taxBasis,
         startDate: req.body.startDate,
-        niNumber: req.body.niNumber
+        niNumber: req.body.niNumber,
+        employeesNIpaid: req.body.employeesNIpaid
       };
 
       candidatepayrollservice.updatePayrollTaxDetails(req.params.candidateId, payrollTax).then(function(response){
@@ -168,7 +169,8 @@ module.exports = function(db){
             taxBasis: worker.payrollTax.taxBasis,
             taxCode: worker.payrollTax.taxCode,
             startDate: worker.startDate,
-            niNumber: worker.taxDetail.niNumber
+            niNumber: worker.taxDetail.niNumber,
+            employeesNIpaid: worker.taxDetail.employeesNIpaid
           };
       }
     }

@@ -1,88 +1,88 @@
-<div style="margin-left:50px;">
-	<div class="col-xs-12;margin-top:30px;">
-		<label style="margin-right:40px;">Select Agency</label>
-		<select>
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-		</select>
-	</div>
 
-	<div >
-		<div style="margin-top:70px">
-			<span style="margin-right:40px;"  >
-				<label >Number Of Timesheets</label>
-			</span>
-			<span >
-				<span>ck</span>
-			</span>
-		</div>
-
-		<div style="margin-top:25px">
-			<span style="margin-right:40px;"><label >Number Of Uploads</label></span>
-			<span >ck</span>
-		</div>
-		
-		<div style="margin-top:25px">
-			<span style="margin-right:40px;"><label >Manually Added Timesheets</label></span>
-			<span >ck</span>
-		</div>
-
-		<div style="margin-top:25px">
-			<span style="margin-right:40px;"><label >Invoices To Generate</label></span>
-			<span >ck</span>
-		</div>
-
-		<div style="margin-top:25px">
-			<span style="margin-right:40px;"><label >validation To Generate</label></span>
-			<span >ck</span>
-		</div>
-		
-		<div style="margin-top:25px">
-			<span style="margin-right:40px;"><label >Gross</label></span>
-		</div>
-		<div style="margin-left:25px">
-			<div style="margin-top:10px">
-				<span style="margin-right:40px;"><label >Validation  1</label></span>
-				<span >ck</span>
-			</div>
+	<!-- Large modal -->
+      
+			<div class="modal-content">
 			
-			<div style="margin-top:25px">
-				<span style="margin-right:40px;"><label >Validation  2</label></span>
-				<span >ck</span>
-			</div>
+				<div class="modal-header">
+                    <h4 class="modal-title">Create Validation</h4>
+				</div><!-- /modal-header -->
+				
+				<div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-xs-5 control-label">Select agency</label>
+                                    <div class="col-xs-7 no-padding-left">
+                                        <select class="form-control" ng-change="selectAgency(agency.id)" ng-model="agency.id" ng-options="agency._id as agency.name for agency in agencies">
+                                            <option>-- Select --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-xs-5 control-label">Select branch</label>
+                                    <div class="col-xs-7 no-padding-left">
+                                        <select class="form-control" ng-change="selectBranch(branch.id)" ng-model="branch.id" ng-options="branch._id as branch.name for branch in branches">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br/>
+                    <div class="row"> 
+                        <div class="col-sm-12">
+                            <h4><input type="checkbox" ng-model="r.sAll" ng-change="selectAll(r.sAll)"/> Select timesheet batch to validate:</h4>
+                            {{sAll}}
+                            <div class="tableWrapper tableWrapperHeight140">
+                                 <table class="table table-striped">
+                                     <tbody>
+                                         <tr ng-repeat="timesheetbatch in timesheetbatches">
+                                             <td><input type="checkbox" ng-model="timesheetbatch.select" ng-click="r.sAll='false';console.log(1)"/></td>
+                                             <td>{{timesheetbatch.batchNumber}}</td>
+                                             <!-- <td>{{timesheetbatch.select}}</td> -->
+                                         </tr>
+                                         
+                                     </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                             <h4>Batch Overview</h4>
+                        </div>
+                    </div>
+                    
+                    <form class="form-horizontal form-bordered"> 
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="col-xs-12 control-label">
+                                        Total number of timesheets <span class="pull-right">{{timesheetbatches.length}}</span>
+                                    </label>
+                                </div>
+							</div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="col-xs-12 control-label">
+                                        Validations to generate <span class="pull-right">{{count(timesheetbatches)}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form> 
+                   
+				</div><!-- /modal-body -->
+				    
+                <div class="modal-footer">
+                    <a href type="button" class="btn pull-left" ng-click="close()">Cancel</a>
+                    <button class="btn btn-primary" ng-click="validate()">Procced and Validate</button> 
+                </div><!-- /modal footer -->
+                        
+		 	</div><!-- /modal content -->
 
-			<div style="margin-top:25px">
-				<span style="margin-right:40px;"><label >Validation  3</label></span>
-				<span >ck</span>
-			</div>
-
-			<div style="margin-top:25px">
-				<span style="margin-right:40px;"><label >Validation  4</label></span>
-				<span >ck</span>
-			</div>
-		</div>
-		<p style="margin-top:50px">Sending To</p>
-		<div class="row">
-			<p class="col-xs-2">test@gmail.com</p>
-			<p class="col-xs-2"><a href="">edit</a></p>
-
-		</div>
-		<div class="row">
-			<p class="col-xs-2">test@gmail.com</p>
-			<p class="col-xs-2"><a href="">edit</a></p>
-		</div>
-		<div class="row col-xs-12" >
-			<div class="col-xs-8" ></div>
-			<div align="right" class="col-xs-2"><p>
-			<button style="" class="btn btn-fail" >cancel</button>
-
-			</div>
-			<div align="left" class="col-xs-2">
-			<button style="" class="btn btn-success" >send</button>
-			</div>
-		</div>
-	</div>
-
-</div>

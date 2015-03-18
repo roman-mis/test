@@ -455,5 +455,214 @@
 	"templateTypes":[{
 			"code":"1",
 			"name":"Standard"
-		}]
+		}],
+	"AOE":{
+		"AOETypes":[
+	{
+     "country":"England",
+     "orderType":"Attachment of Earnings Order (AEO)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"true",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"England",
+     "orderType":"CAEO (Consolidated AEO)",
+     "deductionType":"",
+     "protectedEarning":"",
+     "carriedForward":"",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"England",
+     "orderType":"AE on AO (AE order on an Admin Order)",
+     "deductionType":"",
+     "protectedEarning":"",
+     "carriedForward":"",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"England",
+     "orderType":"Council Tax AEO",
+     "deductionType":"Percentage",
+     "protectedEarning":"false",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":"An employee can only have two CTAEOs from the same billing authority active at any one time. Any further CTAEOs should be returned."
+   },
+   {
+     "country":"England",
+     "orderType":"Deduction from Earnings Order (DEO)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"true",
+     "adminFee":"1",
+     "otherInfo":"Takes priority over existing AEOs"
+   },
+   {
+     "country":"England",
+     "orderType":"Income Payment Orders",
+     "deductionType":"",
+     "protectedEarning":"",
+     "carriedForward":"",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"England",
+     "orderType":"Income Support Deduction Notice (ISDN)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Earnings Arrestment",
+     "deductionType":"Amount or Percentage",
+     "protectedEarning":"false",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":"Can be operated with a current maintenance arrestment, but can only have one earnings arrest active at any time. If more than one received, must be returned and employee issued with a conjoined arrestment order."
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Current Maintenance Arrestment",
+     "deductionType":"Amount",
+     "protectedEarning":"false",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":"operated with an earnings arrestment, but can only have one current maintenance arrestment active at any time. If more than one received, must be returned and employee issued with a conjoined arrestment order."
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Conjoined Arrestment Order",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"true",
+     "adminFee":"1",
+     "otherInfo":"Issued for more than one earnings arrestment or current maintenance arrestmen"
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Deductions from Earnings Order (DEO)",
+     "deductionType":"",
+     "protectedEarning":"",
+     "carriedForward":"",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Debt Arrangement Scheme",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"true",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Attachment of Earnings Order (AEO)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"Scotland",
+     "orderType":"Income Support Deduction Notice (ISDN)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"Northern Ireland",
+     "orderType":"Attachment of Earnings Order (AEO)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"true",
+     "adminFee":"1",
+     "otherInfo":""
+   },
+   {
+     "country":"Northern Ireland",
+     "orderType":"Deduction from Earnings Order (DEO)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"true",
+     "adminFee":"1",
+     "otherInfo":"Takes priority over existing AEOs."
+   },
+   {
+     "country":"Northern Ireland",
+     "orderType":"Income Support Deduction Notice (ISDN)",
+     "deductionType":"Amount",
+     "protectedEarning":"true",
+     "carriedForward":"false",
+     "adminFee":"1",
+     "otherInfo":""
+   }
+],
+
+"priority":[
+{
+	"value":"Priority",
+	"carriedForward":"true"
+	},
+	{
+		"value":"Non Priority",
+		"carriedForward":"false"
+	}
+],
+
+"deductionTypes":[
+	{
+		"value":"Fixed",
+		"reference":"Amount"
+	},
+	{
+		"value":"Percentage",
+		"reference":"Percentage"
+	},
+	{
+		"value":"Table",
+		"reference":"Table"
+	},
+	{
+		"value":"Band",
+		"reference":"Band"
+	}
+]
+	},
+	"agencyStatus":[{
+			"code":1,
+			"value":"Submitted"
+		},
+		{
+			"code":2,
+			"value":"Live"
+			}],
+			"candidateStatus":[{
+			"code":1,
+			"value":"Submitted"
+		},
+		{
+			"code":2,
+			"value":"Live"
+			},
+			{
+			"code":3,
+			"value":"P45 Out"
+			}]
 }
+
+

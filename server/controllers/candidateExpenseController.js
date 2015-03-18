@@ -5,6 +5,8 @@ module.exports = function(db){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice')(db),
 	candidateservice=require('../services/candidateservice')(db),
+	utils = require('../utils/utils'),
+	dataList = require('../data/data_list.json'),
 	Q = require('q');
 
 	function getExpenseVm(expense, reload){
@@ -26,6 +28,40 @@ module.exports = function(db){
 		var user=expense.user||{};
 		var createdBy=expense.createdBy||{};
 
+		var days = [];
+		_.forEach(expense.days, function(day){
+			var expenses = [];
+			_.forEach(day.expenses, function(expense){
+				var subType;
+				switch(expense.expenseType.toLowerCase()){
+					case 'subsistence':
+						subType = utils.findInArray(dataList.MealsList, expense.subType, 'code') || null;
+						break;
+					case 'transportation':
+						subType = utils.findInArray(dataList.TransportationMeans, expense.subType, 'code') || null;
+						break;
+					case 'other':
+						subType = utils.findInArray(dataList.OtherExpenseTypes, expense.subType, 'code') || null;
+						break;
+				}
+				expenses.push({
+					expenseType: expense.expenseType,
+	                subType: subType,
+	                value: expense.value,
+	                text: expense.text,
+	                description: expense.description,
+	                receiptUrls: expense.receiptUrls,
+				});
+			});
+			days.push({
+				date: day.date,
+	            startTime: day.startTime,
+	            endTime: day.endTime,
+	            postcodes: day.postcodes,
+	            expenses: expenses
+			});
+		});
+
 		var expenseVm = {
 			_id: expense._id,
 			claimReference: expense.claimReference,
@@ -34,7 +70,7 @@ module.exports = function(db){
 			createdBy: {_id: createdBy._id, firstName: createdBy.firstName, lastName: createdBy.lastName},
 			startedDate: expense.startedDate,
 	    	submittedDate: expense.submittedDate,
-	    	days: expense.days
+	    	days: days
 		};
 		return expenseVm;
 	}
@@ -52,6 +88,7 @@ module.exports = function(db){
 	};
 
 	controller.getExpenses = function(req, res){
+
 		return expenseservice.getExpenses(req._restOptions)
 		.then(function(expenses){
 			
@@ -61,7 +98,7 @@ module.exports = function(db){
 		  		var expense = build(_expense);
 		  		expensesVms.push(expense);
 			});
-		  	console.log('expensesssss');
+		  	
 		  		// console.log(expenses);
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
@@ -73,6 +110,8 @@ module.exports = function(db){
 
 	controller.postExpense=function (req, res) {	
 		var request = req.body;
+		console.log('requesting');
+		console.log(req.body);
 		var expense = request.expense;
 
 		var newExpense = {
@@ -91,6 +130,8 @@ module.exports = function(db){
 				total = total + ex.value;
 			});
 		});
+		console.log(newExpense);
+		console.log('expensesessssss');
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
@@ -115,6 +156,23 @@ module.exports = function(db){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
+	};
+	controller.getCandidateExpenses=function(req,res){
+
+
+          return Q.promise(function(resolve,reject){
+
+                expenseservice.getExpenseByUserId(req.params.id).then(function(d){
+                   res.json({result:true,object:d});
+
+                },function(err){
+
+                	res.sendFailureResponse(err);
+                });
+
+          });
+			
+	
 	};
   	return controller;
 };

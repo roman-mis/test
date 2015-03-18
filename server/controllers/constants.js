@@ -186,5 +186,18 @@ module.exports = function(){
       res.json(dataList.templateTypes);
     };
 
+    controller.getAOE = function(req,res){
+      res.json(dataList.AOE);
+    };
+
+    controller.getAgencyStatus = function(req,res){
+      res.json(dataList.agencyStatus);
+    };
+
+    controller.getCandidateStatus = function(req,res){
+      res.json(dataList.candidateStatus);
+    };
+
+
   return controller;
 };

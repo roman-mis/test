@@ -3,14 +3,16 @@
 module.exports=function(db){
 	var Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
-		_=require('lodash');
-	var utils=require('../utils/utils');
-	var systemservice=require('./systemservice')(db),
-	candidatecommonservice=require('./candidatecommonservice')(db);
+		_=require('lodash'),
+		utils=require('../utils/utils'),
+		systemservice=require('./systemservice')(db),
+		awsservice=require('./awsservice'),
+		processor=require('./timesheetprocessor')(db);
 	
 	var service={};
 
 	service.getTimesheets = function(request){
+		console.log('#####################@@@@@@@@@@@@@@@@@@')
 		return Q.Promise(function(resolve,reject){
 			var q=db.Timesheet.find().populate('worker').populate('batch');
 
@@ -35,105 +37,79 @@ module.exports=function(db){
 	};
 
 	service.getCSVFile = function(code, file){
-		switch(code){
-			case '1':
-				return getStandardTemplate(file);
-			case '2':
-				break;
-		}
+		return Q.Promise(function(resolve,reject){
+			console.log('here');
+			return processor.getCSVFile(code, file)
+			.then(function(finishData){
+				if(finishData.validationFailError){
+					resolve({data: finishData});
+				}else{
+					var s3ObjectName = new Date().getTime().toString() + '_' + file.name;
+					var folder=process.env.S3_TEMP_FOLDER;
+					var s3ObjectType = file.mimetype || 'text/plain';
+					var body = require('fs').readFileSync(file.path);
+
+					return awsservice.putS3Object(body,s3ObjectName,s3ObjectType,folder)
+					.then(function(){
+						resolve({url: s3ObjectName, data: finishData});
+					},reject);
+				}
+				
+			}, reject);
+		});
 	};
 
-	function findPaymentRate(paymentRates, search){
-		var paymentRate = {};
-		_.forEach(paymentRates, function(_paymentRate){
-			if(_paymentRate.name.toString().trim().toLowerCase() === search.trim().toLowerCase() || (_paymentRate.importAliases.indexOf(search) > 0)){
-				paymentRate = _paymentRate;
-				return false;
-			}
-		});
-		return paymentRate;
-	}
-
-	function getStandardTemplate(file){
+	function getTimesheetBatch(timesheetData){
 		return Q.Promise(function(resolve,reject){
-			return utils.readCsvFromFile(file.path).then(function(data){
-				return systemservice.getSystem()
-			  	.then(function(system){
-			  		var paymentRates = system.paymentRates;
-			  			console.log('Format 1');
-				  		var finishData = [];
-				  		_.forEach(data, function(row){
-			  				candidatecommonservice.getUserByRef(row.contractorReferenceNumber)
-			  				.then(function(candidate){
-			  					row.validationErrors = [];
-					  			if(row.rateDescription){
-					  				var paymentRate = findPaymentRate(paymentRates, row.rateDescription);
-					  				row.elementType = paymentRate._id || null;
-					  				row.paymentRate = paymentRate;
-					  				// Add No Matching Payrment Rate validation if not matching
-					  				if(!row.elementType){
-		  								row.validationErrors.push('No Matching Payment Rate Found.');
-					  				}
-					  			}
-					  			
-					  			// Add No Matching Candidate validation if not matching
-					  			if(!candidate){
-					  				row.validationErrors.push('No Matching Contractor Found.');
-					  			}else{
-					  				if(candidate.firstName !== row.contractorForename){
-					  					row.validationErrors.push('Contractor First Name Mismatch.');
-					  				}
-					  				if(candidate.lastName !== row.contractorSurname){
-					  					row.validationErrors.push('Contractor Last Name Mismatch.');
-					  				}
-					  			}
-					  			var contractor = candidate || {};
-					  			row.contractor = {_id: contractor._id, firstName: contractor.firstName, lastName: contractor.lastName};
-					  			row.worker = contractor._id;
-					  			row.total = row['total(gross)'];
-					  			row.net = row['total(net)'];
-					  			row.units = row.noOfUnits;
-					  			row.payRate = row.unitRate;
-					  			row.holidayPayIncluded = row.holidayPayRule;
-					  			row.holidayPayDays = row.holidayPayRate;
-		                		finishData.push(row);
-			  				}).then(function(){
-			  					if(Object.keys(data).length === Object.keys(finishData).length){
-			  						resolve(finishData);
-			  					}
-			  				});
-						});
-			  	}, reject);
-			}, function(err){
-				resolve({result:false, error: err});
-			});
+			if(timesheetData.batchNumber){
+				console.log(timesheetData.batchNumber);
+				return db.TimesheetBatch.findOne({ batchNumber: timesheetData.batchNumber }).exec()
+  				.then(function(timesheetBatch) {
+					resolve(timesheetBatch);
+  				}, reject);
+			}else{
+				var timesheetBatchDetail = {
+					agency: timesheetData.timesheets[0].agency,
+	    			branch: timesheetData.timesheets[0].branch
+				};
+				var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
+				resolve(timesheetBatchModel);
+			}
 		});
 	}
 
 	service.saveBulkTimesheet = function(timesheetData){
 		return Q.Promise(function(resolve,reject){
 			
-			// Create Timesheet Batch
-			var timesheetBatchDetail = {
-				agency: timesheetData[0].agency,
-    			branch: timesheetData[0].branch
-			};
-			var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
-			
-			var timesheetsToSave = [];
-			var timesheetsToSavePromise = [];
-			// Loop through timesheetData
-			_.forEach(timesheetData, function(timesheetDetail){
-				timesheetDetail.batch = timesheetBatchModel._id;
-				var timesheetModel = new db.Timesheet(timesheetDetail);
-				timesheetsToSave.push(timesheetModel);
-				timesheetsToSavePromise.push(Q.nfcall(timesheetModel.save.bind(timesheetModel)));
-			});
+			return getTimesheetBatch(timesheetData).then(function(timesheetBatchModel){
+				console.log(timesheetBatchModel);
+				var timesheetsToSave = [];
+				var timesheetsToSavePromise = [];
+				// Loop through timesheetData
+				_.forEach(timesheetData.timesheets, function(timesheetDetail){
+					timesheetDetail.batch = timesheetBatchModel._id;
+					timesheetDetail.imageUrl = timesheetData.filename;
+					timesheetDetail.createdBy = timesheetData.addedBy;
+					timesheetDetail.createdDate = new Date();
+					timesheetDetail.updatedBy = timesheetData.addedBy;
+					timesheetDetail.updatedDate = new Date();
 
-			return Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel)).then(function(){
-				return Q.all(timesheetsToSavePromise).then(function(){
-					console.log(timesheetsToSave);
-					resolve(timesheetsToSave);
+					var timesheetModel = new db.Timesheet(timesheetDetail);
+					timesheetsToSave.push(timesheetModel);
+					timesheetsToSavePromise.push(Q.nfcall(timesheetModel.save.bind(timesheetModel)));
+				});
+
+				// Move file from temp to Timesheet folder
+				var fileName = timesheetData.filename;
+				return awsservice.moveS3Object(process.env.S3_TEMP_FOLDER+fileName,fileName,process.env.S3_TIMESHEET_FOLDER)
+				.then(function(){
+					// Save Timesheet Batch
+					return Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel)).then(function(){
+						// Save all timesheets
+						return Q.all(timesheetsToSavePromise).then(function(){
+							resolve(timesheetsToSave);
+						}, reject);
+					});
 				}, reject);
 			});
 		});

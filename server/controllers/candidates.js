@@ -376,6 +376,7 @@ module.exports = function(dbs){
               agencyName:    req.body.agencyName,
               jobTitle:      req.body.jobTitle,
               startDate:     req.body.startDate,
+              status:        req.body.status,
               bankDetail:bankDetail,
               
               taxDetail: taxDetail

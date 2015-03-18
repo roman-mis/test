@@ -16,16 +16,17 @@ module.exports=function(){
 				
 				_.forEach(request.filters,function(filter,filterName){
 					console.log('=======================================================');
+					console.log(filter);
+					console.log(filterName);
+
 					console.log('searching for '+filterName+' = '+JSON.stringify(filter));
 					
 					// var filterObj={};
 					
 						if(filter.operator==='exact' ||filter.operator==='equals' ){
-					
 							 q.where(filterName).equals(filter.term);
 						}
 						else if(filter.operator==='contains' ){
-					
 							q.where(filterName).equals(new RegExp(filter.term,'i'));
 						}
 						else if(filter.operator==='ne' ){
@@ -60,7 +61,9 @@ module.exports=function(){
 							.then(function(allRecords){
 								console.log('Found : '+allRecords.length);
 								console.log('allRecords');
-								console.log(allRecords);
+								// console.log(allRecords);
+								
+
 								resolve({count:totalcount,rows:allRecords});
 				
 							},reject);

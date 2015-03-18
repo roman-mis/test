@@ -10,9 +10,10 @@ angular.module('origApp').config(function($stateProvider) {
   .state('app.payroll.home', {
     url: '/home',
     templateUrl: 'views/payroll/payrollHome.html',
+    controller: 'PayrollHomeController'
   })
-  .state('app.payroll.viewAll', {
-    url: '/viewAll',
+  .state('app.payroll.view', {
+    url: 'view/:type',
     templateUrl: 'views/payroll/viewAll.html',
   })
   .state('app.payroll.runPayroll', {
@@ -20,10 +21,15 @@ angular.module('origApp').config(function($stateProvider) {
     templateUrl: 'views/payroll/runPayroll.html',
     controller: 'runPayrollController'
   })
-  .state('app.payroll.AOE', {
-    url: '/AOE',
-    templateUrl: 'views/payroll/AOE.html',
-    controller: 'AOEController'
+  .state('app.payroll.endPeriod', {
+    url:'/endPeriod',
+    templateUrl: 'views/payroll/endPeriod.html'
+  })
+  .state('app.payroll.payroll', {
+    url:'/payroll',
+    templateUrl:'views/payroll/payrollpayroll.html',
+    controller:'payrollPayrollCtrl'
   });
+ 
 
 });

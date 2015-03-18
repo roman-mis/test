@@ -70,6 +70,11 @@ angular.module('origApp').config(function($stateProvider) {
 		templateUrl: 'views/admin/hmrc/partials/mileage.html',
 		controller: 'MileageController'
 	})
+        .state('app.admin.paymentRates', {
+            url: '/paymentrates',
+            templateUrl: 'views/admin/payment_rates/index.html',
+            controller: 'PaymentRatesController'
+        })
 	.state('app.admin.hmrc.expensesRate', {
 		url: '/expensesRates',
 		templateUrl: 'views/admin/expensesRate.html',

@@ -5,7 +5,11 @@ angular.module('origApp.controllers')
 
           //define private variables
           var candidateResource = HttpResource.model('candidates/' + $scope.candidateId);
-          
+          $scope.employeesNIpaidOptions = [
+              {value:'Yes',code: true},
+              {value: 'No',code: false}
+            ];
+            
           //load tax information
           $scope.loadTax = function() {
             $scope.tax = candidateResource.get('payrolltax');

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('CandidateSidebarAddTimesheetController',
+.controller('CandidateSidebarAddTimesheetController', ['$scope','$modalInstance', 'parentScope', 'HttpResource','$http','s3Service',
 	function ($scope, $modalInstance, parentScope, HttpResource,$http, s3Service) {
 
 
@@ -135,7 +135,7 @@ angular.module('origApp.controllers')
 	$scope.onSelectFile = function(fileInput) {
 		$scope.files = fileInput;
 		$scope.inSelectFile = true;
-
+		$scope.uploadStatus = undefined;
 		$scope.$apply();
 	};
 	//upload file to s3
@@ -148,20 +148,49 @@ angular.module('origApp.controllers')
 
 
 		$scope.isUploading = true;
+
 		var str = $scope.files.files[0].name;
 		str = str.replace(/ /g, '_');
-		s3Service.upload({
-			fileName: new Date().getTime().toString() + str,
-			file: $scope.files.files[0]
+		// s3Service.upload({
+		// 	fileName: new Date().getTime().toString() + str,
+		// 	file: $scope.files.files[0]
 
-		}).then(function(data) {
-			$scope.isUploading = false;
-			$scope.uploadedImg.url = data.url;
+		// }).then(function(data) {
+		// 	$scope.isUploading = false;
+		// 	$scope.uploadedImg.url = data.url;
 
-			console.log(data.url)
-		}, function() {
-			// alert('error');
-		});
+		// 	console.log(data.url);
+		// }, function() {
+		// 	// alert('error');
+		// });
+
+
+
+		var fileName = new Date().getTime().toString() + '_' + $scope.files.files[0].name;
+	            var mimeType = $scope.files.files[0].type || 'image/jpeg';
+	            $scope.isUploading = true;
+	            
+	            HttpResource.model('documents/timesheet').customGet('signedUrl', {
+	              mimeType: mimeType,
+	              fileName: fileName
+	            }, function(response) {
+	              var signedRequest = response.data.signedRequest;
+	              $http({
+	                method: 'PUT',
+	                url: signedRequest,
+	                data: $scope.files.files[0],
+	                headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
+	              }).success(function() {
+	                //get view url of file
+	                $scope.isUploading = false;
+	                $scope.uploadStatus = 'Uploaded successfully';
+	                $scope.uploadedImg.url = response.data.url;
+	                
+
+	              }).error(function () {
+	              	$scope.uploadStatus = 'Upload failure';
+	              });
+	            });
 
 	};
 
@@ -255,4 +284,4 @@ angular.module('origApp.controllers')
 		$modalInstance.dismiss('cancel');
 	};
 	
-});
+}]);

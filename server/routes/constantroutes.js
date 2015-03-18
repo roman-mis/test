@@ -78,3 +78,7 @@ router.get('/enginesizes',controller.enginesizes);
 router.get('/expensesratetypes',controller.expensesRateTypes);
 
 router.get('/timesheettemplates',controller.getTimesheetTemplates);
+router.get('/AOE',controller.getAOE);
+
+router.get('/agencyStatus',controller.getAgencyStatus);
+router.get('/candidateStatus',controller.getCandidateStatus);

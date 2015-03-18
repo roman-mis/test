@@ -17,7 +17,7 @@ describe('Navigate to candidates url', function () {
   });
 
   it('should take to tabs', function () {
-    element(by.repeater('row in options.data').row(0)).element(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).click()
+    element(by.repeater('row in options.data').row(0)).all(by.css('[ng-click="getExternalScope().viewDetails(row)"]')).first().click()
 
     browser.wait(function () {
       return browser.getCurrentUrl().then(function (url) {

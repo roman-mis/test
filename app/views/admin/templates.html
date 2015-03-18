@@ -1,29 +1,30 @@
-<div class="container">
+<div class="col-xs-12">
 	<div class="btn-group ">
-  <button type="button" style="margin:10px;" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-    add new <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/call_log')"><img style="width:20px;height:20px;" src="/images/64px/0101-database.png">&nbsp;&nbsp;Call Log</a></li>
-    <li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/task')"><img style="width:20px;height:20px" src="/images/64px/0275-spell-check.png">&nbsp;&nbsp;Task </a></li>
-    <li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/document')"><img style="width:20px;height:20px" src="/images/64px/0049-folder-open.png">&nbsp;&nbsp;Document</a></li>
-    <li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/email')"><img style="width:20px;height:20px" src="/images/64px/0070-envelop.png"> &nbsp;&nbsp;Email</a></li>
-    <li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/payslip')"><img style="width:20px;height:20px" src="/images/64px/0005-newspaper.png">&nbsp;&nbsp;Payslip</a></li>
-    <li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/invoice')"><img style="width:20px;height:20px" src="/images/64px/0039-file-text2.png">&nbsp;&nbsp;Invoice</a></li>
-    
-  </ul>
+		<button type="button" style="margin:10px;" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			add new <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+		<li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/call_log')"><img style="width:20px;height:20px;" src="/images/64px/0101-database.png">&nbsp;&nbsp;Call Log</a></li>
+		<li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/task')"><img style="width:20px;height:20px" src="/images/64px/0275-spell-check.png">&nbsp;&nbsp;Task </a></li>
+		<li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/document')"><img style="width:20px;height:20px" src="/images/64px/0049-folder-open.png">&nbsp;&nbsp;Document</a></li>
+		<li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/email')"><img style="width:20px;height:20px" src="/images/64px/0070-envelop.png"> &nbsp;&nbsp;Email</a></li>
+		<li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/payslip')"><img style="width:20px;height:20px" src="/images/64px/0005-newspaper.png">&nbsp;&nbsp;Payslip</a></li>
+		<li style="margin:5px;cursor:pointer"><a ng-click="direction('front');go('/admin/add_new/invoice')"><img style="width:20px;height:20px" src="/images/64px/0039-file-text2.png">&nbsp;&nbsp;Invoice</a></li>
+	</ul>
 </div>
 <!-- grid  -->
-<div class="candidate-main meta-box padding-10 container-fluid">
-  <div class="col-xs-12 row">
-      <div class="col-lg-3 col-xs-5">
-          <input class="form-control" type="text" placeholder="Search by first name" ng-keyup="onDelaySearch()" ng-model="filterName" />
-      </div>
-      <div class="col-xs-1 nonepadding">
-          <button ng-click="search()" class="btn btn-success form-control">Go</button>
-      </div>
-  </div>
-  <div template-grid="gridOptions"></div>
-</div>
+	<div class="candidate-main meta-box padding-10 container-fluid">
+	  <div class="row">
+		  <div class="col-lg-3 col-xs-5">
+			  <input class="form-control" type="text" placeholder="Search by first name" ng-keyup="onDelaySearch()" ng-model="filterName" />
+		  </div>
+		  <div class="col-xs-1 nonepadding">
+			  <button ng-click="search()" class="btn btn-success form-control">Go</button>
+		  </div>
+	  
+		  <div class="col-xs-12">
+			<div template-grid="gridOptions"></div>
+		  </div>
+	</div>
 	
 </div>

@@ -1,9 +1,9 @@
-
+'use strict';
 var app = angular.module('origApp.services');
 
 app.factory('parseCSV', function($http, $q) {
 
-	function _get(file){
+	function _getFile(file){
 		var d = $q.defer();
 		Papa.parse(file,  {	// Papa is "papa parser" for parsing csv file
 			complete: function(results) {
@@ -42,7 +42,7 @@ app.factory('parseCSV', function($http, $q) {
 	}
 
 	return {
-		get: _get
+		get: _getFile
 	};
 
 });

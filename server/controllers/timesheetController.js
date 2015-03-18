@@ -90,10 +90,10 @@ module.exports = function(dbs){
 
 	controller.postTimesheet = function (req, res) {	
 		var timesheet = req.body;		
-		timesheet.addedBy = req.user.id;
-		timesheet.dateAdded = new Date();
-		timesheet.lastEditedBy = req.user.id;
-		timesheet.dateEdited = new Date();
+		timesheet.createdBy = req.user.id;
+		timesheet.createdDate = new Date();
+		timesheet.updatedBy = req.user.id;
+		timesheet.updatedDate = new Date();
 		
 		timesheetservice.saveTimesheet(null, timesheet)
 			.then(function(response){
@@ -110,12 +110,13 @@ module.exports = function(dbs){
 		var timesheetTemplate = req.body.timesheettemplate;
 		var uploadedFile = req.files.file;
 		return timesheetservice.getCSVFile(timesheetTemplate, uploadedFile).then(function(result){
-			res.json({result:true, objects: result});
+			res.json({result:true, url: result.url, objects: result.data});
 		});
 	};
 
 	controller.postBulkTimesheet = function(req, res){
 		var timesheetData = req.body;
+		timesheetData.addedBy = req.user.id;
 
 		timesheetservice.saveBulkTimesheet(timesheetData)
 			.then(function(response){

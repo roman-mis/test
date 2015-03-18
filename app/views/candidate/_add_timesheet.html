@@ -14,7 +14,7 @@
 						Contractor ID
 					</div>
 					<div class="col-xs-6 col-sm-2 form-group">
-						{{candidate._id}}
+						{{candidate.candidateRef}}
 					</div>
 				</div>
 				<div class="row">
@@ -162,6 +162,12 @@
 
 								</button>
 
+							</div>
+							<div class="col-sm-12 text-left">
+								{{files.files[0].name}} 
+							</div>
+							<div class="col-sm-12 text-left">
+								{{uploadStatus}}
 							</div>
 						</div>
 					</fieldset>

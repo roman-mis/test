@@ -26,7 +26,7 @@ module.exports = function(mongoose,autoIncrement) {
     lockedUnlockedBy:      {type:Schema.Types.ObjectId,ref:'User'},
     activatedDate:     {type:Date,required:false},
     avatarFileName:   {type:String,default:''},
-    lastLogin:{type:String,default:'none'},
+    lastLogin:{type:Date,default:null},
     worker:{
         contactNumber:      {type:String,required:false,trim:true},
         birthDate:          {type:Date,required:false},
@@ -45,6 +45,7 @@ module.exports = function(mongoose,autoIncrement) {
         sector:             {type:String},
         jobTitle:           {type:String,required:false,trim:true},
         startDate:          {type:Date,required:false},
+        status:             {type:String},
         vehicleInformation: [{
             vehicleCode:    {type:String,required:false,trim:true},
             fuelType:       {type:String,required:false,trim:true},
