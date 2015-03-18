@@ -44,7 +44,7 @@
 	service.getUserByEmail=candidatecommonservice.getUserByEmail;
 
 	service.getAllCandidates=function(request){
-		
+	
 		return Q.Promise(function(resolve,reject){
 			var q=db.User.find();
 			
