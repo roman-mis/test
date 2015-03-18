@@ -6,13 +6,15 @@
 					<div class="form-group">
 						<label class="control-label col-xs-6">Default Pay Frequency</label>
 						<div class="col-xs-6">
-							{{dropDownLists.payFrequency}}
 							<select class="form-control" ng-model="companyProfile.defaults.payFrequency" ng-options="opt.code as opt.description for opt in dropDownLists.payFrequency"></select>
 						</div>
 					</div>
-				
-
-			
+					<div class="form-group">
+						<label class="control-label col-xs-6"> Default Holiday Pay Rule </label>
+						<div class="col-xs-6">
+							<select class="form-control" ng-model="companyProfile.defaults.holidayPayRule" ng-options="opt.code as opt.description for opt in dropDownLists.holidayPayRule"></select>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="control-label col-xs-6">Default Payment Method</label>
 						<div class="col-xs-6">
