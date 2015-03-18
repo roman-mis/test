@@ -84,15 +84,14 @@ module.exports = function(dbs){
                                t.endTime=secondValue[second].endTime;
                                t.postcodes=secondValue[second].postcodes;
                                t.expenseType=i.expenseType;
-
-                                  t.subType=i.subType;
-                                   t.value=i.value;
-                                    t.text=i.text;
-                                     t.description=i.description;
-                                      t.receiptUrls=i.receiptUrls;
-                                      bucketObject.total +=i.value;
-
-                                     bucketObject.expenses.push(t);
+                               t.subType=i.subType;
+                               t._id=i._id;
+                               t.value=i.value;
+                               t.text=i.text;
+                               t.description=i.description;
+                               t.receiptUrls=i.receiptUrls;
+                               bucketObject.total +=i.value;
+                               bucketObject.expenses.push(t);
 
                                })
 
