@@ -7,7 +7,11 @@ Q=require('q');
 
 var controller={};
 module.exports = function(){
+
 	var agencyservice=require('../services/agencyservice'),
+	db = require('../models'),
+	timesheetBatchservice = require('../services/timesheetbatchservice')(db),
+	timesheetservice = require('../services/timesheetservice')(db),
 	utils=require('../utils/utils'),
 	dataList=require('../data/data_list.json'),
 	awsService=require('../services/awsservice'),
@@ -82,6 +86,7 @@ module.exports = function(){
 	};
 
 	controller.getAgency=function(req,res){
+		console.log('i am here called');
 		agencyservice.getAgency(req.params.id, true)
 			.then(function(agency){
 				//console.log('agency is ');
@@ -112,7 +117,8 @@ module.exports = function(){
 	  		postCode: req.body.postCode,		
 	  		companyRegNo: req.body.companyRegNo,	
 	  		companyVatNo: req.body.companyVatNo,
-	  		logoFileName:req.body.logoFileName
+	  		logoFileName:req.body.logoFileName,
+	  		status:req.body.status
 		};
 
 
@@ -591,6 +597,81 @@ module.exports = function(){
 			locked: user.locked,
 			user:user._id,role:role,status:status
 		};
+	}
+
+	controller.agenciesWithTimesheetBatches=function(req,res){
+		agencyservice.getAllAgencies(req._restOptions)
+	  	.then(function(agencies){
+		    timesheetBatchservice.getAllTimesheetBatches(req._restOptions)
+		    .then(function(timesheetBatches){
+			    var ao = [];
+			  	agencies.rows.forEach(function(a){
+			  		var agency=getAgencyVm(a);
+			  				agency = addTimesheetBatches(agency,timesheetBatches);
+			  				// console.log(agency);
+			  				if(agency.timesheetBatches.length > 0){
+				  				ao.push(agency); 
+			  				}
+					});
+			    var pagination=req._restOptions.pagination||{};
+		    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:agencies.count}};
+			    res.json(resp);
+		  	},function(){
+
+		  	});
+
+	  	});
+	};
+
+	function addTimesheetBatches(agency,timesheetBatches){
+		agency.timesheetBatches = [];
+
+		// console.log(agency);
+		_.forEach(timesheetBatches.rows, function(timesheetBatch){
+				if(timesheetBatch.agency+'' === agency._id+''){
+					agency.timesheetBatches.push(timesheetBatch);
+				}
+			});
+
+		return agency;
+	}
+
+	controller.agenciesWithTimesheets=function(req,res){
+		agencyservice.getAllAgencies(req._restOptions)
+	  	.then(function(agencies){
+		    timesheetservice.getTimesheets(req._restOptions)
+		    .then(function(timesheets){
+			    var ao = [];
+			    console.log('**************************')
+			  	agencies.rows.forEach(function(a){
+			  		var agency=getAgencyVm(a);
+			  				agency = addTimesheets(agency,timesheets);
+			  				// console.log(agency);
+			  				if(agency.timesheets.length > 0){
+				  				ao.push(agency); 
+			  				}
+					});
+			    var pagination=req._restOptions.pagination||{};
+		    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:agencies.count}};
+			    res.json(resp);
+		  	},function(){
+
+		  	});
+
+	  	});
+	};
+
+	function addTimesheets(agency,timesheets){
+		agency.timesheets = [];
+
+		// console.log(agency);
+		_.forEach(timesheets.rows, function(timesheet){
+				if(timesheet.agency+'' === agency._id+''){
+					agency.timesheets.push(timesheet);
+				}
+			});
+
+		return agency;
 	}
 
   return controller;

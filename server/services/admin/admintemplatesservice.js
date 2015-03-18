@@ -8,9 +8,9 @@ var service = {};
 service.saveTemplate = function(templateContent){
 	return Q.Promise(function(resolve,reject){
 
-		console.log(templateContent)
+		console.log(templateContent);
 		var template = db.Template(templateContent);
-		console.log(template)
+		console.log(template);
 
 		return Q.all([Q.nfcall(template.save.bind(template))])
 			.then(function(){
@@ -81,14 +81,14 @@ service.updateAdminTemplate=function(adminTemplateId,templateContent){
 					console.log('##########################');
 					console.log(adminTemplate);
 					if(adminTemplate){
-						var v = ['templateTechnique','templateName','templateType',
-							'mergeFields','templatTitle','body'];
-							console.log(v);
-						for(var i = 0; i < v.length; i++){
-							console.log(adminTemplate[v[i]]);
-							console.log(templateContent[v[i]]);
+						// var v = ['templateTechnique','templateName','templateType',
+						// 	'mergeFields','templatTitle','body'];
+							// console.log(v);
+						for(var key in templateContent){
+							// console.log(adminTemplate[v[i]]);
+							// console.log(templateContent[v[i]]);
 
-							adminTemplate[v[i]] = templateContent[v[i]];
+							adminTemplate[key] = templateContent[key];
 						}
 						console.log('***********adminTemplate*************');
 						console.log(adminTemplate);

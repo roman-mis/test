@@ -10,7 +10,7 @@ var express = require('express'),
 	candidatepayrollcontroller = require('../controllers/candidates-payroll')(db),
 	historycontroller = require('../controllers/history')(),
 	pendingonboardingcontroller = require('../controllers/pendingOnboardingController')(db),
-	expensecontroller = require('../controllers/candidateExpenseController')(),
+	expensecontroller = require('../controllers/candidateExpenseController')(db),
 	expressJwt = require('express-jwt'),
 	restMiddleware=require('../middlewares/restmiddleware'),
 	taskcontroller = require('../controllers/task')(db),
@@ -31,6 +31,8 @@ router.get('/:id',candidatecontroller.getCandidate);
 router.post('/', candidatecontroller.postCandidate );
 
 router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
+
+/*router.get('/:id/lastLog',candidatecontroller.getLastLog); */
 
 //TODO: should be authenticated
 router.patch('/:id/contactdetail', candidatecontroller.updateContactDetail);
@@ -78,6 +80,8 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
 router.post('/:id/expenses', expensecontroller.postExpense);
 router.get('/expenses/:id', expensecontroller.getExpense);
+
+router.get('/:id/candidateExpenses',expensecontroller.getCandidateExpenses);
 
 router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);
 router.get('/:id/vehicleinformation/:code', candidatecontroller.getVehicleInformation);

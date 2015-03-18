@@ -1,5 +1,4 @@
 		<div class="modal-content add-tsh" >
-		<button ng-click="logDis()">logDis</button>
 			<div class="modal-header">
 				<h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
 			</div><!-- /modal-header -->
@@ -15,7 +14,7 @@
 						Contractor ID
 					</div>
 					<div class="col-xs-6 col-sm-2 form-group">
-						{{candidate._id}}
+						{{candidate.candidateRef}}
 					</div>
 				</div>
 				<div class="row">
@@ -152,7 +151,7 @@
 								<div class="col-sm-12 form-group">
 									<!-- <div class="fileUpload btn btn-primary form-control"> -->
 									<button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
-									<input type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;"/>
+									<input accept = "image/*"type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;"/>
 								</div>
 								
 
@@ -163,6 +162,12 @@
 
 								</button>
 
+							</div>
+							<div class="col-sm-12 text-left">
+								{{files.files[0].name}} 
+							</div>
+							<div class="col-sm-12 text-left">
+								{{uploadStatus}}
 							</div>
 						</div>
 					</fieldset>
@@ -192,7 +197,7 @@
 
 						<div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
 							<a ng-click = "cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>    
-							<button  ng-disabled="addClicked == false" ng-click ="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
+							<button  ng-disabled="addClicked == false || weekEndingDate == null" ng-click ="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
 						</div>
 					</div>
 				</div><!-- /modal footer -->

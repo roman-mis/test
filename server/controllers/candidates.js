@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(dbs){
-  var candidateservice=require('../services/candidateservice'),
+  var candidateservice=require('../services/candidateservice')(dbs),
     utils=require('../utils/utils'),
     candidatecommonservice = require('../services/candidatecommonservice')(dbs),
     dataList=require('../data/data_list.json');
@@ -98,6 +98,8 @@ module.exports = function(dbs){
     };
 
     controller.postAvatar=function (req,res){
+      //busboy has been removed. use multer instead
+      //should be changed to upload the avatar from client side by providing signed url instead
       //console.log(req.busboy);
       if(req.busboy){
         /////
@@ -279,6 +281,7 @@ module.exports = function(dbs){
 
         candidateservice.getUser(req.params.id)
           .then(function(user){
+        
             if(user){
               var vm=getContactInformationViewModel(user,user.contactDetail);
               res.json({result:true,object:vm});
@@ -288,6 +291,13 @@ module.exports = function(dbs){
             }
           },res.sendFailureResponse);
     };
+    controller.getLastLog=function(req,res){
+
+      candidateservice.getLogs(req.params.id).then(function(doc){
+          res.json(doc);
+
+      },res.sendFailureResponse)
+    }
 
     controller.getBankDetail=function (req, res){
       candidateservice.getUser(req.params.id)
@@ -366,6 +376,7 @@ module.exports = function(dbs){
               agencyName:    req.body.agencyName,
               jobTitle:      req.body.jobTitle,
               startDate:     req.body.startDate,
+              status:        req.body.status,
               bankDetail:bankDetail,
               
               taxDetail: taxDetail

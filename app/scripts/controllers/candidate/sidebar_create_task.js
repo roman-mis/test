@@ -8,7 +8,6 @@ angular.module('origApp.controllers')
           }
           $scope.activityType = params.activityType;
 
-
           $scope.candidate = parentScope.candidate;
           $scope.agencies = HttpResource.model('agencies').query({});
           $scope.users = HttpResource.model('users').query({});
@@ -28,6 +27,7 @@ angular.module('origApp.controllers')
             $modalInstance.dismiss('cancel');
           };
           $scope.save = function() {
+
             $scope.isSaving = true;
             var endpointName = $scope.activityType === 'callLog' ? 'calllog' : 'task';
             HttpResource.model('candidates/' + $scope.candidate._id + '/' + endpointName).create($scope.data).post()

@@ -12,9 +12,9 @@ module.exports = function(){
 			subType: 		req.body.subType,
 			templateBody: 	req.body.templateBody,
 			title: 			req.body.title
-		}
+		};
 		adminTemplatesService.saveTemplate(templateContent).then(
-			function(result){
+			function(){
 				console.log('done!');
 				res.json({result:true, object:'vm'});
 			},
@@ -38,8 +38,8 @@ module.exports = function(){
 		adminTemplatesService.getAdminTemplate(req.params.id)
 		.then(function(adminTemplate){
 			if(adminTemplate){
-				console.log("******************")
-				adminTemplate.x= "hello";
+				console.log('******************');
+				adminTemplate.x= 'hello';
 				console.log(adminTemplate);
 				res.json({result:true, object: adminTemplate});
 			}else{
@@ -61,13 +61,16 @@ module.exports = function(){
 		console.log('hello from updateAdminTemplate');
 		console.log(req.params.id);
 		var templateContent = {
-			templateTechnique: 	req.body.templateTechnique,
-			templateName: 		req.body.templateName,
-			templateType: 		req.body.templateType,
-			mergeFields: 		req.body.mergeFields,
-			templatTitle: 		req.body.templatTitle,
-			body: 				req.body.body
+			templateType: 	req.body.templateType,
+			name: 			req.body.name,
+			subType: 		req.body.subType,
+			templateBody: 	req.body.templateBody,
+			title: 			req.body.title,
+			updatedDate: Date.now()
 		};
+		// console.log('*************************')
+		// console.log(Date.now);
+		// console.log(Date.now());
 		adminTemplatesService.updateAdminTemplate(req.params.id,templateContent)
 			.then(function(response){
 				res.json(response);

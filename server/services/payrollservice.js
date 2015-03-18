@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports=function(){
-	var db = require('../models'),
+module.exports=function(dbs){
+	var db = dbs,
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
         systemService=require('./systemservice')(db),
@@ -50,600 +50,621 @@ module.exports=function(){
 		return Q.nfcall(q.exec.bind(q));
 	};
     
-    service.runPayroll=function(req) {
-        
-        log('Starting a payroll run!');
+    service.runPayroll=function(payrollRequest) {
+        var logs=[];    
+        log('Starting a payroll run!',logs);
         
         var today = new Date();
         
-        // Get the system
-        return systemService.getSystem()
-        .then(function(system) {
-            
-            log('Retrieved system record');
-            
-            // Get the NI threshold
-            var employersNiThreshold = getStatutoryValue('employersNiThreshold',system);
-            var employersNiRate = getStatutoryValue('employersNiRate',system);
-            var employeesNiRate = getStatutoryValue('employeesNiRate',system);
-            var employeesHighEarnerNiRates = getStatutoryValue('employeesHighEarnerNiRate',system);
-            var incomeTaxHigherRateThreshold = getStatutoryValue('incomeTaxHigherRateThreshold',system);
-            var incomeTaxAdditionalRateThreshold = getStatutoryValue('incomeTaxAdditionalRateThreshold',system);
-            var incomeTaxBasicRate = getStatutoryValue('incomeTaxBasicRate',system);
-            var incomeTaxHigherRate = getStatutoryValue('incomeTaxHigherRate',system);
-            var incomeTaxAdditionalRate = getStatutoryValue('incomeTaxAdditionalRate',system);
-            
-            var statutoryValuesOK = false;
-                    
-            if(employersNiThreshold) {
-                if(employersNiRate) {
-                    if(employeesNiRate) {
-                        if(employeesHighEarnerNiRates) {
-                            if(incomeTaxHigherRateThreshold) {
-                                if(incomeTaxAdditionalRateThreshold) {
-                                    if(incomeTaxBasicRate) {
-                                        if(incomeTaxHigherRate) {
-                                            if(incomeTaxAdditionalRate) {
-                                                statutoryValuesOK = true;
-                                            }
-                                            else {
-                                                log('Cannot progress as Income Tax Additional Rate not set');
-                                            }
-                                        }
-                                        else {
-                                            log('Cannot progress as Income Tax Higher Rate not set');
-                                        }
-                                    }
-                                    else {
-                                        log('Cannot progress as Income Tax Basic Rate not set');
-                                    }
-                                }
-                                else {
-                                    log('Cannot progress as Income Tax Additional Rate Threshold not set');
-                                }
-                            }
-                            else {
-                                log('Cannot progress as Income Tax Higher Rate Threshold not set');
-                            }
-                        }
-                        else {
-                            log('Cannot progress as Employees High Earner NI Rate not set');
-                        }
-                    }
-                    else {
-                        log('Cannot progress as Employees NI Rate not set');
-                    }
-                }
-                else {
-                    log('Cannot progress as Employers NI Rate not set');
-                }
-            }
-            else {
-                log('Cannot progress as Employers NI Threshold not set');
-            }
-            
-            if(statutoryValuesOK) {
-                console.log(req.body.weekNo);
-                console.log('------------------------------------------------------------');
-                console.log(req.body);
-                db.Payroll.findOne({ isCurrent: true, weekNo: req.body.weekNo },function(err,payroll) {
-
-                    if(!err) {
-
-                        log('Retrieved payroll record');
-
-                        req.body.workers.forEach(function(worker){
-
-                           log('On Worker: ' + worker);
-
-                           // Get the worker
-                           db.User.findById(worker._id,function(err,_worker) {
-                               if(!err) {
-
-                                   log('Retrieved worker record');
-
-                                   // Get the worker's age
-                                   var diff = today-worker.birthDate;
-                                   var age = Math.floor(diff/31536000000);
-
-                                   var nmw = 0;
-
-                                   //region Get the NMW for this worker's age
-                                   if(system.statutoryTables.nmw){
-                                       var currentDate = new Date();//console.log(currentDate);
-                                       system.statutoryTables.nmw.forEach(function(_value) {
-                                           //console.log(_value);
-                                           if(currentDate >= _value.validFrom && currentDate <= _value.validTo && _value.ageLower<age && _value.ageUpper>age) {
-                                               nmw = _value.amount;
-                                           }
-                                       });
-                                   }
-                                   if(nmw===0) {
-                                       // TODO take this out as it should always be set
-                                       log('No NMW found for this date and age so using a default');
+        return Q.Promise(function(resolve,reject){
+            // Get the system
+          return systemService.getSystem()
+          .then(function(system) {
+              
+              log('Retrieved system record',logs);
+              
+              // Get the NI threshold
+              var employersNiThreshold = getStatutoryValue('employersNiThreshold',system);
+              var employersNiRate = getStatutoryValue('employersNiRate',system);
+              var employeesNiRate = getStatutoryValue('employeesNiRate',system);
+              var employeesHighEarnerNiRates = getStatutoryValue('employeesHighEarnerNiRate',system);
+              var incomeTaxHigherRateThreshold = getStatutoryValue('incomeTaxHigherRateThreshold',system);
+              var incomeTaxAdditionalRateThreshold = getStatutoryValue('incomeTaxAdditionalRateThreshold',system);
+              var incomeTaxBasicRate = getStatutoryValue('incomeTaxBasicRate',system);
+              var incomeTaxHigherRate = getStatutoryValue('incomeTaxHigherRate',system);
+              var incomeTaxAdditionalRate = getStatutoryValue('incomeTaxAdditionalRate',system);
+              
+              var statutoryValuesOK = false;
+                  
+              if(employersNiThreshold) {
+                  if(employersNiRate) {
+                      if(employeesNiRate) {
+                          if(employeesHighEarnerNiRates) {
+                              if(incomeTaxHigherRateThreshold) {
+                                  if(incomeTaxAdditionalRateThreshold) {
+                                      if(incomeTaxBasicRate) {
+                                          if(incomeTaxHigherRate) {
+                                              if(incomeTaxAdditionalRate) {
+                                                  statutoryValuesOK = true;
+                                              }
+                                              else {
+                                                  log('Cannot progress as Income Tax Additional Rate not set',logs);
+                                              }
+                                          }
+                                          else {
+                                              log('Cannot progress as Income Tax Higher Rate not set',logs);
+                                          }
+                                      }
+                                      else {
+                                          log('Cannot progress as Income Tax Basic Rate not set',logs);
+                                      }
+                                  }
+                                  else {
+                                      log('Cannot progress as Income Tax Additional Rate Threshold not set',logs);
+                                  }
+                              }
+                              else {
+                                  log('Cannot progress as Income Tax Higher Rate Threshold not set',logs);
+                              }
+                          }
+                          else {
+                              log('Cannot progress as Employees High Earner NI Rate not set',logs);
+                          }
+                      }
+                      else {
+                          log('Cannot progress as Employees NI Rate not set',logs);
+                      }
+                  }
+                  else {
+                      log('Cannot progress as Employers NI Rate not set',logs);
+                  }
+              }
+              else {
+                  log('Cannot progress as Employers NI Threshold not set',logs);
+              }
+              
+              if(statutoryValuesOK) {
+                  console.log(payrollRequest.payFrequency);
+                  console.log('------------------------------------------------------------');
+                  console.log(payrollRequest);
+                  // payrollRequest.payFrequency='weekly';
+                  return db.Payroll.findOne({ isCurrent: true, periodType: payrollRequest.payFrequency }).exec()
+                  .then(function(payroll) {
+
+                      if(payroll) {
+
+                          log('Retrieved payroll record',logs);
+                          log('Payroll week number '+payroll.weekNumber,logs);
+                          var promises= new Q(true);
+
+                          payrollRequest.workers.forEach(function(worker){
+
+                             
+                             promises=promises.then(function(){
+                                    log('On Worker: ' + worker._id,logs);
+                                    return db.User.findById(worker._id).exec().then(function(_worker) {
+                                       if(_worker){
+                                          log('Retrieved worker record',logs);
+                                          var workerPayrollTax=_worker.worker.payrollTax||{};
+
+                                         // Get the worker's age
+                                         var diff = today-worker.birthDate;
+                                         var age = Math.floor(diff/31536000000);
+
+                                         var nmw = 0;
+
+                                         //region Get the NMW for this worker's age
+                                         if(system.statutoryTables.nmw){
+                                             var currentDate = new Date();//console.log(currentDate);
+                                             system.statutoryTables.nmw.forEach(function(_value) {
+                                                 //console.log(_value);
+                                                 if(currentDate >= _value.validFrom && currentDate <= _value.validTo && _value.ageLower<age && _value.ageUpper>age) {
+                                                     nmw = _value.amount;
+                                                 }
+                                             });
+                                         }
+                                         if(nmw===0) {
+                                             // TODO take this out as it should always be set
+                                             log('No NMW found for this date and age so using a default',logs);
+
+                                             nmw = 6.50;
+                                         }
+
+                                         log('NMW: ' + nmw,logs);
+                                         return db.PayrollWorkerYTD.findOne({ worker: worker._id }).exec()
+                                            .then(function(payrollWorkerYTD) {
+                                                
+                                                    log('Retreived Payroll YTD record',logs);
+
+                                                     payrollWorkerYTD = payrollWorkerYTD||new db.PayrollWorkerYTD( {
+                                                         taxableEarnings: 0,
+                                                         taxPaid: 0
+                                                     });
+                                                  
+                                                     // TODO - Change status to receipted
+
+                                                     log('Looking up Worker ID: ' + worker._id,logs);
+
+                                                     // status: 'submitted' , 
+                                                     // Get all the timesheets for this worker that are status of receipted
+                                                     return db.Timesheet.find( { worker: worker._id.toString() , status: 'receipted' } )
+                                                      .exec().then(function(timesheets) {
+                                                          if(timesheets) {
+
+                                                               
+
+                                                              var timesheetPromises= new Q(true);
+
+                                                                var totalHours = 0;
+                                                               var totalPay = 0;
+                                                               var totalEffectiveEarnings = 0;
+                                                               var totalHolidayPay = 0;
+
+                                                               timesheets.forEach(function(timesheet) {
+                                                                    timesheetPromises=timesheetPromises.then(function(){
+                                                                        log('Found timesheet: ' + timesheet,logs);
+
+                                                                         var _payrollProduct;
+                                                                         // Get the payroll product
+                                                                         _worker.worker.payrollProduct.forEach(function(payrollProduct) {
+                                                                             log('Payroll Product Agency: ' + payrollProduct.agency,logs);
+                                                                             log('Timesheet Agency: ' + timesheet.agency,logs);
+
+                                                                             if(payrollProduct.agency.toString()===timesheet.agency.toString()) {
+                                                                                 _payrollProduct=payrollProduct;
+                                                                             }
+                                                                         });
+
+                                                                         var timesheetElementIndex = 0;
+                                                                         timesheet.elements.forEach(function(element) {
+
+                                                                             var holidayPay = 0;
+
+                                                                             log('Found timesheet element: ' + element,logs);
+
+                                                                             //region Daily or Hourly
+                                                                             if(element.paymentRate.rateType==='Daily' || element.paymentRate.rateType==='Hourly') {
+
+                                                                                 log('It is a ' + element.paymentRate.rateType + ' element',logs);
+
+                                                                                 var hours = 0,
+                                                                                     pay = 0;
+
+                                                                                 if(element.paymentRate.rateType==='Daily') {
+                                                                                     hours = element.units*element.paymentRate.hours;
+                                                                                 }
+                                                                                 else {
+                                                                                     hours = element.units;
+                                                                                 }
+
+                                                                                 // Work out the effective earnings based on hours * NMW
+                                                                                 var effectiveEarnings = hours*nmw;
+                                                                                 timesheet.elements[timesheetElementIndex].effectiveEarnings = effectiveEarnings;
+                                                                                 totalEffectiveEarnings+=effectiveEarnings;
+                                                                                 log('Effective earnings: ' + effectiveEarnings,logs);
 
-                                       nmw = 6.50;
-                                   }
+                                                                                 pay = element.units*element.payRate;
+                                                                                 log('Adding ' + pay + ' of pay from this element',logs);
+                                                                                 totalPay+=pay;
 
-                                   log('NMW: ' + nmw);
+                                                                                 log('Adding ' + hours + ' hours from this element',logs);
+                                                                                 totalHours+=hours;
 
-                                   //endregion                    
+                                                                                 log('Now the total hours for this worker are: ' + totalHours,logs);
 
-                                   //region Get the PayrollWorkerYTD record
+                                                                                 //region Holiday pay
 
-                               //    var payrollWorkerYTD;
+                                                                                 // Rolled up or retained but on Total Pay
+                                                                                 if(_payrollProduct.holidayPayRule==='2' || _payrollProduct.holidayPayRule==='4') {
+                                                                                     log('Rolled up or retained but on Total Pay',logs);
 
-                                   db.PayrollWorkerYTD.findOne({ worker: worker._id },function(err,payrollWorkerYTD) {
+                                                                                     holidayPay = (_payrollProduct.holidayPayDays/260)*pay;
+                                                                                     if(isNaN(holidayPay)) { holidayPay = 0; }
+                                                                                     log('Holiday pay: ' + holidayPay,logs);
 
-                                       if(!err) {
+                                                                                     timesheet.elements[timesheetElementIndex].holidayPay.onActual = holidayPay;
+                                                                                     totalHolidayPay+=holidayPay;
+                                                                                 }
+                                                                                 // Rolled up or retained on NMW
+                                                                                 if(_payrollProduct.holidayPayRule==='1' || _payrollProduct.holidayPayRule==='3') {
+                                                                                     log('Rolled up or retained on NMW',logs);                                                                   
 
-                                           log('Retreived Payroll YTD record');
+                                                                                     holidayPay = (_payrollProduct.holidayPayDays/(260-_payrollProduct.holidayPayDays))*effectiveEarnings;
+                                                                                     if(isNaN(holidayPay)) { holidayPay = 0; }
+                                                                                     log('Holiday pay: ' + holidayPay,logs);
 
-                                           payrollWorkerYTD = payrollWorkerYTD||new db.PayrollWorkerYTD( {
-                                               taxableEarnings: 0,
-                                               taxPaid: 0
-                                           });
-                                        
-                                           // TODO - Change status to receipted
+                                                                                     timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
+                                                                                     totalHolidayPay+=holidayPay;
+                                                                                 }
 
-                                           log('Looking up Worker ID: ' + worker._id);
+                                                                                 //endregion
+                                                                             }
+                                                                             //endregion
 
-                                           // status: 'submitted' , 
+                                                                             //region It's a Holiday timesheet entry
+                                                                             if(element.paymentRate.rateType==='Holiday') {
+                                                                                 log('It is a holiday element',logs);
 
-                                           // Get all the timesheets for this worker that are status of receipted
-                                           db.Timesheet.find( { worker: worker._id.toString() , status: 'receipted' } )
-                                           .exec(function(err,timesheets) {
-                                               if(!err) {
+                                                                                 holidayPay = element.units*element.payRate;
+                                                                                 if(isNaN(holidayPay)) { holidayPay = 0; }
+                                                                                 log('Holiday pay: ' + holidayPay,logs);
 
-                                                   log('Timesheet records retrieved: ' + timesheets.length);
+                                                                                 totalHolidayPay+=holidayPay;
 
-                                                   if(timesheets) {
+                                                                                 totalPay+=holidayPay;
 
-                                                       var totalHours = 0,
-                                                           totalPay = 0,
-                                                           totalEffectiveEarnings = 0,
-                                                           totalHolidayPay = 0;
+                                                                                 // Rolled up or retained but on Total Pay
+                                                                                 if(_payrollProduct.holidayPayRule==='2' || _payrollProduct.holidayPayRule==='4') {
+                                                                                     timesheet.elements[timesheetElementIndex].holidayPay.onActual = holidayPay;
+                                                                                 }
+                                                                                 // Rolled up or retained on NMW
+                                                                                 if(_payrollProduct.holidayPayRule==='1' || _payrollProduct.holidayPayRule==='3') {
+                                                                                     timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
+                                                                                 }
+                                                                             }
+                                                                             //endregion
 
-                                                       timesheets.forEach(function(timesheet) {
+                                                                             log('After this element Total Effective Earnings are: ' + totalEffectiveEarnings,logs);
+                                                                             log('After this element Total Pay is: ' + totalPay,logs);
+                                                                             log('After this element Total Holiday Pay is: ' + totalHolidayPay,logs);
+                                                                           });
 
-                                                           log('Found timesheet: ' + timesheet);
+                                                                          log('saving timesheet',logs);
+                                                                          // throw {message:'just a test'};
+                                                                          // return true;
+                                                                          return Q.nfcall(timesheet.save.bind(timesheet));
+                                                                    });
 
-                                                           var _payrollProduct;
-                                                           // Get the payroll product
-                                                           _worker.worker.payrollProduct.forEach(function(payrollProduct) {
-                                                               log('Payroll Product Agency: ' + payrollProduct.agency);
-                                                               log('Timesheet Agency: ' + timesheet.agency);
+                                                                   //region Earnings
 
-                                                               if(payrollProduct.agency.toString()===timesheet.agency.toString()) {
-                                                                   _payrollProduct=payrollProduct;
-                                                               }
-                                                           });
+                                                                   timesheetPromises=timesheetPromises.then(function(){
+                                                                        var employersNiOnNmw = 0;
 
-                                                           var timesheetElementIndex = 0;
-                                                           timesheet.elements.forEach(function(element) {
+                                                                       if(totalEffectiveEarnings>=employersNiThreshold.amount) {
+                                                                           employersNiOnNmw = ((totalEffectiveEarnings-employersNiThreshold.amount)/100)*employersNiRate.amount;
+                                                                           log('Employers NI on NMW: ' + employersNiOnNmw,logs);
+                                                                       }
 
-                                                               var holidayPay = 0;
+                                                                       var actualNMW = totalEffectiveEarnings+employersNiOnNmw;
+                                                                       log('Actual NMW: ' + actualNMW,logs);
 
-                                                               log('Found timesheet element: ' + element);
+                                                                       //endregion
 
-                                                               //region Daily or Hourly
-                                                               if(element.paymentRate.rateType==='Daily' || element.paymentRate.rateType==='Hourly') {
+                                                                       //region Holiday Pay Deducted (retained or rolled up)
 
-                                                                   log('It is a ' + element.paymentRate.rateType + ' element');
+                                                                       var totalPayForNMW = totalPay-totalHolidayPay;
+                                                                       log('Total pay for NMW: ' + totalPayForNMW,logs);
 
-                                                                   var hours = 0,
-                                                                       pay = 0;
+                                                                       //endregion
 
-                                                                   if(element.paymentRate.rateType==='Daily') {
-                                                                       hours = element.units*element.paymentRate.hours;
-                                                                   }
-                                                                   else {
-                                                                       hours = element.units;
-                                                                   }
+                                                                       //region TODO: Holiday Pay Taken
 
-                                                                   // Work out the effective earnings based on hours * NMW
-                                                                   var effectiveEarnings = hours*nmw;
-                                                                   timesheet.elements[timesheetElementIndex].effectiveEarnings = effectiveEarnings;
-                                                                   totalEffectiveEarnings+=effectiveEarnings;
-                                                                   log('Effective earnings: ' + effectiveEarnings);
+                                                                       var totalHolidayPayTaken = 0;
 
-                                                                   pay = element.units*element.payRate;
-                                                                   log('Adding ' + pay + ' of pay from this element');
-                                                                   totalPay+=pay;
+                                                                       if(totalHolidayPayTaken>_worker.worker.payrollValues.holidayPayRetained) {
+                                                                           log('SERIOUS PROBLEM: Holiday Pay requested to be taken is under the amount retained. Requested: ' + totalHolidayPayTaken + ' and only ' + _worker.worker.payrollValues.holidayPayRetained + ' retained', logs);
+                                                                           totalHolidayPayTaken = _worker.worker.payrollValues.holidayPayRetained;
+                                                                       }
 
-                                                                   log('Adding ' + hours + ' hours from this element');
-                                                                   totalHours+=hours;
+                                                                       log('Holiday pay taken: ' + totalHolidayPayTaken, logs);
 
-                                                                   log('Now the total hours for this worker are: ' + totalHours);
+                                                                       //endregion
 
-                                                                   //region Holiday pay
+                                                                       // NMW Verification
+                                                                       if(totalPay+totalHolidayPayTaken>actualNMW) {
 
-                                                                   // Rolled up or retained but on Total Pay
-                                                                   if(_payrollProduct.holidayPayRule==='2' || _payrollProduct.holidayPayRule==='4') {
-                                                                       log('Rolled up or retained but on Total Pay');
+                                                                           //region Margin
 
-                                                                       holidayPay = (_payrollProduct.holidayPayDays/260)*pay;
-                                                                       if(isNaN(holidayPay)) { holidayPay = 0; }
-                                                                       log('Holiday pay: ' + holidayPay);
+                                                                           var margin = 20;
 
-                                                                       timesheet.elements[timesheetElementIndex].holidayPay.onActual = holidayPay;
-                                                                       totalHolidayPay+=holidayPay;
-                                                                   }
-                                                                   // Rolled up or retained on NMW
-                                                                   if(_payrollProduct.holidayPayRule==='1' || _payrollProduct.holidayPayRule==='3') {
-                                                                       log('Rolled up or retained on NMW');                                                                   
+                                                                           log('Margin: ' + margin, logs);
 
-                                                                       holidayPay = (_payrollProduct.holidayPayDays/(260-_payrollProduct.holidayPayDays))*effectiveEarnings;
-                                                                       if(isNaN(holidayPay)) { holidayPay = 0; }
-                                                                       log('Holiday pay: ' + holidayPay);
+                                                                           //endregion
 
-                                                                       timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
-                                                                       totalHolidayPay+=holidayPay;
-                                                                   }
+                                                                           var totalPayAfterHPandMargin = totalPay-margin;
+                                                                           log('Total pay after HP and Margin: ' + totalPayAfterHPandMargin, logs);
 
-                                                                   //endregion
-                                                               }
-                                                               //endregion
+                                                                           //region Expenses
 
-                                                               //region It's a Holiday timesheet entry
-                                                               if(element.paymentRate.rateType==='Holiday') {
-                                                                   log('It is a holiday element');
+                                                                           var capacityForExpenses = totalPayAfterHPandMargin-actualNMW;
+                                                                           log('Capacity for expenses: ' + capacityForExpenses, logs);
 
-                                                                   holidayPay = element.units*element.payRate;
-                                                                   if(isNaN(holidayPay)) { holidayPay = 0; }
-                                                                   log('Holiday pay: ' + holidayPay);
+                                                                           var totalExpenses = 0;
+                                                                           log('Total expenses available to use: ' + _worker.worker.currentExpensesToUse, logs);
 
-                                                                   totalHolidayPay+=holidayPay;
+                                                                           if(_worker.worker.currentExpensesToUse>capacityForExpenses) {
+                                                                               totalExpenses = capacityForExpenses;
+                                                                               log('Plenty of expenses available so going for full capacity', logs);
+                                                                           }
+                                                                           else { // Use it all
+                                                                               totalExpenses = _worker.worker.currentExpensesToUse;
+                                                                               log('Not enough expenses so using all there is', logs);
+                                                                           }
 
-                                                                   totalPay+=holidayPay;
+                                                                           log('Expenses used: ' + totalExpenses, logs);
 
-                                                                   // Rolled up or retained but on Total Pay
-                                                                   if(_payrollProduct.holidayPayRule==='2' || _payrollProduct.holidayPayRule==='4') {
-                                                                       timesheet.elements[timesheetElementIndex].holidayPay.onActual = holidayPay;
-                                                                   }
-                                                                   // Rolled up or retained on NMW
-                                                                   if(_payrollProduct.holidayPayRule==='1' || _payrollProduct.holidayPayRule==='3') {
-                                                                       timesheet.elements[timesheetElementIndex].holidayPay.onNMW = holidayPay;
-                                                                   }
-                                                               }
-                                                               //endregion
+                                                                           // Remove the amount we used off the worker
+                                                                           _worker.worker.currentExpensesToUse=_worker.worker.currentExpensesToUse-totalExpenses;
 
-                                                               log('After this element Total Effective Earnings are: ' + totalEffectiveEarnings);
-                                                               log('After this element Total Pay is: ' + totalPay);
-                                                               log('After this element Total Holiday Pay is: ' + totalHolidayPay);
-                                                           });
+                                                                           //endregion
 
-                                                           timesheet.save(function(err,timesheet){
-                                                               log('Error saving timesheet: ' + err);
-                                                           });
-                                                       });
+                                                                           //region Summary before taxes and NI
 
-                                                       //region Earnings
+                                                                           log('SUMMARY BEFORE TAXES AND NI', logs);
+                                                                           log('Gross pay: ' + totalPay, logs);
+                                                                           log('Holiday pay accrued: ' + totalHolidayPay, logs);
+                                                                           log('Holiday pay taken: ' + totalHolidayPayTaken, logs);
+                                                                           log('Margin: ' + margin, logs);
+                                                                           log('Expenses allowed: ' + totalExpenses, logs);
 
-                                                       var employersNiOnNmw = 0;
+                                                                           var payForTaxesAndNI = totalPay - totalHolidayPay + totalHolidayPayTaken - margin - totalExpenses;
 
-                                                       if(totalEffectiveEarnings>=employersNiThreshold) {
-                                                           employersNiOnNmw = ((totalEffectiveEarnings-employersNiThreshold)/100)*employersNiRate;
-                                                           log('Employers NI on NMW: ' + employersNiOnNmw);
-                                                       }
+                                                                           log('Pay available for taxes and NI: ' + payForTaxesAndNI, logs);
 
-                                                       var actualNMW = totalEffectiveEarnings+employersNiOnNmw;
-                                                       log('Actual NMW: ' + actualNMW);
+                                                                           //endregion
 
-                                                       //endregion
+                                                                           //region Employers NI
 
-                                                       //region Holiday Pay Deducted (retained or rolled up)
+                                                                           var employersNI = 0;
+                                                                           
 
-                                                       var totalPayForNMW = totalPay-totalHolidayPay;
-                                                       log('Total pay for NMW: ' + totalPayForNMW);
+                                                                           if(payForTaxesAndNI>employersNiThreshold.amount) {
+                                                                               employersNI = (payForTaxesAndNI-employersNiThreshold.amount) * (employersNiRate.amount/(100+employersNiRate.amount));
+                                                                               log('Pay under Employers NI Threshold so none due', logs);
+                                                                           }
 
-                                                       //endregion
+                                                                           log('Employers NI: ' + employersNI, logs);
 
-                                                       //region TODO: Holiday Pay Taken
+                                                                           //endregion
 
-                                                       var totalHolidayPayTaken = 0;
+                                                                           //region Employees NI
 
-                                                       if(totalHolidayPayTaken>_worker.worker.payrollValues.holidayPayRetained) {
-                                                           log('SERIOUS PROBLEM: Holiday Pay requested to be taken is under the amount retained. Requested: ' + totalHolidayPayTaken + ' and only ' + _worker.worker.payrollValues.holidayPayRetained + ' retained');
-                                                           totalHolidayPayTaken = _worker.worker.payrollValues.holidayPayRetained;
-                                                       }
+                                                                           var paySubjectToEmployeesNIandTax = payForTaxesAndNI-employersNI;
 
-                                                       log('Holiday pay taken: ' + totalHolidayPayTaken);
+                                                                           log('Pay subject to Employees NI: ' + paySubjectToEmployeesNIandTax, logs);
 
-                                                       //endregion
+                                                                           var employeesNI = 0;
 
-                                                       // NMW Verification
-                                                       if(totalPay+totalHolidayPayTaken>actualNMW) {
+                                                                           if(_worker.worker.taxDetail.employeesNIpaid) {
+                                                                               // Main NI (12% in Feb 2015)
+                                                                               var mainNI = 0;
+                                                                               if(paySubjectToEmployeesNIandTax>employeesNiRate.lowerThreshold) {
+                                                                                   if(paySubjectToEmployeesNIandTax>employeesNiRate.upperThreshold) {
+                                                                                       mainNI = employeesNiRate.upperThreshold-employeesNiRate.lowerThreshold;
+                                                                                   }
+                                                                                   else {
+                                                                                       mainNI = paySubjectToEmployeesNIandTax-employeesNiRate.lowerThreshold;
+                                                                                   }
 
-                                                           //region Margin
+                                                                                   mainNI = (mainNI/100)*employeesNiRate.amount;
+                                                                               }
+                                                                               log('Main NI: ' + mainNI, logs);
 
-                                                           var margin = 20;
+                                                                               // High earners NI (2% in Feb 2015)
+                                                                               var highEarnerNI = 0;
+                                                                               if(paySubjectToEmployeesNIandTax>employeesHighEarnerNiRates.lowerThreshold) {
+                                                                                   highEarnerNI = ((paySubjectToEmployeesNIandTax-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
+                                                                               }
+                                                                               log('High earner NI: ' + highEarnerNI, logs);
 
-                                                           log('Margin: ' + margin);
+                                                                               employeesNI = mainNI + highEarnerNI;
+                                                                               log('Employees NI: ' + employeesNI, logs);
+                                                                           }
+                                                                           else {
+                                                                               log('This worker does not have to pay Employees NI', logs);
+                                                                           }
 
-                                                           //endregion
+                                                                           //endregion
 
-                                                           var totalPayAfterHPandMargin = totalPay-margin;
-                                                           log('Total pay after HP and Margin: ' + totalPayAfterHPandMargin);
+                                                                           //region Income Tax
 
-                                                           //region Expenses
+                                                                           var taxCode = '',
+                                                                               taxCodeUpper = '';
 
-                                                           var capacityForExpenses = totalPayAfterHPandMargin-actualNMW;
-                                                           log('Capacity for expenses: ' + capacityForExpenses);
+                                                                           taxCodeUpper = _worker.worker.payrollTax.taxCode.toUpperCase();
 
-                                                           var totalExpenses = 0;
-                                                           log('Total expenses available to use: ' + _worker.worker.currentExpensesToUse);
+                                                                           //region Get Tax Code letter
 
-                                                           if(_worker.worker.currentExpensesToUse>capacityForExpenses) {
-                                                               totalExpenses = capacityForExpenses;
-                                                               log('Plenty of expenses available so going for full capacity');
-                                                           }
-                                                           else { // Use it all
-                                                               totalExpenses = _worker.worker.currentExpensesToUse;
-                                                               log('Not enough expenses so using all there is');
-                                                           }
+                                                                           log('Tax code upper case: ' + taxCodeUpper, logs);
 
-                                                           log('Expenses used: ' + totalExpenses);
+                                                                           if(taxCodeUpper.indexOf('L')>-1) { taxCode = 'L'; }
+                                                                           else if(taxCodeUpper.indexOf('P')>-1) { taxCode = 'P'; }
+                                                                           else if(taxCodeUpper.indexOf('Y')>-1) { taxCode = 'Y'; }
+                                                                           else if(taxCodeUpper.indexOf('0T')>-1) { taxCode = '0T'; }
+                                                                           else if(taxCodeUpper.indexOf('T')>-1) { taxCode = 'T'; }
+                                                                           else if(taxCodeUpper.indexOf('BR')>-1) { taxCode = 'BR'; }
+                                                                           else if(taxCodeUpper.indexOf('D0')>-1) { taxCode = 'D0'; }
+                                                                           else if(taxCodeUpper.indexOf('D1')>-1) { taxCode = 'D1'; }
+                                                                           else if(taxCodeUpper.indexOf('NT')>-1) { taxCode = 'NT'; }
 
-                                                           // Remove the amount we used off the worker
-                                                           _worker.worker.currentExpensesToUse=_worker.worker.currentExpensesToUse-totalExpenses;
+                                                                           log('Tax code minus numbers: ' + taxCode, logs);
 
-                                                           //endregion
+                                                                           //endregion
 
-                                                           //region Summary before taxes and NI
+                                                                           //region Get Tax Code number
 
-                                                           log('SUMMARY BEFORE TAXES AND NI');
-                                                           log('Gross pay: ' + totalPay);
-                                                           log('Holiday pay accrued: ' + totalHolidayPay);
-                                                           log('Holiday pay taken: ' + totalHolidayPayTaken);
-                                                           log('Margin: ' + margin);
-                                                           log('Expenses allowed: ' + totalExpenses);
+                                                                           var taxCodeNumber = parseInt(taxCodeUpper.substring(0,taxCodeUpper.indexOf(taxCode)));
 
-                                                           var payForTaxesAndNI = totalPay + totalHolidayPay + totalHolidayPayTaken + margin + totalExpenses;
+                                                                           log('Tax code number: ' + taxCodeNumber, logs);
 
-                                                           log('Pay available for taxes and NI: ' + payForTaxesAndNI);
+                                                                           //endregion
 
-                                                           //endregion
+                                                                           //region Get YTD basic, higher and additional
+                                                                           
+                                                                           var basicRateYTD = (incomeTaxHigherRateThreshold.amount*payroll.weekNumber)/52;
+                                                                           log('Basic rate YTD: ' + basicRateYTD, logs);
 
-                                                           //region Employers NI
+                                                                           var higherRateYTD = (incomeTaxAdditionalRateThreshold.amount*payroll.weekNumber)/52;
+                                                                           log('Higher rate YTD: ' + higherRateYTD, logs);
 
-                                                           var employersNI = 0;
+                                                                           var additionalRateYTD = higherRateYTD;
+                                                                           log('Additional rate YTD: ' + additionalRateYTD, logs);
 
-                                                           if(payForTaxesAndNI>employersNiThreshold) {
-                                                               employersNI = (payForTaxesAndNI-employersNI) * (employersNiRate/(1+employersNiRate));
-                                                               log('Pay under Employers NI Threshold so none due');
-                                                           }
+                                                                           //endregion
 
-                                                           log('Employers NI: ' + employersNI);
+                                                                           var taxableEarningsYTD =workerPayrollTax.p45GrossTax+ payrollWorkerYTD.taxableEarnings+paySubjectToEmployeesNIandTax;
+                                                                           log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD, logs);
+                                                                           log('Taxable earnings YTD P45: ' + workerPayrollTax.p45GrossTax, logs);
 
-                                                           //endregion
+                                                                           var taxInPeriod = 0,
+                                                                               availableTaxFreeAllowanceIncThisWeek = 0,
+                                                                               earningsYTDsubjectToTax = 0,
+                                                                               higherTax = 0,
+                                                                               additionalTax = 0;
 
-                                                           //region Employees NI
+                                                                           switch(taxCode) {
+                                                                                   case 'L':
+                                                                                   case 'P':
+                                                                                   case 'T':
+                                                                                   case 'Y':
+                                                                                   case 'V':
 
-                                                           var paySubjectToEmployeesNI = payForTaxesAndNI+employersNI;
+                                                                                   availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(payroll.weekNumber/52);
 
-                                                           log('Pay subject to Employees NI: ' + paySubjectToEmployeesNI);
+                                                                                   log('Available tax free allowance inc this week: ' + availableTaxFreeAllowanceIncThisWeek, logs);
 
-                                                           var employeesNI = 0;
+                                                                                   earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
+                                                                                   log('Earnings YTD subject to tax: ' + earningsYTDsubjectToTax, logs);
 
-                                                           if(_worker.worker.taxDetail.employeesNIpaid) {
-                                                               // Main NI (12% in Feb 2015)
-                                                               var mainNI = 0;
-                                                               if(paySubjectToEmployeesNI>employeesNiRate.lowerThreshold) {
-                                                                   if(paySubjectToEmployeesNI>employeesNiRate.upperThreshold) {
-                                                                       mainNI = employeesNiRate.upperThreshold-employeesNiRate.lowerThreshold;
-                                                                   }
-                                                                   else {
-                                                                       mainNI = paySubjectToEmployeesNI-employeesNiRate.lowerThreshold;
-                                                                   }
+                                                                                   break;
+                                                                                case 'D0':
 
-                                                                   mainNI = (mainNI/100)*employeesNiRate.amount;
-                                                               }
-                                                               log('Main NI: ' + mainNI);
+                                                                                   higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate.amount;
+                                                                                   log('Higher tax: ' + higherTax, logs);
 
-                                                               // High earners NI (2% in Feb 2015)
-                                                               var highEarnerNI = 0;
-                                                               if(paySubjectToEmployeesNI>employeesHighEarnerNiRates.lowerThreshold) {
-                                                                   highEarnerNI = ((paySubjectToEmployeesNI-employeesHighEarnerNiRates.lowerThreshold)/100)*employeesHighEarnerNiRates.amount;
-                                                               }
-                                                               log('High earner NI: ' + highEarnerNI);
+                                                                                   taxInPeriod = higherTax-payrollWorkerYTD.taxPaid;
 
-                                                               employeesNI = mainNI + highEarnerNI;
-                                                               log('Employees NI: ' + employeesNI);
-                                                           }
-                                                           else {
-                                                               log('This worker does not have to pay Employees NI');
-                                                           }
+                                                                                   break;
+                                                                                case 'D1':
 
-                                                           //endregion
+                                                                                   additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate.amount;
+                                                                                   log('Additional tax: ' + additionalTax, logs);
 
-                                                           //region Income Tax
+                                                                                   taxInPeriod = additionalTax-payrollWorkerYTD.taxPaid;
 
-                                                           var taxCode = '',
-                                                               taxCodeUpper = '';
+                                                                                   break;
 
-                                                           taxCodeUpper = _worker.worker.payrollTax.taxCode.toUpperCase();
+                                                                                case 'K' :
 
-                                                           //region Get Tax Code letter
+                                                                                   availableTaxFreeAllowanceIncThisWeek = -((taxCodeNumber*10)-9)*(payroll.weekNumber/52);
+                                                                                   log('Available tax free allowance incl this week: ' + availableTaxFreeAllowanceIncThisWeek, logs);
 
-                                                           log('Tax code upper case: ' + taxCodeUpper);
+                                                                                   earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
+                                                                                   log('Earnings YTD subject to tax: ' + earningsYTDsubjectToTax, logs);
 
-                                                           if(taxCodeUpper.indexOf('L')>-1) { taxCode = 'L'; }
-                                                           else if(taxCodeUpper.indexOf('P')>-1) { taxCode = 'P'; }
-                                                           else if(taxCodeUpper.indexOf('Y')>-1) { taxCode = 'Y'; }
-                                                           else if(taxCodeUpper.indexOf('0T')>-1) { taxCode = '0T'; }
-                                                           else if(taxCodeUpper.indexOf('T')>-1) { taxCode = 'T'; }
-                                                           else if(taxCodeUpper.indexOf('BR')>-1) { taxCode = 'BR'; }
-                                                           else if(taxCodeUpper.indexOf('D0')>-1) { taxCode = 'D0'; }
-                                                           else if(taxCodeUpper.indexOf('D1')>-1) { taxCode = 'D1'; }
-                                                           else if(taxCodeUpper.indexOf('NT')>-1) { taxCode = 'NT'; }
+                                                                                   break;
 
-                                                           log('Tax code minus numbers: ' + taxCode);
+                                                                                case 'BR':
 
-                                                           //endregion
+                                                                                   break;
+                                                                           }
 
-                                                           //region Get Tax Code number
+                                                                           switch(taxCode) {
+                                                                                   case 'L':
+                                                                                   case 'P':
+                                                                                   case 'T':
+                                                                                   case 'Y':
+                                                                                   case 'V':
+                                                                                   case 'K':
 
-                                                           var taxCodeNumber = parseInt(taxCodeUpper.substring(0,taxCodeUpper.indexOf(taxCode)));
+                                                                                   var basicAmountToTax = (earningsYTDsubjectToTax>basicRateYTD ? basicRateYTD : earningsYTDsubjectToTax);
+                                                                                   log('Basic amount to tax: ' + basicAmountToTax, logs);
 
-                                                           log('Tax code number: ' + taxCodeNumber);
+                                                                                   var basicTax = (basicAmountToTax*incomeTaxBasicRate.amount)/100;
+                                                                                   log('Basic tax: ' + basicTax, logs);
 
-                                                           //endregion
+                                                                                   var higherRateLowerLimit = (earningsYTDsubjectToTax>basicRateYTD ? basicRateYTD : 0);
+                                                                                   log('Higher rate lower limit: ' + higherRateLowerLimit, logs);
 
-                                                           //region Get YTD basic, higher and additional
+                                                                                   var higherRateUpperLimit = (earningsYTDsubjectToTax>higherRateYTD ? higherRateYTD : earningsYTDsubjectToTax);
+                                                                                   log('Higher rate upper limit: ' + higherRateUpperLimit, logs);
 
-                                                           var basicRateYTD = (incomeTaxHigherRateThreshold*payroll.weekNo)/52;
-                                                           log('Basic rate YTD: ' + basicRateYTD);
+                                                                                   higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate.amount)/100 : 0);
+                                                                                   log('Higher tax: ' + higherTax, logs);
 
-                                                           var higherRateYTD = (incomeTaxAdditionalRateThreshold*payroll.weekNo)/52;
-                                                           log('Higher rate YTD: ' + higherRateYTD);
+                                                                                   var additionalAmountToTax = (earningsYTDsubjectToTax>additionalRateYTD ? earningsYTDsubjectToTax-additionalRateYTD : 0);
+                                                                                   log('Additional amount to tax: ' + additionalAmountToTax, logs);
 
-                                                           var additionalRateYTD = higherRateYTD;
-                                                           log('Additional rate YTD: ' + additionalRateYTD);
+                                                                                   additionalTax = (additionalAmountToTax*incomeTaxAdditionalRate.amount)/100;
+                                                                                   log('Additional tax: ' + additionalTax, logs);
 
-                                                           //endregion
+                                                                                   var taxYTD = basicTax + higherTax + additionalTax;
+                                                                                   log('Tax YTD: ' + taxYTD, logs);
 
-                                                           var taxableEarningsYTD = payrollWorkerYTD.taxableEarnings+totalPay;
-                                                           log('Taxable earnings YTD inc this week: ' + taxableEarningsYTD);
+                                                                                   log('Tax already paid YTP: ' + payrollWorkerYTD.taxPaid, logs);
 
-                                                           var taxInPeriod = 0,
-                                                               availableTaxFreeAllowanceIncThisWeek = 0,
-                                                               earningsYTDsubjectToTax = 0;
+                                                                                   taxInPeriod = taxYTD-payrollWorkerYTD.taxPaid; 
+                                                                                   log('Tax in period: ' + taxInPeriod, logs);
 
-                                                           switch(taxCode) {
-                                                                   case 'L':
-                                                                   case 'P':
-                                                                   case 'T':
-                                                                   case 'Y':
-                                                                   case 'V':
+                                                                                   break;
 
-                                                                   availableTaxFreeAllowanceIncThisWeek = ((taxCodeNumber*10)+9)*(payroll.weekNo/52);
+                                                                           }
 
-                                                                   log('Available tax free allowance inc this week: ' + availableTaxFreeAllowanceIncThisWeek);
+                                                                           //endregion
+                                                                       }
+                                                                       else {
+                                                                           log('SERIOUS PROBLEM: Under NMW. It is ' + totalPay+totalHolidayPayTaken + ' which is not more than ' + actualNMW, logs);
+                                                                          
+                                                                       }
 
-                                                                   earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
-                                                                   log('Earnings YTD subject to tax: ' + earningsYTDsubjectToTax);
+                                                                       
+                                                                   });
 
-                                                                   break;
-                                                                case 'D0':
+                                                                    
+//region Earnings
+                                                                }, reject);
 
-                                                                   var higherTax = earningsYTDsubjectToTax*incomeTaxHigherRate;
-                                                                   log('Higher tax: ' + higherTax);
+                                                              return timesheetPromises;
+                                                          }
+                                                          else {
+                                                             log('No timesheets so stopping!', logs);
+                                                             
+                                                          }
 
-                                                                   taxInPeriod = higherTax-payrollWorkerYTD.taxPaid;
-
-                                                                   break;
-                                                                case 'D1':
-
-                                                                   var additionalTax = earningsYTDsubjectToTax*incomeTaxAdditionalRate;
-                                                                   log('Additional tax: ' + additionalTax);
-
-                                                                   taxInPeriod = additionalTax-payrollWorkerYTD.taxPaid;
-
-                                                                   break;
-
-                                                                case 'K' :
-
-                                                                   availableTaxFreeAllowanceIncThisWeek = -((taxCodeNumber*10)-9)*(payroll.weekNo/52);
-                                                                   log('Available tax free allowance incl this week: ' + availableTaxFreeAllowanceIncThisWeek);
-
-                                                                   earningsYTDsubjectToTax = taxableEarningsYTD-availableTaxFreeAllowanceIncThisWeek;
-                                                                   log('Earnings YTD subject to tax: ' + earningsYTDsubjectToTax);
-
-                                                                   break;
-
-                                                                case 'BR':
-
-                                                                   break;
-                                                           }
-
-                                                           switch(taxCode) {
-                                                                   case 'L':
-                                                                   case 'P':
-                                                                   case 'T':
-                                                                   case 'Y':
-                                                                   case 'V':
-                                                                   case 'K':
-
-                                                                   var basicAmountToTax = (earningsYTDsubjectToTax>basicRateYTD ? basicRateYTD : earningsYTDsubjectToTax);
-                                                                   log('Basic amount to tax: ' + basicAmountToTax);
-
-                                                                   var basicTax = basicAmountToTax*incomeTaxBasicRate;
-                                                                   log('Basic tax: ' + basicTax);
-
-                                                                   var higherRateLowerLimit = (earningsYTDsubjectToTax>basicRateYTD ? basicRateYTD : 0);
-                                                                   log('Higher rate lower limit: ' + higherRateLowerLimit);
-
-                                                                   var higherRateUpperLimit = (earningsYTDsubjectToTax>higherRateYTD ? higherRateYTD : earningsYTDsubjectToTax);
-                                                                   log('Higher rate upper limit: ' + higherRateUpperLimit);
-
-                                                                   var higherTax = (higherRateLowerLimit>0 ? ((higherRateUpperLimit-higherRateLowerLimit)*incomeTaxHigherRate) : 0);
-                                                                   log('Higher tax: ' + higherTax);
-
-                                                                   var additionalAmountToTax = (earningsYTDsubjectToTax>additionalRateYTD ? earningsYTDsubjectToTax-additionalRateYTD : 0);
-                                                                   log('Additional amount to tax: ' + additionalAmountToTax);
-
-                                                                   var additionalTax = additionalAmountToTax*incomeTaxAdditionalRate;
-                                                                   log('Additional tax: ' + additionalTax);
-
-                                                                   var taxYTD = basicTax + higherTax + additionalTax;
-                                                                   log('Tax YTD: ' + taxYTD);
-
-                                                                   log('Tax already paid YTP: ' + payrollWorkerYTD.taxPaid);
-
-                                                                   taxInPeriod = taxYTD-payrollWorkerYTD.taxPaid; 
-                                                                   log('Tax in period: ' + taxInPeriod);
-
-                                                                   break;
-
-                                                           }
-
-                                                           //endregion
-                                                       }
-                                                       else {
-                                                           log('SERIOUS PROBLEM: Under NMW. It is ' + totalPay+totalHolidayPayTaken + ' which is not more than ' + actualNMW);
-                                                       }
-
-                                                   }
-                                                   else {
-                                                       log('No timesheets so stopping!');
-                                                   }
-                                               }
-                                               else {
-                                                   log('Error retrieving timesheet records: ' + err);
-                                               }
-                                           });
-                                           payrollWorkerYTD.save(function(err,payrollWorkerYTD) {
-                                               if(err) {
-                                                   log('Error saving Payroll Worker YTD:' + err);
-                                               }
-                                           });
+                                                      }).then(function(){
+                                                           log('saving payrollworkerYTD');
+                                                           // return true;
+                                                           return Q.nfcall(payrollWorkerYTD.save.bind(payrollWorkerYTD));
+                                                          
+                                                      });
+                                                
+                                            });
                                        }
-                                       else {
-                                           log('Error retrieving Payroll TYD record: ' + err);
+                                       else{
+                                          // log('Worker not found');
+                                          throw {name:'InvalidData',message:'Worker not found ' + worker._id};
                                        }
+                                   
                                    });
+                             });
+                             
+                         });
+                          return promises;
 
-                                   //endregion
+                      }
+                      else {
+                          // log('Payroll record not found');
+                          throw {name:'InvalidData',message:'Payroll record not found'};
+                      }
+                  });
 
-
-                               }
-                               else {
-                                   log('Error retrieving worker record: ' + err);
-                               }
-                           });
-                       });
-                    }
-                    else {
-                        log('Error retrieving payroll record: ' + err);
-                    }
-                });
-
-            }
-            else {
-                log('Statutory values not OK so bailing out');
-            }
+              }
+              else {
+                  // log('Statutory values not OK so bailing out',logs);
+                  throw {name:'InvalidData',message:'Statutory values not OK so bailing out'};
+              }
+              
+          })
+          .then(function(){
+            logs.push('Success.......');
+              resolve({result:true,logs:logs});
+          },function(err){
             
+              logs.push(err.message);
+            
+              resolve({result:false,logs:logs,error:err});
+            
+          });
         });
     };
         
@@ -671,8 +692,11 @@ module.exports=function(){
             }
         }
     
-    function log(message) {
+    function log(message,logs) {
         console.log(message);
+        if(logs){
+          logs.push(message);
+        }
     }
     
 	return service;

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('CandidateSidebarAddTimesheetController',
+.controller('CandidateSidebarAddTimesheetController', ['$scope','$modalInstance', 'parentScope', 'HttpResource','$http','s3Service',
 	function ($scope, $modalInstance, parentScope, HttpResource,$http, s3Service) {
 
 
@@ -8,7 +8,8 @@ angular.module('origApp.controllers')
 	$scope.candidate = parentScope.candidate;
 
 	//getting agencies related to the current candidate
-	var _candidateAgencies = HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct')
+
+	HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct')
 	.query({},function (data) {
 		//waiting for the data to return
 		$scope.agencies = data.data.objects;
@@ -17,14 +18,15 @@ angular.module('origApp.controllers')
 		//must wait for saveAgency model to initialize
 		//watching saveAgency to change vat value to the current agency
 
-		$scope.$watch('saveAgency', function (newVal) {
-			if($scope.saveAgency == null)
+		$scope.$watch('saveAgency', function () {
+			if(!$scope.saveAgency){
 				return;
+			}
 			var _vat = HttpResource.model ('agencies/'+$scope.saveAgency.agency._id+'/payroll');
 			_vat.query({},function (data) {
 				$scope.isVat = data.data.object.defaultInvoicing.invoiceVatCharged;
-			})
-		})
+			});
+		});
 	});
 
 
@@ -40,12 +42,12 @@ angular.module('origApp.controllers')
 	});
 	
 	
-	var _currentVat = HttpResource.model('systems/vat/current')
+	HttpResource.model('systems/vat/current')
 	.query({},function (data) {
 		
 		$scope.currentVat = data.data;
 
-	})
+	});
 
 
 	//user inputs
@@ -71,11 +73,12 @@ angular.module('origApp.controllers')
 
 
 	$scope.$watch('elements.amount', function (newVal) {
-		if($scope.isVat == true){
+		if($scope.isVat === true){
 			$scope.elements.vat = Math.round((newVal * $scope.currentVat.object.amount/100)*100)/100;	
 		}
-		else
+		else{
 			$scope.elements.vat = 0;
+		}
 		
 	});
 
@@ -98,7 +101,7 @@ angular.module('origApp.controllers')
 			chargeRate: null,
 			amount: $scope.elements.amount,
 			vat: $scope.elements.vat
-		}
+		};
 		
 		$scope.finalElements.push($scope.tableInfo);
 
@@ -118,7 +121,7 @@ angular.module('origApp.controllers')
 		$scope.elements.vat = 0;
 		
 		
-	}
+	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//uploading
@@ -132,32 +135,62 @@ angular.module('origApp.controllers')
 	$scope.onSelectFile = function(fileInput) {
 		$scope.files = fileInput;
 		$scope.inSelectFile = true;
-
-		$scope.$apply(function() {
-
-		});
+		$scope.uploadStatus = undefined;
+		$scope.$apply();
 	};
 	//upload file to s3
 
 	$scope.uploadFile = function() {
 
-		if($scope.inSelectFile == false){
+		if($scope.inSelectFile === false){
 			return;
 		}
 
 
 		$scope.isUploading = true;
 
-		s3Service.upload({
-			fileName: new Date().getTime().toString() + $scope.files.files[0].name,
-			file: $scope.files.files[0]
+		var str = $scope.files.files[0].name;
+		str = str.replace(/ /g, '_');
+		// s3Service.upload({
+		// 	fileName: new Date().getTime().toString() + str,
+		// 	file: $scope.files.files[0]
 
-		}).then(function(data) {
-			$scope.isUploading = false;
-			$scope.uploadedImg.url = data.url;
-		}, function() {
-			// alert('error');
-		});
+		// }).then(function(data) {
+		// 	$scope.isUploading = false;
+		// 	$scope.uploadedImg.url = data.url;
+
+		// 	console.log(data.url);
+		// }, function() {
+		// 	// alert('error');
+		// });
+
+
+
+		var fileName = new Date().getTime().toString() + '_' + $scope.files.files[0].name;
+	            var mimeType = $scope.files.files[0].type || 'image/jpeg';
+	            $scope.isUploading = true;
+	            
+	            HttpResource.model('documents/timesheet').customGet('signedUrl', {
+	              mimeType: mimeType,
+	              fileName: fileName
+	            }, function(response) {
+	              var signedRequest = response.data.signedRequest;
+	              $http({
+	                method: 'PUT',
+	                url: signedRequest,
+	                data: $scope.files.files[0],
+	                headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
+	              }).success(function() {
+	                //get view url of file
+	                $scope.isUploading = false;
+	                $scope.uploadStatus = 'Uploaded successfully';
+	                $scope.uploadedImg.url = response.data.url;
+	                
+
+	              }).error(function () {
+	              	$scope.uploadStatus = 'Upload failure';
+	              });
+	            });
 
 	};
 
@@ -211,7 +244,8 @@ angular.module('origApp.controllers')
 		}
 		$scope.daysInRange = daysInRange;
 		$scope.times = [];
-		$scope.dateHolder=daysInRange[1].label + " to " + daysInRange[7].label;
+
+		$scope.dateHolder=daysInRange[1].label +  'to'  + daysInRange[7].label;
 
 		$scope.weekEndingDate = daysInRange[6];
 	};
@@ -230,35 +264,24 @@ angular.module('origApp.controllers')
 			elements: $scope.finalElements,
 			total: $scope.total,
 			imageUrl: $scope.uploadedImg.url
-		}
+		};
 
 		
 		HttpResource.model('timesheets').create(timesheet).post()
-		.then(function(response) {
+		.then(function() {
 			// if (HttpResource.flushError(response)) {
 			// 	}
 			
 			
 		});
-		HttpResource.model('timesheets').query({}, function  (res) {
-			
-			console.log(res);
-			
-		})
 		$modalInstance.close();
 	};
 
-
-	$scope.logDis = function () {
-		// body...
-		console.log($scope.weekEndingDate.object)
-	}
-
 	$scope.cancel = function() {
-		if (!confirm('Are you sure you want to cancel?')) {
+		if (!window.confirm('Are you sure you want to cancel?')) {
 			return;
 		}
 		$modalInstance.dismiss('cancel');
 	};
 	
-});
+}]);

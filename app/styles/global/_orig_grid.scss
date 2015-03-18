@@ -1,15 +1,15 @@
-.orig-grid-wrapper{
-  .orig-grid{
-    
-  }
-  .orig-grid-pagination-wrapper{
-    margin: 5px;
-    font-size: 14px;
-    .page-rows-count{
-      float: left;
+.orig-grid-wrapper {
+    .orig-grid > tbody > tr {
+        cursor: pointer;
     }
-    .pagination{
-      float: right;
+    .orig-grid-pagination-wrapper {
+        margin: 5px;
+        font-size: 14px;
+        .page-rows-count {
+            float: left;
+        }
+        .pagination {
+            float: right;
+        }
     }
-  }
 }

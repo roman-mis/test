@@ -8,7 +8,7 @@
  * Controller of the origApp
  */
 angular.module('origApp.controllers')
-        .controller('RegisterHomeController', function($scope, HttpResource) {
+        .controller('RegisterHomeController', function($scope) {
             
             /*var User = HttpResource.model('candidates');
             var candidate = {

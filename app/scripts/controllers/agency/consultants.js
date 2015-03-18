@@ -154,10 +154,12 @@ angular.module('origApp.controllers')
             $scope.isSaving = true;
             var sendData = {};
             angular.copy($scope.data, sendData);
-            if ($scope.data.status)
+            if ($scope.data.status){
               sendData.status = $scope.data.status.code;
-            if ($scope.data.role)
+            }
+            if ($scope.data.role){
               sendData.role = $scope.data.role.code;
+            }
             if ($scope.editingConsultant) {
               HttpResource.model('agencies/consultants').create(sendData)
                       .patch($scope.editingConsultant._id)

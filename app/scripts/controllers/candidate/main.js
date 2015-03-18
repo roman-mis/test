@@ -12,7 +12,6 @@ angular.module('origApp.controllers')
             {link: '/candidates/' + $scope.candidateId, text: ''}
           ];
           $scope.candidate = null;
-
           //load condidate basic information
           $scope.loadCandidate = function() {
             $scope.candidate = cddAPI.get($scope.candidateId, function() {

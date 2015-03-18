@@ -17,30 +17,32 @@ angular.module('origApp.services')
           companyProfile = data.data;
           d.resolve(companyProfile);
         }
-        else 
-          d.reject("no data");
+        else {
+          d.reject('no data');
+        }
       });
     }
     
     return d.promise;
   }
 
-  function _saveCompanyProfile(data, docId){
+  function _saveCompanyProfile(data, tab){
     var d = $q.defer();
-    companyProfile = data;
-    console.log(data);
-    if (docId){
-      HttpResource.model('systems/companyProfile/' + docId)
+  if(tab==='contact'){
+  
+    companyProfile=data.contact;
+  }else if(tab==='accounts'){
+    companyProfile=data.accounts;
+  }else if(tab ==='bankDetails'){
+    companyProfile = data.bankDetails;
+  }else if(tab ==='defaults'){
+    companyProfile = data.defaults;
+  }
+
+    if (data){
+      HttpResource.model('systems/companyProfile/' + tab)
       .create(companyProfile).post().then(function(result){
         console.log(result);
-      });
-    }
-    else {
-      acAPI.create(companyProfile).post().then(function(response) {
-        console.log(response);
-        if (!HttpResource.flushError(response)) {
-          console.log('saved successfully');
-        }
       });
     }
     d.resolve('saved successfully');

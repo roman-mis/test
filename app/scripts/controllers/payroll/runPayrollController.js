@@ -1,41 +1,41 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll','$modalInstance',
 	function($rootScope,$scope,HttpResource,ModalService,$http,payroll,$modalInstance){
-		$scope.pay = {frequency:''}
-		$scope.agency = {id:''}
-		$scope.runPayroll={};
+		$scope.pay = {frequency:''};
+		$scope.agency = {id:''};
+		$scope.p = {};
+		$scope.p.worker=[];
 		$scope.selection = {type: false};
 		$scope.agencyList = [];
+		$scope.PayFrequency = [];
+		$scope.firstStep = true;
+		$scope.secondStep = false;
 
-	
-		$scope.PayFrequency = [{
-			code:"weekly",
-			description:"Weekly"
-		},{
-			code:"2",
-			description:"Bi-Weekly"
-		},{
-			code:"3",
-			description:"4 Weekly"
-		},{
-			code:"4",
-			description:"Monthly"
-		}];
+
+
+    HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
+      if(data.statusText === 'OK' ){
+          console.log('data');
+          console.log(data);
+          $scope.PayFrequency = data.data;
+      }
+    });
 
 		$scope.payroll = payroll.details;
 		console.log($scope.payroll);
 
 		    function initWorkerSelection(limit){
-    	$scope.runPayroll.worker=[];
+    	$scope.p.worker=[];
     	for(var i = 0; i < limit; i++){
-    		$scope.runPayroll.worker[i] = false;	
+    		$scope.p.worker[i] = false;	
     	}
     }
 
     $scope.getPayrollRunWorker = function(){
     	if($scope.pay.frequency === '' || $scope.agency.id === ''){
-    		return
+    		return;
     	}
     	var params={worker:{
     		payrollTax:{
@@ -47,48 +47,63 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
     	}};
     	console.log(params);
     	$http.get('/api/candidates?worker.payrollTax.payFrequency='+$scope.pay.frequency+'&worker.payrollProduct.agency='+$scope.agency.id)
-    	.success(function(data, status, headers, config) {
+    	.success(function(data) {
 		  	 console.log(data); 
 		  	 $scope.candidates = data.objects;
 		  	 console.log($scope.candidates); 
 		  	 initWorkerSelection($scope.candidates.length);
-		}).error(function(data, status, headers, config) {
+		}).error(function() {
 
 
 		});
-    }
+    };
 
     $scope.unselectHead = function(){
 		$scope.selection.type = false;
-	}
+	};
 
 	$scope.selectAll = function(){
-		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
-    		$scope.runPayroll.worker[i] = $scope.selection.type;	
+		for(var i = 0; i < $scope.p.worker.length; i++){
+    		$scope.p.worker[i] = $scope.selection.type;	
     	}
-	}
+	};
+
+	// $scope.closeModal = function() {
+
+ //    //  Manually hide the modal using bootstrap.
+ //    $element.modal('hide');
+
+ //    //  Now close as normal, but give 500ms for bootstrap to animate
+ //    close(null, 500);
+ //  };
+
+	$scope.close = function(){
+		$modalInstance.close();
+	};
 
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
-			weekNo:'fourWeekly'};
-		for(var i = 0; i < $scope.runPayroll.worker.length; i++){
-			if($scope.runPayroll.worker[i]){
+			payFrequency:$scope.pay.frequency};
+			console.log($scope.pay.frequency);
+		for(var i = 0; i < $scope.p.worker.length; i++){
+			if($scope.p.worker[i]){
 				runParollWorkers.workers.push({_id: $scope.candidates[i]._id});
 			}
 		}
-		console.log(runParollWorkers)
+		console.log(runParollWorkers);
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
-            console.log(response);
-          if (!HttpResource.flushError(response)) {
-          	console.log('donePosting');
-            console.log(response);
-            $modalInstance.close();
-          }
-        });
-	}
+	    // if(!response.data.result){
+	    	$scope.response = response.data.logs;
+	    	console.log($scope.response);
+				$scope.firstStep = false;
+				$scope.secondStep = true;
+	    // }else{
+	    // 	$scope.close();
+	    // }
+    });
+	};
 
-	$scope.close = function(){
-		$modalInstance.dismiss('cancel');
-	}
+
+
 
 }]);	

@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function(){
+module.exports = function(dbs){
 	var _=require('lodash'),
-		timesheetservice=require('../services/timesheetservice')(),
+		timesheetservice=require('../services/timesheetservice')(dbs),
 		Q=require('q');
 
 	var controller = {};
@@ -90,11 +90,11 @@ module.exports = function(){
 
 	controller.postTimesheet = function (req, res) {	
 		var timesheet = req.body;		
-		timesheet.addedBy = req.user.id;
-		timesheet.dateAdded = new Date();
-		timesheet.lastEditedBy = req.user.id;
-		timesheet.dateEdited = new Date();
-		console.log(timesheet);
+		timesheet.createdBy = req.user.id;
+		timesheet.createdDate = new Date();
+		timesheet.updatedBy = req.user.id;
+		timesheet.updatedDate = new Date();
+		
 		timesheetservice.saveTimesheet(null, timesheet)
 			.then(function(response){
 				buildTimesheetVm(response, true)
@@ -106,52 +106,25 @@ module.exports = function(){
 			});
 	};
 
-
-	var fs = require('fs');
-	var sys = require('sys');
-	controller.uploadTimesheet = function(req, res){
-		// var objectName=req.query.fileName;
-		// console.log(objectName);
-		console.log(req.files.fileName);
-		var fileName = req.files.fileName;
-
-		var csvData = parseCsvFile(fileName.path, function(rowData){
-			console.log(rowData);
+	controller.uploadCsv = function(req, res){
+		var timesheetTemplate = req.body.timesheettemplate;
+		var uploadedFile = req.files.file;
+		return timesheetservice.getCSVFile(timesheetTemplate, uploadedFile).then(function(result){
+			res.json({result:true, url: result.url, objects: result.data});
 		});
-
-		res.json({result:true, object:csvData});
 	};
 
-	function parseCsvFile(fileName, callback){
-		var stream = fs.createReadStream(fileName);
-		var iteration = 0, header = [], buffer = '';
-		var pattern = /(?:^|,)("(?:[^"]+)*"|[^,]*)/g;
-		stream.addListener('data', function(data){
-			buffer+=data.toString();
-			var parts = buffer.split('\r\n');
-			parts.forEach(function(d, i){
-				if(i === parts.length-1){
-					return;
-				}
-				if(iteration++ === 0 && i === 0){
-					header = d.split(pattern);
-				}else{
-					callback(buildRecord(d));
-				}
-			});
-			buffer = parts[parts.length-1];
-		});
+	controller.postBulkTimesheet = function(req, res){
+		var timesheetData = req.body;
+		timesheetData.addedBy = req.user.id;
 
-		function buildRecord(str){
-			var record = {};
-			str.split(pattern).forEach(function(value, index){
-				if(header[index] !== ''){
-					record[header[index].toLowerCase()] = value.replace(/"/g, '');
-				}
+		timesheetservice.saveBulkTimesheet(timesheetData)
+			.then(function(response){
+				res.json({result:true, objects:response});
+			},function(err){
+			 	res.sendFailureResponse(err);
 			});
-			return record;
-		}
-	}
+	};
 
 	return controller;
 };

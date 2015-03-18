@@ -1,7 +1,8 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('payrollController',['$rootScope', '$scope', 'HttpResource',
-	function($rootScope,$scope,HttpResource){	
+	function($rootScope,$scope){	
 		console.log('hello');
 	
 	$scope.camelCaseFormate = function(s){
@@ -17,7 +18,7 @@ app.controller('payrollController',['$rootScope', '$scope', 'HttpResource',
     		s = s+ arr.join('');
     	}
     	return s;
-    }
+    };
 
 
 
@@ -36,13 +37,13 @@ app.controller('payrollController',['$rootScope', '$scope', 'HttpResource',
 	
 	$scope.viewAction = function(){
 		$scope.viewAll = ! $scope.viewAll;		
-	}
+	};
 	
 
 	$scope.checkUncheck = function(index){
 		$scope.agencyCheckListValues[$scope.camelCaseFormate($scope.agencyCheckListLabels[index])] = !		
-		$scope.agencyCheckListValues[$scope.camelCaseFormate($scope.agencyCheckListLabels[index])]		
-	}
+		$scope.agencyCheckListValues[$scope.camelCaseFormate($scope.agencyCheckListLabels[index])];		
+	};
 
 $scope.payroll =  {
 weekNumber: 1,
@@ -75,7 +76,7 @@ paymentConfirmed: true,
 reportsCreated: true
 }
 ]
-}
+};
 console.log($scope.payroll);
 
 // HttpResource.model('payroll').create(payroll).post().then(function(response) {

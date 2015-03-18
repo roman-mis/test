@@ -3,9 +3,9 @@
 var Q=require('q'),
 _=require('lodash');
 
-module.exports = function(){
-  var candidatepayrollservice=require('../services/payrollproductservice'),
-    candidateservice=require('../services/candidateservice');
+module.exports = function(db){
+  var candidatepayrollservice=require('../services/payrollproductservice')(db),
+    candidateservice=require('../services/candidateservice')(db);
     var controller={};
 
 
@@ -34,7 +34,8 @@ module.exports = function(){
         taxCode: req.body.taxCode,
         taxBasis: req.body.taxBasis,
         startDate: req.body.startDate,
-        niNumber: req.body.niNumber
+        niNumber: req.body.niNumber,
+        employeesNIpaid: req.body.employeesNIpaid
       };
 
       candidatepayrollservice.updatePayrollTaxDetails(req.params.candidateId, payrollTax).then(function(response){
@@ -168,7 +169,8 @@ module.exports = function(){
             taxBasis: worker.payrollTax.taxBasis,
             taxCode: worker.payrollTax.taxCode,
             startDate: worker.startDate,
-            niNumber: worker.taxDetail.niNumber
+            niNumber: worker.taxDetail.niNumber,
+            employeesNIpaid: worker.taxDetail.employeesNIpaid
           };
       }
     }

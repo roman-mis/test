@@ -1,42 +1,135 @@
-<table>
-	<tr>
-		<td> Bank Name </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.bankName" /> </td>
-	</tr>
-	<tr>
-		<td> Address 1 </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.address1" /> </td>
-	</tr>
-	<tr>
-		<td> Address 2 </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.address2" /> </td>
-	</tr>
-	<tr>
-		<td> Town </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.town" /> </td>
-	</tr>
-	<tr>
-		<td> Country </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.country" /> </td>
-	</tr>
-	<tr>
-		<td> Post Code </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.postcode" /> </td>
-	</tr>
-	<tr>
-		<td> Account name </td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.accountName" /> </td>
-	</tr>
-	<tr>
-		<td> Account Number </td>
-		<td> <input type="number" ng-model="companyProfile.bankDetails.accountNo" /> </td>
-	</tr>
-	<tr>
-		<td> Sort Code </td>
-		<td> <input type="number" ng-model="companyProfile.bankDetails.sortCode" /> </td>
-	</tr>
-	<tr>
-		<td> Payroll Reference &nbsp;</td>
-		<td> <input type="text" ng-model="companyProfile.bankDetails.payrollRef" /> </td>
-	</tr>
-</table>
+	<div class="col-xs-12">
+		<div class="row text-center">
+			<form class="form-horizontal" name="details" novalidate ng-submit="save(details.$valid)">
+			<div class="col-xs-8">
+				
+					<div class="form-group">
+						<label class="control-label col-xs-6">Bank Name</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.bankName" name="bankName" required/>
+							
+							<div ng-show="details.bankName.$invalid && submitted">
+                                 <p ng-show="details.bankName.$error.required">
+                                    Please enter bank name.
+                                 </p>
+							</div>
+						</div> 
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Address 1</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.address1" name="address1" required />
+							<div ng-show="details.address1.$invalid && submitted">
+                            <p ng-show="details.address1.$error.required">
+                            	Please enter address1.
+                            </p>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Address 2</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.address2" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Town</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" name="town" ng-model="companyProfile.bankDetails.town" required />
+							<div ng-show="details.town.$invalid && submitted">
+                                <p ng-show="details.town.$error.required">
+                                   Please enter town name.
+                                </p>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Country</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.country" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Post Code</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.postcode" name="postcode" ng-pattern='/^([A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKS-UW])\ [0-9][ABD-HJLNP-UW-Z]{2}|(GIR\ 0AA)|(SAN\ TA1)|(BFPO\ (C\/O\ )?[0-9]{1,4})|((ASCN|BBND|[BFS]IQQ|PCRN|STHL|TDCU|TKCA)\ 1ZZ))$/' required />
+							<div ng-show="details.postcode.$invalid && submitted">
+                               <p ng-show="details.postcode.$error.required">
+                                 Please enter postal code.
+                               </p>
+                               <p ng-show="details.postcode.$error.pattern">
+                                   Please enter valid postal code.
+                               </p>
+
+						    </div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Account name</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" name="accountName" ng-model="companyProfile.bankDetails.accountName" required />
+							<div ng-show="details.accountName.$invalid && submitted">
+								<p ng-show="details.accountName.$error.required">
+                                  Please enter bank account name.
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Account Number</label>
+						<div class="col-xs-6">
+							<input type="number" class="form-control" name="accountNumber" ng-model="companyProfile.bankDetails.accountNo" ng-maxlength=8 required />
+							<div ng-show="details.accountNumber.$invalid && submitted">
+                             <p ng-show="details.accountNumber.$error.required">
+                                 Please enter bank account number.
+                             </p>
+                             <p ng-show="details.accountNumber.$error.maxlength">Please enter not more than 8 digits.</p>
+                             <p ng-show="!details.accountNumber.$error.required && !details.accountNumber.$error.maxlength">
+                              Please enter valid account number.
+                             </p>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Sort Code</label>
+						<div class="col-xs-6">
+							<input type="number" name="sort" class="form-control" ng-model="companyProfile.bankDetails.sortCode" required ng-maxlength=6/>
+							<div ng-show="details.sort.$invalid && submitted">
+                            <p ng-show="details.sort.$error.required">
+                              Please enter sort code.
+                            </p>
+                            <p ng-show="details.sort.$error.maxlength">
+                             Please enter not more than 6 digits.
+                            </p>
+                            <p ng-show="!details.sort.$error.maxlength && !details.sort.$error.required">
+                             Please enter valid sort code.
+                            </p> 
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-6">Payroll Reference</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" name="roll" ng-model="companyProfile.bankDetails.payrollRef" required />
+							<div ng-show="details.roll.$invalid && submitted">
+                             <p ng-show="details.roll.$error.required">
+                                 Please enter pay roll reference.
+                             </p>
+                             
+							</div>
+						</div>
+					</div>
+			
+				
+			</div>
+			<div class="col-xs-4">
+		       <button type="submit" class="btn btn-success form-control"  ng-disabled="taxForm.$invalid || isTaxSaving">
+		        <div>Save  <i class="fa fa-save"></i></div>
+		      
+		      </button>
+			</div>
+		</form>
+		</div>		
+	</div>
+
+

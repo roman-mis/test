@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('origApp.controllers');
 
 app.controller('templatesController',['$rootScope', '$scope','$location','HttpResource', 'adminTemplate',
@@ -10,55 +11,54 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
                               ];
 
 	$scope.getImage = function(v){
+    // console.log('v ==========> ' + v)
 		var img= '';
-  //   switch(v){
-		// 	case 'call_log':
-		// 		img='/images/64px/0101-database.png';
-		// 	break;
-		// 	case 'task':
-		// 		img='/images/64px/0275-spell-check.png';
-		// 	break;
-		// 	case 'document':
-		// 		img='/images/64px/0049-folder-open.png';
-		// 	break;
-		// 	case 'email':
-		// 		img='/images/64px/0070-envelop.png';
-		// 	break;
-		// 	case 'invoice':
-		// 		img='/images/64px/0039-file-text2.png';
-		// 	break;
-		// 	default:
-		// 		img="";
-		// }
+    switch(v){
+			case 'call_log':
+				img='/images/64px/0101-database.png';
+			break;
+			case 'task':
+				img='/images/64px/0275-spell-check.png';
+			break;
+			case 'document':
+				img='/images/64px/0049-folder-open.png';
+			break;
+			case 'email':
+				img='/images/64px/0070-envelop.png';
+			break;
+			case 'invoice':
+				img='/images/64px/0039-file-text2.png';
+			break;
+			default:
+				img="";
+		}
+    // console.log('img ==========> ' + img)
 		return img;
-	}
+	};
 	  $scope.gridOptions={
-		columns:["1" ,'Name','Type','Last Edited','Created','Action'],
-		rowdata:['name','subType','updatedDate','createdDate'],
-		allData:[],
-		data:[],
-    image:$scope.image,
-		getImage:$scope.getImage,
-		limit: 20,
-        totalItems: 0,
-        isPagination: false,
-        onLimitChanged: function() {
-          $scope.loadAllAdminTemplates();
-        },
-        onPageChanged: function() {
-          $scope.loadAllAdminTemplates();
-        }
+  		columns:['1' ,'Name','Type','Last Edited','Created','Action'],
+  		rowdata:['name','subType','updatedDate','createdDate'],
+  		allData:[],
+  		data:[],
+      image:$scope.image,
+  		getImage:$scope.getImage,
+  		limit: 20,
+      totalItems: 0,
+      isPagination: false,
+      onLimitChanged: function() {
+        $scope.loadAllAdminTemplates();
+      },
+      onPageChanged: function() {
+        $scope.loadAllAdminTemplates();
+      }
 	  };
 	  
 	  $scope.go = function(path) {
     	console.log(path);
  		$location.path(path);
-	  }
+	  };
 
-	  for (var i = 0;i<10;i++){
-		$scope.gridOptions.data[i]=[];
-		
-	  }
+	  
 
 
       $scope.ableLoadMore = false;
@@ -67,6 +67,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 	  //trigger filtering after 500ms from the last typing
 	  var searchTimerPromise = null;
 	  $scope.onDelaySearch = function() {
+      //$timeout is angular's; jshint pls
 	    $timeout.cancel(searchTimerPromise);
 	    searchTimerPromise = $timeout(function() {
 	      $scope.loadAllAdminTemplates();
@@ -74,14 +75,15 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 	  };
 
     $scope.search = function(){
-      console.log("searching " + $scope.filterName)
+      console.log('searching' + $scope.filterName);
       $scope.loadAllAdminTemplates();
-    }
+    };
           // HTTP resource
     var acAPI = HttpResource.model('admin/templates');
 
     $scope.loadAllAdminTemplates = function() {
       var params = {};
+      console.log('$scope.gridOptions.limit ==> ' + $scope.gridOptions.limit);
       if ($scope.gridOptions.limit) {
         params._limit = $scope.gridOptions.limit;
       }
@@ -97,7 +99,11 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
       console.log(params);
       console.log($scope.gridOptions.data);
 
-      $scope.gridOptions.allData = acAPI.query(params, function(data) {
+      $scope.gridOptions.allData = acAPI.query(params, function() {
+        console.log('*************************');
+        console.log($scope.gridOptions.allData.meta.totalCount);
+        $scope.gridOptions.totalItems = $scope.gridOptions.allData.meta.totalCount;
+
         $scope.gridOptions.data = [];
         for(var i = 0; i < $scope.gridOptions.allData.length; i++){
         	$scope.gridOptions.data[i] =[];
@@ -118,26 +124,26 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
     $scope.gridOptions.loadAdminTemplate = function(index) {
     	var id = $scope.gridOptions.allData[index]._id;
-      HttpResource.model('admin/templates/'+id)
-      .query({},function(data) {
-        console.log(data)
-        adminTemplate.details = data.data.object;
-        console.log(adminTemplate.details)
-        $location.path('/admin/add_new/edite');
-      });
+    	adminTemplate.details = $scope.gridOptions.allData[index];
+        $location.path('/admin/add_new/edit');
+      //HttpResource.model('admin/templates/'+id)
+      //.query({},function(data) {
+      //  console.log(data);
+      //  console.log(adminTemplate.details);
+      //});
     };
 
     $scope.gridOptions.clone = function(index) {
     	adminTemplate.details = $scope.gridOptions.allData[index];
-    	console.log(adminTemplate)
+    	console.log(adminTemplate);
     };
 
      $scope.gridOptions.deleteAdminTemplate = function(index) {
-     	 if (!confirm('Are you sure to delete this template?')) {
+     	 if (!window.confirm('Are you sure to delete this template?')) {
         return;
       }
     	var id =$scope.gridOptions.allData[index]._id;
-    	console.log(id)
+    	console.log(id);
       HttpResource.model('admin/templates')
       .delete(id).then(function(result){
         console.log('*****');

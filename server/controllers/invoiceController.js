@@ -3,8 +3,8 @@
 
 module.exports = function(){
 	var _=require('lodash'),
-		invoiceservice=require('../services/invoiceservice')(),
-		Q = require('q');
+		invoiceservice=require('../services/invoiceservice')();
+		// Q = require('q');
 
 	var controller={};
 		 
@@ -34,12 +34,14 @@ module.exports = function(){
 			var newInvoice=req.body;
 
 			invoiceservice.saveInvoice((type==='patch'?req.params.id:null), newInvoice).then(function(invoice){
+				console.log('controller true')
 				// buildInvoiceVm(invoice, true)
 		  //       .then(function(_invoice){
 	   //        		res.json({result:true, object:_invoice});
 		  //       },res.sendFailureResponse);
 				res.json({result:true, object:invoice});
 			},function(err){
+				console.log('controller false')
 			 	res.sendFailureResponse(err);
 			});
 		}
@@ -72,19 +74,19 @@ module.exports = function(){
 			};
 		}
 
-		function buildInvoiceVm(invoice, reload){
-			return Q.Promise(function(resolve, reject){
-				if(reload){
-					return invoiceservice.getInvoice(invoice._id, true)
-		      		.then(function(invoice){
-		      			var invoiceVm = getInvoiceVm(invoice);
-		      			resolve({result:true, object: invoiceVm});
-		      		},reject);
-				}else{
-					getInvoiceVm(invoice);
-				}
-			});
-		}
+		// function buildInvoiceVm(invoice, reload){
+		// 	return Q.Promise(function(resolve, reject){
+		// 		if(reload){
+		// 			return invoiceservice.getInvoice(invoice._id, true)
+		//       		.then(function(invoice){
+		//       			var invoiceVm = getInvoiceVm(invoice);
+		//       			resolve({result:true, object: invoiceVm});
+		//       		},reject);
+		// 		}else{
+		// 			getInvoiceVm(invoice);
+		// 		}
+		// 	});
+		// }
 
  return controller;
 };

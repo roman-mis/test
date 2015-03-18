@@ -1,6 +1,10 @@
 'use strict';
 var Q=require('q');
 
+function saveSystemModel(systemModel){
+	return Q.nfcall(systemModel.save.bind(systemModel));
+}
+
 module.exports=function(dbs){
 	var db = dbs,
 		
@@ -99,12 +103,14 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getSystem=function(){
-		var q=db.System.findOne();
+	service.getSystem=function(){		
 		return Q.Promise(function(resolve,reject){
+			var q=db.System.findOne();
 			return Q.nfcall(q.exec.bind(q))
 				.then(function(system){
+
 					if(system){
+						console.log('we r resolving');
 						resolve(system);
 					}
 					else{
@@ -198,6 +204,4 @@ module.exports=function(dbs){
 	return service;
 };
 
-function saveSystemModel(systemModel){
-	return Q.nfcall(systemModel.save.bind(systemModel));
-}
+

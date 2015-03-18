@@ -1,4 +1,4 @@
-<div class=container">
+
 <div class="orig-grid-wrapper">
   <table class="table orig-grid">
     <thead>
@@ -12,7 +12,7 @@
       </tr>
       <tr  ng-repeat="raw in options.data" >
         <td   class="col-xs-1 text-center">
-          <img style="width:20px;height:20px" ng-src='{{options.getImage(options.allData[$index].templateTechnique)}}' alt="">
+          <img style="width:20px;height:20px" ng-src='{{options.getImage(options.allData[$index].templateType)}}' alt="">
         </td>
         <td class="col-xs-2 text-center" ng-repeat="col in raw track by $index">
           {{col| date:'yyyy-MM-dd'}}
@@ -47,4 +47,4 @@
       num-pages="options.numPages"></pagination>
   </div>
 </div>
-</div>
+

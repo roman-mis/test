@@ -3,7 +3,6 @@
 module.exports=function(dbs){
 
 var Q=require('q');
-var utils=require('../../utils/utils');
 var systemservice = require('../../services/systemservice')(dbs);
 var service = {};
 
@@ -13,9 +12,13 @@ service.saveMileageRates = function(mileageRatesInfo){
 			.then(function(systemModel){
 				if(systemModel){
 					console.log('edit');
+					console.log(mileageRatesInfo);
+					systemModel.mileageRates = [];
+					console.log(systemModel);
 					
-					utils.updateSubModel(systemModel.mileageRates, mileageRatesInfo);
-					return Q.nfcall(systemModel.save.bind(systemModel))
+					systemModel.mileageRates = mileageRatesInfo;
+					// systemModel.markModified('mileageRates');
+					return Q.all([Q.nfcall(systemModel.save.bind(systemModel))])
 					.then(function(){
 							resolve(systemModel);
 						},reject);				}

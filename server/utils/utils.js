@@ -80,10 +80,11 @@ module.exports=utils={
 		return props;
 	},
 	updateSubModel:function(model,viewmodel){
+		console.log(model);
+		console.log(viewmodel);
 		var props=[];
 		model=model||{};
 		_.forEach(viewmodel,function(val,key){
-					
 					if(val!==undefined && key!=='_id'){
 						model[key]=val;
 						props.push(key);
@@ -184,6 +185,42 @@ module.exports=utils={
 		res.write(data.Body);
 		res.end();
   	console.log('file sent');
+	},
+	readCsvFromFile: function(filePath){
+		var csv = require('fast-csv');
+		return Q.Promise(function(resolve){
+			var csvData = [], header=[], headerFlag=false;
+			csv
+			 .fromPath(filePath)
+			 .on('data', function(data){
+				if(!headerFlag){
+					header = data; console.log(header);
+					headerFlag = true;
+				}else{
+					var record = {};
+					data.forEach(function(value, index){
+						if(header[index] !== ''){
+							// Converting to Camel Case
+							var headerName = header[index]
+								.toLowerCase()
+								.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+						        .replace(/\s/g, '')
+						        .replace(/^(.)/, function($1) { return $1.toLowerCase(); }); 
+							record[headerName] = value.replace(/"/g, '') || null;
+						}
+					});
+					csvData.push(record);
+				}
+			 }).on('end', function(){
+			     resolve(csvData);
+			 });
+		});
+	},
+	camelize: function(randomString){
+		return randomString
+	        .toLowerCase()
+	        .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+	        .replace(/\s/g, '')
+	        .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
 	}
-	
 };

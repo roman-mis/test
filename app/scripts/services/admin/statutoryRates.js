@@ -18,7 +18,7 @@ angular.module('origApp.services')
           d.resolve(statutoryRates);
         }
         else {
-          d.reject("no data");
+          d.reject('no data');
         }
       });
     }

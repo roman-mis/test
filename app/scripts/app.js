@@ -29,7 +29,9 @@ angular.module('origApp', [
   'colorpicker.module',
   'wysiwyg.module',
   'angular.filter',
-  'ui.sortable'
+  'ui.sortable',
+  'angularFileUpload',
+  'ui-notification'
   //,
  // 'gm.datepickerMultiSelect'
 ])

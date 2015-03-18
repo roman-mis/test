@@ -1,14 +1,14 @@
 'use strict';
 
-var adminExpenseRatesService = require('../../services/admin/adminExpenseRatesSerivce');
+// var adminExpenseRatesService = require('../../services/admin/adminExpenseRatesSerivce');
 
 module.exports = function() {
     
     return {
-        getExpenseRates: function(req, res) {
+        getExpenseRates: function() {
             
         },
-        saveExpenseRates: function(req, res) {
+        saveExpenseRates: function() {
             
         }
     };

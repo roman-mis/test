@@ -1,62 +1,49 @@
 'use strict';
+module.exports=function(db){
+
 var db 			= require('../../models');
 var Q 			= require('q');
-var queryutils 	= require('../../utils/queryutils')(db);
-var service 	= {};
+var utils=require('../../utils/utils');
+// var queryutils 	= require('../../utils/queryutils')(db);
+var systemservice = require('../../services/systemservice')(db);
+var service = {};
 
-service.getAllAdminCompanyProfile = function(request){
-	console.log('request');
-	console.log(request);
-	return Q.Promise(function(resolve, reject){
-		var q = db.System.find();
-		queryutils.applySearch(q,db.System,request)
-		.then(resolve, reject);
-	});
+service.updateAdminCompanyProfile = function(name,val){
+
+    var q=Q.defer();
+    systemservice.getSystem()
+    	.then(function(system){
+             
+    		if(name==='contact'){
+
+    			utils.updateSubModel(system.companyProfile.contact,val);
+
+		    }else if(name === 'accounts'){
+				utils.updateSubModel(system.companyProfile.accounts,val);	
+
+		    }else if(name === 'bankDetails'){
+				utils.updateSubModel(system.companyProfile.bankDetails,val);		    	
+		    	
+		    }else if(name === 'defaults'){
+		    	utils.updateSubModel(system.companyProfile.defaults,val);		    	
+			}
+				console.log('------system-------');
+			 return Q.nfcall(system.save.bind(system)); 
+			
+    	})
+    	 .then(q.resolve,q.reject);
+
+  
+	return q.promise;
 };
 
-service.saveAdminCompanyProfile = function(companyProfile){
+service.saveAdminCompanyProfile = function(name,companyProfile){
 	return Q.Promise(function(resolve,reject){
-		var doc = db.System({companyProfile: companyProfile});
-		return Q.all([Q.nfcall(doc.save.bind(doc))])
-		.then(function(){
-			console.log('save done');
-			resolve({});
-		}, reject);
+		service.updateAdminCompanyProfile(name,companyProfile).then(function(){
+           resolve({});
+		},reject);		
 	});
-};
+};  
 
-service.editAdminCompanyProfile = function(id, companyProfile){
-	return Q.Promise(function(resolve,reject){
-		service.getAdminCompanyProfile(id)
-		.then(function(doc){
-			doc.companyProfile = companyProfile;
-			return Q.all([Q.nfcall(doc.save.bind(doc))])
-			.then(function(){
-				console.log('save done');
-				resolve({});
-			}, reject);
-		});
-	});
+return service;
 };
-
-service.deleteAdminCompanyProfile = function(){
-	// not implemented yet
-	console.log('deleteAdminCompanyProfile');
-};
-
-service.getAdminCompanyProfile = function(id){
-	var query = db.System.findOne({'_id':id});
-	return Q.Promise(function(resolve,reject){
-		Q.nfcall(query.exec.bind(query))
-		.then(function(doc){
-				if(doc){
-					resolve(doc);
-				}
-				else{
-					reject({result:false,name:'NOTFOUND',message:'admin template not found'});
-				}
-			}, reject);
-	});
-};
-
-module.exports = service;
