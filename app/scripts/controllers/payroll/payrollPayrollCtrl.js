@@ -33,12 +33,6 @@ app.controller("payrollPayrollCtrl",
             console.log(data);
         });
 
-        HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('', {}, function (agencies) {
-            console.log('agencies done !!');
-            console.log(agencies);
-            $scope.agencies = agencies.data.objects;
-        });
-
         $scope.fields = [
                           {
                               "_id": "54fff16865c23dc23e602549",

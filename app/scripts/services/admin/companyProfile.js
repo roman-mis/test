@@ -26,12 +26,23 @@ angular.module('origApp.services')
     return d.promise;
   }
 
-  function _saveCompanyProfile(data, docId){
+  function _saveCompanyProfile(data, docId, tab){
+    console.log(docId);
     var d = $q.defer();
-    companyProfile = data;
+  //  var data='data.'+tab;
+  if(tab==='/profile'){
+    companyProfile=data.contact;
+  }else if(tab==='/accounts'){
+    companyProfile=data.accounts;
+  }else if(tab ==='/bankDetails'){
+    companyProfile = data.bankDetails;
+  }else if(tab ==='/defaults'){
+    companyProfile = data.defaults;
+  }
+  console.log(companyProfile);
     console.log(data);
     if (docId){
-      HttpResource.model('systems/companyProfile/' + docId)
+      HttpResource.model('systems/companyProfile/' + docId + tab)
       .create(companyProfile).post().then(function(result){
         console.log(result);
       });

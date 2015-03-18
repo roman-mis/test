@@ -93,7 +93,8 @@ module.exports=function(db){
 			filterBy:{},
 			sortBy:{}
 		};
-
+         console.log('rest middle ware');
+         console.log(req.query._include);
 		if(req.query._include){
 			var includes=_.map(req.query._include.split(','),
 				function(el){

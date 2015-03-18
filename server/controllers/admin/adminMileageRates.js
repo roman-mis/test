@@ -11,7 +11,7 @@ module.exports = function(dbs){
 	  		console.log('system');
 	  		console.log(system);
 	  		var mileageRatesVm=getMileageRatesVm(system);
-		    res.json({result:true, object:mileageRatesVm});
+		    res.json({result:true, objects:mileageRatesVm});
 	  	},function(err){
 	  		res.sendFailureResponse(err);
 	  	});    

@@ -21,23 +21,20 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		// get company profile from the server
 		CompanyProfileService.getCompanyProfile().then(function(data){
 			if(data.companyProfile){
-				$scope.companyProfile = data.companyProfile;
+				$scope.companyProfile =data.companyProfile[0].companyProfile;
 			}
-			docId = data.id;
+
+			$scope.docId = data.companyProfile[0]._id;
 		});
 		 $scope.isTabActive = function(stateKey) {
             return $state.includes('app.admin.' + stateKey);
           };
 
 		$scope.save = function(val){
-			if(val){
-
-
-			CompanyProfileService.saveCompanyProfile($scope.companyProfile, docId);
-		}else{
-
-			$scope.submitted=true;
-		}
+			console.log(val);
+			console.log($scope.companyProfile);
+			CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/profile');
+		
 		};
 
 	}]);
