@@ -81,5 +81,7 @@ router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
 router.post('/:id/expenses', expensecontroller.postExpense);
 router.get('/expenses/:id', expensecontroller.getExpense);
 
+router.get('/:id/candidateExpenses',expensecontroller.getCandidateExpenses);
+
 router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);
 router.get('/:id/vehicleinformation/:code', candidatecontroller.getVehicleInformation);
