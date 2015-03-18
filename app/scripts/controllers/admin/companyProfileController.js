@@ -6,7 +6,7 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
         
 		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
 			{link: '/admin/home', text: 'Admin'},
-			{link: '/admin/company_profile/contact', text: 'Company Profile'}
+			{link: '/admin/companyProfile/contact', text: 'Company Profile'}
 		];
 
 		$scope.companyProfile = {};
@@ -33,7 +33,7 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
 		$scope.save = function(val){
 			console.log(val);
 			console.log($scope.companyProfile);
-			CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/profile');
+			CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/contact');
 		
 		};
 

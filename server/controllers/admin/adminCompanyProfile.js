@@ -20,7 +20,7 @@ module.exports = function(db){
 	controller.saveAdminCompanyProfile = function(req, res){
 		adminCompanyProfileService.saveAdminCompanyProfile(req.params.id,req.params.name,req.body)
 		.then(function(system){
-		    res.json({result:true, object: 'vm'});
+		    res.json({result:true});
 		},function(err){
 			console.log(err + 'err');
 			res.sendFailureResponse(err);

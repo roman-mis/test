@@ -30,7 +30,7 @@ angular.module('origApp.services')
     console.log(docId);
     var d = $q.defer();
   //  var data='data.'+tab;
-  if(tab==='/profile'){
+  if(tab==='/contact'){
     companyProfile=data.contact;
   }else if(tab==='/accounts'){
     companyProfile=data.accounts;

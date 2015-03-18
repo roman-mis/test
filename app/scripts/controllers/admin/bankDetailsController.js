@@ -5,7 +5,7 @@ app.controller('bankDetailsController',['$scope', '$location', 'HttpResource', '
 	function($scope, $location, HttpResource, $rootScope,$state,CompanyProfileService){
 	$rootScope.breadcrumbs.splice(3,$rootScope.breadcrumbs.length-1);
 
-    $rootScope.breadcrumbs.push({link: '/admin/company_profile/bank_details', text: 'Bank Details'});
+    $rootScope.breadcrumbs.push({link: '/admin/companyProfile/bankDetails', text: 'Bank Details'});
 
 
         $scope.isTabActive = function(stateKey) {

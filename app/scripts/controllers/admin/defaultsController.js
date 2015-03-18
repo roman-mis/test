@@ -5,7 +5,7 @@ app.controller('defaultsController',['$scope', '$rootScope','$state','CompanyPro
 	function($scope, $rootScope,$state, CompanyProfileService){
 		$rootScope.breadcrumbs.splice(3,$rootScope.breadcrumbs.length-1);
 		$rootScope.breadcrumbs.push(
-		{link: '/admin/home/company_profile/defaults', text: 'Defaults'});
+		{link: '/admin/home/companyProfile/defaults', text: 'Defaults'});
 
 
 		 $scope.isTabActive = function(stateKey) {

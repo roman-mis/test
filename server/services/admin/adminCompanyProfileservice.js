@@ -15,18 +15,18 @@ console.log(val);
     	.then(function(system){
     		
     		////console.log(system);
-    		if(name.toLowerCase()==='profile'){
+    		if(name.toLowerCase()==='contact'){
     			utils.updateSubModel(system.contact,val);
+    			console.log(val);
 
 		    }else if(name.toLowerCase() === 'accounts'){
 				utils.updateSubModel(system.accounts,val);		    	
 		    }else if(name.toLowerCase() === 'bankdetails'){
 				utils.updateSubModel(system.bankDetails,val);		    	
-		    	
+		    	console.log(val);
 		    }else if(name.toLowerCase() === 'defaults'){
 		    	utils.updateSubModel(system.defaults,val);		    	
 			}
-			//console.log('system.save');
 				console.log('------system-------');
 			 return Q.nfcall(system.save.bind(system));
 			
