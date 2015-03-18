@@ -104,7 +104,7 @@ module.exports=function(dbs){
 	};
 
 	service.getSystem=function(){
-		var q=db.System.find();
+		var q=db.System.findOne();
 		return Q.Promise(function(resolve,reject){
 			return Q.nfcall(q.exec.bind(q))
 				.then(function(system){
