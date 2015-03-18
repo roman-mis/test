@@ -4,7 +4,9 @@
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped">
+                    <!--Big table-->
                     <thead>
+                        <!--First green row-->
                         <tr>
                             <th></th>
                             <th>Category</th>
@@ -45,11 +47,13 @@
                             <th></th>
                             <th></th>
                         </tr>
-                    </thead>
+                    </thead> <!--First green row-->
                     <tbody>
-                        <tr>
+                        <!--First table body-->
+                        <tr ng-repeat-start="user in users">
+                            <!--big table basic row-->
                             <td>
-                                <a data-toggle="collapse" data-target="#accordion" class="clickable"><i class="fa fa-minus-square-o"></i></a>
+                                <a data-toggle="collapse" data-target="{{'#accordion'+$index}}" class="clickable"><i class="fa fa-minus-square-o"></i></a>
                             </td>
                             <td>Category</td>
                             <td>Type</td>
@@ -64,11 +68,13 @@
                             </td>
                             <td></td>
                             <td></td>
-                        </tr>
-                        <tr>
+                        </tr> <!--big table basic row-->
+                        <tr ng-repeat-end>
+                            <!--big table detailed row-->
                             <td colspan="12" class="td-collapsed">
-                                <div id="accordion" class="collapse">
+                                <div id="{{'accordion'+$index}}" class="collapse">
                                     <table class="table table-striped table-container">
+                                        <!--user details table-->
                                         <thead>
                                             <tr>
                                                 <th>
@@ -88,11 +94,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <!--category-->
+                                            <tr ng-repeat-start="cat in categories">
+                                                <!--category basic info-->
                                                 <td>
-                                                    <a data-toggle="collapse" data-target="#accordion-inner-1" class="clickable"><i class="fa fa-minus-square-o"></i></a>
+                                                    <a data-toggle="collapse" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable"><i class="fa fa-minus-square-o"></i></a>
                                                 </td>
-                                                <td>Other</td>
+                                                <td>{{cat}}</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -128,7 +136,7 @@
                                                             <li>
                                                                 <a style="cursor:pointer">Inverse Selection</a>
                                                             </li>
-                                                            <li>
+                                                            <li ng-click="editSelected({'user':user,'cat':cat})">
                                                                 <a style="cursor:pointer">Edit</a>
                                                             </li>
                                                             <li>
@@ -137,124 +145,79 @@
                                                         </ul>
                                                     </div>
                                                 </td>
-                                            </tr>
-
-                                        <td colspan="12" class="td-collapsed">
-                                            <div id="accordion-inner-1" class="collapse">
-                                                <table class="table table-striped">
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" />
-                                                        </td>
-                                                        <td></td>
-                                                        <td>Accommodation</td>
-                                                        <td>dd/mm/yyyy</td>
-                                                        <td>&pound;125.00</td>
-                                                        <td>&pound;00.00</td>
-                                                        <td>&pound;00.00</td>
-                                                        <td>&pound;125.00</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <a style="cursor:pointer" data-toggle="dropdown">
-                                                                    <i class="fa fa-picture-o present"></i>
-                                                                </a>
-                                                                <ul class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                    <li>
-                                                                        <a style="cursor:pointer">View</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Add</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Delete</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Print</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td>Submitted</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" />
-                                                        </td>
-                                                        <td></td>
-                                                        <td>Professional fees</td>
-                                                        <td>dd/mm/yyyy</td>
-                                                        <td>&pound;39.00</td>
-                                                        <td>&pound;00.00</td>
-                                                        <td>&pound;00.00</td>
-                                                        <td>&pound;39.00</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <a style="cursor:pointer" data-toggle="dropdown">
-                                                                    <i class="fa fa-picture-o present"></i>
-                                                                </a>
-                                                                <ul class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                    <li>
-                                                                        <a style="cursor:pointer">View</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Add</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Delete</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Print</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td>Submitted</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" />
-                                                        </td>
-                                                        <td></td>
-                                                        <td>Insurance</td>
-                                                        <td>dd/mm/yyyy</td>
-                                                        <td>&pound;39.00</td>
-                                                        <td>&pound;00.00</td>
-                                                        <td>&pound;00.00</td>
-                                                        <td>&pound;39.00</td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <a style="cursor:pointer" data-toggle="dropdown">
-                                                                    <i class="fa fa-picture-o absent"></i>
-                                                                </a>
-                                                                <ul class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                    <li>
-                                                                        <a style="cursor:pointer">View</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Add</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Delete</a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a style="cursor:pointer">Print</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                        <td>Unsubmitted</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </td>
-                    </tbody>
-                </table>
+                                            </tr> <!--category basic info-->
+                                            <tr ng-repeat-end> <!--category detailed info-->
+                                                <td colspan="12" class="td-collapsed">
+                                                    <div id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" class="collapse">
+                                                        <table class="table table-striped">
+                                                            <tr ng-repeat="item in data | filter:cat">
+                                                                <td>
+                                                                    <input type="checkbox" ng-model="checked[user][cat][$index]"/>
+                                                                </td>
+                                                                <td></td>
+                                                                <td>{{item.type}}</td>
+                                                                <td>{{item.date}}</td>
+                                                                <td>&pound;{{item.value}}</td>
+                                                                <td>&pound;{{item.amount}}</td>
+                                                                <td>&pound;{{item.vat}}</td>
+                                                                <td>&pound;{{item.total}}</td>
+                                                                <td ng-if="item.status== 'Submitted'">
+                                                                    <div class="dropdown">
+                                                                        <a style="cursor:pointer" data-toggle="dropdown">
+                                                                            <i class="fa fa-picture-o present"></i>
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
+                                                                            <li>
+                                                                                <a style="cursor:pointer">View</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a style="cursor:pointer">Add</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a style="cursor:pointer">Delete</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a style="cursor:pointer">Print</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </td>
+                                                                <td ng-if="item.status== 'Unsubmitted'">
+                                                                    <div class="dropdown">
+                                                                        <a style="cursor:pointer" data-toggle="dropdown">
+                                                                            <i class="fa fa-picture-o absent"></i>
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
+                                                                            <li>
+                                                                                <a style="cursor:pointer">View</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a style="cursor:pointer">Add</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a style="cursor:pointer">Delete</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a style="cursor:pointer">Print</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </td>
+                                                                <td>{{item.status}}</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr><!--category detailed info-->
+                                        </tbody>
+                                    </table> <!--user details table-->
+                                </div>
+                            </td>
+                        </tr> <!--big table detailed row-->
+                    </tbody> <!--First table body-->
+                </table> <!--Big table-->
             </div>
         </div>
     </div>
