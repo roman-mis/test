@@ -198,6 +198,10 @@ module.exports = function(){
       res.json(dataList.candidateStatus);
     };
 
+    controller.getCandidateProfile = function (req, res) {
+        res.json(dataList.candidateProfile);
+    };
+
 
   return controller;
 };
