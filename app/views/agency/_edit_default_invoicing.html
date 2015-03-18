@@ -7,7 +7,10 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-xs-8 col-sm-7">Holiday Pay included</label>
+                        <div class="col-xs-8 col-sm-7">
+                            <label>Holiday Pay included</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-xs-4 col-sm-5">
                             <!--<div class="make-switch">
                               <label class="switch_wrap pull-right" for="field">
@@ -19,7 +22,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-8 col-sm-7">Employers NI included</label>
+                        <div class="col-xs-8 col-sm-7">
+                            <label>Employers NI included</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-xs-4 col-sm-5">
                             <!--<div class="make-switch">
                               <label class="switch_wrap pull-right" for="fieldNI">
@@ -31,7 +37,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-8 col-sm-7">VAT charged</label>
+                        <div class="col-xs-8 col-sm-7">
+                            <label>VAT charged</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-xs-4 col-sm-5">
                             <!--<div class="make-switch pull-right">
                                 <label class="switch_wrap" for="fieldVAT">
@@ -45,7 +54,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-6">Invoice Method</label>
+                        <div class="col-sm-6">
+                            <label>Invoice Method</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="data.invoiceMethod"
                                     ng-options="item.code as item.description for item in invoiceMethods"
@@ -53,7 +65,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-6">Invoice Design</label>
+                        <div class="col-sm-6">
+                            <label>Invoice Design</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="data.invoiceDesign"
                                     ng-options="item._id as item.name for item in invoiceDesigns"
@@ -65,7 +80,10 @@
             <div class="row">
                 <div class="col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label class="col-sm-6">Invoice Email Primary</label>
+                        <div class="col-sm-6">
+                            <label>Invoice Email Primary</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <input class="form-control" ng-model="data.invoiceEmailPrimary" ng-required="status == 'Live'? true:false" ng-pattern="emailPat">
                         </div>
@@ -81,7 +99,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-6">Payment Terms</label>
+                        <div class="col-sm-6">
+                            <label>Payment Terms</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="data.paymentTerms"
                                     ng-options="item.code as item.description for item in paymentTerms"
@@ -91,7 +112,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-6">Invoice to</label>
+                        <div class="col-sm-6">
+                            <label>Invoice to</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="data.invoiceTo"
                                     ng-options="item._id as item.name for item in agency.branches"

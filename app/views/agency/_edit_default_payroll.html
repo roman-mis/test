@@ -7,7 +7,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label class="col-sm-6">Product Type</label>
+                        <div class="col-sm-6">
+                            <label>Product Type</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="data.productType"
                                     ng-options="item.code as item.description for item in serviceUsed"
@@ -15,7 +18,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-9 col-sm-6">Margin Charged to agency</label>
+                        <div class="col-xs-9 col-sm-6">
+                            <label>Margin Charged to agency</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-xs-3 col-sm-6">
                             <!--<div class="make-switch">
                               <label class="switch_wrap pull-right" for="fieldMargin">
@@ -27,7 +33,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-6">Margin Type</label>
+                        <div class="col-sm-6">
+                            <label>Margin Type</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <select class="form-control" ng-model="data.marginType"
                                     ng-options="item.code as item.description for item in marginTypes"
@@ -35,7 +44,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-6">Margin Amount</label>
+                        <div class="col-sm-6">
+                            <label>Margin Amount</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <div class="input-group-addon">&#163;</div>
@@ -45,7 +57,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-6">Holiday Amount</label>
+                        <div class="col-sm-6">
+                            <label>Holiday Amount</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <div class="input-group-addon">&percnt;</div>
