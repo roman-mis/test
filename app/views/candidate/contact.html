@@ -44,7 +44,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-3 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]">
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live'&&($index == 0||$index==1||$index==2)">
         </div>
       </div>
     </form>
@@ -67,7 +67,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-3 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'">
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'" ng-required = "candidate.status == 'Live'&&($index == 0||$index==3||$index==4||$index==5)">
           <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name=='nationality'">
             <ui-select-match>{{$select.selected.description}}</ui-select-match>
             <ui-select-choices repeat="item.code as item in nationalities | filter: $select.search">{{item.description}}</ui-select-choices>
@@ -87,14 +87,14 @@
 
 <script type="text/ng-template" id="views/candidate/_bank_details_edit.html">
   <div class="modal-header">
-    <h3 class="modal-title">Edit Primary Address</h3>
+    <h3 class="modal-title">Edit Bank Details</h3>
   </div>
   <div class="modal-body">
     <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-4 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]">
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live' && ($index == 0||$index==1||$index==2||$index==3)" ng-maxlength='{{field.maxLength}}'>
         </div>
       </div>
     </form>
