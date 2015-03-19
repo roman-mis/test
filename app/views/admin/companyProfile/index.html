@@ -1,0 +1,38 @@
+<a class="pull-right pointer" ng-click="direction('back')" ui-sref="app.admin.home"><i class="fa fa-reply"></i>&nbsp; Back</a>
+<br />
+
+<div class="candidate-layout">
+  <div class="candidate-center">
+    <!-- <div ng-include="'views/candidate/_meta.html'"></div> -->
+
+    <div class="candidate-main meta-box container-fluid">
+      
+      <section class="tabs-wrapper row">
+        <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
+          <li ng-class="{active: isTabActive('companyProfile.contact')}">
+            <a ui-sref="app.admin.companyProfile.contact">Contact</a>
+          </li>
+          <li ng-class="{active: isTabActive('companyProfile.accounts')}">
+            <a ui-sref="app.admin.companyProfile.accounts">Accounts</a>
+          </li>
+          <li ng-class="{active: isTabActive('companyProfile.bankDetails')}">
+            <a ui-sref="app.admin.companyProfile.bankDetails">Bank Details</a>
+          </li>
+          <li ng-class="{active: isTabActive('companyProfile.defaults')}">
+            <a ui-sref="app.admin.companyProfile.defaults">Defaults</a>
+          </li>
+          
+        </ul>
+        <div class="tab-content col-xs-12">
+          <div ui-view></div>
+          <br />
+		  <div class="col-xs-12 text-center">
+			<!--<button class="btn btn-success" ng-click="save()"> Save </button> -->
+		  </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+</div>

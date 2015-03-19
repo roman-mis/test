@@ -13,4 +13,4 @@ module.exports = function(app){
 };
 
 router.get('/', controller.getAdminCompanyProfile);
-router.post('/:id/:name', controller.saveAdminCompanyProfile);
+router.post('/:name', controller.saveAdminCompanyProfile);
