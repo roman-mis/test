@@ -197,9 +197,9 @@ module.exports = function(){
     controller.getCandidateStatus = function(req,res){
       res.json(dataList.candidateStatus);
     };
-
+    
     controller.getCandidateProfile = function (req, res) {
-        res.json(dataList.candidateProfile);
+        res.json(dataList.candidateProfile[req.params.type]);
     };
 
 
