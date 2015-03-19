@@ -50,8 +50,6 @@ input[disabled] {
 
 .modal-open {
     overflow: hidden;
-    width: calc(100% - 17px); //for chrome/safari
-    width: -moz-calc(100% - 16px); //for firefox
 }
 
 .modal-lg {
