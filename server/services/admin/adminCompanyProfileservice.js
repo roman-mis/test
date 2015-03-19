@@ -1,5 +1,5 @@
 'use strict';
-module.exports=function(db){
+module.exports=function(){
 
 var db 			= require('../../models');
 var Q 			= require('q');
@@ -13,16 +13,16 @@ service.updateAdminCompanyProfile = function(name,val){
     var q=Q.defer();
     systemservice.getSystem()
     	.then(function(system){     
-    		if(name.toLowerCase() === 'contact'){
+    		if(name === 'contact'){
     			utils.updateSubModel(system.companyProfile.contact,val);
 
-		    }else if(name.toLowerCase() === 'accounts'){
+		    }else if(name === 'accounts'){
 				utils.updateSubModel(system.companyProfile.accounts,val);	
 
-		    }else if(name.toLowerCase() === 'bankDetails'){
+		    }else if(name === 'bankDetails'){
 				utils.updateSubModel(system.companyProfile.bankDetails,val);		    	
 		    	
-		    }else if(name.toLowerCase() === 'defaults'){
+		    }else if(name === 'defaults'){
 		    	utils.updateSubModel(system.companyProfile.defaults,val);		    	
 			}
 
