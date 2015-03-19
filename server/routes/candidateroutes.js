@@ -28,6 +28,8 @@ router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
 router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
+router.patch('/updateExpense/:resourceId/:dayId/:expenseId/:status',expensecontroller.updateExpense);
+
 
 router.get('/:id',candidatecontroller.getCandidate);
 
@@ -82,7 +84,6 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 
 router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
 router.post('/:id/expenses', expensecontroller.postExpense);
-
 
 
 router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);

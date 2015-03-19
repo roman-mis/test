@@ -1,70 +1,63 @@
-.animation{
-	-webkit-perspective:2000px;
-	-moz-perspective:2000px;
-	-o-perspective: 2000px;
-	perspective: 2000px;
+.animation {
+    -webkit-perspective: 2000px;
+    -moz-perspective: 2000px;
+    -o-perspective: 2000px;
+    perspective: 2000px;
 }
 
 .cube {
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    position: relative;
     margin-top: 30px;
 }
 
-.animate.ng-enter, 
-.animate.ng-leave { 
-	-webkit-transition: 700ms linear -webkit-transform, 700ms linear opacity, 700ms linear background-color;
-	-moz-transition: 700ms linear -moz-transform, 700ms linear opacity, 700ms linear background-color;
-	-o-transition: 700ms linear -o-transform, 700ms linear opacity, 700ms linear background-color;
-	transition: 700ms linear transform, 700ms linear opacity, 700ms linear background-color;
-	position: absolute;
+.animate.ng-enter,
+.animate.ng-leave {
+    -webkit-transition: 700ms linear -webkit-transform, 700ms linear opacity, 700ms linear background-color;
+    -moz-transition: 700ms linear -moz-transform, 700ms linear opacity, 700ms linear background-color;
+    -o-transition: 700ms linear -o-transform, 700ms linear opacity, 700ms linear background-color;
+    transition: 700ms linear transform, 700ms linear opacity, 700ms linear background-color;
+    position: absolute;
 }
 
 .animate.ng-enter {
-//	background-color: $gray-lighter;
-    
-	-webkit-transform-origin: 0% 50%;
-	-moz-transform-origin: 0% 50%;
-	-o-transform-origin: 0% 50%;
-	transform-origin: 0% 50%;
-    
+    -webkit-transform-origin: 0% 50%;
+    -moz-transform-origin: 0% 50%;
+    -o-transform-origin: 0% 50%;
+    transform-origin: 0% 50%;
     -webkit-transform: translateX(100%) rotateY(90deg);
-	-moz-transform: translateX(100%) rotateY(90deg);
-	-o-transform: translateX(100%) rotateY(90deg);
-	transform: translateX(100%) rotateY(90deg);
-
-	opacity: 0;
+    -moz-transform: translateX(100%) rotateY(90deg);
+    -o-transform: translateX(100%) rotateY(90deg);
+    transform: translateX(100%) rotateY(90deg);
+    opacity: 0;
 }
-.animate.ng-enter.ng-enter-active {
-//	background-color: $gray-lighter;
 
+.animate.ng-enter.ng-enter-active {
     -webkit-transform: translateX(0%) rotateY(0deg);
     -moz-transform: translateX(0%) rotateY(0deg);
     -o-transform: translateX(0%) rotateY(0deg);
     transform: translateX(0%) rotateY(0deg);
-    
-	opacity: 1;
+    opacity: 1;
 }
 
 .animate.ng-leave {
-	-webkit-transform-origin: 100% 50%;
-	-moz-transform-origin: 100% 50%;
-	-o-transform-origin: 100% 50%;
-	transform-origin: 100% 50%;
+    -webkit-transform-origin: 100% 50%;
+    -moz-transform-origin: 100% 50%;
+    -o-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
 }
+
 .animate.ng-leave.ng-leave-active {
-//	background-color: $gray-light;
-    
     -webkit-transform: translateX(-100%) rotateY(-90deg);
     -moz-transform: translateX(-100%) rotateY(-90deg);
     -o-transform: translateX(-100%) rotateY(-90deg);
     transform: translateX(-100%) rotateY(-90deg);
-    
-	opacity: 0;
+    opacity: 0;
 }
+
 .admin-icon {
     width: 76px;
     height: 76px;
@@ -79,14 +72,14 @@
         width: 51px;
     }
     &:hover {
-        opacity: 0.8; 
+        opacity: 0.8;
     }
 }
 
 .firstLevel-menu {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
     > div {
         width: 135px;
     }
