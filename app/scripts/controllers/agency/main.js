@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
             $scope.selectedAgencyId = $stateParams.agencyId;
             $http.get('/api/constants/agencyStatus/').success(function (data) {
                 $scope.status = data;
-                $scope.agencyStatus = data[0].value;
+                //if (!$scope.agencyStatus) $scope.agencyStatus = data[0].value;
             });
 
             var agencyAPI = HttpResource.model('agencies');
@@ -25,6 +25,12 @@ angular.module('origApp.controllers')
             //load agency basic information
             $scope.loadAgency = function () {
                 $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId);
+                console.log($scope.selectedAgency.status);
+                if (!$scope.selectedAgency.status) {
+                    $scope.selectedAgency.status = 'Submitted';
+                    $scope.agencyStatus = $scope.selectedAgency.status;
+                    $scope.updateStatus();
+                }
             };
 
 
@@ -35,6 +41,27 @@ angular.module('origApp.controllers')
                 }
                 $rootScope.breadcrumbs = ary;
             };
+
+            $scope.updateStatus = function () {
+                $scope.agencyStatus = $scope.selectedAgency.status;
+                //console.log($scope.selectedAgency.status);
+                var successCallback = function (response) {
+                    if (!HttpResource.flushError(response)) {
+                        if ($scope.selectedAgency) {
+                            $scope.selectedAgency = jQuery.extend($scope.selectedAgency, $scope.selectedAgency);
+                            $rootScope.$broadcast('agencyUpdated', { agency: $scope.selectedAgency });
+                        }
+                    }
+                };
+                if ($scope.selectedAgency) {
+                    HttpResource.model('agencies').create({ name: $scope.selectedAgency.status })
+                            .patch($scope.selectedAgencyId)
+                            .then(function (response) {
+                                successCallback(response);
+                            });
+                }
+
+            }
 
             $scope.loadAgency();
 
