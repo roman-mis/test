@@ -132,7 +132,8 @@ angular.module('origApp.controllers')
                   dataItem.expenses.push({
                     expenseType: 'Transport',
                     subType: item.type.description,
-                    value: item.cost * 1
+                    value: item.cost * 1,
+                    mileage: item.mileage
                   });
                 }
               });
@@ -142,9 +143,9 @@ angular.module('origApp.controllers')
                 if (item.date.getTime() === dataItem.date.getTime()) {
                   dataItem.expenses.push({
                     expenseType: 'Subsistence',
-                    subType: item.type.description,
+                    subType: item.type._id,
                     value: item.cost * 1,
-                    description: item.description
+                    description: item.type.name
                   });
                 }
               });
@@ -154,9 +155,9 @@ angular.module('origApp.controllers')
                 if (item.date.getTime() === dataItem.date.getTime()) {
                   dataItem.expenses.push({
                     expenseType: 'Other',
-                    subType: item.type.description,
+                    subType: item.type._id,
                     value: item.cost * 1,
-                    description: item.description
+                    description: item.type.name
                   });
                 }
               });
