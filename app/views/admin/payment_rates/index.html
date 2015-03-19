@@ -21,9 +21,10 @@
                             <td>{{ payrate.rateType }}</td>
                             <td>{{ payrate.hours }}</td>
                             <td>{{ payrate.importAliases.join(',') }}</td>
-                            <td>
-                                <a href="" ng-click="openModal('paymentRates', $index)" class="pull-right">
-                                            <i class="fa fa-eye"></i></a>
+                            <td class="text-center" style="width: 50px;">
+                                <a href="" ng-click="openModal('paymentRates', $index)">
+                                    <i class="fa fa-eye"></i>
+								</a>
                             </td>
                         </tr>
                     </span>
