@@ -24,6 +24,7 @@ angular.module('origApp.controllers')
 
             //load agency basic information
             $scope.loadAgency = function () {
+<<<<<<< HEAD
                 $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId, function () {
                     console.log($scope.selectedAgency);
                     console.log($scope.selectedAgency.status);
@@ -32,6 +33,17 @@ angular.module('origApp.controllers')
                         $scope.agencyStatus = $scope.selectedAgency.status;
                         $scope.updateStatus();
                     }
+=======
+                $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId,function(){
+                    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+                    console.log($scope.selectedAgency);
+                    console.log($scope.selectedAgency.status);
+                    // if (!$scope.selectedAgency.status) {
+                    //     $scope.selectedAgency.status = 'Submitted';
+                    //     $scope.agencyStatus = $scope.selectedAgency.status;
+                    //     $scope.updateStatus();
+                    // }
+>>>>>>> 6c1ffdfe6924149a3f747223e1dbfb18c271f2d8
                 });
             };
 
@@ -49,21 +61,24 @@ angular.module('origApp.controllers')
                 //console.log($scope.selectedAgency.status);
                 var successCallback = function (response) {
                     if (!HttpResource.flushError(response)) {
-                        if ($scope.selectedAgency) {
-                            $scope.selectedAgency = jQuery.extend($scope.selectedAgency, $scope.selectedAgency);
-                            $rootScope.$broadcast('agencyUpdated', { agency: $scope.selectedAgency });
-                        }
+                        console.log(response);
                     }
                 };
                 if ($scope.selectedAgency) {
+<<<<<<< HEAD
                     HttpResource.model('agencies').create($scope.selectedAgency)
+=======
+                    console.log('********************************');
+                    console.log($scope.selectedAgency);
+                    HttpResource.model('agencies').create($scope.selectedAgency )
+>>>>>>> 6c1ffdfe6924149a3f747223e1dbfb18c271f2d8
                             .patch($scope.selectedAgencyId)
                             .then(function (response) {
                                 successCallback(response);
                             });
                 }
 
-            }
+            };
 
             $scope.loadAgency();
 
