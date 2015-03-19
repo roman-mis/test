@@ -92,7 +92,7 @@ module.exports = function(){
 				//console.log('agency is ');
 				//console.log(agency);
 				var vm=getAgencyVm(agency, true);
-				//console.log('vm is ');console.log(vm);
+				console.log('vm is ');console.log(vm);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
 	};
@@ -327,7 +327,8 @@ module.exports = function(){
 			postCode: agency.postCode,
 			companyRegNo: agency.companyRegNo,
 			companyVatNo: agency.companyVatNo,
-			branches: _branches
+			branches: _branches,
+			status:agency.status
 		};
 	}
 

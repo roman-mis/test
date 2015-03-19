@@ -1,14 +1,16 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp7Controller', function($scope, HttpResource, ConstantsResource) {
+        .controller('CandidateSidebarAddExp7Controller', function($scope, HttpResource) {
           $scope.expenseData.subsistences = $scope.expenseData.subsistences || [];
-          $scope.mealTypes = ConstantsResource.get('mealslist');
+          // $scope.mealTypes = ConstantsResource.get('mealslist');
+          $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({});
+          console.log($scope.mealTypes);
 
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
           
           $scope.onTypeChanged = function(){
-            $scope.addData.cost = $scope.addData.type ? $scope.addData.type.default_cost : '0.00';
+            $scope.addData.cost = $scope.addData.type ? $scope.addData.type.amount : '0.00';
           };
 
           

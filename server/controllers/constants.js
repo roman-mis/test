@@ -190,12 +190,20 @@ module.exports = function(){
       res.json(dataList.AOE);
     };
 
+    controller.getCandidateTitle = function (req, res) {
+        res.json(dataList.candidateTitle);
+    };
+
     controller.getAgencyStatus = function(req,res){
       res.json(dataList.agencyStatus);
     };
 
     controller.getCandidateStatus = function(req,res){
       res.json(dataList.candidateStatus);
+    };
+    
+    controller.getCandidateProfile = function (req, res) {
+        res.json(dataList.candidateProfile[req.params.type]);
     };
 
 

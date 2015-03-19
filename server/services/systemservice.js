@@ -108,9 +108,7 @@ module.exports=function(dbs){
 			var q=db.System.findOne();
 			return Q.nfcall(q.exec.bind(q))
 				.then(function(system){
-
 					if(system){
-						console.log('we r resolving');
 						resolve(system);
 					}
 					else{

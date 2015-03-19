@@ -6,7 +6,6 @@ module.exports = function(dbs){
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		service={};
-		var mongoose=require('mongoose');
 
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
@@ -31,7 +30,7 @@ module.exports = function(dbs){
 	};
 
 	service.saveExpenses = function(expenseDetails){
-		console.log(expenseDetails);
+		console.log(expenseDetails);console.log(expenseDetails.days);
 		console.log('here wer are');
 		var deff = Q.defer();
 		var expenseModel;
@@ -46,18 +45,15 @@ module.exports = function(dbs){
 		});
 		return deff.promise;
 	};
+
     service.getAllExpenses=function(request){
-
-
-      request.orderBy=[{"submittedDate":-1}];
-
+      request.orderBy=[{'submittedDate':-1}];
 
     	return Q.Promise(function(resolve,reject){
 			var q=db.Expense.find();
 
 			queryutils.applySearch(q, db.Expense, request)
 				.then(function(expense){
-
 
            var r=expense.rows;
 					 var bucket=[];
@@ -134,7 +130,6 @@ module.exports = function(dbs){
           });
 
         });
-
     };
 
 
