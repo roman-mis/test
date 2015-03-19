@@ -3,7 +3,7 @@ module.exports=function(app){
 
 	function getResponseMessage(response){
 		if(app.get('env') === 'development'){
-			return response.message;	
+			return response.message;
 		}
 		else{
 			return 'Something went wrong';
@@ -11,12 +11,12 @@ module.exports=function(app){
 	}
 	function getResponseDetail(response){
 		if(app.get('env') === 'development'){
-			return response.detail;	
+			return response.detail;
 		}
 		else{
 			return '';
 		}
-	}
+	};
 
 	return function(req,res,next){
 		// console.log('checking sendFailureResponse function');

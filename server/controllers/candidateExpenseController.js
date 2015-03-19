@@ -91,24 +91,24 @@ module.exports = function(db){
 
 		return expenseservice.getExpenses(req._restOptions)
 		.then(function(expenses){
-			
+
 			var expensesVms = [];
 		  	_.forEach(expenses.rows, function(_expense){
-		  		
+
 		  		var expense = build(_expense);
 		  		expensesVms.push(expense);
 			});
-		  	
+
 		  		// console.log(expenses);
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
-			
+
 			res.json(resp);
 		})
 		.then(null, res.sendFailureResponse);
 	};
 
-	controller.postExpense=function (req, res) {	
+	controller.postExpense=function (req, res) {
 		var request = req.body;
 		console.log('requesting');
 		console.log(req.body);
@@ -161,11 +161,24 @@ module.exports = function(db){
 
 
           return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
-       
+
          res.json({result:true,object:expense});
 
           })
 	      .then(null, res.sendFailureResponse);
+	};
+	controller.updateExpense=function(req,res){
+
+      expenseservice.updateEachExpense(req.params.resourceId,req.params.dayId,req.params.expenseId,req.params.status).then(function(d){
+
+           res.json(d);
+
+      },function(err){
+
+      	res.json(err);
+      });
+
+
 	};
 
   	return controller;

@@ -23,7 +23,7 @@ module.exports = function(){
 		 awsService.getS3SignedUrl('getObject', req.params.fileName,null,folder,{Expires:500})
 	    .then(function(returnData){
 	        res.json(returnData);
-	       
+
 	    },res.sendFailureResponse);
 
 	};
@@ -32,12 +32,12 @@ module.exports = function(){
 		 awsService.getS3SignedUrl('getObject', req.params.fileName,null,folder,{Expires:500})
 	    .then(function(returnData){
 	        res.redirect(returnData.signedRequest);
-	       
+
 	    },res.sendFailureResponse);
 
 	};
 	controller.getFile=function(req,res){
-		
+
 		  //console.log(res);
 		  //return;
 		  var newFileName=req.params.fileName;
@@ -59,26 +59,26 @@ module.exports = function(){
 	    awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
 	    .then(function(returnData){
 	        res.json(returnData);
-	       
+
 	    },res.sendFailureResponse);
 	};
 
 	controller.getAllAgency=function (req,res){
-		
+
 		agencyservice.getAllAgencies(req._restOptions)
 	  	.then(function(result){
 		    console.log('getAllAgency over');
 		    // console.log(result.rows);
-		    
+
 		    var ao = [];
 		  	result.rows.forEach(function(a){
 		  		var agency=getAgencyVm(a);
 		  		ao.push(agency);
 			});
-		    
+
 		    var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
-	    
+
 		    res.json(resp);
 	  	},function(){
 
@@ -109,13 +109,13 @@ module.exports = function(){
 		var agencyDetails = {
 			name: req.body.name,
 			// agencyType: req.body.agencyType,
-	  		address1: req.body.address1,			
-	  		address2: req.body.address2,			
-	  		address3: req.body.address3,			
-	  		town: req.body.town,				
-	  		country: req.body.country,			
-	  		postCode: req.body.postCode,		
-	  		companyRegNo: req.body.companyRegNo,	
+	  		address1: req.body.address1,
+	  		address2: req.body.address2,
+	  		address3: req.body.address3,
+	  		town: req.body.town,
+	  		country: req.body.country,
+	  		postCode: req.body.postCode,
+	  		companyRegNo: req.body.companyRegNo,
 	  		companyVatNo: req.body.companyVatNo,
 	  		logoFileName:req.body.logoFileName,
 	  		status:req.body.status
@@ -193,7 +193,7 @@ module.exports = function(){
 				else{
 					res.json({result:false,message:'Consultant not found'});
 				}
-				
+
 			},res.sendFailureResponse);
 	};
 
@@ -377,7 +377,7 @@ module.exports = function(){
 		},function(err){
 		 	res.sendFailureResponse(err);
 		});
-	};	
+	};
 
 	controller.lockUnlockConsultant=function(req,res){
 		agencyservice.lockUnlockConsultant(req.params.id,req.params.flag,req.user?req.user.id:null)
@@ -389,10 +389,10 @@ module.exports = function(){
 					//return false;
 				}
 				else{
-					res.json({result:false,message:response.message});	
+					res.json({result:false,message:response.message});
 				}
-				
-				
+
+
 			},res.sendFailureResponse);
 	};
 
@@ -409,7 +409,7 @@ module.exports = function(){
 							res.json({result:true,message:'Change password link sent successfully'});
 						}
 						else{
-							res.json({result:false,message:response.message});	
+							res.json({result:false,message:response.message});
 						}
 					},res.sendFailureResponse);
 				}
@@ -421,12 +421,12 @@ module.exports = function(){
 				console.log('ERROR');
 				console.log(err);
 			});
-		
+
 	};
 
 
 	function getAgencyPayrollVm(agencyOld){
-		
+
 
 		return Q.Promise(function(resolve,reject){
 			function build(agency){
@@ -474,7 +474,7 @@ module.exports = function(){
 	      		return agencyservice.getAgency(agencyOld._id, true)
 	      		.then(function(agency){
 	      			console.log('got agency again....');
-				
+
 	      			build(agency);
 
 	      		}).then(null,reject);
@@ -483,16 +483,16 @@ module.exports = function(){
 	      	// 	console.log('No reload');
 	      	// 	build(agencyOld);
 	      	// }
-	      	
-			
-	      	
-	        
+
+
+
+
       	});
-      	
+
     }
 
 	// function getAgencyPayrollVm_(agency){
-		
+
 	// 	return {
 	// 		_id: agency._id,
 	// 		name: agency.name,
@@ -545,7 +545,7 @@ module.exports = function(){
 		});
 	};
 
-		
+
 	function getAgencySalesVm(agency){
 		console.log(agency);
 		return {
@@ -588,12 +588,12 @@ module.exports = function(){
 		var user=consultant.user||{};
 		var status=utils.findInArray(dataList.StatusList,consultant.status,'code')||{};
 		var role=utils.findInArray(dataList.RolesList,consultant.role,'code')||{};
-		return { 
-			_id: consultant._id, 
+		return {
+			_id: consultant._id,
 			emailAddress: consultant.emailAddress,
 			phone:consultant.phone,
-			firstName: consultant.firstName, 
-			lastName: consultant.lastName, 
+			firstName: consultant.firstName,
+			lastName: consultant.lastName,
 			locked: user.locked,
 			user:user._id,role:role,status:status
 		};
@@ -610,7 +610,7 @@ module.exports = function(){
 			  				agency = addTimesheetBatches(agency,timesheetBatches);
 			  				// console.log(agency);
 			  				if(agency.timesheetBatches.length > 0){
-				  				ao.push(agency); 
+				  				ao.push(agency);
 			  				}
 					});
 			    var pagination=req._restOptions.pagination||{};
@@ -648,7 +648,7 @@ module.exports = function(){
 			  				agency = addTimesheets(agency,timesheets);
 			  				// console.log(agency);
 			  				if(agency.timesheets.length > 0){
-				  				ao.push(agency); 
+				  				ao.push(agency);
 			  				}
 					});
 			    var pagination=req._restOptions.pagination||{};

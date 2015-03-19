@@ -10,7 +10,7 @@ module.exports = function(app){
 };
 
 function getUserInfoViewModel(usr){
-  
+
      return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress
     };
 }
@@ -29,19 +29,19 @@ function postAdmin(req,res){
           activationLink:fullUrl
       };
       console.log(newUser);
-      
+
       userservice.createUser(opt,newUser)
         .then(function(response){
           console.log('in success ');
-          
+
           var userMod=response.object;
-          
+
                 var vm=getUserInfoViewModel(userMod);
                 res.json({result:true,object:vm});
-          
+
         },function(error){
            console.log('in failure');
-          
+
            //console.log(error);
            res.sendFailureResponse(error);
         });
