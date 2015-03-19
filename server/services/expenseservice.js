@@ -6,7 +6,6 @@ module.exports = function(dbs){
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		service={};
-		var mongoose=require('mongoose');
 
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
@@ -31,7 +30,7 @@ module.exports = function(dbs){
 	};
 
 	service.saveExpenses = function(expenseDetails){
-		console.log(expenseDetails);
+		console.log(expenseDetails);console.log(expenseDetails.days);
 		console.log('here wer are');
 		var deff = Q.defer();
 		var expenseModel;
@@ -46,11 +45,9 @@ module.exports = function(dbs){
 		});
 		return deff.promise;
 	};
+
     service.getAllExpenses=function(request){
-
-
-      request.orderBy=[{"submittedDate":-1}];
-    	
+      	request.orderBy=[{'submittedDate':-1}];
 
     	return Q.Promise(function(resolve,reject){
 			var q=db.Expense.find();
@@ -58,57 +55,44 @@ module.exports = function(dbs){
 			queryutils.applySearch(q, db.Expense, request)
 				.then(function(expense){
 
- 
-           var r=expense.rows; 
-					 var bucket=[];
-					 for(var first=0;first< r.length;first++){
+           			var r=expense.rows; 
+					var bucket=[];
+					for(var first=0;first< r.length;first++){
+		                var bucketObject={};
+		                bucketObject.expenses=[];
+		                    
+		                bucketObject.claimReference=r[first].claimReference;
+		                bucketObject.claimDate=r[first].createdDate;
+		                bucketObject.expenses=[];
+		                bucketObject.id=r[first]._id;
+		                var secondValue=r[first].days;
 
-                var bucketObject={};
-                bucketObject.expenses=[];
-                    
-                bucketObject.claimReference=r[first].claimReference;
-                bucketObject.claimDate=r[first].createdDate;
-                bucketObject.expenses=[];
-                bucketObject.id=r[first]._id;
-                var secondValue=r[first].days;
+                		for(var second=0;second<secondValue.length;second++){
+                      		bucketObject.total=0;
                 
-
-                for(var second=0;second<secondValue.length;second++){
-                      bucketObject.total=0;
-                
-                              secondValue[second].expenses.forEach(function(i){
-
-                               var t={};
-                               t.date=secondValue[second].date;
-                               t.startTime=secondValue[second].startTime;
-                               t.endTime=secondValue[second].endTime;
-                               t.postcodes=secondValue[second].postcodes;
-                               t.expenseType=i.expenseType;
-                               t.subType=i.subType;
-                               t._id=i._id;
-                               t.value=i.value;
-                               t.text=i.text;
-                               t.description=i.description;
-                               t.receiptUrls=i.receiptUrls;
-                               bucketObject.total +=i.value;
-                               bucketObject.expenses.push(t);
-
-                               })
-
-
-                } 
-                bucket.push(bucketObject);
-
-					 }
-             
-             
-           resolve(bucket);
-				     });
-		     });
-    		
-
-    	
-    }
+							secondValue[second].expenses.forEach(function(i){
+								var t={};
+								t.date=secondValue[second].date;
+								t.startTime=secondValue[second].startTime;
+								t.endTime=secondValue[second].endTime;
+								t.postcodes=secondValue[second].postcodes;
+								t.expenseType=i.expenseType;
+								t.subType=i.subType;
+								t._id=i._id;
+								t.value=i.value;
+								t.text=i.text;
+								t.description=i.description;
+								t.receiptUrls=i.receiptUrls;
+								bucketObject.total +=i.value;
+								bucketObject.expenses.push(t);
+							});
+                		} 
+                		bucket.push(bucketObject);
+					}
+       				resolve(bucket);
+			    }, reject);
+		    });
+    };
 
 
 	return service;

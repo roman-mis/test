@@ -15,7 +15,7 @@
         </div>
         <div class="form-group col-sm-3 col-xs-4">
           <select class="form-control" ng-model="addData.type" 
-                  ng-options="type.description for type in mealTypes track by type.code" ng-change="onTypeChanged()">
+                  ng-options="type.name for type in mealTypes track by type._id" ng-change="onTypeChanged()">
             <option value="">-Meal Type-</option>
           </select>
         </div>

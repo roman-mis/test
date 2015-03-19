@@ -5,21 +5,28 @@ module.exports = function(db){
 	var _ = require('lodash'),
 	expenseservice = require('../services/expenseservice')(db),
 	candidateservice=require('../services/candidateservice')(db),
+	systemservice = require('../services/systemservice')(db),
 	utils = require('../utils/utils'),
 	dataList = require('../data/data_list.json'),
 	Q = require('q');
 
 	function getExpenseVm(expense, reload){
 		return Q.Promise(function(resolve, reject){
-			if(reload){
-				return expenseservice.getExpense(expense._id, true)
-	      		.then(function(expense){
-	      			var expenseVm = build(expense);
-	      			resolve({result:true, object: expenseVm});
-	      		},reject);
-			}else{
-				build(expense);
-			}
+			return systemservice.getSystem()
+	  			.then(function(system){
+	  				if(system.expensesRate){
+	  					if(reload){
+							return expenseservice.getExpense(expense._id, true)
+				      		.then(function(expense){
+				      			var expenseVm = build(expense, system.expensesRate);
+				      			resolve(expenseVm);
+				      		},reject);
+						}else{
+							var expenseVm = build(expense, system.expensesRate);
+							resolve(expenseVm);
+						}
+	  				}
+	  			}, reject);
 		});
 	}
 
@@ -28,39 +35,40 @@ module.exports = function(db){
 		var user=expense.user||{};
 		var createdBy=expense.createdBy||{};
 
-		var days = [];
-		_.forEach(expense.days, function(day){
-			var expenses = [];
-			_.forEach(day.expenses, function(expense){
-				var subType;
-				switch(expense.expenseType.toLowerCase()){
-					case 'subsistence':
-						subType = utils.findInArray(dataList.MealsList, expense.subType, 'code') || null;
-						break;
-					case 'transportation':
-						subType = utils.findInArray(dataList.TransportationMeans, expense.subType, 'code') || null;
-						break;
-					case 'other':
-						subType = utils.findInArray(dataList.OtherExpenseTypes, expense.subType, 'code') || null;
-						break;
-				}
-				expenses.push({
-					expenseType: expense.expenseType,
-	                subType: subType,
-	                value: expense.value,
-	                text: expense.text,
-	                description: expense.description,
-	                receiptUrls: expense.receiptUrls,
-				});
-			});
-			days.push({
-				date: day.date,
-	            startTime: day.startTime,
-	            endTime: day.endTime,
-	            postcodes: day.postcodes,
-	            expenses: expenses
-			});
-		});
+		// var days = [];
+		// _.forEach(expense.days, function(day){
+		// 	var expenses = [];
+		// 	_.forEach(day.expenses, function(expense){
+		// 		var subType = null;
+		// 		switch(expense.expenseType.toLowerCase()){
+		// 			case 'subsistence':
+		// 				subType = utils.findInArray(dataList.MealsList, expense.subType, 'code') || null;
+		// 				break;
+		// 			case 'transportation':
+		// 				subType = utils.findInArray(dataList.TransportationMeans, expense.subType, 'code') || null;
+		// 				break;
+		// 			case 'other':
+		// 				subType = utils.findInArray(dataList.OtherExpenseTypes, expense.subType, 'code') || null;
+		// 				break;
+		// 		}
+		// 		expenses.push({
+		// 			expenseType: expense.expenseType,
+	 //                subType: subType,
+	 //                mileage: expense.mileage,
+	 //                value: expense.value,
+	 //                text: expense.text,
+	 //                description: expense.description,
+	 //                receiptUrls: expense.receiptUrls,
+		// 		});
+		// 	});
+		// 	days.push({
+		// 		date: day.date,
+	 //            startTime: day.startTime,
+	 //            endTime: day.endTime,
+	 //            postcodes: day.postcodes,
+	 //            expenses: expenses
+		// 	});
+		// });
 
 		var expenseVm = {
 			_id: expense._id,
@@ -70,8 +78,9 @@ module.exports = function(db){
 			createdBy: {_id: createdBy._id, firstName: createdBy.firstName, lastName: createdBy.lastName},
 			startedDate: expense.startedDate,
 	    	submittedDate: expense.submittedDate,
-	    	days: days
+	    	days: expense.days
 		};
+		
 		return expenseVm;
 	}
 
@@ -99,7 +108,6 @@ module.exports = function(db){
 		  		expensesVms.push(expense);
 			});
 		  	
-		  		// console.log(expenses);
 			var pagination=req._restOptions.pagination||{};
 	    	var resp={result:true,objects:expensesVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:expenses.count}};
 			
@@ -111,7 +119,7 @@ module.exports = function(db){
 	controller.postExpense=function (req, res) {	
 		var request = req.body;
 		console.log('requesting');
-		console.log(req.body);
+		console.log(req.body); 
 		var expense = request.expense;
 
 		var newExpense = {
@@ -130,8 +138,7 @@ module.exports = function(db){
 				total = total + ex.value;
 			});
 		});
-		console.log(newExpense);
-		console.log('expensesessssss');
+
 		expenseservice.saveExpenses(newExpense).then(function(response){
 			getExpenseVm(response, true)
 	        .then(function(_expense){
@@ -157,15 +164,11 @@ module.exports = function(db){
 		 	res.sendFailureResponse(err);
 		});
 	};
+
 	controller.getAllExpenses=function(req,res){
-
-
-          return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
-       
-         res.json({result:true,object:expense});
-
-          })
-	      .then(null, res.sendFailureResponse);
+      	return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
+     		res.json({result:true,object:expense});
+		}).then(null, res.sendFailureResponse);
 	};
 
   	return controller;
