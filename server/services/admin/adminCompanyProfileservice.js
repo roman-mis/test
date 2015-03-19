@@ -12,22 +12,20 @@ service.updateAdminCompanyProfile = function(name,val){
 
     var q=Q.defer();
     systemservice.getSystem()
-    	.then(function(system){
-             
-    		if(name==='contact'){
-
+    	.then(function(system){     
+    		if(name.toLowerCase() === 'contact'){
     			utils.updateSubModel(system.companyProfile.contact,val);
 
-		    }else if(name === 'accounts'){
+		    }else if(name.toLowerCase() === 'accounts'){
 				utils.updateSubModel(system.companyProfile.accounts,val);	
 
-		    }else if(name === 'bankDetails'){
+		    }else if(name.toLowerCase() === 'bankDetails'){
 				utils.updateSubModel(system.companyProfile.bankDetails,val);		    	
 		    	
-		    }else if(name === 'defaults'){
+		    }else if(name.toLowerCase() === 'defaults'){
 		    	utils.updateSubModel(system.companyProfile.defaults,val);		    	
 			}
-				console.log('------system-------');
+
 			 return Q.nfcall(system.save.bind(system)); 
 			
     	})
