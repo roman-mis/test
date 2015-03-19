@@ -1,25 +1,30 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{data.name?'Edit Agency Information':'Adding an agency'}}</h3>
+    <h3 class="modal-title">{{data.name?'Edit Agency Information':'Adding an agency'}}</h3>
 </div>
 <div class="modal-body">
-  <form name="agencyForm" class="form-horizontal" role="form" novalidate>
-    <div class="form-group" ng-repeat="field in fields">
-      <label class="col-sm-4 control-label">{{field.label}}</label>
-      <div class="col-sm-7">
-        <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name != 'name' && field.name != 'country'">
-        <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" required ng-if="field.name == 'name'">
-        <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name == 'country'">
-          <ui-select-match>{{$select.selected.name}}</ui-select-match>
-          <ui-select-choices repeat="item.code as item in countries | filter: $select.search">{{item.name}}</ui-select-choices>
-        </ui-select>
-      </div>
-    </div>
-  </form>
+    <form name="agencyForm" class="form-horizontal" role="form" novalidate>
+        <div class="form-group" ng-repeat="field in fields">
+            <div class="col-sm-4">
+                <label class="control-label">{{field.label}}</label>
+                <label class="control-label" ng-if="field.required">*</label>
+            </div>
+            <div class="col-sm-7">
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name != 'postCode' && field.name != 'companyRegNo' && field.name != 'companyVatNo' && field.name != 'country'">
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'postCode'" orig-postcode>
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'companyRegNo'" ng-pattern="/^(\d{8})+$/">
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'companyVatNo'" ng-pattern="/^(\d{9})+$/">
+                <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name == 'country'">
+                  <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="item.code as item in countries | filter: $select.search">{{item.name}}</ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || agencyForm.$invalid">
-    <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-    <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-  </button>
-  <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || agencyForm.$invalid">
+        <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+        <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+    </button>
+    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
 </div>

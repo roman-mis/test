@@ -157,22 +157,16 @@ module.exports = function(db){
 		 	res.sendFailureResponse(err);
 		});
 	};
-	controller.getCandidateExpenses=function(req,res){
+	controller.getAllExpenses=function(req,res){
 
 
-          return Q.promise(function(resolve,reject){
+          return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
+       
+         res.json({result:true,object:expense});
 
-                expenseservice.getExpenseByUserId(req.params.id).then(function(d){
-                   res.json({result:true,object:d});
-
-                },function(err){
-
-                	res.sendFailureResponse(err);
-                });
-
-          });
-			
-	
+          })
+	      .then(null, res.sendFailureResponse);
 	};
+
   	return controller;
 };
