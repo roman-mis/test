@@ -18,9 +18,9 @@ app.controller('addNewCandidateModalCtrl', ['$scope', '$modalInstance', 'HttpRes
                 firstName: $scope.can.firstName,
                 lastName: $scope.can.lastName,
                 emailAddress: $scope.can.email,
-                mobile: $scope.can.mobile,
-                phone: $scope.can.phone,
-                address1: $scope.can.address
+                phone: $scope.can.contactNumber,
+                niNumber: $scope.can.niNumber,
+                birthDate: $scope.can.birthDate
             }
 
             HttpResource.model('candidates/')
