@@ -2,7 +2,8 @@
 angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp8Controller', function($scope, HttpResource, ConstantsResource) {
           $scope.expenseData.others = $scope.expenseData.others || [];
-          $scope.types = ConstantsResource.get('otherexpensetypes');
+          // $scope.types = ConstantsResource.get('otherexpensetypes');
+          $scope.types = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
           $scope.defaultAddData = {};
           $scope.addData = angular.copy($scope.defaultAddData);
