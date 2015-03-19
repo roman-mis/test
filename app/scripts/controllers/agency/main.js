@@ -24,13 +24,15 @@ angular.module('origApp.controllers')
 
             //load agency basic information
             $scope.loadAgency = function () {
-                $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId);
-                console.log($scope.selectedAgency.status);
-                if (!$scope.selectedAgency.status) {
-                    $scope.selectedAgency.status = 'Submitted';
-                    $scope.agencyStatus = $scope.selectedAgency.status;
-                    $scope.updateStatus();
-                }
+                $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId, function () {
+                    console.log($scope.selectedAgency);
+                    console.log($scope.selectedAgency.status);
+                    if (!$scope.selectedAgency.status) {
+                        $scope.selectedAgency.status = 'Submitted';
+                        $scope.agencyStatus = $scope.selectedAgency.status;
+                        $scope.updateStatus();
+                    }
+                });
             };
 
 
@@ -54,7 +56,7 @@ angular.module('origApp.controllers')
                     }
                 };
                 if ($scope.selectedAgency) {
-                    HttpResource.model('agencies').create({ name: $scope.selectedAgency.status })
+                    HttpResource.model('agencies').create($scope.selectedAgency)
                             .patch($scope.selectedAgencyId)
                             .then(function (response) {
                                 successCallback(response);

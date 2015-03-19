@@ -80,7 +80,8 @@ router.get('/expensesratetypes',controller.expensesRateTypes);
 router.get('/timesheettemplates',controller.getTimesheetTemplates);
 router.get('/AOE',controller.getAOE);
 
-router.get('/agencyStatus',controller.getAgencyStatus);
+router.get('/candidateTitle', controller.getCandidateTitle);
+router.get('/agencyStatus', controller.getAgencyStatus);
 router.get('/candidateStatus', controller.getCandidateStatus);
 
 router.get('/candidateProfile', controller.getCandidateProfile);
