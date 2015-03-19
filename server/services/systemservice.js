@@ -103,14 +103,11 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getSystem=function(){
-		var q=db.System.findOne();
+	service.getSystem=function(){		
 		return Q.Promise(function(resolve,reject){
+			var q=db.System.findOne();
 			return Q.nfcall(q.exec.bind(q))
 				.then(function(system){
-					console.log('====================================================================')
-					console.log(system);
-					console.log('====================================================================')
 					if(system){
 						resolve(system);
 					}

@@ -6,7 +6,7 @@ app.controller('accountsController',['$scope', '$location', 'HttpResource', '$ro
     
 		$rootScope.breadcrumbs.splice(3,$rootScope.breadcrumbs.length-1);
 
-		$rootScope.breadcrumbs.push({link: '/admin/home/company_profile/accounts', text: 'Accounts'})
+		$rootScope.breadcrumbs.push({link: '/admin/home/companyProfile/accounts', text: 'Accounts'})
 
 
       $scope.isTabActive = function(stateKey) {
@@ -15,8 +15,9 @@ app.controller('accountsController',['$scope', '$location', 'HttpResource', '$ro
 
 
        $scope.save=function(val){
+
         if(val){    	
-         CompanyProfileService.saveCompanyProfile($scope.companyProfile, $scope.docId,'/accounts');
+         CompanyProfileService.saveCompanyProfile($scope.companyProfile, 'accounts');
        }else{
         $scope.submitted=true;
        }

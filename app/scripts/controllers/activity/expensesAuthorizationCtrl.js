@@ -11,11 +11,12 @@ app.controller("expensesAuthorizationCtrl",
         ];
 
 
-        HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('', {}, function (agencies) {
-            console.log('agencies done !!');
-            console.log(agencies);
-            $scope.agencies = agencies.data.objects;
-        });
+        //HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('', {}, function (agencies) {
+        //    console.log('agencies done !!');
+        //    console.log(agencies);
+        //    $scope.agencies = agencies.data.objects;
+        //});
+
 
         var catCount;
         initialize();

@@ -21,7 +21,8 @@ service.saveMileageRates = function(mileageRatesInfo){
 					return Q.all([Q.nfcall(systemModel.save.bind(systemModel))])
 					.then(function(){
 							resolve(systemModel);
-						},reject);				}
+						},reject);				
+				}
 			}, reject);
 	});
 };
