@@ -1,5 +1,4 @@
 'use strict';
-console.log(1)
 angular.module('origApp.services')
 .factory('userPermissions', function(HttpResource, $q) {
 
@@ -17,8 +16,6 @@ angular.module('origApp.services')
     
     return d.promise;
   }
-
-
 
   return {
     permissions: permissions,
