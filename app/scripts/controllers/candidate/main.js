@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateMainController', function($scope, $rootScope, $state, $stateParams, HttpResource) {
+        .controller('CandidateMainController', function($scope, $rootScope, $state, $stateParams, HttpResource,$http) {
           $scope.candidateId = $stateParams.candidateId;
 
           var cddAPI = HttpResource.model('candidates');
@@ -29,6 +29,31 @@ angular.module('origApp.controllers')
           };
 
           $scope.loadCandidate();
+          HttpResource.model('constants/candidateStatus').query({},function (res) {
+            $scope.candidateStatus = res.data;
+            // $scope.candidate.status
+            $scope.editCandidateStatus = function () {
+              console.log($scope.candidate.status);
+              HttpResource.model('candidates/' + $scope.candidateId).create($scope.candidate)
+              .patch().then(function (res) {
+                console.log(res);
+              });
+            };
+          });
+
+          // $scope.url = '/api/candidates/' + $scope.candidateId;
+          // $scope.$watch('candidate.status',function (newVal) {
+          //   console.log(newVal);
+          //   $http({method: 'PATCH', url: $scope.url, data:newVal}).
+          //   success(function(data, status) {
+          //     $scope.status = status;
+          //     console.log(data);
+          //   }).
+          //   error(function(data, status) {
+          //     $scope.data = data || 'Request failed';
+          //     $scope.status = status;
+          //   });
+          // });
 
           $scope.isTabActive = function(stateKey) {
             return $state.includes('app.candidate.' + stateKey);
