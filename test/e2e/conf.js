@@ -18,9 +18,9 @@ exports.config = {
     'browserName': 'chrome'
   }],*/
   suites: {
-    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'],
+    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js'/*,'./spec/candidates.js','./spec/sidebar.js'*/],
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    remote: ['./spec/dummy_data.js','./spec/login.js','./spec/check_agency.js'],
+    remote: ['./spec/dummy_data.js','./spec/login.js','./spec/search_current_candidate.js','./spec/candidates.js'],
     dummy: ['./spec/dummy_data.js','./spec/login.js','./spec/search_current_candidate.js','./spec/sidebar.js']
   },
 
