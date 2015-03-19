@@ -32,7 +32,8 @@ angular.module('origApp.controllers')
             $scope.expenseData.transports.push({
               date: data.date,
               type: data.type,
-              cost: $scope.getCost(data.type, data.mileage)
+              cost: $scope.getCost(data.type, data.mileage),
+              mileage: data.mileage
             });
             $scope.addData = angular.copy($scope.defaultAddData);
           }
