@@ -14,6 +14,7 @@ module.exports = function(mongoose,autoIncrement) {
             date: Date,
             startTime: String,
             endTime: String,
+            hoursWorked: Number,
             postcodes: [ String ],
             expenses: [{
                 expenseType: String, // subsistence, travel, other, voucher
