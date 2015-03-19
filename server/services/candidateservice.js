@@ -281,7 +281,7 @@
 	};
 		
 
-	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress){
+	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress,contactDetail){
 		return Q.Promise(function(resolve,reject){
 			service.getUser(userId)
 			   .then(function(user){
@@ -291,6 +291,7 @@
 							//var props=utils.updateSubModel(user.contactDetail,workerContact);
 							utils.updateSubModel(user,userInformation);
 							utils.updateModel(user.worker,workerPrimaryAddress);
+                            utils.updateModel(user.contactDetail,contactDetail);
 
 							return Q.all([Q.nfcall(user.save.bind(user))])
 								.then(function(){

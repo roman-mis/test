@@ -188,13 +188,13 @@ module.exports = function(dbs){
     };
 
     controller.updateContactDetail=function (req, res){
-      
+
       var contactDetail={
-              phone:req.body.phone, 
-              mobile:req.body.mobile, 
-              altEmail:req.body.altEmail, 
-              facebook:req.body.facebook, 
-              linkedin:req.body.linkedin, 
+              phone:req.body.phone,
+              mobile:req.body.mobile,
+              altEmail:req.body.altEmail,
+              facebook:req.body.facebook,
+              linkedin:req.body.linkedin,
               google:req.body.google
           };
 
@@ -222,7 +222,7 @@ module.exports = function(dbs){
      // addressDetails.updatedBy=(req.user?req.user.id:undefined);
 
       function submitUser(){
-        candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
+          candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
          .then(function(response){
           console.log('contact detail submited');
             var vm=getContactInformationViewModel(response.object,response.object.contactDetail);
