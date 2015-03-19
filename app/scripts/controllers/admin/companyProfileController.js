@@ -32,11 +32,11 @@ app.controller('companyProfileController',['$scope', '$rootScope', 'CompanyProfi
           };
 
 		$scope.save = function(val){
-		    if(val){
-               
+		    if(val){    
                	CompanyProfileService.saveCompanyProfile($scope.companyProfile,'contact');
-
-		    }
+		    }else{
+       		 $scope.submitted=true;
+       		}
 		
 		
 		};

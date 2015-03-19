@@ -1,7 +1,7 @@
 'use strict';
 var controller={};
-module.exports = function(db){
-	var Q = require('q');
+module.exports = function(){
+	//var Q = require('q');
 	var db = require('../../models');
 	var systemservice = require('../../services/systemservice')(db),
 	adminCompanyProfileService = require('../../services/admin/adminCompanyProfileservice')(db);
@@ -19,7 +19,7 @@ module.exports = function(db){
 
 	controller.saveAdminCompanyProfile = function(req, res){
 		adminCompanyProfileService.saveAdminCompanyProfile(req.params.name,req.body)
-		.then(function(system){
+		.then(function(){
 		    res.json({result:true});
 		},function(err){
 			console.log(err + 'err');
