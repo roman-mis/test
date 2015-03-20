@@ -7,7 +7,7 @@ var sinon=require('sinon'),
 	Q=require('q');
 
 //this is the parent test suite for the whole controller
-describe('invoiceContrller',function(){
+describe('invoiceController',function(){
 		var responseMock, responseObj, reqObj, jsonStub, sendFailureResponseStub;
 		var invoiceServiceMock, invoiceController, fakes, dbMock, sandbox;
 		before(function(){
@@ -115,9 +115,10 @@ describe('invoiceContrller',function(){
 			getAllInvoicesStub.returns(p);
 			//d.resolve();
 			invoiceController.getAllInvoices(req, responseMock);
-			d.resolve();
+			d.resolve({});
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub,sinon.match({result:true, objects:arr}));
+			sinon.assert.calledWith(jsonStub,sinon.match({result:true}));
+			sinon.assert.calledWith(jsonStub,sinon.match({objects:[]}));
 			done();
 		});
 
@@ -295,13 +296,14 @@ describe('invoiceContrller',function(){
 
 			saveInvoiceStub.returns(p);
 			invoiceController.postInvoice(req, responseMock);
-			d.resolve();
+			d.resolve([vm]);
 			//x.then(function(returned){
 			//	expect(returned).to.be.ok();
 			//	expect(returned).to.have.property('name');
 			//});
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub,sinon.match({result:true, object:vm}));
+			sinon.assert.calledWith(jsonStub,sinon.match({result:true}));
+			sinon.assert.calledWith(jsonStub,sinon.match({object:[vm]}));
 			done();
 		});
 
@@ -385,10 +387,11 @@ describe('invoiceContrller',function(){
 	
 			getInvoiceStub.returns(p);
 			invoiceController.getInvoice(req, responseMock);
-			d.resolve(vm);
+			d.resolve([vm]);
 			
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub,sinon.match({result:true, object:vm}));
+			sinon.assert.calledWith(jsonStub,sinon.match({result:true}));
+			sinon.assert.calledWith(jsonStub,sinon.match({object:{}}));	
 			done();
 		});
 

@@ -8,7 +8,7 @@ var sinon=require('sinon'),
 
 //this is the parent test suite for the whole controller
 describe('candidates-payroll',function(){
-		var responseMock, jsonStub, sendFailureResponseStub,candidatesPayrollController;
+		var responseMock, jsonStub, getPrProductDetailsStub, sendFailureResponseStub,candidatesPayrollController;
 		var getUserStub, sandbox, userVm, candidatePayrollMock,candidateServiceMock,  updatePrProductDetailsStub, fakes;
 		before(function(){
 		
@@ -190,144 +190,18 @@ describe('candidates-payroll',function(){
 			var d=Q.defer();
 			var p=d.promise;
 			var req={params:{'candidateId':'54c8f20a1ae2818801a805e8'}};
-			//var userVm={
-   // "_id" : "54c6699cb50b1f740f5a7d30",
-   // "candidate_no" : 1,
-   // "activationCode" : "6d9a2f70-a577-11e4-a74f-8553e93f833e",
-   // "title" : "Mr",
-   // "firstName" : "ishwor",
-   // "lastName" : "m",
-   // "emailAddress" : "ishwor@makeitsimple.info",
-   // "userType" : "WK",
-   // "updated_date" : "2015-01-26T16:21:48.604Z",
-   // "created_date" : "2015-01-26T16:21:48.604Z",
-   // "dpaUpdatedDate" : "2015-01-29T12:03:10.642Z",
-   // "documents" : [ 
-   //     {
-   //         "documentName" : "wnmrge",
-   //         "documentType" : "3",
-   //         "agency" : "54c8bb4b27df08b003488587",
-   //         "generatedName" : "1422462334949_winmerge.2.14.0.nupkg",
-   //         "mimeType" : "text/plain",
-   //         "uploadedBy" : "54c6699cb50b1f740f5a7d30",
-   //         "uploadedDate" : "2015-01-28T16:30:47.316Z",
-   //         "_id" : "54c90eb756a277d41709d345"
-   //     }
-   // ],
-   // "worker" : {
-   //     "contactNumber" : "9999999",
-   //     "town" : "Sheffield",
-   //     "county" : "Sheffield",
-   //     "postCode" : "GU16 7HF",
-   //     "arrivalDate" : null,
-   //     "recentDepDate" : null,
-   //     "agencyName" : "some agency",
-   //     "jobTitle" : "Developer",
-   //     "bankDetail" : {
-   //         "bankName" : "Sheffield Bank",
-   //         "accountName" : "ac/name",
-   //         "sortCode" : "9989",
-   //         "accountNo" : "45454",
-   //         "bankRollNo" : "5555"
-   //     },
-   //     "taxDetail" : {
-   //         "p45Uploaded" : true,
-   //         "niNumber" : "AA 22 33 55 B"
-   //     },
-   //     "address_1" : "address 1",
-   //     "address_2" : "address 2",
-   //     "address_3" : "address 3",
-   //     "nationality" : "1",
-   //     "payrollTax" : {
-   //         "declaration" : "0",
-   //         "p45GrossTax" : 20,
-   //         "p45TaxDeducted" : 30,
-   //         "payFrequency" : "2",
-   //         "taxBasis" : "2",
-   //         "taxCode" : "32"
-   //     },
-   //     "startDate" : "2014-12-31T18:15:00.000Z",
-   //     "payrollProduct" : [ 
-   //         {
-   //             "agency" : "54c8bb4b27df08b003488587",
-   //             "agencyRef" : "a",
-   //             "margin" : "3",
-   //             "marginFixed" : 1,
-   //             "holidayPayRule" : "2",
-   //             "derogationContract" : "2",
-   //             "derogationSpread" : "2",
-   //             "serviceUsed" : "2",
-   //             "paymentTerms" : "2",
-   //             "paymentMethod" : "3",
-   //             "jobDescription" : "j",
-   //             "createdDate" : "2015-01-29T12:30:03.951Z",
-   //             "_id" : "54ca27cb9c851ab013e9661a",
-   //             "marginException" : [ 
-   //                 {
-   //                     "marginType" : "1",
-   //                     "reason" : "2",
-   //                     "deductionType" : "2",
-   //                     "deductionNumberOfPayroll" : null,
-   //                     "createdBy" : "54c6699cb50b1f740f5a7d30",
-   //                     "createdDate" : "2015-01-29T12:36:39.782Z",
-   //                     "_id" : "54ca29589c851ab013e9661c",
-   //                     "deductionDate" : null,
-   //                     "deductionPeriod" : "2"
-   //                 }, 
-   //                 ],
-   //             "branch" : null,
-   //             "consultant" : null,
-   //             "updatedDate" : "2015-01-29T12:33:28.550Z"
-   //         }, 
-   //         {
-   //             "agency" : "54c8bb4b27df08b003488587",
-   //             "agencyRef" : "ar",
-   //             "margin" : "1",
-   //             "marginFixed" : 4,
-   //             "holidayPayRule" : "3",
-   //             "derogationContract" : "3",
-   //             "derogationSpread" : "5",
-   //             "serviceUsed" : "5",
-   //             "paymentTerms" : "1",
-   //             "paymentMethod" : "2",
-   //             "jobDescription" : "jd",
-   //             "createdDate" : "2015-01-29T12:33:53.634Z",
-   //             "_id" : "54ca28b19c851ab013e9661b",
-   //             "marginException" : []
-   //         }, 
-   //                 ],
-   //     "birthDate" : "Wed Jan 28 2015 20:27:03 GMT+0545 (Nepal Standard Time)",
-   //     "payrollproducts" : []
-   // },
-   // "avatarFileName" : "",
-   // "lockedUnlockedOn" : "2015-01-26T16:21:48.602Z",
-   // "locked" : false,
-   // "isActive" : true,
-   // "__v" : 25,
-   // "activatedDate" : "2015-01-26T16:22:34.763Z",
-   // "password" : "$2a$10$9Tf6bDcOz3jziMHrJPc07uqeIsf/alwWab8RhTFKihN.AMJOWR3kK",
-   // "candidateNo" : 7,
-   // "contactDetail" : {
-   //     "altEmail" : "ishwor+alternate@makeitsimple.info",
-   //     "facebook" : "fb.com/ishwor",
-   //     "linkedin" : "linkedin.com/ishwor",
-   //     "mobile" : "888888",
-   //     "phone" : "999999"
-   // },
-   // "dpaUpdatedBy" : "54c6699cb50b1f740f5a7d30"
-//};
-
+			
 			var retObj={
-    '_id': "54c6699cb50b1f740f5a7d30",
-    'declaration': "0",
-    'niNumber': "AA 22 33 55 B",
-    'p45GrossTax': 20,
-    'p45TaxDeducted': 30,
-    'payFrequency': "2",
-    'startDate': "2014-12-31T18:15:00.000Z",
-    'taxBasis': "2",
-    'taxCode': "32"
-  };
+   				 '_id': "54c6699cb50b1f740f5a7d30",
+   				 'declaration': "0",
+   				 'niNumber': "AA 22 33 55 B",
+   				 'p45GrossTax': 20,
+   				 'p45TaxDeducted': 30,
+   				 'payFrequency': "2",
+   				 'startDate': "2014-12-31T18:15:00.000Z",
+   				 'taxBasis': "2",
+   				 'taxCode': "32"
+  			};
 
 			getUserStub.returns(p);
 			candidatesPayrollController.getPayrollTax(req, responseMock);
@@ -368,133 +242,7 @@ describe('candidates-payroll',function(){
 		it('should return json result true', function(done){
 			var d=Q.defer();
 			var p=d.promise;
-		//	var userVm={
-  //  "_id" : "54c6699cb50b1f740f5a7d30",
-  //  "candidate_no" : 1,
-  //  "activationCode" : "6d9a2f70-a577-11e4-a74f-8553e93f833e",
-  //  "title" : "Mr",
-  //  "firstName" : "ishwor",
-  //  "lastName" : "m",
-  //  "emailAddress" : "ishwor@makeitsimple.info",
-  //  "userType" : "WK",
-  //  "updated_date" : "2015-01-26T16:21:48.604Z",
-  //  "created_date" : "2015-01-26T16:21:48.604Z",
-  //  "dpaUpdatedDate" : "2015-01-29T12:03:10.642Z",
-  //  "documents" : [ 
-  //      {
-  //          "documentName" : "wnmrge",
-  //          "documentType" : "3",
-  //          "agency" : "54c8bb4b27df08b003488587",
-  //          "generatedName" : "1422462334949_winmerge.2.14.0.nupkg",
-  //          "mimeType" : "text/plain",
-  //          "uploadedBy" : "54c6699cb50b1f740f5a7d30",
-  //          "uploadedDate" : "2015-01-28T16:30:47.316Z",
-  //          "_id" : "54c90eb756a277d41709d345"
-  //      }
-  //  ],
-  //  "worker" : {
-  //      "contactNumber" : "9999999",
-  //      "town" : "Sheffield",
-  //      "county" : "Sheffield",
-  //      "postCode" : "GU16 7HF",
-  //      "arrivalDate" : null,
-  //      "recentDepDate" : null,
-  //      "agencyName" : "some agency",
-  //      "jobTitle" : "Developer",
-  //      "bankDetail" : {
-  //          "bankName" : "Sheffield Bank",
-  //          "accountName" : "ac/name",
-  //          "sortCode" : "9989",
-  //          "accountNo" : "45454",
-  //          "bankRollNo" : "5555"
-  //      },
-  //      "taxDetail" : {
-  //          "p45Uploaded" : true,
-  //          "niNumber" : "AA 22 33 55 B"
-  //      },
-  //      "address_1" : "address 1",
-  //      "address_2" : "address 2",
-  //      "address_3" : "address 3",
-  //      "nationality" : "1",
-  //      "payrollTax" : {
-  //          "declaration" : "0",
-  //          "p45GrossTax" : 20,
-  //          "p45TaxDeducted" : 30,
-  //          "payFrequency" : "2",
-  //          "taxBasis" : "2",
-  //          "taxCode" : "32"
-  //      },
-  //      "startDate" : "2014-12-31T18:15:00.000Z",
-  //      "payrollProduct" : [ 
-  //          {
-  //              "agency" : "54c8bb4b27df08b003488587",
-  //              "agencyRef" : "a",
-  //              "margin" : "3",
-  //              "marginFixed" : 1,
-  //              "holidayPayRule" : "2",
-  //              "derogationContract" : "2",
-  //              "derogationSpread" : "2",
-  //              "serviceUsed" : "2",
-  //              "paymentTerms" : "2",
-  //              "paymentMethod" : "3",
-  //              "jobDescription" : "j",
-  //              "createdDate" : "2015-01-29T12:30:03.951Z",
-  //              "_id" : "54ca27cb9c851ab013e9661a",
-  //              "marginException" : [ 
-  //                  {
-  //                      "marginType" : "1",
-  //                      "reason" : "2",
-  //                      "deductionType" : "2",
-  //                      "deductionNumberOfPayroll" : null,
-  //                      "createdBy" : "54c6699cb50b1f740f5a7d30",
-  //                      "createdDate" : "2015-01-29T12:36:39.782Z",
-  //                      "_id" : "54ca29589c851ab013e9661c",
-  //                      "deductionDate" : null,
-  //                      "deductionPeriod" : "2"
-  //                  }, 
-  //                  ],
-  //              "branch" : null,
-  //              "consultant" : null,
-  //              "updatedDate" : "2015-01-29T12:33:28.550Z"
-  //          }, 
-  //          {
-  //              "agency" : "54c8bb4b27df08b003488587",
-  //              "agencyRef" : "ar",
-  //              "margin" : "1",
-  //              "marginFixed" : 4,
-  //              "holidayPayRule" : "3",
-  //              "derogationContract" : "3",
-  //              "derogationSpread" : "5",
-  //              "serviceUsed" : "5",
-  //              "paymentTerms" : "1",
-  //              "paymentMethod" : "2",
-  //              "jobDescription" : "jd",
-  //              "createdDate" : "2015-01-29T12:33:53.634Z",
-  //              "_id" : "54ca28b19c851ab013e9661b",
-  //              "marginException" : []
-  //          }, 
-  //                  ],
-  //      "birthDate" : "Wed Jan 28 2015 20:27:03 GMT+0545 (Nepal Standard Time)",
-  //      "payrollproducts" : []
-  //  },
-  //  "avatarFileName" : "",
-  //  "lockedUnlockedOn" : "2015-01-26T16:21:48.602Z",
-  //  "locked" : false,
-  //  "isActive" : true,
-  //  "__v" : 25,
-  //  "activatedDate" : "2015-01-26T16:22:34.763Z",
-  //  "password" : "$2a$10$9Tf6bDcOz3jziMHrJPc07uqeIsf/alwWab8RhTFKihN.AMJOWR3kK",
-  //  "candidateNo" : 7,
-  //  "contactDetail" : {
-  //      "altEmail" : "ishwor+alternate@makeitsimple.info",
-  //      "facebook" : "fb.com/ishwor",
-  //      "linkedin" : "linkedin.com/ishwor",
-  //      "mobile" : "888888",
-  //      "phone" : "999999"
-  //  },
-  //  "dpaUpdatedBy" : "54c6699cb50b1f740f5a7d30"
-//};
-
+		
 			var req={params:{'candidateId':'54c6699cb50b1f740f5a7d30'},
 				 body:{ '_id': "54c6699cb50b1f740f5a7d30", 
 					'declaration': "0",
@@ -555,7 +303,7 @@ describe('candidates-payroll',function(){
 	});
 
 	describe('getPayrollProduct tests', function(){
-		var getPrProductDetailsStub;
+		//var getPrProductDetailsStub;
 		before(function(){
 			getPrProductDetailsStub=sinon.stub(candidatePayrollMock, 'getPayrollProductDetails');
 		});
@@ -572,133 +320,7 @@ describe('candidates-payroll',function(){
 			var y=x.promise;
 			var req={params:{'candidateId':'54c6699cb50b1f740f5a7d30',
 					 'productId':'54e21efb46cac21961f01eaf'}};
-			//var userVm={
-   // "_id" : "54c6699cb50b1f740f5a7d30",
-   // "candidate_no" : 1,
-   // "activationCode" : "6d9a2f70-a577-11e4-a74f-8553e93f833e",
-   // "title" : "Mr",
-   // "firstName" : "ishwor",
-   // "lastName" : "m",
-   // "emailAddress" : "ishwor@makeitsimple.info",
-   // "userType" : "WK",
-   // "updated_date" : "2015-01-26T16:21:48.604Z",
-   // "created_date" : "2015-01-26T16:21:48.604Z",
-   // "dpaUpdatedDate" : "2015-01-29T12:03:10.642Z",
-   // "documents" : [ 
-   //     {
-   //         "documentName" : "wnmrge",
-   //         "documentType" : "3",
-   //         "agency" : "54c8bb4b27df08b003488587",
-   //         "generatedName" : "1422462334949_winmerge.2.14.0.nupkg",
-   //         "mimeType" : "text/plain",
-   //         "uploadedBy" : "54c6699cb50b1f740f5a7d30",
-   //         "uploadedDate" : "2015-01-28T16:30:47.316Z",
-   //         "_id" : "54c90eb756a277d41709d345"
-   //     }
-   // ],
-   // "worker" : {
-   //     "contactNumber" : "9999999",
-   //     "town" : "Sheffield",
-   //     "county" : "Sheffield",
-   //     "postCode" : "GU16 7HF",
-   //     "arrivalDate" : null,
-   //     "recentDepDate" : null,
-   //     "agencyName" : "some agency",
-   //     "jobTitle" : "Developer",
-   //     "bankDetail" : {
-   //         "bankName" : "Sheffield Bank",
-   //         "accountName" : "ac/name",
-   //         "sortCode" : "9989",
-   //         "accountNo" : "45454",
-   //         "bankRollNo" : "5555"
-   //     },
-   //     "taxDetail" : {
-   //         "p45Uploaded" : true,
-   //         "niNumber" : "AA 22 33 55 B"
-   //     },
-   //     "address_1" : "address 1",
-   //     "address_2" : "address 2",
-   //     "address_3" : "address 3",
-   //     "nationality" : "1",
-   //     "payrollTax" : {
-   //         "declaration" : "0",
-   //         "p45GrossTax" : 20,
-   //         "p45TaxDeducted" : 30,
-   //         "payFrequency" : "2",
-   //         "taxBasis" : "2",
-   //         "taxCode" : "32"
-   //     },
-   //     "startDate" : "2014-12-31T18:15:00.000Z",
-   //     "payrollProduct" : [ 
-   //         {
-   //             "agency" : "54c8bb4b27df08b003488587",
-   //             "agencyRef" : "a",
-   //             "margin" : "3",
-   //             "marginFixed" : 1,
-   //             "holidayPayRule" : "2",
-   //             "derogationContract" : "2",
-   //             "derogationSpread" : "2",
-   //             "serviceUsed" : "2",
-   //             "paymentTerms" : "2",
-   //             "paymentMethod" : "3",
-   //             "jobDescription" : "j",
-   //             "createdDate" : "2015-01-29T12:30:03.951Z",
-   //             "_id" : "54ca27cb9c851ab013e9661a",
-   //             "marginException" : [ 
-   //                 {
-   //                     "marginType" : "1",
-   //                     "reason" : "2",
-   //                     "deductionType" : "2",
-   //                     "deductionNumberOfPayroll" : null,
-   //                     "createdBy" : "54c6699cb50b1f740f5a7d30",
-   //                     "createdDate" : "2015-01-29T12:36:39.782Z",
-   //                     "_id" : "54ca29589c851ab013e9661c",
-   //                     "deductionDate" : null,
-   //                     "deductionPeriod" : "2"
-   //                 }, 
-   //                 ],
-   //             "branch" : null,
-   //             "consultant" : null,
-   //             "updatedDate" : "2015-01-29T12:33:28.550Z"
-   //         }, 
-   //         {
-   //             "agency" : "54c8bb4b27df08b003488587",
-   //             "agencyRef" : "ar",
-   //             "margin" : "1",
-   //             "marginFixed" : 4,
-   //             "holidayPayRule" : "3",
-   //             "derogationContract" : "3",
-   //             "derogationSpread" : "5",
-   //             "serviceUsed" : "5",
-   //             "paymentTerms" : "1",
-   //             "paymentMethod" : "2",
-   //             "jobDescription" : "jd",
-   //             "createdDate" : "2015-01-29T12:33:53.634Z",
-   //             "_id" : "54ca28b19c851ab013e9661b",
-   //             "marginException" : []
-   //         }, 
-   //                 ],
-   //     "birthDate" : "Wed Jan 28 2015 20:27:03 GMT+0545 (Nepal Standard Time)",
-   //     "payrollproducts" : []
-   // },
-   // "avatarFileName" : "",
-   // "lockedUnlockedOn" : "2015-01-26T16:21:48.602Z",
-   // "locked" : false,
-   // "isActive" : true,
-   // "__v" : 25,
-   // "activatedDate" : "2015-01-26T16:22:34.763Z",
-   // "password" : "$2a$10$9Tf6bDcOz3jziMHrJPc07uqeIsf/alwWab8RhTFKihN.AMJOWR3kK",
-   // "candidateNo" : 7,
-   // "contactDetail" : {
-   //     "altEmail" : "ishwor+alternate@makeitsimple.info",
-   //     "facebook" : "fb.com/ishwor",
-   //     "linkedin" : "linkedin.com/ishwor",
-   //     "mobile" : "888888",
-   //     "phone" : "999999"
-   // },
-   // "dpaUpdatedBy" : "54c6699cb50b1f740f5a7d30"
-//};
-			var retObj={ '_id': "54c6699cb50b1f740f5a7d30", 
+					var retObj={ '_id': "54c6699cb50b1f740f5a7d30", 
 					'declaration': "0",
     					'niNumber': "AA 22 33 55 B",
    					'p45GrossTax': 20,
@@ -707,8 +329,8 @@ describe('candidates-payroll',function(){
     					'startDate': "2014-12-31T18:15:00.000Z",
     					'taxBasis': "2",
     					'taxCode': "32"
-  					};
-		var pr_product={
+  			};
+			var pr_product={
                			 "agency" : "54cf9f23f383e9be63a0d666",
                			 "margin" : "2",
                			 "marginFixed" : 20,
@@ -720,12 +342,11 @@ describe('candidates-payroll',function(){
                			 "createdDate" : "2015-02-16T16:46:51.044Z",
                			 "_id" : "54e21efb46cac21961f01eaf",
                			 "marginException" : []
-            	};
+            		};
 			
 			getPrProductDetailsStub.returns(p);
 			candidatesPayrollController.getPayrollProduct(req, responseMock);
 			d.resolve([pr_product]);
-			//x.resolve({result:true,object:pr_product});
 			sinon.assert.calledOnce(jsonStub);
 			sinon.assert.calledWith(jsonStub, sinon.match({result:true}));
       sinon.assert.calledWith(jsonStub, sinon.match({object:pr_product}));
@@ -740,6 +361,7 @@ describe('candidates-payroll',function(){
 			updatePrProductDetailsStub=sinon.stub(candidatePayrollMock,'updatePayrollProductDetails');
 		});
 		beforeEach(function(){
+			getPrProductDetailsStub.reset();
 			updatePrProductDetailsStub.reset();
 			jsonStub.reset();
 			sendFailureResponseStub.reset();
@@ -788,13 +410,17 @@ describe('candidates-payroll',function(){
 	
 			var d=Q.defer();
 			var p=d.promise;
-			
+			var x=Q.defer();
+			var y=x.promise;
 			updatePrProductDetailsStub.returns(p);
+			getPrProductDetailsStub.returns(y);
 			candidatesPayrollController.postPayrollProduct(req, responseMock);
-			d.resolve({user:userVm,product:respObj});
+			d.resolve({user:userVm,product:[respObj]});
+			x.resolve([respObj]);
 
-			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub, sinon.match(respObj));
+			//sinon.assert.calledOnce(jsonStub);
+			sinon.assert.calledWith(jsonStub, sinon.match([respObj]));
+			//sinon.assert.calledWith(jsonStub, sinon.match({object:[respObj]}));
 			done();
 		});
 
@@ -860,6 +486,7 @@ describe('candidates-payroll',function(){
 		//	updatePrProductDetailStub=fakes.stub(candidatePayrollMock,'updatePayrollProductDetails');
 		//});
 		beforeEach(function(){
+			getPrProductDetailsStub.reset();
 			updatePrProductDetailsStub.reset();
 			jsonStub.reset();
 			sendFailureResponseStub.reset();
@@ -877,7 +504,7 @@ describe('candidates-payroll',function(){
                 		"paymentTerms" : "2",
                 		"paymentMethod" : "2",
                 		"createdDate" : "2015-02-16T16:46:51.044Z",
-                		"_id" : "54e21efb46cac21961f01eaf",
+                		"id" : "54e21efb46cac21961f01eaf",
                 		"marginException" : [],
 				"branch":"1",
 				"derogationSpread":"2",
@@ -896,7 +523,7 @@ describe('candidates-payroll',function(){
                 		"paymentTerms" : "2",
                 		"paymentMethod" : "2",
                 		"createdDate" : "2015-02-16T16:46:51.044Z",
-                		"_id" : "54e21efb46cac21961f01eaf",
+                		"id" : "54e21efb46cac21961f01eaf",
                 		"marginException" : [],
 				"branch":"1",
 				"derogationSpread":"2",
@@ -908,13 +535,15 @@ describe('candidates-payroll',function(){
 	
 			var d=Q.defer();
 			var p=d.promise;
-			
+			var x=Q.defer();
+			var y=x.promise;
 			updatePrProductDetailsStub.returns(p);
+			getPrProductDetailsStub.returns(y);
 			candidatesPayrollController.patchPayrollProduct(req, responseMock);
-			d.resolve(respObj);
-
-			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub, sinon.match(respObj));
+			d.resolve({user:userVm,product:[respObj]});
+			x.resolve([respObj]);
+			//sinon.assert.calledOnce(jsonStub);
+			sinon.assert.calledWith(jsonStub, sinon.match({result:true}));
 			done();
 		});
 
@@ -1093,7 +722,7 @@ describe('candidates-payroll',function(){
 		});
 
 	});
-	describe('getMarginExceptiont tests', function(){
+	describe('getMarginException tests', function(){
 		//var getMarginExceptionStub;
 		//before(function(){
 		//	deletePrProductDetailsStub=s.stub(candidatePayrollMock,'deletePayrollProductDetails');
@@ -1107,139 +736,13 @@ describe('candidates-payroll',function(){
 		it('should return json result true', function(done){
 			var req={params:{'candidateId':'54c6699cb50b1f740f5a7d30',
 					 'productId':'54e21efb46cac21961f01eaf'}};
-				//var userVm={
-   // "_id" : "54c6699cb50b1f740f5a7d30",
-   // "candidate_no" : 1,
-   // "activationCode" : "6d9a2f70-a577-11e4-a74f-8553e93f833e",
-   // "title" : "Mr",
-   // "firstName" : "ishwor",
-   // "lastName" : "m",
-   // "emailAddress" : "ishwor@makeitsimple.info",
-   // "userType" : "WK",
-   // "updated_date" : "2015-01-26T16:21:48.604Z",
-   // "created_date" : "2015-01-26T16:21:48.604Z",
-   // "dpaUpdatedDate" : "2015-01-29T12:03:10.642Z",
-   // "documents" : [ 
-   //     {
-   //         "documentName" : "wnmrge",
-   //         "documentType" : "3",
-   //         "agency" : "54c8bb4b27df08b003488587",
-   //         "generatedName" : "1422462334949_winmerge.2.14.0.nupkg",
-   //         "mimeType" : "text/plain",
-   //         "uploadedBy" : "54c6699cb50b1f740f5a7d30",
-   //         "uploadedDate" : "2015-01-28T16:30:47.316Z",
-   //         "_id" : "54c90eb756a277d41709d345"
-   //     }
-   // ],
-   // "worker" : {
-   //     "contactNumber" : "9999999",
-   //     "town" : "Sheffield",
-   //     "county" : "Sheffield",
-   //     "postCode" : "GU16 7HF",
-   //     "arrivalDate" : null,
-   //     "recentDepDate" : null,
-   //     "agencyName" : "some agency",
-   //     "jobTitle" : "Developer",
-   //     "bankDetail" : {
-   //         "bankName" : "Sheffield Bank",
-   //         "accountName" : "ac/name",
-   //         "sortCode" : "9989",
-   //         "accountNo" : "45454",
-   //         "bankRollNo" : "5555"
-   //     },
-   //     "taxDetail" : {
-   //         "p45Uploaded" : true,
-   //         "niNumber" : "AA 22 33 55 B"
-   //     },
-   //     "address_1" : "address 1",
-   //     "address_2" : "address 2",
-   //     "address_3" : "address 3",
-   //     "nationality" : "1",
-   //     "payrollTax" : {
-   //         "declaration" : "0",
-   //         "p45GrossTax" : 20,
-   //         "p45TaxDeducted" : 30,
-   //         "payFrequency" : "2",
-   //         "taxBasis" : "2",
-   //         "taxCode" : "32"
-   //     },
-   //     "startDate" : "2014-12-31T18:15:00.000Z",
-   //     "payrollProduct" : [ 
-   //         {
-   //             "agency" : "54c8bb4b27df08b003488587",
-   //             "agencyRef" : "a",
-   //             "margin" : "3",
-   //             "marginFixed" : 1,
-   //             "holidayPayRule" : "2",
-   //             "derogationContract" : "2",
-   //             "derogationSpread" : "2",
-   //             "serviceUsed" : "2",
-   //             "paymentTerms" : "2",
-   //             "paymentMethod" : "3",
-   //             "jobDescription" : "j",
-   //             "createdDate" : "2015-01-29T12:30:03.951Z",
-   //             "_id" : "54ca27cb9c851ab013e9661a",
-   //             "marginException" : [ 
-   //                 {
-   //                     "marginType" : "1",
-   //                     "reason" : "2",
-   //                     "deductionType" : "2",
-   //                     "deductionNumberOfPayroll" : null,
-   //                     "createdBy" : "54c6699cb50b1f740f5a7d30",
-   //                     "createdDate" : "2015-01-29T12:36:39.782Z",
-   //                     "_id" : "54ca29589c851ab013e9661c",
-   //                     "deductionDate" : null,
-   //                     "deductionPeriod" : "2"
-   //                 }, 
-   //                 ],
-   //             "branch" : null,
-   //             "consultant" : null,
-   //             "updatedDate" : "2015-01-29T12:33:28.550Z"
-   //         }, 
-   //         {
-   //             "agency" : "54c8bb4b27df08b003488587",
-   //             "agencyRef" : "ar",
-   //             "margin" : "1",
-   //             "marginFixed" : 4,
-   //             "holidayPayRule" : "3",
-   //             "derogationContract" : "3",
-   //             "derogationSpread" : "5",
-   //             "serviceUsed" : "5",
-   //             "paymentTerms" : "1",
-   //             "paymentMethod" : "2",
-   //             "jobDescription" : "jd",
-   //             "createdDate" : "2015-01-29T12:33:53.634Z",
-   //             "_id" : "54ca28b19c851ab013e9661b",
-   //             "marginException" : []
-   //         }, 
-   //                 ],
-   //     "birthDate" : "Wed Jan 28 2015 20:27:03 GMT+0545 (Nepal Standard Time)",
-   //     "payrollproducts" : []
-   // },
-   // "avatarFileName" : "",
-   // "lockedUnlockedOn" : "2015-01-26T16:21:48.602Z",
-   // "locked" : false,
-   // "isActive" : true,
-   // "__v" : 25,
-   // "activatedDate" : "2015-01-26T16:22:34.763Z",
-   // "password" : "$2a$10$9Tf6bDcOz3jziMHrJPc07uqeIsf/alwWab8RhTFKihN.AMJOWR3kK",
-   // "candidateNo" : 7,
-   // "contactDetail" : {
-   //     "altEmail" : "ishwor+alternate@makeitsimple.info",
-   //     "facebook" : "fb.com/ishwor",
-   //     "linkedin" : "linkedin.com/ishwor",
-   //     "mobile" : "888888",
-   //     "phone" : "999999"
-   // },
-   // "dpaUpdatedBy" : "54c6699cb50b1f740f5a7d30"
-//};
-	
+				
 			var d=Q.defer();
 			var p=d.promise;
 			
 			getUserStub.returns(p);
 			candidatesPayrollController.getMarginException(req, responseMock);
-			d.resolve(userVm);
+			d.resolve([userVm]);
 
 			sinon.assert.calledOnce(jsonStub);
 			sinon.assert.calledWith(jsonStub, sinon.match({result:true}));
@@ -1277,138 +780,12 @@ describe('candidates-payroll',function(){
 		
 		it('should return json result true', function(done){
 			
-
-				//var userVm={
-  //  "_id" : "54c6699cb50b1f740f5a7d30",
-  //  "candidate_no" : 1,
-  //  "activationCode" : "6d9a2f70-a577-11e4-a74f-8553e93f833e",
-  //  "title" : "Mr",
-  //  "firstName" : "ishwor",
-  //  "lastName" : "m",
-  //  "emailAddress" : "ishwor@makeitsimple.info",
-  //  "userType" : "WK",
-  //  "updated_date" : "2015-01-26T16:21:48.604Z",
-  //  "created_date" : "2015-01-26T16:21:48.604Z",
-  //  "dpaUpdatedDate" : "2015-01-29T12:03:10.642Z",
-  //  "documents" : [ 
-  //      {
-  //          "documentName" : "wnmrge",
-  //          "documentType" : "3",
-  //          "agency" : "54c8bb4b27df08b003488587",
-  //          "generatedName" : "1422462334949_winmerge.2.14.0.nupkg",
-  //          "mimeType" : "text/plain",
-  //          "uploadedBy" : "54c6699cb50b1f740f5a7d30",
-  //          "uploadedDate" : "2015-01-28T16:30:47.316Z",
-  //          "_id" : "54c90eb756a277d41709d345"
-  //      }
-  //  ],
-  //  "worker" : {
-  //      "contactNumber" : "9999999",
-  //      "town" : "Sheffield",
-  //      "county" : "Sheffield",
-  //      "postCode" : "GU16 7HF",
-  //      "arrivalDate" : null,
-  //      "recentDepDate" : null,
-  //      "agencyName" : "some agency",
-  //      "jobTitle" : "Developer",
-  //      "bankDetail" : {
-  //          "bankName" : "Sheffield Bank",
-  //          "accountName" : "ac/name",
-  //          "sortCode" : "9989",
-  //          "accountNo" : "45454",
-  //          "bankRollNo" : "5555"
-  //      },
-  //      "taxDetail" : {
-  //          "p45Uploaded" : true,
-  //          "niNumber" : "AA 22 33 55 B"
-  //      },
-  //      "address_1" : "address 1",
-  //      "address_2" : "address 2",
-  //      "address_3" : "address 3",
-  //      "nationality" : "1",
-  //      "payrollTax" : {
-  //          "declaration" : "0",
-  //          "p45GrossTax" : 20,
-  //          "p45TaxDeducted" : 30,
-  //          "payFrequency" : "2",
-  //          "taxBasis" : "2",
-  //          "taxCode" : "32"
-  //      },
-  //      "startDate" : "2014-12-31T18:15:00.000Z",
-  //      "payrollProduct" : [ 
-  //          {
-  //              "agency" : "54c8bb4b27df08b003488587",
-  //              "agencyRef" : "a",
-  //              "margin" : "3",
-  //              "marginFixed" : 1,
-  //              "holidayPayRule" : "2",
-  //              "derogationContract" : "2",
-  //              "derogationSpread" : "2",
-  //              "serviceUsed" : "2",
-  //              "paymentTerms" : "2",
-  //              "paymentMethod" : "3",
-  //              "jobDescription" : "j",
-  //              "createdDate" : "2015-01-29T12:30:03.951Z",
-  //              "_id" : "54ca27cb9c851ab013e9661a",
-  //              "marginException" : [ 
-  //                  {
-  //                      "marginType" : "1",
-  //                      "reason" : "2",
-  //                      "deductionType" : "2",
-  //                      "deductionNumberOfPayroll" : null,
-  //                      "createdBy" : "54c6699cb50b1f740f5a7d30",
-  //                      "createdDate" : "2015-01-29T12:36:39.782Z",
-  //                      "_id" : "54ca29589c851ab013e9661c",
-  //                      "deductionDate" : null,
-  //                      "deductionPeriod" : "2"
-  //                  }, 
-  //                  ],
-  //              "branch" : null,
-  //              "consultant" : null,
-  //              "updatedDate" : "2015-01-29T12:33:28.550Z"
-  //          }, 
-  //          {
-  //              "agency" : "54c8bb4b27df08b003488587",
-  //              "agencyRef" : "ar",
-  //              "margin" : "1",
-  //              "marginFixed" : 4,
-  //              "holidayPayRule" : "3",
-  //              "derogationContract" : "3",
-  //              "derogationSpread" : "5",
-  //              "serviceUsed" : "5",
-  //              "paymentTerms" : "1",
-  //              "paymentMethod" : "2",
-  //              "jobDescription" : "jd",
-  //              "createdDate" : "2015-01-29T12:33:53.634Z",
-  //              "_id" : "54ca28b19c851ab013e9661b",
-  //              "marginException" : []
-  //          }, 
-  //                  ],
-  //      "birthDate" : "Wed Jan 28 2015 20:27:03 GMT+0545 (Nepal Standard Time)",
-  //      "payrollproducts" : []
-  //  },
-  //  "avatarFileName" : "",
-  //  "lockedUnlockedOn" : "2015-01-26T16:21:48.602Z",
-  //  "locked" : false,
-  //  "isActive" : true,
-  //  "__v" : 25,
-  //  "activatedDate" : "2015-01-26T16:22:34.763Z",
-  //  "password" : "$2a$10$9Tf6bDcOz3jziMHrJPc07uqeIsf/alwWab8RhTFKihN.AMJOWR3kK",
-  //  "candidateNo" : 7,
-  //  "contactDetail" : {
-  //      "altEmail" : "ishwor+alternate@makeitsimple.info",
-  //      "facebook" : "fb.com/ishwor",
-  //      "linkedin" : "linkedin.com/ishwor",
-  //      "mobile" : "888888",
-  //      "phone" : "999999"
-  //  },
-  //  "dpaUpdatedBy" : "54c6699cb50b1f740f5a7d30"
-//};
 	
 			var d=Q.defer();
 			var p=d.promise;
 			var req={params:{'candidateId':'54c6699cb50b1f740f5a7d30',
 					 'productId':'54e21efb46cac21961f01eaf'},
+				user:{'id':'54c6699cb50b1f740f5a7d30'},
 			         body: {
                         "marginType" : "1",
                         "reason" : "2",
@@ -1420,23 +797,13 @@ describe('candidates-payroll',function(){
                         "deductionDate" : null,
                         "deductionPeriod" : "2"
                     }};
-			var respObj= {
-                        "marginType" : "1",
-                        "reason" : "2",
-                        "deductionType" : "2",
-                        "deductionNumberOfPayroll" : null,
-                        "createdBy" : "54c6699cb50b1f740f5a7d30",
-                        "createdDate" : "2015-01-29T12:36:39.782Z",
-                        "_id" : "54ca29589c851ab013e9661c",
-                        "deductionDate" : null,
-                        "deductionPeriod" : "2"
-                    };
+			
 			postMargExceptionStub.returns(p);
 			candidatesPayrollController.postMarginException(req, responseMock);
-			d.resolve(respObj);
+			d.resolve({object:{}});
 
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub, sinon.match({result:true, object:respObj}));
+			sinon.assert.calledWith(jsonStub, sinon.match({result:true, object:{}}));
 			done();
 		});
 
@@ -1448,6 +815,7 @@ describe('candidates-payroll',function(){
 			var p=d.promise;
 			var req={params:{'candidateId':'54c6699cb50b1f740f5a7d30',
 					 'productId':'54e21efb46cac21961f01eaf'},
+				user:{'id':'54c6699cb50b1f740f5a7d30'},
 			         body: {
                         "marginType" : "1",
                         "reason" : "2",
@@ -1640,10 +1008,11 @@ describe('candidates-payroll',function(){
                     };
 			patchMargExceptionStub.returns(p);
 			candidatesPayrollController.patchMarginException(req, responseMock);
-			d.resolve(respObj);
+			d.resolve([respObj]);
 
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub, sinon.match({result:true, object:respObj}));
+			sinon.assert.calledWith(jsonStub, sinon.match({result:true}));
+			//sinon.assert.calledWith(jsonStub, sinon.match({object:respObj}));
 			done();
 		});
 
@@ -1679,7 +1048,7 @@ describe('candidates-payroll',function(){
 
 	});
 	
-	describe('patchMarginExceptiont tests', function(){
+	describe('deleteMarginException tests', function(){
 		var deleteMargExceptionStub;
 		before(function(){
 			deleteMargExceptionStub=sinon.stub(candidatePayrollMock,'deleteMarginException');
@@ -1719,10 +1088,10 @@ describe('candidates-payroll',function(){
                     };
 			deleteMargExceptionStub.returns(p);
 			candidatesPayrollController.deleteMarginException(req, responseMock);
-			d.resolve(userVm);
+			d.resolve();
 
 			sinon.assert.calledOnce(jsonStub);
-			sinon.assert.calledWith(jsonStub, sinon.match({result:true, object:respObj}));
+			sinon.assert.calledWith(jsonStub, sinon.match({result:true}));
 			done();
 		});
 
