@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateHomeController', function($scope, $stateParams,HttpResource) {
+        .controller('CandidateHomeController', function($scope, $stateParams,HttpResource,ModalService) {
           $scope.candidateId = $stateParams.candidateId;
 
 
@@ -32,4 +32,13 @@ angular.module('origApp.controllers')
 
           //share this data over all sub pages
           $scope.addSubBreadcrumb(null);
+
+          $scope.editDetails = function() {
+            ModalService.open({
+              templateUrl: 'views/candidate/_editCandidateDetails.html',
+              parentScope: $scope,
+              controller: 'editContactDetailsCtrl',
+              size:'md'
+            });
+          };
         });

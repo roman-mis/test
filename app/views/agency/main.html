@@ -13,7 +13,9 @@
 		  </div>
 		</div>
           <div align="right">
-              <select ng-model="agencyStatus" ng-options="item.value as item.value for item in status"></select>
+              <select ng-model="selectedAgency.status"
+                      ng-options="item.value as item.value for item in status"
+                      ng-change="updateStatus()"></select>
           </div>
 		<section class="tabs-wrapper row">
 		  <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">

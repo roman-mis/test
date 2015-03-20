@@ -34,7 +34,9 @@ module.exports = function(mongoose) {
             basicRate: Number,
             higherRate: Number,
             additionalRate: Number,
-            total: Number
+            total: Number,
+            p45GrossTax: Number,
+            p45TaxDeducted: Number
         },
         grossTimesheetValue: Number,
         deductions: {
