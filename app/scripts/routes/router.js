@@ -16,7 +16,7 @@ angular.module('origApp').config(function($stateProvider, $urlRouterProvider) {
       }
     })
   .state('first', {
-    url: '/',
+    url: '/first',
     views: {
         header: {
           templateUrl: 'views/partials/header.html',
@@ -42,5 +42,5 @@ angular.module('origApp').config(function($stateProvider, $urlRouterProvider) {
     }
   });
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/agencies');
 });

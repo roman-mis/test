@@ -3,8 +3,13 @@ console.log('333');
 angular.module('origApp.controllers')
         .controller('first', function($scope, $rootScope, $location, AuthService, $state, userPermissions) {
           console.log('dkjd');
+          $rootScope.currentUser = null;
+          if(AuthService.isLoggedIn()){
+            $rootScope.currentUser = AuthService.getCurrentUser();
+          }
           var currentUser = AuthService.getCurrentUser();
-          var params = {};
+          console.log(currentUser);
+          $state.go('app.agencies');
           userPermissions.first(currentUser.userType).then(function(data){
             console.log(data);            // if($location.path() === '/'){
             console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
