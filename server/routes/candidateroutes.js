@@ -28,12 +28,12 @@ router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
 router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
-router.patch('/updateExpense/:resourceId/:dayId/:expenseId/:status',expensecontroller.updateExpense);
-
+router.patch('/updateAllexpenses/:status',expensecontroller.updateExpense);
 
 router.get('/:id',candidatecontroller.getCandidate);
 
 router.post('/', candidatecontroller.postCandidate );
+router.post('/admin', candidatecontroller.postCandidateByAdmin );
 
 router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
 

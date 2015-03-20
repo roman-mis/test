@@ -32,10 +32,12 @@ angular.module('origApp.controllers')
           HttpResource.model('constants/candidateStatus').query({},function (res) {
             $scope.candidateStatus = res.data;
             // $scope.candidate.status
+
             $scope.editCandidateStatus = function () {
               console.log($scope.candidate.status);
-              HttpResource.model('candidates/' + $scope.candidateId).create($scope.candidate)
-              .patch().then(function (res) {
+              console.log($scope.candidateId);
+              HttpResource.model('candidates/updateStatus').create($scope.candidate)
+              .patch($scope.candidateId).then(function (res) {
                 console.log(res);
               });
             };

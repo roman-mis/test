@@ -949,8 +949,13 @@
     "WK": {
       "first": {
         "open": {
-          "state": "",
-          "stateParams": []
+          "state": "app.agency.home",
+          "stateParams": [
+            {
+              "key":"agencyId",
+              "value":"_id"
+            }
+          ]
         }
       },
       "permissions": {

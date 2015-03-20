@@ -8,14 +8,10 @@
  * Controller of the origApp
  */
 angular.module('origApp.controllers', [])
-        .controller('MainController', function($scope, $rootScope, AuthService, $state) {
+        .controller('MainController', function($interval, $scope, $rootScope, $location, AuthService) {
           $rootScope.breadcrumbs = [{link:'/', text:'Home'}];
           $rootScope.currentUser = null;
           if(AuthService.isLoggedIn()){
             $rootScope.currentUser = AuthService.getCurrentUser();
           }
-          
-          $scope.isStateIncludes = function(pathKey){
-            return $state.includes('app.' + pathKey);
-          };
         });
