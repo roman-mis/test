@@ -19,8 +19,5 @@ angular.module('origApp.controllers', [])
             console.log(userPermissions);
             console.log(userPermissions.permissions);
           });
-          $interval(function(){
-            console.log(userPermissions.permissions);
-          },1000);
             // $state.go('app.agencies');
         });

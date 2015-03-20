@@ -152,6 +152,18 @@ module.exports = function(dbs){
         });
     };
 
+    controller.updateStatus=function (req,res){
+      console.log('/////////////////////////////////////////////////')
+      console.log(req.body);
+      console.log(req.params.id);
+      console.log(req.body.status);
+      candidateservice.updateStatus(req.params.id, req.body.status).
+      then(function(resp){
+        res.json(resp);
+      },function(err){
+        res.Json(err);
+      });
+    };
 
     controller.getAllCandidate=function (req,res){
       //console.log('user');

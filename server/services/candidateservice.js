@@ -26,6 +26,32 @@
 		var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 		return Q.nfcall(query.exec.bind(query));
 	};
+
+	service.updateStatus=function(id,status){
+		// var query=db.User.findById(id);
+		// console.log(query);
+		// return Q.nfcall(query.exec.bind(query));
+
+		return Q.Promise(function(resolve,reject){
+		return service.getUser(id)
+			.then(function(user){
+					console.log(user);
+					if(user){
+						user.worker.status = status;
+						return Q.all([Q.nfcall(user.save.bind(user))])
+							.then(function(){
+								resolve({result:true});
+								console.log({result:true});
+							},reject);
+					}else{
+						console.log({result:false});
+						reject({result:false,name:'NOTFOUND',message:'can\'t find candidate'});
+					}
+				
+			},reject);
+	});
+	};
+
 	service.getLogs=function(id){
       var defer=Q.defer();
       db.User.findOne({"_id":id}).select('lastLogin').exec(function(err,res){

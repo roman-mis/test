@@ -29,6 +29,7 @@ router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
 router.patch('/updateExpense/:resourceId/:dayId/:expenseId/:status',expensecontroller.updateExpense);
+router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
 
 
 router.get('/:id',candidatecontroller.getCandidate);
