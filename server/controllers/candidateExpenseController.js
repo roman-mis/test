@@ -173,14 +173,13 @@ module.exports = function(db){
 	};
 	controller.updateExpense=function(req,res){
 
-      expenseservice.updateEachExpense(req.params.resourceId,req.params.dayId,req.params.expenseId,req.params.status).then(function(d){
-
+		expenseservice.updateEachExpense(req.params.status,req.body.expenseIds).then(function(d){
            res.json(d);
 
-      },function(err){
+		},function(err){
 
-      	res.json(err);
-      });
+       	res.sendFailureResponse(err);
+		});
 
 
 	};
