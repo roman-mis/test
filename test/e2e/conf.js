@@ -56,16 +56,15 @@ exports.config = {
 
 
     var DisplayProcessor = require('./../../node_modules/jasmine-spec-reporter/src/display-processor');
-    var count=0;
     function screenshotProcessor(options) {}
 
     screenshotProcessor.prototype = new DisplayProcessor();
     screenshotProcessor.prototype.displayFailedSpec = function (spec, log) {
-      count++;
-      var url='https://originem-payroll-dev.s3.amazonaws.com/screenshots/screenshot-'+count+'.png';
+      var number=String(parseInt(new Date().getTime().toString().substr(-9,9)));
+      var url='https://originem-payroll-dev.s3.amazonaws.com/screenshots/'+number+'.png';
       browser.takeScreenshot().then(function (data) {
        // writeScreenShot(data,path);
-       awsservice.putS3Object(new Buffer(data, 'base64'),String(parseInt(new Date().getTime().toString().substr(-9,9)))+'.png','image/png','screenshots/').then(function(str){
+       awsservice.putS3Object(new Buffer(data, 'base64'),number+'.png','image/png','screenshots/').then(function(str){
          url=str;
        })
       });
