@@ -32,6 +32,7 @@ router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpense
 router.get('/:id',candidatecontroller.getCandidate);
 
 router.post('/', candidatecontroller.postCandidate );
+router.post('/admin', candidatecontroller.postCandidateByAdmin );
 
 router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
 

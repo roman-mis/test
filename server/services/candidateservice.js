@@ -214,9 +214,16 @@
 										var objectName=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
 										return awsservice.moveS3Object(process.env.S3_P45_TEMP_FOLDER+objectName,objectName,process.env.S3_P45_FOLDER+userModel._id+'/')
 										.then(function(){
+                                            if(opt.skipEmail) {
+                                                return true;
+                                            }
+
 											return sendMail(opt,userModel);
 										});
 									}
+                                    else if(opt.skipEmail) {
+                                        return true;
+                                    }
 									else{
 										opt.subject='Registration successful.';
 										return sendMail(opt,userModel);
@@ -372,7 +379,7 @@
 							db.User.update({"_id":user._id},{$set:{"lastLogin":new Date()}},function(err){
 						        console.log(err);
 						      
-						    })
+						    });
 						
 							deff.resolve(user);
 						}
