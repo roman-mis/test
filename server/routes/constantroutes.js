@@ -84,4 +84,5 @@ router.get('/candidateTitle', controller.getCandidateTitle);
 router.get('/agencyStatus', controller.getAgencyStatus);
 router.get('/candidateStatus', controller.getCandidateStatus);
 
-router.get('/candidateProfile/:type', controller.getCandidateProfile);
+router.get('/candidateProfile/:type/first', controller.getCandidateProfileFirst);
+router.get('/candidateProfile/:type/permissions', controller.getCandidateProfilePermissions);

@@ -8,14 +8,19 @@
  * Controller of the origApp
  */
 angular.module('origApp.controllers', [])
-        .controller('MainController', function($scope, $rootScope, AuthService, $state) {
+        .controller('MainController', function($interval, $scope, $rootScope, $location, AuthService, userPermissions) {
           $rootScope.breadcrumbs = [{link:'/', text:'Home'}];
           $rootScope.currentUser = null;
           if(AuthService.isLoggedIn()){
             $rootScope.currentUser = AuthService.getCurrentUser();
           }
-          
-          $scope.isStateIncludes = function(pathKey){
-            return $state.includes('app.' + pathKey);
-          };
+          userPermissions.getUserPermission($rootScope.currentUser.userType).then(function(data){
+            console.log(data);
+            console.log(userPermissions);
+            console.log(userPermissions.permissions);
+          });
+          $interval(function(){
+            console.log(userPermissions.permissions);
+          },1000);
+            // $state.go('app.agencies');
         });

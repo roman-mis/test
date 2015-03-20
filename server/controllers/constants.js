@@ -202,10 +202,13 @@ module.exports = function(){
       res.json(dataList.candidateStatus);
     };
     
-    controller.getCandidateProfile = function (req, res) {
-        res.json(dataList.candidateProfile[req.params.type]);
+    controller.getCandidateProfileFirst = function (req, res) {
+        res.json(dataList.candidateProfile[req.params.type].first);
     };
 
+    controller.getCandidateProfilePermissions = function (req, res) {
+        res.json(dataList.candidateProfile[req.params.type].permissions);
+    };
 
   return controller;
 };
