@@ -28,7 +28,9 @@ router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
 router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
-router.patch('/updateAllexpenses/:status',expensecontroller.updateExpense);
+router.patch('/updateAllexpensesToReject',expensecontroller.updateExpenseReject);
+
+router.patch('/updateAllexpensesToApprove',expensecontroller.updateExpenseApprove)
 
 router.get('/:id',candidatecontroller.getCandidate);
 

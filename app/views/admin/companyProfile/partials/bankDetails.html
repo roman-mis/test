@@ -2,17 +2,17 @@
 	<div class="row text-center">
 		<form class="form-horizontal" name="details" novalidate ng-submit="save(details.$valid)">
 			<div class="col-xs-8">
-				
+
 					<div class="form-group">
 						<label class="control-label col-xs-6">Bank Name</label>
 						<div class="col-xs-6">
-							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.bankName" name="bankName" required/>		
+							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.bankName" name="bankName" required/>
 							<div ng-show="details.bankName.$invalid && submitted">
                                  <p ng-show="details.bankName.$error.required">
                                     Please enter bank name.
                                  </p>
 							</div>
-						</div> 
+						</div>
 					</div>
 
 					<div class="form-group">
@@ -57,7 +57,7 @@
 						<label class="control-label col-xs-6">Post Code</label>
 						<div class="col-xs-6">
 							<input type="text" class="form-control" ng-model="companyProfile.bankDetails.postcode" name="postcode" ng-pattern='/^([A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKS-UW])\ [0-9][ABD-HJLNP-UW-Z]{2}|(GIR\ 0AA)|(SAN\ TA1)|(BFPO\ (C\/O\ )?[0-9]{1,4})|((ASCN|BBND|[BFS]IQQ|PCRN|STHL|TDCU|TKCA)\ 1ZZ))$/' required />
-							<div ng-show="details.postcode.$invalid && submitted">  
+							<div ng-show="details.postcode.$invalid && (details.postcode.$dirty || submitted)">
                                <p ng-show="details.postcode.$error.pattern">
                                    Please enter valid postal code.
                                </p>
@@ -82,7 +82,7 @@
 						<div class="col-xs-6">
 							<input type="number" class="form-control" name="accountNumber" ng-model="companyProfile.bankDetails.accountNo" ng-maxlength=8  />
 							<div ng-show="details.accountNumber.$invalid && submitted">
-                            
+
                              <p ng-show="details.accountNumber.$error.maxlength">Please enter not more than 8 digits.</p>
                              <p ng-show="!details.accountNumber.$error.required && !details.accountNumber.$error.maxlength">
                               Please enter valid account number.
@@ -101,7 +101,7 @@
                             </p>
                             <p ng-show="!details.sort.$error.maxlength && !details.sort.$error.required">
                              Please enter valid sort code.
-                            </p> 
+                            </p>
 							</div>
 						</div>
 					</div>
@@ -113,21 +113,21 @@
 							<div ng-show="details.roll.$invalid && submitted">
                              <p ng-show="details.roll.$error.required">
                                  Please enter pay roll reference.
-                             </p>  
+                             </p>
 							</div>
 						</div>
 					</div>
-				
+
 			</div>
 
 			<div class="col-xs-4">
 		       <button type="submit" class="btn btn-success form-control"  ng-disabled="taxForm.$invalid || isTaxSaving">
-		        <div>Save  <i class="fa fa-save"></i></div>  
+		        <div>Save  <i class="fa fa-save"></i></div>
 		      </button>
 			</div>
 
 		</form>
-	</div>		
+	</div>
 </div>
 
 

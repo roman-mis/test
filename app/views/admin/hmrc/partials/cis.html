@@ -1,177 +1,130 @@
-        <div role="tabpanel" class="tab-pane" id="verification">
-            <div class="row">
-                <div class="col-sm-12">
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                 <div class="form-group">
-                                    <label class="col-xs-4 control-label">User ID</label>
-                                    <div class="col-xs-8 no-padding-left">
-                                        <input type="text" readonly class="form-control" ng-model="user._id"/>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="col-xs-4 control-label">Password</label>
-                                    <div class="col-xs-8 no-padding-left">
-                                        <input type="text" readonly class="form-control" ng-model="user.passward"/>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <label class="col-xs-4 control-label">First Name</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.firstName"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.firstName" style="cursor:pointer" role="presentation"   ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.firstName}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Last Name</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.lastName"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li  align="center"  ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.lastName" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.lastName}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Address 1</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.address1"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li align="center"  ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.address1" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.address1}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Address 2</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.address2"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li  align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.address2" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.address2}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+<div role="tabpanel" class="tab-pane" id="verification">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">User ID</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.id" />
+                                </span>
+
                             </div>
-                            
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Town</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.town"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.town" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="">{{x.town}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Country</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.county"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li  align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.county" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.county}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Post Code</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.postCode"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li align="center"   ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.postCode" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.postCode}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Phone</label> 
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.phone"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li  align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded && x.phone" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.phone}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Fax</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.fax"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                            <li  align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded  && x.fax" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.fax}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-4 control-label">Email</label>
-                                    <div class="dropdown col-xs-8 no-padding-left"  >
-                                        <span class="dropdown-toggle" id="dropdownMenu1" aria-expanded="false" type="text" >
-                                            <input class="form-control"  ng-keyup="onDelaySearch()" ng-model="user.emailAddress"/>
-                                        </span>
-                                        <ul  class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li ng-hide="dataLoaded">
-                                            <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                        </li>
-                                            <li  align="center" ng-hide="dataLoaded">
-                                                <i class="fa fa-spinner fa-spin fa-5x"></i>
-                                            </li>
-                                            <li ng-show="dataLoaded  && x.emailAddress" style="cursor:pointer" role="presentation"  ng-repeat="x in allUsers | filter : user"><a role="menuitem" tabindex="-1" style="color:black;text-decoration:none;" ng-click="select(x._id)">{{x.emailAddress}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>                            
-                                <div class="form-group">
-                                    <div class="col-xs-8 col-xs-offset-4 pull-right text-right">
-                                    <button class="btn btn-primary btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&#160;  Clear Data</button>
-                                    <button class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
                         </div>
-                    </form>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Passward</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.passward" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">First Name</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.firstName" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Last Name</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.lastName" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Address 1</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.address1" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Address 2</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.address2" />
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Town</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.town" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Country</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.county" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Post Code</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.postCode" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Phone</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.phone" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Fax</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.fax" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Email</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="cisUser.emailAddress" />
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-8 col-xs-offset-4 pull-right text-right">
+                                <button class="btn btn-primary btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&#160;  Clear Data</button>
+                                <button class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+            </form>
         </div>
+    </div>
+</div>

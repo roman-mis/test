@@ -171,9 +171,9 @@ module.exports = function(db){
      		res.json({result:true,object:expense});
 		}).then(null, res.sendFailureResponse);
 	};
-	controller.updateExpense=function(req,res){
+	controller.updateExpenseReject=function(req,res){
 
-		expenseservice.updateEachExpense(req.params.status,req.body.expenseIds).then(function(d){
+		expenseservice.updateEachExpense('Reject',req.body.expenseIds).then(function(d){
            res.json(d);
 
 		},function(err){
@@ -181,6 +181,16 @@ module.exports = function(db){
        	res.sendFailureResponse(err);
 		});
 
+
+	};
+	controller.updateExpenseApprove=function(req,res){
+    expenseservice.updateEachExpense('Approve',req.body.expenseIds).then(function(d){
+           res.json(d);
+
+		},function(err){
+
+       	res.sendFailureResponse(err);
+		});
 
 	};
 
