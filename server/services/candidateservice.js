@@ -214,9 +214,16 @@
 										var objectName=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
 										return awsservice.moveS3Object(process.env.S3_P45_TEMP_FOLDER+objectName,objectName,process.env.S3_P45_FOLDER+userModel._id+'/')
 										.then(function(){
+                                            if(opt.skipEmail) {
+                                                return true;
+                                            }
+
 											return sendMail(opt,userModel);
 										});
 									}
+                                    else if(opt.skipEmail) {
+                                        return true;
+                                    }
 									else{
 										opt.subject='Registration successful.';
 										return sendMail(opt,userModel);
@@ -281,7 +288,7 @@
 	};
 
 
-	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress,contactDetail){
+	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress){
 		return Q.Promise(function(resolve,reject){
 			service.getUser(userId)
 			   .then(function(user){
@@ -291,7 +298,6 @@
 							//var props=utils.updateSubModel(user.contactDetail,workerContact);
 							utils.updateSubModel(user,userInformation);
 							utils.updateModel(user.worker,workerPrimaryAddress);
-                            utils.updateModel(user.contactDetail,contactDetail);
 
 							return Q.all([Q.nfcall(user.save.bind(user))])
 								.then(function(){
@@ -371,8 +377,7 @@
 
 							db.User.update({"_id":user._id},{$set:{"lastLogin":new Date()}},function(err){
 						        console.log(err);
-
-						    })
+						    });
 
 							deff.resolve(user);
 						}

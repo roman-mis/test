@@ -34,6 +34,7 @@ router.patch('/updateExpense/:resourceId/:dayId/:expenseId/:status',expensecontr
 router.get('/:id',candidatecontroller.getCandidate);
 
 router.post('/', candidatecontroller.postCandidate );
+router.post('/admin', candidatecontroller.postCandidateByAdmin );
 
 router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
 
