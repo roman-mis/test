@@ -47,7 +47,7 @@ module.exports = function(dbs){
 	};
 
     service.getAllExpenses=function(request){
-      	request.orderBy=[{'submittedDate':-1}];
+      request.orderBy=[{'submittedDate':-1}];
 
     	return Q.Promise(function(resolve,reject){
 			var q=db.Expense.find();
@@ -55,43 +55,81 @@ module.exports = function(dbs){
 			queryutils.applySearch(q, db.Expense, request)
 				.then(function(expense){
 
-           			var r=expense.rows; 
-					var bucket=[];
-					for(var first=0;first< r.length;first++){
-		                var bucketObject={};
-		                bucketObject.expenses=[];
-		                    
-		                bucketObject.claimReference=r[first].claimReference;
-		                bucketObject.claimDate=r[first].createdDate;
-		                bucketObject.expenses=[];
-		                bucketObject.id=r[first]._id;
-		                var secondValue=r[first].days;
+           var r=expense.rows;
+					 var bucket=[];
+           r.forEach(function(t){
+                var bucketObject={};
+                bucketObject.expenses=[];
 
-                		for(var second=0;second<secondValue.length;second++){
-                      		bucketObject.total=0;
-                
-							secondValue[second].expenses.forEach(function(i){
-								var t={};
-								t.date=secondValue[second].date;
-								t.startTime=secondValue[second].startTime;
-								t.endTime=secondValue[second].endTime;
-								t.postcodes=secondValue[second].postcodes;
-								t.expenseType=i.expenseType;
-								t.subType=i.subType;
-								t._id=i._id;
-								t.value=i.value;
-								t.text=i.text;
-								t.description=i.description;
-								t.receiptUrls=i.receiptUrls;
-								bucketObject.total +=i.value;
-								bucketObject.expenses.push(t);
-							});
-                		} 
-                		bucket.push(bucketObject);
-					}
-       				resolve(bucket);
-			    }, reject);
-		    });
+                bucketObject.claimReference=t.claimReference;
+                bucketObject.claimDate=t.createdDate;
+                bucketObject.expenses=[];
+                bucketObject.id=t._id;
+
+                var secondValue=t.days;
+                bucketObject.total=0;
+                secondValue.forEach(function(l){
+
+                      var daySpecific={};
+                      daySpecific.startTime=l.startTime;
+                      daySpecific.endTime=l.endTime;
+                      daySpecific.date=l.date;
+                      daySpecific.postcodes=l.postcodes;
+                      daySpecific.dayId=l._id;
+                          l.expenses.forEach(function(i){
+
+                               var t={};
+                               t.date= daySpecific.date;
+                               t.startTime= daySpecific.startTime;
+                               t.endTime=daySpecific.endTime;
+                               t.postcodes=daySpecific.postcodes;
+                               t.dayId= daySpecific.dayId;
+                               t.expenseType=i.expenseType;
+                               t.subType=i.subType;
+                               t._id=i._id;
+                               t.value=i.value;
+                               t.status=i.status;
+                               t.text=i.text;
+                               t.description=i.description;
+                               t.receiptUrls=i.receiptUrls;
+                               bucketObject.total +=i.value;
+                               bucketObject.expenses.push(t);
+
+                               })
+
+
+                });
+
+                bucket.push(bucketObject);
+
+					 });
+
+           console.log(bucket.length);
+           resolve(bucket);
+				     });
+		     });
+
+
+
+    };
+    service.updateEachExpense=function(resourceId,dayId,expenseId,status){
+
+        return Q.promise(function(resolve,reject){
+
+          db.Expense.findById(resourceId, function (e, data) {
+
+              if(e){
+
+                reject({result:false,message:"Something went wrong."})
+              }else{
+              data.days.id(dayId).expenses.id(expenseId).status = expenseId;
+
+              data.save();
+              resolve({result:true,message:"Success."})
+            }
+          });
+
+        });
     };
 
 

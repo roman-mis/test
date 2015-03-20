@@ -64,6 +64,7 @@ angular.module('origApp.controllers')
 
         // edit primary contact information
         .controller('_EditPrimaryContactController', function($scope, $modalInstance, parentScope, HttpResource) {
+          $scope.candidate = parentScope.candidate;
           $scope.fields = [
             {name: 'phone', label: 'Phone'},
             {name: 'mobile', label: 'Mobile'},
@@ -103,11 +104,14 @@ angular.module('origApp.controllers')
             {name: 'address1', label: 'Address 1'},
             {name: 'address2', label: 'Address 2'},
             {name: 'address3', label: 'Address 3'},
+            {name: 'town', label:'Town'},
+            {name: 'country', label:'Country'},
+            {name: 'postCode', label:'Post Code'},
             {name: 'nationality', label: 'Nationality'}
           ];
           $scope.data = {};
           $scope.nationalities = parentScope.nationalities;
-
+          $scope.candidate = parentScope.candidate;
           $scope.fields.forEach(function(item) {
             $scope.data[item.name] = parentScope.contactDetail[item.name];
           });
@@ -133,12 +137,13 @@ angular.module('origApp.controllers')
 
         // edit bank details
         .controller('_EditBankDetailsController', function($scope, $modalInstance, parentScope, HttpResource) {
+          $scope.candidate = parentScope.candidate;
           $scope.fields = [
             {name: 'accountName', label: 'Name on Account'},
             {name: 'bankName', label: 'Bank Name'},
-            {name: 'accountNo', label: 'Account No.'},
-            {name: 'sortCode', label: 'Sort Code'},
-            {name: 'bankRollNo', label: 'Bankroll No.'}
+            {name: 'accountNo', label: 'Account No.',maxLength:8},
+            {name: 'sortCode', label: 'Sort Code',maxLength:6},
+            {name: 'bankRollNo', label: 'Bankroll No.',maxLength:18}
           ];
           $scope.data = {};
 
@@ -146,6 +151,9 @@ angular.module('origApp.controllers')
             $scope.data[item.name] = parentScope.bankDetail[item.name];
           });
 
+          
+            
+          
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };

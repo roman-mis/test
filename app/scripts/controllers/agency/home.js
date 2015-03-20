@@ -91,7 +91,7 @@ angular.module('origApp.controllers')
 
         // edit agency contact information
         .controller('_AgencyContactEditController', function ($scope, $modalInstance, parentScope, HttpResource) {
-            $scope.status = parentScope.$parent.agencyStatus;
+            $scope.status = parentScope.$parent.selectedAgency.status;
             $scope.ukPhone = /^[0]+(\d{10})+$/;
             $scope.emailPat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
             $scope.fields = [
