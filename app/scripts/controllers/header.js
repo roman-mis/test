@@ -1,13 +1,10 @@
 'use strict';
 
 angular.module('origApp.controllers')
-.controller('HeaderController', function($scope, $rootScope, AuthService, userPermissions) {
+.controller('HeaderController', function($scope, $rootScope, AuthService) {
 	$scope.logout = function(){
 		AuthService.doLogout();
 	};
 	$scope.currentUser = AuthService.getCurrentUser();
-
-	userPermissions.getUserPermission('WK').then(function(data){
-		console.log(data);
-	});
+	// $state.go('contact.detail')
 });

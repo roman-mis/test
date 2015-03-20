@@ -32,7 +32,7 @@ angular.module('origApp').config(function($stateProvider) {
 	})
 	.state('app.admin.companyProfile.bankDetails', {
 		url: '/bankdetails',
-		templateUrl: 'views/admin/companyProfile/partials/bankdetails.html',
+		templateUrl: 'views/admin/companyProfile/partials/bankDetails.html',
 		controller: 'bankDetailsController'
 	})
 	.state('app.admin.companyProfile.defaults', {

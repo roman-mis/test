@@ -17,17 +17,19 @@
       "description": "As well as my new job, I have another job or State Pension or Occupational Pension"
     }
   ],
+
+
   "PayFrequency": [
     {
       "code": "weekly",
       "description": "Weekly"
     },
     {
-      "code": "twoWeekly",
+      "code": "twoweekly",
       "description": "Bi-Weekly"
     },
     {
-      "code": "fourWeekly",
+      "code": "fourweekly",
       "description": "4 Weekly"
     },
     {
@@ -35,6 +37,8 @@
       "description": "Monthly"
     }
   ],
+
+
   "TaxBasis": [
     {
       "code": "1",
@@ -45,6 +49,8 @@
       "description": "W1/M1"
     }
   ],
+
+
   "Margin": [
     {
       "code": "1",
@@ -59,6 +65,8 @@
       "description": "Hours Table"
     }
   ],
+
+
   "HolidayPayRule": [
     {
       "code": "1",
@@ -89,6 +97,8 @@
       "description": "No Holiday Pay"
     }
   ],
+
+
   "DerogationContract": [
     {
       "code": "1",
@@ -103,6 +113,8 @@
       "description": "Opt-out"
     }
   ],
+
+
   "ServiceUsed": [
     {
       "code": "1",
@@ -168,6 +180,8 @@
       "onboardingScript": "The CIS Script"
     }
   ],
+
+
   "PaymentTerms": [
     {
       "code": "1",
@@ -178,6 +192,8 @@
       "description": "On full receipt"
     }
   ],
+
+
   "PaymentMethod": [
     {
       "code": "1",
@@ -192,6 +208,8 @@
       "description": "Cheque"
     }
   ],
+
+
   "Holidays": [
     {
       "code": "1",
@@ -206,6 +224,8 @@
       "description": "no holiday pay"
     }
   ],
+
+
   "AdminFee": [
     {
       "code": "1",
@@ -216,6 +236,8 @@
       "description": "Fixed Fee"
     }
   ],
+
+
   "CommunicationMethod": [
     {
       "code": "1",
@@ -234,6 +256,8 @@
       "description": "Telephone"
     }
   ],
+
+
   "ContractorStatus": [
     {
       "code": "1",
@@ -248,6 +272,8 @@
       "description": "New Enquiry"
     }
   ],
+
+
   "VehicleTypes": [
     {
       "code": "1",
@@ -262,6 +288,8 @@
       "description": "bicycle"
     }
   ],
+
+
   "Priorities": [
     {
       "code": "1",
@@ -280,6 +308,8 @@
       "description": "Critical"
     }
   ],
+
+
   "CallLogTaskTypes": [
     {
       "code": "1",
@@ -342,6 +372,8 @@
       "description": "registration query"
     }
   ],
+
+
   "Statuses": [
     {
       "code": "1",
@@ -356,6 +388,8 @@
       "description": "escalated"
     }
   ],
+
+
   "CreateTaskTypes": [
     {
       "code": "1",
@@ -382,6 +416,8 @@
       "description": "Expenses"
     }
   ],
+
+
   "DocumentTypes": [
     {
       "code": "1",
@@ -409,6 +445,8 @@
       "path": "EXPENSE_FORM"
     }
   ],
+
+
   "MarginExceptionTypes": [
     {
       "code": "1",
@@ -423,6 +461,8 @@
       "description": "Increased Margin"
     }
   ],
+
+
   "Reasons": [
     {
       "code": "1",
@@ -441,6 +481,8 @@
       "description": "Introduction Margin"
     }
   ],
+
+
   "DeductionTypes": [
     {
       "code": "1",
@@ -455,6 +497,8 @@
       "description": "Number of Payroll"
     }
   ],
+
+
   "AgencyTypes": [
     {
       "code": "1",
@@ -473,6 +517,8 @@
       "description": "Factoring"
     }
   ],
+
+
   "InvoiceMethods": [
     {
       "code": "1",
@@ -483,6 +529,8 @@
       "description": "Individual"
     }
   ],
+
+
   "StatusList": [
     {
       "code": "1",
@@ -493,6 +541,8 @@
       "description": "Dormant"
     }
   ],
+
+
   "MarginTypes": [
     {
       "code": "1",
@@ -519,6 +569,8 @@
       "description": "Charge per timesheet"
     }
   ],
+
+
   "RolesList": [
     {
       "code": "1",
@@ -533,6 +585,8 @@
       "description": "Consultant"
     }
   ],
+
+
   "MealsList": [
     {
       "code": "1",
@@ -560,6 +614,8 @@
       "default_cost": "0.00"
     }
   ],
+
+
   "TransportationMeans": [
     {
       "code": "1",
@@ -582,6 +638,8 @@
       "default_ppm": "N/A"
     }
   ],
+
+
   "OtherExpenseTypes": [
     {
       "code": "1",
@@ -596,6 +654,8 @@
       "description": "Other"
     }
   ],
+
+
   "Fuels": [
     {
       "code": "1",
@@ -628,6 +688,8 @@
       ]
     }
   ],
+
+
   "expensesRateTypes": [
     {
       "code": "1",
@@ -638,12 +700,16 @@
       "name": "Non-Billable"
     }
   ],
+
+
   "templateTypes": [
     {
       "code": "1",
       "name": "Standard"
     }
   ],
+
+
   "AOE": {
     "AOETypes": [
       {
@@ -800,6 +866,8 @@
         "otherInfo": ""
       }
     ],
+
+
     "priority": [
       {
         "value": "Priority",
@@ -810,6 +878,8 @@
         "carriedForward": "false"
       }
     ],
+
+
     "deductionTypes": [
       {
         "value": "Fixed",
@@ -829,6 +899,8 @@
       }
     ]
   },
+
+
   "candidateTitle": [
 	{
       "code": 1,
@@ -843,6 +915,8 @@
       "value": "Ms"
     }
   ],
+
+
   "agencyStatus": [
     {
       "code": 1,
@@ -853,6 +927,8 @@
       "value": "Live"
     }
   ],
+
+
   "candidateStatus": [
     {
       "code": 1,
@@ -867,12 +943,19 @@
       "value": "P45 Out"
     }
   ],
+
+
   "candidateProfile": {
     "WK": {
       "first": {
         "open": {
-          "state": "",
-          "stateParams": []
+          "state": "app.agency.home",
+          "stateParams": [
+            {
+              "key":"agencyId",
+              "value":"_id"
+            }
+          ]
         }
       },
       "permissions": {

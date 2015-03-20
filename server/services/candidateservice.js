@@ -26,6 +26,32 @@
 		var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 		return Q.nfcall(query.exec.bind(query));
 	};
+
+	service.updateStatus=function(id,status){
+		// var query=db.User.findById(id);
+		// console.log(query);
+		// return Q.nfcall(query.exec.bind(query));
+
+		return Q.Promise(function(resolve,reject){
+		return service.getUser(id)
+			.then(function(user){
+					console.log(user);
+					if(user){
+						user.worker.status = status;
+						return Q.all([Q.nfcall(user.save.bind(user))])
+							.then(function(){
+								resolve({result:true});
+								console.log({result:true});
+							},reject);
+					}else{
+						console.log({result:false});
+						reject({result:false,name:'NOTFOUND',message:'can\'t find candidate'});
+					}
+				
+			},reject);
+	});
+	};
+
 	service.getLogs=function(id){
       var defer=Q.defer();
       db.User.findOne({"_id":id}).select('lastLogin').exec(function(err,res){
@@ -214,9 +240,16 @@
 										var objectName=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
 										return awsservice.moveS3Object(process.env.S3_P45_TEMP_FOLDER+objectName,objectName,process.env.S3_P45_FOLDER+userModel._id+'/')
 										.then(function(){
+                                            if(opt.skipEmail) {
+                                                return true;
+                                            }
+
 											return sendMail(opt,userModel);
 										});
 									}
+                                    else if(opt.skipEmail) {
+                                        return true;
+                                    }
 									else{
 										opt.subject='Registration successful.';
 										return sendMail(opt,userModel);
@@ -281,7 +314,7 @@
 	};
 
 
-	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress,contactDetail){
+	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress){
 		return Q.Promise(function(resolve,reject){
 			service.getUser(userId)
 			   .then(function(user){
@@ -291,7 +324,6 @@
 							//var props=utils.updateSubModel(user.contactDetail,workerContact);
 							utils.updateSubModel(user,userInformation);
 							utils.updateModel(user.worker,workerPrimaryAddress);
-                            utils.updateModel(user.contactDetail,contactDetail);
 
 							return Q.all([Q.nfcall(user.save.bind(user))])
 								.then(function(){
@@ -371,8 +403,7 @@
 
 							db.User.update({"_id":user._id},{$set:{"lastLogin":new Date()}},function(err){
 						        console.log(err);
-
-						    })
+						    });
 
 							deff.resolve(user);
 						}

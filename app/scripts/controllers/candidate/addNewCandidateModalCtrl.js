@@ -23,7 +23,7 @@ app.controller('addNewCandidateModalCtrl', ['$scope', '$modalInstance', 'HttpRes
                 birthDate: $scope.can.birthDate
             }
 
-            HttpResource.model('candidates/')
+            HttpResource.model('candidates/admin')
                 .create(data).post().then(function (result) {
                     console.log('*****');
                     console.log(result);

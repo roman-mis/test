@@ -7,6 +7,8 @@ angular.module('origApp.controllers')
           var agencyResource = HttpResource.model('agencies');
 
           //define public variables
+          $scope.candidate = $scope.$parent.candidate;
+          console.log($scope.candidate);
           $scope.candidateId = $stateParams.candidateId;
           $scope.$scope = $scope;
           $scope.product = {};

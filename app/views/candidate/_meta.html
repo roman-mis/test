@@ -15,6 +15,14 @@
                 <p class='candidate-name'>{{candidate.firstName}} {{candidate.lastName}}</p>
                 <p class='candidate-ref'>Ref: {{candidate.candidateRef}}</p>
             </div>
+            
+        </div>
+        <div class="col-lg-3">
+            <label style="color:green">Candidate Status</label>
+            <select class='form-control' ng-model = "candidate.status" ng-options="status.value as status.value for status in candidateStatus">
+            </select>
+            <button ng-click="editCandidateStatus()" class="btn btn-success">Save</button>
+
         </div>
         <div class='pie-chat col-lg-3 hidden-md hidden-sm hidden-xs'></div>
         <div class="col-md-12 hidden-lg">
@@ -23,6 +31,7 @@
                     <p class='candidate-name'>{{candidate.firstName}} {{candidate.lastName}}</p>
                     <p class='candidate-ref'>Ref: {{candidate.candidateRef}}</p>    
                 </div>
+                
                 <div class='beta pull-right'>
                     <span>80%</span>
                     <span>onboard</span>
