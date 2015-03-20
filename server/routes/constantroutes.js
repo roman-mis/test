@@ -13,21 +13,28 @@ router.get('/nationalities',controller.nationalities);
 
 router.get('/starterdeclarations',controller.starterdeclarations);
 
-router.get('/payfrequencies',controller.payfrequencies);
-
 router.get('/taxbasis',controller.taxbasis);
 
 router.get('/margins',controller.margins);
 
+router.get('/payfrequencies',controller.payfrequencies);
+
 router.get('/holidaypayrules',controller.holidaypayrules);
 
+router.get('/paymentmethods',controller.paymentmethods);
+
+router.get('/adminfee',controller.adminfee);
+
 router.get('/derogationcontracts',controller.derogationcontracts);
+
+router.get('/communicationmethod',controller.communicationmethod);
+
+router.get('/contractorstatus',controller.contractorstatus);
 
 router.get('/servicesused',controller.servicesused);
 
 router.get('/paymentterms',controller.paymentterms);
 
-router.get('/paymentmethods',controller.paymentmethods);
 
 
 router.get('/holidays',controller.holidays);
