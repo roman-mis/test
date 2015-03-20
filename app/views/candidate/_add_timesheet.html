@@ -47,7 +47,7 @@
                             </button>
                             <button class="btn btn-primary" ng-click="clicked =false">cancel</button>
                         </div>
-                        <input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder">
+                        <input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder" ng-click="clicked = true" readonly style="cursor:text">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="clicked = true"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -58,7 +58,7 @@
         <hr>
         <div class="row">
             <div class="col-md-3 col-sm-12 form-group">
-                <span>Rate Description</span>
+                <span>Rate</span>
                 <select ng-model="saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates"></select>
             </div>
             <div class="col-sm-12 form-group hidden-md hidden-lg">
