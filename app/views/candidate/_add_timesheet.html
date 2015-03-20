@@ -118,7 +118,7 @@
                             <th>VAT</th>
                         </tr>
                     </thead>
-                    <tbody id ="tableBody">
+                    <tbody id="tableBody">
                         <tr ng-repeat="element in finalElements">
                             <td>{{element.elementName}}</td>
                             <td>{{element.description}}</td>
@@ -147,7 +147,7 @@
                         <div class="col-sm-12 form-group">
                             <!-- <div class="fileUpload btn btn-primary form-control"> -->
                             <button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
-                            <input accept="image/*" type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;" />
+                            <input accept="image/*, application/pdf" type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;" />
                         </div>
 
 
@@ -157,9 +157,13 @@
                                 <div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
 
                             </button>
-
                         </div>
-                        <div class="col-sm-12 text-left">
+                        <div class="col-sm-12 form-group" ng-show="isUploading">
+                            <button class="btn btn-primary btn-block" ng-disabled="!isUploading" ng-click="cancelUpload()">
+                                <div> &nbsp; Cancel Upload</div>
+                            </button>
+                        </div>
+                        <div class="col-sm-12 text-left" style="word-wrap:break-word">
                             {{files.files[0].name}}
                         </div>
                         <div class="col-sm-12 text-left">
