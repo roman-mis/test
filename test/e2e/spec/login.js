@@ -43,10 +43,10 @@ describe('Browse to sign in', function() {
   });
 
 
-  it('should navigate to candidates page ', function () {
+  it('should navigate inside the portal', function () {
     browser.wait(function () {
       return browser.getCurrentUrl().then(function (url) {
-        return (url.indexOf('candidates') !== -1);
+        return (url.indexOf('home') == -1);
       });
     }, 5000);
 
