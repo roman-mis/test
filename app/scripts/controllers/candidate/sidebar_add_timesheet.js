@@ -245,7 +245,7 @@ angular.module('origApp.controllers')
 		$scope.daysInRange = daysInRange;
 		$scope.times = [];
 
-		$scope.dateHolder=daysInRange[1].label +  'to'  + daysInRange[7].label;
+		$scope.dateHolder=daysInRange[1].label +  ' to '  + daysInRange[7].label;
 
 		$scope.weekEndingDate = daysInRange[6];
 	};
