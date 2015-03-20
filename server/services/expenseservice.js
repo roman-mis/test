@@ -104,7 +104,6 @@ module.exports = function(dbs){
 
 					 });
 
-           console.log(bucket.length);
            resolve(bucket);
 				     });
 		     });
@@ -112,22 +111,40 @@ module.exports = function(dbs){
 
 
     };
-    service.updateEachExpense=function(resourceId,dayId,expenseId,status){
+    service.updateEachExpense=function(status,ids){
 
         return Q.promise(function(resolve,reject){
 
-          db.Expense.findById(resourceId, function (e, data) {
+            var q=db.Expense.find();
 
-              if(e){
+            return Q.nfcall(q.exec.bind(q)).then(function(doc){
 
-                reject({result:false,message:"Something went wrong."})
-              }else{
-              data.days.id(dayId).expenses.id(expenseId).status = expenseId;
 
-              data.save();
-              resolve({result:true,message:"Success."})
-            }
-          });
+                ids.forEach(function(e){
+
+                  doc.forEach(function(d){
+
+                    d.days.forEach(function(l){
+
+                      l.expenses.forEach(function(ex){
+
+                        if(ex._id==e){
+
+                          ex.status=status;
+                          d.save();
+
+                          if(ids[ids.length-1]==e){
+
+                            resolve({result:true});
+                          }
+
+                        }
+                      })
+                    })
+                  })
+                })
+
+            },reject);
 
         });
     };

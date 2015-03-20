@@ -106,6 +106,7 @@ module.exports = function(db){
     };
 
     controller.patchPayrollProduct=function (req,res){
+      console.log('payroll product patch.....');
       savePayrollProduct(req, res, 'patch');
     };
 
