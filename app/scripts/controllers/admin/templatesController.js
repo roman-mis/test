@@ -1,15 +1,14 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('templatesController',['$rootScope', '$scope','$location','HttpResource', 'adminTemplate',
-	function($rootScope,$scope,$location,HttpResource,adminTemplate){	
+app.controller('templatesController',['$rootScope', '$scope','$location','HttpResource', 'adminTemplate','userPermissions',
+	function($rootScope,$scope,$location,HttpResource,adminTemplate,userPermissions){	
 		console.log('hello');
 	
   $rootScope.breadcrumbs = [{link:'/', text:'Home'},
                               {link: '/admin/home', text: 'Admin'},
                               {link: '/admin/templates', text: 'Templates'},
                               ];
-
 	$scope.getImage = function(v){
     // console.log('v ==========> ' + v)
 		var img= '';

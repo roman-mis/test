@@ -2,11 +2,6 @@
 angular.module('origApp.controllers')
         .controller('AgencyMainController', function ($scope, $rootScope, $state, $stateParams, HttpResource, $http) {
             $scope.selectedAgencyId = $stateParams.agencyId;
-            $http.get('/api/constants/agencyStatus/').success(function (data) {
-                $scope.status = data;
-                //if (!$scope.agencyStatus) $scope.agencyStatus = data[0].value;
-            });
-
             var agencyAPI = HttpResource.model('agencies');
 
             //main breadcrumbs
@@ -15,7 +10,6 @@ angular.module('origApp.controllers')
               { link: '/agencies', text: 'Agencies' },
               { link: '/agencies/' + $scope.selectedAgencyId, text: '' }
             ];
-            $scope.selectedAgency = null;
 
             $scope.$watch('selectedAgency', function () {
                 $scope.baseBreadcrumbs[2].text = $scope.selectedAgency.name;
@@ -24,14 +18,13 @@ angular.module('origApp.controllers')
 
             //load agency basic information
             $scope.loadAgency = function () {
-                $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId);
-                console.log($scope.selectedAgency.status);
-                if (!$scope.selectedAgency.status) {
-                    $scope.selectedAgency.status = 'Submitted';
-                    $scope.agencyStatus = $scope.selectedAgency.status;
-                    $scope.updateStatus();
-                }
-            };
+                $scope.selectedAgency = agencyAPI.get($scope.selectedAgencyId,function(){
+                    
+                $http.get('/api/constants/agencyStatus/').success(function (data) {
+                    $scope.status = data;
+                });
+            });
+        };
 
 
             $scope.addSubBreadcrumb = function (crumb) {
@@ -47,21 +40,20 @@ angular.module('origApp.controllers')
                 //console.log($scope.selectedAgency.status);
                 var successCallback = function (response) {
                     if (!HttpResource.flushError(response)) {
-                        if ($scope.selectedAgency) {
-                            $scope.selectedAgency = jQuery.extend($scope.selectedAgency, $scope.selectedAgency);
-                            $rootScope.$broadcast('agencyUpdated', { agency: $scope.selectedAgency });
-                        }
+                        console.log(response);
                     }
                 };
                 if ($scope.selectedAgency) {
-                    HttpResource.model('agencies').create({ name: $scope.selectedAgency.status })
+                    console.log('********************************');
+                    console.log($scope.selectedAgency);
+                    HttpResource.model('agencies').create($scope.selectedAgency )
                             .patch($scope.selectedAgencyId)
                             .then(function (response) {
                                 successCallback(response);
                             });
                 }
 
-            }
+            };
 
             $scope.loadAgency();
 

@@ -50,8 +50,6 @@ input[disabled] {
 
 .modal-open {
     overflow: hidden;
-    width: calc(100% - 17px); //for chrome/safari
-    width: -moz-calc(100% - 16px); //for firefox
 }
 
 .modal-lg {
@@ -962,10 +960,6 @@ body {
     border-top: 1px solid #e5e5e5;
 }
 
-select.form-control,
-input.form-control {
-    padding: 0 2px;
-}
 
 .form-group {
     margin-bottom: 8px;
@@ -1394,13 +1388,13 @@ tr {
     margin-bottom: 0;
 }
 
-.table tr > th,
-.table tr > td {
+.table-activityExpenses tr > th,
+.table-activityExpenses tr > td {
     text-align: left;
 }
 
-.table tr > th:nth-child(1),
-.table tr > td:nth-child(1) {
+.table-activityExpenses tr > th:nth-child(1),
+.table-activityExpenses tr > td:nth-child(1) {
     min-width: 46px;
     max-width: 46px;
     width: 46px;
@@ -1411,57 +1405,57 @@ tr {
     text-align: right;
 }
 
-.table tr > th:nth-child(2),
-.table tr > td:nth-child(2) {
+.table-activityExpenses tr > th:nth-child(2),
+.table-activityExpenses tr > td:nth-child(2) {
     min-width: 100px;
     width: 100px;
     max-width: 100px;
 }
 
-.table tr > th:nth-child(3),
-.table tr > td:nth-child(3) {
+.table-activityExpenses tr > th:nth-child(3),
+.table-activityExpenses tr > td:nth-child(3) {
     max-width: 130px;
     min-width: 130px;
     width: 130px;
 }
 
-.table tr > th:nth-child(4),
-.table tr > td:nth-child(4) {
+.table-activityExpenses tr > th:nth-child(4),
+.table-activityExpenses tr > td:nth-child(4) {
     max-width: 100px;
     min-width: 100px;
     width: 100px;
 }
 
-.table tr > th:nth-child(5),
-.table tr > td:nth-child(5) {
+.table-activityExpenses tr > th:nth-child(5),
+.table-activityExpenses tr > td:nth-child(5) {
     max-width: 80px;
     min-width: 80px;
     width: 80px;
 }
 
-.table tr > th:nth-child(6),
-.table tr > td:nth-child(6) {
+.table-activityExpenses tr > th:nth-child(6),
+.table-activityExpenses tr > td:nth-child(6) {
     max-width: 80px;
     min-width: 80px;
     width: 80px;
 }
 
-.table tr > th:nth-child(7),
-.table tr > td:nth-child(7) {
+.table-activityExpenses tr > th:nth-child(7),
+.table-activityExpenses tr > td:nth-child(7) {
     max-width: 80px;
     min-width: 80px;
     width: 80px;
 }
 
-.table tr > th:nth-child(8),
-.table tr > td:nth-child(8) {
+.table-activityExpenses tr > th:nth-child(8),
+.table-activityExpenses tr > td:nth-child(8) {
     max-width: 80px;
     min-width: 80px;
     width: 80px;
 }
 
-.table tr > th:nth-child(9),
-.table tr > td:nth-child(9) {
+.table-activityExpenses tr > th:nth-child(9),
+.table-activityExpenses tr > td:nth-child(9) {
     max-width: 85px;
     min-width: 85px;
     width: 85px;
@@ -1479,8 +1473,8 @@ tr {
     text-align: center;
 }
 
-.table tr > th:nth-child(10),
-.table tr > td:nth-child(10) {
+.table-activityExpenses tr > th:nth-child(10),
+.table-activityExpenses tr > td:nth-child(10) {
     min-width: 65px;
     max-width: 65px;
     width: 65px;
@@ -1493,16 +1487,16 @@ tr {
     width: 85px;
 }
 
-.table tr > th:nth-child(11),
-.table tr > td:nth-child(11) {
+.table-activityExpenses tr > th:nth-child(11),
+.table-activityExpenses tr > td:nth-child(11) {
     min-width: 32px;
     width: 32px;
     padding: 8px 0;
     text-align: center;
 }
 
-.table tr > th:nth-child(12),
-.table tr > td:nth-child(12) {
+.table-activityExpenses tr > th:nth-child(12),
+.table-activityExpenses tr > td:nth-child(12) {
     min-width: 32px;
     width: 32px;
     padding: 8px 0;

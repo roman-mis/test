@@ -10,8 +10,8 @@
                     <label class="col-sm-4">Payment Rate Name</label>
                     <div class="col-sm-8">
                         <input name="name" type="text" class="form-control" ng-model="paymentRates.name" value="{{paymentRates.name}}" required>
-                            <span ng-show="addPaymentForm.name.$invalid && (addPaymentForm.name.$dirty || submitted) && addPaymentForm.name" class="clearfix danger">
-                                <span ng-show="addPaymentForm.name.$error.required">Rate Type cannont be empty.</span>
+                            <span ng-show="addPaymentForm.name.$invalid && (addPaymentForm.name.$dirty || submitted) && addPaymentForm.name" class="clearfix danger" style="line-height: 20px;">
+                                <span ng-show="addPaymentForm.name.$error.required">Rate Type cannot be empty.</span>
                             </span>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                             <ui-select-match value="" placeholder="Select a payment rate">{{$select.selected}}</ui-select-match>
                             <ui-select-choices repeat="item in rateTypes">{{ item  }}</ui-select-choices>
                         </ui-select>
-                            <span ng-show="addPaymentForm.rateType.$invalid && (addPaymentForm.rateType.$dirty  || submitted) && addPaymentForm.rateType" class="clearfix danger">
+                            <span ng-show="addPaymentForm.rateType.$invalid && (addPaymentForm.rateType.$dirty  || submitted) && addPaymentForm.rateType" class="clearfix danger" style="line-height: 20px;">
                                 <span ng-show="addPaymentForm.rateType.$error.required" class="clearfix danger">Rate Type cannot be empty.</span>
                             </span>
                     </div>
@@ -33,7 +33,7 @@
                     <label class="col-sm-4">Hours</label>
                     <div class="col-sm-8">
                         <input type="number" min="0" class="form-control" name="hours" ng-model="paymentRates.hours" value="{{paymentRates.hours}}" required>
-                            <span ng-show="addPaymentForm.hours.$invalid && (addPaymentForm.hours.$dirty || submitted)  && addPaymentForm.hours" class="clearfix danger">
+                            <span ng-show="addPaymentForm.hours.$invalid && (addPaymentForm.hours.$dirty || submitted)  && addPaymentForm.hours" class="clearfix danger" style="line-height: 20px;">
                                 <span ng-show="addPaymentForm.hours.$error.required" class="clearfix danger">Hours cannot be empty.</span>
                                 <span ng-show="addPaymentForm.hours.$error.min" class="clearfix danger">Hours cannot be negative.</span>
                                 <span ng-show="addPaymentForm.hours.$error.number" class="clearfix danger">Please enter a number</span>
