@@ -212,14 +212,15 @@ module.exports = function(dbs){
     //TODO: should be changed to req.user.id only after this api requires authentication
       //addressDetails.updatedBy=(req.user?req.user.id:undefined);
         var userInformation={
-          emailAddress:req.body.emailAddress
+          emailAddress:req.body.emailAddress,
+          contactDetail : contactDetail
         };
 
 
      // addressDetails.updatedBy=(req.user?req.user.id:undefined);
 
       function submitUser(){
-          candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
+          candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails)
          .then(function(response){
           console.log('contact detail submited');
             var vm=getContactInformationViewModel(response.object,response.object.contactDetail);
