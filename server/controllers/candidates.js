@@ -460,7 +460,7 @@ module.exports = function(dbs){
           'address3':worker.address3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
           'contactNumber':worker.contactNumber,
           'phone':contact.phone,'mobile':contact.mobile,'altEmail':contact.altEmail,
-                    'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
+                    'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google,status:user.worker.status
             };
     }
 

@@ -13,20 +13,16 @@ angular.module('origApp').config(function($stateProvider, $urlRouterProvider) {
           templateUrl: 'views/main.html',
           controller: 'MainController'
         }
-      }
+      },
+      resolve: {permissions:['userPermissions', 'AuthService' ,function(userPermissions,AuthService){
+        console.log(AuthService.getCurrentUser());
+
+        
+        }]}
     })
-  .state('first', {
-    url: '/first',
-    views: {
-        header: {
-          templateUrl: 'views/partials/header.html',
-          controller: 'HeaderController'
-        },
-        body: {
-          templateUrl: 'views/main.html',
-          controller: 'first'
-        }
-      }
+  .state('app.first', {
+    url: '/',
+    controller: 'first'
   })
   .state('reset-password', {
     url: '/reset-password/:emailAddress/:verifyCode',
@@ -42,5 +38,5 @@ angular.module('origApp').config(function($stateProvider, $urlRouterProvider) {
     }
   });
 
-  $urlRouterProvider.otherwise('/agencies');
+  $urlRouterProvider.otherwise('/');
 });

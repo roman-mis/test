@@ -949,14 +949,14 @@
     "WK": {
       "first": {
         "open": {
-          "state": "app.agency.home",
+          "state": "app.candidate.home",
           "stateParams": [
             {
-              "key":"agencyId",
+              "key":"candidateId",
               "value":"_id"
             }
           ]
-        }
+        } 
       },
       "permissions": {
         "accessKey": "WK",
@@ -1045,7 +1045,7 @@
                   "assignTo": {
                     "hide": true
                   },
-                  "NotifyMeWhenTaskComplete ": {
+                  "NotifyMeWhenTaskComplete": {
                     "hide": true
                   }
                 }

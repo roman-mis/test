@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
         .controller('CandidateSidebarCreateTaskController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, params, MsgService) {
-
+          $scope.permissions = parentScope.permissions;
           $scope.data = {};
           if (params.agency) {
             $scope.data.agency = params.agency;
