@@ -7,6 +7,11 @@ angular.module('origApp.controllers')
         {link: '/admin/hmrc/rti', text: 'RTI Submissions'}
     ];
     $scope.$parent.tab = 'rti';
+
+
+    $scope.delete = function () {
+        $scope.user = {};
+    };
     
     // HttpResource.model('/api/systems/rti').customGet('',{},function(data){
     // 		console.log('rti');
