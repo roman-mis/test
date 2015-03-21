@@ -26,10 +26,36 @@
 		var query=db.User.findById(id).populate('worker.payrollProduct.agency');
 		return Q.nfcall(query.exec.bind(query));
 	};
+
+	service.updateStatus=function(id,status){
+		// var query=db.User.findById(id);
+		// console.log(query);
+		// return Q.nfcall(query.exec.bind(query));
+
+		return Q.Promise(function(resolve,reject){
+		return service.getUser(id)
+			.then(function(user){
+					console.log(user);
+					if(user){
+						user.worker.status = status;
+						return Q.all([Q.nfcall(user.save.bind(user))])
+							.then(function(){
+								resolve({result:true});
+								console.log({result:true});
+							},reject);
+					}else{
+						console.log({result:false});
+						reject({result:false,name:'NOTFOUND',message:'can\'t find candidate'});
+					}
+				
+			},reject);
+	});
+	};
+
 	service.getLogs=function(id){
       var defer=Q.defer();
       db.User.findOne({"_id":id}).select('lastLogin').exec(function(err,res){
-   
+
       	if(!err){
 
       	defer.resolve(res);
@@ -44,16 +70,16 @@
 	service.getUserByEmail=candidatecommonservice.getUserByEmail;
 
 	service.getAllCandidates=function(request){
-		
+
 		return Q.Promise(function(resolve,reject){
 			var q=db.User.find();
-			
+
 			q.where('userType').equals('WK');
-			
+
 			queryutils.applySearch(q,db.User,request)
 			.then(resolve,reject);
 		});
-		
+
 	};
 
 	service.uploadDocuments=function(id,documents){
@@ -74,11 +100,11 @@
 			         		user.documents.push(document);
 			         		docsAdded.push(document);
 			         	});
-			         	
+
 						console.log('uploading documents');
 	     				var o=[];Q.Promise(function(){});
 	     				_.forEach(documents,function(doc){
-	     					
+
 	     					// var data=doc.data;
 	     					// var mimetype=doc.mimeType;
 	     					var newFileName=doc.generatedName;
@@ -91,10 +117,10 @@
 	     					// console.log('folder = '+folder);
 	     					// console.log('file key = '+newFileName );
 	     					console.log('Moving a Document   '+doc.generatedName+' to '+folder);
-	     					
+
 	     					o.push(awsservice.moveS3Object(process.env.S3_TEMP_FOLDER+newFileName,newFileName,folder));
 	     				});
-	     				
+
 						console.log('saving user');
 	 					Q.all(o)
 	 						.then(function(){
@@ -106,8 +132,8 @@
 
 			         	// Q.nfcall(user.save.bind(user))
 		         		// 	.then(function(){
-		         				
-		         				
+
+
 		         		// 	})
 				         // 	.then(function(){
 				         // 		resolve({result:true,object:{user:user,documents:docsAdded}});
@@ -135,31 +161,31 @@
 		db.User.findOne({emailAddress: user.emailAddress},function(err,existingUser){
 			if(existingUser) {
 				var response=
-				{ 
+				{
 					name: 'DuplicateRecordExists',
 					message: 'Email address '+user.emailAddress+' already taken'
 				};
-				
+
 				deff.reject(response);
-				
+
 			}
 			else {
 
-				
+
 				var userModel;
 
 				userModel=new db.User(user);
 
 				userModel.worker=worker;
-				
+
 				console.log('going for validations');
-				
+
 				Q.allSettled([Q.nfcall(userModel.validate.bind(userModel))])
 				.spread(function(userPromise){
 					console.log('------------my validate result.......');
 						// console.log(arguments);
 						var response=
-						{ 
+						{
 							name: 'ModelValidationError',
 							message: 'Validation error',
 							errors:[]
@@ -168,7 +194,7 @@
 						var hasError=false;
 						if(userPromise.state==='rejected'){
 							hasError=true;
-							errObj=userPromise.reason.errors;		
+							errObj=userPromise.reason.errors;
 						}
 
 						if(hasError){
@@ -177,7 +203,7 @@
 								return itm;
 							});
 							console.log(response.errors);
-							deff.reject(response);	
+							deff.reject(response);
 							return;
 						}
 
@@ -185,10 +211,10 @@
 
 						var guid=uuid.v1();
 						console.log('Activation Code is : '+guid);
-						
+
 						userModel.activationCode=guid;
 
-						
+
 						console.log('saving started....');
 						if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!=='')
 						{
@@ -201,22 +227,29 @@
 						}
 						console.log('user id is : '+userModel._id);
 						console.log('user is new ? '+userModel.isNew);
-						
+
 						Q.nfcall(userModel.save.bind(userModel))
 							.then(function(){
 									//console.log('saving worker');
 									console.log('user id is '+userModel._id);
 									console.log('user is new ? '+userModel.isNew);
-									
+
 									if(userModel.worker.taxDetail.p45DocumentUrl && userModel.worker.taxDetail.p45DocumentUrl.trim()!=='')
 									{
 
 										var objectName=_.last(userModel.worker.taxDetail.p45DocumentUrl.split('/'));
 										return awsservice.moveS3Object(process.env.S3_P45_TEMP_FOLDER+objectName,objectName,process.env.S3_P45_FOLDER+userModel._id+'/')
 										.then(function(){
+                                            if(opt.skipEmail) {
+                                                return true;
+                                            }
+
 											return sendMail(opt,userModel);
 										});
 									}
+                                    else if(opt.skipEmail) {
+                                        return true;
+                                    }
 									else{
 										opt.subject='Registration successful.';
 										return sendMail(opt,userModel);
@@ -265,21 +298,21 @@
 						// var props=utils.updateSubModel(user.worker.bankDetail,bankDetails);
 						return Q.nfcall(user.save.bind(user))
 							.then(function(){
-								
+
 								deff.resolve({result:true,object:user});
-								
+
 							},deff.reject);
 		   		}
 		   		else{
 		   			deff.reject({name:'NotFound',message:'No Bank detail found'});
 		   		}
-			   	
+
 
 		},deff.reject);
 
 	     return deff.promise;
 	};
-		
+
 
 	service.updateContactDetail=function(userId,userInformation,workerPrimaryAddress){
 		return Q.Promise(function(resolve,reject){
@@ -294,15 +327,15 @@
 
 							return Q.all([Q.nfcall(user.save.bind(user))])
 								.then(function(){
-									
+
 									resolve({result:true,object:user});
-									
+
 								},reject);
 			   		}
 			   		else{
 			   			reject({name:'NotFound',message:'No Bank detail found'});
 			   		}
-				   	
+
 
 			},reject);
 		});
@@ -367,23 +400,22 @@
 					utils.compareSecureString(user.password,password)
 					.then(function(result){
 						if(result){
-				
+
 							db.User.update({"_id":user._id},{$set:{"lastLogin":new Date()}},function(err){
 						        console.log(err);
-						      
-						    })
-						
+						    });
+
 							deff.resolve(user);
 						}
 						else{
 							deff.reject({name:'InvalidLogin',message:'User not found',detail:'passwords do not match'});
 						}
-					});	
+					});
 				}
 				else{
 					deff.reject({name:'InvalidLogin',message:'User not found',detail:(user && !user.isActive?'not activated '+user.isActive:'user object not found in db')});
 				}
-				
+
 			},function(err){
 				deff.reject(err);
 			});
@@ -398,13 +430,13 @@
 			        if(user){
 			         	//db.sequelize.transaction(function(t){
 			         		user.avatarFileName=newFileName;
-			         		
+
 			         	new Q(Q.nfcall(user.save.bind(user))
 			         			.then(function(){
 			         				console.log('uploading avatar');
 
 		         					return awsservice.putS3Object(data,newFileName,mimetype,folder);
-			         				
+
 			         			})
 			         	)
 			         	.then(function(){
@@ -415,11 +447,11 @@
 			        else{
 			          reject({result:false,name:'NotFound',message:'User not found'});
 			        }
-	            
+
 		        },reject);
-		        
+
 	    });
-			
+
 	};
 
 	return service;

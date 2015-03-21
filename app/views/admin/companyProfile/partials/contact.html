@@ -1,21 +1,20 @@
 <div class="row text-center">
-		<form ng-submit="save(profile.$valid)" novalidate name="profile" class="form-horizontal">
-	<div class="col-xs-8">
-	
+	<form ng-submit="save(contact.$valid)" novalidate name="profile" class="form-horizontal">
+
+		<div class="col-xs-8">
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Company name</label>
 				<div class="col-xs-6">
 					<input type="text" class="form-control" ng-model="companyProfile.contact.companyName" name="companyName" ng-maxlength=36 />
-					
 					<div ng-show="profile.companyName.$invalid && submitted">
-
-                     
                         <p ng-show="profile.companyName.$error.maxlength">
                            Please enter less than 36 character.
                         </p>
 					</div>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Address 1</label>
 				<div class="col-xs-6">
@@ -25,25 +24,28 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Address 2</label>
 				<div class="col-xs-6">
-					<input type="text" class="form-control" ng-model="companyProfile.contact.address2" />
+					<input type="text" class="form-control" ng-model="companyProfile.contact.address2"/>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Town</label>
 				<div class="col-xs-6">
-					<input type="text" class="form-control" ng-model="companyProfile.contact.town" name="town"  />
+					<input type="text" class="form-control" ng-model="companyProfile.contact.town" name="town"/>
 					<div ng-show="profile.town.$invalid && submitted">
                         <p ng-show="profile.town.$error.required">Please enter town name.</p>
 					</div>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Country</label>
 				<div class="col-xs-6">
-					<input type="text" class="form-control" ng-model="companyProfile.contact.country" name="country" />
+					<input type="text" class="form-control" ng-model="companyProfile.contact.country" name="country"/>
 					<div ng-show="profile.country.$invalid && submitted">
                     <p ng-show="profile.country.$error.required">
                      Please enter country name.
@@ -51,48 +53,41 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Post Code</label>
 				<div class="col-xs-6">
 					<input type="text" class="form-control" ng-model="companyProfile.contact.postcode" name="postcode" ng-pattern='/^([A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKS-UW])\ [0-9][ABD-HJLNP-UW-Z]{2}|(GIR\ 0AA)|(SAN\ TA1)|(BFPO\ (C\/O\ )?[0-9]{1,4})|((ASCN|BBND|[BFS]IQQ|PCRN|STHL|TDCU|TKCA)\ 1ZZ))$/'  />
-					<div ng-show="profile.postcode.$invalid && submitted">
-						
+					<div ng-show="profile.postcode.$invalid && (profile.postcode.$dirty && submitted)">
 						<p ng-show="profile.postcode.$error.pattern">
 							Invalid postal code.
-
 						</p>
 					</div>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Tel</label>
 				<div class="col-xs-6">
-					<input type="number" class="form-control" ng-model="companyProfile.contact.telephone" name="tel" />
-        <!--      <div ng-show="profile.tel.$invalid && submitted">
-               <p ng-show="profile.tel.$error.required">
-                 Please enter telephone number.
-               </p>
-               <p ng-show="profile.tel.$error.pattern">
-                  Invalid telephone format.
-               </p>
-              </div>  -->
+					<input type="number" class="form-control" ng-model="companyProfile.contact.telephone" name="tel"/>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Fax</label>
 				<div class="col-xs-6">
-					<input type="number" class="form-control" ng-model="companyProfile.contact.fax" name="fax" />
-					<div ng-show="profile.fax.$dirty && profile.fax.$invalid && submitted">
+					<input type="number" class="form-control" ng-model="companyProfile.contact.fax" name="fax"/>
+					<div ng-show="profile.fax.$dirty && profile.fax.$invalid && (profile.fax.$dirty  || submitted)">
                     <p>Please enter valid fax.</p>
 					</div>
 				</div>
 			</div>
+
 			<div class="form-group">
 				<label class="control-label col-xs-6">Email</label>
 				<div class="col-xs-6">
-					<input type="email" class="form-control" ng-model="companyProfile.contact.email" name="email"  />
-					<div ng-show="profile.email.$invalid && submitted">
-                    
+					<input type="email" class="form-control" ng-model="companyProfile.contact.email" name="email"/>
+					<div ng-show="profile.email.$invalid && (profile.email.$dirty  || submitted)">
                      <p ng-show="profile.email.$error.email">
                      	Please enter valid email address.
                      </p>
@@ -100,15 +95,14 @@
 				</div>
 			</div>
 
-		
-		
 	</div>
+
 	<div class="col-xs-4">
        <button type="submit" class="btn btn-success form-control"  ng-disabled="taxForm.$invalid || isTaxSaving">
         <div>Save  <i class="fa fa-save"></i></div>
-      
       </button>
 	</div>
+
 </form>
 </div>
-  
+

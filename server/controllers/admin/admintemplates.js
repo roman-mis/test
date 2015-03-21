@@ -4,7 +4,7 @@ module.exports = function(){
 	var adminTemplatesService=require('../../services/admin/admintemplatesservice');
 
 	controller.saveTemplate = function(req,res){
-		
+
 		var templateContent = {
 
 			templateType: 	req.body.templateType,
@@ -24,7 +24,9 @@ module.exports = function(){
 	controller.getAlladminTemplates=function (req,res){
 		adminTemplatesService.getAllAdminTemplates(req._restOptions)
 	  	.then(function(result){
-		    
+	  		console.log('we are getting result from here');
+	  		console.log(result);
+
 		    var pagination=req._restOptions.pagination||{};
 		    var resp={result:true,objects:result.rows, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
 	    	console.log(resp);

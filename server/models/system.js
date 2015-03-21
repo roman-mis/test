@@ -200,12 +200,11 @@ module.exports = function(mongoose) {
                 name:String,
                 amount:Number,
                 taxApplicable:Boolean,
-                expensesRateType:String,
+                expensesRateType:String, // subsistence, other
                 vat:Boolean,
                 dispensation:Boolean,
                 receipted:Boolean,
-                isEnabled:Boolean,
-                type: String // subsistence, other
+                isEnabled:Boolean
             }
         ]
     });

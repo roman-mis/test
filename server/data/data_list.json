@@ -1,669 +1,951 @@
-
 {
-	"StarterDeclarations":[{
-			"code":"0",
-			"description":"Not Applicable"
-		},{
-			"code":"1",
-			"description":"This is my first job since last 6 April and I have not been receiving taxable Jobseeker’s Allowance, Employment and Support Allowance, taxable Incapacity Benefit, State Pension or Occupational Pension"
-		},{
-			"code":"2",
-			"description":"This is now my only job but since last 6 April I have had another job, or received taxable Jobseeker’s Allowance, Employment and Support Allowance, taxable Incapacity Benefit, State Pension or Occupational Pension"
-		},{
-			"code":"3",
-			"description":"As well as my new job, I have another job or State Pension or Occupational Pension"
-		}],
+  "StarterDeclarations": [
+    {
+      "code": "0",
+      "description": "Not Applicable"
+    },
+    {
+      "code": "1",
+      "description": "This is my first job since last 6 April and I have not been receiving taxable Jobseeker’s Allowance, Employment and Support Allowance, taxable Incapacity Benefit, State Pension or Occupational Pension"
+    },
+    {
+      "code": "2",
+      "description": "This is now my only job but since last 6 April I have had another job, or received taxable Jobseeker’s Allowance, Employment and Support Allowance, taxable Incapacity Benefit, State Pension or Occupational Pension"
+    },
+    {
+      "code": "3",
+      "description": "As well as my new job, I have another job or State Pension or Occupational Pension"
+    }
+  ],
 
-	"PayFrequency":[{
-			"code":"weekly",
-			"description":"Weekly"
-		},{
-			"code":"twoWeekly",
-			"description":"Bi-Weekly"
-		},{
-			"code":"fourWeekly",
-			"description":"4 Weekly"
-		},{
-			"code":"monthly",
-			"description":"Monthly"
-		}],
-	"TaxBasis":[{
-			"code":"1",
-			"description":"Cumulative"
-		},{
-			"code":"2",
-			"description":"W1/M1"
-		}
-		],
-	"Margin":[{
-			"code":"1",
-			"description":"% of Gross"
-		},{
-			"code":"2",
-			"description":"Fixed Fee"
-		},{
-			"code":"3",
-			"description":"Hours Table"
-		}],
-	"HolidayPayRule":[{
-			"code":"1",
-			"description":"Rolled Up on NMW"
-		},{
-			"code":"2",
-			"description":"Rolled Up on Total Pay"
-		},{
-			"code":"3",
-			"description":"Retained on NMW"
-		},{
-			"code":"4",
-			"description":"Retained on Total Pay"
-		},{
-			"code":"5",
-			"description":"Charged Back on NMW"
-		},{
-			"code":"6",
-			"description":"Charged Back on Total Pay"
-		},{
-			"code":"7",
-			"description":"No Holiday Pay"
-		}],
-	"DerogationContract":[{
-			"code":"1",
-			"description":"Not Applicable"
-		},{
-			"code":"2",
-			"description":"Opt-in"
-		},{
-			"code":"3",
-			"description":"Opt-out"
-		}],
-	"ServiceUsed":[{
-			"code":"1",
-			"description":"Umbrella",
-			"requirementList":["Umbrella 1", "Umbrella 2", "Umbrella 3", "Umbrella 4"],
-			"onboardingScript":"The Umbrella Script"
-		},{
-			"code":"2",
-			"description":"PAYE",
-			"requirementList":["PAYE 1", "PAYE 2", "PAYE 3", "PAYE 4"],
-			"onboardingScript":"The PAYE Script"
-		},{
-			"code":"3",
-			"description":"Low end",
-			"requirementList":["Low end 1", "Low end 2", "Low end 3", "Low end 4"],
-			"onboardingScript":"The Low end Script"
-		},{
-			"code":"4",
-			"description":"Hybrid",
-			"requirementList":["Hybrid 1", "Hybrid 2", "Hybrid 3", "Hybrid 4"],
-			"onboardingScript":"The Hybrid Script"
-		},{
-			"code":"5",
-			"description":"PAYE+",
-			"requirementList":["PAYE+ 1", "PAYE+ 2", "PAYE+ 3", "PAYE+ 4"],
-			"onboardingScript":"The PAYE+ Script"
-		},{
-			"code":"6",
-			"description":"CIS",
-			"requirementList":["CIS 1"],
-			"onboardingScript":"The CIS Script"
-		}],
-	"PaymentTerms":[{
-			"code":"1",
-			"description":"On partial receipt"
-		},{
-			"code":"2",
-			"description":"On full receipt"
-		}],
-	"PaymentMethod":[{
-			"code":"1",
-			"description":"Faster Payment"
-		},{
-			"code":"2",
-			"description":"BACS"
-		},{
-			"code":"3",
-			"description":"Cheque"
-		}],
-	"Holidays":[{
-			"code":"1",
-			"description":"calculate and pay immediately"
-		},{
-			"code":"2",
-			"description":"calculate and retain"
-		},{
-			"code":"3",
-			"description":"no holiday pay"
-		}],
-	"AdminFee":[{
-			"code": "1",
-			"description": "Use Agency rule"
-		},{
-			"code": "2",
-			"description": "Fixed Fee"
-		}],
-	"CommunicationMethod": [{
-			"code": "1",
-			"description": "Email"
-		},{
-			"code": "2",
-			"description": "Text"
-		},{
-			"code": "3",
-			"description": "Post"
-		},{
-			"code": "4",
-			"description": "Telephone"
-		}],
-	"ContractorStatus": [{
-			"code": "1",
-			"description": "New Contractor"
-		},{
-			"code": "2",
-			"description": "Pending"
-		},{
-			"code": "3",
-			"description": "New Enquiry"
-		}],
-	"VehicleTypes":[{
-			"code":"1",
-			"description":"Car/van"
-		},{
-			"code":"2",
-			"description":"motor cycle"
-		},{
-			"code":"3",
-			"description":"bicycle"
-		}],
-	"Priorities":[{
-			"code":"1",
-			"description":"Low"
-		},{
-			"code":"2",
-			"description":"Medium"
-		},{
-			"code":"3",
-			"description":"High"
-		},{
-			"code":"4",
-			"description":"Critical"
-		}],
-	"CallLogTaskTypes":[{
-			"code":"1",
-			"description":"Expenses"
-		},{
-			"code":"2",
-			"description":"Timesheets"
-		},{
-			"code":"3",
-			"description":"General Query"
-		},{
-			"code":"4",
-			"description":"Payment Query"
-		},{
-			"code":"5",
-			"description":"Payment Not Received"
-		},{
-			"code":"6",
-			"description":"SMS/Payslip Not Received"
-		},{
-			"code":"7",
-			"description":"Contract Query"
-		},{
-			"code":"8",
-			"description":"Status Query"
-		},{
-			"code":"9",
-			"description":"P45 Request"
-		},{
-			"code":"10",
-			"description":"SSP/SMP/SPP Notification"
-		},{
-			"code":"15",
-			"description":"Other"
-		},{
-			"code":"11",
-			"description":"Registration Follow Up"
-		},{
-			"code":"12",
-			"description":"Registration Received"
-		},{
-			"code":"13",
-			"description":"First Contact"
-		},{
-			"code":"14",
-			"description":"registration query"
-		}],
-	"Statuses":[{
-			"code":"1",
-			"description":"outstanding"
-		},{
-			"code":"2",
-			"description":"resolved"
-		},{
-			"code":"3",
-			"description":"escalated"
-		}],
-	"CreateTaskTypes":[{
-			"code":"1",
-			"description":"Customer Service"
-		},{
-			"code":"2",
-			"description":"Payroll"
-		},{
-			"code":"3",
-			"description":"Payslip"
-		},{
-			"code":"4",
-			"description":"Complaint"
-		},{
-			"code":"5",
-			"description":"New Enquiry"
-		},{
-			"code":"6",
-			"description":"Expenses"
-		}],
-	"DocumentTypes":[{
-			"code":"1",
-			"description":"P45",
-			"path":"P45"
-		},{
-			"code":"2",
-			"description":"Application Form",
-			"path":"APP_FORM"
-		},{
-			"code":"3",
-			"description":"Contract",
-			"path":"CONTRACT"
-		},{
-			"code":"4",
-			"description":"Assignment Schedule",
-			"path":"ASSIGNMENT_SCHEDULE"
-		},{
-			"code":"5",
-			"description":"Expense form",
-			"path":"EXPENSE_FORM"
-		}],
-	"MarginExceptionTypes":[{
-			"code":"1",
-			"description":"Free Margin"
-		},{
-			"code":"2",
-			"description":"Partial Margin"
-		},{
-			"code":"3",
-			"description":"Increased Margin"
-		}],
-	"Reasons":[{
-			"code":"1",
-			"description":"Payroll Error"
-		},{
-			"code":"2",
-			"description":"Customer Service Error"
-		},{
-			"code":"3",
-			"description":"Agency Error"
-		},{
-			"code":"4",
-			"description":"Introduction Margin"
-		}],
-	"DeductionTypes":[{
-			"code":"1",
-			"description":"Date"
-		},{
-			"code":"2",
-			"description":"Period"
-		},{
-			"code":"3",
-			"description":"Number of Payroll"
-		}],
-	"AgencyTypes":[{
-			"code":"1",
-			"description":"Head Office"
-		},{
-			"code":"2",
-			"description":"Branch"
-		},{
-			"code":"3",
-			"description":"Invoicing"
-		},{
-			"code":"4",
-			"description":"Factoring"
-		}],
-	"InvoiceMethods":[{
-			"code":"1",
-			"description":"Consolidate by Import"
-		},{
-			"code":"2",
-			"description":"Individual"
-		}],
-	"StatusList":[{
-			"code":"1",
-			"description":"Live"
-		},{
-			"code":"2",
-			"description":"Dormant"
-		}],
-	"MarginTypes":[{
-			"code":"1",
-			"description":"Use contractor rules"
-		},{
-			"code":"2",
-			"description":"Use assignment rule"
-		},{
-			"code":"3",
-			"description":"Apply fixed fee"
-		},{
-			"code":"4",
-			"description":"Apply % on timesheet value"
-		},{
-			"code":"5",
-			"description":"Charge per timesheet week"
-		},{
-			"code":"6",
-			"description":"Charge per timesheet"
-		}],
-	"RolesList":[{
-			"code":"1",
-			"description":"Manager"
-		},{
-			"code":"2",
-			"description":"Payroll"
-		},{
-			"code":"3",
-			"description":"Consultant"
-		}],
-	"MealsList":[{
-			"code":"1",
-			"description":"Breakfast",
-			"default_cost":"5.00"
-		},{
-			"code":"2",
-			"description":"Meal 1",
-			"default_cost":"5.00"
-		},{
-			"code":"3",
-			"description":"Meal 2",
-			"default_cost":"10.00"
-		},{
-			"code":"4",
-			"description":"Evening Meal",
-			"default_cost":"15.00"
-		},{
-			"code":"5",
-			"description":"Other",
-			"default_cost":"0.00"
-		}],
-	"TransportationMeans":[{
-			"code":"1",
-			"description":"Car / Van",
-			"default_ppm":"0.45"
-		},{
-			"code":"2",
-			"description":"Motorbike",
-			"default_ppm":"0.25"
-		},{
-			"code":"3",
-			"description":"Bicycle",
-			"default_ppm":"0.20"
-		},{
-			"code":"4",
-			"description":"Public Transport",
-			"default_ppm":"N/A"
-		}],
-	"OtherExpenseTypes":[{
-			"code":"1",
-			"description":"Stationary"
-		},{
-			"code":"2",
-			"description":"Training"
-		},{
-			"code":"3",
-			"description":"Other"
-		}],
-	"Fuels":[{
-			"code":"1",
-			"description":"Petrol",
-			"engineSizes":[{
-				"code": "1",
-				"description":"Upto 1000 cc"
-			}]
-		},{
-			"code":"2",
-			"description":"Diesel",
-			"engineSizes":[{
-				"code": "1",
-				"description":"Upto 1200 cc"
-			}]
-		},{
-			"code":"3",
-			"description":"LPG",
-			"engineSizes":[{
-				"code": "1",
-				"description":"Upto 1400 cc"
-			}]
-		}], 
-	"expensesRateTypes":[
-		{
-			"code":"1",
-			"name":"Billable"
-		},
-		{
-			"code":"2",
-			"name":"Non-Billable"
-		}],
-	"templateTypes":[{
-			"code":"1",
-			"name":"Standard"
-		}],
-	"AOE":{
-		"AOETypes":[
-	{
-     "country":"England",
-     "orderType":"Attachment of Earnings Order (AEO)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"true",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"England",
-     "orderType":"CAEO (Consolidated AEO)",
-     "deductionType":"",
-     "protectedEarning":"",
-     "carriedForward":"",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"England",
-     "orderType":"AE on AO (AE order on an Admin Order)",
-     "deductionType":"",
-     "protectedEarning":"",
-     "carriedForward":"",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"England",
-     "orderType":"Council Tax AEO",
-     "deductionType":"Percentage",
-     "protectedEarning":"false",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":"An employee can only have two CTAEOs from the same billing authority active at any one time. Any further CTAEOs should be returned."
-   },
-   {
-     "country":"England",
-     "orderType":"Deduction from Earnings Order (DEO)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"true",
-     "adminFee":"1",
-     "otherInfo":"Takes priority over existing AEOs"
-   },
-   {
-     "country":"England",
-     "orderType":"Income Payment Orders",
-     "deductionType":"",
-     "protectedEarning":"",
-     "carriedForward":"",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"England",
-     "orderType":"Income Support Deduction Notice (ISDN)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Earnings Arrestment",
-     "deductionType":"Amount or Percentage",
-     "protectedEarning":"false",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":"Can be operated with a current maintenance arrestment, but can only have one earnings arrest active at any time. If more than one received, must be returned and employee issued with a conjoined arrestment order."
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Current Maintenance Arrestment",
-     "deductionType":"Amount",
-     "protectedEarning":"false",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":"operated with an earnings arrestment, but can only have one current maintenance arrestment active at any time. If more than one received, must be returned and employee issued with a conjoined arrestment order."
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Conjoined Arrestment Order",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"true",
-     "adminFee":"1",
-     "otherInfo":"Issued for more than one earnings arrestment or current maintenance arrestmen"
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Deductions from Earnings Order (DEO)",
-     "deductionType":"",
-     "protectedEarning":"",
-     "carriedForward":"",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Debt Arrangement Scheme",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"true",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Attachment of Earnings Order (AEO)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"Scotland",
-     "orderType":"Income Support Deduction Notice (ISDN)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"Northern Ireland",
-     "orderType":"Attachment of Earnings Order (AEO)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"true",
-     "adminFee":"1",
-     "otherInfo":""
-   },
-   {
-     "country":"Northern Ireland",
-     "orderType":"Deduction from Earnings Order (DEO)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"true",
-     "adminFee":"1",
-     "otherInfo":"Takes priority over existing AEOs."
-   },
-   {
-     "country":"Northern Ireland",
-     "orderType":"Income Support Deduction Notice (ISDN)",
-     "deductionType":"Amount",
-     "protectedEarning":"true",
-     "carriedForward":"false",
-     "adminFee":"1",
-     "otherInfo":""
-   }
-],
 
-"priority":[
-{
-	"value":"Priority",
-	"carriedForward":"true"
-	},
-	{
-		"value":"Non Priority",
-		"carriedForward":"false"
-	}
-],
+  "PayFrequency": [
+    {
+      "code": "weekly",
+      "description": "Weekly"
+    },
+    {
+      "code": "twoweekly",
+      "description": "Bi-Weekly"
+    },
+    {
+      "code": "fourweekly",
+      "description": "4 Weekly"
+    },
+    {
+      "code": "monthly",
+      "description": "Monthly"
+    }
+  ],
 
-"deductionTypes":[
+
+  "TaxBasis": [
+    {
+      "code": "1",
+      "description": "Cumulative"
+    },
+    {
+      "code": "2",
+      "description": "W1/M1"
+    }
+  ],
+
+
+  "Margin": [
+    {
+      "code": "1",
+      "description": "% of Gross"
+    },
+    {
+      "code": "2",
+      "description": "Fixed Fee"
+    },
+    {
+      "code": "3",
+      "description": "Hours Table"
+    }
+  ],
+
+
+  "HolidayPayRule": [
+    {
+      "code": "1",
+      "description": "Rolled Up on NMW"
+    },
+    {
+      "code": "2",
+      "description": "Rolled Up on Total Pay"
+    },
+    {
+      "code": "3",
+      "description": "Retained on NMW"
+    },
+    {
+      "code": "4",
+      "description": "Retained on Total Pay"
+    },
+    {
+      "code": "5",
+      "description": "Charged Back on NMW"
+    },
+    {
+      "code": "6",
+      "description": "Charged Back on Total Pay"
+    },
+    {
+      "code": "7",
+      "description": "No Holiday Pay"
+    }
+  ],
+
+
+  "DerogationContract": [
+    {
+      "code": "1",
+      "description": "Not Applicable"
+    },
+    {
+      "code": "2",
+      "description": "Opt-in"
+    },
+    {
+      "code": "3",
+      "description": "Opt-out"
+    }
+  ],
+
+
+  "ServiceUsed": [
+    {
+      "code": "1",
+      "description": "Umbrella",
+      "requirementList": [
+        "Umbrella 1",
+        "Umbrella 2",
+        "Umbrella 3",
+        "Umbrella 4"
+      ],
+      "onboardingScript": "The Umbrella Script"
+    },
+    {
+      "code": "2",
+      "description": "PAYE",
+      "requirementList": [
+        "PAYE 1",
+        "PAYE 2",
+        "PAYE 3",
+        "PAYE 4"
+      ],
+      "onboardingScript": "The PAYE Script"
+    },
+    {
+      "code": "3",
+      "description": "Low end",
+      "requirementList": [
+        "Low end 1",
+        "Low end 2",
+        "Low end 3",
+        "Low end 4"
+      ],
+      "onboardingScript": "The Low end Script"
+    },
+    {
+      "code": "4",
+      "description": "Hybrid",
+      "requirementList": [
+        "Hybrid 1",
+        "Hybrid 2",
+        "Hybrid 3",
+        "Hybrid 4"
+      ],
+      "onboardingScript": "The Hybrid Script"
+    },
+    {
+      "code": "5",
+      "description": "PAYE+",
+      "requirementList": [
+        "PAYE+ 1",
+        "PAYE+ 2",
+        "PAYE+ 3",
+        "PAYE+ 4"
+      ],
+      "onboardingScript": "The PAYE+ Script"
+    },
+    {
+      "code": "6",
+      "description": "CIS",
+      "requirementList": [
+        "CIS 1"
+      ],
+      "onboardingScript": "The CIS Script"
+    }
+  ],
+
+
+  "PaymentTerms": [
+    {
+      "code": "1",
+      "description": "On partial receipt"
+    },
+    {
+      "code": "2",
+      "description": "On full receipt"
+    }
+  ],
+
+
+  "PaymentMethod": [
+    {
+      "code": "1",
+      "description": "Faster Payment"
+    },
+    {
+      "code": "2",
+      "description": "BACS"
+    },
+    {
+      "code": "3",
+      "description": "Cheque"
+    }
+  ],
+
+
+  "Holidays": [
+    {
+      "code": "1",
+      "description": "calculate and pay immediately"
+    },
+    {
+      "code": "2",
+      "description": "calculate and retain"
+    },
+    {
+      "code": "3",
+      "description": "no holiday pay"
+    }
+  ],
+
+
+  "AdminFee": [
+    {
+      "code": "1",
+      "description": "Use Agency rule"
+    },
+    {
+      "code": "2",
+      "description": "Fixed Fee"
+    }
+  ],
+
+
+  "CommunicationMethod": [
+    {
+      "code": "1",
+      "description": "Email"
+    },
+    {
+      "code": "2",
+      "description": "Text"
+    },
+    {
+      "code": "3",
+      "description": "Post"
+    },
+    {
+      "code": "4",
+      "description": "Telephone"
+    }
+  ],
+
+
+  "ContractorStatus": [
+    {
+      "code": "1",
+      "description": "New Contractor"
+    },
+    {
+      "code": "2",
+      "description": "Pending"
+    },
+    {
+      "code": "3",
+      "description": "New Enquiry"
+    }
+  ],
+
+
+  "VehicleTypes": [
+    {
+      "code": "1",
+      "description": "Car/van"
+    },
+    {
+      "code": "2",
+      "description": "motor cycle"
+    },
+    {
+      "code": "3",
+      "description": "bicycle"
+    }
+  ],
+
+
+  "Priorities": [
+    {
+      "code": "1",
+      "description": "Low"
+    },
+    {
+      "code": "2",
+      "description": "Medium"
+    },
+    {
+      "code": "3",
+      "description": "High"
+    },
+    {
+      "code": "4",
+      "description": "Critical"
+    }
+  ],
+
+
+  "CallLogTaskTypes": [
+    {
+      "code": "1",
+      "description": "Expenses"
+    },
+    {
+      "code": "2",
+      "description": "Timesheets"
+    },
+    {
+      "code": "3",
+      "description": "General Query"
+    },
+    {
+      "code": "4",
+      "description": "Payment Query"
+    },
+    {
+      "code": "5",
+      "description": "Payment Not Received"
+    },
+    {
+      "code": "6",
+      "description": "SMS/Payslip Not Received"
+    },
+    {
+      "code": "7",
+      "description": "Contract Query"
+    },
+    {
+      "code": "8",
+      "description": "Status Query"
+    },
+    {
+      "code": "9",
+      "description": "P45 Request"
+    },
+    {
+      "code": "10",
+      "description": "SSP/SMP/SPP Notification"
+    },
+    {
+      "code": "15",
+      "description": "Other"
+    },
+    {
+      "code": "11",
+      "description": "Registration Follow Up"
+    },
+    {
+      "code": "12",
+      "description": "Registration Received"
+    },
+    {
+      "code": "13",
+      "description": "First Contact"
+    },
+    {
+      "code": "14",
+      "description": "registration query"
+    }
+  ],
+
+
+  "Statuses": [
+    {
+      "code": "1",
+      "description": "outstanding"
+    },
+    {
+      "code": "2",
+      "description": "resolved"
+    },
+    {
+      "code": "3",
+      "description": "escalated"
+    }
+  ],
+
+
+  "CreateTaskTypes": [
+    {
+      "code": "1",
+      "description": "Customer Service"
+    },
+    {
+      "code": "2",
+      "description": "Payroll"
+    },
+    {
+      "code": "3",
+      "description": "Payslip"
+    },
+    {
+      "code": "4",
+      "description": "Complaint"
+    },
+    {
+      "code": "5",
+      "description": "New Enquiry"
+    },
+    {
+      "code": "6",
+      "description": "Expenses"
+    }
+  ],
+
+
+  "DocumentTypes": [
+    {
+      "code": "1",
+      "description": "P45",
+      "path": "P45"
+    },
+    {
+      "code": "2",
+      "description": "Application Form",
+      "path": "APP_FORM"
+    },
+    {
+      "code": "3",
+      "description": "Contract",
+      "path": "CONTRACT"
+    },
+    {
+      "code": "4",
+      "description": "Assignment Schedule",
+      "path": "ASSIGNMENT_SCHEDULE"
+    },
+    {
+      "code": "5",
+      "description": "Expense form",
+      "path": "EXPENSE_FORM"
+    }
+  ],
+
+
+  "MarginExceptionTypes": [
+    {
+      "code": "1",
+      "description": "Free Margin"
+    },
+    {
+      "code": "2",
+      "description": "Partial Margin"
+    },
+    {
+      "code": "3",
+      "description": "Increased Margin"
+    }
+  ],
+
+
+  "Reasons": [
+    {
+      "code": "1",
+      "description": "Payroll Error"
+    },
+    {
+      "code": "2",
+      "description": "Customer Service Error"
+    },
+    {
+      "code": "3",
+      "description": "Agency Error"
+    },
+    {
+      "code": "4",
+      "description": "Introduction Margin"
+    }
+  ],
+
+
+  "DeductionTypes": [
+    {
+      "code": "1",
+      "description": "Date"
+    },
+    {
+      "code": "2",
+      "description": "Period"
+    },
+    {
+      "code": "3",
+      "description": "Number of Payroll"
+    }
+  ],
+
+
+  "AgencyTypes": [
+    {
+      "code": "1",
+      "description": "Head Office"
+    },
+    {
+      "code": "2",
+      "description": "Branch"
+    },
+    {
+      "code": "3",
+      "description": "Invoicing"
+    },
+    {
+      "code": "4",
+      "description": "Factoring"
+    }
+  ],
+
+
+  "InvoiceMethods": [
+    {
+      "code": "1",
+      "description": "Consolidate by Import"
+    },
+    {
+      "code": "2",
+      "description": "Individual"
+    }
+  ],
+
+
+  "StatusList": [
+    {
+      "code": "1",
+      "description": "Live"
+    },
+    {
+      "code": "2",
+      "description": "Dormant"
+    }
+  ],
+
+
+  "MarginTypes": [
+    {
+      "code": "1",
+      "description": "Use contractor rules"
+    },
+    {
+      "code": "2",
+      "description": "Use assignment rule"
+    },
+    {
+      "code": "3",
+      "description": "Apply fixed fee"
+    },
+    {
+      "code": "4",
+      "description": "Apply % on timesheet value"
+    },
+    {
+      "code": "5",
+      "description": "Charge per timesheet week"
+    },
+    {
+      "code": "6",
+      "description": "Charge per timesheet"
+    }
+  ],
+
+
+  "RolesList": [
+    {
+      "code": "1",
+      "description": "Manager"
+    },
+    {
+      "code": "2",
+      "description": "Payroll"
+    },
+    {
+      "code": "3",
+      "description": "Consultant"
+    }
+  ],
+
+
+  "MealsList": [
+    {
+      "code": "1",
+      "description": "Breakfast",
+      "default_cost": "5.00"
+    },
+    {
+      "code": "2",
+      "description": "Meal 1",
+      "default_cost": "5.00"
+    },
+    {
+      "code": "3",
+      "description": "Meal 2",
+      "default_cost": "10.00"
+    },
+    {
+      "code": "4",
+      "description": "Evening Meal",
+      "default_cost": "15.00"
+    },
+    {
+      "code": "5",
+      "description": "Other",
+      "default_cost": "0.00"
+    }
+  ],
+
+
+  "TransportationMeans": [
+    {
+      "code": "1",
+      "description": "Car / Van",
+      "default_ppm": "0.45"
+    },
+    {
+      "code": "2",
+      "description": "Motorbike",
+      "default_ppm": "0.25"
+    },
+    {
+      "code": "3",
+      "description": "Bicycle",
+      "default_ppm": "0.20"
+    },
+    {
+      "code": "4",
+      "description": "Public Transport",
+      "default_ppm": "N/A"
+    }
+  ],
+
+
+  "OtherExpenseTypes": [
+    {
+      "code": "1",
+      "description": "Stationary"
+    },
+    {
+      "code": "2",
+      "description": "Training"
+    },
+    {
+      "code": "3",
+      "description": "Other"
+    }
+  ],
+
+
+  "Fuels": [
+    {
+      "code": "1",
+      "description": "Petrol",
+      "engineSizes": [
+        {
+          "code": "1",
+          "description": "Upto 1000 cc"
+        }
+      ]
+    },
+    {
+      "code": "2",
+      "description": "Diesel",
+      "engineSizes": [
+        {
+          "code": "1",
+          "description": "Upto 1200 cc"
+        }
+      ]
+    },
+    {
+      "code": "3",
+      "description": "LPG",
+      "engineSizes": [
+        {
+          "code": "1",
+          "description": "Upto 1400 cc"
+        }
+      ]
+    }
+  ],
+
+
+  "expensesRateTypes": [
+    {
+      "code": "1",
+      "name": "Billable"
+    },
+    {
+      "code": "2",
+      "name": "Non-Billable"
+    }
+  ],
+
+
+  "templateTypes": [
+    {
+      "code": "1",
+      "name": "Standard"
+    }
+  ],
+
+
+  "AOE": {
+    "AOETypes": [
+      {
+        "country": "England",
+        "orderType": "Attachment of Earnings Order (AEO)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "true",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "England",
+        "orderType": "CAEO (Consolidated AEO)",
+        "deductionType": "",
+        "protectedEarning": "",
+        "carriedForward": "",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "England",
+        "orderType": "AE on AO (AE order on an Admin Order)",
+        "deductionType": "",
+        "protectedEarning": "",
+        "carriedForward": "",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "England",
+        "orderType": "Council Tax AEO",
+        "deductionType": "Percentage",
+        "protectedEarning": "false",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": "An employee can only have two CTAEOs from the same billing authority active at any one time. Any further CTAEOs should be returned."
+      },
+      {
+        "country": "England",
+        "orderType": "Deduction from Earnings Order (DEO)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "true",
+        "adminFee": "1",
+        "otherInfo": "Takes priority over existing AEOs"
+      },
+      {
+        "country": "England",
+        "orderType": "Income Payment Orders",
+        "deductionType": "",
+        "protectedEarning": "",
+        "carriedForward": "",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "England",
+        "orderType": "Income Support Deduction Notice (ISDN)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Earnings Arrestment",
+        "deductionType": "Amount or Percentage",
+        "protectedEarning": "false",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": "Can be operated with a current maintenance arrestment, but can only have one earnings arrest active at any time. If more than one received, must be returned and employee issued with a conjoined arrestment order."
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Current Maintenance Arrestment",
+        "deductionType": "Amount",
+        "protectedEarning": "false",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": "operated with an earnings arrestment, but can only have one current maintenance arrestment active at any time. If more than one received, must be returned and employee issued with a conjoined arrestment order."
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Conjoined Arrestment Order",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "true",
+        "adminFee": "1",
+        "otherInfo": "Issued for more than one earnings arrestment or current maintenance arrestmen"
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Deductions from Earnings Order (DEO)",
+        "deductionType": "",
+        "protectedEarning": "",
+        "carriedForward": "",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Debt Arrangement Scheme",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "true",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Attachment of Earnings Order (AEO)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "Scotland",
+        "orderType": "Income Support Deduction Notice (ISDN)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "Northern Ireland",
+        "orderType": "Attachment of Earnings Order (AEO)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "true",
+        "adminFee": "1",
+        "otherInfo": ""
+      },
+      {
+        "country": "Northern Ireland",
+        "orderType": "Deduction from Earnings Order (DEO)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "true",
+        "adminFee": "1",
+        "otherInfo": "Takes priority over existing AEOs."
+      },
+      {
+        "country": "Northern Ireland",
+        "orderType": "Income Support Deduction Notice (ISDN)",
+        "deductionType": "Amount",
+        "protectedEarning": "true",
+        "carriedForward": "false",
+        "adminFee": "1",
+        "otherInfo": ""
+      }
+    ],
+
+
+    "priority": [
+      {
+        "value": "Priority",
+        "carriedForward": "true"
+      },
+      {
+        "value": "Non Priority",
+        "carriedForward": "false"
+      }
+    ],
+
+
+    "deductionTypes": [
+      {
+        "value": "Fixed",
+        "reference": "Amount"
+      },
+      {
+        "value": "Percentage",
+        "reference": "Percentage"
+      },
+      {
+        "value": "Table",
+        "reference": "Table"
+      },
+      {
+        "value": "Band",
+        "reference": "Band"
+      }
+    ]
+  },
+
+
+  "candidateTitle": [
 	{
-		"value":"Fixed",
-		"reference":"Amount"
-	},
+      "code": 1,
+      "value": "Mr"
+    },
+    {
+      "code": 2,
+      "value": "Mrs"
+    },
 	{
-		"value":"Percentage",
-		"reference":"Percentage"
-	},
-	{
-		"value":"Table",
-		"reference":"Table"
-	},
-	{
-		"value":"Band",
-		"reference":"Band"
-	}
-]
-	},
-	"agencyStatus":[{
-			"code":1,
-			"value":"Submitted"
-		},
-		{
-			"code":2,
-			"value":"Live"
-			}],
-			"candidateStatus":[{
-			"code":1,
-			"value":"Submitted"
-		},
-		{
-			"code":2,
-			"value":"Live"
-			},
-			{
-			"code":3,
-			"value":"P45 Out"
-			}],
-"profiles": [{
+      "code": 3,
+      "value": "Ms"
+    }
+  ],
+
+
+  "agencyStatus": [
+    {
+      "code": 1,
+      "value": "Submitted"
+    },
+    {
+      "code": 2,
+      "value": "Live"
+    }
+  ],
+
+
+  "candidateStatus": [
+    {
+      "code": 1,
+      "value": "Submitted"
+    },
+    {
+      "code": 2,
+      "value": "Live"
+    },
+    {
+      "code": 3,
+      "value": "P45 Out"
+    }
+  ],
+
+
+  "candidateProfile": {
     "WK": {
       "first": {
         "open": {
@@ -763,7 +1045,7 @@
                   "assignTo": {
                     "hide": true
                   },
-                  "NotifyMeWhenTaskComplete ": {
+                  "NotifyMeWhenTaskComplete": {
                     "hide": true
                   }
                 }
@@ -773,25 +1055,5 @@
         }
       }
     }
-  },{
-  	"AC": {
-      "first": {
-        "open": {
-          "state": "app.agency.home",
-          "stateParams": [
-            {
-              "key":"agencyId",
-              "value":"_id"
-            }
-          ]
-        } 
-      },
-      "permissions": {
-
-      }
-  	}
   }
-  ]
 }
-
-

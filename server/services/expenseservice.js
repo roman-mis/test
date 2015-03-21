@@ -6,7 +6,6 @@ module.exports = function(dbs){
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		service={};
-		var mongoose=require('mongoose');
 
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
@@ -31,7 +30,7 @@ module.exports = function(dbs){
 	};
 
 	service.saveExpenses = function(expenseDetails){
-		console.log(expenseDetails);
+		console.log(expenseDetails);console.log(expenseDetails.days);
 		console.log('here wer are');
 		var deff = Q.defer();
 		var expenseModel;
@@ -46,55 +45,110 @@ module.exports = function(dbs){
 		});
 		return deff.promise;
 	};
-    service.getExpenseByUserId=function(id){
+
+    service.getAllExpenses=function(request){
+      request.orderBy=[{'submittedDate':-1}];
+
+    	return Q.Promise(function(resolve,reject){
+			var q=db.Expense.find();
+
+			queryutils.applySearch(q, db.Expense, request)
+				.then(function(expense){
+
+           var r=expense.rows;
+					 var bucket=[];
+           r.forEach(function(t){
+                var bucketObject={};
+                bucketObject.expenses=[];
+
+                bucketObject.claimReference=t.claimReference;
+                bucketObject.claimDate=t.createdDate;
+                bucketObject.expenses=[];
+                bucketObject.id=t._id;
+
+                var secondValue=t.days;
+                bucketObject.total=0;
+                secondValue.forEach(function(l){
+
+                      var daySpecific={};
+                      daySpecific.startTime=l.startTime;
+                      daySpecific.endTime=l.endTime;
+                      daySpecific.date=l.date;
+                      daySpecific.postcodes=l.postcodes;
+                      daySpecific.dayId=l._id;
+                          l.expenses.forEach(function(i){
+
+                               var t={};
+                               t.date= daySpecific.date;
+                               t.startTime= daySpecific.startTime;
+                               t.endTime=daySpecific.endTime;
+                               t.postcodes=daySpecific.postcodes;
+                               t.dayId= daySpecific.dayId;
+                               t.expenseType=i.expenseType;
+                               t.subType=i.subType;
+                               t._id=i._id;
+                               t.value=i.value;
+                               t.status=i.status;
+                               t.text=i.text;
+                               t.description=i.description;
+                               t.receiptUrls=i.receiptUrls;
+                               bucketObject.total +=i.value;
+                               bucketObject.expenses.push(t);
+
+                               })
+
+
+                });
+
+                bucket.push(bucketObject);
+
+					 });
+
+           resolve(bucket);
+				     });
+		     });
 
 
 
-    	return Q.promise(function(resolve,reject){
+    };
+    service.updateEachExpense=function(status,ids){
 
-    		var q=db.Expense.find({"user":id});
-    		
-    	    Q.nfcall(q.exec.bind(q)).then(function(r){
+        return Q.promise(function(resolve,reject){
 
-                var bucket=[];
-    	    	
-    	    	for(var first=0;first < r.length;first++){
+            var q=db.Expense.find();
 
-    	    		var bucketObject={};
-    	    		bucketObject.expenses=[];
-
-    	    		bucketObject.claimReference=r[first].claimReference;
-    	    		bucketObject.claimDate=r[first].createdDate;
-    	    		bucketObject.id=r[first]._id;
-    	    	    var secondValue=r[first].days[0];
-    	    	    var total=0;
-    	    		for(var second=0;second < secondValue.expenses.length;second++){
-                       var t={};
-                       t.date=secondValue.date;
-                       t.startTime=secondValue.startTime;
-                       t.endTime=secondValue.endTime;
-                       t.postcodes=secondValue.postcodes;
-                       t.expenseType=secondValue.expenses[second].expenseType;
-                       t.subType=secondValue.expenses[second].subType;
-                       t.value=secondValue.expenses[second].value;
-                       t.text=secondValue.expenses[second].text;
-                       t.description=secondValue.expenses[second].description;
-                       t.receiptUrls=secondValue.expenses[second].receiptUrls;
-                       total +=secondValue.expenses[second].value;
-                       bucketObject.expenses.push(t);
+            return Q.nfcall(q.exec.bind(q)).then(function(doc){
 
 
+                ids.forEach(function(e){
 
-    	    		}
-    	    		bucketObject.total=total;
-    	    		bucket.push(bucketObject);
-    	    		
-    	    	}
-    	    	resolve(bucket);
+                  doc.forEach(function(d){
 
-    	    },reject);
-    	})
-    }
+                    d.days.forEach(function(l){
+
+                      l.expenses.forEach(function(ex){
+
+                        if(ex._id==e){
+
+                          ex.status=status;
+                          d.save();
+
+                          if(ids[ids.length-1]==e){
+
+                            resolve({result:true});
+                          }
+
+                        }
+                      })
+                    })
+                  })
+                })
+
+            },reject);
+
+        });
+    };
+
 
 	return service;
 };

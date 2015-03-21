@@ -1,50 +1,59 @@
 <div class="candidate-layout">
-	<div class="candidate-center">
-	  <div class="candidate-main meta-box container-fluid">
-		<div class="row visible-xs">
-		  <div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" ng-click="tab.isMenuCollapsed = !tab.isMenuCollapsed">
-			  <span class="sr-only">Toggle navigation</span>
-			  <span class="icon-bar"></span>
-			  <span class="icon-bar"></span>
-			  <span class="icon-bar"></span>
-			</button>
-			<span class="navbar-brand visible-xs">{{tab.caption}}</span>
-		  </div>
-		</div>
-		<section class="tabs-wrapper row">
-		  <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
-			<li ng-class="{active: isTabActive('home')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}">Home</a>
-			</li>
-			<li ng-class="{active: isTabActive('payroll')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}/payroll">Payroll</a>
-			</li>
-			<li ng-class="{active: isTabActive('consultants')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}/consultants">Consultants</a>
-			</li>
-			<li ng-class="{active: isTabActive('candidates')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}/candidates">Candidates</a>
-			</li>
-			<li ng-class="{active: isTabActive('sales')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}/sales">Sales</a>
-			</li>
-			<li ng-class="{active: isTabActive('history')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}/history">History</a>
-			</li>
-			<li ng-class="{active: isTabActive('other')}">
-			  <a ng-href="/agencies/{{selectedAgencyId}}/other">Other</a>
-			</li>
-		  </ul>
-		  <div class="tab-content col-xs-12">
-			<div ui-view></div>
-		  </div>
-		</section>
-	  </div>
-	</div>
+    <div class="candidate-center">
+        <div class="candidate-main meta-box container-fluid">
+            <div class="row visible-xs">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" ng-click="tab.isMenuCollapsed = !tab.isMenuCollapsed">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="navbar-brand visible-xs">{{tab.caption}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10"></div>
+                <div class="col-xs-2">
+                    <label style="color:green">Agency Status</label>
+                    <select class="form-control" ng-model="selectedAgency.status"
+                            ng-options="item.value as item.value for item in status"
+                            ng-change="updateStatus()"></select>
+                </div>
+            </div>
+            <section class="tabs-wrapper row">
+                <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
+                    <li ng-class="{active: isTabActive('home')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}">Home</a>
+                    </li>
+                    <li ng-class="{active: isTabActive('payroll')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/payroll">Payroll</a>
+                    </li>
+                    <li ng-class="{active: isTabActive('consultants')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/consultants">Consultants</a>
+                    </li>
+                    <li ng-class="{active: isTabActive('candidates')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/candidates">Candidates</a>
+                    </li>
+                    <li ng-class="{active: isTabActive('sales')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/sales">Sales</a>
+                    </li>
+                    <li ng-class="{active: isTabActive('history')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/history">History</a>
+                    </li>
+                    <li ng-class="{active: isTabActive('other')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/other">Other</a>
+                    </li>
+                </ul>
+                <div class="tab-content col-xs-12">
+                    <div ui-view></div>
+                </div>
+            </section>
+        </div>
+    </div>
 
 
-	<div class="sidemenu right-sidebar">
-		<div ng-include="'views/agency/_rightmenu.html'"></div> 
-	</div>
+    <div class="sidemenu right-sidebar">
+        <div ng-include="'views/agency/_rightmenu.html'"></div>
+    </div>
 </div>	

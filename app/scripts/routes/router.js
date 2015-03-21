@@ -20,12 +20,10 @@ angular.module('origApp').config(function($stateProvider, $urlRouterProvider) {
         
         }]}
     })
-
   .state('app.first', {
     url: '/',
     controller: 'first'
   })
-  
   .state('reset-password', {
     url: '/reset-password/:emailAddress/:verifyCode',
     views: {

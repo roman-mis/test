@@ -88,14 +88,15 @@ module.exports=function(db){
 	}
 	
 	return function(req,res,next){
+		console.log('testtest');
 		var opt={
 			include:[],
 			filterBy:{},
 			sortBy:{}
 		};
-         console.log('rest middle ware');
-         console.log(req.query._include);
+		console.log(opt);
 		if(req.query._include){
+			console.log('1');
 			var includes=_.map(req.query._include.split(','),
 				function(el){
 				if(el){
@@ -124,7 +125,7 @@ module.exports=function(db){
 		}
 
 		if(!_.isUndefined(req.query._limit) || !_.isUndefined(req.query._offset)){
-			console.log('have pagination');
+			console.log('2');
 			var paginationOption={};	
 			paginationOption.limit=req.query._limit?req.query._limit:20;
 			paginationOption.offset=req.query._offset?req.query._offset:0;
@@ -132,6 +133,7 @@ module.exports=function(db){
 		}
 
 		if(req.query._orderby){
+			console.log('3');
 			//var allOrderBys=[];
 			var orderBys=_.map(req.query._orderby.split(','),
 				function(itm){
@@ -155,7 +157,9 @@ module.exports=function(db){
 		}
 
 		var filters={};
+
 		_.forEach(req.query,function(v,q){
+
 			// console.log('q = ');
 			if(q && v && q.substr(0,1)!=='_'){
 				var filter={};
@@ -179,6 +183,7 @@ module.exports=function(db){
 			}
 		});
 		opt.filters=filters;
+		console.log(opt);
 		
 		// if(filters){
 		// 	var reqFilters={};
@@ -190,8 +195,7 @@ module.exports=function(db){
 		// }
 
 		req._restOptions=opt;
-		console.log('using rest options');
-		console.log(JSON.stringify(opt));
+		
 		//res.json(opt);
 		next();
 	};

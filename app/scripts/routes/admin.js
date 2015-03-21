@@ -16,7 +16,7 @@ angular.module('origApp').config(function($stateProvider) {
 		controller: 'templatesController'
 	})
 	.state('app.admin.companyProfile', {
-		url: '/companyProfile',
+		url: '/companyprofile',
 		templateUrl: 'views/admin/companyProfile/index.html',
 		controller: 'companyProfileController'
 	})
@@ -31,8 +31,8 @@ angular.module('origApp').config(function($stateProvider) {
 		controller: 'accountsController'
 	})
 	.state('app.admin.companyProfile.bankDetails', {
-		url: '/bankDetails',
-		templateUrl: 'views/admin/companyProfile/partials/bankdetails.html',
+		url: '/bankdetails',
+		templateUrl: 'views/admin/companyProfile/partials/bankDetails.html',
 		controller: 'bankDetailsController'
 	})
 	.state('app.admin.companyProfile.defaults', {

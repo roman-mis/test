@@ -5,11 +5,11 @@ angular.module('origApp.controllers')
           $scope.doLogin = function() {
             if ($scope.loginform.$validate()) {
               AuthService.doLogin($scope.emailAddress, $scope.password).then(
-                      function() {
-                      },
-                      function() {
-                        MsgService.alertByKey('danger', 'LoginError');
-                      }
+                function() {
+                },
+                function() {
+                  MsgService.alertByKey('danger', 'LoginError');
+                }
               );
             }
           };

@@ -43,6 +43,15 @@ module.exports = function(){
       res.json(dataList.DerogationContract);
     };
 
+    controller.contractorstatus = function(req, res){
+      res.json(dataList.ContractorStatus);
+    };
+
+    controller.communicationmethod = function(req, res){
+
+      res.json(dataList.CommunicationMethod);
+    };
+
     controller.servicesused = function(req,res){
 
       res.json(dataList.ServiceUsed);
@@ -56,6 +65,11 @@ module.exports = function(){
     controller.paymentmethods=function(req,res){
 
       res.json(dataList.PaymentMethod);
+    };
+
+    controller.adminfee = function(req, res){
+
+      res.json(dataList.AdminFee);
     };
 
 
@@ -156,7 +170,7 @@ module.exports = function(){
     controller.getAdminCompanyProfileData = function (req, res){
       var companyProfileData = {
         payFrequency: dataList.PayFrequency,
-        holidayPayRule: dataList.Holidays,
+        holidayPayRule: dataList.HolidayPayRule,
         paymentMethod: dataList.PaymentMethod,
         adminFee: dataList.AdminFee,
         derogationContract: dataList.DerogationContract,
@@ -190,6 +204,10 @@ module.exports = function(){
       res.json(dataList.AOE);
     };
 
+    controller.getCandidateTitle = function (req, res) {
+        res.json(dataList.candidateTitle);
+    };
+
     controller.getAgencyStatus = function(req,res){
       res.json(dataList.agencyStatus);
     };
@@ -197,7 +215,14 @@ module.exports = function(){
     controller.getCandidateStatus = function(req,res){
       res.json(dataList.candidateStatus);
     };
+    
+    controller.getCandidateProfileFirst = function (req, res) {
+        res.json(dataList.candidateProfile[req.params.type].first);
+    };
 
+    controller.getCandidateProfilePermissions = function (req, res) {
+        res.json(dataList.candidateProfile[req.params.type].permissions);
+    };
 
   return controller;
 };
