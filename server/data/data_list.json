@@ -662,7 +662,136 @@
 			{
 			"code":3,
 			"value":"P45 Out"
-			}]
+			}],
+"profiles": [{
+    "WK": {
+      "first": {
+        "open": {
+          "state": "app.candidate.home",
+          "stateParams": [
+            {
+              "key":"candidateId",
+              "value":"_id"
+            }
+          ]
+        } 
+      },
+      "permissions": {
+        "accessKey": "WK",
+        "fields": {
+          "candidate": {
+            "taps": {
+              "Home": {
+                "hide": false
+              },
+              "Contact": {
+                "hide": false
+              },
+              "Payroll": {
+                "hide": true
+              },
+              "Payslips": {
+                "hide": false
+              },
+              "Agencies": {
+                "hide": false
+              },
+              "Compliance": {
+                "hide": true
+              },
+              "History": {
+                "hide": false
+              }
+            },
+            "rightToolBar": {
+              "addExpesesWizard": {
+                "hide": false
+              },
+              "addExpesesManually": {
+                "hide": false
+              },
+              "callLog": {
+                "hide": false,
+                "newName": "Contact Us",
+                "functionality": {
+                  "candidateName": {
+                    "hide": false
+                  },
+                  "selectAgency": {
+                    "hide": false,
+                    "filter": {
+                      "name": "byUser",
+                      "type": "agencies assigned to user"
+                    }
+                  },
+                  "taskType": {
+                    "hide": false,
+                    "filter": {
+                      "name": "byValue",
+                      "values": [
+                        "Expenses",
+                        "Timesheets",
+                        "General Query",
+                        "Payroll Query",
+                        "Payment not received",
+                        "P45 Request"
+                      ]
+                    }
+                  },
+                  "selectPriority": {
+                    "hide": true,
+                    "setTo": "high priority"
+                  },
+                  "status": {
+                    "hide": true,
+                    "setTo": "General user"
+                  },
+                  "title": {
+                    "hide": false,
+                    "setTo": "Inbound Portal Enquiry",
+                    "editable": false
+                  },
+                  "selectTemplate": {
+                    "hide": true
+                  },
+                  "textFeld": {
+                    "hide": false
+                  },
+                  "followUpNeeded": {
+                    "hide": true
+                  },
+                  "assignTo": {
+                    "hide": true
+                  },
+                  "NotifyMeWhenTaskComplete ": {
+                    "hide": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },{
+  	"AC": {
+      "first": {
+        "open": {
+          "state": "app.agency.home",
+          "stateParams": [
+            {
+              "key":"agencyId",
+              "value":"_id"
+            }
+          ]
+        } 
+      },
+      "permissions": {
+
+      }
+  	}
+  }
+  ]
 }
 
 

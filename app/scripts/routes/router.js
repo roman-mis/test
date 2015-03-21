@@ -13,21 +13,32 @@ angular.module('origApp').config(function($stateProvider, $urlRouterProvider) {
           templateUrl: 'views/main.html',
           controller: 'MainController'
         }
-      }
-    })
-    .state('reset-password', {
-      url: '/reset-password/:emailAddress/:verifyCode',
-      views: {
-        header: {
-          templateUrl: 'views/register/header.html',
-          controller: ''
-        },
-        body: {
-          templateUrl: 'views/reset_password.html',
-          controller: 'ResetPasswordController'
-        }
-      }
-    });
+      },
+      resolve: {permissions:['userPermissions', 'AuthService' ,function(userPermissions,AuthService){
+        console.log(AuthService.getCurrentUser());
 
-  $urlRouterProvider.otherwise('/candidates');
+        
+        }]}
+    })
+
+  .state('app.first', {
+    url: '/',
+    controller: 'first'
+  })
+  
+  .state('reset-password', {
+    url: '/reset-password/:emailAddress/:verifyCode',
+    views: {
+      header: {
+        templateUrl: 'views/register/header.html',
+        controller: ''
+      },
+      body: {
+        templateUrl: 'views/reset_password.html',
+        controller: 'ResetPasswordController'
+      }
+    }
+  });
+
+  $urlRouterProvider.otherwise('/');
 });
