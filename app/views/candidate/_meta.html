@@ -19,7 +19,7 @@
         </div>
         <div class="col-lg-3">
             <label style="color:green">Candidate Status</label>
-            <select class='form-control' ng-model = "candidate.status" ng-options="status.value as status.value for status in candidateStatus">
+            <select class='form-control' ng-model = "candidate.status" ng-options="status.value as status.value for status in candidateStatus" ng-change = "editCandidateStatus()">
             </select>
             <button ng-click="editCandidateStatus()" class="btn btn-success">Save</button>
 

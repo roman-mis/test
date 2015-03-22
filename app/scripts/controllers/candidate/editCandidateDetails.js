@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
-		.controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource',
-			function($scope,$modalInstance,$stateParams, HttpResource, parentScope){
+		.controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource','$http',
+			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
 				
@@ -10,18 +10,32 @@ angular.module('origApp.controllers')
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
 					console.log(res);
 				});
+
+        HttpResource.model('constants/candidateTitle').query({},function (res) {
+          console.log(res.data);
+          var titles = res.data;
+          $scope.titles = [];
+          titles.forEach(function (item) {
+            $scope.titles.push(item.value);
+          });
+        });
 				
 				$scope.status = parentScope.candidate.status;
 				$scope.lettersOnly = /^[A-Za-z]+$/;
 				$scope.ukMobile = /^0(\d ?){10}$/;
+        $scope.emailPattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 				console.log(parentScope.candidate.status);
 
 
 				HttpResource.model('constants/nationalities').query({},function (res) {
-					// body...
-					$scope.nationalities = res.data;
+					var nationalities = res.data;
+          $scope.nationalities = [];
+          nationalities.forEach(function (item) {
+            $scope.nationalities.push(item.description);            
+          });
+          console.log(res.data);
 				});
-				console.log($scope.nationalities);
+				
 				
 
 
