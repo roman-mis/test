@@ -1014,19 +1014,19 @@
                         "Expenses",
                         "Timesheets",
                         "General Query",
-                        "Payroll Query",
-                        "Payment not received",
+                        "Payment Query",
+                        "Payment Not Received",
                         "P45 Request"
                       ]
                     }
                   },
                   "selectPriority": {
                     "hide": true,
-                    "setTo": "high priority"
+                    "setTo": "High"
                   },
                   "status": {
                     "hide": true,
-                    "setTo": "General user"
+                    "setTo": "outstanding" 
                   },
                   "title": {
                     "hide": false,
