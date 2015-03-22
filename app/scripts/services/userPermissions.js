@@ -7,7 +7,7 @@ angular.module('origApp.services')
   function _getUserPermission(type){
     var d = $q.defer();
 
-    var acAPI = HttpResource.model('constants/candidateProfile/' + type+'/permissions');
+    var acAPI = HttpResource.model('constants/profiles/' + type + '/permissions');
 
     acAPI.query({}, function(data) {
       permissions.permissions = data.data;
@@ -20,7 +20,7 @@ angular.module('origApp.services')
   function _first(type){
     var d = $q.defer();
 
-    var acAPI = HttpResource.model('constants/candidateProfile/' + type+'/first');
+    var acAPI = HttpResource.model('constants/profiles/' + type + '/first');
 
     acAPI.query({}, function(data) {
       var first = data.data;
@@ -31,7 +31,7 @@ angular.module('origApp.services')
   }
 
   return {
-    first:_first,
+    first: _first,
     permissions: permissions,
     getUserPermission: _getUserPermission
   };
