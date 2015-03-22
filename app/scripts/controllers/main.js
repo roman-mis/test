@@ -17,8 +17,8 @@ angular.module('origApp.controllers', [])
 	            console.log(data);            // if($location.path() === '/'){
 	            console.log('******************************');
 	            // }
-		          console.log(userPermissions.permissions.permissions.fields.candidate.taps);
-		          $scope.permissions = userPermissions.permissions.permissions.fields.candidate;
+		          // console.log(userPermissions.permissions.permissions.fields.taps);
+		          $scope.permissions = userPermissions.permissions.permissions.fields;
 	          });
           }
         });

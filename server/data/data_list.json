@@ -945,7 +945,7 @@
   ],
 
 
-  "candidateProfile": {
+  "profiles": {
     "WK": {
       "first": {
         "open": {
@@ -961,7 +961,6 @@
       "permissions": {
         "accessKey": "WK",
         "fields": {
-          "candidate": {
             "taps": {
               "Home": {
                 "hide": false
@@ -1051,9 +1050,55 @@
                 }
               }
             }
-          }
         }
       }
     }
-  }
+  , 
+  "AC": {
+      "first": {
+        "open": {
+          "state": "app.agency.home",
+          "stateParams": [
+            {
+              "key":"agencyId",
+              "value":"_id"
+            }
+          ]
+        } 
+      },
+      "permissions": {
+      	        "fields": {
+            "taps": {
+              "Home": {
+                "hide": false
+              },
+              "Contact": {
+                "hide": false
+              },
+              "Payroll": {
+                "hide": true
+              },
+              "Candidates": {
+                "hide": false
+              },
+              "Consultants":{
+              	"hide": false
+              },
+              "Sales":{
+              	"hide": false
+              },
+              "History": {
+                "hide": true
+              },
+              "Others": {
+              	"hide": false
+              }
+            },
+            "rightToolBar": {
+            }
+        }
+      }
+    }
+ }
+
 }
