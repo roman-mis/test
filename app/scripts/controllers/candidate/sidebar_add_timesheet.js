@@ -1,287 +1,305 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('CandidateSidebarAddTimesheetController', ['$scope','$modalInstance', 'parentScope', 'HttpResource','$http','s3Service',
-	function ($scope, $modalInstance, parentScope, HttpResource,$http, s3Service) {
+.controller('CandidateSidebarAddTimesheetController', ['$scope', '$modalInstance', 'parentScope', 'HttpResource', '$http', 's3Service', '$q', function ($scope, $modalInstance, parentScope, HttpResource, $http, s3Service, $q) {
 
 
-	//getting current candidate from parent scope
-	$scope.candidate = parentScope.candidate;
+    //getting current candidate from parent scope
+    $scope.candidate = parentScope.candidate;
+    var canceller = $q.defer();
+    var uploadCancelled = false;
 
-	//getting agencies related to the current candidate
+    //getting agencies related to the current candidate
 
-	HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct')
-	.query({},function (data) {
-		//waiting for the data to return
-		$scope.agencies = data.data.objects;
-		$scope.saveAgency = $scope.agencies[0];
+    HttpResource.model('candidates/' + $scope.candidate._id + '/payrollproduct')
+    .query({}, function (data) {
+        //waiting for the data to return
+        $scope.agencies = data.data.objects;
+        $scope.saveAgency = $scope.agencies[0];
 
-		//must wait for saveAgency model to initialize
-		//watching saveAgency to change vat value to the current agency
+        //must wait for saveAgency model to initialize
+        //watching saveAgency to change vat value to the current agency
 
-		$scope.$watch('saveAgency', function () {
-			if(!$scope.saveAgency){
-				return;
-			}
-			var _vat = HttpResource.model ('agencies/'+$scope.saveAgency.agency._id+'/payroll');
-			_vat.query({},function (data) {
-				$scope.isVat = data.data.object.defaultInvoicing.invoiceVatCharged;
-			});
-		});
-	});
-
-
-	//getting payment rates
-	var _rates = HttpResource.model('systems/paymentrates');
-
-	_rates.query({}, function (data) {
-
-		$scope.paymentRates = data.data.objects;
-		$scope.saveRate = $scope.paymentRates[0];
-		
-
-	});
-	
-	
-	HttpResource.model('systems/vat/current')
-	.query({},function (data) {
-		
-		$scope.currentVat = data.data;
-
-	});
+        $scope.$watch('saveAgency', function () {
+            if (!$scope.saveAgency) {
+                return;
+            }
+            var _vat = HttpResource.model('agencies/' + $scope.saveAgency.agency._id + '/payroll');
+            _vat.query({}, function (data) {
+                $scope.isVat = data.data.object.defaultInvoicing.invoiceVatCharged;
+            });
+        });
+    });
 
 
-	//user inputs
-	$scope.elements = { unit:0	, payRate:0, chargeRate: 'N/A', amount:0, vat:0 };
+    //getting payment rates
+    var _rates = HttpResource.model('systems/paymentrates');
+
+    _rates.query({}, function (data) {
+
+        $scope.paymentRates = data.data.objects;
+        $scope.saveRate = $scope.paymentRates[0];
 
 
-	$scope.$watch('elements.payRate',function (newVal) {
-
-		$scope.elements.amount = Math.round((newVal * $scope.elements.unit)*100)/100;	
-		
-	});	
+    });
 
 
+    HttpResource.model('systems/vat/current')
+    .query({}, function (data) {
 
-	$scope.$watch('elements.unit',function (newVal) {
-		$scope.elements.amount = Math.round(($scope.elements.payRate * newVal)*100)/100;
-		if(isNaN($scope.elements.amount)){
-			$scope.elements.amount = null;
-		}
-	});
+        $scope.currentVat = data.data;
+
+    });
+
+
+    //user inputs
+    $scope.elements = { unit: 0, payRate: 0, chargeRate: 'N/A', amount: 0, vat: 0 };
+
+
+    $scope.$watch('elements.payRate', function (newVal) {
+
+        $scope.elements.amount = Math.round((newVal * $scope.elements.unit) * 100) / 100;
+
+    });
 
 
 
-
-	$scope.$watch('elements.amount', function (newVal) {
-		if($scope.isVat === true){
-			$scope.elements.vat = Math.round((newVal * $scope.currentVat.object.amount/100)*100)/100;	
-		}
-		else{
-			$scope.elements.vat = 0;
-		}
-		
-	});
+    $scope.$watch('elements.unit', function (newVal) {
+        $scope.elements.amount = Math.round(($scope.elements.payRate * newVal) * 100) / 100;
+        if (isNaN($scope.elements.amount)) {
+            $scope.elements.amount = null;
+        }
+    });
 
 
 
-	$scope.userDescription = '';
-	$scope.finalElements=[];
-	$scope.totalVat = 0;
-	$scope.net = 0;
-	$scope.total = 0;
-	$scope.addClicked = false;
-	$scope.populateTable = function () {
-		$scope.addClicked = true;
-		$scope.tableInfo = {
-			elementType: $scope.saveRate._id,
-			elementName: $scope.saveRate.name,
-			description: $scope.userDescription,
-			units: $scope.elements.unit,
-			payRate: $scope.elements.payRate,
-			chargeRate: null,
-			amount: $scope.elements.amount,
-			vat: $scope.elements.vat
-		};
-		
-		$scope.finalElements.push($scope.tableInfo);
 
+    $scope.$watch('elements.amount', function (newVal) {
+        if ($scope.isVat === true) {
+            $scope.elements.vat = Math.round((newVal * $scope.currentVat.object.amount / 100) * 100) / 100;
+        }
+        else {
+            $scope.elements.vat = 0;
+        }
 
-		$scope.net += $scope.tableInfo.amount;
-		$scope.net = Math.round($scope.net *100)/100;
-		$scope.totalVat += $scope.tableInfo.vat;
-		$scope.totalVat = Math.round($scope.totalVat*100)/100;
-
-		$scope.total = $scope.net + $scope.totalVat;
-		$scope.total = Math.round($scope.total * 100)/100;
-		
-		$scope.userDescription = '';
-		$scope.elements.unit = 0;
-		$scope.elements.payRate = 0;
-		$scope.elements.amount = 0;
-		$scope.elements.vat = 0;
-		
-		
-	};
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//uploading
-	$scope.inSelectFile = false;
-
-
-	$scope.files = '';
-	$scope.uploadedImg = {url:null, name:''};
-
-
-	$scope.onSelectFile = function(fileInput) {
-		$scope.files = fileInput;
-		$scope.inSelectFile = true;
-		$scope.uploadStatus = undefined;
-		$scope.$apply();
-	};
-	//upload file to s3
-
-	$scope.uploadFile = function() {
-
-		if($scope.inSelectFile === false){
-			return;
-		}
-
-
-		$scope.isUploading = true;
-
-		var str = $scope.files.files[0].name;
-		str = str.replace(/ /g, '_');
-		// s3Service.upload({
-		// 	fileName: new Date().getTime().toString() + str,
-		// 	file: $scope.files.files[0]
-
-		// }).then(function(data) {
-		// 	$scope.isUploading = false;
-		// 	$scope.uploadedImg.url = data.url;
-
-		// 	console.log(data.url);
-		// }, function() {
-		// 	// alert('error');
-		// });
+    });
 
 
 
-		var fileName = new Date().getTime().toString() + '_' + $scope.files.files[0].name;
-	            var mimeType = $scope.files.files[0].type || 'image/jpeg';
-	            $scope.isUploading = true;
-	            
-	            HttpResource.model('documents/timesheet').customGet('signedUrl', {
-	              mimeType: mimeType,
-	              fileName: fileName
-	            }, function(response) {
-	              var signedRequest = response.data.signedRequest;
-	              $http({
-	                method: 'PUT',
-	                url: signedRequest,
-	                data: $scope.files.files[0],
-	                headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
-	              }).success(function() {
-	                //get view url of file
-	                $scope.isUploading = false;
-	                $scope.uploadStatus = 'Uploaded successfully';
-	                $scope.uploadedImg.url = response.data.url;
-	                
+    $scope.userDescription = '';
+    $scope.finalElements = [];
+    $scope.totalVat = 0;
+    $scope.net = 0;
+    $scope.total = 0;
+    $scope.addClicked = false;
+    $scope.populateTable = function () {
+        $scope.addClicked = true;
+        $scope.tableInfo = {
+            elementType: $scope.saveRate._id,
+            elementName: $scope.saveRate.name,
+            description: $scope.userDescription,
+            units: $scope.elements.unit,
+            payRate: $scope.elements.payRate,
+            chargeRate: null,
+            amount: $scope.elements.amount,
+            vat: $scope.elements.vat
+        };
 
-	              }).error(function () {
-	              	$scope.uploadStatus = 'Upload failure';
-	              });
-	            });
-
-	};
+        $scope.finalElements.push($scope.tableInfo);
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	//calender
+        $scope.net += $scope.tableInfo.amount;
+        $scope.net = Math.round($scope.net * 100) / 100;
+        $scope.totalVat += $scope.tableInfo.vat;
+        $scope.totalVat = Math.round($scope.totalVat * 100) / 100;
+
+        $scope.total = $scope.net + $scope.totalVat;
+        $scope.total = Math.round($scope.total * 100) / 100;
+
+        $scope.userDescription = '';
+        $scope.elements.unit = 0;
+        $scope.elements.payRate = 0;
+        $scope.elements.amount = 0;
+        $scope.elements.vat = 0;
 
 
-	var currentDate = new Date();
-	$scope.minDate = currentDate;
-	$scope.claimDate = $scope.claimDate || currentDate;
-	$scope.weekEndingDay = 0;
-	$scope.clicked= false;
-	$scope.$watch('claimDate', function() {
-		setTimeout(function() {
-			var that = $('#claim_datepicker td > .btn.active.btn-info');
-			if (that.length === 1) {
-				that.trigger('click');
-			}
-		}, 100);
-	});
+    };
 
-	$(document).on('click', '#claim_datepicker td > .btn', function() {
-		var that = this;
-		$(that).closest('table').find('td > .btn').removeClass('btn-info active');
-		$(that).closest('tr').find('td > .btn').addClass('btn-info active');
-	});
-
-	$scope.okay = function() {
-		var date = $scope.claimDate;
-		$scope.claimDateRange = [];
-
-		while(date.getDay()!==$scope.weekEndingDay) {
-			date = new Date(date.getTime() - 24 * 60 * 60 * 1000); 
-		}
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //uploading
+    $scope.inSelectFile = false;
 
 
-		$scope.claimDateRange[0] = date;
-		$scope.claimDateRange[1] = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
-
-		var daysInRange = [{object: 'all', label: 'All dates in selection'}];
-		var dt = $scope.claimDateRange[0];
-		dt.setHours(0, 0, 0, 0);
-		for (var i = 0; i < 7; i++) {
-			if (dt > $scope.claimDateRange[1]) {
-				break;
-			}
-			daysInRange.push({object: dt, label: moment(dt).format('ddd DD/MM/YYYY')});
-			dt = new Date(dt.getTime() + 24 * 3600 * 1000);
-			dt.setHours(0, 0, 0, 0);
-		}
-		$scope.daysInRange = daysInRange;
-		$scope.times = [];
-
-		$scope.dateHolder=daysInRange[1].label +  'to'  + daysInRange[7].label;
-
-		$scope.weekEndingDate = daysInRange[6];
-	};
+    $scope.files = '';
+    $scope.uploadedImg = { url: null, name: '' };
 
 
-	
-	
-	$scope.ok = function() {
-		var timesheet = {
-			agency: $scope.saveAgency.agency._id,
-			worker: $scope.candidate._id,
-			weekEndingDate: $scope.weekEndingDate.object,
-			status: 'submitted',
-			net:$scope.net,
-			vat: $scope.totalVat,
-			elements: $scope.finalElements,
-			total: $scope.total,
-			imageUrl: $scope.uploadedImg.url
-		};
+    $scope.onSelectFile = function (fileInput) {
+        $scope.files = fileInput;
+        $scope.inSelectFile = true;
+        $scope.uploadStatus = undefined;
+        $scope.$apply();
+    };
+    //upload file to s3
 
-		
-		HttpResource.model('timesheets').create(timesheet).post()
-		.then(function() {
-			// if (HttpResource.flushError(response)) {
-			// 	}
-			
-			
-		});
-		$modalInstance.close();
-	};
+    $scope.uploadFile = function () {
 
-	$scope.cancel = function() {
-		if (!window.confirm('Are you sure you want to cancel?')) {
-			return;
-		}
-		$modalInstance.dismiss('cancel');
-	};
-	
+        if ($scope.inSelectFile === false) {
+            return;
+        }
+
+
+        $scope.isUploading = true;
+
+        var str = $scope.files.files[0].name;
+        str = str.replace(/ /g, '_');
+        // s3Service.upload({
+        // 	fileName: new Date().getTime().toString() + str,
+        // 	file: $scope.files.files[0]
+
+        // }).then(function(data) {
+        // 	$scope.isUploading = false;
+        // 	$scope.uploadedImg.url = data.url;
+
+        // 	console.log(data.url);
+        // }, function() {
+        // 	// alert('error');
+        // });
+
+
+
+        var fileName = new Date().getTime().toString() + '_' + $scope.files.files[0].name;
+        //console.log($scope.files.files[0].type);
+        //console.log($scope.files.files[0].type.indexOf('image/'));
+        if ($scope.files.files[0].type.indexOf('image/') == -1 && $scope.files.files[0].type.indexOf('application/pdf') == -1) {
+            $scope.uploadStatus = 'invalid file: only images and pdf file types allowed';
+            $scope.isUploading = false;
+            return;
+        }
+        var mimeType = $scope.files.files[0].type;
+        $scope.isUploading = true;
+        uploadCancelled = false;
+        canceller = $q.defer();
+
+        HttpResource.model('documents/timesheet').customGet('signedUrl', {
+            mimeType: mimeType,
+            fileName: fileName
+        }, function (response) {
+            var signedRequest = response.data.signedRequest;
+            $http({
+                method: 'PUT',
+                url: signedRequest,
+                data: $scope.files.files[0],
+                headers: { 'Content-Type': mimeType, 'x-amz-acl': 'public-read' },
+                timeout: canceller.promise
+            }).success(function () {
+                //get view url of file
+                $scope.isUploading = false;
+                if (uploadCancelled) {
+                    $scope.uploadStatus = 'Uploaded cancelled';
+                } else {
+                    $scope.uploadStatus = 'Uploaded successfully';
+                    $scope.uploadedImg.url = response.data.url;
+                }
+            }).error(function () {
+                $scope.uploadStatus = 'Upload failure';
+            });
+        });
+
+    };
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //calender
+
+
+    var currentDate = new Date();
+    $scope.minDate = currentDate;
+    $scope.claimDate = $scope.claimDate || currentDate;
+    $scope.weekEndingDay = 0;
+    $scope.clicked = false;
+    $scope.$watch('claimDate', function () {
+        setTimeout(function () {
+            var that = $('#claim_datepicker td > .btn.active.btn-info');
+            if (that.length === 1) {
+                that.trigger('click');
+            }
+        }, 100);
+    });
+
+    $(document).on('click', '#claim_datepicker td > .btn', function () {
+        var that = this;
+        $(that).closest('table').find('td > .btn').removeClass('btn-info active');
+        $(that).closest('tr').find('td > .btn').addClass('btn-info active');
+    });
+
+    $scope.okay = function () {
+        var date = $scope.claimDate;
+        $scope.claimDateRange = [];
+
+        while (date.getDay() !== $scope.weekEndingDay) {
+            date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
+        }
+
+
+        $scope.claimDateRange[0] = date;
+        $scope.claimDateRange[1] = new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+        var daysInRange = [{ object: 'all', label: 'All dates in selection' }];
+        var dt = $scope.claimDateRange[0];
+        dt.setHours(0, 0, 0, 0);
+        for (var i = 0; i < 7; i++) {
+            if (dt > $scope.claimDateRange[1]) {
+                break;
+            }
+            daysInRange.push({ object: dt, label: moment(dt).format('ddd DD/MM/YYYY') });
+            dt = new Date(dt.getTime() + 24 * 3600 * 1000);
+            dt.setHours(0, 0, 0, 0);
+        }
+        $scope.daysInRange = daysInRange;
+        $scope.times = [];
+
+        $scope.dateHolder = daysInRange[1].label + ' to ' + daysInRange[7].label;
+
+        $scope.weekEndingDate = daysInRange[6];
+    };
+
+
+
+
+    $scope.ok = function () {
+        var timesheet = {
+            agency: $scope.saveAgency.agency._id,
+            worker: $scope.candidate._id,
+            weekEndingDate: $scope.weekEndingDate.object,
+            status: 'submitted',
+            net: $scope.net,
+            vat: $scope.totalVat,
+            elements: $scope.finalElements,
+            total: $scope.total,
+            imageUrl: $scope.uploadedImg.url
+        };
+
+
+        HttpResource.model('timesheets').create(timesheet).post()
+        .then(function () {
+            // if (HttpResource.flushError(response)) {
+            // 	}
+
+
+        });
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        if (!window.confirm('Are you sure you want to cancel?')) {
+            return;
+        }
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.cancelUpload = function () {
+        canceller.resolve("upload cancelled");
+        uploadCancelled = true;
+    };
+
 }]);
