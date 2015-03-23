@@ -18,7 +18,7 @@ describe('Checking mailbox', function() {
       return browser.driver.getCurrentUrl().then(function (url) {
         return (url.indexOf('neo2') !== -1);
       });
-    }, 5000);
+    }, 20000);
   });
 /*
   it('should enter lite version', function () {
