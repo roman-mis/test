@@ -106,7 +106,6 @@ angular.module('origApp.controllers')
 
         $scope.finalElements.push($scope.tableInfo);
 
-
         $scope.net += $scope.tableInfo.amount;
         $scope.net = Math.round($scope.net * 100) / 100;
         $scope.totalVat += $scope.tableInfo.vat;
@@ -121,7 +120,7 @@ angular.module('origApp.controllers')
         $scope.elements.amount = 0;
         $scope.elements.vat = 0;
 
-
+        $('#tableHeader').css('display', 'table-header-group');
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////

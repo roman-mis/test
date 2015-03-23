@@ -30,3 +30,5 @@ router.get('/emailvalidation/:emailAddress',controller.emailValidation);
 router.get('/changepassword/verify/:emailAddress/:code',controller.verifyChangePassword);
 
 router.post('/changepassword/:emailAddress/:code',controller.changePassword);
+
+router.patch('/:id', controller.patchUser);

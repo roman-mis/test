@@ -3,6 +3,7 @@ angular.module('origApp.controllers')
     .controller('expensesRateModalController', [ '$scope', '$modalInstance', 'HttpResource', 'parentScope', 'expensesRateService',
         function ($scope, $modalInstance, HttpResource, parentScope, expensesRateService) {
 
+            var docId;
             $scope.expensesRate = {};
 
             expensesRateService.getExpensesRateTypes().then(function (response) {
@@ -10,6 +11,7 @@ angular.module('origApp.controllers')
             });
 
             if (undefined !== parentScope) {
+                docId = parentScope._id;
                 $scope.expensesRate = parentScope;
             }
 
@@ -24,9 +26,11 @@ angular.module('origApp.controllers')
                 }
                 $scope.isSaving = true;
 
-                expensesRateService.saveExpensesRate($scope.expensesRate)
+                expensesRateService.saveExpensesRate($scope.expensesRate, docId)
                     .then(function (response) {
                         $scope.isSaving = false;
+                        docId ? docId = docId : null;
+
                         if (!HttpResource.flushError(response)) {
                             $modalInstance.close('saved');
                         }
