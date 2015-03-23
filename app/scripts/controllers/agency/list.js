@@ -52,7 +52,10 @@ angular.module('origApp.controllers')
               { field: 'country', display: 'Country', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.country}}&nbsp;</div>' },
               { field: 'postCode', display: 'Postcode', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.postCode}}&nbsp;</div>' },
               { field: 'town', display: 'Town', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.town}}&nbsp;</div>' },
-              { field: 'address', display: 'Address', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.address1}}<!--<br/>{{row.address2}}-->&nbsp;</div>' }
+              {
+                  field: 'address', display: 'Address', cellTemplate: '<div style="width:100%; white-space: nowrap;' +
+                      'overflow: hidden; text-overflow: ellipsis; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.address1}}<!--<br/>{{row.address2}}-->&nbsp;</div>',
+              }
             ],
             data: []
           };
