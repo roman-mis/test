@@ -1,38 +1,36 @@
 <style>
-.hideAndShow{
-
-  margin-top:-25px;
-
-}
-
+    .hideAndShow {
+        margin-top: -25px;
+    }
 </style>
 <h3>Home</h3>
 <div class="row">
-<div class='col-md-6'>
-  <ul class="entry-content">
-    <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactdetail.phone}}</span></li>
-    <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">{{contactdetail.mobile}}</span></li>
-    <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<span class="meta">{{contactdetail.emailAddress}}</span></li>
-    <li class="clearfix"><i class="fa fa-location-arrow"></i>Address<span class="meta">{{contactdetail.address1}}-{{contactdetail.address2}}-{{contactdetail.address3}}</span></li>
+    <div class='col-md-6'>
+        <ul class="entry-content">
+            <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactdetail.phone}}</span>
+            </li>
+            <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">{{contactdetail.mobile}}</span>
+            </li>
+            <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<span class="meta">{{contactdetail.emailAddress}}</span>
+            </li>
+            <li class="clearfix"><i class="fa fa-location-arrow"></i>Address<span class="meta">{{contactdetail.address1}}-{{contactdetail.address2}}-{{contactdetail.address3}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <ul class="entry-content">
 
+            <li ng-repeat-start="i in lastLogs">
 
-         
-  </ul>
-</div>
-<div class="col-md-6">
-<ul class="entry-content">
+                <span ng-if="i.object.lastLogin">Last Logged In: {{i.object.lastLogin | date:'MM/dd/yyyy @ h:mma'}}</span>
+                <span ng-if="i.object.lastCallLog">Last Call Log: {{i.object.lastCallLog | date:'MM/dd/yyyy @ h:mma'}}</span>
+                <span ng-if="i.object.lastExpense">Last Expenses: {{i.object.lastExpense | date:'MM/dd/yyyy @ h:mma'}}</span>
+            </li>
+            <li ng-repeat-end=''></li>
 
-    <li ng-repeat-start="i in lastLogs" >
-     
-   <span ng-if="i.object.lastLogin" >Last Logged In: {{i.object.lastLogin | date:'MM/dd/yyyy @ h:mma'}}</span>
-   <span ng-if="i.object.lastCallLog">Last Call Log: {{i.object.lastCallLog | date:'MM/dd/yyyy @ h:mma'}}</span>
-   <span ng-if="i.object.lastExpense">Last Expenses: {{i.object.lastExpense | date:'MM/dd/yyyy @ h:mma'}}</span>
-    </li>
-    <li ng-repeat-end=''></li>
- 
-</ul>
- 
-</div>
+        </ul>
+
+    </div>
 </div>
 
 <!--<div ng-repeat='item in payrollProduct'>
