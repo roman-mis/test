@@ -30,7 +30,9 @@ router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpense
 
 router.patch('/updateAllexpensesToReject',expensecontroller.updateExpenseReject);
 
-router.patch('/updateAllexpensesToApprove',expensecontroller.updateExpenseApprove)
+router.patch('/updateAllexpensesToApprove',expensecontroller.updateExpenseApprove);
+
+router.delete('/deleteAllExpenses',expensecontroller.deleteExpense);
 
 router.get('/:id',candidatecontroller.getCandidate);
 
