@@ -62,8 +62,14 @@ angular.module('origApp.controllers')
 									$scope.form.age.$setValidity('age',$scope.isValid);
 								}
                 $scope.save = function () {
-                  HttpResource.model('users/'+$scope.candidateId).create($scope.candidate)
+                  console.log($scope.candidate.emailAddress);
+                  HttpResource.model('users').create($scope.candidate)
                   .patch($scope.candidateId).then(function (res) {
+                    
+                    console.log(res);
+                  });
+                  HttpResource.model('candidates').create($scope.candidate)
+                  .patch($scope.candidateId+'/contactdetail').then(function (res) {
                     console.log(res);
                   });
                 };

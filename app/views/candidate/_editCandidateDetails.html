@@ -51,7 +51,7 @@
         <div class="form-group">
             <label class="col-sm-4 control-label">E-mail Address<span ng-show="candidate.status == 'Live'">*</span></label>
             <div class="col-sm-8">
-                <input type="email" class="form-control ng-pristine ng-valid" ng-required ="candidate.status == 'Live'" ng-model="candidate.email" ng-pattern = "emailPattern">
+                <input type="email" class="form-control ng-pristine ng-valid" ng-required ="candidate.status == 'Live'" ng-model="candidate.emailAddress" ng-pattern = "emailPattern">
             </div>
         </div>
         
@@ -59,13 +59,13 @@
         <div class="form-group">
             <label class="col-sm-4 control-label">Mobile no.</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control ng-valid" ng-model="candidate.mobile" ng-pattern = "ukMobile" ng-required = "candidate.status =='Live' &&!candidate.phone">
+                <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.mobile" ng-pattern = "ukMobile" ng-required = "candidate.status =='Live' &&(!candidate.phone &&!candidate.mobile)">
             </div>
         </div>
         <div class="form-group ">
             <label class="col-sm-4 control-label">Phone no.</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control ng-valid" ng-model="candidate.phone" ng-pattern = "ukPhone" ng-required = "candidate.status =='Live' &&!candidate.mobile">
+                <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.phone" ng-pattern = "ukPhone" ng-required = "candidate.status =='Live' &&(!candidate.mobile &&!candidate.phone)">
             </div>
         </div>
         <div class="form-group ">
@@ -84,11 +84,21 @@
             </div>
 
         </div>
-        {{item}}
         <div class="form-group">
             <label class="col-sm-4 control-label">Address</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.address" style="">
+                <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.address1" ng-required="candidate.status=='Live'">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label"> Country</label>
+            <div class="col-sm-8">
+                <input type = 'text' class="form-control" ng-model="candidate.country"ng-required="candidate.status=='Live'"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8">
+                <input type = 'text' class="form-control" ng-model="candidate.country"ng-required="candidate.status=='Live'"></input>
             </div>
         </div>
     </form>
