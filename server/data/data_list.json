@@ -713,12 +713,16 @@
   ],
 
 
-  "templateTypes": [
-    {
+  "templateTypes": [{
       "code": "1",
       "name": "Standard"
-    }
-  ],
+    },{
+      "code": "2",
+      "name": "Format 1"    
+    },{
+      "code": "3",
+      "name": "Format 2"    
+    }],
 
 
   "AOE": {
