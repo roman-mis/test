@@ -47,12 +47,12 @@ angular.module('origApp.controllers')
                       '<span ng-show="row.branches.length>0">' +
                         '<a href="javascript:void(0)" class="action_wrapper" data-agency-id="{{row._id}}" ng-click="getExternalScope().openBranch(row)">' +
                         '<i class="fa fa-plus-square"></i></a>&nbsp;&nbsp;</span>' +
-                        '<span><div style="width:90%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})"><a ng-href="/agencies/{{row._id}}">{{row.name}}</a></div></span></div>'
+                        '<span><div style="width:90%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.name}}</div></span></div>'
               },
-              {field: 'country', display: 'Country'},
-              {field: 'postcode', display: 'Postcode'},
-              {field: 'town', display: 'Town'},
-              {field: 'address', display: 'Address', cellTemplate: '{{row.address1}}<br/>{{row.address2}}'}
+              { field: 'country', display: 'Country', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.country}}</div>' },
+              { field: 'postCode', display: 'Postcode', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.postCode}}</div>' },
+              { field: 'town', display: 'Town', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.town}}</div>' },
+              {field: 'address', display: 'Address', cellTemplate: '<div style="width:100%; display:inline-block" ui-sref="app.agency.home({agencyId: row._id})">{{row.address1}}<br/>{{row.address2}}</div>'}
             ],
             data: []
           };
