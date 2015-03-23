@@ -690,7 +690,7 @@
   ],
 
 
-  "expensesRateTypes": [
+  "billableTypes": [
     {
       "code": "1",
       "name": "Billable"
@@ -698,6 +698,17 @@
     {
       "code": "2",
       "name": "Non-Billable"
+    }
+  ],
+  
+  "expensesRateTypes": [
+    {
+      "code": "Subsistence",
+      "name": "Subsistence"
+    },
+    {
+      "code": "Other",
+      "name": "Other"
     }
   ],
 
@@ -1023,19 +1034,19 @@
                         "Expenses",
                         "Timesheets",
                         "General Query",
-                        "Payment Query",
-                        "Payment Not Received",
+                        "Payroll Query",
+                        "Payment not received",
                         "P45 Request"
                       ]
                     }
                   },
                   "selectPriority": {
                     "hide": true,
-                    "setTo": "High"
+                    "setTo": "high priority"
                   },
                   "status": {
                     "hide": true,
-                    "setTo": "outstanding" 
+                    "setTo": "General user"
                   },
                   "title": {
                     "hide": false,

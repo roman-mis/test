@@ -18,11 +18,11 @@
             
         </div>
         <div class="col-lg-3">
-            <label style="color:green">Candidate Status</label>
-            <select class='form-control' ng-model = "candidate.status" ng-options="status.value as status.value for status in candidateStatus">
-            </select>
-            <button ng-click="editCandidateStatus()" class="btn btn-success">Save</button>
-
+            <label style="color:#539347">Candidate Status</label>
+            <ui-select ng-model = "candidate.status" theme="select2" search-enabled="false" ng-change = "editCandidateStatus()">
+                <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                <ui-select-choices repeat = "item.value as item in candidateStatus">{{item.value}}</ui-select-choices>
+            </ui-select>
         </div>
         <div class='pie-chat col-lg-3 hidden-md hidden-sm hidden-xs'></div>
         <div class="col-md-12 hidden-lg">

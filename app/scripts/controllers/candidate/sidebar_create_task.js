@@ -60,8 +60,7 @@ angular.module('origApp.controllers')
             for(var i = 0; i < values.length; i++){
               for(var j = 0; j < $scope.taskTypes.length; j++){
                 if($scope.taskTypes[j].description === values[i]){
-                  console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
-                  console.log($scope.taskTypes[j].description)
+                  console.log($scope.taskTypes[j].description);
                   newTaskTypes.push($scope.taskTypes[j]);
                   break;
                 }                
@@ -86,11 +85,17 @@ angular.module('origApp.controllers')
             $scope.agencies = HttpResource.model('agencies').query({});
             $scope.users = HttpResource.model('users').query({});
           }
+          $scope.activityType = params.activityType;
 
-            if (params.agency){
-              $scope.data.agency = params.agency;
-            }
-           
+          $scope.candidate = parentScope.candidate;
+          $scope.agencies = HttpResource.model('agencies').query({});
+          $scope.users = HttpResource.model('users').query({});
+          $scope.templates = HttpResource.model('templates').query({templateType: 'TASK'});
+
+          //load constants
+          $scope.priorities = ConstantsResource.get('priorities');
+          $scope.taskTypes = ConstantsResource.get($scope.activityType === 'callLog' ? 'calllogtasktypes' : 'createtasktypes');
+          $scope.statuses = ConstantsResource.get('statuses');
 
           $scope.onTemplateChange = function(template) {
             $scope.data.templateTitle = template.title;
