@@ -1,3 +1,7 @@
+.add-tsh hr {
+    margin-top: 8px;    
+}
+
 .modal-content .add-tsh {
 	width: 970px;	
 }
@@ -97,7 +101,12 @@ input.form-control {
     padding-bottom: 10px;
 }
 
-#tableHeader, #tableBody{
+#tableHeader {
+    display: none;
+}
+
+#tableHeader, 
+#tableBody{
     margin-bottom: 0px;
 }
 .tableWrapper {
