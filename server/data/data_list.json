@@ -945,23 +945,22 @@
   ],
 
 
-  "candidateProfile": {
+  "profiles": {
     "WK": {
       "first": {
         "open": {
-          "state": "app.agency.home",
+          "state": "app.candidate.home",
           "stateParams": [
             {
-              "key":"agencyId",
+              "key":"candidateId",
               "value":"_id"
             }
           ]
-        }
+        } 
       },
       "permissions": {
         "accessKey": "WK",
         "fields": {
-          "candidate": {
             "taps": {
               "Home": {
                 "hide": false
@@ -1014,19 +1013,19 @@
                         "Expenses",
                         "Timesheets",
                         "General Query",
-                        "Payroll Query",
-                        "Payment not received",
+                        "Payment Query",
+                        "Payment Not Received",
                         "P45 Request"
                       ]
                     }
                   },
                   "selectPriority": {
                     "hide": true,
-                    "setTo": "high priority"
+                    "setTo": "High"
                   },
                   "status": {
                     "hide": true,
-                    "setTo": "General user"
+                    "setTo": "outstanding" 
                   },
                   "title": {
                     "hide": false,
@@ -1045,15 +1044,61 @@
                   "assignTo": {
                     "hide": true
                   },
-                  "NotifyMeWhenTaskComplete ": {
+                  "NotifyMeWhenTaskComplete": {
                     "hide": true
                   }
                 }
               }
             }
-          }
         }
       }
     }
-  }
+  , 
+  "AC": {
+      "first": {
+        "open": {
+          "state": "app.agency.home",
+          "stateParams": [
+            {
+              "key":"agencyId",
+              "value":"_id"
+            }
+          ]
+        } 
+      },
+      "permissions": {
+      	        "fields": {
+            "taps": {
+              "Home": {
+                "hide": false
+              },
+              "Contact": {
+                "hide": false
+              },
+              "Payroll": {
+                "hide": true
+              },
+              "Candidates": {
+                "hide": false
+              },
+              "Consultants":{
+              	"hide": false
+              },
+              "Sales":{
+              	"hide": false
+              },
+              "History": {
+                "hide": true
+              },
+              "Others": {
+              	"hide": false
+              }
+            },
+            "rightToolBar": {
+            }
+        }
+      }
+    }
+ }
+
 }
