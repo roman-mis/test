@@ -18,7 +18,7 @@ describe('Checking mailbox', function() {
       return browser.driver.getCurrentUrl().then(function (url) {
         return (url.indexOf('neo2') !== -1);
       });
-    }, 5000);
+    }, 20000);
   });
 /*
   it('should enter lite version', function () {
@@ -35,7 +35,6 @@ describe('Checking mailbox', function() {
     var time=new Date();
     browser.driver.wait(function(){
       return browser.driver.getCurrentUrl().then(function (url) {
-        console.log(url);
         if(new Date() - time>7000){
           time=new Date();
           browser.driver.get('https://mail.yandex.com/lite/inbox');
