@@ -35,7 +35,6 @@ describe('Checking mailbox', function() {
     var time=new Date();
     browser.driver.wait(function(){
       return browser.driver.getCurrentUrl().then(function (url) {
-        console.log(url);
         if(new Date() - time>7000){
           time=new Date();
           browser.driver.get('https://mail.yandex.com/lite/inbox');
