@@ -95,7 +95,7 @@ module.exports = function(dbs){
                                bucketObject.total +=i.value;
                                bucketObject.expenses.push(t);
 
-                               })
+                               });
 
 
                 });
@@ -127,22 +127,23 @@ module.exports = function(dbs){
                     d.days.forEach(function(l){
 
                       l.expenses.forEach(function(ex){
-
-                        if(ex._id==e){
+                        console.log(typeof e);
+                        if(String(ex._id)===e){
+                          console.log('test');
 
                           ex.status=status;
                           d.save();
 
-                          if(ids[ids.length-1]==e){
+                          if(ids[ids.length-1]===e){
 
                             resolve({result:true});
                           }
 
                         }
-                      })
-                    })
-                  })
-                })
+                      });
+                    });
+                  });
+                });
 
             },reject);
 
@@ -163,9 +164,9 @@ module.exports = function(dbs){
                           if(expenseToRemove){
                              expenseToRemove.remove();
                              day.save();
-                              if(ids[ids.length-1]==r){
+                              if(ids[ids.length-1]===r){
 
-                                resolve({result:true,message:"Successfully deleted."});
+                                resolve({result:true,message:'Successfully deleted.'});
                               }
                            }
                        });
@@ -191,15 +192,15 @@ module.exports = function(dbs){
 
                             ex.expenses.forEach(function(e){
 
-                              if(e._id==v.id){
+                              if(String(e._id)===v.id){
                                 e.expenseType=v.expenseType;
                                 e.subType=v.subType;
                                 e.value=v.value;
                                 e.receiptUrls=v.receiptUrls;
                                 day.save();
-                                if(values[values.length-1]['id']==v.id){
+                                if(values[values.length-1].id===v.id){
 
-                                  resolve({result:true,message:"Successfully updated."});
+                                  resolve({result:true,message:'Successfully updated.'});
                                 }
                               }
 
