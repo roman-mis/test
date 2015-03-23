@@ -40,8 +40,6 @@ router.put('/expenses/edit',expensecontroller.updateSelectedExpenses);
 router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
 
 
-
-
 router.get('/:id',candidatecontroller.getCandidate);
 
 router.post('/', candidatecontroller.postCandidate );

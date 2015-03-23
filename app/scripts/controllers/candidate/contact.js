@@ -107,7 +107,6 @@ angular.module('origApp.controllers')
             {name: 'town', label:'Town'},
             {name: 'country', label:'Country'},
             {name: 'postCode', label:'Post Code'},
-            {name: 'nationality', label: 'Nationality'}
           ];
           $scope.data = {};
           $scope.nationalities = parentScope.nationalities;

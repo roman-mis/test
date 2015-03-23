@@ -18,7 +18,7 @@ angular.module('origApp.controllers', [])
 	            console.log('******************************');
 	            // }
 		          // console.log(userPermissions.permissions.permissions.fields.taps);
-		          $scope.permissions = userPermissions.permissions.permissions.fields;
+		          //$scope.permissions = userPermissions.permissions.permissions.fields;
 	          });
           }
         });
