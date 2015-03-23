@@ -194,7 +194,17 @@ module.exports=utils={
 			 .fromPath(filePath)
 			 .on('data', function(data){
 				if(!headerFlag){
-					header = data; console.log(header);
+					console.log(data);
+					var headers = [];
+					_.forEach(data, function(name){
+						var colName = name;
+						while (headers.indexOf(colName) > -1) {
+						    colName = colName + '1';
+						}
+						headers.push(colName);
+					});
+					header = headers;
+
 					headerFlag = true;
 				}else{
 					var record = {};
