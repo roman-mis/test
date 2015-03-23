@@ -26,12 +26,24 @@ router.get('/loggedinuser',candidatecontroller.getLoggedInUser);
 
 router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
-router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
+router.get('/expenses', restMiddleware(db),expensecontroller.getAllExpenses);
+
+router.delete('/expenses',expensecontroller.deleteExpense);
+
+router.patch('/expenses/reject',expensecontroller.updateExpenseReject);
+
+router.patch('/expenses/approve',expensecontroller.updateExpenseApprove);
+
+router.put('/expenses/edit',expensecontroller.updateSelectedExpenses);
+
+
+router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
 
 
 router.get('/:id',candidatecontroller.getCandidate);
 
 router.post('/', candidatecontroller.postCandidate );
+router.post('/admin', candidatecontroller.postCandidateByAdmin );
 
 router.get('/:id/contactdetail',candidatecontroller.getContactDetail);
 
@@ -82,7 +94,6 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 
 router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
 router.post('/:id/expenses', expensecontroller.postExpense);
-
 
 
 router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);

@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('origApp.controllers')
-        .controller('HeaderController', function($scope, $rootScope, AuthService,HttpResource) {
-          $scope.logout = function(){
-            AuthService.doLogout();
-          };
-          $scope.currentUser = AuthService.getCurrentUser();
-          HttpResource.model('constants/candidateStatus').query({},function (res) {
-          	console.log('*****************************')
-			     console.log(res);
-			    });
-        });
+.controller('HeaderController', function($scope, $rootScope, AuthService,userPermissions) {
+	$scope.logout = function(){
+		AuthService.doLogout();
+	};
+	$scope.currentUser = AuthService.getCurrentUser();
+	// $state.go('contact.detail')
+	$scope.r={};
+	$scope.permissions = userPermissions.permissions;
+
+});

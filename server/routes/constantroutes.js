@@ -13,21 +13,28 @@ router.get('/nationalities',controller.nationalities);
 
 router.get('/starterdeclarations',controller.starterdeclarations);
 
-router.get('/payfrequencies',controller.payfrequencies);
-
 router.get('/taxbasis',controller.taxbasis);
 
 router.get('/margins',controller.margins);
 
+router.get('/payfrequencies',controller.payfrequencies);
+
 router.get('/holidaypayrules',controller.holidaypayrules);
 
+router.get('/paymentmethods',controller.paymentmethods);
+
+router.get('/adminfee',controller.adminfee);
+
 router.get('/derogationcontracts',controller.derogationcontracts);
+
+router.get('/communicationmethod',controller.communicationmethod);
+
+router.get('/contractorstatus',controller.contractorstatus);
 
 router.get('/servicesused',controller.servicesused);
 
 router.get('/paymentterms',controller.paymentterms);
 
-router.get('/paymentmethods',controller.paymentmethods);
 
 
 router.get('/holidays',controller.holidays);
@@ -80,7 +87,9 @@ router.get('/expensesratetypes',controller.expensesRateTypes);
 router.get('/timesheettemplates',controller.getTimesheetTemplates);
 router.get('/AOE',controller.getAOE);
 
-router.get('/agencyStatus',controller.getAgencyStatus);
+router.get('/candidateTitle', controller.getCandidateTitle);
+router.get('/agencyStatus', controller.getAgencyStatus);
 router.get('/candidateStatus', controller.getCandidateStatus);
 
-router.get('/candidateProfile', controller.getCandidateProfile);
+router.get('/profiles/:type/first', controller.getProfileFirst);
+router.get('/profiles/:type/permissions', controller.getProfilePermissions);

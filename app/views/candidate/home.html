@@ -3,8 +3,10 @@
         margin-top: -25px;
     }
 </style>
-<h3>Home</h3>
+<!-- <h3>Home</h3> -->
+
 <div class="row">
+<<<<<<< HEAD
     <div class='col-md-6'>
         <ul class="entry-content">
             <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactdetail.phone}}</span>
@@ -27,6 +29,22 @@
                 <span ng-if="i.object.lastExpense">Last Expenses: {{i.object.lastExpense | date:'MM/dd/yyyy @ h:mma'}}</span>
             </li>
             <li ng-repeat-end=''></li>
+=======
+
+<div class='col-md-6'>
+<p class="entry-title">Home<a class="icon-edit pull-right" href ng-click="editDetails()"><i class="fa fa-edit"></i>edit</a></p>
+  <ul class="entry-content">
+    <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactdetail.phone}}</span></li>
+    <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">{{contactdetail.mobile}}</span></li>
+    <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<span class="meta">{{contactdetail.emailAddress}}</span></li>
+    <li class="clearfix"><i class="fa fa-location-arrow"></i>Address<span class="meta">{{contactdetail.address1}}-{{contactdetail.address2}}-{{contactdetail.address3}}</span></li>
+
+         
+  </ul>
+</div>
+<div class="col-md-6">
+<ul class="entry-content">
+>>>>>>> d1ea36549c058da2db89fa293d4ac1966855933c
 
         </ul>
 

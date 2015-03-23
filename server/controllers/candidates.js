@@ -34,7 +34,7 @@ module.exports = function(dbs){
       // var generatedNames=Array.isArray(req.body.generatedName)?req.body.generatedName:[req.body.generatedName];
       // var mimeTypes=Array.isArray(req.body.mimeType)?req.body.mimeType:[req.body.mimeType];
       var docs=[];
-      
+
       // console.log(req.body);
       var nowDate=new Date();
       _.forEach(req.body.documents,function(doc){
@@ -108,7 +108,7 @@ module.exports = function(dbs){
             console.log('Receiving file : '+ filename);
             //console.log(file);
             var newFileName=new Date().getTime().toString() + filename;
-           
+
             var folder=process.env.S3_AVATARS_FOLDER+req.params.id+'/';
             file.on('data',function(data){
               if(data){
@@ -122,10 +122,10 @@ module.exports = function(dbs){
               else{
                 res.json({result:false,message:'File not streamed'});
               }
-            
+
             })
             .on('error',res.sendFailureResponse);
-          
+
           })
           .on('error',res.sendFailureResponse);
       }
@@ -138,7 +138,7 @@ module.exports = function(dbs){
       candidateservice.getUser(req.params.id,req._restOptions)
         .then(function(user){
           if(user) {
-            
+
             console.log('have data');
             //console.log(user);
             var vm=getCandidateInfoViewModel(user);
@@ -152,20 +152,29 @@ module.exports = function(dbs){
         });
     };
 
+    controller.updateStatus=function (req,res){
+
+      candidateservice.updateStatus(req.params.id, req.body.status).
+      then(function(resp){
+        res.json(resp);
+      },function(err){
+        res.Json(err);
+      });
+    };
 
     controller.getAllCandidate=function (req,res){
       //console.log('user');
       //console.log(req.user);
- 
+
       candidateservice.getAllCandidates(req._restOptions)
       .then(function(result){
        // console.log(arguments);
         var vms=_.map(result.rows,function(user){
-          
+
            var vm=getCandidateInfoViewModel(user);
-           
+
            return vm;
-         
+
         });
         var pagination=req._restOptions.pagination||{};
         var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
@@ -185,13 +194,13 @@ module.exports = function(dbs){
     };
 
     controller.updateContactDetail=function (req, res){
-      
+
       var contactDetail={
-              phone:req.body.phone, 
-              mobile:req.body.mobile, 
-              altEmail:req.body.altEmail, 
-              facebook:req.body.facebook, 
-              linkedin:req.body.linkedin, 
+              phone:req.body.phone,
+              mobile:req.body.mobile,
+              altEmail:req.body.altEmail,
+              facebook:req.body.facebook,
+              linkedin:req.body.linkedin,
               google:req.body.google
           };
 
@@ -212,14 +221,15 @@ module.exports = function(dbs){
     //TODO: should be changed to req.user.id only after this api requires authentication
       //addressDetails.updatedBy=(req.user?req.user.id:undefined);
         var userInformation={
-          emailAddress:req.body.emailAddress
+          emailAddress:req.body.emailAddress,
+          contactDetail : contactDetail
         };
-        
+
 
      // addressDetails.updatedBy=(req.user?req.user.id:undefined);
 
       function submitUser(){
-        candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails,contactDetail)
+          candidateservice.updateContactDetail(req.params.id,userInformation,addressDetails)
          .then(function(response){
           console.log('contact detail submited');
             var vm=getContactInformationViewModel(response.object,response.object.contactDetail);
@@ -228,7 +238,7 @@ module.exports = function(dbs){
               res.sendFailureResponse(err);
            });
        }
-       
+
       if(userInformation.emailAddress){
         // console.log(userInformation);
         candidatecommonservice.getUserByEmail(userInformation.emailAddress)
@@ -236,13 +246,13 @@ module.exports = function(dbs){
             //console.log(existingUser);
             if(existingUser && existingUser.id!==req.params.id) {
               var response=
-              { 
+              {
                 name: 'DuplicateRecordExists',
                 message: 'Email address '+userInformation.emailAddress+' already taken'
               };
-              
+
               res.sendFailureResponse(response);
-              
+
             }
             else{
               submitUser();
@@ -253,7 +263,7 @@ module.exports = function(dbs){
         submitUser();
       }
 
-     
+
     };
 
     controller.updateBankDetails=function (req, res){
@@ -278,7 +288,7 @@ module.exports = function(dbs){
 
         candidateservice.getUser(req.params.id)
           .then(function(user){
-        
+
             if(user){
               var vm=getContactInformationViewModel(user,user.contactDetail);
               res.json({result:true,object:vm});
@@ -293,15 +303,15 @@ module.exports = function(dbs){
       candidateservice.getLogs(req.params.id).then(function(doc){
           res.json(doc);
 
-      },res.sendFailureResponse)
-    }
+      },res.sendFailureResponse);
+    };
 
     controller.getBankDetail=function (req, res){
       candidateservice.getUser(req.params.id)
          .then(function(user){
             if(user){
                //res.json({result:true, object:{'bank_name':details.bankName,'account_name':details.accountName,'sort_code':
-               //         details.sortCode,'account_no':details.accountNo,'bank_roll_no':details.bankRollNo}}); 
+               //         details.sortCode,'account_no':details.accountNo,'bank_roll_no':details.bankRollNo}});
               var vm=getBankDetailViewModel(user.worker.bankDetail);
               res.json({result:true, object: vm});
             }
@@ -312,83 +322,110 @@ module.exports = function(dbs){
     };
 
     controller.postCandidate=function (req, res) {
-      
-          console.log('post candidate started');
-          //res.json('good');
-          //return;
-          
 
+        handlePostCandidate(req, function(err, response){
+            if(err){
+                res.sendFailureResponse(err);
+            }
+            res.json(response);
 
-          var contactDetail={
-              phone:req.body.phone, 
-              mobile:req.body.mobile, 
-              altEmail:req.body.altEmail, 
-              facebook:req.body.facebook, 
-              linkedin:req.body.linkedin, 
-              google:req.body.google 
-          };
-          
-          var newUser={
-            title:req.body.title,
-            firstName:req.body.firstName,
-            lastName:req.body.lastName,
-            emailAddress: req.body.emailAddress,
+        });
+    };
+
+    controller.postCandidateByAdmin=function(req, res) {
+
+        req.skipEmail = 'true';
+        handlePostCandidate(req, function(err, response){
+            if(err){
+                res.sendFailureResponse(err);
+            }
+            res.json(response);
+
+        });
+    };
+
+    /**
+     * Handles the registration of a candidate
+     * @param request
+     * @param callback
+     */
+    function handlePostCandidate(request, callback) {
+
+        console.log('post candidate started');
+        //res.json('good');
+        //return;
+
+        var contactDetail={
+            phone:request.body.phone,
+            mobile:request.body.mobile,
+            altEmail:request.body.altEmail,
+            facebook:request.body.facebook,
+            linkedin:request.body.linkedin,
+            google:request.body.google
+        };
+
+        var newUser={
+            title:request.body.title,
+            firstName:request.body.firstName,
+            lastName:request.body.lastName,
+            emailAddress: request.body.emailAddress,
             userType: 'WK',
             contactDetail:contactDetail
-          };
+        };
 
-          var bankDetail={
-            bankName:req.body.bankName, 
-            accountName:req.body.accountName, 
-            sortCode:req.body.sortCode, 
-            accountNo:req.body.accountNo, 
-            bankRollNo:req.body.bankRollNo
-          };
-          
+        var bankDetail={
+            bankName:request.body.bankName,
+            accountName:request.body.accountName,
+            sortCode:request.body.sortCode,
+            accountNo:request.body.accountNo,
+            bankRollNo:request.body.bankRollNo
+        };
 
-          var taxDetail={
-              currentP45:req.body.currentP45,
-              p45Uploaded:req.body.p45Uploaded,
-              p46Uploaded:req.body.p46Uploaded,
-              niNumber:      req.body.niNumber,
-              p45DocumentUrl:req.body.p45DocumentUrl,
-              employeesNIpaid:req.body.employeesNIpaid
-          };
 
-          var worker={
-              
-              sector:    req.body.sector,
-              birthDate:     req.body.birthDate,
-              address1:    req.body.address1,
-              address2:      req.body.address2,
-              address3:      req.body.address3,
-              town:           req.body.town,
-              county:         req.body.county,
-              postCode:      req.body.postCode,
-              gender:         req.body.gender,
-              nationality:    req.body.nationality,
-              arrivalDate:   utils.nullifyDate(req.body.arrivalDate),
-              recentDepDate:utils.nullifyDate(req.body.recentDepDate),
-              empLastVisit: req.body.empLastVisit,
-              agencyName:    req.body.agencyName,
-              jobTitle:      req.body.jobTitle,
-              startDate:     req.body.startDate,
-              status:        req.body.status,
-              bankDetail:bankDetail,
-              
-              taxDetail: taxDetail
-          };
-          //res.json({user:newUser,worker:worker});
-          //return;
+        var taxDetail={
+            currentP45:request.body.currentP45,
+            p45Uploaded:request.body.p45Uploaded,
+            p46Uploaded:request.body.p46Uploaded,
+            niNumber:      request.body.niNumber,
+            p45DocumentUrl:request.body.p45DocumentUrl,
+            employeesNIpaid: request.body.employeesNIpaid
+        };
 
-          // worker.taxDetail.push(taxDetail);
-          // new.worker=worker;
-          var fullUrl = req.protocol + '://' + req.get('host') +'/register/activate/'+newUser.emailAddress;
-          var opt={
-              activationLink:fullUrl
-          };
-          console.log(newUser);
-          candidateservice.signup(opt,newUser,worker)
+        var worker={
+            sector:    request.body.sector,
+            birthDate:     request.body.birthDate,
+            address1:    request.body.address1,
+            address2:      request.body.address2,
+            address3:      request.body.address3,
+            town:           request.body.town,
+            county:         request.body.county,
+            postCode:      request.body.postCode,
+            gender:         request.body.gender,
+            nationality:    request.body.nationality,
+            arrivalDate:   utils.nullifyDate(request.body.arrivalDate),
+            recentDepDate:utils.nullifyDate(request.body.recentDepDate),
+            empLastVisit: request.body.empLastVisit,
+            agencyName:    request.body.agencyName,
+            jobTitle:      request.body.jobTitle,
+            startDate:     request.body.startDate,
+            status:        request.body.status,
+            bankDetail:bankDetail,
+
+            taxDetail: taxDetail
+        };
+        //res.json({user:newUser,worker:worker});
+        //return;
+
+        // worker.taxDetail.push(taxDetail);
+        // new.worker=worker;
+        var fullUrl = request.protocol + '://' + request.get('host') +'/register/activate/'+newUser.emailAddress;
+        var opt={
+            activationLink:fullUrl,
+            skipEmail : request.skipEmail
+        };
+
+        console.log(newUser);
+        candidateservice.signup(opt,newUser,worker)
             .then(function(response){
               console.log('in success ');
               // console.log(response.object.userModel);
@@ -400,20 +437,19 @@ module.exports = function(dbs){
               // candidateservice.getWorkerByUser(userMod._id)
               //   .then(function(w){
                     var vm=getCandidateInfoViewModel(userMod);
-                    res.json({result:true,object:vm});
+                    callback(null, {result:true,object:vm});
                 // },res.sendFailureResponse);
-              
+
 
             },function(error){
                console.log('in failure');
                //res.json(true);
                console.log(error);
-               res.sendFailureResponse(error);
+               callback(error);
             });
-          
 
-    };
 
+    }
 
     function getContactInformationViewModel(user,contact){
       var worker=user.worker;
@@ -421,7 +457,7 @@ module.exports = function(dbs){
           'address3':worker.address3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
           'contactNumber':worker.contactNumber,
           'phone':contact.phone,'mobile':contact.mobile,'altEmail':contact.altEmail,
-                    'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
+                    'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google,status:user.worker.status
             };
     }
 
@@ -525,9 +561,9 @@ module.exports = function(dbs){
 //     res.sendFailureResponse({message:'No document uploaded'});
 //     return false;
 //   }
-  
-  
-  
+
+
+
 //    //console.log(req.files);
 //   // var file=req.files[0];
 //   var docs=[];
@@ -567,16 +603,16 @@ module.exports = function(dbs){
 // router.get('/user1/:id',function(req,res){
 //   db.User.findById(req.params.id)
 //   .exec(function(err,user){
-    
+
 //       res.json(user);
-    
+
 //   });
 // });
 
 // router.get('/user2/:id',function(req,res){
-  
+
 //    console.log(db.DB.model('Worker').schema.paths.user);
- 
+
 // res.json('trure');
 // return;
 //   db.Worker.findOne({user:req.params.id})
@@ -585,6 +621,6 @@ module.exports = function(dbs){
 //       console.log(worker.taxDetail);
 //       console.log(worker.taxDetail._id);
 //       res.json(worker.user);
-    
+
 //   });
 // });

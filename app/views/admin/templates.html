@@ -16,15 +16,16 @@
 	<div class="candidate-main meta-box padding-10 container-fluid">
 	  <div class="row">
 		  <div class="col-lg-3 col-xs-5">
-			  <input class="form-control" type="text" placeholder="Search by first name" ng-keyup="onDelaySearch()" ng-model="filterName" />
+			  <input class="form-control" type="text" placeholder="Search by first name" ng-change="onDelaySearch()" ng-model="filterName" />
 		  </div>
-		  <div class="col-xs-1 nonepadding">
+	<!--	  <div class="col-xs-1 nonepadding">
 			  <button ng-click="search()" class="btn btn-success form-control">Go</button>
-		  </div>
-	  
+		  </div> -->
+
 		  <div class="col-xs-12">
+
 			<div template-grid="gridOptions"></div>
 		  </div>
 	</div>
-	
+
 </div>

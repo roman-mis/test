@@ -7,7 +7,7 @@
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Starter Declaration</div>
     <div class="col-xs-4">
-      <ui-select ng-model="tax.declaration" theme="select2" search-enabled="false">
+      <ui-select ng-model="tax.declaration" theme="select2" search-enabled="false" ng-required = "candidate.status == 'Live'">
         <ui-select-match>{{$select.selected.description}}</ui-select-match>
         <ui-select-choices repeat="item.code as item in starterDeclarations">{{item.description}}</ui-select-choices>
       </ui-select>
@@ -46,13 +46,13 @@
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Start Date</div>
     <div class="col-xs-4">
-      <div orig-datepicker placeholder="* Date of Birth" ng-model="tax.startDate"></div>  
+      <div orig-datepicker placeholder="* Date of Birth" ng-model="tax.startDate" ng-required = "candidate.status == 'Live'"></div>  
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Pay Frequency</div>
     <div class="col-xs-4">
-      <ui-select ng-model="tax.payFrequency" theme="select2" search-enabled="false">
+      <ui-select ng-model="tax.payFrequency" theme="select2" search-enabled="false" ng-required = "candidate.status == 'Live'">
         <ui-select-match>{{$select.selected.description}}</ui-select-match>
         <ui-select-choices repeat="item.code as item in payFrequencies">{{item.description}}</ui-select-choices>
       </ui-select>  
@@ -61,27 +61,28 @@
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Employee's NI Paid</div>
     <div class="col-xs-4">
-      <select class="form-control" ng-model="tax.employeesNIpaid" 
-              ng-options="option.code as option.value for option in employeesNIpaidOptions ">
-      </select>
+      <ui-select ng-model="tax.employeesNIpaid" theme="select2" search-enabled="false">
+        <ui-select-match>{{$select.selected.value}}</ui-select-match>
+        <ui-select-choices repeat="item.code as item in employeesNIpaidOptions">{{item.value}}</ui-select-choices>
+      </ui-select> 
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">NI Number</div>
     <div class="col-xs-4">
-      <input class="form-control" type="text" placeholder="" ng-model="tax.niNumber">
+      <input orig-ni class="form-control" type="text" placeholder="" ng-model="tax.niNumber" ng-required = "candidate.status == 'Live'">
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Tax Code</div>
     <div class="col-xs-4">
-      <input class="form-control" type="text" placeholder="" ng-model="tax.taxCode">
+      <input class="form-control" type="text" placeholder="" ng-model="tax.taxCode" ng-required = "candidate.status == 'Live'">
     </div>
   </div>
   <div class="col-xs-12 nonepadding form-group">
     <div class="col-sm-4 col-xs-3">Tax Basis</div>
     <div class="col-xs-4">
-      <ui-select ng-model="tax.taxBasis" name="title" theme="select2" search-enabled="false">
+      <ui-select ng-model="tax.taxBasis" name="title" theme="select2" search-enabled="false" ng-required = "candidate.status == 'Live'">
         <ui-select-match>{{$select.selected.description}}</ui-select-match>
         <ui-select-choices repeat="item.code as item in taxBasises">{{item.description}}</ui-select-choices>
       </ui-select>
