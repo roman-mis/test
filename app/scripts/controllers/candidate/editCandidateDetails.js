@@ -13,27 +13,22 @@ angular.module('origApp.controllers')
 
         HttpResource.model('constants/candidateTitle').query({},function (res) {
           console.log(res.data);
-          var titles = res.data;
-          $scope.titles = [];
-          titles.forEach(function (item) {
-            $scope.titles.push(item.value);
-          });
+          $scope.titles = res.data;
+          console.log($scope.candidate.title)
         });
 				
 				$scope.status = parentScope.candidate.status;
 				$scope.lettersOnly = /^[A-Za-z]+$/;
-				$scope.ukMobile = /^0(\d ?){10}$/;
+				$scope.ukMobile = /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
+        $scope.ukPhone = /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/;
         $scope.emailPattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 				console.log(parentScope.candidate.status);
 
 
 				HttpResource.model('constants/nationalities').query({},function (res) {
-					var nationalities = res.data;
-          $scope.nationalities = [];
-          nationalities.forEach(function (item) {
-            $scope.nationalities.push(item.description);            
-          });
-          console.log(res.data);
+					// body...
+					$scope.nationalities = res.data;
+          console.log($scope.nationalities);
 				});
 				
 				
@@ -66,23 +61,11 @@ angular.module('origApp.controllers')
 									console.log($scope.isValid);
 									$scope.form.age.$setValidity('age',$scope.isValid);
 								}
-							
 
+                $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
 						});
 					}
 				});
-				
-				
-				//console.log($scope.age);
-				$scope.$watch('candidate.birthDate', function () {
-					
-				});
-				
-				//
-				$scope.log = function () {
-					// boy...
-					console.log($scope.form);
-					console.log($scope.form.age.$error);
-					console.log($scope.nationalities);
-				};
 		}]);

@@ -44,7 +44,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-3 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live'&&($index == 0||$index==1||$index==2)">
+          <input type="{{field.type?field.type:'text'}}" ng-class="{'orig-postcode':data[field.name]==postCode}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live'&&($index == 0||$index==1||$index==2)">
         </div>
       </div>
     </form>
@@ -68,10 +68,6 @@
         <label class="col-sm-3 control-label">{{field.label}}</label>
         <div class="col-sm-8">
           <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'" ng-required = "candidate.status == 'Live'&&($index == 0||$index==3||$index==4||$index==5)">
-          <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name=='nationality'">
-            <ui-select-match>{{$select.selected.description}}</ui-select-match>
-            <ui-select-choices repeat="item.code as item in nationalities | filter: $select.search">{{item.description}}</ui-select-choices>
-          </ui-select>
         </div>
       </div>
     </form>
@@ -94,7 +90,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-4 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live' && ($index == 0||$index==1||$index==2||$index==3)" ng-maxlength='{{field.maxLength}}'>
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live' && ($index == 0||$index==1||$index==2||$index==3)" maxlength='{{field.maxLength}}'ng-maxlength='{{field.maxLength}}'>
         </div>
       </div>
     </form>

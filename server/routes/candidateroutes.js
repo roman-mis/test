@@ -29,7 +29,7 @@ router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
 router.patch('/updateAllexpensesToReject',expensecontroller.updateExpenseReject);
-
+router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
 router.patch('/updateAllexpensesToApprove',expensecontroller.updateExpenseApprove)
 
 router.get('/:id',candidatecontroller.getCandidate);
