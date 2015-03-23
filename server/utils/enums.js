@@ -28,5 +28,10 @@ module.exports={
 	timesheetStatuses:{
 		'Submitted':'submitted',
 		'Payrolled':'payrolled'
+	},
+	expenseStatus:{
+
+		'Approve':'approve',
+		'Reject':'reject'
 	}
 };

@@ -16,6 +16,8 @@ module.exports=function(db){
 				return getStandardTemplate(file);
 			case '2':
 				return getFormat1Template(file);
+			case '3':
+				return getFormat2Template(file);
 		}
 	};
 
@@ -229,6 +231,24 @@ module.exports=function(db){
 		  				});
 					});
 			  	}, reject);
+			}, function(err){
+				resolve({result:false, error: err});
+			});
+		});
+	}
+
+	function getFormat2Template(file){
+		return Q.Promise(function(resolve,reject){
+			return utils.readCsvFromFile(file.path, false).then(function(data){
+				return systemservice.getSystem()
+			  	.then(function(system){
+			  		var paymentRates = system.paymentRates;
+		  			var finishData = [];
+			  		var validationFailError = false;
+			  		
+			  		console.log(data);
+
+			  	});	
 			}, function(err){
 				resolve({result:false, error: err});
 			});
