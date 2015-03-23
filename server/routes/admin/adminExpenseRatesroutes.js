@@ -26,5 +26,6 @@ router.get('/', controller.getExpenseRates);
 router.post('/', controller.postExpenseRates);
 
 router.get('/expensesratetype/:expensesRateType', controller.getByExpenseRateType);
+router.get('/constants/expensesratetypes', controller.getExpenseRatesData);
 
 router.patch('/:id', controller.patchExpenseRates);

@@ -189,22 +189,22 @@ module.exports = function(mongoose) {
         },
         paymentRates: [
             {
-                name: String,
+                name:{ type : String, required: true },
                 rateType: String,
                 hours: Number,
                 importAliases: [ String ]
             }
         ],
-        expensesRate:[
+        expensesRate: [
             {
-                name:String,
-                amount:Number,
-                taxApplicable:Boolean,
-                expensesRateType:String, // subsistence, other
-                vat:Boolean,
-                dispensation:Boolean,
-                receipted:Boolean,
-                isEnabled:Boolean
+                name: { type : String, required: true },
+                amount: { type: Number, default: 0 },
+                taxApplicable: Boolean,
+                expensesRateType: String, // subsistence, other
+                vat: Boolean,
+                dispensation: Boolean,
+                receipted: Boolean,
+                isEnabled: Boolean
             }
         ]
     });
