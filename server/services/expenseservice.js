@@ -53,6 +53,23 @@ module.exports = function(dbs){
       });
 
   };
+  service.deleteOrUpdate=function(val){
+
+
+    return Q.promise(function(resolve,reject){
+
+       var q=db.Expense.find().where('days.expenses._id').in(val);
+       Q.nfcall(q.exec.bind(q)).then(function(d){
+           d.forEach(function(doc){
+
+              resolve(doc);
+           });
+
+
+       },reject);
+
+    });
+  };
 
 	service.saveExpenses = function(expenseDetails){
 		console.log(expenseDetails);console.log(expenseDetails.days);
@@ -136,81 +153,85 @@ module.exports = function(dbs){
 
 
     };
+    service.saveExpensesValues=function(model){
+       return Q.promise(function(resolve,reject){
+
+           return Q.nfcall(model.save.bind(model)).then(function(){
+
+                       resolve();
+
+          },reject);
+
+
+       });
+
+
+
+    };
     service.updateEachExpense=function(status,ids){
 
         return Q.promise(function(resolve,reject){
 
-            var q=db.Expense.find().where('days.expenses._id').in(ids);
+          service.deleteOrUpdate(ids).then(function(model){
 
-            return Q.nfcall(q.exec.bind(q)).then(function(doc){
-               console.log(doc);
+            ids.forEach(function(e){
 
-                ids.forEach(function(e){
+               model.days.forEach(function(ex){
 
-                  doc.forEach(function(d){
+                  var l=ex.expenses.id(e);
+                  if(l){
 
-                    d.days.forEach(function(l){
+                    if(status==='Approve'){
 
-                      l.expenses.forEach(function(ex){
-                        console.log(typeof e);
-                        if(String(ex._id)===e){
-                          if(status==='Approve'){
-                            console.log(status);
-                            console.log('testtest');
-                            console.log(enums.expenseStatus.Reject);
-                             e.status=enums.expenseStatus.Approve;
-                             d.save();
-                          }else{
+                      l.status=enums.expenseStatus.Approve;
+                    }else{
 
-                            console.log(status);
-                            console.log(enums.expenseStatus.Reject);
-                            e.status=enums.expenseStatus.Reject;
-                            d.save();
-                          }
+                     l.status=enums.expenseStatus.Reject;
+                    }
+                  }
 
+               });
 
+            });
+          service.saveExpensesValues(model).then(function(){
 
-                          if(ids[ids.length-1]===e){
+           resolve({result:true});
 
-                            resolve({result:true});
-                          }
+          },reject);
 
-                        }
-                      });
-                    });
-                  });
-                });
+          });
 
-            },reject);
 
         });
     };
     service.deleteExpense=function(ids){
 
         return Q.promise(function(resolve,reject){
-           var q=db.Expense.find().where('days.expenses._id').in(ids);
-           return Q.nfcall(q.exec.bind(q)).then(function(d){
-            console.log(d);
-              ids.forEach(function(r){
 
-                  d.forEach(function(day){
+          service.deleteOrUpdate(ids).then(function(model){
 
-                       day.days.forEach(function(ex){
+             ids.forEach(function(r){
 
-                          var expenseToRemove=ex.expenses.id(r);
-                          if(expenseToRemove){
-                             expenseToRemove.remove();
-                             day.save();
-                              if(ids[ids.length-1]===r){
+               model.days.forEach(function(ex){
 
-                                resolve({result:true,message:'Successfully deleted.'});
-                              }
-                           }
-                       });
-                  });
+                 var expenseToRemove=ex.expenses.id(r);
 
-              });
-           },reject);
+                 if(expenseToRemove){
+
+                   expenseToRemove.remove();
+
+                 }
+
+               });
+
+             });
+          service.saveExpensesValues(model).then(function(){
+
+           resolve({result:true});
+
+          },reject);
+
+          },reject);
 
         });
 
@@ -234,9 +255,10 @@ module.exports = function(dbs){
                     }
                   });
                 });
-                 return Q.nfcall(model.save.bind(model)).then(function(){
+                service.saveExpensesValues(model).then(function(){
 
-                       resolve({result:true,message:'Successfully edited'});
+                   resolve({result:true});
+
                   },reject);
 
           },reject);
