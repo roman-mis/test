@@ -17,14 +17,6 @@ module.exports = function(){
       
     };
 
-    controller.updateStatus = function(req, res){
-      userservice.updateStatus().then(function(data){
-        res.json({result:true});
-      },function(){
-        res.json({result:false});
-      });
-    };
-
     controller.lockunlock=function(req,res){
     	userservice.lockunlock(req.params.id,req.params.flag,req.user.id)
     	.then(function(){

@@ -50,6 +50,11 @@ angular.module('origApp').config(function($stateProvider) {
     	controller:'statutoryRatesController',
     	templateUrl: 'views/admin/statutory_rates/index.html'
   	})
+  	.state('app.admin.users', {
+    	url: '/users',
+    	controller:'usersController',
+    	templateUrl: 'views/admin/users.html'
+  	})
     .state('app.admin.hmrc', {
         url: '/hmrc',
         controller: 'HmrcController',
