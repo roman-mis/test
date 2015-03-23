@@ -126,7 +126,8 @@ module.exports = function(){
       };
       return userservice.patchUser(req.params.id, userDetails)
         .then(function(user){
-          res.json({result:true, object:user});
+          var userVm = getUserViewModel(user);
+          res.json({result:true, object:userVm});
         },res.sendFailureResponse);
     };
 
