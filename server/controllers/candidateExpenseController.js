@@ -204,6 +204,19 @@ module.exports = function(db){
          });
 
 	};
+	controller.updateSelectedExpenses=function(req,res){
+
+        expenseservice.updateSelectedExpenses(req.body.body).then(function(d){
+
+               res.json(d);
+         },function(err){
+
+           res.sendFailureResponse(err);
+
+         });
+
+
+	};
 
   	return controller;
 };
