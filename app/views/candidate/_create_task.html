@@ -14,12 +14,12 @@
             </div>
           </div>
 
-          <div ng-if="!permissions.rightToolBar.callLog.functionality.selectAgency.hide" class="form-group">
-            <label class="col-xs-6 col-md-5">Select Agency *</label>
+          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.status.hide">
+            <label class="col-xs-6 col-md-5">Status</label>
             <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
-                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+              <ui-select ng-model="data.status" theme="select2" search-enabled="false" >
+                <ui-select-match placeholder="Select a status">{{$select.selected.description}}</ui-select-match>
+                <ui-select-choices repeat="item.code as item in statuses">{{item.description}}</ui-select-choices>
               </ui-select>
             </div>
           </div>
@@ -53,22 +53,25 @@
             </div>
           </div>
 
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.status.hide">
-            <label class="col-xs-6 col-md-5">Status</label>
+          
+          <div ng-if="!permissions.rightToolBar.callLog.functionality.selectAgency.hide" class="form-group">
+            <label class="col-xs-6 col-md-5">Select Agency *</label>
             <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.status" theme="select2" search-enabled="false" >
-                <ui-select-match placeholder="Select a status">{{$select.selected.description}}</ui-select-match>
-                <ui-select-choices repeat="item.code as item in statuses">{{item.description}}</ui-select-choices>
+              <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
+                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
               </ui-select>
             </div>
           </div>
+
+          
         </div> 
       </div>
       <div class="row" >
         <div class="col-sm-6" ng-if="!permissions.rightToolBar.callLog.functionality.title.hide">
           <div class="form-group ">
             <div class="col-xs-12">
-              <input type="text" class="form-control" placeholder="Title" ng-model="data.templateTitle" >
+              <input type="text" class="form-control" placeholder="Title" ng-readonly="permissions.rightToolBar.callLog.functionality.title.readOnly" ng-model="data.templateTitle" >
             </div> 
           </div>
         </div>

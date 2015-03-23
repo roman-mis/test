@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
         .controller('CandidateSidebarCreateTaskController', function($q,$rootScope,$scope, $modalInstance, parentScope, HttpResource, ConstantsResource, params, MsgService) {
-          $scope.permissions1 = parentScope.permissions;
+          $scope.permissions = parentScope.permissions;
           $scope.data = {};
           var prioritiesDone = false;
           var statusesDone = false;
@@ -55,42 +55,33 @@ angular.module('origApp.controllers')
 
 
           function getTaskTypes(values){
-            var found = false;
+            var newTaskTypes   = [];
             console.log('**************************');
             for(var i = 0; i < values.length; i++){
               for(var j = 0; j < $scope.taskTypes.length; j++){
                 if($scope.taskTypes[j].description === values[i]){
                   console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
                   console.log($scope.taskTypes[j].description)
-                  found = true;
+                  newTaskTypes.push($scope.taskTypes[j]);
                   break;
                 }                
               }
-              console.log(found)
-              if(found === false){
-                console.log($scope.taskTypes);
-                $scope.taskTypes.splice(j,1);
-                console.log('$$$$$$$$$$$$$$%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$')
-                  console.log($scope.taskTypes);
-                  console.log('$$$$$$$$$$$$$$%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$')
-              }else{
-                found = false;
-              }
             }
+            return newTaskTypes;
           }
 
           if($rootScope.currentUser.userType === 'WK'){
             $scope.agencies = HttpResource.model('candidates/' + parentScope.candidate._id + '/agencies').query({});
             //assign values
-            $scope.data.templateTitle = $scope.permissions1.rightToolBar.callLog.functionality.title.setTo;
+            $scope.data.templateTitle = $scope.permissions.rightToolBar.callLog.functionality.title.setTo;
             promise.promise.then(function(data){
               console.log('********************'+data+'********************');
-              // getTaskTypes($scope.permissions1.rightToolBar.callLog.functionality.taskType.filter.values);
-              $scope.data.status = getByDescription($scope.statuses, $scope.permissions1.rightToolBar.callLog.functionality.status.setTo);
-              $scope.data.priority = getByDescription($scope.priorities, $scope.permissions1.rightToolBar.callLog.functionality.selectPriority.setTo);
+              $scope.taskTypes = getTaskTypes($scope.permissions.rightToolBar.callLog.functionality.taskType.filter.values);
+              $scope.data.status = getByDescription($scope.statuses, $scope.permissions.rightToolBar.callLog.functionality.status.setTo);
+              $scope.data.priority = getByDescription($scope.priorities, $scope.permissions.rightToolBar.callLog.functionality.selectPriority.setTo);
             });
           }else{
-            // $scope.taskTypes = ConstantsResource.get($scope.activityType === 'callLog' ? 'calllogtasktypes' : 'createtasktypes');
+            $scope.taskTypes = ConstantsResource.get($scope.activityType === 'callLog' ? 'calllogtasktypes' : 'createtasktypes');
             $scope.templates = HttpResource.model('templates').query({templateType: 'TASK'});
             $scope.agencies = HttpResource.model('agencies').query({});
             $scope.users = HttpResource.model('users').query({});
