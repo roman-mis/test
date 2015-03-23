@@ -16,8 +16,7 @@ angular.module('origApp.controllers', [])
 	          userPermissions.getUserPermission(AuthService.getCurrentUser().userType).then(function(data){
 	            console.log(data);            // if($location.path() === '/'){
 	            console.log('******************************');
-	            // }
-		          // console.log(userPermissions.permissions.permissions.fields.taps);
+
 		          //$scope.permissions = userPermissions.permissions.permissions.fields;
 	          });
           }

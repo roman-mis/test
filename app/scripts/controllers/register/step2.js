@@ -10,7 +10,7 @@
 angular.module('origApp.controllers')
         .controller('RegisterStep2Controller', function($scope, candidate, ConstantsResource) {
             $scope.candidate = candidate;
-            $scope.genders = [{key:'M', value:'MALE'}, {key:'F', value:'FEMALE'}];
+            $scope.genders = [{key:'M', value:'Male'}, {key:'F', value:'Female'}];
             $scope.nationality = ConstantsResource.get('nationalities');
             // [{"code":"1","description":"British"}];
         });

@@ -95,7 +95,7 @@ module.exports = function(dbs){
                                bucketObject.total +=i.value;
                                bucketObject.expenses.push(t);
 
-                               })
+                               });
 
 
                 });
@@ -127,48 +127,46 @@ module.exports = function(dbs){
                     d.days.forEach(function(l){
 
                       l.expenses.forEach(function(ex){
-
-                        if(ex._id==e){
+                        console.log(typeof e);
+                        if(String(ex._id)===e){
+                          console.log('test');
 
                           ex.status=status;
                           d.save();
 
-                          if(ids[ids.length-1]==e){
+                          if(ids[ids.length-1]===e){
 
                             resolve({result:true});
                           }
 
                         }
-                      })
-                    })
-                  })
-                })
+                      });
+                    });
+                  });
+                });
 
             },reject);
 
         });
     };
     service.deleteExpense=function(ids){
-      console.log(ids);
+
         return Q.promise(function(resolve,reject){
            var q=db.Expense.find();
            return Q.nfcall(q.exec.bind(q)).then(function(d){
-               //   console.log(d);
               ids.forEach(function(r){
-            //    console.log(r);
 
                   d.forEach(function(day){
-                   //     console.log(day);
+
                        day.days.forEach(function(ex){
 
-                        //  console.log(ex.expenses.id(r));
                           var expenseToRemove=ex.expenses.id(r);
                           if(expenseToRemove){
                              expenseToRemove.remove();
                              day.save();
-                              if(ids[ids.length-1]==r){
+                              if(ids[ids.length-1]===r){
 
-                                resolve({result:true,message:"Successfully updated."});
+                                resolve({result:true,message:'Successfully deleted.'});
                               }
                            }
                        });
@@ -176,6 +174,44 @@ module.exports = function(dbs){
 
               });
            },reject);
+
+        });
+
+    };
+    service.updateSelectedExpenses=function(values){
+
+        return Q.promise(function(resolve,reject){
+             var q=db.Expense.find();
+             return Q.nfcall(q.exec.bind(q)).then(function(d){
+
+                 values.forEach(function(v){
+
+                      d.forEach(function(day){
+
+                           day.days.forEach(function(ex){
+
+                            ex.expenses.forEach(function(e){
+
+                              if(String(e._id)===v.id){
+                                e.expenseType=v.expenseType;
+                                e.subType=v.subType;
+                                e.value=v.value;
+                                e.receiptUrls=v.receiptUrls;
+                                day.save();
+                                if(values[values.length-1].id===v.id){
+
+                                  resolve({result:true,message:'Successfully updated.'});
+                                }
+                              }
+
+                            });
+
+                           });
+
+                      });
+
+                 });
+             });
 
         });
 

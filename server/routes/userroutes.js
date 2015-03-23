@@ -1,10 +1,9 @@
 'use strict';
 
-var express = require('express'),    
+var express = require('express'),
     router = express.Router(),
     expressJwt = require('express-jwt'),
     db = require('../models'),
-    util=require('util'),
     controller=require('../controllers/users')(db),
     restMiddleware=require('../middlewares/restmiddleware'),
 	routeskipper=require('../middlewares/route-skipper')
