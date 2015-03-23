@@ -148,6 +148,38 @@ module.exports = function(dbs){
 
         });
     };
+    service.deleteExpense=function(ids){
+      console.log(ids);
+        return Q.promise(function(resolve,reject){
+           var q=db.Expense.find();
+           return Q.nfcall(q.exec.bind(q)).then(function(d){
+               //   console.log(d);
+              ids.forEach(function(r){
+            //    console.log(r);
+
+                  d.forEach(function(day){
+                   //     console.log(day);
+                       day.days.forEach(function(ex){
+
+                        //  console.log(ex.expenses.id(r));
+                          var expenseToRemove=ex.expenses.id(r);
+                          if(expenseToRemove){
+                             expenseToRemove.remove();
+                             day.save();
+                              if(ids[ids.length-1]==r){
+
+                                resolve({result:true,message:"Successfully updated."});
+                              }
+                           }
+                       });
+                  });
+
+              });
+           },reject);
+
+        });
+
+    };
 
 
 	return service;

@@ -193,6 +193,17 @@ module.exports = function(db){
 		});
 
 	};
+	controller.deleteExpense=function(req,res){
+
+         expenseservice.deleteExpense(req.body.expenseIds).then(function(d){
+                  res.json(d);
+
+         },function(err){
+
+         	res.sendFailureResponse(err);
+         });
+
+	};
 
   	return controller;
 };
