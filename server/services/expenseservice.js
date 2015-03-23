@@ -115,10 +115,10 @@ module.exports = function(dbs){
 
         return Q.promise(function(resolve,reject){
 
-            var q=db.Expense.find();
+            var q=db.Expense.find().where('days.expenses._id').in(ids);
 
             return Q.nfcall(q.exec.bind(q)).then(function(doc){
-
+               console.log(doc);
 
                 ids.forEach(function(e){
 
@@ -152,8 +152,9 @@ module.exports = function(dbs){
     service.deleteExpense=function(ids){
 
         return Q.promise(function(resolve,reject){
-           var q=db.Expense.find();
+           var q=db.Expense.find().where('days.expenses._id').in(ids);
            return Q.nfcall(q.exec.bind(q)).then(function(d){
+            console.log(d);
               ids.forEach(function(r){
 
                   d.forEach(function(day){
@@ -181,10 +182,10 @@ module.exports = function(dbs){
     service.updateSelectedExpenses=function(values){
 
         return Q.promise(function(resolve,reject){
-             var q=db.Expense.find();
-             return Q.nfcall(q.exec.bind(q)).then(function(d){
 
                  values.forEach(function(v){
+                      var q=db.Expense.find().where('days.expenses._id').equals(v.id);
+                      return Q.nfcall(q.exec.bind(q)).then(function(d){
 
                       d.forEach(function(day){
 
