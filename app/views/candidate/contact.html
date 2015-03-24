@@ -5,7 +5,7 @@
         <li ng-show="contactDetail.address1">{{contactDetail.address1}}</li>
         <li ng-show="contactDetail.address2">{{contactDetail.address2}}</li>
         <li ng-show="contactDetail.address3">{{contactDetail.address3}}</li>
-        <li ng-show="contactDetail.nationality">{{getNationality(contactDetail.nationality).description}}</li>
+        <!-- <li ng-show="contactDetail.nationality">{{getNationality(contactDetail.nationality).description}}</li> -->
     </ul>
 </div>
 <div class='col-sm-6 col-md-7 col-lg-6'>
@@ -50,7 +50,6 @@
 </div>
 
 <script type="text/ng-template" id="views/candidate/_primary_contact_edit.html">
-<<<<<<< HEAD
     <div class="modal-header">
         <h3 class="modal-title">Edit Primary Contact Information</h3>
     </div>
@@ -59,7 +58,7 @@
             <div class="form-group" ng-repeat="field in fields">
                 <label class="col-sm-3 control-label">{{field.label}}</label>
                 <div class="col-sm-8">
-                    <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]">
+                    <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-pattern="patterns($index)" ng-required="candidate.status=='Live'&&($index==0||$index==1||$index==2)">
                 </div>
             </div>
         </form>
@@ -72,79 +71,6 @@
         <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
     </div>
 </script>
-
-<script type="text/ng-template" id="views/candidate/_primary_address_edit.html">
-    <div class="modal-header">
-        <h3 class="modal-title">Edit Primary Address</h3>
-    </div>
-    <div class="modal-body">
-        <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-            <div class="form-group" ng-repeat="field in fields">
-                <label class="col-sm-3 control-label">{{field.label}}</label>
-                <div class="col-sm-8">
-                    <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'">
-                    <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name=='nationality'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in nationalities | filter: $select.search">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-        </button>
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-    </div>
-</script>
-
-<script type="text/ng-template" id="views/candidate/_bank_details_edit.html">
-    <div class="modal-header">
-        <h3 class="modal-title">Edit Primary Address</h3>
-    </div>
-    <div class="modal-body">
-        <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-            <div class="form-group" ng-repeat="field in fields">
-                <label class="col-sm-4 control-label">{{field.label}}</label>
-                <div class="col-sm-8">
-                    <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]">
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-        </button>
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-    </div>
-</script>
-=======
-  <div class="modal-header">
-    <h3 class="modal-title">Edit Primary Contact Information</h3>
-  </div>
-  <div class="modal-body">
-    <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-      <div class="form-group" ng-repeat="field in fields">
-        <label class="col-sm-3 control-label">{{field.label}}</label>
-        <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" ng-class="{'orig-postcode':data[field.name]==postCode}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live'&&($index == 0||$index==1||$index==2)">
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-    </button>
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-  </div>
-</script>
-
 <script type="text/ng-template" id="views/candidate/_primary_address_edit.html">
   <div class="modal-header">
     <h3 class="modal-title">Edit Primary Address</h3>
@@ -154,7 +80,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-3 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'" ng-required = "candidate.status == 'Live'&&($index == 0||$index==3||$index==4||$index==5)">
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'" ng-required = "candidate.status == 'Live'&&($index == 0||$index==3||$index==4||$index==5)" ng-pattern="patterns($index)">
         </div>
       </div>
     </form>
@@ -190,4 +116,3 @@
     <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
   </div>
 </script>
->>>>>>> d1ea36549c058da2db89fa293d4ac1966855933c
