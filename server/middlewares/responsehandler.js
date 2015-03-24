@@ -34,7 +34,8 @@ module.exports=function(app){
 							{
 								result:false,
 								type:'ValidationFailure',
-								validationErrors:response.errors
+								validationErrors:response.errors,
+								message:response.message
 							});
 
 					}

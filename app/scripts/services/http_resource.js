@@ -39,6 +39,8 @@ angular.module('origApp.services')
             if(response.data && response.data.message){
               MsgService.alert(response.data.message, 'danger');
             }else{
+              console.log(response);
+
               MsgService.alert('Unknown error occurred.', 'danger');
             }
             return true;

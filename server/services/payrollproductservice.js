@@ -122,33 +122,67 @@ module.exports=function(dbs){
 	   					console.log('add');
 	   					delete payrollProductDetails._id;
 	   					payrollProductDetails.createdDate = new Date();
-	   					user.worker.payrollProduct.push(payrollProductDetails);
-	   					console.log(payrollProductDetails);
-	   					product=user.worker.payrollProduct[user.worker.payrollProduct.length-1];
-
-	   					return Q.nfcall(user.save.bind(user)).then(function(){
-							deff.resolve({user:user, product:product});						
-						}, deff.reject);
+	   					var notExistedAgency = true;
+	   				    user.worker.payrollProduct.forEach(function(payrollProduct){	   				    	
+	   				    	if(payrollProduct.agency){
+	   				    	//	console.log(typeof payrollProduct.agency);
+	   				    	//	console.log(typeof payrollProductDetails.agency);
+	   				    		if(String(payrollProduct.agency) === payrollProductDetails.agency){
+	   				    		notExistedAgency = false;
+	   				    		return deff.reject({result:false,name:'ValidationError',message:'Agency already exists.'});
+	   				    		}
+	   				    	}
+	   				   	});
+	   				    	if(notExistedAgency === true){
+	   				    		user.worker.payrollProduct.push(payrollProductDetails);
+	   				    		product=user.worker.payrollProduct[user.worker.payrollProduct.length-1];
+	   				    	//	console.log('getting product length:' +user.worker.payrollProduct.length);
+	   				    		return Q.nfcall(user.save.bind(user)).then(function(){
+								deff.resolve({user:user, product:product});						
+								}, deff.reject);
+	   				    	}
 
 	   				}else{
-	   					console.log('edit');
+
+	   					console.log('edit');	   					
 	   					product=user.worker.payrollProduct.id(payrollProductDetails._id);
+	   					console.log('getting new products agency id:' +payrollProductDetails.agency);
+	   					console.log(typeof payrollProductDetails.agency); //string
+
+	   					console.log(payrollProductDetails._id);
 	   					if(product){
+	   						console.log('getting old products agency id:' +product.agency);
+	   						console.log(typeof product.agency); //object
 	   						payrollProductDetails.updatedDate = new Date();
-	   						utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
+	   						if(String(product.agency) === payrollProductDetails.agency){
+	   							utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
+	   						
+	   						}else if(String(product.agency) !== payrollProductDetails.agency){
+
+	   							var notDuplicateAgency = true;
+	   							user.worker.payrollProduct.forEach(function(payrollProduct){	   				    	
+	   				    			if(payrollProduct.agency){
+	   				    				console.log(typeof payrollProduct.agency); //object
+			   				    		if(String(payrollProduct.agency) === payrollProductDetails.agency){
+			   				    			notDuplicateAgency = false;
+			   				    			return deff.reject({result:false,name:'ValidationError',message:'Agency already exists.'});
+			   				    		
+			   				    		}
+	   				    			}
+	   				   		 	});
+	   							if(notDuplicateAgency === true){  
+	   							utils.updateSubModel(user.worker.payrollProduct.id(payrollProductDetails._id),payrollProductDetails);
+	   							}
+	   						}
+
 	   						return Q.nfcall(user.save.bind(user)).then(function(){
 								deff.resolve({user:user, product:product});						
 							}, deff.reject);
-	   					}
-	   					else{
+							
+	   					}else{
 	   						return deff.reject({result:false,name:'NotFound',message:'Product not found'});
 	   					}
 	   				}
-
-
-	   	// 			return Q.nfcall(user.save.bind(user)).then(function(result){
-					// 	deff.resolve({user:user, product:product});						
-					// }, deff.reject);
 
 		   		} else {
 		   			deff.reject({name:'NotFound',message:'No Payroll Product detail found'});
@@ -156,6 +190,10 @@ module.exports=function(dbs){
 		}, deff.reject);
 	   	return deff.promise;
 	};
+
+
+
+
 
 	service.deletePayrollProductDetails=function(candidateId, productId){
 		var deff=Q.defer();

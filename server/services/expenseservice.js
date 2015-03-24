@@ -6,6 +6,7 @@ module.exports = function(dbs){
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		service={};
+    var enums=require('../utils/enums');
 
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
@@ -28,6 +29,47 @@ module.exports = function(dbs){
 
 		return Q.nfcall(q.exec.bind(q));
 	};
+  service.updateForExpenses=function(val){
+
+    return Q.promise(function(resolve,reject){
+
+       var bucket=[];
+       var q;
+       val.forEach(function(v){
+
+         bucket.push(v.id);
+
+       });
+       q=db.Expense.find().where('days.expenses._id').in(bucket);
+       Q.nfcall(q.exec.bind(q)).then(function(d){
+           d.forEach(function(doc){
+
+              resolve(doc);
+           });
+
+
+       },reject);
+
+      });
+
+  };
+  service.deleteOrUpdate=function(val){
+
+
+    return Q.promise(function(resolve,reject){
+
+       var q=db.Expense.find().where('days.expenses._id').in(val);
+       Q.nfcall(q.exec.bind(q)).then(function(d){
+           d.forEach(function(doc){
+
+              resolve(doc);
+           });
+
+
+       },reject);
+
+    });
+  };
 
 	service.saveExpenses = function(expenseDetails){
 		console.log(expenseDetails);console.log(expenseDetails.days);
@@ -111,108 +153,115 @@ module.exports = function(dbs){
 
 
     };
+    service.saveExpensesValues=function(model){
+       return Q.promise(function(resolve,reject){
+
+           return Q.nfcall(model.save.bind(model)).then(function(){
+
+                       resolve();
+
+          },reject);
+
+
+       });
+
+
+
+    };
     service.updateEachExpense=function(status,ids){
 
         return Q.promise(function(resolve,reject){
 
-            var q=db.Expense.find().where('days.expenses._id').in(ids);
+          service.deleteOrUpdate(ids).then(function(model){
 
-            return Q.nfcall(q.exec.bind(q)).then(function(doc){
-               console.log(doc);
+            ids.forEach(function(e){
 
-                ids.forEach(function(e){
+               model.days.forEach(function(ex){
 
-                  doc.forEach(function(d){
+                  var l=ex.expenses.id(e);
+                  if(l){
 
-                    d.days.forEach(function(l){
+                    if(status==='Approve'){
 
-                      l.expenses.forEach(function(ex){
-                        console.log(typeof e);
-                        if(String(ex._id)===e){
-                          console.log('test');
+                      l.status=enums.expenseStatus.Approve;
+                    }else{
 
-                          ex.status=status;
-                          d.save();
+                     l.status=enums.expenseStatus.Reject;
+                    }
+                  }
 
-                          if(ids[ids.length-1]===e){
+               });
 
-                            resolve({result:true});
-                          }
+            });
+          service.saveExpensesValues(model).then(function(){
 
-                        }
-                      });
-                    });
-                  });
-                });
+           resolve({result:true});
 
-            },reject);
+          },reject);
+
+          });
+
 
         });
     };
     service.deleteExpense=function(ids){
 
         return Q.promise(function(resolve,reject){
-           var q=db.Expense.find().where('days.expenses._id').in(ids);
-           return Q.nfcall(q.exec.bind(q)).then(function(d){
-            console.log(d);
-              ids.forEach(function(r){
 
-                  d.forEach(function(day){
+          service.deleteOrUpdate(ids).then(function(model){
 
-                       day.days.forEach(function(ex){
+             ids.forEach(function(r){
 
-                          var expenseToRemove=ex.expenses.id(r);
-                          if(expenseToRemove){
-                             expenseToRemove.remove();
-                             day.save();
-                              if(ids[ids.length-1]===r){
+               model.days.forEach(function(ex){
 
-                                resolve({result:true,message:'Successfully deleted.'});
-                              }
-                           }
-                       });
-                  });
+                 var expenseToRemove=ex.expenses.id(r);
 
-              });
-           },reject);
+                 if(expenseToRemove){
+
+                   expenseToRemove.remove();
+
+                 }
+
+               });
+
+             });
+          service.saveExpensesValues(model).then(function(){
+
+           resolve({result:true});
+
+          },reject);
+
+          },reject);
 
         });
 
     };
+
     service.updateSelectedExpenses=function(values){
-
         return Q.promise(function(resolve,reject){
+          service.updateForExpenses(values).then(function(model){
 
-                 values.forEach(function(v){
-                      var q=db.Expense.find().where('days.expenses._id').equals(v.id);
-                      return Q.nfcall(q.exec.bind(q)).then(function(d){
+                values.forEach(function(l){
 
-                      d.forEach(function(day){
+                    model.days.forEach(function(ex){
 
-                           day.days.forEach(function(ex){
 
-                            ex.expenses.forEach(function(e){
+                    var e=ex.expenses.id(l.id);
+                    if(e){
+                       e.expenseType=l.expenseType;
+                       e.subType=l.subType;
+                       e.value=l.value;
+                       e.receiptUrls=l.receiptUrls;
+                    }
+                  });
+                });
+                service.saveExpensesValues(model).then(function(){
 
-                              if(String(e._id)===v.id){
-                                e.expenseType=v.expenseType;
-                                e.subType=v.subType;
-                                e.value=v.value;
-                                e.receiptUrls=v.receiptUrls;
-                                day.save();
-                                if(values[values.length-1].id===v.id){
+                   resolve({result:true});
 
-                                  resolve({result:true,message:'Successfully updated.'});
-                                }
-                              }
+                  },reject);
 
-                            });
-
-                           });
-
-                      });
-
-                 });
-             });
+          },reject);
 
         });
 

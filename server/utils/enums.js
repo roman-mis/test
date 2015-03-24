@@ -29,6 +29,11 @@ module.exports={
 		'Submitted':'submitted',
 		'Payrolled':'payrolled'
 	},
+	expenseStatus:{
+
+		'Approve':'approve',
+		'Reject':'reject'
+	},
 	payFrequency:{
 		'Weekly':'weekly'
 
