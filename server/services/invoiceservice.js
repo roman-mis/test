@@ -90,7 +90,7 @@ module.exports=function(){
 									var prom = new Q(true);
 									_.forEach(invoicesToSave,function(invoiceModel){
 										// prom=prom.then(function(){
-										// 	
+										//
 										// console.log('saving invoice '+invoiceModel._id);
 										// 	return Q.nfcall(invoiceModel.save.bind(invoiceModel));
 										// 	// allInvoiceSavePromises.push(Q.nfcall(invoiceModel.save.bind(invoiceModel)));
@@ -102,7 +102,7 @@ module.exports=function(){
 									prom=prom.then(function(){
 										return Q.all([allInvoiceSavePromises]);
 									});
-									
+
 									console.log('stacking timesheet');
 									_.forEach(timesheetsToUpdate,function(timesheet){
 										prom=prom.then(function(){
@@ -117,7 +117,7 @@ module.exports=function(){
 										_.forEach(invoicesToSave,function(invoiceModel){
 											console.log('removing invoiceModel   '+invoiceModel._id);
 											return Q.nfcall(invoiceModel.remove.bind(invoiceModel));
-											
+
 										});
 									});
 									return prom.then(function(){
@@ -162,7 +162,7 @@ module.exports=function(){
 									// timesheetservice.saveTimesheet(timesheet._id, timesheet);
 									timesheetsToUpdate.push(timesheet);
 								});
-								
+
 								// For Vat
 								var invoiceInfo, invoiceModel;
 								var vatCharged = invoice.companyDefaults.vatCharged;
@@ -180,7 +180,6 @@ module.exports=function(){
 								        vat: net * amount,
 								        total: (net+vat).toFixed(2)
 									};
-				console.log('88888888888888888888888888888888')
 
 									invoiceModel = new db.Invoice(invoiceInfo);
 										return Q.nfcall(invoiceModel.save.bind(invoiceModel))
@@ -194,7 +193,7 @@ module.exports=function(){
 											resolve([invoiceModel]);
 										});
 								}, reject);
-							}, reject); 
+							}, reject);
 						}
 					}else{
 						resolve.json({result:false,message:'Agency Invoice Method not set.'});
@@ -203,7 +202,7 @@ module.exports=function(){
 					resolve.json({result:false,message:'Agency not found.'});
 				}
 			});
-			
+
 		});
 	};
 

@@ -16,25 +16,25 @@
       </div>
       <section class="tabs-wrapper row">
         <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
-          <li ng-class="{active: isTabActive('home')}">
+          <li ng-if="!(permissions.taps.Home.hide)" ng-class="{active: isTabActive('home')}">
             <a ui-sref="app.candidate.home({candidateId: candidateId })">Home</a>
           </li>
-          <li ng-class="{active: isTabActive('contact')}">
+          <li ng-if="!(permissions.taps.Contact.hide)" ng-class="{active: isTabActive('contact')}">
             <a ui-sref="app.candidate.contact({candidateId: candidateId })">Contact</a>
           </li>
-          <li ng-class="{active: isTabActive('payroll')}">
+          <li ng-if="!(permissions.taps.Payroll.hide)" ng-class="{active: isTabActive('payroll')}">
             <a ui-sref="app.candidate.payroll({candidateId: candidateId })">Payroll</a>
           </li>
-          <li ng-class="{active: isTabActive('payslips')}">
+          <li ng-if="!(permissions.taps.Payslips.hide)" ng-class="{active: isTabActive('payslips')}">
             <a ui-sref="app.candidate.payslips({candidateId: candidateId })">Payslips</a>
           </li>
-          <li ng-class="{active: isTabActive('agencies')}">
+          <li ng-if="!(permissions.taps.Agencies.hide)" ng-class="{active: isTabActive('agencies')}">
             <a ui-sref="app.candidate.agencies({candidateId: candidateId })">Agencies</a>
           </li>
-          <li ng-class="{active: isTabActive('compliance')}">
+          <li ng-if="!(permissions.taps.Compliance.hide)" ng-class="{active: isTabActive('compliance')}">
             <a ui-sref="app.candidate.compliance({candidateId: candidateId })">Compliance</a>
           </li>
-          <li ng-class="{active: isTabActive('history')}">
+          <li ng-if="!(permissions.taps.History.hide)" ng-class="{active: isTabActive('history')}">
             <a ui-sref="app.candidate.history({candidateId: candidateId })">History</a>
           </li>
         </ul>

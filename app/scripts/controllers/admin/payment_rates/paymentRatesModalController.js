@@ -5,7 +5,6 @@ angular.module('origApp.controllers')
 
             var docId;
             $scope.paymentRates = {};
-            $scope.initPaymentRates = {};
             /*
              * importAliases in the form is rendered in loop so for the importAliases field to display in init first
              * element is pushed as empty

@@ -11,10 +11,11 @@ angular.module('origApp.controllers')
           
           HttpResource.model('candidates/'+$scope.candidateId+'/contactdetail').customGet('',{},function(data){
               $scope.contactdetail=data.data.object;
+              console.log($scope.contactdetail)
           },function(err){
-
-
           })
+
+
         /*  HttpResource.model('candidates/'+$scope.candidateId+'/lastLog').customGet('',{},function(data){
 
             $scope.lastLogin=data.data.lastLogin;

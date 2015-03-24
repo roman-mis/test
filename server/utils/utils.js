@@ -186,31 +186,47 @@ module.exports=utils={
 		res.end();
   	console.log('file sent');
 	},
-	readCsvFromFile: function(filePath){
+	readCsvFromFile: function(filePath, hasHeader){
+		hasHeader = typeof hasHeader !== 'undefined' ? hasHeader : true;
 		var csv = require('fast-csv');
 		return Q.Promise(function(resolve){
 			var csvData = [], header=[], headerFlag=false;
 			csv
 			 .fromPath(filePath)
 			 .on('data', function(data){
-				if(!headerFlag){
-					header = data; console.log(header);
-					headerFlag = true;
+				if(hasHeader){
+					if(!headerFlag){
+						console.log(data);
+						var headers = [];
+						_.forEach(data, function(name){
+							var colName = name;
+							while (headers.indexOf(colName) > -1) {
+							    colName = colName + '1';
+							}
+							headers.push(colName);
+						});
+						header = headers;
+
+						headerFlag = true;
+					}else{
+						var record = {};
+						data.forEach(function(value, index){
+							if(header[index] !== ''){
+								// Converting to Camel Case
+								var headerName = header[index]
+									.toLowerCase()
+									.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+							        .replace(/\s/g, '')
+							        .replace(/^(.)/, function($1) { return $1.toLowerCase(); }); 
+								record[headerName] = value.replace(/"/g, '') || null;
+							}
+						});
+						csvData.push(record);
+					}
 				}else{
-					var record = {};
-					data.forEach(function(value, index){
-						if(header[index] !== ''){
-							// Converting to Camel Case
-							var headerName = header[index]
-								.toLowerCase()
-								.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
-						        .replace(/\s/g, '')
-						        .replace(/^(.)/, function($1) { return $1.toLowerCase(); }); 
-							record[headerName] = value.replace(/"/g, '') || null;
-						}
-					});
-					csvData.push(record);
+					csvData.push(data);
 				}
+				
 			 }).on('end', function(){
 			     resolve(csvData);
 			 });

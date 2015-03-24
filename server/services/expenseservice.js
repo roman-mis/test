@@ -6,6 +6,7 @@ module.exports = function(dbs){
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
 		service={};
+    var enums=require('../utils/enums');
 
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
@@ -28,6 +29,47 @@ module.exports = function(dbs){
 
 		return Q.nfcall(q.exec.bind(q));
 	};
+  service.updateForExpenses=function(val){
+
+    return Q.promise(function(resolve,reject){
+
+       var bucket=[];
+       var q;
+       val.forEach(function(v){
+
+         bucket.push(v.id);
+
+       });
+       q=db.Expense.find().where('days.expenses._id').in(bucket);
+       Q.nfcall(q.exec.bind(q)).then(function(d){
+           d.forEach(function(doc){
+
+              resolve(doc);
+           });
+
+
+       },reject);
+
+      });
+
+  };
+  service.deleteOrUpdate=function(val){
+
+
+    return Q.promise(function(resolve,reject){
+
+       var q=db.Expense.find().where('days.expenses._id').in(val);
+       Q.nfcall(q.exec.bind(q)).then(function(d){
+           d.forEach(function(doc){
+
+              resolve(doc);
+           });
+
+
+       },reject);
+
+    });
+  };
 
 	service.saveExpenses = function(expenseDetails){
 		console.log(expenseDetails);console.log(expenseDetails.days);
@@ -95,7 +137,7 @@ module.exports = function(dbs){
                                bucketObject.total +=i.value;
                                bucketObject.expenses.push(t);
 
-                               })
+                               });
 
 
                 });
@@ -111,42 +153,118 @@ module.exports = function(dbs){
 
 
     };
+    service.saveExpensesValues=function(model){
+       return Q.promise(function(resolve,reject){
+
+           return Q.nfcall(model.save.bind(model)).then(function(){
+
+                       resolve();
+
+          },reject);
+
+
+       });
+
+
+
+    };
     service.updateEachExpense=function(status,ids){
 
         return Q.promise(function(resolve,reject){
 
-            var q=db.Expense.find();
+          service.deleteOrUpdate(ids).then(function(model){
 
-            return Q.nfcall(q.exec.bind(q)).then(function(doc){
+            ids.forEach(function(e){
 
+               model.days.forEach(function(ex){
 
-                ids.forEach(function(e){
+                  var l=ex.expenses.id(e);
+                  if(l){
 
-                  doc.forEach(function(d){
+                    if(status==='Approve'){
 
-                    d.days.forEach(function(l){
+                      l.status=enums.expenseStatus.Approve;
+                    }else{
 
-                      l.expenses.forEach(function(ex){
+                     l.status=enums.expenseStatus.Reject;
+                    }
+                  }
 
-                        if(ex._id==e){
+               });
 
-                          ex.status=status;
-                          d.save();
+            });
+          service.saveExpensesValues(model).then(function(){
 
-                          if(ids[ids.length-1]==e){
+           resolve({result:true});
 
-                            resolve({result:true});
-                          }
+          },reject);
 
-                        }
-                      })
-                    })
-                  })
-                })
+          });
 
-            },reject);
 
         });
+    };
+    service.deleteExpense=function(ids){
+
+        return Q.promise(function(resolve,reject){
+
+          service.deleteOrUpdate(ids).then(function(model){
+
+             ids.forEach(function(r){
+
+               model.days.forEach(function(ex){
+
+                 var expenseToRemove=ex.expenses.id(r);
+
+                 if(expenseToRemove){
+
+                   expenseToRemove.remove();
+
+                 }
+
+               });
+
+             });
+          service.saveExpensesValues(model).then(function(){
+
+           resolve({result:true});
+
+          },reject);
+
+          },reject);
+
+        });
+
+    };
+
+    service.updateSelectedExpenses=function(values){
+        return Q.promise(function(resolve,reject){
+          service.updateForExpenses(values).then(function(model){
+
+                values.forEach(function(l){
+
+                    model.days.forEach(function(ex){
+
+
+                    var e=ex.expenses.id(l.id);
+                    if(e){
+                       e.expenseType=l.expenseType;
+                       e.subType=l.subType;
+                       e.value=l.value;
+                       e.receiptUrls=l.receiptUrls;
+                    }
+                  });
+                });
+                service.saveExpensesValues(model).then(function(){
+
+                   resolve({result:true});
+
+                  },reject);
+
+          },reject);
+
+        });
+
     };
 
 

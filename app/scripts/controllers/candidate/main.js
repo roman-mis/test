@@ -29,6 +29,11 @@ angular.module('origApp.controllers')
           };
 
           $scope.loadCandidate();
+
+          HttpResource.model('candidates/'+$scope.candidateId+'/contactdetail').query({},function (res) {
+            $scope.candidate.status = res.data.object.status;
+            console.log('status', $scope.candidate.status)
+          });
           HttpResource.model('constants/candidateStatus').query({},function (res) {
             $scope.candidateStatus = res.data;
             // $scope.candidate.status

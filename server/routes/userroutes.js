@@ -1,10 +1,9 @@
 'use strict';
 
-var express = require('express'),    
+var express = require('express'),
     router = express.Router(),
     expressJwt = require('express-jwt'),
     db = require('../models'),
-    util=require('util'),
     controller=require('../controllers/users')(db),
     restMiddleware=require('../middlewares/restmiddleware'),
 	routeskipper=require('../middlewares/route-skipper')
@@ -31,3 +30,5 @@ router.get('/emailvalidation/:emailAddress',controller.emailValidation);
 router.get('/changepassword/verify/:emailAddress/:code',controller.verifyChangePassword);
 
 router.post('/changepassword/:emailAddress/:code',controller.changePassword);
+
+router.patch('/:id', controller.patchUser);

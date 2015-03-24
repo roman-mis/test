@@ -23,25 +23,25 @@
             </div>
             <section class="tabs-wrapper row">
                 <ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" collapse="tab.isMenuCollapsed">
-                    <li ng-class="{active: isTabActive('home')}">
+                    <li ng-if="!(permissions.taps.Home.hide)" ng-class="{active: isTabActive('home')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}">Home</a>
                     </li>
-                    <li ng-class="{active: isTabActive('payroll')}">
+                    <li ng-if="!(permissions.taps.Payroll.hide)" ng-class="{active: isTabActive('payroll')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/payroll">Payroll</a>
                     </li>
-                    <li ng-class="{active: isTabActive('consultants')}">
+                    <li ng-if="!(permissions.taps.Consultants.hide)" ng-class="{active: isTabActive('consultants')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/consultants">Consultants</a>
                     </li>
-                    <li ng-class="{active: isTabActive('candidates')}">
+                    <li ng-if="!(permissions.taps.Candidates.hide)" ng-class="{active: isTabActive('candidates')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/candidates">Candidates</a>
                     </li>
-                    <li ng-class="{active: isTabActive('sales')}">
+                    <li ng-if="!(permissions.taps.Sales.hide)" ng-class="{active: isTabActive('sales')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/sales">Sales</a>
                     </li>
-                    <li ng-class="{active: isTabActive('history')}">
+                    <li ng-if="!(permissions.taps.History.hide)" ng-class="{active: isTabActive('history')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/history">History</a>
                     </li>
-                    <li ng-class="{active: isTabActive('other')}">
+                    <li ng-if="!(permissions.taps.Other.hide)" ng-class="{active: isTabActive('other')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/other">Other</a>
                     </li>
                 </ul>

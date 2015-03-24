@@ -171,15 +171,49 @@ module.exports = function(db){
      		res.json({result:true,object:expense});
 		}).then(null, res.sendFailureResponse);
 	};
-	controller.updateExpense=function(req,res){
+	controller.updateExpenseReject=function(req,res){
 
-		expenseservice.updateEachExpense(req.params.status,req.body.expenseIds).then(function(d){
+		expenseservice.updateEachExpense('Reject',req.body.expenseIds).then(function(d){
            res.json(d);
 
 		},function(err){
 
        	res.sendFailureResponse(err);
 		});
+
+
+	};
+	controller.updateExpenseApprove=function(req,res){
+    expenseservice.updateEachExpense('Approve',req.body.expenseIds).then(function(d){
+           res.json(d);
+
+		},function(err){
+
+       	res.sendFailureResponse(err);
+		});
+
+	};
+	controller.deleteExpense=function(req,res){
+
+         expenseservice.deleteExpense(req.body.expenseIds).then(function(d){
+                  res.json(d);
+
+         },function(err){
+
+         	res.sendFailureResponse(err);
+         });
+
+	};
+	controller.updateSelectedExpenses=function(req,res){
+
+        expenseservice.updateSelectedExpenses(req.body.body).then(function(d){
+
+               res.json(d);
+         },function(err){
+
+           res.sendFailureResponse(err);
+
+         });
 
 
 	};

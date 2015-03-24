@@ -153,10 +153,7 @@ module.exports = function(dbs){
     };
 
     controller.updateStatus=function (req,res){
-      console.log('/////////////////////////////////////////////////')
-      console.log(req.body);
-      console.log(req.params.id);
-      console.log(req.body.status);
+
       candidateservice.updateStatus(req.params.id, req.body.status).
       then(function(resp){
         res.json(resp);
@@ -306,8 +303,8 @@ module.exports = function(dbs){
       candidateservice.getLogs(req.params.id).then(function(doc){
           res.json(doc);
 
-      },res.sendFailureResponse)
-    }
+      },res.sendFailureResponse);
+    };
 
     controller.getBankDetail=function (req, res){
       candidateservice.getUser(req.params.id)
@@ -345,7 +342,7 @@ module.exports = function(dbs){
             res.json(response);
 
         });
-    }
+    };
 
     /**
      * Handles the registration of a candidate
@@ -460,7 +457,7 @@ module.exports = function(dbs){
           'address3':worker.address3,'county':worker.county,'postCode':worker.postCode,'nationality':worker.nationality,
           'contactNumber':worker.contactNumber,
           'phone':contact.phone,'mobile':contact.mobile,'altEmail':contact.altEmail,
-                    'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google
+                    'facebook':contact.facebook,'linkedin':contact.linkedin,'google':contact.google,status:user.worker.status
             };
     }
 

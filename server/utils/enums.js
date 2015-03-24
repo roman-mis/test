@@ -24,5 +24,14 @@ module.exports={
 	},
 	codeTypes:{
 		'ChangePassword':'CHPWD'
+	},
+	timesheetStatuses:{
+		'Submitted':'submitted',
+		'Payrolled':'payrolled'
+	},
+	expenseStatus:{
+
+		'Approve':'approve',
+		'Reject':'reject'
 	}
 };

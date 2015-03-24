@@ -690,7 +690,7 @@
   ],
 
 
-  "expensesRateTypes": [
+  "billableTypes": [
     {
       "code": "1",
       "name": "Billable"
@@ -700,14 +700,29 @@
       "name": "Non-Billable"
     }
   ],
-
-
-  "templateTypes": [
+  
+  "expensesRateTypes": [
     {
-      "code": "1",
-      "name": "Standard"
+      "code": "Subsistence",
+      "name": "Subsistence"
+    },
+    {
+      "code": "Other",
+      "name": "Other"
     }
   ],
+
+
+  "templateTypes": [{
+      "code": "1",
+      "name": "Standard"
+    },{
+      "code": "2",
+      "name": "Format 1"    
+    },{
+      "code": "3",
+      "name": "Format 2"    
+    }],
 
 
   "AOE": {
@@ -945,23 +960,21 @@
   ],
 
 
-  "candidateProfile": {
+  "profiles": {
     "WK": {
       "first": {
         "open": {
-          "state": "app.agency.home",
+          "state": "app.candidate.home",
           "stateParams": [
             {
-              "key":"agencyId",
+              "key":"candidateId",
               "value":"_id"
             }
           ]
-        }
+        } 
       },
       "permissions": {
-        "accessKey": "WK",
         "fields": {
-          "candidate": {
             "taps": {
               "Home": {
                 "hide": false
@@ -983,6 +996,17 @@
               },
               "History": {
                 "hide": false
+              }
+            },
+            "leftMenu":{
+              "hide": true
+            },
+            "topToolBar":{
+              "myProfile":{
+                "hide": false
+              },
+              "advancedSearch":{
+                "hide": true
               }
             },
             "rightToolBar": {
@@ -1031,10 +1055,10 @@
                   "title": {
                     "hide": false,
                     "setTo": "Inbound Portal Enquiry",
-                    "editable": false
+                    "readOnly": true
                   },
                   "selectTemplate": {
-                    "hide": true
+                    "hide": true 
                   },
                   "textFeld": {
                     "hide": false
@@ -1045,15 +1069,64 @@
                   "assignTo": {
                     "hide": true
                   },
-                  "NotifyMeWhenTaskComplete ": {
+                  "NotifyMeWhenTaskComplete": {
                     "hide": true
                   }
                 }
               }
             }
-          }
         }
       }
     }
-  }
+  , 
+  "AC": {
+      "first": {
+        "open": {
+          "state": "app.agency.home",
+          "stateParams": [
+            {
+              "key":"agencyId",
+              "value":"_id"
+            }
+          ]
+        } 
+      },
+      "permissions": {
+      	        "fields": {
+            "taps": {
+              "Home": {
+                "hide": false
+              },
+              "Contact": {
+                "hide": false
+              },
+              "Payroll": {
+                "hide": true
+              },
+              "Candidates": {
+                "hide": false
+              },
+              "Consultants":{
+              	"hide": false
+              },
+              "Sales":{
+              	"hide": false
+              },
+              "History": {
+                "hide": true
+              },
+              "Others": {
+              	"hide": false
+              }
+            },
+            "leftMenu":{
+              "hide": true
+            },
+            "rightToolBar": {
+            }
+        }
+      }
+    }
+ }
+
 }

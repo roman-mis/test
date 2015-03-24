@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
-		.controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource',
-			function($scope,$modalInstance,$stateParams, HttpResource, parentScope){
+		.controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource','$http',
+			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
 				
@@ -10,18 +10,24 @@ angular.module('origApp.controllers')
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
 					console.log(res);
 				});
+
+        HttpResource.model('constants/candidateTitle').query({},function (res) {
+          console.log(res.data);
+          $scope.titles = res.data;
+          console.log($scope.candidate.title);
+        });
 				
 				$scope.status = parentScope.candidate.status;
 				$scope.lettersOnly = /^[A-Za-z]+$/;
-				$scope.ukMobile = /^0(\d ?){10}$/;
 				console.log(parentScope.candidate.status);
 
 
 				HttpResource.model('constants/nationalities').query({},function (res) {
 					// body...
 					$scope.nationalities = res.data;
+          console.log($scope.nationalities);
 				});
-				console.log($scope.nationalities);
+				
 				
 
 
@@ -52,23 +58,22 @@ angular.module('origApp.controllers')
 									console.log($scope.isValid);
 									$scope.form.age.$setValidity('age',$scope.isValid);
 								}
-							
-
+                $scope.save = function () {
+                  console.log($scope.candidate.emailAddress);
+                  HttpResource.model('users').create($scope.candidate)
+                  .patch($scope.candidateId).then(function (res) {
+                    
+                    console.log(res);
+                  });
+                  HttpResource.model('candidates').create($scope.candidate)
+                  .patch($scope.candidateId+'/contactdetail').then(function (res) {
+                    console.log(res);
+                  });
+                };
+                $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
 						});
 					}
 				});
-				
-				
-				//console.log($scope.age);
-				$scope.$watch('candidate.birthDate', function () {
-					
-				});
-				
-				//
-				$scope.log = function () {
-					// boy...
-					console.log($scope.form);
-					console.log($scope.form.age.$error);
-					console.log($scope.nationalities);
-				};
 		}]);

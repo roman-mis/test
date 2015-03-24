@@ -1,63 +1,76 @@
 <div class='col-sm-6 col-md-5 col-lg-6'>
-  <p class="entry-title">Primary Address<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openPrimaryAddressEdit()"><i class="fa fa-edit"></i>edit</a></p>
-  <ul class="entry-content">
-    <li ng-show="contactDetail.address1">{{contactDetail.address1}}</li>
-    <li ng-show="contactDetail.address2">{{contactDetail.address2}}</li>
-    <li ng-show="contactDetail.address3">{{contactDetail.address3}}</li>
-    <li ng-show="contactDetail.nationality">{{getNationality(contactDetail.nationality).description}}</li>
-  </ul>
+    <p class="entry-title">Primary Address<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openPrimaryAddressEdit()"><i class="fa fa-edit"></i>edit</a>
+    </p>
+    <ul class="entry-content">
+        <li ng-show="contactDetail.address1">{{contactDetail.address1}}</li>
+        <li ng-show="contactDetail.address2">{{contactDetail.address2}}</li>
+        <li ng-show="contactDetail.address3">{{contactDetail.address3}}</li>
+        <!-- <li ng-show="contactDetail.nationality">{{getNationality(contactDetail.nationality).description}}</li> -->
+    </ul>
 </div>
 <div class='col-sm-6 col-md-7 col-lg-6'>
-  <p class="entry-title">Primary Contact Information<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openPrimaryContactEdit()"><i class="fa fa-edit"></i>edit</a></p>
-  <ul class="entry-content">
-    <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactDetail.phone}}</span></li>
-    <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">{{contactDetail.mobile}}</span></li>
-    <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<a href="mailto:{{contactDetail.emailAddress}}"><span class="meta">{{contactDetail.emailAddress}}</span></a></li>
-    <li class="clearfix"><i class="fa fa-envelope"></i>Alt.Email<a href="mailto:{{contactDetail.altEmail}}"><span class="meta">{{contactDetail.altEmail}}</span></a></li>
-    <li class="clearfix"><i class="fa fa-facebook"></i>Facebook<a href="#"><span class="meta">{{contactDetail.facebook}}</span></a></li>
-    <li class="clearfix"><i class="fa fa-linkedin"></i>Linkedin<a href="#"><span class="meta">{{contactDetail.linkedin}}</span></a></li>
-  </ul>
+    <p class="entry-title">Primary Contact Information<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openPrimaryContactEdit()"><i class="fa fa-edit"></i>edit</a>
+    </p>
+    <ul class="entry-content">
+        <li class="clearfix"><i class="fa fa-phone"></i>Phone<span class="meta">{{contactDetail.phone}}</span>
+        </li>
+        <li class="clearfix"><i class="fa fa-mobile-phone"></i>Mobile<span class="meta">{{contactDetail.mobile}}</span>
+        </li>
+        <li class="clearfix"><i class="fa fa-envelope-o"></i>Email<a href="mailto:{{contactDetail.emailAddress}}"><span class="meta">{{contactDetail.emailAddress}}</span></a>
+        </li>
+        <li class="clearfix"><i class="fa fa-envelope"></i>Alt. Email<a href="mailto:{{contactDetail.altEmail}}"><span class="meta">{{contactDetail.altEmail}}</span></a>
+        </li>
+        <li class="clearfix"><i class="fa fa-facebook"></i>Facebook<a href="#"><span class="meta">{{contactDetail.facebook}}</span></a>
+        </li>
+        <li class="clearfix"><i class="fa fa-linkedin"></i>LinkedIn<a href="#"><span class="meta">{{contactDetail.linkedin}}</span></a>
+        </li>
+    </ul>
 </div>
 <div class='col-xs-12'>
-  <p class="entry-title">Bank Details<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openBankDetailsEdit()"><i class="fa fa-edit"></i>edit</a></p>
+    <p class="entry-title">Bank Details<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openBankDetailsEdit()"><i class="fa fa-edit"></i>edit</a>
+    </p>
 </div>
 <div class="col-sm-6 col-md-12 col-lg-6">
-  <ul class='entry-content'>
-    <li class="clearfix">Name on Account<span class="meta-o">{{bankDetail.accountName}}</span></li>
-    <li class="clearfix">Bank Name<span class="meta-o">{{bankDetail.bankName}}</span></li>
-  </ul>
+    <ul class='entry-content'>
+        <li class="clearfix">Name on Account<span class="meta-o">{{bankDetail.accountName}}</span>
+        </li>
+        <li class="clearfix">Bank Name<span class="meta-o">{{bankDetail.bankName}}</span>
+        </li>
+    </ul>
 </div>
 <div class="col-sm-6 col-md-12 col-lg-6">
-  <ul class='entry-content'>
-    <li class="clearfix">Account No.<span class="meta-o">{{bankDetail.accountNo}}</span></li>
-    <li class="clearfix">Sort Code<span class="meta-o">{{bankDetail.sortCode}}</span></li>
-    <li class="clearfix">Bankroll No.<span class="meta-o">{{bankDetail.bankRollNo}}</span></li>
-  </ul>
+    <ul class='entry-content'>
+        <li class="clearfix">Account No.<span class="meta-o">{{bankDetail.accountNo}}</span>
+        </li>
+        <li class="clearfix">Sort Code<span class="meta-o">{{bankDetail.sortCode}}</span>
+        </li>
+        <li class="clearfix">Bankroll No.<span class="meta-o">{{bankDetail.bankRollNo}}</span>
+        </li>
+    </ul>
 </div>
 
 <script type="text/ng-template" id="views/candidate/_primary_contact_edit.html">
-  <div class="modal-header">
-    <h3 class="modal-title">Edit Primary Contact Information</h3>
-  </div>
-  <div class="modal-body">
-    <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-      <div class="form-group" ng-repeat="field in fields">
-        <label class="col-sm-3 control-label">{{field.label}}</label>
-        <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live'&&($index == 0||$index==1||$index==2)">
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-    </button>
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-  </div>
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Primary Contact Information</h3>
+    </div>
+    <div class="modal-body">
+        <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
+            <div class="form-group" ng-repeat="field in fields">
+                <label class="col-sm-3 control-label">{{field.label}}</label>
+                <div class="col-sm-8">
+                    <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-pattern="patterns($index)" ng-required="candidate.status=='Live'&&($index==0||$index==1||$index==2)">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
+            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+    </div>
 </script>
-
 <script type="text/ng-template" id="views/candidate/_primary_address_edit.html">
   <div class="modal-header">
     <h3 class="modal-title">Edit Primary Address</h3>
@@ -67,11 +80,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-3 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'" ng-required = "candidate.status == 'Live'&&($index == 0||$index==3||$index==4||$index==5)">
-          <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name=='nationality'">
-            <ui-select-match>{{$select.selected.description}}</ui-select-match>
-            <ui-select-choices repeat="item.code as item in nationalities | filter: $select.search">{{item.description}}</ui-select-choices>
-          </ui-select>
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-if="field.name!='nationality'" ng-required = "candidate.status == 'Live'&&($index == 0||$index==3||$index==4||$index==5)" ng-pattern="patterns($index)">
         </div>
       </div>
     </form>
@@ -94,7 +103,7 @@
       <div class="form-group" ng-repeat="field in fields">
         <label class="col-sm-4 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live' && ($index == 0||$index==1||$index==2||$index==3)" ng-maxlength='{{field.maxLength}}'>
+          <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="candidate.status == 'Live' && ($index == 0||$index==1||$index==2||$index==3)" maxlength='{{field.maxLength}}'ng-maxlength='{{field.maxLength}}'>
         </div>
       </div>
     </form>

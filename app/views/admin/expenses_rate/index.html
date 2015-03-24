@@ -1,0 +1,69 @@
+<div class="col-xs-12">
+    <div class="wrapper-tabs">
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-success pull-right nonpadding"
+                        ng-click="openModal('expensesRate')">Add New Expenses
+                    Rate</button>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Tax Applicable</th>
+                        <th>Expenses Rate Type</th>
+                        <th>Vat</th>
+                        <th>Dispensation</th>
+                        <th>Receipted</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <span ng-show="expensesRate">
+                        <tr ng-repeat="expenserate in expensesRate">
+
+                            <td>{{ expenserate.name }}</td>
+                            <td>{{ expenserate.amount  | number:2 }}</td>
+                            <td>
+                                <span ng-if="expenserate.taxApplicable">Yes</span>
+                                <span ng-if="!expenserate.taxApplicable">No</span>
+                            </td>
+                            <td>{{ expenserate.expensesRateType }}</td>
+
+                            <td>
+                                <span ng-if="expenserate.vat">Yes</span>
+                                <span ng-if="!expenserate.vat">No</span>
+                            </td>
+
+                            <td>
+                                <span ng-if="expenserate.dispensation">Yes</span>
+                                <span ng-if="!expenserate.dispensation">No</span>
+                            </td>
+
+                            <td>
+                                <span ng-if="expenserate.receipted">Yes</span>
+                                <span ng-if="!expenserate.receipted">No</span>
+                            </td>
+
+                            <td>
+                                <span ng-if="expenserate.isEnabled">ON</span>
+                                <span ng-if="!expenserate.isEnabled">OFF</span>
+                            </td>
+
+
+                            <td class="text-center" style="width: 50px;">
+                                <a href="" ng-click="openModal('expensesRate', $index)">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </span>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- /wrapper-tabs -->
+</div><!-- /container -->
