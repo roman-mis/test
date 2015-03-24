@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
 			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
-				
+				$scope.genders = [{ key: 'M', value: 'Male' }, { key: 'F', value: 'Female' }];
 				
 				console.log($scope.candidate);
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
@@ -69,6 +69,7 @@ angular.module('origApp.controllers')
                   .patch($scope.candidateId+'/contactdetail').then(function (res) {
                     console.log(res);
                   });
+                  $modalInstance.dismiss('save');
                 };
                 $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
