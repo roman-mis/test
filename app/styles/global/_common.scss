@@ -586,16 +586,11 @@ header.container-fluid {
                 }
                 .meta {
                     float: right;
-                    color: $green-light;
-                    font-size: 13px;
-                    text-decoration: underline;
-                    &:hover {
-                        color: $green;
-                    }
+                    font-size: 13px; 
                 }
                 .meta-o {
                     float: right;
-                    color: #417EAB;
+                    color: $green-light;
                     font-size: 13px;
                 }
                 > li {
