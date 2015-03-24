@@ -32,9 +32,9 @@ router.delete('/expenses',expensecontroller.deleteExpense);
 
 router.patch('/expenses/reject',expensecontroller.updateExpenseReject);
 
-router.patch('/expenses/approve',expensecontroller.updateExpenseApprove);
+router.patch('/expenses/approve',expensecontroller.approveExpense);
 
-router.put('/expenses/edit',expensecontroller.updateSelectedExpenses);
+router.put('/expenses/edit',expensecontroller.editExpenses);
 
 
 router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
