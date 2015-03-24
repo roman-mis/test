@@ -54,6 +54,8 @@ angular.module('origApp.controllers')
           //save product information
           $scope.saveProduct = function() {
             var successCallback = function(response) {
+              console.log('getting something');
+              console.log(response);
               $scope.isSaving = false;
               if (!HttpResource.flushError(response)) {
                 //$scope.loadProducts();
@@ -75,7 +77,7 @@ angular.module('origApp.controllers')
               $scope.product.patch()
                       .then(successCallback);
             } else {
-              var notExistedCompany = true;
+         /*     var notExistedCompany = true;
               for(var i = 0; i < $scope.gridOptions.data.length; i++){
                 if($scope.gridOptions.data[i].agency){
                   if($scope.product.agency === $scope.gridOptions.data[i].agency._id){
@@ -84,13 +86,13 @@ angular.module('origApp.controllers')
                     break;
                   }
                 }
-              }
-              if(notExistedCompany === true){
+              } 
+              if(notExistedCompany === true){  */
                 $scope.isSaving = true;
                 $scope.product = productResource.create($scope.product);
                 $scope.product.post()
                         .then(successCallback);
-              }
+         //     }
             }
           };
 
@@ -111,15 +113,15 @@ angular.module('origApp.controllers')
           //edit product
           $scope.editProduct = function(product) {
             angular.copy(product, $scope.product);
-            for(var key in $scope.product){
+         /*   for(var key in $scope.product){
               if($scope.product[key].code){
                 $scope.product[key] = $scope.product[key].code;
-              }
+              }  
               if($scope.product[key]._id){
                 $scope.product[key] = $scope.product[key]._id;
               }
-            }
-          };
+            } */
+          };   
 
           $scope.cancelEdit = function(){
             $scope.product = {};
