@@ -28,5 +28,9 @@ module.exports={
 	timesheetStatuses:{
 		'Submitted':'submitted',
 		'Payrolled':'payrolled'
+	},
+	payFrequency:{
+		'Weekly':'weekly'
+
 	}
 };
