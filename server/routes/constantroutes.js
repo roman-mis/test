@@ -83,6 +83,7 @@ router.get('/fuels',controller.fuels);
 router.get('/enginesizes',controller.enginesizes);
 
 router.get('/expensesratetypes',controller.expensesRateTypes);
+router.get('/paymentratetypes',controller.paymentRateTypes);
 
 router.get('/timesheettemplates',controller.getTimesheetTemplates);
 router.get('/AOE',controller.getAOE);

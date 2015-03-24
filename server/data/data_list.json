@@ -712,6 +712,19 @@
     }
   ],
 
+  "paymentRateTypes": [{
+     "code": "Hourly",
+     "name": "Hourly"
+  }, {
+     "code": "Day",
+     "name": "Day"
+  }, {
+      "code": "Expense",
+      "name": "Expense"
+  }, {
+      "code": "Holiday",
+      "name": "Holiday"
+  }],
 
   "templateTypes": [{
       "code": "1",

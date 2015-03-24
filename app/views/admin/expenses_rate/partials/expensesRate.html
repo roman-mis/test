@@ -7,13 +7,12 @@
         <form name="expensesRateForm"  class="form-horizontal row" role="form" novalidate>
 
             <div class="form-group col-sm-12">
-                <label class="col-sm-4">Expenses Rate Name</label>
+                <label class="col-sm-4">Name</label>
                 <div class="col-sm-8">
                     <input name="name" type="text" class="form-control" ng-model="expensesRate.name" value="{{expensesRate.name}}" required>
                     <div ng-show="expensesRateForm.name.$invalid && (expensesRateForm.name.$dirty || submitted) && expensesRateForm.name" class="clearfix danger" style="line-height: 20px;">
                         <div class="alert alert-danger"
-                             ng-show="expensesRateForm.name.$error.required">Rate
-                        Type cannot be empty.</div>
+                             ng-show="expensesRateForm.name.$error.required">Name cannot be empty.</div>
                     </div>
                 </div>
             </div>
@@ -24,13 +23,6 @@
                     <input type="number" min="0" class="form-control"
                            name="amount" ng-model="expensesRate.amount" valu
                            e="{{expensesRate.amount | number:2}}">
-                            <span ng-show="expensesRateForm.amount.$invalid && (expensesRateForm.amount.$dirty || submitted)  && expensesRateForm.amount" class="clearfix danger" style="line-height: 20px;">
-                                 <div class="alert alert-danger" ng-show="expensesRateForm.amount.$error.min"
-                                      class="clearfix danger">Amount cannot be negative.</div>
-                                <div class="alert alert-danger"
-                                     ng-show="expensesRateForm.amount.$error.number"
-                                     class="clearfix danger">Please enter a number</div>
-                            </span>
                 </div>
             </div>
 
@@ -49,15 +41,11 @@
             </div>
 
             <div class="form-group col-sm-12">
-                <label class="col-sm-4">Tax Applicable</label>
+                <label class="col-sm-4">Tax Applicable ?</label>
                 <div class="col-sm-8">
                     <input type="checkbox" min="0"
                            name="taxApplicable" ng-model="expensesRate.taxApplicable" value
                             ="{{expensesRate.taxApplicable}}">
-                            <span ng-show="expensesRateForm.taxApplicable.$invalid && (expensesRateForm.taxApplicable.$dirty || submitted)  && expensesRateForm.taxApplicable" class="clearfix danger" style="line-height: 20px;">
-                                <span ng-show="expensesRateForm.taxApplicable.$error.required"
-                                      class="clearfix danger">TaxApplicable cannot be empty.</span>
-                            </span>
                 </div>
             </div>
 
