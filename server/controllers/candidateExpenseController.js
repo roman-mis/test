@@ -173,7 +173,7 @@ module.exports = function(db){
      		res.json({result:true,object:expense});
 		}).then(null, res.sendFailureResponse);
 	};
-	controller.updateExpenseReject=function(req,res){
+	controller.rejectExpense=function(req,res){
 
 		expenseservice.changeStatus(enums.expenseStatus.Reject,req.body.expenseIds).then(function(d){
            res.json(d);
