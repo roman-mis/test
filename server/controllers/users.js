@@ -119,5 +119,17 @@ module.exports = function(){
       };
     }
 
+    controller.patchUser = function(req,res){
+      var userDetails = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+      };
+      return userservice.patchUser(req.params.id, userDetails)
+        .then(function(user){
+          var userVm = getUserViewModel(user);
+          res.json({result:true, object:userVm});
+        },res.sendFailureResponse);
+    };
+
   return controller;
 };

@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
 			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
-				
+				$scope.genders = [{ key: 'M', value: 'Male' }, { key: 'F', value: 'Female' }];
 				
 				console.log($scope.candidate);
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
@@ -14,14 +14,11 @@ angular.module('origApp.controllers')
         HttpResource.model('constants/candidateTitle').query({},function (res) {
           console.log(res.data);
           $scope.titles = res.data;
-          console.log($scope.candidate.title)
+          console.log($scope.candidate.title);
         });
 				
 				$scope.status = parentScope.candidate.status;
 				$scope.lettersOnly = /^[A-Za-z]+$/;
-				$scope.ukMobile = /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
-        $scope.ukPhone = /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/;
-        $scope.emailPattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 				console.log(parentScope.candidate.status);
 
 
@@ -61,7 +58,19 @@ angular.module('origApp.controllers')
 									console.log($scope.isValid);
 									$scope.form.age.$setValidity('age',$scope.isValid);
 								}
-
+                $scope.save = function () {
+                  console.log($scope.candidate.emailAddress);
+                  HttpResource.model('users').create($scope.candidate)
+                  .patch($scope.candidateId).then(function (res) {
+                    
+                    console.log(res);
+                  });
+                  HttpResource.model('candidates').create($scope.candidate)
+                  .patch($scope.candidateId+'/contactdetail').then(function (res) {
+                    console.log(res);
+                  });
+                  $modalInstance.dismiss('save');
+                };
                 $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
                 };

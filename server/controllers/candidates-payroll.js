@@ -73,7 +73,8 @@ module.exports = function(db){
     function getPayrollProduct(candidateId, productId){
       var deff=Q.defer();
       candidatepayrollservice.getPayrollProductDetails(candidateId)
-        .then(function(payrollProducts){console.log(payrollProducts);console.log(productId);
+        .then(function(payrollProducts){
+          console.log('getting payroll product:' +productId);
           if(payrollProducts){
             _.forEach(payrollProducts, function(payrollProduct){
               if(payrollProduct._id.toString() === productId){
@@ -106,7 +107,7 @@ module.exports = function(db){
     };
 
     controller.patchPayrollProduct=function (req,res){
-      console.log('payroll product patch.....');
+      console.log('payroll product patch.....')
       savePayrollProduct(req, res, 'patch');
     };
 

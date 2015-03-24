@@ -25,20 +25,35 @@
                 <input type="text" class="form-control ng-pristine ng-animate ng-invalid ng-invalid-required" ng-model="candidate.firstName" ng-pattern = "lettersOnly"ng-required = "candidate.status == 'Live' || candidate.status == 'Submitted'" >
             </div>
         </div>
-        <div class="form-group">
+
+        <!--<div class="form-group">
+
             <label class="col-sm-4 control-label">Middle Name</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.middleName" ng-pattern = "lettersOnly">
             </div>
-        </div>
+        </div>-->
         <div class="form-group">
             <label class="col-sm-4 control-label">Last Name<span ng-show="candidate.status == 'Live'|| candidate.status == 'Submitted'">*</span></label>
             <div class="col-sm-8">
                 <input type="text" class="form-control ng-pristine ng-valid" required ng-model="candidate.lastName" ng-pattern = "lettersOnly" ng-required="candidate.status == 'Live' || candidate.status == 'Submitted'">
             </div>
         </div>
+
         <div class="form-group">
-            <label class="col-sm-4 control-label">Date of birth</label>
+            <label class="col-sm-4 control-label">Gender<span ng-show="candidate.status == 'Live'|| candidate.status == 'Submitted'">*</span></label>
+            <div class="col-sm-8">
+                <ui-select ng-model="candidate.gender" name="gender" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live' || candidate.status == 'Submitted'">
+                    <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                    <ui-select-choices repeat="item.key as item in genders | filter: $select.search">
+                        <span ng-bind-html="item.value"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div class="col-sm-8">
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label">Date of Birth</label>
             <div class="col-sm-8">
                 <input name = "age"type="text" id="age" orig-datepicker class="ng-pristine ng-valid" required ng-model="candidate.birthDate" ng-required="candidate.status == 'Live'">
                 <div class="alert alert-danger" ng-show="form.age.$error.age" role="alert">
@@ -48,7 +63,7 @@
             
         </div>
         
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="col-sm-4 control-label">E-mail Address<span ng-show="candidate.status == 'Live'">*</span></label>
             <div class="col-sm-8">
                 <input type="email" class="form-control ng-pristine ng-valid" ng-required ="candidate.status == 'Live'" ng-model="candidate.email" ng-pattern = "emailPattern">
@@ -59,15 +74,15 @@
         <div class="form-group">
             <label class="col-sm-4 control-label">Mobile no.</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.mobile" ng-pattern = "ukMobile" ng-required = "candidate.status =='Live' &&!candidate.phone">
+                <input type="text" class="form-control ng-valid" ng-model="candidate.mobile" ng-pattern = "ukMobile" ng-required = "candidate.status =='Live' &&!candidate.phone">
             </div>
         </div>
         <div class="form-group ">
             <label class="col-sm-4 control-label">Phone no.</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.phone" ng-pattern = "ukPhone" ng-required = "candidate.status =='Live' &&!candidate.mobile">
+                <input type="text" class="form-control ng-valid" ng-model="candidate.phone" ng-pattern = "ukPhone" ng-required = "candidate.status =='Live' &&!candidate.mobile">
             </div>
-        </div>
+        </div>-->
         <div class="form-group ">
             <label class="col-sm-4 control-label">Nationality</label>
             <div class="col-sm-8">
@@ -84,18 +99,18 @@
             </div>
 
         </div>
-        {{item}}
-        <div class="form-group">
+        <!--{{item}}-->
+        <!--<div class="form-group">
             <label class="col-sm-4 control-label">Address</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.address" style="">
             </div>
-        </div>
+        </div>-->
     </form>
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-disabled="form.$invalid" disabled="disabled" ng-click="ok()">
+    <button class="btn btn-primary" ng-disabled="form.$invalid" disabled="disabled" ng-click="save()">
         <span><i class="fa fa-save"></i> &nbsp; Save </span>
     </button>
     <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>

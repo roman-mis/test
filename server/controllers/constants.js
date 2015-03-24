@@ -196,6 +196,10 @@ module.exports = function(){
       res.json(dataList.expensesRateTypes);
     };
 
+    controller.paymentRateTypes = function(req,res){
+        res.json(dataList.paymentRateTypes);
+    };
+
     controller.getTimesheetTemplates = function(req,res){
       res.json(dataList.templateTypes);
     };

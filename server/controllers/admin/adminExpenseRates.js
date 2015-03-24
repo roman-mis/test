@@ -39,10 +39,6 @@ module.exports = function(dbs){
     	return system.expensesRate;
     }
 
-    controller.getExpenseRatesData = function (req, res) {
-        res.json(dataList.ExpensesRateTypes);
-    };
-
     controller.getByExpenseRateType= function(req, res) {
         var exensesRateType = req.params.expensesRateType;
 

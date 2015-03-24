@@ -480,5 +480,21 @@ service.useCode=function(code){
 
 };
 
+service.patchUser = function(userId, userDetails){
+	return Q.Promise(function(resolve,reject){
+		return service.getUser(userId)
+	        .then(function(user){
+	          if(user){
+	            utils.updateModel(user, userDetails);
+	            return Q.nfcall(user.save.bind(user)).then(function(){
+	            	resolve(user);
+	            });
+	          }else{
+	            resolve.json({result:false,message:'User not found'});
+	          }
+	        },reject);
+	});
+};
+
 module.exports=service;
 
