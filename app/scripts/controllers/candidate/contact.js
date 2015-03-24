@@ -123,6 +123,16 @@ angular.module('origApp.controllers')
             {name: 'country', label:'Country'},
             {name: 'postCode', label:'Post Code'},
           ];
+          $scope.patterns = function (index) {
+            switch(index){
+              case 0: return /./;
+              case 1: return /./;
+              case 2: return /./;
+              case 3: return /./;
+              case 4: return /./;
+              case 5: return /([a-zA-Z]{2}[0-9]{1,2}\s{0,1}[0-9]{1,2}[a-zA-Z]{2})/;
+            }
+          };
           $scope.data = {};
           $scope.nationalities = parentScope.nationalities;
           $scope.candidate = parentScope.candidate;
@@ -139,6 +149,7 @@ angular.module('origApp.controllers')
             parentScope.getCandidateResource().create($scope.data)
                     .patch('contactdetail')
                     .then(function(response) {
+                      console.log(response);
                       $scope.isSaving = false;
                       if (!HttpResource.flushError(response)) {
                         parentScope.contactDetail = jQuery.extend(parentScope.contactDetail, $scope.data);
