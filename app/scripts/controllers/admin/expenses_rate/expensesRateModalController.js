@@ -1,14 +1,12 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('expensesRateModalController', [ '$scope', '$modalInstance', 'HttpResource', 'parentScope', 'expensesRateService',
-        function ($scope, $modalInstance, HttpResource, parentScope, expensesRateService) {
+    .controller('expensesRateModalController', [ '$scope', '$modalInstance', 'HttpResource', 'parentScope', 'expensesRateService', 'ConstantsResource',
+        function ($scope, $modalInstance, HttpResource, parentScope, expensesRateService, ConstantsResource) {
 
             var docId;
             $scope.expensesRate = {};
 
-            expensesRateService.getExpensesRateTypes().then(function (response) {
-                $scope.expensesRateTypes = response;
-            });
+            $scope.expensesRateTypes = ConstantsResource.get('expensesRateTypes')
 
             if (undefined !== parentScope) {
                 docId = parentScope._id;

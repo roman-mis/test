@@ -37,11 +37,11 @@ app.controller('ExpensesRateController', ['$scope', '$rootScope', 'expensesRateS
 
             console.log(type);
 
-            $scope.title = 'adding';
+            $scope.title = 'Add a New Expenses Rate Here';
 
-            if ($index !==undefined || $index !== null ) {
+            if ($index !== undefined) {
                 mapExpensesRate = JSON.parse(JSON.stringify($scope.expensesRate));
-                $scope.title = 'editing';
+                $scope.title = 'Welcome to Editing Expenses Rate';
             }
 
             var modalInstance = ModalService.open({
