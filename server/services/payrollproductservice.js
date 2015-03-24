@@ -129,7 +129,7 @@ module.exports=function(dbs){
 	   				    	//	console.log(typeof payrollProductDetails.agency);
 	   				    		if(String(payrollProduct.agency) === payrollProductDetails.agency){
 	   				    		notExistedAgency = false;
-	   				    		return deff.reject({result:false,name:'ValidationError',message:'Agency already exist.'});
+	   				    		return deff.reject({result:false,name:'ValidationError',message:'Agency already exists.'});
 	   				    		}
 	   				    	}
 	   				   	});
@@ -165,7 +165,7 @@ module.exports=function(dbs){
 	   				    				console.log(typeof payrollProduct.agency); //object
 			   				    		if(String(payrollProduct.agency) === payrollProductDetails.agency){
 			   				    			notDuplicateAgency = false;
-			   				    			return deff.reject({result:false,name:'DuplicateRecordExists',message:'Agency cannot be duplicate'});
+			   				    			return deff.reject({result:false,name:'ValidationError',message:'Agency already exists.'});
 			   				    		
 			   				    		}
 	   				    			}
@@ -178,8 +178,8 @@ module.exports=function(dbs){
 	   						return Q.nfcall(user.save.bind(user)).then(function(){
 								deff.resolve({user:user, product:product});						
 							}, deff.reject);
-	   					}
-	   					else{
+							
+	   					}else{
 	   						return deff.reject({result:false,name:'NotFound',message:'Product not found'});
 	   					}
 	   				}
