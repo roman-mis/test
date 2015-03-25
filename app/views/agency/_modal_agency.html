@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form name="agencyForm" class="form-horizontal" role="form" novalidate>
         <div class="form-group" ng-repeat="field in fields">
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <label class="control-label">{{field.label}}</label>
                 <label class="control-label" ng-if="field.required">*</label>
             </div>
@@ -14,8 +14,8 @@
                 <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'companyRegNo'" ng-pattern="/^(\d{8})+$/">
                 <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'companyVatNo'" ng-pattern="/^(\d{9})+$/">
                 <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name == 'country'">
-                  <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                  <ui-select-choices repeat="item.code as item in countries | filter: $select.search">{{item.name}}</ui-select-choices>
+                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item.code as item in countries | filter: $select.search">{{item.name}}</ui-select-choices>
                 </ui-select>
             </div>
         </div>

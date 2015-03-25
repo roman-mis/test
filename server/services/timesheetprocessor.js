@@ -358,10 +358,10 @@ module.exports=function(db){
 						  			if(!candidate){
 						  				dataRow.failMessages.push('No Matching Contractor Found.');
 						  			}else{
-						  				if(candidate.firstName !== row.contractorForename){
+						  				if(candidate.firstName !== dataRow.contractorForename){
 						  					dataRow.failMessages.push('Contractor First Name Mismatch.');
 						  				}
-						  				if(candidate.lastName !== row.contractorSurname){
+						  				if(candidate.lastName !== dataRow.contractorSurname){
 						  					dataRow.failMessages.push('Contractor Last Name Mismatch.');
 						  				}
 						  			}
