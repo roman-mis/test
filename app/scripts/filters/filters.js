@@ -24,6 +24,14 @@ angular.module('origApp.filters', [])
             return moment(input).format(format);
           };
         })
+
+        .filter('dateRange', function() {
+          return function(input) {
+            console.log(input.validFrom);
+            return input;
+          };
+        })
+
         .filter('formatNumber', function($filter) {
           function doFilter(input) {
             if (input === null) {

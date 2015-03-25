@@ -53,7 +53,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="elem in data">
+								<tr ng-repeat="elem in data | dateRange ">
 									<td>&pound;{{elem.amount}}</td>
 									<td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
 									<td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
