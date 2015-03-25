@@ -4,8 +4,13 @@ angular.module('origApp.controllers')
 			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
+<<<<<<< HEAD
 
 
+=======
+				$scope.genders = [{ key: 'M', value: 'Male' }, { key: 'F', value: 'Female' }];
+
+>>>>>>> 298d9a69862880b197dd5a8d776bf97640b11e94
 				console.log($scope.candidate);
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
 					console.log(res);
@@ -59,7 +64,7 @@ angular.module('origApp.controllers')
 									$scope.form.age.$setValidity('age',$scope.isValid);
 								}
                 $scope.save = function (validity) {
-                  alert(validity);
+
                   if(validity){
                   console.log($scope.candidate.emailAddress);
                   HttpResource.model('users').create($scope.candidate)
@@ -71,10 +76,13 @@ angular.module('origApp.controllers')
                   .patch($scope.candidateId+'/contactdetail').then(function (res) {
                     console.log(res);
                   });
+
                  }else{
 
                   $scope.submitted=true;
                  }
+                  $modalInstance.dismiss('save');
+
                 };
                 $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');

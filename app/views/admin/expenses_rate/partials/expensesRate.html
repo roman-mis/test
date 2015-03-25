@@ -27,7 +27,7 @@
             </div>
 
             <div class="form-group col-sm-12">
-                <label class="col-sm-4">Expenses Rate Types</label>
+                <label class="col-sm-4">Types</label>
                 <div class="col-sm-8">
                     <ui-select name="expensesRateType" ng-model="expensesRate.expensesRateType" theme="select2" search-enabled="false">
                         <ui-select-match value="" placeholder="Select a expenses rate">{{$select
@@ -43,45 +43,75 @@
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Tax Applicable ?</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" min="0"
-                           name="taxApplicable" ng-model="expensesRate.taxApplicable" value
-                            ="{{expensesRate.taxApplicable}}">
+
+                    <div class="make-switch">
+                        <label class="switch_wrap">
+                            <input type="checkbox" ng-model="expensesRate.taxApplicable" value
+                                    ="{{expensesRate.taxApplicable}}"/>
+                            <div class="switch"><span class="bullet"></span></div>
+                        </label>
+                    </div>
+
                 </div>
             </div>
 
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Vat</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" min="0"
-                           name="vat" ng-model="expensesRate.vat" value
-                            ="{{expensesRate.vat}}">
+
+                    <div class="make-switch">
+                        <label class="switch_wrap">
+                            <input type="checkbox" ng-model="expensesRate.vat" value
+                                    ="{{expensesRate.vat}}"/>
+                            <div class="switch"><span class="bullet"></span></div>
+                        </label>
+                    </div>
+
                 </div>
             </div>
 
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Dispensation</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" min="0"
-                           name="dispensation" ng-model="expensesRate.dispensation" value
-                            ="{{expensesRate.dispensation}}">
+
+                    <div class="make-switch">
+                        <label class="switch_wrap">
+                            <input type="checkbox" ng-model="expensesRate.dispensation" value
+                                    ="{{expensesRate.dispensation}}"/>
+                            <div class="switch"><span class="bullet"></span></div>
+                        </label>
+                    </div>
+
                 </div>
             </div>
 
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Receipted</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" min="0"
-                           name="receipted" ng-model="expensesRate.receipted" value
-                            ="{{expensesRate.receipted}}">
+
+                    <div class="make-switch">
+                        <label class="switch_wrap">
+                            <input type="checkbox" ng-model="expensesRate.receipted" value
+                                    ="{{expensesRate.receipted}}"/>
+                            <div class="switch"><span class="bullet"></span></div>
+                        </label>
+                    </div>
+
                 </div>
             </div>
 
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Status</label>
                 <div class="col-sm-8">
-                    <input type="checkbox" min="0"
-                           name="isEnabled" ng-model="expensesRate.isEnabled" value
-                            ="{{expensesRate.isEnabled}}">
+
+                    <div class="make-switch">
+                        <label class="switch_wrap">
+                            <input type="checkbox" ng-model="expensesRate.isEnabled" value
+                                    ="{{expensesRate.isEnabled}}"/>
+                            <div class="switch"><span class="bullet"></span></div>
+                        </label>
+                    </div>
+
                 </div>
             </div>
 
