@@ -42,6 +42,9 @@ angular.module('origApp.controllers')
  //    });
  //  };
 
+     HttpResource.model('systems/rti').query({},function (res) {
+         $scope.rti = res.data.object;
+     });
      $scope.openEditRti = function() {
             ModalService.open({
               templateUrl: 'views/admin/hmrc/partials/editRtiSubmission.html',

@@ -4,30 +4,32 @@
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                   <label class="col-xs-6 control-label">Enable RTI</label>
-                                   <div class="col-xs-6">
-                                    <div class="control-label pull-right">
-                                        Angular here
-                                    </div>
-                                </div>
-                            </div>
+                                
                         </div>
                             <div class="col-xs-6">
-                                <button class="btn btn-success pull-right"><a style="color:white;"class="icon-edit" href="" ng-click="openEditRti()">
+                                <button ng-click="openEditRti()" class="btn btn-success pull-right">
+
                                     <i class="fa fa-edit"></i> edit
-                                </a></button>
+                                </button>
                             </div>
                         </div>
 
                     <div class="row">
 
                         <div class="col-sm-6">
+                        <div class="form-group">
+                                   <label class="col-xs-6 control-label">Enable RTI</label>
+                                   <div class="col-xs-6">
+                                    <div class="control-label pull-right">
+                                        No relevant entity found in the api..
+                                    </div>
+                                </div>
+                            </div>
                            <div class="form-group">
                             <label class="col-xs-6 control-label">User ID</label>
                             <div class="col-xs-6 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.userId}}
                                 </div>
                             </div>
                         </div>
@@ -35,7 +37,7 @@
                             <label class="col-xs-6 control-label">Password</label>
                             <div class="col-xs-6 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.password}}
                                 </div>
                             </div>
                         </div>
@@ -43,7 +45,7 @@
                             <label class="col-xs-6 control-label">First Name</label>
                             <div class="dropdown col-xs-6 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.firstName}}
                                 </div>
                             </div>
                         </div>
@@ -51,7 +53,7 @@
                             <label class="col-xs-6 control-label">Last Name</label>
                             <div class="dropdown col-xs-6 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.lastName}}
                                 </div>
                             </div>
                         </div>
@@ -59,7 +61,7 @@
                             <label class="col-xs-6 control-label">Address 1</label>
                             <div class="dropdown col-xs-6 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.address1}}
                                 </div>
                             </div>
                         </div>
@@ -67,7 +69,7 @@
                             <label class="col-xs-6 control-label">Address 2</label>
                             <div class="dropdown col-xs-6 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.address2}}
                                 </div>
                             </div>
                         </div>
@@ -77,7 +79,7 @@
                                 </label>
                                 <div class="col-xs-6">
                                     <div class="control-label pull-right">
-                                        Angular here
+                                        {{rti.eligibleSmallEmployerAllowance}}
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +90,7 @@
                                 </label>
                                 <div class="col-xs-6">
                                     <div class="control-label pull-right">
-                                        Angular here
+                                        {{rti.claimEmploymentAllowance}}
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@
                             <label class="col-xs-4 control-label">Town</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.town}}
                                 </div>
                             </div>
                         </div>
@@ -108,7 +110,7 @@
                             <label class="col-xs-4 control-label">Country</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.country}}
                                 </div>
                             </div>
                         </div>
@@ -116,7 +118,7 @@
                             <label class="col-xs-4 control-label">Post Code</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.postCode}}
                                 </div>
                             </div>
                         </div>
@@ -124,7 +126,7 @@
                             <label class="col-xs-4 control-label">Phone</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.telphone}}
                                 </div>
                             </div>
                         </div>
@@ -132,7 +134,7 @@
                             <label class="col-xs-4 control-label">Fax</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.fax}}
                                 </div>
                             </div>
                         </div>
@@ -140,7 +142,7 @@
                             <label class="col-xs-4 control-label">Email</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <div class="control-label pull-right">
-                                    Angular here
+                                    {{rti.emailAddress}}
                                 </div>
 
                             </div>
@@ -149,10 +151,10 @@
                     
 
                     <div class="col-sm-12 text-right">
-                        <button class="btn btn-primary btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&#160;  Clear Data</button>
+                        <!-- <button class="btn btn-primary btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&#160;  Clear Data</button> -->
                         <button class="btn btn-success">Employer Alignment submissions</button>
                         <!-- <button class="btn btn-primary">Get Data</button> -->
-                        <button class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save</button>
+                        <!-- <button class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save</button> -->
                     </div>
                 </div>
             </form>
