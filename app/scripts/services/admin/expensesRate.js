@@ -42,24 +42,9 @@ angular.module('origApp.services')
             return d.promise;
         }
 
-        function _getExpensesRateTypes() {
-            var d = $q.defer();
-            HttpResource.model('constants/expensesRateTypes').query({}, function (data) {
-                if (data.data) {
-                    d.resolve(data.data);
-                } else {
-                    d.reject('no data');
-                }
-            });
-
-            return d.promise;
-
-        }
-
         return {
             getExpensesRate: _getExpensesRate,
-            saveExpensesRate : _saveExpensesRate,
-            getExpensesRateTypes : _getExpensesRateTypes
+            saveExpensesRate : _saveExpensesRate
         };
 
     });
