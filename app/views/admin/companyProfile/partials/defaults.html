@@ -1,7 +1,43 @@
+<div class="col-md-6">
+    <p class="entry-title">Defaults<a class="icon-edit pull-right" href="javascript:void(0);" href ng-click="openCompanyProfileDefaults()"><i class="fa fa-edit"></i>edit</a></p>
+</div>
+<div class="col-md-12">
+  <div class="row entry-content">
+    <div class="col-sm-5 nonepadding">
+
+      <div class="col-sm-12 form-group">Default Pay Frequency<span class="meta-o">{{companyProfile.defaults.payFrequency}}</span></div>
+
+      <div class="col-sm-12 form-group">Default Holiday Pay Rule <span class="meta-o">{{companyProfile.defaults.holidayPayRule}}</span></div>
+
+      <div class="col-sm-12 form-group">Default Payment Method <span class="meta-o">{{companyProfile.defaults.paymentMethod}}</span></div>
+
+      <div class="col-sm-12 form-group">Default Admin Fee <span class="meta-o">{{companyProfile.defaults.adminFee}}</span></div>
+
+      <div class="col-sm-12 form-group">Derogation Contract <span class="meta-o">{{companyProfile.defaults.derogationContract}}</span></div>
+
+      <div class="col-sm-12 form-group">Derogation Spread Weeks <span class="meta-o">{{companyProfile.defaults.derogationSpreadWeeks}}</span></div>
+
+      <div class="col-sm-12 form-group">Communication Method<span class="meta-o">{{companyProfile.defaults.communicationMethod}}</span></div>
+
+      <div class="col-sm-12 form-group">Contractor Status<span class="meta-o">{{companyProfile.defaults.contractorStatus}}</span></div>
+
+      <div class="col-sm-12 form-group">Default Tax Code Contractors <span class="meta-o">{{companyProfile.defaults.taxCodeContractors}}</span></div>
+
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<!--
 <div class="row">
 	<div class="col-xs-12">
 		<div class="row text-center">
-		<!--	<div class="col-xs-12 col-md-offset-2 col-md-8"> -->
 				<form class="form-horizontal" ng-submit="save(defaults.$valid)" novalidate name="defaults" >
 				<div class="col-xs-8">
 					<div class="form-group">
@@ -77,4 +113,4 @@
 			
 		</div>
 	</div>
-</div>	
+</div>	 -->

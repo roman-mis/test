@@ -21,7 +21,7 @@
                         defer.resolve({
                             'result': true,
                             object: {
-                                'lastLogin': d.lastLogin
+                                'lastLogin': (d.lastLogin?d.lastLogin:null)
                             }
                         });
                     } else {

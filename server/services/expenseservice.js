@@ -64,6 +64,7 @@ module.exports = function(dbs){
 
                 bucketObject.claimReference=t.claimReference;
                 bucketObject.claimDate=t.createdDate;
+                bucketObject.user=t.user;
                 bucketObject.expenses=[];
                 bucketObject.id=t._id;
 
@@ -134,8 +135,7 @@ module.exports = function(dbs){
         return Q.promise(function(resolve,reject){
 
           service.fetchExpenses(ids).then(function(model){
-             var bucket=[];
-             var modelId;
+
              for(var i=0;i<model.length;i++){
                 model[i].days.forEach(function(l){
 
@@ -144,15 +144,17 @@ module.exports = function(dbs){
                            var v=l.expenses.id(id);
                            if(v){
                               v.status=status;
-                              if(modelId !== String(model[i]._id)){
-                              bucket.push(Q.nfcall(model[i].save.bind(model[i])));
-                              modelId=String(model[i]._id);
-                              }
                            }
                       });
                 });
 
              }
+             var bucket=[];
+             model.forEach(function(mo){
+
+               bucket.push(Q.nfcall(mo.save.bind(mo)));
+
+             });
 
              return Q.all(bucket).then(function(){
                  resolve({result:true})
@@ -171,8 +173,7 @@ module.exports = function(dbs){
 
             service.fetchExpenses(ids).then(function(model){
 
-               var bucket=[];
-               var modelId;
+
                for(var i=0;i<model.length;i++){
 
                  model[i].days.forEach(function(l){
@@ -183,10 +184,6 @@ module.exports = function(dbs){
                         if(v){
 
                           v.remove();
-                           if(modelId !== String(model[i]._id)){
-                              bucket.push(Q.nfcall(model[i].save.bind(model[i])));
-                              modelId=String(model[i]._id);
-                              }
 
                           }
 
@@ -194,8 +191,15 @@ module.exports = function(dbs){
                  });
 
                }
+             var bucket=[];
+             model.forEach(function(mo){
+
+               bucket.push(Q.nfcall(mo.save.bind(mo)));
+
+             });
+
              return Q.all(bucket).then(function(){
-                 resolve({result:true})
+                 resolve({result:true});
 
              },reject);
 
@@ -219,26 +223,27 @@ module.exports = function(dbs){
                    ids.forEach(function(doc){
 
                        var e=l.expenses.id(doc.id);
-                       console.log(e);
+
                        if(e){
 
                         e.expenseType=doc.expenseType;
                         e.subType=doc.subType;
                         e.value=doc.value;
                         e.receiptUrls=doc.receiptUrls;
-                        if(modelId !==String(model[i]._id)){
-
-                          bucket.push(Q.nfcall(model[i].save.bind(model[i])));
-                          modelId=String(model[i]._id);
-                        }
                        }
                    });
 
                 });
 
               }
+             var bucket=[];
+             model.forEach(function(mo){
 
-            return Q.all(bucket).then(function(){
+               bucket.push(Q.nfcall(mo.save.bind(mo)));
+
+             });
+
+             return Q.all(bucket).then(function(){
                  resolve({result:true})
 
              },reject);

@@ -12,12 +12,13 @@ app.controller('bankDetailsController',['$scope', '$location', 'HttpResource', '
             return $state.includes('app.admin.' + stateKey);
           };
 
-
+/*
      $scope.save=function(val){
        	if(val){
          CompanyProfileService.saveCompanyProfile($scope.companyProfile, 'bankDetails');
        	}else{
        		$scope.submitted=true;
        	}
-       }
+       }  
+       */
 }]);
