@@ -49,12 +49,12 @@
                         <td>
                             <a data-toggle="collapse" data-target="{{'#accordion'+$index}}" class="clickable"><i class="fa fa-minus-square-o"></i></a>
                         </td>
-                        <td>900001</td>
+                        <td>{{expense.claimReference}}</td>
                         <td>{{expense.claimDate | date : "EEE dd/MM/yyyy"}}</td>
-                        <td>Mark Gentry</td>
-                        <td>Mon 02/23/2015</td>
-                        <td>Submitted</td>
-                        <td>£685.49</td>
+                        <td>{{expense.userName.firstName}}&nbsp;{{expense.userName.lastName}}</td>
+                        <td>{{expense.startDate | date : "EEE dd/MM/yyyy"}}</td>
+                        <td>&nbsp;</td>
+                        <td>{{expense.total | currency:"&pound;"}}</td>
                         <td>
                             <input type="checkbox" />
                         </td>
@@ -75,11 +75,11 @@
                                             <th width="12%">Date</th>
                                             <th width="9%" class="text-right">Value</th>
                                             <th width="10%" class="text-right">Amount</th>
-                                            <th width="8%" class="text-right">VAT</th>
-                                            <th width="8%" class="text-right">Total</th>
-                                            <th width="11%">Receipt</th>
+                                            <th width="9%" class="text-right">VAT</th>
+                                            <th width="9%" class="text-right">Total</th>
+                                            <th width="13%">Receipt</th>
                                             <th>Status</th>
-                                            <th width="10%"></th>
+                                            <th width="6%"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -131,20 +131,23 @@
                                             <td colspan="12" class="td-collapsed">
                                                 <div id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" class="collapse">
                                                     <table class="table table-striped">
-                                                        <tr ng-repeat="item in expense.expenses | filter:cat">
+                                                        <tr ng-repeat="item in expense.expenses" ng-if="item.expenseType==cat">
                                                             <td width="4%">
-                                                                <input type="checkbox" ng-model="checked[expense][cat][$index]" />
+                                                                <input type="checkbox" ng-model="item.checked" />
                                                             </td>
                                                             <td width="11%"></td>
                                                             <td width="12%" class="text-left">{{item.subType}}</td>
                                                             <td width="12%" class="text-left">
                                                                 {{item.date  | date : "EEE dd/MM/yyyy"}}
                                                             </td>
-                                                            <td width="9%">&pound;{{item.value}}</td>
-                                                            <td width="10%">&pound;{{item.amount}}</td>
-                                                            <td>&pound;{{item.vat}}</td>
-                                                            <td>&pound;{{item.total}}</td>
-                                                            <td ng-if="item.status == 'submitted'">
+                                                            <td width="9%" ng-hide="item.edit">{{item.value | currency:"&pound;"}}</td>
+                                                            <td width="9%" ng-show="item.edit">
+                                                                <input style="width: 5em" type="number" placeholder="value" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
+                                                            </td>
+                                                            <td width="10%">{{item.amount | currency:"&pound;"}}</td>
+                                                            <td width="10%">{{item.vat | currency:"&pound;"}}</td>
+                                                            <td width="8%">{{item.total | currency:"&pound;"}}</td>
+                                                            <td width="8%" ng-if="item.status == 'submitted'">
                                                                 <div class="dropdown">
                                                                     <a style="cursor:pointer" data-toggle="dropdown">
                                                                         <i class="fa fa-picture-o present"></i>
@@ -165,7 +168,7 @@
                                                                     </ul>
                                                                 </div>
                                                             </td>
-                                                            <td ng-if="item.status != 'submitted'">
+                                                            <td width="10%" ng-if="item.status != 'submitted'">
                                                                 <div class="dropdown">
                                                                     <a style="cursor:pointer" data-toggle="dropdown">
                                                                         <i class="fa fa-picture-o absent"></i>
@@ -186,17 +189,17 @@
                                                                     </ul>
                                                                 </div>
                                                             </td>
-                                                            <td>{{item.status}}</td>
-                                                            <td>
-                                                                <a style="cursor:pointer">
+                                                            <td width="10%">{{item.status}}</td>
+                                                            <td width="6%">
+                                                                <a style="cursor:pointer" ng-click="item.edit = true; startEditing($parent.$parent.$parent.$index, $parent.$parent.$index)">
                                                                     <i class="fa fa-pencil-square-o"></i>
                                                                 </a>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="11" class="buttons-row">
-                                                                <button class="btn btn-primary">Save</button>
-                                                                <button class="btn btn-default">Cancel</button>
+                                                            <td colspan="11" class="buttons-row" ng-show="expensesArray[$parent.$index].editFlags[$index]">
+                                                                <button class="btn btn-primary" ng-click="finishEditing($parent.$index, $index, true)">Save</button>
+                                                                <button class="btn btn-default" ng-click="finishEditing($parent.$index, $index, false)">Cancel</button>
                                                             </td>
                                                         </tr>
                                                     </table>

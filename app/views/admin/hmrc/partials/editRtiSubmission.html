@@ -1,0 +1,175 @@
+<div class="modal-header">
+  <div class="row">
+    <div class="col-xs-8">
+      <h3 class="modal-title" style="padding: 6px 0;">Edit Details</h3>
+      <button class="btn btn-success" ng-click="log()">log</button>
+    </div>  
+  </div>
+</div>
+
+<div class="modal-body">
+            <div role="tabpanel" class="tab-pane active" id="RTISubmissions">
+            <div class="row">
+                <div class="col-xs-12">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                   <label class="col-xs-4 control-label">Enable RTI</label>
+                                   <div class="col-xs-8">
+                                        <div class="make-switch control-label">
+                                            <label class="switch_wrap pull-right" for="field">
+                                                <input ng-model="rti.enableRti" id="field" type="checkbox" />
+                                                <div class="switch"><span class="bullet"></span></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                           <div class="form-group">
+                            <label class="col-xs-4 control-label">User ID</label>
+                            <div class="col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.userId" class="form-control" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Password</label>
+                            <div class="col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.password" class="form-control" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">First Name</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.firstName" class="form-control"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Last Name</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.lastName" class="form-control"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Address 1</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.address1" class="form-control" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Address 2</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.address2" class="form-control"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Town</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.town" class="form-control"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Country</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.country" class="form-control" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Post Code</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input ng-model="rti.postCode" class="form-control" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Phone</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="rti.telephone" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Fax</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="rti.fax" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-xs-4 control-label">Email</label>
+                            <div class="dropdown col-xs-8 no-padding-left">
+                                <span type="text">
+                                    <input class="form-control" ng-model="rti.emailAddress" />
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">Eligible small employer allowance
+                            </label>
+                            <div class="col-xs-2">
+                                <div class="make-switch">
+                                    <label class="switch_wrap pull-right" for="field2">
+                                        <input ng-model="rti.eligibleSmallEmployerAllowance" id="field2" type="checkbox" />
+                                        <div class="switch"><span class="bullet"></span></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-xs-8 control-label">Claim Employment allowance
+                            </label>
+                            <div class="col-xs-4">
+                                <div class="make-switch">
+                                    <label class="switch_wrap pull-right" for="field3">
+                                        <input ng-model = "rti.claimEmploymentAllowance" id="field3" type="checkbox" />
+                                        <div class="switch"><span class="bullet"></span></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-primary btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&#160;  Clear Data</button>
+                        <button class="btn btn-success">Employer Alignment submissions</button>
+                        <!-- <button class="btn btn-primary">Get Data</button> -->
+                        <button class="btn btn-success" ng-click="save()"><i class="fa fa-floppy-o"></i>&#160; Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

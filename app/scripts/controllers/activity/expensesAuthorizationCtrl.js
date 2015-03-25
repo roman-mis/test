@@ -7,30 +7,88 @@ app.controller("expensesAuthorizationCtrl",
 
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/activity/home', text: 'Activity' },
-                                  { link: '/activity/expensesAuthorization', text: 'Expenses' }
+                                  { link: '/activity/expensesAuthorization', text: 'Expenses Authorisation' }
         ];
 
 
-        HttpResource.model('candidates/expenses').query({}, function (expenses) {
-            console.log('getting expenses done !!');
-            //console.log(expenses.data);
-            $scope.expensesArray = expenses.data.object;
+        $http.get('/api/candidates/expenses').success(function (expenses) {
+            //console.log('getting expenses done !!');
+            //console.log(expenses);
+            $scope.expensesArray = expenses.object;
+            init();
+        });
+
+        function init() {
+
             for (var i = 0; i < $scope.expensesArray.length; i++) {
+                $scope.expensesArray[i].startDate = getMonday($scope.expensesArray[i].claimDate);
                 $scope.expensesArray[i].categories = [];
+                $scope.expensesArray[i].editFlags = [];
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                    $scope.expensesArray[i].expenses[j].checked = false;
+                    $scope.expensesArray[i].expenses[j].edit = false;
                     if ($scope.expensesArray[i].categories.indexOf($scope.expensesArray[i].expenses[j].expenseType) == -1) {
                         $scope.expensesArray[i].categories.push($scope.expensesArray[i].expenses[j].expenseType);
+                        $scope.expensesArray[i].editFlags.push(false);
                     }
                 }
 
             }
+            $scope.cloned = [];
+            angular.copy($scope.expensesArray, $scope.cloned);
             console.log($scope.expensesArray);
+        }
 
-            //HttpResource.model('candidates/' + '55100de8e36c36073a376569' + '/contactdetail').query({}, function (res) {
-            //    console.log(res);
-            //});
-        });
+        function getMonday(d) {
+            d = new Date(d);
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1);
+            return new Date(d.setDate(diff));
+        }
 
+        $scope.startEditing = function (expenseIndex, categoryIndex) {
+            //console.log(categoryIndex); console.log(expenseIndex);
+            $scope.expensesArray[expenseIndex].editFlags[categoryIndex] = true;
+            //console.log($scope.cloned);
+            //console.log($scope.expensesArray);
+        }
+
+        $scope.finishEditing = function (expenseIndex, categoryIndex, save) {
+            if (save) {
+                $scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
+                var req = {};
+                req.body = [];
+                for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                    if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == $scope.expensesArray[expenseIndex].categories[categoryIndex]) {
+                        $scope.expensesArray[expenseIndex].expenses[i].edit = false;
+                        angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
+                        req.body.push({
+                            "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
+                            "subType": $scope.expensesArray[expenseIndex].expenses[i].subType,
+                            "value": $scope.expensesArray[expenseIndex].expenses[i].value,
+                            "id": $scope.expensesArray[expenseIndex].expenses[i].id,
+                            "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
+                        });
+                    }
+                }
+                $http.put('/api/candidates/expenses/edit', req).success(function (res) {
+                    console.log(res);
+                    init();
+                });
+            } else {
+                $scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
+                for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                    if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == $scope.expensesArray[expenseIndex].categories[categoryIndex]) {
+                        $scope.expensesArray[expenseIndex].expenses[i].edit = false;
+                        angular.copy($scope.expensesArray[expenseIndex].expenses[i], $scope.cloned[expenseIndex].expenses[i]);
+                    }
+                }
+            }
+        }
+
+        //$scope.logs = function (x, y) {
+        //    console.log(x); console.log(y);
+        //}
 
         //var catCount;
 
