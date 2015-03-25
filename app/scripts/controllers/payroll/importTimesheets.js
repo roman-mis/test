@@ -141,19 +141,7 @@ angular.module('origApp.controllers')
 	  				deductions:0,
 	  				total: $scope.timesheets[i].total,
 	  				imageUrl: 'test_url',
-	  				elements: [{
-	  					elementType:$scope.timesheets[i].elementType,
-	  					units:$scope.timesheets[i].noOfUnits,
-	  					payRate:$scope.timesheets[i].payRate,
-	  					amout: $scope.timesheets[i].noOfUnits* $scope.timesheets[i].payRate,
-	  					vat: ($scope.timesheets[i].noOfUnits* $scope.timesheets[i].payRate * ($scope.timesheets[i].vat)/100).toFixed(2),
-	  					isCis:false,
-	  					paymentRate:{
-	  						name: $scope.timesheets[i].paymentRate.name,
-	  						rateType: $scope.timesheets[i].paymentRate.rateType,
-	  						hours: $scope.timesheets[i].paymentRate.hours
-	  					}
-	  				}]
+	  				elements: elements
 	  			};
 	  		}
 	  		return bulkTimesheets;
