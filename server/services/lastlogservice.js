@@ -8,44 +8,44 @@
 
         var service = {};
         service.getLastLogs = function(id, type) {
-          
+
 
             var defer = Q.defer();
-            if (type === "User") {
+            if (type === 'User') {
                 db.User.findOne({
-                    "_id": id
+                    '_id': id
                 }).select('lastLogin').exec(function(err, d) {
 
                     if (!err) {
-                        
+
                         defer.resolve({
-                            "result": true,
+                            'result': true,
                             object: {
-                                "lastLogin": d.lastLogin
+                                'lastLogin': (d.lastLogin?d.lastLogin:null)
                             }
                         });
                     } else {
 
                         defer.reject(err);
                     }
-                })
-            } else if (type === "Task") {
+                });
+            } else if (type === 'Task') {
 
                 db.Task.aggregate({
 
-                        "$match": {
+                        '$match': {
 
-                            "user": mongoose.Types.ObjectId(id)
+                            'user': mongoose.Types.ObjectId(id)
                         }
                     }, {
-                        "$project": {
-                            "createdDate": true
+                        '$project': {
+                            'createdDate': true
                         }
                     }, {
 
-                        "$sort": {
+                        '$sort': {
 
-                            "createdDate": -1
+                            'createdDate': -1
                         }
                     },
 
@@ -55,33 +55,33 @@
                         if (!err) {
 
                             defer.resolve({
-                                "result": true,
+                                'result': true,
                                 object: {
-                                    "lastCallLog": document.length?document[0].createdDate:null
+                                    'lastCallLog': document.length?document[0].createdDate:null
                                 }
                             });
                         } else {
 
                             defer.reject(err);
                         }
-                    })
-            } else if (type === "Expense") {
+                    });
+            } else if (type === 'Expense') {
 
                 db.Expense.aggregate({
 
-                        "$match": {
+                        '$match': {
 
-                            "user": mongoose.Types.ObjectId(id)
+                            'user': mongoose.Types.ObjectId(id)
                         }
                     }, {
-                        "$project": {
-                            "createdDate": true
+                        '$project': {
+                            'createdDate': true
                         }
                     }, {
 
-                        "$sort": {
+                        '$sort': {
 
-                            "createdDate": -1
+                            'createdDate': -1
                         }
                     },
 
@@ -92,25 +92,25 @@
                         if (!err) {
 
                             defer.resolve({
-                                "result": true,
+                                'result': true,
                                 object: {
-                                    "lastExpense": document.length?document[0].createdDate:null
+                                    'lastExpense': document.length?document[0].createdDate:null
                                 }
                             });
                         } else {
 
                             defer.reject(err);
                         }
-                    })
+                    });
             }
 
             return defer.promise;
 
 
-        }
+        };
 
 
-        service.getLastlog = function(id) {
+        service.getLastlog = function() {
             var arg = arguments;
 
 
@@ -123,7 +123,7 @@
                 }, reject);
 
 
-            })
+            });
 
 
         };

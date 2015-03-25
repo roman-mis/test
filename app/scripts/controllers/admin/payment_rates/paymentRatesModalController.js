@@ -1,11 +1,10 @@
 'use strict';
 angular.module('origApp.controllers')
     .controller('paymentRatesModalController', [ '$scope', '$modalInstance', 'HttpResource', 'parentScope', 'paymentRatesService',
-        function ($scope, $modalInstance, HttpResource, parentScope, paymentRatesService) {
+        'ConstantsResource', function ($scope, $modalInstance, HttpResource, parentScope, paymentRatesService, ConstantsResource) {
 
             var docId;
             $scope.paymentRates = {};
-            $scope.initPaymentRates = {};
             /*
              * importAliases in the form is rendered in loop so for the importAliases field to display in init first
              * element is pushed as empty
@@ -23,11 +22,7 @@ angular.module('origApp.controllers')
                 $scope.paymentRates.importAliases.unshift('');
             }
 
-            /**
-             * @todo Take json list from server
-             *
-             */
-            $scope.rateTypes = ['Hourly', 'Day', 'Expense', 'Holiday'];
+            $scope.paymentRateTypes = ConstantsResource.get('paymentRateTypes');
 
             $scope.ok = function () {
                 $modalInstance.close('ok passed to parent');
@@ -51,7 +46,7 @@ angular.module('origApp.controllers')
                     return;
                 }
                 $scope.isSaving = true;
-                docId ? docId = docId : null;
+                docId = docId || null;
                 /*Removes first empty element in importAliases before posting it to server*/
                 if ($scope.paymentRates.importAliases[0] === '') {
                     $scope.paymentRates.importAliases.splice(0, 1);

@@ -50,6 +50,8 @@ angular.module('origApp.controllers')
 
             //upload file to s3
             $scope.uploadComapnyLogo = function () {
+                console.log('mmmmmmmmmmm');
+                console.log(arguments);
                 if (!$('#upload_company_logo').val()) {
                     alert('Please select a file first.');
                     return;

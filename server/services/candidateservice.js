@@ -47,14 +47,14 @@
 						console.log({result:false});
 						reject({result:false,name:'NOTFOUND',message:'can\'t find candidate'});
 					}
-				
+
 			},reject);
 	});
 	};
 
 	service.getLogs=function(id){
       var defer=Q.defer();
-      db.User.findOne({"_id":id}).select('lastLogin').exec(function(err,res){
+      db.User.findOne({'_id':id}).select('lastLogin').exec(function(err,res){
 
       	if(!err){
 
@@ -63,7 +63,7 @@
 
       		defer.reject(err);
       	}
-      })
+      });
       return defer.promise;
 	};
 
@@ -401,7 +401,7 @@
 					.then(function(result){
 						if(result){
 
-							db.User.update({"_id":user._id},{$set:{"lastLogin":new Date()}},function(err){
+							db.User.update({'_id':user._id},{$set:{'lastLogin':new Date()}},function(err){
 						        console.log(err);
 						    });
 

@@ -26,11 +26,19 @@ router.get('/loggedinuser',candidatecontroller.getLoggedInUser);
 
 router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
-router.get('/getAllexpenses', restMiddleware(db),expensecontroller.getAllExpenses);
+router.get('/expenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
-router.patch('/updateAllexpensesToReject',expensecontroller.updateExpenseReject);
+router.delete('/expenses',expensecontroller.deleteExpense);
 
-router.patch('/updateAllexpensesToApprove',expensecontroller.updateExpenseApprove)
+router.patch('/expenses/reject',expensecontroller.rejectExpense);
+
+router.patch('/expenses/approve',expensecontroller.approveExpense);
+
+router.put('/expenses/edit',expensecontroller.editExpenses);
+
+
+router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
+
 
 router.get('/:id',candidatecontroller.getCandidate);
 

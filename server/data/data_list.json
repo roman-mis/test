@@ -690,7 +690,7 @@
   ],
 
 
-  "expensesRateTypes": [
+  "billableTypes": [
     {
       "code": "1",
       "name": "Billable"
@@ -700,14 +700,42 @@
       "name": "Non-Billable"
     }
   ],
-
-
-  "templateTypes": [
+  
+  "expensesRateTypes": [
     {
-      "code": "1",
-      "name": "Standard"
+      "code": "Subsistence",
+      "name": "Subsistence"
+    },
+    {
+      "code": "Other",
+      "name": "Other"
     }
   ],
+
+  "paymentRateTypes": [{
+     "code": "Hourly",
+     "name": "Hourly"
+  }, {
+     "code": "Day",
+     "name": "Day"
+  }, {
+      "code": "Expense",
+      "name": "Expense"
+  }, {
+      "code": "Holiday",
+      "name": "Holiday"
+  }],
+
+  "templateTypes": [{
+      "code": "1",
+      "name": "Standard"
+    },{
+      "code": "2",
+      "name": "Format 1"    
+    },{
+      "code": "3",
+      "name": "Format 2"    
+    }],
 
 
   "AOE": {
@@ -959,7 +987,6 @@
         } 
       },
       "permissions": {
-        "accessKey": "WK",
         "fields": {
             "taps": {
               "Home": {
@@ -982,6 +1009,17 @@
               },
               "History": {
                 "hide": false
+              }
+            },
+            "leftMenu":{
+              "hide": true
+            },
+            "topToolBar":{
+              "myProfile":{
+                "hide": false
+              },
+              "advancedSearch":{
+                "hide": true
               }
             },
             "rightToolBar": {
@@ -1030,10 +1068,10 @@
                   "title": {
                     "hide": false,
                     "setTo": "Inbound Portal Enquiry",
-                    "editable": false
+                    "readOnly": true
                   },
                   "selectTemplate": {
-                    "hide": true
+                    "hide": true 
                   },
                   "textFeld": {
                     "hide": false
@@ -1093,6 +1131,9 @@
               "Others": {
               	"hide": false
               }
+            },
+            "leftMenu":{
+              "hide": true
             },
             "rightToolBar": {
             }

@@ -1,204 +1,212 @@
-		<div class="modal-content add-tsh" >
-			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
-			</div><!-- /modal-header -->
-			<div class="modal-body">
-				<div class="row"> 
-					<div class="col-xs-6 col-sm-3 form-group">
-						Contractor Name
-					</div>
-					<div class="col-xs-6 col-sm-4 form-group">
-						{{candidate.firstName}} {{candidate.lastName}}
-					</div>
-					<div class="col-xs-6 col-sm-3 form-group">
-						Contractor ID
-					</div>
-					<div class="col-xs-6 col-sm-2 form-group">
-						{{candidate.candidateRef}}
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-7">
-						<div class="row">
-							<div class="col-xs-12 col-sm-5 form-group">
-								Select Agency
-							</div>
-							<div class="col-xs-12 col-sm-7 form-group">
-								<select class="form-control" ng-model = "saveAgency" ng-options="agency.agency.name for agency in agencies">
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-5">
-						<!--Bootstrap datepicker-->
-						<div class="form-group">
-							<div class="input-group date" id="datepicker">
-								<div ng-show = "clicked == true" 
-								style = "position: absolute;left: 60px;top: 50px; z-index: 1000;
+<div class="modal-content add-tsh">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
+    </div><!-- /modal-header -->
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 form-group">
+                Contractor Name
+            </div>
+            <div class="col-xs-6 col-sm-4 form-group">
+                {{candidate.firstName}} {{candidate.lastName}}
+            </div>
+            <div class="col-xs-6 col-sm-3 form-group">
+                Contractor ID
+            </div>
+            <div class="col-xs-6 col-sm-2 form-group">
+                {{candidate.candidateRef}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-7">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 form-group" style="line-height: 28px">
+                        Select Agency
+                    </div>
+                    <div class="col-xs-12 col-sm-7 form-group">
+                        <select class="form-control" ng-model="saveAgency" ng-options="agency.agency.name for agency in agencies"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5">
+                <!--Bootstrap datepicker-->
+                <div class="form-group">
+                    <div class="input-group date" id="datepicker">
+                        <div ng-show="clicked == true"
+                             style="position: absolute;left: 60px;top: 50px; z-index: 1000;
 								background-color:white;	outline: 1px solid grey">
-								<datepicker 
-								ng-model="claimDate" 
-								format-day="d" 
-								starting-day="weekEndingDay"
-								max-date="minDate" 
-								show-weeks="false" 
-								id="claim_datepicker" >
-							</datepicker>
-							<button class="btn btn-primary" ng-click="okay();clicked =false">
-								ok
-							</button>
-							<button class="btn btn-primary" ng-click="clicked =false">cancel</button>
-						</div>
-						<input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder">
-						<span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-click="clicked = true"><i class="glyphicon glyphicon-calendar"></i></button>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-3 col-sm-12 form-group">
-				<span>Rate Description</span>
-				<select ng-model = "saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates">
-						</select>
-					</div>
-					<div class="col-sm-12 form-group hidden-md hidden-lg">
-						<input type="text" class="form-control" placeholder="Enter description" />
-					</div>
-					<div class="col-md-7 col-sm-12">
-						<div class="row">
-							<div class="col-sm-12 no-padding-right">
-								<div class="col-xs-2 form-group no-padding margin-8 text-center">
-									<span >Unit</span>
-									<input ng-model = "elements.unit" type="number" class="form-control" />
-								</div>
-								<div class="col-xs-2 form-group no-padding margin-8 text-center">
-									<span>Pay Rate</span>
-									<input min="0" ng-model="elements.payRate" 
-									type="number" 
-									class="form-control"/>
-								</div>
-								<div class="col-xs-2 form-group no-padding margin-8 text-center">
-									<span>Charge Rate</span>
-									<input ng-model = 'elements.chargeRate' type="text" class="form-control" disabled />
-								</div>
-								<div class="col-xs-2 form-group no-padding margin-8 text-center">
-									<span>Amount</span>
-									<input ng-model="elements.amount" type="number" class="form-control" disabled />
-								</div>
-								<div class="col-xs-2 form-group no-padding margin-8 text-center">
-									<span>VAT</span>
-									<input ng-model = 'elements.vat' type="text" class="form-control" disabled />
-								</div>
-							</div>
-						</div>
-					</div>
+                            <datepicker ng-model="claimDate"
+                                        format-day="d"
+                                        starting-day="weekEndingDay"
+                                        max-date="minDate"
+                                        show-weeks="false"
+                                        id="claim_datepicker">
+                            </datepicker>
+                            <button class="btn btn-primary" ng-click="okay();clicked =false">
+                                ok
+                            </button>
+                            <button class="btn btn-primary" ng-click="clicked =false">cancel</button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder" ng-click="clicked = true" readonly style="cursor:text">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="clicked = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-3 col-sm-12 form-group">
+                <span>Rate</span>
+                <select ng-model="saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates"></select>
+            </div>
+            <div class="col-sm-12 form-group hidden-md hidden-lg">
+                <input type="text" class="form-control" placeholder="Enter description" />
+            </div>
+            <div class="col-md-7 col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 no-padding-right">
+                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                            <span>Unit</span>
+                            <input ng-model="elements.unit" type="number" class="form-control" />
+                        </div>
+                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                            <span>Pay Rate</span>
+                            <input min="0" ng-model="elements.payRate"
+                                   type="number"
+                                   class="form-control" />
+                        </div>
+                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                            <span>Charge Rate</span>
+                            <input ng-model='elements.chargeRate' type="text" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                            <span>Amount</span>
+                            <input ng-model="elements.amount" type="number" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                            <span>VAT</span>
+                            <input ng-model='elements.vat' type="text" class="form-control" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-					<div class="col-md-2 col-sm-12 col-xs-12 form-group">
-						<br/>
-						<button ng-disabled="!elements.payRate || !elements.unit" ng-click = "populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
-					</div>
-				</div>
-				<div class="row hidden-sm hidden-xs">
-					<div class="col-md-5 form-group">
-						<input ng-model = "userDescription" type="text" class="form-control" placeholder="Enter description" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<table class="table table-striped" id="tableHeader">
-							<thead>
-								<tr>
-									<th>Rate Description</th>
-									<th>Description</th>
-									<th>Unit</th>
-									<th>Pay Rate</th>
-									<th>Charge Rate</th>
-									<th>Amount</th>
-									<th>VAT</th>
-								</tr>
-							</thead>
-						</table>
-						<div class="tableWrapper">
-							<table class="table table-striped" id="tableBody">
-								<tbody>
-									<tr ng-repeat ="element in finalElements">
-										<td style="width: 20%;">{{element.elementName}}</td>
-										<td style="width: 20%;">{{element.description}}</td>
-										<td>{{element.units}}</td>
-										<td>{{element.payRate}}</td>
-										<td style="width: 15%;">n/a</td>
-										<td>{{element.amount}}</td>
-										<td>{{element.vat}}</td>
-									</tr>
+            <div class="col-md-2 col-sm-12 col-xs-12 form-group">
+                <br />
+                <button ng-disabled="!elements.payRate || !elements.unit" ng-click="populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
+            </div>
+        </div>
+        <div class="row hidden-sm hidden-xs">
+            <div class="col-md-5 form-group">
+                <input ng-model="userDescription" type="text" class="form-control" placeholder="Enter description" />
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+                    <thead id="tableHeader">
+                        <tr>
+                            <th>Rate</th>
+                            <th>Description</th>
+                            <th>Unit</th>
+                            <th>Pay Rate</th>
+                            <th>Charge Rate</th>
+                            <th>Amount</th>
+                            <th>VAT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr ng-repeat="element in finalElements">
+                            <td>{{element.elementName}}</td>
+                            <td>{{element.description}}</td>
+                            <td>{{element.units}}</td>
+                            <td>{{element.payRate}}</td>
+                            <td style="width: 15%;">n/a</td>
+                            <td>{{element.amount}}</td>
+                            <td>{{element.vat}}</td>
+                        </tr>
 
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div><!-- /modal-body -->
+                    </tbody>
+                </table>
+                <!--<div class="tableWrapper">
+                    <table class="table table-striped" ></table>
+                </div>-->
+            </div>
+        </div>
+    </div><!-- /modal-body -->
 
-			<div class="modal-footer">
-				<div class="row rowFooter">
-					<div class="col-xs-6 col-sm-4 no-padding-right">
-						<fieldset class="fieldsetTimesheet">
-							<legend>Upload Timesheet</legend>
-							<div class="row">
-								<div class="col-sm-12 form-group">
-									<!-- <div class="fileUpload btn btn-primary form-control"> -->
-									<button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
-									<input accept = "image/*"type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;"/>
-								</div>
-								
+    <div class="modal-footer">
+        <div class="row rowFooter">
+            <div class="col-xs-6 col-sm-4 no-padding-right">
+                <fieldset class="fieldsetTimesheet">
+                    <legend>Upload Timesheet</legend>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <!-- <div class="fileUpload btn btn-primary form-control"> -->
+                            <button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
+                            <input accept="image/*, application/pdf" type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;" />
+                        </div>
 
-							<div class="col-sm-12 form-group">
-								<button class="btn btn-primary btn-block" ng-disabled="isUploading || inSelectFile == false" ng-click="uploadFile()">
-									<div ng-show="!isUploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
-									<div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
 
-								</button>
+                        <div class="col-sm-12 form-group">
+                            <button class="btn btn-primary btn-block" ng-disabled="isUploading || inSelectFile == false" ng-click="uploadFile()">
+                                <div ng-show="!isUploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+                                <div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
 
-							</div>
-							<div class="col-sm-12 text-left">
-								{{files.files[0].name}} 
-							</div>
-							<div class="col-sm-12 text-left">
-								{{uploadStatus}}
-							</div>
-						</div>
-					</fieldset>
-				</div>
-				<div class="col-xs-6 col-sm-4">
-					<div class="row">
-						<div class="col-xs-5 labelDisabledInput">
-							<span>NET</span>
-						</div>
-						<div class="col-xs-7 form-group">
-							<input ng-model = "net" type="text" class="form-control" disabled />
-						</div>
-						<div class="col-xs-5 labelDisabledInput">
-							<span>VAT</span>
-						</div>
-						<div class="col-xs-7  form-group">
-							<input ng-model="totalVat" type="text" class="form-control" disabled />
-						</div>
-								<div class="col-xs-5 labelDisabledInput">
-									<span>Total</span>
-								</div>
-								<div class="col-xs-7 form-group">
-									<input ng-model = "total" type="text" class="form-control" disabled />
-								</div>
-							</div>
-						</div>
+                            </button>
+                        </div>
+                        <div class="col-sm-12 form-group" ng-show="isUploading">
+                            <button class="btn btn-primary btn-block" ng-disabled="!isUploading" ng-click="cancelUpload()">
+                                <div> &nbsp; Cancel Upload</div>
+                            </button>
+                        </div>
+                        <div class="col-sm-12 text-left" style="word-wrap:break-word">
+                            {{files.files[0].name}}
+                        </div>
+                        <div class="col-sm-12 text-left">
+                            {{uploadStatus}}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div class="row">
+                    <div class="col-xs-5 labelDisabledInput">
+                        <span>NET</span>
+                    </div>
+                    <div class="col-xs-7 form-group">
+                        <input ng-model="net" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="col-xs-5 labelDisabledInput">
+                        <span>VAT</span>
+                    </div>
+                    <div class="col-xs-7  form-group">
+                        <input ng-model="totalVat" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="col-xs-5 labelDisabledInput">
+                        <span>Total</span>
+                    </div>
+                    <div class="col-xs-7 form-group">
+                        <input ng-model="total" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+            </div>
 
-						<div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
-							<a ng-click = "cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>    
-							<button  ng-disabled="addClicked == false || weekEndingDate == null" ng-click ="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
-						</div>
-					</div>
-				</div><!-- /modal footer -->
-		</div><!-- /modal content -->
+            <div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
+                <a ng-click="cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>
+                <button ng-disabled="addClicked == false || weekEndingDate == null" ng-click="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
+            </div>
+        </div>
+    </div><!-- /modal footer -->
+</div><!-- /modal content -->

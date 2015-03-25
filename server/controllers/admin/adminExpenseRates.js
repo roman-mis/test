@@ -3,8 +3,10 @@ var controller={};
 module.exports = function(dbs){
 	var _ = require('lodash');
 	var systemservice = require('../../services/systemservice')(dbs),
-	adminExpenseRatesService = require('../../services/admin/adminExpenseRatesService')(dbs);
-    
+	adminExpenseRatesService = require('../../services/admin/adminExpenseRatesService')(dbs),
+    dataList = require('../../data/data_list.json');
+
+
     controller.getExpenseRates= function(req, res) {
         return systemservice.getSystem()
 	  	.then(function(system){

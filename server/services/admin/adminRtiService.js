@@ -6,7 +6,7 @@ var Q=require('q');
 var utils=require('../../utils/utils');
 var systemservice = require('../../services/systemservice')(dbs);
 var service = {};
-var xml2js=require('xml2js');
+//var xml2js=require('xml2js');
 
 service.saveRti = function(mileageRatesInfo){
 	return Q.Promise(function(resolve,reject){

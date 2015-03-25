@@ -1,6 +1,6 @@
 <div class="candidate-meta meta-box container-fluid">
     <div class='meta-box-inner row'>
-        <div class="col-lg-9">
+        <div class="col-sm-8 col-md-9">
             <!--<div class="msg-box alert-danger hidden-sm hidden-xs">
                 <span class='fa fa-exclamation-circle'></span>
                 <span class='message'>Bank Details Required</span>
@@ -11,20 +11,20 @@
                 <span class='message'>Email Address Required</span>
                 <span class='pointer fa fa-times-circle-o pull-right'></span>
             </div>-->
-            <div class='alpha hidden-md hidden-sm hidden-xs'>
+            <div class='alpha'>
                 <p class='candidate-name'>{{candidate.firstName}} {{candidate.lastName}}</p>
                 <p class='candidate-ref'>Ref: {{candidate.candidateRef}}</p>
             </div>
             
         </div>
-        <div class="col-lg-3">
-            <label style="color:green">Candidate Status</label>
-            <select class='form-control' ng-model = "candidate.status" ng-options="status.value as status.value for status in candidateStatus">
-            </select>
-            <button ng-click="editCandidateStatus()" class="btn btn-success">Save</button>
-
+        <div class="col-sm-4 col-md-3">
+            <label style="color:#539347">Candidate Status</label>
+            <ui-select ng-model = "candidate.status" theme="select2" search-enabled="false" ng-change = "editCandidateStatus()">
+                <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                <ui-select-choices repeat = "item.value as item in candidateStatus">{{item.value}}</ui-select-choices>
+            </ui-select>
         </div>
-        <div class='pie-chat col-lg-3 hidden-md hidden-sm hidden-xs'></div>
+<!--        <div class='pie-chat col-lg-3 hidden-md hidden-sm hidden-xs'></div>
         <div class="col-md-12 hidden-lg">
             <div class='alpha col-md-12 hidden-lg'>
                 <div class="pull-left">
@@ -37,7 +37,7 @@
                     <span>onboard</span>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 
