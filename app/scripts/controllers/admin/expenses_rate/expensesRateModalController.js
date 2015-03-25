@@ -27,7 +27,7 @@ angular.module('origApp.controllers')
                 expensesRateService.saveExpensesRate($scope.expensesRate, docId)
                     .then(function (response) {
                         $scope.isSaving = false;
-                        docId ? docId = docId : null;
+                        docId = docId || null;
 
                         if (!HttpResource.flushError(response)) {
                             $modalInstance.close('saved');

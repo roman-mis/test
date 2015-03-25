@@ -338,6 +338,10 @@ header.container-fluid {
                     text-decoration: none;
                     display: block;
                     color: $gray-lightest;
+                    width: 200px; 
+                    @media (max-width: $screen-sm-max) {
+                        width: 40px;
+                    }
                     i, span {
                         text-transform: uppercase;
                         display: block;
@@ -348,13 +352,16 @@ header.container-fluid {
                     }
                     i {
                         text-align: center;
-                        width: 40px;
+                        width: 20%;
                         background-color: $green-light;
+                        @media (max-width: $screen-md-max) {
+                            width: 40px;
+                        }
                     }
                     span.title {
                         padding-left: 10px;
                         text-align: left;
-                        width: 160px;
+                        width: 80%;
                         background-color: $gray;
                         border-bottom: 4px solid $gray-light;
                     }
@@ -579,16 +586,11 @@ header.container-fluid {
                 }
                 .meta {
                     float: right;
-                    color: $green-light;
-                    font-size: 13px;
-                    text-decoration: underline;
-                    &:hover {
-                        color: $green;
-                    }
+                    font-size: 13px; 
                 }
                 .meta-o {
                     float: right;
-                    color: #417EAB;
+                    color: $green-light;
                     font-size: 13px;
                 }
                 > li {
@@ -813,9 +815,7 @@ header.container-fluid {
                     &:nth-child(even) {
                         background-color: $gray-lightest;
                     }
-                    &:hover {
-                        background-color: #dce7d7;
-                    }
+                    
                 }
             }
         }
