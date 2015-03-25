@@ -46,7 +46,7 @@ angular.module('origApp.controllers')
                     return;
                 }
                 $scope.isSaving = true;
-                docId ? docId = docId : null;
+                docId = docId || null;
                 /*Removes first empty element in importAliases before posting it to server*/
                 if ($scope.paymentRates.importAliases[0] === '') {
                     $scope.paymentRates.importAliases.splice(0, 1);
