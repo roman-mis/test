@@ -7,7 +7,7 @@ module.exports = function(dbs){
 		queryutils=require('../utils/queryutils')(db),
 		service={};
     var enums=require('../utils/enums');
-    var async=require('async');
+    // var async=require('async');
 
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
