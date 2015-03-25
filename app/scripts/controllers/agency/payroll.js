@@ -5,7 +5,7 @@ angular.module('origApp.controllers')
 
             function loadPayrollData() {
                 $scope.payrollData = HttpResource.model('agencies/' + $scope.agencyId).get('payroll');
-            }
+            };
 
             $scope.getConstant = function (constantKey, code) {
                 var hashData = ConstantsResource.getHashData(constantKey);

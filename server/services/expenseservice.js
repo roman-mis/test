@@ -51,7 +51,8 @@ module.exports = function(dbs){
       request.orderBy=[{'submittedDate':-1}];
 
     	return Q.Promise(function(resolve,reject){
-			var q=db.Expense.find();
+			var q=db.Expense.find().populate('user','title firstName lastName');
+
 
 			queryutils.applySearch(q, db.Expense, request)
 				.then(function(expense){
@@ -65,6 +66,7 @@ module.exports = function(dbs){
                 bucketObject.claimReference=t.claimReference;
                 bucketObject.claimDate=t.createdDate;
                 bucketObject.expenses=[];
+                bucketObject.userName=t.user;
                 bucketObject.id=t._id;
 
                 var secondValue=t.days;

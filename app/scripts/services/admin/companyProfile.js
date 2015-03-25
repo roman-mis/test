@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.services')
-.factory('CompanyProfileService', function(HttpResource, $q) {
+.factory('CompanyProfileService', function(HttpResource, $q,$rootScope) {
 
   var companyProfile = {};
   var acAPI = HttpResource.model('systems/companyProfile');
@@ -39,11 +39,16 @@ angular.module('origApp.services')
     companyProfile = data.defaults;
   }
 
-    if (data){
+    if (data&& tab){
+      console.log('getting tab');
+      console.log(tab);
       HttpResource.model('systems/companyProfile/' + tab)
       .create(companyProfile).post().then(function(result){
+        console.log('getting result');
         console.log(result);
       });
+      $rootScope.$emit('profileSave',companyProfile,tab);
+      console.log(companyProfile);
     }
     d.resolve('saved successfully');
     return d.promise;
