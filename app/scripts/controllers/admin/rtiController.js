@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('origApp.controllers')
-.controller('RtiController', function($scope, $rootScope, $timeout,HttpResource,allUsers){
+.controller('RtiController', function($scope, $rootScope, $timeout,HttpResource,allUsers,ModalService){
     $rootScope.breadcrumbs = [{link:'/', text:'Home'},
         {link: '/admin/home', text: 'Admin'},
         {link: '/admin/hmrc/rti', text: 'RTI Submissions'}
@@ -42,5 +42,12 @@ angular.module('origApp.controllers')
  //    });
  //  };
 
-     
+     $scope.openEditRti = function() {
+            ModalService.open({
+              templateUrl: 'views/admin/hmrc/partials/editRtiSubmission.html',
+              parentScope: $scope,
+              controller: 'editRtiSubmissionCtrl',
+              size: 'lg'
+            });
+          };
 });
