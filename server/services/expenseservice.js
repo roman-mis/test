@@ -66,7 +66,7 @@ module.exports = function(dbs){
                 bucketObject.claimReference=t.claimReference;
                 bucketObject.claimDate=t.createdDate;
                 bucketObject.expenses=[];
-                bucketObject.user=t.user;
+                bucketObject.userName=t.user;
                 bucketObject.id=t._id;
 
                 var secondValue=t.days;
