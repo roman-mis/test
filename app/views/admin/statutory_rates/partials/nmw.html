@@ -9,8 +9,8 @@
 			<div class="col-xs-12">
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#currentAndFuture" aria-controls="currentAndFuture" role="tab" data-toggle="tab">Current &#38; Future</a></li>
-					<li role="presentation"><a href="#historic" aria-controls="historic" role="tab" data-toggle="tab">Historic</a></li>
+					<li role="presentation" class="active"><a data-target="#currentAndFuture" aria-controls="currentAndFuture" role="tab" data-toggle="tab">Current &#38; Future</a></li>
+					<li role="presentation"><a data-target="#historic" aria-controls="historic" role="tab" data-toggle="tab">Historic</a></li>
 				</ul>
 				<!-- Tab panels -->
 				<div class="tab-content">
@@ -53,7 +53,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="elem in data">
+								<tr ng-repeat="elem in data | validDate ">
 									<td>&pound;{{elem.amount}}</td>
 									<td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
 									<td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
@@ -69,7 +69,24 @@
 					</div>
 
 					<div role="tabpanel" class="tab-pane" id="historic">
-
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Rate</th>
+									<th>Valid From</th>
+									<th>Valid To</th>
+									<th>Age</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="elem in data | validDate: 'reverse' ">
+									<td>&pound;{{elem.amount}}</td>
+									<td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
+									<td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
+									<td>Age: {{elem.ageLower}} - {{elem.ageUpper}}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
