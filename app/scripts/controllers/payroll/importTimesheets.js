@@ -68,7 +68,8 @@ angular.module('origApp.controllers')
   			$scope.errors = 0;
   			$scope.preProcessClicked = true;
   			console.log('in preProcess');
-			for(var i = 0; i< $scope.timesheets.length; ++i){
+			 var count = 1;
+      for(var i = 0; i< $scope.timesheets.length; ++i){
 				console.log('in preProcess loop');
 				if($scope.timesheets[i].failMessages.length>0){
 					$scope.importStatus[i] = 'Import Fail';
@@ -80,19 +81,30 @@ angular.module('origApp.controllers')
 					$scope.importStatus[i] = 'Import Successful';
 				}
 
-				$scope.timesheetTable[i] = {
-					id: $scope.timesheets[i].contractorReferenceNumber,
-					name: $scope.timesheets[i].contractorForename +' '+ $scope.timesheets[i].contractorSurname,
-					unit: $scope.timesheets[i].noOfUnits,
-					rate: $scope.timesheets[i].payRate,
-					total: $scope.timesheets[i].total,
-					importStatus: $scope.importStatus[i]
+				// $scope.timesheetTable[i] = {
+				// 	id: $scope.timesheets[i].contractorReferenceNumber,
+				// 	name: $scope.timesheets[i].contractorForename +' '+ $scope.timesheets[i].contractorSurname,
+				// 	unit: $scope.timesheets[i].noOfUnits,
+				// 	rate: $scope.timesheets[i].payRate,
+				// 	total: $scope.timesheets[i].total,
+				// 	importStatus: $scope.importStatus[i]
+				// };
 
-				};
-
+        for(var j = 0; j< $scope.timesheets[i].elements.length; j++){
+            var timesheetRow = {};
+            timesheetRow.id = count++;
+            timesheetRow.contractorReferenceNumber = $scope.timesheets[i].contractorReferenceNumber;
+            timesheetRow.name = $scope.timesheets[i].contractorForename +' '+ $scope.timesheets[i].contractorSurname;
+            timesheetRow.importStatus = $scope.importStatus[i];
+            timesheetRow.unit = $scope.timesheets[i].elements[j].units;
+            timesheetRow.rate = $scope.timesheets[i].elements[j].payRate;
+            timesheetRow.total = $scope.timesheets[i].elements[j].units*$scope.timesheets[i].elements[j].payRate;
+            timesheetRow.paymentRate = $scope.timesheets[i].elements[j].rateDescription;
+            $scope.timesheetTable.push(timesheetRow);
+        }
 
 			}
-			console.log('out of preProcess loop');
+      console.log('out of preProcess loop');
 			$scope.displayTimesheets = $scope.timesheetTable;
 			console.log('displaySheets ready' ,$scope.displayTimesheets);
 			$scope.uploadValidation();
@@ -103,7 +115,21 @@ angular.module('origApp.controllers')
   			
 	  		var bulkTimesheets = [];
 	  		for(var i = 0; i<$scope.timesheets.length;++i){
-	  			bulkTimesheets[i] = {
+	  			var elements = [];
+          for(var j = 0; j< $scope.timesheets[i].elements.length; j++){
+            var element={
+              elementType:$scope.timesheets[i].elements[j].elementType,
+              units:$scope.timesheets[i].elements[j].noOfUnits,
+              payRate:$scope.timesheets[i].elements[j].payRate,
+              amout: $scope.timesheets[i].elements[j].noOfUnits* $scope.timesheets[i].elements[j].payRate,
+              vat: ($scope.timesheets[i].elements[j].noOfUnits* $scope.timesheets[i].payRate * ($scope.timesheets[i].elements[j].vat)/100).toFixed(2),
+              isCis:false,
+              paymentRate:$scope.timesheets[i].elements[j].paymentRate
+            };
+            elements.push(element);
+          }
+
+          bulkTimesheets[i] = {
 	  				worker: $scope.timesheets[i].worker,
 	  				agency: $scope.saveAgency.id,
 	  				status: 'submitted',

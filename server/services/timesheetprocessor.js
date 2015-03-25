@@ -70,20 +70,20 @@ module.exports=function(db){
 					  			// Set payment Rates
 					  			dataRow.elements = [{
 					  				rateDescription: 'Standard Hourly Rate',
-									noOfUnits: row.hrs,
-									unitRate: row.basic
+									units: row.hrs,
+									payRate: row.basic
 					  			},{
 					  				rateDescription: 'Overtime One Rate',
-									noOfUnits: row.hrs1,
-									unitRate: row.ot1
+									units: row.hrs1,
+									payRate: row.ot1
 					  			},{
 					  				rateDescription: 'Overtime Two Rate',
-									noOfUnits: row.hrs11,
-									unitRate: row.ot2
+									units: row.hrs11,
+									payRate: row.ot2
 					  			},{
 					  				rateDescription: 'Overtime Three Rate',
-									noOfUnits: row.hrs11,
-									unitRate: row.ot3
+									units: row.hrs11,
+									payRate: row.ot3
 					  			}];
 					  			
 					  			var total = 0;
@@ -95,14 +95,15 @@ module.exports=function(db){
 					  				if(!element.elementType){
 		  								dataRow.failMessages.push('No Matching Payment Rate Found.');
 					  				}else{
-					  					if(paymentRate.rateType === 'Hourly' && element.noOfUnits > 100){
+					  					if(paymentRate.rateType === 'Hourly' && element.units > 100){
 					  						dataRow.warningMessages.push('Hours > 100');
 					  					}
-					  					if(paymentRate.rateType === 'Day' && element.noOfUnits > 10){
+					  					if(paymentRate.rateType === 'Day' && element.units > 10){
 					  						dataRow.warningMessages.push('Day > 10');
 					  					}
 					  				}
-					  				total += element.noOfUnits * element.unitRate;
+					  				element.total = parseFloat(element.units) * parseFloat(element.payRate);
+					  				total += element.total;
 					  			});
 
 					  			// Add No Matching Candidate validation if not matching
@@ -258,8 +259,7 @@ module.exports=function(db){
 			  			// For Week Ending Date
 			  			if(row[3].toString().toLowerCase() === 'person'){
 			  				weekEndingDate = row[14].toString();
-			  				console.log(weekEndingDate);
-							var dateParts = weekEndingDate.split(/(?=(?:..)*$)/);
+			  				var dateParts = weekEndingDate.split(/(?=(?:..)*$)/);
 							weekEndingDate = (parseInt(dateParts[2])+2000).toString() + '-' + dateParts[1].toString() + '-' + dateParts[0];
 			  			}
 
@@ -275,13 +275,12 @@ module.exports=function(db){
 			  				var dataRow = {
 			  					acNo: row[0],
 			  					withRef: row[1],
-			  					candidateRef: row[2],
-			  					firstName: firstName,
-			  					lastName: lastName,
+			  					contractorReferenceNumber: row[2],
+			  					contractorForename: firstName,
+			  					contractorSurname: lastName,
 			  					schoolName: row[4],
 			  				};
-			  				console.log(dataRow);
-
+			  				
 			  				// Calculate Full Day vs Half Day
 			  				var dayType = 'half';
 			  				if(
@@ -375,7 +374,7 @@ module.exports=function(db){
 						  				dataRow.failMessages.push('Timesheet Value is less than or equal to 0.');
 						  			}
 						  			finishData.push(dataRow);
-						  			console.log(dataRow);
+						  			// console.log(dataRow);
 
 			                		// Add Overall Validation Result
 			                		if(Object.keys(dataRow.failMessages).length > 0 || dataRow.warningMessages.length > 0){
