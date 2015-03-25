@@ -1,0 +1,97 @@
+<div class="candidate-modal">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Accounts</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="form" role="form" novalidate>
+            <div class="row">
+                <div class="col-sm-12">
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Default Pay Frequency</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.payFrequency" ng-options="opt.code as opt.description for opt in dropDownLists.payFrequency"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6"> Default Holiday Pay Rule </label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.holidayPayRule" ng-options="opt.code as opt.description for opt in dropDownLists.holidayPayRule"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Default Payment Method</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.paymentMethod" ng-options="opt.code as opt.description for opt in dropDownLists.paymentMethod"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Default Admin Fee</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.adminFee" ng-options="opt.code as opt.description for opt in dropDownLists.adminFee"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Derogation Contract</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.derogationContract" ng-options="opt.code as opt.description for opt in dropDownLists.derogationContract"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Derogation Spread Weeks</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" ng-model="companyProfile.defaults.derogationSpreadWeeks" type="number" /> </td>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Communication Method</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.communicationMethod" ng-options="opt.code as opt.description for opt in dropDownLists.communicationMethod"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Contractor Status</label>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="companyProfile.defaults.contractorStatus" ng-options="opt.code as opt.description for opt in dropDownLists.contractorStatus"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-6">Default Tax Code Contractors &nbsp;</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" ng-model="companyProfile.defaults.taxCodeContractors" type="text" /> </td>
+                        </div>
+                    </div>                          
+              
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="saveDefaults()" ng-disabled="isSaving || form.$invalid">
+            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+        </button>
+        <button class="btn btn-warning" ng-click="closeProfileFunction()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+    </div>
+
+</div>

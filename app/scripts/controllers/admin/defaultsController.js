@@ -12,13 +12,5 @@ app.controller('defaultsController',['$scope', '$rootScope','$state','CompanyPro
             return $state.includes('app.admin.' + stateKey);
           };
 
-
-        $scope.save=function(val){
-	       if(val){    	
-	         CompanyProfileService.saveCompanyProfile($scope.companyProfile, 'defaults');
-	       }else{
-	        $scope.submitted=true;
-	       }
-       };
 	}
 ]);
