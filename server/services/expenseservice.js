@@ -64,6 +64,7 @@ module.exports = function(dbs){
 
                 bucketObject.claimReference=t.claimReference;
                 bucketObject.claimDate=t.createdDate;
+                bucketObject.user=t.user;
                 bucketObject.expenses=[];
                 bucketObject.id=t._id;
 

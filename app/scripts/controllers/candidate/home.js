@@ -8,10 +8,10 @@ angular.module('origApp.controllers')
 
             $scope.payrollProduct = data.data.objects;
 		      });
-          
+
           HttpResource.model('candidates/'+$scope.candidateId+'/contactdetail').customGet('',{},function(data){
               $scope.contactdetail=data.data.object;
-              console.log($scope.contactdetail)
+          //    console.log($scope.contactdetail)
           },function(err){
           })
 
@@ -42,4 +42,5 @@ angular.module('origApp.controllers')
               size:'md'
             });
           };
+
         });

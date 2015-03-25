@@ -4,8 +4,8 @@ angular.module('origApp.controllers')
 			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
-				
-				
+
+
 				console.log($scope.candidate);
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
 					console.log(res);
@@ -16,7 +16,7 @@ angular.module('origApp.controllers')
           $scope.titles = res.data;
           console.log($scope.candidate.title);
         });
-				
+
 				$scope.status = parentScope.candidate.status;
 				$scope.lettersOnly = /^[A-Za-z]+$/;
 				console.log(parentScope.candidate.status);
@@ -27,8 +27,8 @@ angular.module('origApp.controllers')
 					$scope.nationalities = res.data;
           console.log($scope.nationalities);
 				});
-				
-				
+
+
 
 
 
@@ -47,7 +47,7 @@ angular.module('origApp.controllers')
 							$scope.age=$scope.calcAge($scope.candidate.birthDate);
 							console.log($scope.age);
 
-							
+
 								// $scope.form.age = newVal;
 								if($scope.age<16 && $scope.status ==='Live'){
 									$scope.isValid = false;
@@ -58,17 +58,23 @@ angular.module('origApp.controllers')
 									console.log($scope.isValid);
 									$scope.form.age.$setValidity('age',$scope.isValid);
 								}
-                $scope.save = function () {
+                $scope.save = function (validity) {
+                  alert(validity);
+                  if(validity){
                   console.log($scope.candidate.emailAddress);
                   HttpResource.model('users').create($scope.candidate)
                   .patch($scope.candidateId).then(function (res) {
-                    
+
                     console.log(res);
                   });
                   HttpResource.model('candidates').create($scope.candidate)
                   .patch($scope.candidateId+'/contactdetail').then(function (res) {
                     console.log(res);
                   });
+                 }else{
+
+                  $scope.submitted=true;
+                 }
                 };
                 $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
