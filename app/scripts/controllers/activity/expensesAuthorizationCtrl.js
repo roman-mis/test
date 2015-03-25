@@ -11,15 +11,44 @@ app.controller("expensesAuthorizationCtrl",
         ];
 
 
-        //HttpResource.model('candidates/54cf9e69f383e9be63a0d663/expenses').customGet('', {}, function (agencies) {
-        //    console.log('agencies done !!');
-        //    console.log(agencies);
-        //    $scope.agencies = agencies.data.objects;
-        //});
+        HttpResource.model('candidates/expenses').query({}, function (expenses) {
+            console.log('getting expenses done !!');
+            //console.log(expenses.data);
+            $scope.expensesArray = expenses.data.object;
+            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                $scope.expensesArray[i].categories = [];
+                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                    if ($scope.expensesArray[i].categories.indexOf($scope.expensesArray[i].expenses[j].expenseType) == -1) {
+                        $scope.expensesArray[i].categories.push($scope.expensesArray[i].expenses[j].expenseType);
+                    }
+                }
+
+            }
+            console.log($scope.expensesArray);
+
+            //HttpResource.model('candidates/' + '55100de8e36c36073a376569' + '/contactdetail').query({}, function (res) {
+            //    console.log(res);
+            //});
+        });
 
 
-        var catCount;
-        initialize();
+        //var catCount;
+
+        //// counting categories and items/category
+        //$scope.categories = [];
+        //catCount = [];
+        //for (var i = 0; i < $scope.data.length; i++) {
+        //    if ($scope.categories.indexOf($scope.data[i].category) == -1) {
+        //        $scope.categories.push($scope.data[i].category);
+        //        catCount.push(1);
+        //    } else catCount[$scope.categories.indexOf($scope.data[i].category)]++;
+        //}
+
+        //$scope.users = ['first', 'second'];
+        //$scope.editing = {};
+        //$scope.checked = {};
+
+        //initialize();
 
 
         function initialize() {
@@ -133,20 +162,6 @@ app.controller("expensesAuthorizationCtrl",
                               "status": "Unsubmitted"
                           }
             ];
-
-            // counting categories and items/category
-            $scope.categories = [];
-            catCount = [];
-            for (var i = 0; i < $scope.data.length; i++) {
-                if ($scope.categories.indexOf($scope.data[i].category) == -1) {
-                    $scope.categories.push($scope.data[i].category);
-                    catCount.push(1);
-                } else catCount[$scope.categories.indexOf($scope.data[i].category)]++;
-            }
-
-            $scope.users = ['first', 'second'];
-            $scope.editing = {};
-            $scope.checked = {};
 
         }
 
