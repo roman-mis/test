@@ -46,11 +46,10 @@ module.exports = function(dbs){
 	  	.then(function(system){
 	  		var exensesRateTypes = [];
 	  		_.forEach(system.expensesRate, function(_expensesRate){
-	  			if(_expensesRate.expensesRateType.toString().toLowerCase() === exensesRateType.toLowerCase()){
+	  			if(_expensesRate.expensesRateType && _expensesRate.expensesRateType.toString().toLowerCase() === exensesRateType.toLowerCase()){
 	  				exensesRateTypes.push(_expensesRate);
 	  			}
 	  		});
-
 	  		res.json({result:true, objects: exensesRateTypes});
 
 	  	},function(err){

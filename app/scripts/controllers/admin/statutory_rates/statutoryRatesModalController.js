@@ -5,7 +5,7 @@ angular.module('origApp.controllers')
 
 		console.log(parentScope);
 		$scope.data = parentScope;
-		$scope.var1 = '12-07-2013';
+		// $scope.var1 = '12-07-2013';
 
 		$scope.ok = function() {
 			$modalInstance.close('ok passed to parent');

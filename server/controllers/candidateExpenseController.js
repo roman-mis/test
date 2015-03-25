@@ -170,6 +170,7 @@ module.exports = function(db){
 
 	controller.getAllExpenses=function(req,res){
       	return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
+      //		console.log(expense);
      		res.json({result:true,object:expense});
 		}).then(null, res.sendFailureResponse);
 	};
