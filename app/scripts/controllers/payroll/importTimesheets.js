@@ -117,12 +117,14 @@ angular.module('origApp.controllers')
 	  		for(var i = 0; i<$scope.timesheets.length;++i){
 	  			var elements = [];
           for(var j = 0; j< $scope.timesheets[i].elements.length; j++){
+            var vat = $scope.timesheets[i].elements[j].noOfUnits * $scope.timesheets[i].payRate * $scope.timesheets[i].elements[j].vat;
+            vat = vat ? vat/100 : 0;
             var element={
               elementType:$scope.timesheets[i].elements[j].elementType,
               units:$scope.timesheets[i].elements[j].noOfUnits,
               payRate:$scope.timesheets[i].elements[j].payRate,
               amout: $scope.timesheets[i].elements[j].noOfUnits* $scope.timesheets[i].elements[j].payRate,
-              vat: ($scope.timesheets[i].elements[j].noOfUnits* $scope.timesheets[i].payRate * ($scope.timesheets[i].elements[j].vat)/100).toFixed(2),
+              vat: vat,
               isCis:false,
               paymentRate:$scope.timesheets[i].elements[j].paymentRate
             };
