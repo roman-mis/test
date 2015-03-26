@@ -6,21 +6,22 @@ var _=require('lodash');
 module.exports=function(){
 	return {
 		applySearch:function(q,Model,request){
-			
-	
+		//	console.log(q);
+
+
 			// var q=Model.find();
 			return Q.Promise(function(resolve,reject){
-				
+
 				var pagination=request.pagination||{limit:1000000,offset:0};
-			
+
 				var orders=request.orderBy||{};
-				
+
 				_.forEach(request.filters,function(filter,filterName){
 
-				
-					
+
+
 					// var filterObj={};
-					
+
 						if(filter.operator==='exact' ||filter.operator==='equals' ){
 							 q.where(filterName).equals(filter.term);
 						}
@@ -28,7 +29,7 @@ module.exports=function(){
 							q.where(filterName).equals(new RegExp(filter.term,'i'));
 						}
 						else if(filter.operator==='ne' ){
-					
+
 							q.where(filterName).ne(filter.term);
 						}
 						else if(filter.operator==='between' ){
@@ -41,32 +42,34 @@ module.exports=function(){
 						}
 				});
 
-			
+
 				Q.nfcall(q.count.bind(q))
 					.then(function(totalcount){
-				
+
+
 						q=q.find();
 						q.limit(pagination.limit);
 						q.skip(pagination.offset);
-						
+
 						_.forEach(orders,function(order){
 							q.sort(order);
-				
+
 						});
 
 						Q.nfcall(q.exec.bind(q))
 							.then(function(allRecords){
-						
+						//		console.log(allRecords);
+
 								// console.log(allRecords);
-								
+
 
 								resolve({count:totalcount,rows:allRecords});
-				
+
 							},reject);
 					},reject);
 
 			});
-			
+
 		},
 		search:function(){
 			// return Q.Promise(function(resolve,reject){
@@ -78,14 +81,14 @@ module.exports=function(){
 
 			// 	var model=conn.DB.model(modelName);
 			// 	var query=model.find();
-				
+
 			// 	_.forEach(populatedModels,function(val,ky){
 			// 		query.populate(val);
 			// 	});
 			// 	if(select && select.trim()!=''){
 			// 		query.select(select);
 			// 	}
-				
+
 			// 	applyFilters(filters,query,model)
 			// 		.then(function(){
 			// 			Q.nfcall(query.exec.bind(query))
@@ -93,7 +96,7 @@ module.exports=function(){
 			// 					resolve({rows:allRecords,count:allRecords.length});
 			// 				});
 			// 		},reject);
-				
+
 			// });
 		}
 	};
@@ -103,14 +106,14 @@ module.exports=function(){
 	// 		var allPromisedFilters=_.map(filters,function(filterItem,ky){
 	// 		return findFilter(ky,filterItem,model);
 	// 		// return Q.Promise(function(resolve,reject){
-				
+
 	// 		// });
 
 	// 		});
 
 	// 		if(allPromisedFilters.length>0) {
 	// 			var newP=allPromisedFilters[0];
-				
+
 	// 			for(var i=1;i<allPromisedFilters.length;i++) {
 	// 				newP=newP
 	// 				.then(allPromisedFilters[i].then(function(r){
@@ -126,7 +129,7 @@ module.exports=function(){
 	// 		else{
 	// 			resolve(query);
 	// 		}
-			
+
 	// 	});
 
 	// }
@@ -145,22 +148,22 @@ module.exports=function(){
 	// 			// var operator=filterItem.operator.toLowerCase();
 	// 			// if(operator==='exact'||operator==='iexact'||operator==='equals')
 	// 			// {
-	// 			// 	query.where(filter.key).equals(filterItem.term);	
+	// 			// 	query.where(filter.key).equals(filterItem.term);
 	// 			// }
 	// 			// else if(operator==='gt'){
 	// 			// 	query.where(filter.key).gt(filterItem.term);
 	// 			// }
-				
+
 
 	// 			// resolve()
 	// 		}
-	// 		else if(newFilters.length>1){ 
+	// 		else if(newFilters.length>1){
 	// 			//if (prop!==undefined && prop.schema && prop.schema.paths){
 	// 				var a=filterName;
 	// 			for(var i=0;i<newFilters.length;i++){
 	// 				a=filterName.substring(0,_.lastIndexOf(a,'.'));
 	// 				var b=filterName.substring(_.lastIndexOf(a,'.')+1);
-					
+
 	// 				prop=newFilters.model.schema.paths[a];
 	// 				if(prop!==undefined && prop.caster){
 	// 					var newModel=conn.DB.model(a);
@@ -179,7 +182,7 @@ module.exports=function(){
 	// 			}
 	// 			// prop=model.schema.paths[filterName];
 
-	// 			// if(prop.schema){//prop with 
+	// 			// if(prop.schema){//prop with
 
 	// 			// }
 	// 			// var newFilterName=_.remove(newFilters,function(itm,idx){return idx>0}).join();
@@ -221,7 +224,7 @@ module.exports=function(){
 	// function goDeepSchema(model,filterName,filter){
 	// 	return Q.Promise(function(){
 	// 		// var newFilters=filterName.split('.');
-			
+
 	// 	});
 	// }
 

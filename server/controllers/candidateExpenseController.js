@@ -9,6 +9,8 @@ module.exports = function(db){
 	utils = require('../utils/utils'),
 	dataList = require('../data/data_list.json'),
 	Q = require('q');
+	var enums=require('../utils/enums');
+
 
 	function getExpenseVm(expense, reload){
 		return Q.Promise(function(resolve, reject){
@@ -168,12 +170,13 @@ module.exports = function(db){
 
 	controller.getAllExpenses=function(req,res){
       	return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
+      //		console.log(expense);
      		res.json({result:true,object:expense});
 		}).then(null, res.sendFailureResponse);
 	};
-	controller.updateExpenseReject=function(req,res){
+	controller.rejectExpense=function(req,res){
 
-		expenseservice.updateEachExpense('Reject',req.body.expenseIds).then(function(d){
+		expenseservice.changeStatus(enums.expenseStatus.Reject,req.body.expenseIds).then(function(d){
            res.json(d);
 
 		},function(err){
@@ -183,8 +186,8 @@ module.exports = function(db){
 
 
 	};
-	controller.updateExpenseApprove=function(req,res){
-    expenseservice.updateEachExpense('Approve',req.body.expenseIds).then(function(d){
+	controller.approveExpense=function(req,res){
+    expenseservice.changeStatus(enums.expenseStatus.Approve,req.body.expenseIds).then(function(d){
            res.json(d);
 
 		},function(err){
@@ -204,9 +207,9 @@ module.exports = function(db){
          });
 
 	};
-	controller.updateSelectedExpenses=function(req,res){
+	controller.editExpenses=function(req,res){
 
-        expenseservice.updateSelectedExpenses(req.body.body).then(function(d){
+        expenseservice.editExpenses(req.body.body).then(function(d){
 
                res.json(d);
          },function(err){

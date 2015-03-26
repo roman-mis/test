@@ -281,8 +281,10 @@ header .row-header {
         }
     }
     .notice {
-        color: #9fc968;
-        font-size: $font-size-small;
+        color: $green;
+        font-size: 13px;
+        line-height: 15px; 
+        margin-top: 15px;
     }
     /*Step 2*/
     

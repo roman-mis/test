@@ -1,7 +1,7 @@
 <div class="col-sm-6">
     <p class="entry-title">
         Address Information
-        <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgencyEdit()"><i class="fa fa-edit"></i>edit</a>
+        <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgencyEdit()"><i class="fa fa-edit"></i></a>
     </p>
     <form class="entry-content" novalidate>
         <div class="row">
@@ -20,32 +20,19 @@
 <div class="col-sm-6">
     <p class="entry-title">
         Contact Information
-        <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openContactEdit()"><i class="fa fa-edit"></i>edit</a>
+        <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openContactEdit()"><i class="fa fa-edit"></i></a>
     </p>
     <form class="entry-content">
         <div class="row">
-            <div class="col-xs-12 form-group">Phone 1 <span class="meta">{{agencyContact.phone1}}</span></div>
-            <div class="col-xs-12 form-group">Phone2 <span class="meta">{{agencyContact.phone2}}</span></div>
-            <div class="col-xs-12 form-group">Fax <a href="#"><span class="meta">{{agencyContact.fax}}</span></a></div>
-            <div class="col-xs-12 form-group">Facebook <a ng-href="{{agencyContact.facebook}}" target="_blank"><span class="meta">{{agencyContact.facebook}}</span></a></div>
-            <div class="col-xs-12 form-group">Linkedin <a ng-href="{{agencyContact.linkedin}}" target="_blank"><span class="meta">{{agencyContact.linkedin}}</span></a></div>
-            <div class="col-xs-12 form-group">Website <a ng-href="{{agencyContact.website}}" target="_blank"><span class="meta">{{agencyContact.website}}</span></a></div>
-            <div class="col-xs-12 form-group">Email <a ng-href="mailto:{{agencyContact.email}}"><span class="meta">{{agencyContact.email}}</span></a></div>
-            <div class="col-sm-3 col-xs-3 form-group">Logo <span class="meta-o"></span></div>
-            <div class="col-sm-3 col-xs-3 form-group nonepadding">
-                <button type="button" class="btn btn-success form-control" onclick="$('#upload_company_logo').click();">Browse</button>
-                <input type="file" onchange="angular.element(this).scope().onSelectCompanyLogo(this)"
-                       id="upload_company_logo"
-                       name="companyLogo" style="display: none;" />
-            </div>
-            <div class="col-sm-3 col-xs-3 form-group ">
-                <button type="button" class="btn btn-success form-control">{{agencyContact.logo}}</button>
-            </div>
-            <div class="col-sm-3 col-xs-3 form-group nonepadding">
-                <button type="button" class="btn btn-danger form-control" ng-disabled="isLogoUploading" ng-click="uploadComapnyLogo()">
-                    <div ng-show="!isLogoUploading">Upload</div>
-                    <div ng-show="isLogoUploading">Uploading...</div>
-                </button>
+            <div class="col-xs-12 form-group">Phone 1 <span class="meta-o">{{agencyContact.phone1}}</span></div>
+            <div class="col-xs-12 form-group">Phone2 <span class="meta-o">{{agencyContact.phone2}}</span></div>
+            <div class="col-xs-12 form-group">Fax <a href="#"><span class="meta-o">{{agencyContact.fax}}</span></a></div>
+            <div class="col-xs-12 form-group">Facebook <a ng-href="{{agencyContact.facebook}}" target="_blank"><span class="meta-o">{{agencyContact.facebook}}</span></a></div>
+            <div class="col-xs-12 form-group">Linkedin <a ng-href="{{agencyContact.linkedin}}" target="_blank"><span class="meta-o">{{agencyContact.linkedin}}</span></a></div>
+            <div class="col-xs-12 form-group">Website <a ng-href="{{agencyContact.website}}" target="_blank"><span class="meta-o">{{agencyContact.website}}</span></a></div>
+            <div class="col-xs-12 form-group">Email <a ng-href="mailto:{{agencyContact.email}}"><span class="meta-o">{{agencyContact.email}}</span></a></div>
+            <div class="col-sm-3 col-xs-3 form-group">
+                <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="openPhotoUpload()">Add or change logo</button>
             </div>
         </div>
     </form>

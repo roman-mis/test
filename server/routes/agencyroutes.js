@@ -10,7 +10,7 @@ var express = require('express'),
 	routeskipper=require('../middlewares/route-skipper');
 
 module.exports = function(app){
-  app.use('/api/agencies',routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[]), router);
+  app.use('/api/agencies',routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[{path:/\/api\/agencies\/\w+\/file_redirect_url\/\w+/}]), router);
 };
 
 /* Agency */

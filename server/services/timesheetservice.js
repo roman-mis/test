@@ -38,7 +38,6 @@ module.exports=function(db){
 
 	service.getCSVFile = function(code, file){
 		return Q.Promise(function(resolve,reject){
-			console.log('here');
 			return processor.getCSVFile(code, file)
 			.then(function(finishData){
 				if(finishData.validationFailError){

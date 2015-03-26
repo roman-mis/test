@@ -32,53 +32,19 @@ angular.module('origApp.controllers')
             };
 
 
+            $scope.openPhotoUpload = function () {
+               ModalService.open({
+                    templateUrl: 'views/agency/_modal_upload_logo.html',
+                    parentScope: $scope,
+                    controller: 'AgencyLogoUploadController'
+                });
+            };
 
             $scope.openContactEdit = function () {
                 ModalService.open({
                     templateUrl: 'views/agency/_agency_contact_edit.html',
                     parentScope: $scope,
                     controller: '_AgencyContactEditController'
-                });
-            };
-
-            //upload company logo
-            $scope.onSelectCompanyLogo = function (fileInput) {
-                $scope.$apply(function () {
-                    $scope.agencyContact.localLogoPath = fileInput.value;
-                });
-            };
-
-            //upload file to s3
-            $scope.uploadComapnyLogo = function () {
-                if (!$('#upload_company_logo').val()) {
-                    alert('Please select a file first.');
-                    return;
-                }
-                var file = $('#upload_company_logo')[0].files[0];
-                var fileName = new Date().getTime().toString() + '_' + file.name;
-                var mimeType = file.type || 'text/plain';
-                $scope.isLogoUploading = true;
-                HttpResource.model('agencies/' + $scope.agencyId).customGet('logosignedurl', {
-                    mimeType: mimeType,
-                    fileName: fileName
-                }, function (response) {
-                    var signedRequest = response.data.signedRequest;
-                    $http({
-                        method: 'PUT',
-                        url: signedRequest,
-                        data: file,
-                        headers: { 'Content-Type': mimeType, 'x-amz-acl': 'public-read' }
-                    }).success(function () {
-                        HttpResource.model('agencies/' + $scope.agencyId).create({ logo: fileName })
-                            .patch('contact')
-                            .then(function (response) {
-                                $scope.isLogoUploading = false;
-                                if (!HttpResource.flushError(response)) {
-                                    $scope.agencyContact.localLogoPath = '';
-                                    $scope.agencyContact.logo = fileName;
-                                }
-                            });
-                    });
                 });
             };
 
@@ -95,13 +61,13 @@ angular.module('origApp.controllers')
             $scope.ukPhone = /^[0]+(\d{10})+$/;
             $scope.emailPat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
             $scope.fields = [
-              { name: 'phone1', label: 'Phone 1', required: ($scope.status == 'Live') ? true : false },
+              { name: 'phone1', label: 'Phone 1', required: ($scope.status === 'Live') ? true : false },
               { name: 'phone2', label: 'Phone 2' },
               { name: 'fax', label: 'Fax' },
               { name: 'facebook', label: 'Facebook' },
               { name: 'linkedin', label: 'Linkedin' },
               { name: 'website', label: 'Website', type: 'url' },
-              { name: 'email', label: 'Email', type: 'email', required: ($scope.status == 'Live') ? true : false, pat: $scope.emailPat }
+              { name: 'email', label: 'Email', type: 'email', required: ($scope.status === 'Live') ? true : false, pat: $scope.emailPat }
             ];
             $scope.data = {};
 

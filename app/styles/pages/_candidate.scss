@@ -93,7 +93,6 @@
     }
     &.padding-10 {
         padding-top: 10px;
-        border: 1px solid $gray-lighter;
         .table >thead >tr >th {
             width: 9em;
         }
@@ -130,11 +129,6 @@
     .history {
         .meta-box-content {
             margin-top: 20px;
-        }
-    }
-    .agencies {
-        .agencies_wrapper {
-            padding-top: 20px;
         }
     }
 }
@@ -184,13 +178,13 @@
     }
 }
 
-.agencies_wrapper {
-    padding-top: 20px;
-}
-
 .payroll-product-form > .row .form-group {
     line-height: 28px;
     .btn {
         height: 28px;
     }
+}
+
+.entry-content {
+    margin: 0;
 }

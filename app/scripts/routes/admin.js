@@ -92,9 +92,9 @@ angular.module('origApp').config(function($stateProvider) {
             templateUrl: 'views/admin/payment_rates/index.html',
             controller: 'PaymentRatesController'
         })
-	.state('app.admin.hmrc.expensesRate', {
-		url: '/expensesRates',
-		templateUrl: 'views/admin/expensesRate.html',
-		controller: 'expensesRateController'
-	});
+        .state('app.admin.expensesRate', {
+            url: '/expensesrate',
+            templateUrl: 'views/admin/expenses_rate/index.html',
+            controller: 'ExpensesRateController'
+        });
 });

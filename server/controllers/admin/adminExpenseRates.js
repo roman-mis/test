@@ -3,8 +3,10 @@ var controller={};
 module.exports = function(dbs){
 	var _ = require('lodash');
 	var systemservice = require('../../services/systemservice')(dbs),
-	adminExpenseRatesService = require('../../services/admin/adminExpenseRatesService')(dbs);
-    
+	adminExpenseRatesService = require('../../services/admin/adminExpenseRatesService')(dbs),
+    dataList = require('../../data/data_list.json');
+
+
     controller.getExpenseRates= function(req, res) {
         return systemservice.getSystem()
 	  	.then(function(system){
@@ -44,11 +46,10 @@ module.exports = function(dbs){
 	  	.then(function(system){
 	  		var exensesRateTypes = [];
 	  		_.forEach(system.expensesRate, function(_expensesRate){
-	  			if(_expensesRate.expensesRateType.toString().toLowerCase() === exensesRateType.toLowerCase()){
+	  			if(_expensesRate.expensesRateType && _expensesRate.expensesRateType.toString().toLowerCase() === exensesRateType.toLowerCase()){
 	  				exensesRateTypes.push(_expensesRate);
 	  			}
 	  		});
-
 	  		res.json({result:true, objects: exensesRateTypes});
 
 	  	},function(err){

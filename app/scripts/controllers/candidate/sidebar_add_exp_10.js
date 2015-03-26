@@ -11,10 +11,11 @@ angular.module('origApp.controllers')
                     .post()
                     .then(function(response) {
                       $scope.isSaving = false;
-                      if (!HttpResource.flushError(response)) {
-                        $scope.expenseData.claimReference = response.data.object.claimReference;
+
+                      // if (!HttpResource.flushError(response)) {
+                        $scope.expenseData.claimReference = response.data.claimReference;
                         $scope.gotoNext();
-                      }
+                      // }
                     });
           };
           

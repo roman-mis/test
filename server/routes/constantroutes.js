@@ -83,6 +83,7 @@ router.get('/fuels',controller.fuels);
 router.get('/enginesizes',controller.enginesizes);
 
 router.get('/expensesratetypes',controller.expensesRateTypes);
+router.get('/paymentratetypes',controller.paymentRateTypes);
 
 router.get('/timesheettemplates',controller.getTimesheetTemplates);
 router.get('/AOE',controller.getAOE);
@@ -90,6 +91,8 @@ router.get('/AOE',controller.getAOE);
 router.get('/candidateTitle', controller.getCandidateTitle);
 router.get('/agencyStatus', controller.getAgencyStatus);
 router.get('/candidateStatus', controller.getCandidateStatus);
+router.get('/expenseClaimStatus', controller.getExpenseClaimStatus);
+router.get('/expenseStatus', controller.getExpenseStatus);
 
 router.get('/profiles/:type/first', controller.getProfileFirst);
 router.get('/profiles/:type/permissions', controller.getProfilePermissions);
