@@ -712,6 +712,21 @@
     }
   ],
 
+  "userTypes": [
+    {
+      "code": "WK",
+      "name": "Worker"
+    },
+    {
+      "code": "AC",
+      "name": "Agency Consultant"
+    },
+    {
+      "code": "SA",
+      "name": "System Admin"
+    }
+  ],
+
 
   "templateTypes": [
     {
@@ -1119,7 +1134,28 @@
               "hide": true
             },
             "rightToolBar": {
+              "hide": false
             }
+        }
+      }
+    },
+    "SA":{
+      "first": {
+        "open": {
+          "state": "app.admin.home",
+          "stateParams": [
+            
+          ]
+        } 
+      },
+      "permissions": {
+        "fields": {
+          "leftMenu":{
+            "hide": false
+          },
+          "rightToolBar": {
+            "hide": false
+          }
         }
       }
     }

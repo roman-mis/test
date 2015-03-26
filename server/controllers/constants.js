@@ -224,5 +224,8 @@ module.exports = function(){
         res.json(dataList.profiles[req.params.type].permissions);
     };
 
+    controller.getUserTypes = function (req, res) {
+        res.json(dataList.userTypes);
+    };
   return controller;
 };

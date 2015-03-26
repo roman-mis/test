@@ -3,7 +3,7 @@
 angular.module('origApp.controllers')
         .controller('AgencyEditController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, $rootScope, MsgService) {
           $scope.countries = ConstantsResource.get('countries');
-          $scope.status = parentScope.selectedAgency.status;
+          // $scope.status = parentScope.selectedAgency.status;
           $scope.fields = [
             { name: 'name', label: 'Name', required: ($scope.status == 'Live' || $scope.status == 'Submitted') ? true : false },
             { name: 'address1', label: 'Address 1', required: ($scope.status == 'Live') ? true : false },

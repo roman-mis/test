@@ -21,6 +21,8 @@ router.get('/:id',controller.getUser);
 
 router.get('/activation/:emailAddress',controller.getActivation);
 
+router.post('/update/:id',controller.updateUser);
+
 router.post('/activation/:emailAddress',controller.postActivation);
 
 router.post('/:id/lockunlock/:flag',controller.lockunlock);
@@ -28,5 +30,9 @@ router.post('/:id/lockunlock/:flag',controller.lockunlock);
 router.get('/emailvalidation/:emailAddress',controller.emailValidation);
 
 router.get('/changepassword/verify/:emailAddress/:code',controller.verifyChangePassword);
+router.get('/resetpassword/verify/:emailAddress/:code',controller.verifyResetPassword);
 
 router.post('/changepassword/:emailAddress/:code',controller.changePassword);
+// router.post('/resetpassword/:emailAddress/:code',controller.resetPassword);
+
+router.get('/send/passwardReset/:id',controller.sendPasswardReset);

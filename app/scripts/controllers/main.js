@@ -13,11 +13,12 @@ angular.module('origApp.controllers', [])
           $rootScope.currentUser = null;
           if(AuthService.isLoggedIn()){
             $rootScope.currentUser = AuthService.getCurrentUser();
-	          userPermissions.getUserPermission(AuthService.getCurrentUser().userType).then(function(data){
+            $rootScope.currentUser.userType = 'SA';
+	          userPermissions.getUserPermission($rootScope.currentUser.userType).then(function(data){
 	            console.log(data);            // if($location.path() === '/'){
 	            console.log('******************************');
 
-		          //$scope.permissions = userPermissions.permissions.permissions.fields;
+		          $scope.permissions = userPermissions.permissions.permissions.fields;
 	          });
           }
         });

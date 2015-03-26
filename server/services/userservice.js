@@ -7,7 +7,6 @@ var _=require('lodash');
 // var Sequelize=require('sequelize');
 var mailer=require('../mailing/mailer');
 var uuid = require('node-uuid');
-
 var utils=require('../utils/utils');
 var queryutils=require('../utils/queryutils')(db);
 var enums=require('../utils/enums');
@@ -18,6 +17,61 @@ service.getUser=function(id){
 		var q=db.User.findById(id);
 		return Q.nfcall(q.exec.bind(q));
 
+};
+
+service.updateUser = function(id,updates){
+	return Q.Promise(function(resolve,reject){
+		console.log(id);
+		return service.getUser(id).then(function(user){
+			if(user){
+				for(var key in updates){
+					user[key] = updates[key];
+				}
+				console.log('********************************************')
+				console.log('********************************************')
+				console.log(user);
+				return Q.nfcall(user.save.bind(user)).then(function(){
+					resolve({result:true,object:user});
+					},reject);
+			}else{
+				reject({result:false,message:'User does not exist'});
+			}
+		},reject);	
+	});
+}; 
+
+service.sendPasswardReset	 = function(id,req){
+	
+
+	return Q.Promise(function(resolve,reject){
+		
+		return service.getUser(id).then(function(user){
+				if(user){
+				// 	user.resetPassword.activationCode=activationCode;
+				// 	user.resetPassword.date=Date();
+
+					return Q.nfcall(user.save.bind(user)).then(function(){
+						return service.generateCode(user,enums.codeTypes.ChangePassword).then(function(code){
+							var fullUrl = req.protocol + '://' + req.get('host') +'/reset-password/'+req.query.emailAddress;
+						  // var activationCode ='';
+						  var newActivationLink='';
+							newActivationLink=fullUrl +'/'+code.code;
+						  var mailModel={title:user.title,firstName:req.query.firstName,lastName:req.query.lastName,
+						        activationLink:newActivationLink};
+						  var mailOption={to:req.query.emailAddress};
+						  console.log('&&&&&&&&&&&&&&&&&&&')
+							return mailer.sendEmail(mailOption,mailModel,'user_change_password').then(function(){
+									resolve({result:true,message:'mail sent'}); 
+								},reject);	
+						},reject);
+					},reject);
+				}else{
+
+					reject({result:false,name:'NOTFOUND',message:'User profile not found'});
+				}
+			},reject);
+		
+	});
 };
 
 service.removeUser=function(userId){
@@ -441,19 +495,35 @@ service.changePassword=function(emailAddress,verificationCode,newPassword){
 	console.log(arguments);
 	return Q.Promise(function(resolve,reject){
 
-		verifyCode(emailAddress,verificationCode,enums.codeTypes.ChangePassword)
+		return verifyCode(emailAddress,verificationCode,enums.codeTypes.ChangePassword)
 			.then(function(response){
 				if(response.result){
 					console.log('code verified');
 					// console.log('valid ver');
-					service.useCode(response.object.code)
+					return service.useCode(response.object.code)
 						.then(function(){
 							var user=response.object.user;
-							user.password=newPassword;
-							Q.nfcall(user.save.bind(user))
-								.then(function(){
-									resolve({result:true,object:{user:user,code:response.code}});
-								},reject);
+
+
+							if(newPassword){
+								return utils.secureString(newPassword).
+										then(function(securePassword){
+											console.log('password hashed : '+securePassword);
+											user.password=securePassword;
+											console.log(user); 
+											console.log('************************************************************');
+											return Q.nfcall(user.save.bind(user))
+												.then(function(){
+													console.log('------------------------------------------------------------------')
+													console.log('------------------------------------------------------------------')
+													resolve({result:true,object:{user:user,code:response.code}});
+												},reject);
+										},reject);
+							}
+							else{
+								reject();
+							}							
+							
 						},reject);
 				}
 				else{
@@ -468,9 +538,12 @@ service.changePassword=function(emailAddress,verificationCode,newPassword){
 
 service.getCode=function(userId,code,codeType){
 	console.log('searching for code');
+	console.log(userId)
+	console.log(code)
+	console.log(codeType)
 	var q=db.Code.findOne({user:userId,code:code,codeType:codeType});
 	return Q.nfcall(q.exec.bind(q));
-
+ 
 };
 
 service.useCode=function(code){
