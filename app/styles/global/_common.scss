@@ -209,14 +209,12 @@ header.container-fluid {
         max-width: 200px;
         width: 100%;
         height: $st-length;
-        
-        .search-form > .form-group, 
-        .search-form .dropdown-menu {
+        .search-form > .form-group, .search-form .dropdown-menu {
             color: $gray;
             background-color: $gray-lightest;
         }
         .search-form {
-            height: $st-length; 
+            height: $st-length;
         }
         .search-group {
             position: relative;
@@ -266,7 +264,7 @@ header.container-fluid {
                 margin: 0;
                 border: 1px solid $gray-light;
                 height: $st-length;
-                width: 100%; 
+                width: 100%;
             }
             .dropdown-menu {
                 right: 0;
@@ -338,11 +336,12 @@ header.container-fluid {
                     text-decoration: none;
                     display: block;
                     color: $gray-lightest;
-                    width: 200px; 
+                    width: 200px;
                     @media (max-width: $screen-sm-max) {
                         width: 40px;
                     }
-                    i, span {
+                    i,
+                    span {
                         text-transform: uppercase;
                         display: block;
                         height: 36px;
@@ -540,9 +539,9 @@ header.container-fluid {
             margin-bottom: 14px;
             color: $gray;
             background-color: #fff;
+            border: 1px solid $gray-lighter;
             .meta-box-inner {
                 padding: $grid-gutter-width $grid-gutter-width / 2;
-                border: 1px solid $gray-lighter;
                 @media(max-width: $screen-md-max) {
                     padding: $grid-gutter-width-md $grid-gutter-width-md / 2;
                 }
@@ -567,12 +566,12 @@ header.container-fluid {
                 border-bottom: 1px solid $gray;
                 color: $green;
             }
-            .icon-edit {
-                text-decoration: underline;
+            .icon-edit i {
+                position: relative;
                 color: $green-light;
-                i {
-                    position: relative;
-                    top: 2px;
+                transition: color .1s;
+                &:hover {
+                    color: $green;
                 }
             }
             .entry-content {
@@ -583,20 +582,7 @@ header.container-fluid {
                     margin-right: 5px;
                     text-align: center;
                     display: inline-block;
-                }
-                .meta {
-                    float: right;
-                    font-size: 13px; 
-                }
-                .meta-o {
-                    float: right;
-                    color: $green-light;
-                    font-size: 13px;
-                    text-decoration: underline;
-                    &:hover {
-                        color: $green;
-                    }
-                }
+                }                
                 > li {
                     height: 22px;
                 }
@@ -734,20 +720,14 @@ header.container-fluid {
                     margin-right: -10px;
                     margin-left: -10px;
                     li {
-               //         width: 120px;
                         padding: 0 15px;
-                       // height: 20px;
                         text-align: center;
-//                        border: none;
                         background: $gray-light;
-//                        border-radius: 16px;
-//                        margin-right: 3px;
                         &:hover, &:focus {
                             background: $green;
                         }
                         a {
                             padding: 0;
-//                            font-size: 13px;
                             color: $gray-lightest;
                             &:hover, &:focus {
                                 background-color: transparent;
@@ -819,7 +799,6 @@ header.container-fluid {
                     &:nth-child(even) {
                         background-color: $gray-lightest;
                     }
-                    
                 }
             }
         }
@@ -908,6 +887,20 @@ header.container-fluid {
                     }
                 }
             }
+        }        
+        .meta {
+            float: right;
+            font-size: 13px;
+        }
+        .meta-o {
+            float: right;
+            color: $green-light;
+            font-size: 13px;
+            text-decoration: underline;
+            transition: color .1s;
+            &:hover {
+                color: $green;
+            }
         }
     }
 }
@@ -941,29 +934,6 @@ body {
 .modal::-webkit-scrollbar {
     display: none;
 }
-
-.runPayroll-header {
-    min-height: 16.428571429px;
-    padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.runPayroll-header-title {
-    margin: 0;
-    line-height: 1.428571429;
-}
-
-.runPayroll-body {
-    position: relative;
-    padding: 20px;
-}
-
-.runPayroll-footer {
-    padding: 19px 20px 20px;
-    text-align: right;
-    border-top: 1px solid #e5e5e5;
-}
-
 
 .form-group {
     margin-bottom: 8px;
@@ -1208,13 +1178,13 @@ table {
     overflow-x: hidden;
 }
 
-.mileAge :hover{
+.mileAge:hover {
     display: inline;
 }
 
 .mileAge span {
     display: none;
-} 
+}
 
 .payroll_payroll_unselectable {
     -webkit-touch-callout: none;
@@ -1332,7 +1302,6 @@ body {
 .tOuter-dropdown {
     right: 70px;
 }
-
 
 .tInner-dropdown {
     right: 45px;
@@ -1472,7 +1441,6 @@ tr {
     width: 65px;
 }
 
-
 .table-container tr > td:nth-child(9) {
     text-align: center;
 }
@@ -1511,12 +1479,13 @@ td > input[type="checkbox"] {
 }
 
 .present {
-    color: #4CAF50;    
+    color: #4CAF50;
 }
 
 .absent {
     color: #F44336;
 }
+
 .table td .btn {
     padding: 0 12px;
     outline: none;
