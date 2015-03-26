@@ -14,7 +14,7 @@ select.form-control {
     border: 1px solid $gray-light;
     background-color: $gray-lightest;
     outline: none;
-    transition: background-color .2s;
+    transition: background-color .1s;
     input {
         height: 27px;
     }
@@ -34,7 +34,7 @@ select.form-control {
 }
 
 button {
-    transition: background-color .2s;
+    transition: background-color .1s;
     &:focus {
         outline: none !important;
         border-color: $gray-light;
