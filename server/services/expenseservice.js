@@ -320,15 +320,11 @@ module.exports = function(dbs){
                           e.receiptUrls=doc.receiptUrls;
 
                         }
-                        if(doc.subType && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
+                        if(doc.status){
 
-                          e.subType=doc.subType;
-                          t.subType=doc.subType;
+                          e.status=doc.status;
                         }
-                        if(!doc.subType && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
 
-                          t.subType=e.subType;
-                        }
 
 
 
