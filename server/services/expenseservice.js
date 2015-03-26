@@ -7,8 +7,6 @@ module.exports = function(dbs){
 		queryutils=require('../utils/queryutils')(db),
 		service={};
     var enums=require('../utils/enums');
-    var async=require('async');
-
 	service.getExpenses=function(request){
 		return Q.Promise(function(resolve,reject){
 			var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
@@ -124,7 +122,7 @@ module.exports = function(dbs){
                                                         if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
 
                                                             t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.tax = time.amount + '%';
+                                                            t.expenseDetail.vat = time.amount + '%';
 
                                                         }
 
@@ -140,7 +138,7 @@ module.exports = function(dbs){
                                           t.expenseDetail = {};
                                           t.expenseDetail.name=i.subType;
                                           t.expenseDetail.total=i.value;
-                                          t.expenseDetail.tax=0+'%';
+                                          t.expenseDetail.vat=0+'%';
                                         }
 
                                         bucketObject.expenses.push(t);
