@@ -1,13 +1,48 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{data.name?'Edit Agency Information':'Adding an agency'}}</h3>
-</div>
+    <h4 class="modal-title">Add or Change Logo</h4>
+</div><!-- /modal-header -->
+
 <div class="modal-body">
-   <h3>logo</h3>
-</div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 form-group full-row">
+            <img src="{{agency.logoUrl}}" id="logo" width="150" height="150" class=""/>
+        </div>
+        <div class="col-xs-8 col-sm-8 full-row">
+            <h4 style="margin-top: 0;">Image details</h4>
+            <div class="row form-group">
+                <div class="col-xs-3">Name : {{agency.logoFileName}}</div>
+                <div class="col-xs-9 img-details" id="uploadFile"></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-3">Size</div>
+                <div class="col-xs-9 img-details" id="filesize"></div>
+            </div>
+            <div class="row" style="margin-top: 38px;">
+                <div class="col-xs-5 col-sm-4">
+                    <div class="fileUpload btn btn-primary form-control">
+                        <span onclick="$('#upload_company_logo').click();">Browse</span>
+                        <input type="file" onchange="angular.element(this).scope().onSelectCompanyLogo(this)"
+                               id="upload_company_logo"
+                               name="companyLogo" style="display: none;" />
+                    </div>
+                </div>
+
+
+                <div class="col-xs-5 col-sm-6 no-padding">
+                    <button type="button" class="btn btn-primary form-control img-details"
+                        ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
+                        <span ng-show="!isLogoUploading" >Upload New Image</span>
+                        <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /modal-body -->
+
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || agencyForm.$invalid">
-        <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-        <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-    </button>
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-</div>
+    <a href="" type="button" ng-click="cancel()" class="btn">Cancel</a>
+    <button class="btn btn-primary" ng-click="ok()">Done</button>
+</div><!-- /modal footer -->
+
+
