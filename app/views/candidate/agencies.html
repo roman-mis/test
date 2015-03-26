@@ -12,19 +12,19 @@
                 <div class="pure-g">
                   <div class="pure-u-2-5">Consultant </div>
                   <div class="pure-u-3-5">
-                    <span class="green-light-color">{{product.consultant.name}}</span>
+                    <span>{{product.consultant.name}}</span>
                   </div>
                   <div class="pure-u-2-5">Branch</div>
                   <div class="pure-u-3-5">
-                    <span class="green-light-color">{{product.branch.name}}</span>
+                    <span>{{product.branch.name}}</span>
                   </div>
                   <div class="pure-u-2-5">Date Added</div>
                   <div class="pure-u-3-5">
-                    <span class="green-light-color">22/22/2222</span>
+                    <span>22/22/2222</span>
                   </div>
                   <div class="pure-u-2-5">Agency Ref</div>
                   <div class="pure-u-3-5">
-                    <span class="green-light-color">555-555</span>
+                    <span>555-555</span>
                   </div>
                 </div>
               </div>
@@ -32,21 +32,21 @@
                 <div class="pure-g">
                   <div class="pure-u-2-5">Margin </div>
                   <div class="pure-u-3-5">
-                    <span class="green-light-color">{{getConstantDescription('margins', product.margin)}}</span>
+                    <span>{{getConstantDescription('margins', product.margin)}}</span>
                   </div>
                   <div class="pure-u-2-5">Contact</div>
                   <div class="pure-u-3-5">
-                    <span class="green-light-color">01617131730</span>
+                    <span>01617131730</span>
                   </div>
                   <div class="pure-u-2-5"></div>
                   <div class="pure-u-3-5">
-                    <a href="mailto:info@originem.co.uk" class="green-light-color">info@originem.co.uk</a>
+                    <a href="mailto:info@originem.co.uk" class="meta-o" style="float: none">info@originem.co.uk</a>
                   </div>
                 </div>
               </div>
               <div class="pure-u-1-1">
                 <p class="entry-title pure-u-1">Exception History
-                  <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgenciesAddingMargin(product)"><i class="fa fa-plus-square-o"></i> Add</a>
+                  <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgenciesAddingMargin(product)"><i class="fa fa-plus-square-o"></i></a>
                 </p>
               </div>
               <div class="pure-u-1">
@@ -71,7 +71,6 @@
                       <td>{{exception.deductionNumberOfPayroll}}</td>
                       <td class="text-center" style="white-space: nowrap; width: 50px">
                         <a href="" ng-click="openAgenciesAddingMargin(product, exception)"><i class="fa fa-edit"></i></a>
-                        <a href=""><i class="fa fa-folder-o"></i></a>
                         <a href="" ng-click="deleteMarginException(product, exception)"><i class="fa fa-trash-o"></i></a>
                       </td>
                     </tr>

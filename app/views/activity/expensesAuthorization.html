@@ -1,4 +1,10 @@
-﻿<div class="runPayroll-body">
+<!--
+  <div orig-grid="gridOptions" external-scope="$scope"></div>
+</div>-->
+   
+
+   
+   <div class="meta-box padding-10 container-fluid">
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-striped">
@@ -41,13 +47,14 @@
                             </div>
                         </th>
                     </tr>
-                </thead> <!--First green row-->
+                </thead>
+                <!--First green row-->
                 <tbody>
                     <!--First table body-->
                     <tr ng-repeat-start="expense in expensesArray">
                         <!--big table basic row-->
                         <td>
-                            <a data-toggle="collapse" data-target="{{'#accordion'+$index}}" class="clickable"><i class="fa fa-minus-square-o"></i></a>
+                            <a data-toggle="collapse" data-target="{{'#accordion'+$index}}" class="clickable" style="cursor:pointer"><i class="fa fa-minus-square-o"></i></a>
                         </td>
                         <td>{{expense.claimReference}}</td>
                         <td>{{expense.claimDate | date : "EEE dd/MM/yyyy"}}</td>
@@ -58,7 +65,8 @@
                         <td>
                             <input type="checkbox" />
                         </td>
-                    </tr> <!--big table basic row-->
+                    </tr>
+                    <!--big table basic row-->
                     <tr ng-repeat-end>
                         <!--big table detailed row-->
                         <td colspan="12" class="td-collapsed">
@@ -87,7 +95,7 @@
                                         <tr ng-repeat-start="cat in expense.categories">
                                             <!--category basic info-->
                                             <td>
-                                                <a data-toggle="collapse" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable"><i class="fa fa-minus-square-o"></i></a>
+                                                <a data-toggle="collapse" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer"><i class="fa fa-minus-square-o"></i></a>
                                             </td>
                                             <td>{{cat}}</td>
                                             <td></td>
@@ -125,20 +133,21 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                        </tr> <!--category basic info-->
+                                        </tr>
+                                        <!--category basic info-->
                                         <tr ng-repeat-end>
                                             <!--category detailed info-->
                                             <td colspan="12" class="td-collapsed">
                                                 <div id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" class="collapse">
                                                     <table class="table table-striped">
                                                         <tr ng-repeat="item in expense.expenses" ng-if="item.expenseType==cat">
-                                                            <td width="4%">
+                                                            <td width="2%">
                                                                 <input type="checkbox" ng-model="item.checked" />
                                                             </td>
                                                             <td width="11%"></td>
                                                             <td width="12%" class="text-left">{{item.subType}}</td>
                                                             <td width="12%" class="text-left">
-                                                                {{item.date  | date : "EEE dd/MM/yyyy"}}
+                                                                {{item.date | date : "EEE dd/MM/yyyy"}}
                                                             </td>
                                                             <!--<td width="9%" ng-hide="item.edit">{{item.value | currency:"&pound;"}}</td>
                                                             <td width="9%" ng-show="item.edit">
@@ -193,11 +202,11 @@
                                                                     </ul>
                                                                 </div>
                                                             </td>
-                                                            <td width="10%">{{item.status}}</td>
-                                                            <td width="6%">
-                                                                <a style="cursor:pointer" ng-click="item.edit = true; startEditing($parent.$parent.$parent.$index, $parent.$parent.$index)">
-                                                                    <i class="fa fa-pencil-square-o"></i>
-                                                                </a>
+                                                            <td width="10%" style="text-transform: capitalize">{{item.status}}</td>
+                                                            <td width="8%" class="text-center">
+                                                                <a style="cursor:pointer" ng-click=""><i class="fa fa-times"></i></a>
+                                                                <a style="cursor:pointer" ng-click=""><i class="fa fa-check"></i></a>
+                                                                <a style="cursor:pointer" ng-click="item.edit = true; startEditing($parent.$parent.$parent.$index, $parent.$parent.$index)"><i class="fa fa-pencil-square-o"></i></a>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -209,15 +218,19 @@
                                                     </table>
                                                 </div>
                                             </td>
-                                        </tr><!--category detailed info-->
+                                        </tr>
+                                        <!--category detailed info-->
                                     </tbody>
-                                </table> <!--expense details table-->
+                                </table>
+                                <!--expense details table-->
                             </div>
                         </td>
-                    </tr> <!--big table detailed row-->
-                </tbody> <!--First table body-->
-            </table> <!--Big table-->
+                    </tr>
+                    <!--big table detailed row-->
+                </tbody>
+                <!--First table body-->
+            </table>
+            <!--Big table-->
         </div>
     </div>
 </div>
-
