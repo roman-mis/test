@@ -149,11 +149,11 @@
                                                             <td width="12%" ng-show="item.edit">
                                                                 <select ng-if="item.expenseType=='Transport'"
                                                                         class="form-control ng-pristine ng-valid"
-                                                                        ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].expenseDetail.name"
+                                                                        ng-model="cloned[$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
                                                                         ng-options="type.description as type.description for type in transportTypes"></select>
                                                                 <select ng-if="item.expenseType=='Subsistence'"
                                                                         class="form-control ng-pristine ng-valid"
-                                                                        ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].expenseDetail.name"
+                                                                        ng-model="cloned[$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
                                                                         ng-options="type.name as type.name for type in mealTypes" ng-change="onTypeChanged()"></select>
                                                             </td>
                                                             <td width="12%" class="text-left" ng-hide="item.edit">
@@ -224,7 +224,7 @@
                                                             <td width="8%" class="text-center">
                                                                 <a ng-show="item.edit" style="cursor:pointer" ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$index, item._id, false)"><i class="fa fa-times"></i></a>
                                                                 <a ng-show="item.edit" style="cursor:pointer" ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$index, item._id, true)"><i class="fa fa-check"></i></a>
-                                                                <a style="cursor:pointer" ng-click="item.edit = true; startEditing($parent.$parent.$parent.$index, $parent.$parent.$index)"><i class="fa fa-pencil-square-o"></i></a>
+                                                                <a ng-hide="item.edit" style="cursor:pointer" ng-click="item.edit = true"><i class="fa fa-pencil-square-o"></i></a>
                                                             </td>
                                                         </tr>
                                                         <!--<tr>
