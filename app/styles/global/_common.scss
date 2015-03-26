@@ -592,6 +592,10 @@ header.container-fluid {
                     float: right;
                     color: $green-light;
                     font-size: 13px;
+                    text-decoration: underline;
+                    &:hover {
+                        color: $green;
+                    }
                 }
                 > li {
                     height: 22px;
@@ -815,9 +819,7 @@ header.container-fluid {
                     &:nth-child(even) {
                         background-color: $gray-lightest;
                     }
-                    &:hover {
-                        background-color: #dce7d7;
-                    }
+                    
                 }
             }
         }

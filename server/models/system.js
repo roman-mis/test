@@ -62,7 +62,7 @@ module.exports = function(mongoose) {
             town: String,
             country: String,
             postCode: String,
-            telphone: String,
+            telephone: String,
             fax: String,
             emailAddress: String,
             eligibleSmallEmployerAllowance: Boolean,
@@ -90,7 +90,7 @@ module.exports = function(mongoose) {
             town: String,
             country: String,
             postCode: String,
-            telphone: String,
+            telephone: String,
             fax: String,
             emailAddress: String
         },

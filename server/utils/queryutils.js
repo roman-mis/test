@@ -6,6 +6,7 @@ var _=require('lodash');
 module.exports=function(){
 	return {
 		applySearch:function(q,Model,request){
+		//	console.log(q);
 
 
 			// var q=Model.find();
@@ -57,7 +58,7 @@ module.exports=function(){
 
 						Q.nfcall(q.exec.bind(q))
 							.then(function(allRecords){
-								console.log(allRecords);
+						//		console.log(allRecords);
 
 								// console.log(allRecords);
 
