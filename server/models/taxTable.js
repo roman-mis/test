@@ -15,5 +15,5 @@ module.exports = function(mongoose) {
 	});
 
 
-  	return mongoose.model('ActionRequest',schema);
+  	return mongoose.model('TaxTable',schema);
 };
