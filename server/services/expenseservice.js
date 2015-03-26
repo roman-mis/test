@@ -291,6 +291,7 @@ module.exports = function(dbs){
 
 
     service.editExpenses=function(ids){
+      console.log(ids);
         return Q.promise(function(resolve,reject){
 
            var q = db.System.find().select('statutoryTables expensesRate');
@@ -312,9 +313,12 @@ module.exports = function(dbs){
                    ids.forEach(function(doc){
 
                        var e=l.expenses.id(doc.id);
+                       console.log(e);
 
                        if(e){
+                        console.log(doc.expenseType);
                         if(doc.expenseType){
+                          console.log('test');
 
                          e.expenseType=doc.expenseType;
 
@@ -337,6 +341,21 @@ module.exports = function(dbs){
                         if(doc.date){
 
                           e.date=doc.date;
+                        }
+                        if(doc.expenseType==='Other' || doc.expenseType==='Subsistence'){
+
+                          if(doc.subType){
+
+                               var sys=systemDoc.expensesRate.id(doc.subType);
+                               if(sys){
+
+                                sys.name=doc.subType;
+                                systemDoc.save();
+                               }
+                          }
+                        }else{
+
+                          e.subType=doc.subType;
                         }
 
 
