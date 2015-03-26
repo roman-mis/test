@@ -2,15 +2,32 @@
 
 angular.module('origApp.controllers')
         .controller('ResetPasswordController', function($scope, $stateParams, HttpResource, $location, MsgService) {
+          console.log('0000055555')
           $scope.emailAddress = $stateParams.emailAddress;
           $scope.verifyCode = $stateParams.verifyCode;
           $scope.isValidCode = true;
+          
           HttpResource.model('users')
                   .customGet('changepassword/verify/' + $scope.emailAddress + '/' + $scope.verifyCode, {}, function(response) {
                     if (response.data.result === true) {
                       $scope.isValidCode = true;
                     } else {
-                      $scope.isValidCode = false;
+                      console.log(11110)
+                      HttpResource.model('users')
+                        .customGet('resetpassword/verify/' + $scope.emailAddress + '/' + $scope.verifyCode, {}, function(response) {
+                          if (response.data.result === true) {
+                            $scope.isValidCode = true;
+                      console.log(2222222222222222)
+
+                          } else {
+                            $scope.isValidCode = false;
+                            //MsgService.danger(response.data.message);
+                      console.log(3333333333333)
+
+                          }
+                        }, function() {
+
+                        });
                       //MsgService.danger(response.data.message);
                     }
                   }, function() {

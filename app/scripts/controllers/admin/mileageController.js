@@ -1,144 +1,89 @@
 'use strict';
 
 angular.module('origApp.controllers')
-.controller('MileageController', function($scope, $timeout, $rootScope,HttpResource){
+.controller('MileageController', function($scope, $timeout, $rootScope,HttpResource, Notification){
     $rootScope.breadcrumbs = [{link:'/', text:'Home'},
         {link: '/admin/home', text: 'Admin'},
         {link: '/admin/hmrc/mileage', text: 'Mileage Rates'}
-    ];   
-    $scope.$parent.tab = 'mileage';
-    $scope.data = [];
-    $scope.typeSuggestion = [];
-    $scope.new={};
-    $scope.r = {
-    	type:{editeRaw:[]},
-    	restriction:{editeRaw:[]},
-    	amount:{editeRaw:[]}
-    };
+    ];  
+    $scope.showEdit = []; 
+    $scope.viewIcon = [];
+    $scope.tempValue = '';
+    $scope.mileageRates = {};
 
-    HttpResource.model('systems/mileagerates').customGet('',{},function(data){
-  		console.log('mileage');
-  		console.log(data);
-  		if(data.data.object){
-  			$scope.data = data.data.object;
-  			console.log($scope.data);
-  		}
-  		// 	$scope.data = [
-    // {type:'test',restriction:'test restriction',amount:'5'},
-    // {type:'test',restriction:'test restriction',amount:'5'},
-    // {type:'test',restriction:'test restriction',amount:'5'},
-    // {type:'test',restriction:'test restriction',amount:'5'},
-    // {type:'test',restriction:'test restriction',amount:'5'}
-    // ];
-    
-  	});
-
-    
+    // var valuesName = [];
+    $scope.mileageRatesNames = ['petrolUpTo1400', 'petrol1401to2000', 'petrolAbove2000', 'diselUpTo1400',
+                             'disel1401to2000', 'diselAbove2000', 'lpgUpTo1400', 'lpg1401to2000', 'lpgAbove2000']
 
 
-    $scope.showEdit = function(col,index2){
-    	console.log($scope.r[col].editeRaw[index2]);
-    	console.log(col);
-    	console.log(index2);
-
-    	if($scope.r[col].editeRaw[index2] !== true){
-	  		for(var i = 0; i < $scope.data.length; i++){
-	    		$scope.r.type.editeRaw[i] =false;
-	    		$scope.r.restriction.editeRaw[i] =false;
-	    		$scope.r.amount.editeRaw[i] =false;
-	    	}
-				$scope.r[col].temp = $scope.data[index2][col];
-	    	$scope.r[col].editeRaw[index2] =true;
-    	}
-    	console.log($scope.r[col].editeRaw[index2]);
-    };
-
-    function updateTypeSugestion(){
-    	var foundFlag = false;
-    	$scope.typeSuggestion = [];
-    	for(var i = 0; i < $scope.data.length; i++){
-    		for(var j = 0; j < $scope.typeSuggestion.length; j++){
-    			if($scope.data[i].type === $scope.typeSuggestion[j]){
-    				foundFlag = true;
-    				break;
-    			}
-    		}
-    		if(foundFlag){
-    			foundFlag = false;
-    		}else{
-    			$scope.typeSuggestion.push($scope.data[i].type);	
-    		}
-    	}
-    	console.log($scope.typeSuggestion);	
+    function loadData(){
+        HttpResource.model('systems/mileagerates').customGet('',{},function(data){
+            if(data.data.objects){
+                $scope.mileageRates = data.data.objects;
+            }
+        });
     }
-    updateTypeSugestion();
 
-    $scope.keyDown = function(col,index2,event){
-    	// console.log(event);
-    	if(event.keyCode === 13){
-    		$scope.data[index2][col] = $scope.r[col].temp;
-    		$scope.r[col].editeRaw[index2] =false;
-    		updateTypeSugestion();
-    	}else if(event.keyCode === 27){
-    		$scope.r[col].editeRaw[index2] =false;
-	    	$scope.r[col].temp = '';
-    	}
-    };
-    $scope.selectType = function(index,x){
-    	$scope.data[index].type = x;
-    	$scope.r.type.editeRaw[index]=false;
-    	updateTypeSugestion();
-    };
+    loadData();
+    $scope.$parent.tab = 'mileage';
+    for(var i = 0 ; i < 8; i++){
+        $scope.viewIcon[i] = false; 
+    }
+    function hideAllEdites(){
+        for(var i = 0 ; i < 8; i++){
+            $scope.showEdit[i] = false; 
+        }
+        $scope.EditedIndex = -1;
+    }
+    hideAllEdites();
 
-    $scope.addRow = function(){
-	    $scope.showWarning = false;
-    	$scope.warning = [];
-    	if(!$scope.new.type ||  $scope.new.type === ''){
-    		$scope.warning.push('you must enter a type before adding new raw');
-    	}
-    	if(!$scope.new.restriction ||  $scope.new.restriction === ''){
-    		$scope.warning.push('you must enter a restriction before adding new raw');
-    		
-    	}
-    	if(!$scope.new.amount ||  $scope.new.amount === ''){
-    		$scope.warning.push('you must enter an amount before adding new raw');
-    	}
-    	console.log($scope.warning);
-    	if($scope.warning.length === 0){
-    		$scope.data.push({
-    			type: $scope.new.type,
-    			restriction: $scope.new.restriction,
-    			amount: $scope.new.amount
-    		});
-    		$scope.new.type = '';
-    		$scope.new.restriction='';
-    		$scope.new.amount='';
-    	}else{
-    		$scope.showWarning = true;
-    		$timeout(function(){
-    			$scope.showWarning = false;
-    		},5000);
-    	}
+    $scope.showEditFn = function(index){
+        hideAllEdites();
+        $scope.showEdit[index] = true;
+        $scope.EditedIndex = index;
+        $scope.tempValue = $scope.mileageRates[$scope.mileageRatesNames[index]];
     };
 
-    $scope.addNew = function(){
-	    $scope.showWarning = false;
-    	if(event.keyCode === 13){
-	    	$scope.addRow();
-             $scope.save();
-    	}
+    $scope.getEvent = function(event, index){
+        if(event.keyCode === 27){
+            console.log($scope.tempValue);
+            hideAllEdites();
+        }else if(event.keyCode === 13){
+            if(Number($scope.tempValue)){
+                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue);      
+            }else{
+                Notification.error({message: 'Values must be Number', delay: 2000});
+            }
+            hideAllEdites();
+        }else if(event.keyCode === 9){
+            if(Number($scope.tempValue)){
+                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue);      
+                $scope.showEditFn(index + 1);
+            }else{
+                Notification.error({message: 'Values must be Number', delay: 2000});
+            }
+        }
     };
+
+    $scope.hide = function(){        
+        hideAllEdites();
+    };
+
+    $scope.hover = function(index){
+        $scope.viewIcon[index] = true;
+    };
+    
+    $scope.leave = function(index){
+        $scope.viewIcon[index] = false;
+    };
+
     $scope.save = function(){
-	    HttpResource.model('systems/mileagerates').create({data:$scope.data}).post().then(function(response) {
-	    	console.log('posting');
-	    	console.log(response);
-	    });
+        HttpResource.model('systems/mileagerates').create($scope.mileageRates).post().then(function() {
+        });
     };
 
-    $scope.delete = function(index){
-        console.log(index)
-        $scope.data.splice(index,1);
-        $scope.save();
+    $scope.clearUnsaved = function(){
+        loadData();
     };
 
 });

@@ -101,6 +101,7 @@ module.exports = function(dbs){
                                         t.status = i.status;
                                         t.text = i.text;
                                         t.description = i.description;
+                                        t.subType=i.subType;
                                         t.receiptUrls = i.receiptUrls;
                                         bucketObject.total += i.value;
                                         if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
@@ -184,6 +185,31 @@ module.exports = function(dbs){
       q=db.Expense.find().where('days.expenses._id').in(b);
       return Q.nfcall(q.exec.bind(q));
     };
+  /*  service.sendMail=function(contactDetails){
+
+      return Q.promise(function(resolve,reject){
+
+
+      var promises=[];
+      for(var i=0;i<contactDetails.length;i++){
+
+        var mailModel={title:contactDetails[i].title,firstName:contactDetails[i].firstName,lastName:contactDetails[i].lastName,reason:contactDetails[i].reason};
+        var mailOption={to:contactDetails[i].to};
+        promises.push(mailer.sendEmail(mailOption,mailModel,'status_change'));
+        if(contactDetails.length-1===i){
+
+          Q.allSettled(promises).then(function(d){
+
+                console.log(d);
+          })
+        }
+
+      }
+    });
+   //   console.log(contactDetails);
+
+    }; */
+
     service.changeStatus=function(status,ids){
 
         return Q.promise(function(resolve,reject){
@@ -263,8 +289,18 @@ module.exports = function(dbs){
 
     };
 
+
     service.editExpenses=function(ids){
         return Q.promise(function(resolve,reject){
+
+           var q = db.System.find().select('statutoryTables expensesRate');
+
+          return Q.nfcall(q.exec.bind(q)).then(function(system){
+
+
+        system.forEach(function(systemDoc){
+
+
 
           service.fetchExpensesForEdit(ids).then(function(model){
 
@@ -278,11 +314,34 @@ module.exports = function(dbs){
                        var e=l.expenses.id(doc.id);
 
                        if(e){
+                        if(doc.expenseType){
 
-                        e.expenseType=doc.expenseType;
-                        e.subType=doc.subType;
-                        e.value=doc.value;
-                        e.receiptUrls=doc.receiptUrls;
+                         e.expenseType=doc.expenseType;
+
+
+                        }
+                        if(doc.value){
+
+                           e.value=Number(doc.value);
+
+                        }
+                        if(doc.receiptUrls){
+                          e.receiptUrls=doc.receiptUrls;
+
+                        }
+                        if(doc.status){
+
+                          e.status=doc.status;
+                        }
+
+                        if(doc.date){
+
+                          e.date=doc.date;
+                        }
+
+
+
+
                        }
                    });
 
@@ -303,11 +362,12 @@ module.exports = function(dbs){
 
 
           },reject);
+         });
+         });
 
         });
 
     };
-
 
 	return service;
 };

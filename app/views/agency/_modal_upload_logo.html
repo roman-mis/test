@@ -5,25 +5,27 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-4 col-sm-4 form-group full-row">
-            <img src="{{agency.logoUrl}}" id="logo" width="150" height="150" class=""/>
+            <img src="{{temp.dataUrl}}" id="logo" width="150" height="150" />
         </div>
         <div class="col-xs-8 col-sm-8 full-row">
             <h4 style="margin-top: 0;">Image details</h4>
             <div class="row form-group">
-                <div class="col-xs-3">Name : {{agency.logoFileName}}</div>
+                <div class="col-xs-3">
+                    Name : {{temp.logoFileName}}</div>
                 <div class="col-xs-9 img-details" id="uploadFile"></div>
             </div>
             <div class="row form-group">
-                <div class="col-xs-3">Size</div>
+                <div class="col-xs-3">Size : {{temp.logoSize | number:0}} <span
+                        ng-if="temp.logoSize">KB</span>
+                </div>
                 <div class="col-xs-9 img-details" id="filesize"></div>
             </div>
             <div class="row" style="margin-top: 38px;">
                 <div class="col-xs-5 col-sm-4">
                     <div class="fileUpload btn btn-primary form-control">
                         <span onclick="$('#upload_company_logo').click();">Browse</span>
-                        <input type="file" onchange="angular.element(this).scope().onSelectCompanyLogo(this)"
-                               id="upload_company_logo"
-                               name="companyLogo" style="display: none;" />
+                        <input file-model="companyLogo" type="file"
+                               id="upload_company_logo" name="companyLogo" style="display: none;" />
                     </div>
                 </div>
 

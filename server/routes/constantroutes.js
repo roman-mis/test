@@ -91,6 +91,9 @@ router.get('/AOE',controller.getAOE);
 router.get('/candidateTitle', controller.getCandidateTitle);
 router.get('/agencyStatus', controller.getAgencyStatus);
 router.get('/candidateStatus', controller.getCandidateStatus);
+router.get('/expenseClaimStatus', controller.getExpenseClaimStatus);
+router.get('/expenseStatus', controller.getExpenseStatus);
 
 router.get('/profiles/:type/first', controller.getProfileFirst);
 router.get('/profiles/:type/permissions', controller.getProfilePermissions);
+router.get('/userTypes', controller.getUserTypes);

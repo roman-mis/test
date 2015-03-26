@@ -23,7 +23,8 @@ module.exports={
 		OTHERS:'OTHERS'
 	},
 	codeTypes:{
-		'ChangePassword':'CHPWD'
+		'ChangePassword':'CHPWD',
+		'resetPassword' :'RSPWD'
 	},
 	timesheetStatuses:{
 		'Submitted':'submitted',
@@ -33,5 +34,9 @@ module.exports={
 
 		'Approve':'approve',
 		'Reject':'reject'
+	},
+	payFrequency:{
+		'Weekly':'weekly'
+
 	}
 };
