@@ -86,13 +86,13 @@ module.exports = function(){
 	};
 
 	controller.getAgency=function(req,res){
-		console.log('i am here called');
+		console.log('agency.getAgency');
 		agencyservice.getAgency(req.params.id, true)
 			.then(function(agency){
 				//console.log('agency is ');
 				//console.log(agency);
 				var vm=getAgencyVm(agency, true);
-				console.log('vm is ');console.log(vm);
+				console.log('Agency Model is ');console.log(vm);
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
 	};
@@ -328,8 +328,10 @@ module.exports = function(){
 			companyRegNo: agency.companyRegNo,
 			companyVatNo: agency.companyVatNo,
 			branches: _branches,
-			status:agency.status
-		};
+			status:agency.status,
+            logoFileName: agency.logoFileName,
+            logoUrl: 'api/agencies/' + agency._id + '/file_redirect_url/' + agency.logoFileName
+        };
 	}
 
 	controller.getAgencyPayroll = function(req, res){
