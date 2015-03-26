@@ -8,7 +8,7 @@
 	// var Promise=require('promise');
 	var _=require('lodash');
 	// var Sequelize=require('sequelize');
-	var mailer=require('../mailing/mailer');
+	var mailer=require('../mailing/mailer'); 
 	var uuid = require('node-uuid');
 	var service={};
 	var utils=require('../utils/utils');
