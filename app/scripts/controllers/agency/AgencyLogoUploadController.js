@@ -3,8 +3,15 @@
 angular.module('origApp.controllers')
     .controller('AgencyLogoUploadController', function ($scope, $modalInstance, $http, parentScope, HttpResource) {
 
+        $scope.temp = {};
+
         if (Object.keys(parentScope.agency).length) {
             $scope.agency = parentScope.agency;
+            $scope.temp = {
+                logoFileName : $scope.agency.logoFileName,
+                dataUrl : $scope.agency.logoUrl
+            };
+
         }
 
         $scope.cancel = function () {
@@ -15,6 +22,27 @@ angular.module('origApp.controllers')
             $modalInstance.dismiss();
         };
 
+        $scope.$watch('companyLogo', function (fileInfo) {
+
+            if (fileInfo) {
+
+                var fileSize =  (fileInfo.size / 1024);
+                var picReader = new FileReader();
+                picReader.readAsDataURL(fileInfo);
+
+                picReader.addEventListener("load", function (event) {
+                    $scope.temp.dataUrl = event.target.result;
+                    $scope.$digest();
+                });
+
+                $scope.temp = {
+                    logoFileName : fileInfo.name,
+                    logoSize : fileSize
+                };
+            }
+
+        });
+
         /*Uploding file to aws S3*/
         $scope.uploadCompanyLogo = function () {
 
@@ -24,7 +52,7 @@ angular.module('origApp.controllers')
                 alert('Please select a file first.');
                 return;
             }
-            var file = $('#upload_company_logo')[0].files[0];
+            var file = $scope.companyLogo;
             var fileName = new Date().getTime().toString() + '_' + file.name;
             var mimeType = file.type || 'text/plain';
             $scope.isLogoUploading = true;
@@ -51,4 +79,18 @@ angular.module('origApp.controllers')
             });
         };
 
-    });
+    }).directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]);
