@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('origApp.directives')
-        .directive('templateGrid', function() {
+        .directive('grid', function() {
           return {
             restrict: 'A',
             scope: {
-              options: '=templateGrid',
+              options: '=grid',
               externalScope: '='
             },
             controller: function($scope) {
@@ -35,7 +35,7 @@ angular.module('origApp.directives')
                 }
               });
             },
-            templateUrl: 'views/partials/templateGrid.html',
+            templateUrl: 'views/partials/grid.html',
             replace: true,
             link: function() {
               return true;

@@ -23,7 +23,8 @@ module.exports={
 		OTHERS:'OTHERS'
 	},
 	codeTypes:{
-		'ChangePassword':'CHPWD'
+		'ChangePassword':'CHPWD',
+		'resetPassword' :'RSPWD'
 	},
 	timesheetStatuses:{
 		'Submitted':'submitted',

@@ -13,10 +13,11 @@ service.saveMileageRates = function(mileageRatesInfo){
 				if(systemModel){
 					console.log('edit');
 					console.log(mileageRatesInfo);
-					systemModel.mileageRates = [];
 					console.log(systemModel);
 					
 					systemModel.mileageRates = mileageRatesInfo;
+					console.log(mileageRatesInfo);
+					
 					// systemModel.markModified('mileageRates');
 					return Q.all([Q.nfcall(systemModel.save.bind(systemModel))])
 					.then(function(){

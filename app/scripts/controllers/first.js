@@ -6,6 +6,7 @@ angular.module('origApp.controllers')
             $state.go('register.home');
           } else {
             $rootScope.currentUser = AuthService.getCurrentUser();
+            $rootScope.currentUser.userType = 'SA';
             var params = {};
             userPermissions.first($rootScope.currentUser.userType).then(function(data){
               for(var i = 0; i < data.open.stateParams.length; i++){

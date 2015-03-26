@@ -3,6 +3,7 @@ angular.module('origApp').config(function($stateProvider) {
 	$stateProvider
 	.state('app.admin', {
 		url: '/admin',
+		abstract:true,
 		templateUrl: 'views/admin/index.html',
 		controller: 'CubeCtrl'
 	})
@@ -54,6 +55,17 @@ angular.module('origApp').config(function($stateProvider) {
     	url: '/users',
     	controller:'usersController',
     	templateUrl: 'views/admin/users.html'
+  	})
+  	.state('app.admin.user', {
+    	url: '/user/:id',
+			abstract:true,
+    	controller:'userViewController',
+    	templateUrl: 'views/admin/userView.html'
+  	})
+  	.state('app.admin.user.home', {
+    	url: '/home',
+    	controller:'userHomeController',
+    	templateUrl: 'views/admin/user_home.html'
   	})
     .state('app.admin.hmrc', {
         url: '/hmrc',

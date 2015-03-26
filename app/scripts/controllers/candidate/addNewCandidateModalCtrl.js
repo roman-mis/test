@@ -3,6 +3,7 @@ var app = angular.module('origApp.controllers');
 
 app.controller('addNewCandidateModalCtrl', ['$scope', '$modalInstance', 'HttpResource', '$http',
     function ($scope, $modalInstance, HttpResource, $http) {
+
         $http.get('/api/constants/candidateTitle/').success(function (data) {
             var titles = data;
             $scope.titleary = [];
@@ -21,7 +22,7 @@ app.controller('addNewCandidateModalCtrl', ['$scope', '$modalInstance', 'HttpRes
                 phone: $scope.can.contactNumber,
                 niNumber: $scope.can.niNumber,
                 birthDate: $scope.can.birthDate
-            }
+            };
 
             HttpResource.model('candidates/admin')
                 .create(data).post().then(function (result) {

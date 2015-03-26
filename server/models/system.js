@@ -66,7 +66,8 @@ module.exports = function(mongoose) {
             fax: String,
             emailAddress: String,
             eligibleSmallEmployerAllowance: Boolean,
-            claimEmploymentAllowance: Boolean
+            claimEmploymentAllowance: Boolean,
+            enableRti: Boolean
         },
         mileageRates: {
             petrolUpTo1400: Number,
