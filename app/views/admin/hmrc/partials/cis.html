@@ -1,164 +1,74 @@
 <div role="tabpanel" class="tab-pane" id="verification">
-    <div class="row">
-        <div class="col-sm-12">
-            <form class="form-horizontal">
-            <div class="row">
-                    <div class="col-xs-6"></div>
-                    <div class="col-xs-6">
-                        <button class="btn btn-success pull-right" ng-click="editCis()">
-                            <i class="fa fa-edit"></i> edit
-                        </button>
-                    </div>
+    <div class="container" style="width:95%">
+        <div class="col-sm-6">
 
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group ">
-                            <label class="col-xs-4 control-label">User ID</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.id" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.userId}}
-                                </div>
+        </div>
+        <div class="col-xs-6">
+            <a href ng-click="openEditCis()" class="pull-right" style="color:green">
 
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="col-xs-4 control-label">Passward</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.passward" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.password}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="col-xs-4 control-label">First Name</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.firstName" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.firstName}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Last Name</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.lastName" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.lastName}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Address 1</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.address1" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.address1}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Address 2</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.address2" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.address2}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Town</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.town" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.town}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Country</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.county" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.country}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Post Code</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.postCode" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.postCode}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Phone</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.phone" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.telphone}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Fax</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.fax" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.fax}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Email</label>
-                            <div class="dropdown col-xs-8 no-padding-left">
-                                <!-- <span type="text">
-                                    <input class="form-control" ng-model="cisUser.emailAddress" />
-                                </span> -->
-                                <div class="control-label pull-right">
-                                    {{cis.emailAddress}}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="form-group">
-                            <div class="col-xs-8 col-xs-offset-4 pull-right text-right">
-                                <button class="btn btn-primary btn-danger" ng-click="delete()"><i class="fa fa-trash"></i>&#160;  Clear Data</button>
-                                <button class="btn btn-success"><i class="fa fa-floppy-o"></i>&#160; Save</button>
-                            </div>
-                        </div> -->
-                    </div>
-
-                </div>
-            </form>
+                <i class="fa fa-edit"></i>
+            </a> 
         </div>
     </div>
-</div>
+    <div class="form-control container table-responsive" style=" border:solid green 1px;width:95%;">    
+
+        <div class="col-xs-12">
+            <div class="col-xs-6">
+                <table class=" table table-stripped" style="width:100%">
+                    <tr>
+                        <td>User ID</td>
+                        <td align="right">{{cis.userId}}</td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td align="right">{{cis.password}}</td>
+                    </tr>
+                    <tr>
+                        <td>First Name</td>
+                        <td align="right">{{cis.firstName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td align="right">{{cis.lastName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Address 1</td>
+                        <td align="right">{{cis.address1}}</td>
+                    </tr>
+                    <tr>
+                        <td>Address 2</td>
+                        <td align="right">{{cis.address2}}</td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="col-xs-6">
+                <table class="table table-stripped" style="width:100%">
+                    <tr>
+                        <td>Town</td>
+                        <td align="right">{{cis.town}}</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td align="right">{{cis.country}}</td>
+                    </tr>
+                    <tr>
+                        <td>Post Code</td>
+                        <td align="right">{{cis.postCode}}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td align="right">{{cis.telephone}}</td>
+                    </tr>
+                    <tr>
+                        <td>fax</td>
+                        <td align="right">{{cis.fax}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td align="right">{{cis.emailAddress}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>

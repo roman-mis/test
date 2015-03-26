@@ -213,7 +213,7 @@ module.exports = function(dbs){
              });
 
              return Q.all(bucket).then(function(){
-                 resolve({result:true})
+                 resolve({result:true});
 
              },reject);
 
@@ -272,7 +272,6 @@ module.exports = function(dbs){
 
 
               var bucket=[];
-              var modelId;
               for(var i=0;i<model.length;i++){
 
                 model[i].days.forEach(function(l){
