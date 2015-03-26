@@ -44,6 +44,29 @@ angular.module('origApp.controllers')
 
      HttpResource.model('systems/rti').query({},function (res) {
          $scope.rti = res.data.object;
+         $scope.$watch('rti', function () {
+          if($scope.rti.enableRti === true){
+            $scope.enableRtiValue = 'Yes';
+            console.log($scope.enableRtiValue);
+          }else if($scope.rti.enableRti === false){
+            $scope.enableRtiValue = 'No';
+          }
+
+          if($scope.rti.eligibleSmallEmployerAllowance === true){
+            $scope.eligibleSmallEmployerAllowanceValue = 'Yes';
+          }else if($scope.rti.eligibleSmallEmployerAllowance === false){
+            $scope.eligibleSmallEmployerAllowanceValue = 'No';
+          }
+
+          if($scope.rti.claimEmploymentAllowance === true){
+            $scope.claimEmploymentAllowanceValue = 'Yes';
+          }else if($scope.rti.claimEmploymentAllowance === false){
+            $scope.claimEmploymentAllowanceValue = 'No';
+          }
+
+         });
+         
+          
      });
      $scope.openEditRti = function() {
             ModalService.open({

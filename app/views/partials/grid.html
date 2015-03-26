@@ -10,6 +10,8 @@
           {{col}}
         </td>
       </tr>
+    </thead>
+    <tbody>
       <tr  ng-repeat="raw in options.data" >
         <td   class="col-xs-1 text-center">
           <img style="width:20px;height:20px" ng-src='{{options.getImage(options.allData[$index].templateType)}}' alt="">
@@ -21,8 +23,6 @@
           <i ng-click="options.loadAdminTemplate($index)"class="fa fa-eye"></i> &nbsp;| &nbsp;<i class="fa fa-files-o" ng-click="options.clone($index)"></i> &nbsp;| &nbsp; <i ng-click="options.deleteAdminTemplate($index)" class="fa fa-trash"></i>
         </td>
       </tr>
-    </thead>
-    <tbody>
 
     </tbody>
   </table>

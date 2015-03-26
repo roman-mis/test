@@ -17,7 +17,7 @@ module.exports = function(dbs){
 	  	});    
     };
     controller.saveMileageRates= function(req, res) {
-        var mileageRatesInfo=req.body.data;
+        var mileageRatesInfo=req.body; 
         console.log(mileageRatesInfo);
 		adminMileageRatesService.saveMileageRates(mileageRatesInfo).then(function(system){
 			var mileageRatesVm=getMileageRatesVm(system);

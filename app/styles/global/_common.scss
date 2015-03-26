@@ -30,8 +30,8 @@ table {
 a,
 i,
 li {
-    transition: color .2s;
-    transition: background-color .2s;
+    transition: color .1s;
+    transition: background-color .1s;
 }
 
 li.active,
@@ -420,6 +420,11 @@ header.container-fluid {
             }
             .main-menu {
                 padding-left: 12px;
+                a {
+                    @media (max-width: $screen-md-max) {
+                        width: 40px;
+                    }
+                }
                 a span.title {
                     @media(max-width: $screen-md-max) {
                         display: none;

@@ -1,24 +1,18 @@
-<div class="col-md-6">
-	<p class="entry-title">Accounts Details<a class="icon-edit pull-right" href="javascript:void(0);" href ng-click="openCompanyProfileAccounts()"><i class="fa fa-edit"></i>edit</a></p>
+<div class="col-sm-6">
+    <p class="entry-title">Accounts Details<a class="icon-edit pull-right" href="javascript:void(0);" href ng-click="openCompanyProfileAccounts()"><i class="fa fa-edit"></i></a>
+    </p>
+    <div class="row entry-content">
+        <div class="form-group">Vat Number<span class="meta">{{companyProfile.accounts.vatNumber}}</span>
+        </div>
+        <div class="form-group">Company Registration Number <span class="meta">{{companyProfile.accounts.companyRegNo}}</span>
+        </div>
+        <div class="form-group">UTR Number <span class="meta">{{companyProfile.accounts.utrNumber}}</span>
+        </div>
+        <div class="form-group">Tax District Number <span class="meta">{{companyProfile.accounts.taxDistrictNo}}</span>
+        </div>
+        <div class="form-group">PAYE Reference <span class="meta">{{companyProfile.accounts.payeRef}}</span>
+        </div>
+        <div class="form-group">Accounts Office Reference<span class="meta">{{companyProfile.accounts.accountsOfficeRef}}</span>
+        </div>
+    </div>
 </div>
-<div class="col-md-12">
-  <div class="row entry-content">
-    <div class="col-sm-5 nonepadding">
-
-      <div class="col-sm-12 form-group">Vat Number<span class="meta-o">{{companyProfile.accounts.vatNumber}}</span></div>
-
-      <div class="col-sm-12 form-group">Company Registration Number <span class="meta-o">{{companyProfile.accounts.companyRegNo}}</span></div>
-
-      <div class="col-sm-12 form-group">UTR Number <span class="meta-o">{{companyProfile.accounts.utrNumber}}</span></div>
-
-      <div class="col-sm-12 form-group">Tax District Number <span class="meta-o">{{companyProfile.accounts.taxDistrictNo}}</span></div>
-
-      <div class="col-sm-12 form-group">PAYE Reference <span class="meta-o">{{companyProfile.accounts.payeRef}}</span></div>
-
-      <div class="col-sm-12 form-group">Accounts Office Reference<span class="meta-o">{{companyProfile.accounts.accountsOfficeRef}}</span></div>
-      
-  	</div>
-</div>
-</div>
-
-
