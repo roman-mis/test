@@ -975,27 +975,27 @@
   "expenseClaimStatus": [
 	{
 		"code": 1,
-		"value": "Submitted"
+		"value": "submitted"
 	},
 	{
 		"code": 2,
-		"value": "Approved"
+		"value": "approved"
 	},
 	{
 		"code": 3,
-		"value": "Rejected"
+		"value": "rejected"
 	},
 	{
 		"code": 4,
-		"value": "Ready to Payroll"
+		"value": "ready to payroll"
 	},
 	{
 		"code": 5,
-		"value": "Payrolled"
+		"value": "payrolled"
 	},
 	{
 		"code": 6,
-		"value": "Deleted"
+		"value": "deleted"
 	}
   ],
 
@@ -1006,15 +1006,15 @@
 	},
 	{
 		"code": 2,
-		"value": "Approved"
+		"value": "approved"
 	},
 	{
 		"code": 3,
-		"value": "Rejected"
+		"value": "rejected"
 	},
 	{
 		"code": 4,
-		"value": "Deleted"
+		"value": "deleted"
 	}
   ],
 
