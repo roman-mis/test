@@ -402,6 +402,16 @@ module.exports = function(dbs){
                             arrayObject.total += e.value;
 
                         }
+                        if(doc.subType && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
+
+                          e.subType=doc.subType;
+                          t.subType=doc.subType;
+                        }
+                        if(!doc.subType && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
+
+                          t.subType=e.subType;
+                        }
+
 
                        arrayObject.expenses.push(t);
 
