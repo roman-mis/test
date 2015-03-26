@@ -9,11 +9,12 @@
                 <label class="control-label" ng-if="field.required">*</label>
             </div>
             <div class="col-sm-7">
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name != 'postCode' && field.name != 'companyRegNo' && field.name != 'companyVatNo' && field.name != 'country'">
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'postCode'" orig-postcode>
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'companyRegNo'" ng-pattern="/^(\d{8})+$/">
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required? true:false" ng-if="field.name == 'companyVatNo'" ng-pattern="/^(\d{9})+$/">
-                <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name == 'country'">
+            
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='name'||field.name=='address1'" ng-if="field.name != 'postCode' && field.name != 'companyRegNo' && field.name != 'companyVatNo' && field.name != 'country'">
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='postCode'" ng-if="field.name == 'postCode'" orig-postcode>
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='companyRegNo'" ng-if="field.name == 'companyRegNo'" ng-pattern="/^(\d{8})+$/">
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='companyVatNo'" ng-if="field.name == 'companyVatNo'" ng-pattern="/^(\d{9})+$/">
+                <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name == 'country'" ng-required = "field.name=='country'">
                     <ui-select-match>{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="item.code as item in countries | filter: $select.search">{{item.name}}</ui-select-choices>
                 </ui-select>
