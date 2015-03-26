@@ -972,6 +972,51 @@
     }
   ],
 
+  "expenseClaimStatus": [
+	{
+		"code": 1,
+		"value": "Submitted"
+	},
+	{
+		"code": 2,
+		"value": "Approved"
+	},
+	{
+		"code": 3,
+		"value": "Rejected"
+	},
+	{
+		"code": 4,
+		"value": "Ready to Payroll"
+	},
+	{
+		"code": 5,
+		"value": "Payrolled"
+	},
+	{
+		"code": 6,
+		"value": "Deleted"
+	}
+  ],
+
+  "expenseStatus": [
+	{
+		"code": 1,
+		"value": "submitted"
+	},
+	{
+		"code": 2,
+		"value": "Approved"
+	},
+	{
+		"code": 3,
+		"value": "Rejected"
+	},
+	{
+		"code": 4,
+		"value": "Deleted"
+	}
+  ],
 
   "profiles": {
     "WK": {
