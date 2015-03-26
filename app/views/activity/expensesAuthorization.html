@@ -140,10 +140,11 @@
                                                             <td width="12%" class="text-left">
                                                                 {{item.date  | date : "EEE dd/MM/yyyy"}}
                                                             </td>
-                                                            <td width="9%" ng-hide="item.edit">{{item.value | currency:"&pound;"}}</td>
+                                                            <!--<td width="9%" ng-hide="item.edit">{{item.value | currency:"&pound;"}}</td>
                                                             <td width="9%" ng-show="item.edit">
                                                                 <input style="width: 5em" type="number" placeholder="value" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
-                                                            </td>
+                                                            </td>-->
+                                                            <td width="9%"></td>
                                                             <td width="10%" ng-hide="item.edit">{{item.amount | currency:"&pound;"}}</td>
                                                             <td width="9%" ng-show="item.edit">
                                                                 <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
