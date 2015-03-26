@@ -293,6 +293,15 @@ module.exports = function(dbs){
     service.editExpenses=function(ids){
         return Q.promise(function(resolve,reject){
 
+           var q = db.System.find().select('statutoryTables expensesRate');
+
+          return Q.nfcall(q.exec.bind(q)).then(function(system){
+
+
+        system.forEach(function(systemDoc){
+
+
+
           service.fetchExpensesForEdit(ids).then(function(model){
 
 
@@ -313,7 +322,7 @@ module.exports = function(dbs){
                         }
                         if(doc.value){
 
-                           e.value=doc.value;
+                           e.value=Number(doc.value);
 
                         }
                         if(doc.receiptUrls){
@@ -323,6 +332,11 @@ module.exports = function(dbs){
                         if(doc.status){
 
                           e.status=doc.status;
+                        }
+
+                        if(doc.date){
+
+                          e.date=doc.date;
                         }
 
 
@@ -348,6 +362,8 @@ module.exports = function(dbs){
 
 
           },reject);
+         });
+         });
 
         });
 
