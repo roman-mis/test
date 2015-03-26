@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(){
+module.exports = function () {
 
     var dataList = require('../data/data_list.json');
     var countries = require('../data/countries.json');
@@ -9,217 +9,225 @@ module.exports = function(){
     var controller = {};
 
 
-    controller.nationalities = function(req,res){
-      var nationalitesData = require('../data/nationalities.json');
-      res.json(nationalitesData);
+    controller.nationalities = function (req, res) {
+        var nationalitesData = require('../data/nationalities.json');
+        res.json(nationalitesData);
     };
-    controller.starterdeclarations = function(req,res){
+    controller.starterdeclarations = function (req, res) {
 
-      res.json(dataList.StarterDeclarations);
-    };
-
-    controller.payfrequencies = function(req,res){
-
-      res.json(dataList.PayFrequency);
+        res.json(dataList.StarterDeclarations);
     };
 
-    controller.taxbasis = function(req,res){
+    controller.payfrequencies = function (req, res) {
 
-      res.json(dataList.TaxBasis);
+        res.json(dataList.PayFrequency);
     };
 
-    controller.margins = function(req,res){
+    controller.taxbasis = function (req, res) {
 
-      res.json(dataList.Margin);
+        res.json(dataList.TaxBasis);
     };
 
-    controller.holidaypayrules = function(req,res){
+    controller.margins = function (req, res) {
 
-      res.json(dataList.HolidayPayRule);
+        res.json(dataList.Margin);
     };
 
-    controller.derogationcontracts = function(req,res){
+    controller.holidaypayrules = function (req, res) {
 
-      res.json(dataList.DerogationContract);
+        res.json(dataList.HolidayPayRule);
     };
 
-    controller.contractorstatus = function(req, res){
-      res.json(dataList.ContractorStatus);
+    controller.derogationcontracts = function (req, res) {
+
+        res.json(dataList.DerogationContract);
     };
 
-    controller.communicationmethod = function(req, res){
-
-      res.json(dataList.CommunicationMethod);
+    controller.contractorstatus = function (req, res) {
+        res.json(dataList.ContractorStatus);
     };
 
-    controller.servicesused = function(req,res){
+    controller.communicationmethod = function (req, res) {
 
-      res.json(dataList.ServiceUsed);
+        res.json(dataList.CommunicationMethod);
     };
 
-    controller.paymentterms=function(req,res){
+    controller.servicesused = function (req, res) {
 
-      res.json(dataList.PaymentTerms);
+        res.json(dataList.ServiceUsed);
     };
 
-    controller.paymentmethods=function(req,res){
+    controller.paymentterms = function (req, res) {
 
-      res.json(dataList.PaymentMethod);
+        res.json(dataList.PaymentTerms);
     };
 
-    controller.adminfee = function(req, res){
+    controller.paymentmethods = function (req, res) {
 
-      res.json(dataList.AdminFee);
+        res.json(dataList.PaymentMethod);
+    };
+
+    controller.adminfee = function (req, res) {
+
+        res.json(dataList.AdminFee);
     };
 
 
-    controller.holidays =function(req,res){
+    controller.holidays = function (req, res) {
 
-      res.json(dataList.Holidays);
+        res.json(dataList.Holidays);
     };
 
-    controller.vehicletypes=function(req,res){
+    controller.vehicletypes = function (req, res) {
 
-      res.json(dataList.VehicleTypes);
+        res.json(dataList.VehicleTypes);
     };
 
-    controller.priorities = function(req,res){
+    controller.priorities = function (req, res) {
 
-      res.json(dataList.Priorities);
+        res.json(dataList.Priorities);
     };
 
-    controller.calllogtasktypes = function(req,res){
+    controller.calllogtasktypes = function (req, res) {
 
-      res.json(dataList.CallLogTaskTypes);
+        res.json(dataList.CallLogTaskTypes);
     };
 
-    controller.statuses = function(req,res){
+    controller.statuses = function (req, res) {
 
-      res.json(dataList.Statuses);
+        res.json(dataList.Statuses);
     };
 
-    controller.createtasktypes=function(req,res){
+    controller.createtasktypes = function (req, res) {
 
-      res.json(dataList.CreateTaskTypes);
+        res.json(dataList.CreateTaskTypes);
     };
 
-    controller.documenttypes=function(req,res){
+    controller.documenttypes = function (req, res) {
 
-      res.json(dataList.DocumentTypes);
+        res.json(dataList.DocumentTypes);
     };
 
-    controller.marginexceptiontypes = function(req,res){
+    controller.marginexceptiontypes = function (req, res) {
 
-      res.json(dataList.MarginExceptionTypes);
+        res.json(dataList.MarginExceptionTypes);
     };
 
-    controller.reasons=function(req,res){
+    controller.reasons = function (req, res) {
 
-      res.json(dataList.Reasons);
+        res.json(dataList.Reasons);
     };
 
-    controller.deductiontypes=function(req,res){
+    controller.deductiontypes = function (req, res) {
 
-      res.json(dataList.DeductionTypes);
+        res.json(dataList.DeductionTypes);
     };
 
-    controller.agencytypes=function(req,res){
+    controller.agencytypes = function (req, res) {
 
-      res.json(dataList.AgencyTypes);
+        res.json(dataList.AgencyTypes);
     };
 
-    controller.invoicemethods=function(req,res){
+    controller.invoicemethods = function (req, res) {
 
-      res.json(dataList.InvoiceMethods);
+        res.json(dataList.InvoiceMethods);
     };
 
-    controller.statuslist=function(req,res){
+    controller.statuslist = function (req, res) {
 
-      res.json(dataList.StatusList);
+        res.json(dataList.StatusList);
     };
 
-    controller.countries = function(req,res){
-      res.json(countries);
+    controller.countries = function (req, res) {
+        res.json(countries);
 
     };
 
-    controller.margintypes = function(req,res){
-      res.json(dataList.MarginTypes);
+    controller.margintypes = function (req, res) {
+        res.json(dataList.MarginTypes);
     };
 
-    controller.roleslist = function(req,res){
-      res.json(dataList.RolesList);
+    controller.roleslist = function (req, res) {
+        res.json(dataList.RolesList);
     };
 
-    controller.mealslist = function(req,res){
-      res.json(dataList.MealsList);
+    controller.mealslist = function (req, res) {
+        res.json(dataList.MealsList);
     };
 
-    controller.transportationmeans = function(req,res){
-      res.json(dataList.TransportationMeans);
+    controller.transportationmeans = function (req, res) {
+        res.json(dataList.TransportationMeans);
     };
 
-    controller.otherexpensetypes = function(req,res){
-      res.json(dataList.OtherExpenseTypes);
+    controller.otherexpensetypes = function (req, res) {
+        res.json(dataList.OtherExpenseTypes);
     };
 
-    controller.getAdminTemplatesData = function (req,res){
-      res.json(adminTemplatesData[req.params.type]);
+    controller.getAdminTemplatesData = function (req, res) {
+        res.json(adminTemplatesData[req.params.type]);
     };
 
-    controller.getAdminCompanyProfileData = function (req, res){
-      var companyProfileData = {
-        payFrequency: dataList.PayFrequency,
-        holidayPayRule: dataList.HolidayPayRule,
-        paymentMethod: dataList.PaymentMethod,
-        adminFee: dataList.AdminFee,
-        derogationContract: dataList.DerogationContract,
-        communicationMethod: dataList.CommunicationMethod,
-        contractorStatus: dataList.ContractorStatus
-      };
-      res.json(companyProfileData);
+    controller.getAdminCompanyProfileData = function (req, res) {
+        var companyProfileData = {
+            payFrequency: dataList.PayFrequency,
+            holidayPayRule: dataList.HolidayPayRule,
+            paymentMethod: dataList.PaymentMethod,
+            adminFee: dataList.AdminFee,
+            derogationContract: dataList.DerogationContract,
+            communicationMethod: dataList.CommunicationMethod,
+            contractorStatus: dataList.ContractorStatus
+        };
+        res.json(companyProfileData);
     };
 
-    controller.fuels = function(req,res){
-      res.json(dataList.Fuels);
+    controller.fuels = function (req, res) {
+        res.json(dataList.Fuels);
     };
 
-    controller.enginesizes = function(req,res){
-      res.json(dataList.EngineSizes);
+    controller.enginesizes = function (req, res) {
+        res.json(dataList.EngineSizes);
     };
 
-    controller.payRateTypes = function(req,res){
-      res.json(dataList.PayRateTypes);
+    controller.payRateTypes = function (req, res) {
+        res.json(dataList.PayRateTypes);
     };
 
-    controller.expensesRateTypes = function(req,res){
-      res.json(dataList.expensesRateTypes);
+    controller.expensesRateTypes = function (req, res) {
+        res.json(dataList.expensesRateTypes);
     };
 
-    controller.paymentRateTypes = function(req,res){
+    controller.paymentRateTypes = function (req, res) {
         res.json(dataList.paymentRateTypes);
     };
 
-    controller.getTimesheetTemplates = function(req,res){
-      res.json(dataList.templateTypes);
+    controller.getTimesheetTemplates = function (req, res) {
+        res.json(dataList.templateTypes);
     };
 
-    controller.getAOE = function(req,res){
-      res.json(dataList.AOE);
+    controller.getAOE = function (req, res) {
+        res.json(dataList.AOE);
     };
 
     controller.getCandidateTitle = function (req, res) {
         res.json(dataList.candidateTitle);
     };
 
-    controller.getAgencyStatus = function(req,res){
-      res.json(dataList.agencyStatus);
+    controller.getAgencyStatus = function (req, res) {
+        res.json(dataList.agencyStatus);
     };
 
-    controller.getCandidateStatus = function(req,res){
-      res.json(dataList.candidateStatus);
+    controller.getCandidateStatus = function (req, res) {
+        res.json(dataList.candidateStatus);
     };
-    
+
+    controller.getExpenseClaimStatus = function (req, res) {
+        res.json(dataList.expenseClaimStatus);
+    };
+
+    controller.getExpenseStatus = function (req, res) {
+        res.json(dataList.expenseStatus);
+    };
+
     controller.getProfileFirst = function (req, res) {
         res.json(dataList.profiles[req.params.type].first);
     };
@@ -228,5 +236,5 @@ module.exports = function(){
         res.json(dataList.profiles[req.params.type].permissions);
     };
 
-  return controller;
+    return controller;
 };

@@ -10,7 +10,13 @@ app.controller("expensesAuthorizationCtrl",
                                   { link: '/activity/expensesAuthorization', text: 'Expenses Authorisation' }
         ];
         $scope.transportTypes = ConstantsResource.get('transportationmeans');
-        $scope.mealTypes = ConstantsResource.get('mealslist');
+        $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({});
+        $http.get('/api/constants/expenseClaimStatus').success(function (res) {
+            $scope.expenseClaimStatus = res;
+        });
+        $http.get('/api/constants/expenseStatus').success(function (res) {
+            $scope.expenseStatus = res;
+        });
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
             //console.log('getting expenses done !!');
@@ -77,7 +83,7 @@ app.controller("expensesAuthorizationCtrl",
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
                         req.body.push({
                             "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                            "subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
+                            //"subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
                             "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
                             "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
                             "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
@@ -101,7 +107,6 @@ app.controller("expensesAuthorizationCtrl",
                         break;
                     }
                 }
-                console.log($scope.transportTypes, $scope.mealTypes);
                 //$scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
                 //for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                 //    if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == $scope.expensesArray[expenseIndex].categories[categoryIndex]) {
