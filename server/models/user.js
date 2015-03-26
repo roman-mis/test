@@ -27,6 +27,10 @@ module.exports = function(mongoose,autoIncrement) {
     activatedDate:     {type:Date,required:false},
     avatarFileName:   {type:String,default:''},
     lastLogin:{type:Date,default:null},
+    resetPassword:{
+        activationCode: {type:String},
+        date:           {type:Date,required:false}
+    },
     worker:{
         contactNumber:      {type:String,required:false,trim:true},
         birthDate:          {type:Date,required:false},

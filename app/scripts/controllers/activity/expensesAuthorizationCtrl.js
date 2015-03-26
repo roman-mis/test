@@ -61,6 +61,7 @@ app.controller("expensesAuthorizationCtrl",
         //}
 
         $scope.finishEditing = function (expenseIndex, itemId, save) {
+            //console.log(expenseIndex);
             if (save) {
                 //$scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
                 var req = {};
@@ -81,9 +82,11 @@ app.controller("expensesAuthorizationCtrl",
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
+                        console.log($scope.expensesArray[expenseIndex].expenses[i].expenseType);
                         req.body.push({
                             "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             //"subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
+                            "date": $scope.expensesArray[expenseIndex].expenses[i].date,
                             "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
                             "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
                             "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
@@ -104,6 +107,7 @@ app.controller("expensesAuthorizationCtrl",
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
                         angular.copy($scope.expensesArray[expenseIndex].expenses[i], $scope.cloned[expenseIndex].expenses[i]);
+                        //console.log('found', itemId);
                         break;
                     }
                 }

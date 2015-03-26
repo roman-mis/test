@@ -3,11 +3,32 @@
 
 module.exports = function(){
   var _=require('lodash');
+  
   var userservice=require('../services/userservice'),
     enums=require('../utils/enums');
 
     var controller={};
+ 
+    controller.sendPasswardReset = function(req,res){
+      userservice.sendPasswardReset(req.params.id,req)
+      .then(function(){
+        res.json({result:true});
+      });
+    };
 
+    controller.updateUser = function(req,res){
+      var updates = {};
+      updates.firstName = req.body.firstName;
+      updates.lastName = req.body.lastName;
+      updates.emailAddress = req.body.emailAddress;
+      updates.userType = req.body.userType;
+      console.log(req.body);
+      userservice.updateUser(req.body.id,updates).then(function(data){
+        res.json({result:true,data:data});
+      },function(err){
+        res.json({result:false,data:err});
+      });
+    };
 
     controller.emailValidation=function(req,res){
       userservice.checkDuplicateUser(req.params.emailAddress)
@@ -85,6 +106,13 @@ module.exports = function(){
           },res.sendFailureResponse);
     };
 
+    controller.verifyResetPassword=function(req,res){
+        userservice.verifyCode(req.params.emailAddress,req.params.code,enums.codeTypes.resetPassword)
+          .then(function(response){
+              res.json(response);
+          },res.sendFailureResponse);
+    };
+
     controller.changePassword=function(req,res){
       userservice.changePassword(req.params.emailAddress,req.params.code,req.body.newPassword)
           .then(function(response){
@@ -97,6 +125,8 @@ module.exports = function(){
               
           },res.sendFailureResponse);
     };
+
+    
 
     controller.getUser=function(req,res){
         userservice.getUser(req.params.id)
@@ -115,7 +145,7 @@ module.exports = function(){
     function getUserViewModel(user){
       return {
         _id:user._id,title:user.title,firstName:user.firstName,lastName:user.lastName,
-        emailAddress:user.emailAddress
+        emailAddress:user.emailAddress,lastLogin:user.lastLogin,createdDate: user.createdDate,userType:user.userType
       };
     }
 

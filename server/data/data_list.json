@@ -712,6 +712,21 @@
     }
   ],
 
+  "userTypes": [
+    {
+      "code": "WK",
+      "name": "Worker"
+    },
+    {
+      "code": "AC",
+      "name": "Agency Consultant"
+    },
+    {
+      "code": "SA",
+      "name": "System Admin"
+    }
+  ],
+
   "paymentRateTypes": [{
      "code": "Hourly",
      "name": "Hourly"
@@ -975,27 +990,27 @@
   "expenseClaimStatus": [
 	{
 		"code": 1,
-		"value": "Submitted"
+		"value": "submitted"
 	},
 	{
 		"code": 2,
-		"value": "Approved"
+		"value": "approved"
 	},
 	{
 		"code": 3,
-		"value": "Rejected"
+		"value": "rejected"
 	},
 	{
 		"code": 4,
-		"value": "Ready to Payroll"
+		"value": "ready to payroll"
 	},
 	{
 		"code": 5,
-		"value": "Payrolled"
+		"value": "payrolled"
 	},
 	{
 		"code": 6,
-		"value": "Deleted"
+		"value": "deleted"
 	}
   ],
 
@@ -1006,15 +1021,15 @@
 	},
 	{
 		"code": 2,
-		"value": "Approved"
+		"value": "approved"
 	},
 	{
 		"code": 3,
-		"value": "Rejected"
+		"value": "rejected"
 	},
 	{
 		"code": 4,
-		"value": "Deleted"
+		"value": "deleted"
 	}
   ],
 
@@ -1181,7 +1196,28 @@
               "hide": true
             },
             "rightToolBar": {
+              "hide": false
             }
+        }
+      }
+    },
+    "SA":{
+      "first": {
+        "open": {
+          "state": "app.admin.home",
+          "stateParams": [
+            
+          ]
+        } 
+      },
+      "permissions": {
+        "fields": {
+          "leftMenu":{
+            "hide": false
+          },
+          "rightToolBar": {
+            "hide": false
+          }
         }
       }
     }

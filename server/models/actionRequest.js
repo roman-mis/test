@@ -7,7 +7,7 @@ module.exports = function(mongoose) {
   	
 
 	var schema= new BaseSchema({
-        type: String // ssp, smp, spp, holidayPay, studentLoan
+        type: String, // ssp, smp, spp, holidayPay, studentLoan
         status: String, // Submitted, 
 		worker: { type:Schema.Types.ObjectId, ref:'User' },
         dateInformed: Date,
@@ -31,10 +31,10 @@ module.exports = function(mongoose) {
         },
         imageUrl: String,
         days: [
-                weekNumber: Number,
-                monthNumber: Number,
-                amount: Number
-        ],
+               { weekNumber: Number,
+                               monthNumber: Number,
+                               amount: Number}
+        ]
         
 	});
 
