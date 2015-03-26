@@ -4,13 +4,8 @@ angular.module('origApp.controllers')
 			function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
 				$scope.candidateId = $stateParams.candidateId;
 				$scope.candidate = parentScope.candidate;
-<<<<<<< HEAD
-
-
-=======
 				$scope.genders = [{ key: 'M', value: 'Male' }, { key: 'F', value: 'Female' }];
 
->>>>>>> 298d9a69862880b197dd5a8d776bf97640b11e94
 				console.log($scope.candidate);
 				HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
 					console.log(res);
