@@ -101,6 +101,7 @@ module.exports = function(dbs){
                                         t.status = i.status;
                                         t.text = i.text;
                                         t.description = i.description;
+                                        t.subType=i.subType;
                                         t.receiptUrls = i.receiptUrls;
                                         bucketObject.total += i.value;
                                         if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
@@ -288,138 +289,49 @@ module.exports = function(dbs){
 
     };
 
-       service.editExpenses=function(ids){
-        console.log(ids);
+
+    service.editExpenses=function(ids){
         return Q.promise(function(resolve,reject){
-          var q = db.System.find().select('statutoryTables expensesRate');
-
-          return Q.nfcall(q.exec.bind(q)).then(function(system){
-
-
-        system.forEach(function(systemDoc){
-
-
 
           service.fetchExpensesForEdit(ids).then(function(model){
 
 
-
-              var responseArray=[];
+              var bucket=[];
               for(var i=0;i<model.length;i++){
-                var arrayObject={};
-                arrayObject.claimReference=model[i].claimReference;
-                arrayObject.id=model[i]._id;
-                arrayObject.claimDate=model[i].createdDate;
-                arrayObject.userName=model[i].user;
-                arrayObject.expenses=[];
-                arrayObject.total = 0 ;
+
                 model[i].days.forEach(function(l){
-                  var daySpecific={};
-                  daySpecific.startTime = l.startTime;
-                  daySpecific.endTime = l.endTime;
-                  daySpecific.date = l.date;
-                  daySpecific.postcodes = l.postcodes;
-                  daySpecific.dayId = l._id;
-
                    ids.forEach(function(doc){
-
-                      var t = {};
-                      t.date = daySpecific.date;
-                      t.startTime = daySpecific.startTime;
-                      t.endTime = daySpecific.endTime;
-                      t.postcodes = daySpecific.postcodes;
-                      t.dayId = daySpecific.dayId;
-                      t._id = doc.id;
-                      t.receiptUrls = i.receiptUrls;
-                  //    arrayObject.total += doc.value;
 
                        var e=l.expenses.id(doc.id);
 
                        if(e){
-
                         if(doc.expenseType){
 
-                           e.expenseType=doc.expenseType;
-                           t.expenseType=doc.expenseType;
+                         e.expenseType=doc.expenseType;
 
-                        }else{
 
-                          t.expenseType=e.expenseType;
+                        }
+                        if(doc.value){
+
+                           e.value=doc.value;
+
                         }
                         if(doc.receiptUrls){
-
                           e.receiptUrls=doc.receiptUrls;
-                          t.receiptUrls=doc.receiptUrls;
-
-                        }else{
-
-                          t.receiptUrls=e.receiptUrls;
-                        }
-                        if(doc.value && (doc.expenseType==='Other' || doc.expenseType==='Subsistence')){
-
-                          e.value=Number(doc.value);
-
-                          var sys = systemDoc.expensesRate.id(doc.subType);
-
-                                            if (sys) {
-                                                t.expenseDetail = {};
-                                                t.expenseDetail.name = sys.name;
-                                                t.expenseDetail.id = sys._id;
-
-                                                if (sys.taxApplicable) {
-
-                                                    systemDoc.statutoryTables.vat.forEach(function(time) {
-                                                        var validFrom = new Date(time.validFrom);
-                                                        var validTo = new Date(time.validTo);
-
-                                                        var current = new Date();
-                                                        if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
-
-                                                            t.expenseDetail.total =Number(doc.value)+ (time.amount / 100 * Number(doc.value));
-                                                            t.expenseDetail.vat = time.amount + '%';
-
-                                                        }
-
-
-                                                    });
-                                                }
-
-
-                                            }
-                               arrayObject.total += Number(doc.value);
 
                         }
-                        if(doc.value && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
+                        if(doc.status){
 
-                          e.value=Number(doc.value);
-                          t.amount=Number(doc.value);
-                          arrayObject.total += Number(doc.value);
-
-                        }
-                        if(!doc.value){
-
-                            t.amount=e.value;
-                            arrayObject.total += e.value;
-
-                        }
-                        if(doc.subType && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
-
-                          e.subType=doc.subType;
-                          t.subType=doc.subType;
-                        }
-                        if(!doc.subType && (doc.expenseType !=='Other' || doc.expenseType !=='Subsistence')){
-
-                          t.subType=e.subType;
+                          e.status=doc.status;
                         }
 
 
-                       arrayObject.expenses.push(t);
+
 
                        }
                    });
 
                 });
-                responseArray.push(arrayObject);
 
               }
              var bucket=[];
@@ -430,20 +342,16 @@ module.exports = function(dbs){
              });
 
              return Q.all(bucket).then(function(){
-                 resolve({result:true,object:responseArray})
+                 resolve({result:true})
 
              },reject);
 
 
           },reject);
-           });
-
-           },reject);
 
         });
 
     };
-
 
 	return service;
 };
