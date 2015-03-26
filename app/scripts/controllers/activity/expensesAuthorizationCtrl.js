@@ -65,8 +65,8 @@ app.controller("expensesAuthorizationCtrl",
                         req.body.push({
                             "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             "subType": $scope.expensesArray[expenseIndex].expenses[i].subType,
-                            "value": $scope.expensesArray[expenseIndex].expenses[i].value,
-                            "id": $scope.expensesArray[expenseIndex].expenses[i].id,
+                            "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
                             "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
                         });
                     }
@@ -223,14 +223,14 @@ app.controller("expensesAuthorizationCtrl",
 
         }
 
-        $scope.editSelected = function (location) {
-            console.log($scope.checked[location.user][location.cat]);
-            $scope.editing[location.user] = {};
-            $scope.editing[location.user][location.cat] = $scope.checked[location.user][location.cat];
-            console.log($scope.editing);
-            //for (var i = 0; i < $scope.checked[location.user][location.cat].length; i++) {
-            //    $scope.editing[location.user][location.cat][i]= 
-            //}
-        }
+        //$scope.editSelected = function (location) {
+        //    console.log($scope.checked[location.user][location.cat]);
+        //    $scope.editing[location.user] = {};
+        //    $scope.editing[location.user][location.cat] = $scope.checked[location.user][location.cat];
+        //    console.log($scope.editing);
+        //    //for (var i = 0; i < $scope.checked[location.user][location.cat].length; i++) {
+        //    //    $scope.editing[location.user][location.cat][i]= 
+        //    //}
+        //}
 
     }]);
