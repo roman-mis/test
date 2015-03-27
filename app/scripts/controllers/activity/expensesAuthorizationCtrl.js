@@ -17,6 +17,7 @@ app.controller("expensesAuthorizationCtrl",
         $http.get('/api/constants/expenseStatus').success(function (res) {
             $scope.expenseStatus = res;
         });
+        $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
             //console.log('getting expenses done !!');
@@ -34,6 +35,9 @@ app.controller("expensesAuthorizationCtrl",
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                     $scope.expensesArray[i].expenses[j].checked = false;
                     $scope.expensesArray[i].expenses[j].edit = false;
+                    if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
+                        $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
+                    }
                     if ($scope.expensesArray[i].categories.indexOf($scope.expensesArray[i].expenses[j].expenseType) == -1) {
                         $scope.expensesArray[i].categories.push($scope.expensesArray[i].expenses[j].expenseType);
                         //$scope.expensesArray[i].editFlags.push(false);
@@ -61,46 +65,60 @@ app.controller("expensesAuthorizationCtrl",
         //}
 
         $scope.finishEditing = function (expenseIndex, itemId, save) {
-            //console.log(expenseIndex);
+            //console.log($scope.mealTypes);
             if (save) {
-                //$scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
                 var req = {};
                 req.body = [];
-                //for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
-                //    if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == $scope.expensesArray[expenseIndex].categories[categoryIndex]) {
-                //        $scope.expensesArray[expenseIndex].expenses[i].edit = false;
-                //        angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
-                //        req.body.push({
-                //            "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                //            "subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
-                //            "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
-                //            "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
-                //            "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
-                //        });
-                //    }
-                //}
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
-                        console.log($scope.expensesArray[expenseIndex].expenses[i].expenseType);
+                        //console.log($scope.expensesArray[expenseIndex].expenses[i].expenseType);
+                        var subType = '';
+                        if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
+                            for (var j = 0; j < $scope.mealTypes.length; j++) {
+                                //console.log($scope.expensesArray[expenseIndex].expenses[i]);
+                                var newSub= $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
+                                if (newSub == $scope.mealTypes[j].name) {
+                                    subType = $scope.mealTypes[j]._id;
+                                    break;
+                                }
+                            }
+                        } else if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Other') {
+                            for (var j = 0; j < $scope.otherTypes.length; j++) {
+                                //console.log($scope.expensesArray[expenseIndex].expenses[i]);
+                                var newSub = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
+                                if (newSub == $scope.otherTypes[j].name) {
+                                    subType = $scope.otherTypes[j]._id;
+                                    break;
+                                }
+                            }
+                        } else {
+                            subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
+                        }
                         req.body.push({
-                            "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                            //"subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
-                            "date": $scope.expensesArray[expenseIndex].expenses[i].date,
-                            "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
-                            "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
-                            "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
+                            expenseType:  $scope.expensesArray[expenseIndex].expenses[i].expenseType,
+                            subType:      subType,
+                            date:         $scope.expensesArray[expenseIndex].expenses[i].date,
+                            value:        $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            id:           $scope.expensesArray[expenseIndex].expenses[i]._id,
+                            receiptUrls:  $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
+                            status:       $scope.expensesArray[expenseIndex].expenses[i].status
                         });
                         break;
                     }
                 }
+                //console.log(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
-                    console.log(res);
+                    //console.log(res);
                     $http.get('/api/candidates/expenses').success(function (expenses) {
-                        //console.log('getting expenses done !!');
-                        //console.log(expenses);
-                        $scope.expensesArray = expenses.object;
-                        init();
+                        //console.log(expenses.object[expenseIndex].expenses[i]);
+                        $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
+                        var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
+                        $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
+                        $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
+                        if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
+                            $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
+                        }
                     });
                 });
             } else {
@@ -140,123 +158,6 @@ app.controller("expensesAuthorizationCtrl",
         //$scope.users = ['first', 'second'];
         //$scope.editing = {};
         //$scope.checked = {};
-
-        //initialize();
-
-
-        function initialize() {
-            $scope.data = [
-                          {
-                              "_id": "5506fd4fba11c59b8f2ef465",
-                              "id": 4,
-                              "category": "Organic",
-                              "type": "Quordate",
-                              "date": "dd/mm/yy",
-                              "value": 732,
-                              "amount": 219,
-                              "vat": 386,
-                              "total": 869,
-                              "status": "Submitted"
-                          },
-                          {
-                              "_id": "5506fd4f377de3c1ad043496",
-                              "id": 261,
-                              "category": "Plastic",
-                              "type": "Conjurica",
-                              "date": "dd/mm/yy",
-                              "value": 828,
-                              "amount": 964,
-                              "vat": 361,
-                              "total": 806,
-                              "status": "Submitted"
-                          },
-                          {
-                              "_id": "5506fd4fb1a4ef293f876905",
-                              "id": 886,
-                              "category": "Plastic",
-                              "type": "Comvoy",
-                              "date": "dd/mm/yy",
-                              "value": 748,
-                              "amount": 730,
-                              "vat": 653,
-                              "total": 640,
-                              "status": "Unsubmitted"
-                          },
-                          {
-                              "_id": "5506fd4f7ee42b540862d9bd",
-                              "id": 646,
-                              "category": "Plastic",
-                              "type": "Equitax",
-                              "date": "dd/mm/yy",
-                              "value": 769,
-                              "amount": 76,
-                              "vat": 782,
-                              "total": 566,
-                              "status": "Submitted"
-                          },
-                          {
-                              "_id": "5506fd4f6ea68ce28c3c38fe",
-                              "id": 591,
-                              "category": "Organic",
-                              "type": "Visalia",
-                              "date": "dd/mm/yy",
-                              "value": 979,
-                              "amount": 10,
-                              "vat": 244,
-                              "total": 277,
-                              "status": "Submitted"
-                          },
-                          {
-                              "_id": "5506fd4f30eb7d32bd680e43",
-                              "id": 470,
-                              "category": "Organic",
-                              "type": "Envire",
-                              "date": "dd/mm/yy",
-                              "value": 412,
-                              "amount": 832,
-                              "vat": 440,
-                              "total": 76,
-                              "status": "Submitted"
-                          },
-                          {
-                              "_id": "5506fd4f799c024b34bb1461",
-                              "id": 473,
-                              "category": "Other",
-                              "type": "Marqet",
-                              "date": "dd/mm/yy",
-                              "value": 173,
-                              "amount": 343,
-                              "vat": 951,
-                              "total": 998,
-                              "status": "Unsubmitted"
-                          },
-                          {
-                              "_id": "5506fd4fe63464f5fa7dcd74",
-                              "id": 979,
-                              "category": "Other",
-                              "type": "Maineland",
-                              "date": "dd/mm/yy",
-                              "value": 716,
-                              "amount": 562,
-                              "vat": 744,
-                              "total": 861,
-                              "status": "Submitted"
-                          },
-                          {
-                              "_id": "5506fd4f696009cfb2a9b13a",
-                              "id": 57,
-                              "category": "Organic",
-                              "type": "Extragene",
-                              "date": "dd/mm/yy",
-                              "value": 272,
-                              "amount": 59,
-                              "vat": 668,
-                              "total": 672,
-                              "status": "Unsubmitted"
-                          }
-            ];
-
-        }
 
         //$scope.editSelected = function (location) {
         //    console.log($scope.checked[location.user][location.cat]);

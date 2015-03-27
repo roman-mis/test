@@ -8,19 +8,23 @@ module.exports = function(mongoose) {
 
 	var schema= new BaseSchema({
         type: String, // ssp, smp, spp, holidayPay, studentLoan
-        status: String, // Submitted, 
+        status: String, // Submitted, Approved
 		worker: { type:Schema.Types.ObjectId, ref:'User' },
         dateInformed: Date,
         intendedStartDate: Date,
+        actualStartDate: Date,
         startDate: Date,
         endDate: Date,
         smp: {
             babyDueDate: Date,
+            actualBirthDate: Date,
+            babyEarly: Boolean
         },
         spp: {
             babyDueDate: Date,
             relationship: String,
-            numberWeeks: Number
+            numberWeeks: Number,
+            actualBirthDate: Date
         },
         holidayPay: {
             amount: Number
@@ -30,10 +34,18 @@ module.exports = function(mongoose) {
             payDirectly: Boolean
         },
         imageUrl: String,
-        days: [
-               { weekNumber: Number,
-                               monthNumber: Number,
-                               amount: Number}
+        days: [ 
+            { 
+                weekNumber: Number,
+                monthNumber: Number,
+                amountPaid: Number,
+                amount: Number,
+                worker: Boolean,
+                paid: Boolean,
+                excluded: Boolean,
+                sick: Booelan,
+                notes: String
+            }
         ]
         
 	});

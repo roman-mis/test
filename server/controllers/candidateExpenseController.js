@@ -208,7 +208,7 @@ module.exports = function(db){
 
 	};
 	controller.editExpenses=function(req,res){
-
+				console.log(req.body)
         expenseservice.editExpenses(req.body.body).then(function(d){
 
                res.json(d);
