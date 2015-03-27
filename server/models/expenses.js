@@ -21,6 +21,8 @@ module.exports = function(mongoose,autoIncrement) {
                 subType: String, // breakfast, meal1, carvan, motorbike, stationery
                 amount: Number, // 46 miles or 1 lunch
                 value: Number, // Cost inc VAT for one item (45p for a mile or £4.50 for a lunch)
+                vatApplicable: Number, // How much of the value (price per one) is to have VAT on it
+                vatRate: Number, 
                 vat: Number, // The VAT element (2.5p or 75p)
                 total: Number, // The total, so 46 miles @ 45p = £20.70 or 1 lunch at £4.50 = £4.50
                 text: String, // WE43 9KK
