@@ -78,7 +78,7 @@ module.exports = function(mongoose) {
             dieselAbove2001: Number,
             lpgUpTo1400: Number,
             lpg1401to2000: Number,
-            lpgAbove2001: Number
+            lpgAbove2001: Number   
         },
         cis: {
             userId: String,
