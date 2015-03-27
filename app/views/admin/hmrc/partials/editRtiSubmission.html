@@ -125,7 +125,7 @@
                             <label class="col-xs-4 control-label">Email</label>
                             <div class="dropdown col-xs-8 no-padding-left">
                                 <span type="text">
-                                    <input class="form-control" ng-model="rti.emailAddress" />
+                                    <input ng-pattern = "/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" class="form-control" ng-model="rti.emailAddress" />
                                 </span>
 
                             </div>
