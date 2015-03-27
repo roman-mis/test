@@ -77,7 +77,7 @@ app.controller("expensesAuthorizationCtrl",
                         if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
                             for (var j = 0; j < $scope.mealTypes.length; j++) {
                                 //console.log($scope.expensesArray[expenseIndex].expenses[i]);
-                                var newSub= $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
+                                var newSub = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                                 if (newSub == $scope.mealTypes[j].name) {
                                     subType = $scope.mealTypes[j]._id;
                                     break;
@@ -96,13 +96,13 @@ app.controller("expensesAuthorizationCtrl",
                             subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                         }
                         req.body.push({
-                            expenseType:  $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                            subType:      subType,
-                            date:         $scope.expensesArray[expenseIndex].expenses[i].date,
-                            value:        $scope.expensesArray[expenseIndex].expenses[i].amount,
-                            id:           $scope.expensesArray[expenseIndex].expenses[i]._id,
-                            receiptUrls:  $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
-                            status:       $scope.expensesArray[expenseIndex].expenses[i].status
+                            expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
+                            subType: subType,
+                            date: $scope.expensesArray[expenseIndex].expenses[i].date,
+                            value: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            id: $scope.expensesArray[expenseIndex].expenses[i]._id,
+                            receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
+                            status: $scope.expensesArray[expenseIndex].expenses[i].status
                         });
                         break;
                     }
@@ -129,44 +129,30 @@ app.controller("expensesAuthorizationCtrl",
                         break;
                     }
                 }
-                //$scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
-                //for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
-                //    if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == $scope.expensesArray[expenseIndex].categories[categoryIndex]) {
-                //        $scope.expensesArray[expenseIndex].expenses[i].edit = false;
-                //        angular.copy($scope.expensesArray[expenseIndex].expenses[i], $scope.cloned[expenseIndex].expenses[i]);
-                //    }
-                //}
             }
+        }
+
+        $scope.deleteSelected = function (expenseIndex, category) {
+            var req = {};
+            req.expenseIds = [];
+            for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                if ($scope.expensesArray[expenseIndex].expenses[i].checked
+                    && $scope.expensesArray[expenseIndex].expenses[i].expenseType == category) {
+                    req.expenseIds.push($scope.expensesArray[expenseIndex].expenses[i]._id);
+                }
+            }
+            console.log(req);
+            $http.delete('/api/candidates/expenses', req).success(function (res) {
+                console.log(res);
+                //$http.get('/api/candidates/expenses').success(function (expenses) {
+                //    $scope.expensesArray = expenses.object;
+                //    init();
+                //});
+            });
         }
 
         //$scope.logs = function (x, y) {
         //    console.log(x); console.log(y);
-        //}
-
-        //var catCount;
-
-        //// counting categories and items/category
-        //$scope.categories = [];
-        //catCount = [];
-        //for (var i = 0; i < $scope.data.length; i++) {
-        //    if ($scope.categories.indexOf($scope.data[i].category) == -1) {
-        //        $scope.categories.push($scope.data[i].category);
-        //        catCount.push(1);
-        //    } else catCount[$scope.categories.indexOf($scope.data[i].category)]++;
-        //}
-
-        //$scope.users = ['first', 'second'];
-        //$scope.editing = {};
-        //$scope.checked = {};
-
-        //$scope.editSelected = function (location) {
-        //    console.log($scope.checked[location.user][location.cat]);
-        //    $scope.editing[location.user] = {};
-        //    $scope.editing[location.user][location.cat] = $scope.checked[location.user][location.cat];
-        //    console.log($scope.editing);
-        //    //for (var i = 0; i < $scope.checked[location.user][location.cat].length; i++) {
-        //    //    $scope.editing[location.user][location.cat][i]= 
-        //    //}
         //}
 
     }]);
