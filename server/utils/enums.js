@@ -36,7 +36,10 @@ module.exports={
 		'Reject':'reject'
 	},
 	payFrequency:{
-		'Weekly':'weekly'
+		'Weekly':'weekly',
+		'TwoWeekly':'twoweekly',
+		'FourWeekly':'fourweekly',
+		'Monthly':'monthly'
 
 	}
 };

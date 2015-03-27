@@ -65,14 +65,10 @@
     border: 1px solid $gray-light;
     text-align: center;
     line-height: 76px;
-    border-radius: 4px;
     margin: 0 auto;
     img {
         height: 51px;
         width: 51px;
-    }
-    &:hover {
-        opacity: 0.8;
     }
 }
 
@@ -82,5 +78,15 @@
     justify-content: flex-start;
     > div {
         width: 135px;
+        a {
+            color: $green-light;
+        }
+        &:hover {
+            opacity: .8;
+            a {
+                text-decoration: none;
+                color: $green;
+            }
+        }
     }
 }
