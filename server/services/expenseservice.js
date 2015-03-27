@@ -291,6 +291,7 @@ module.exports = function(dbs){
 
 
     service.editExpenses=function(ids){
+      console.log(ids);
         return Q.promise(function(resolve,reject){
 
            var q = db.System.find().select('statutoryTables expensesRate');
@@ -299,44 +300,89 @@ module.exports = function(dbs){
 
 
         system.forEach(function(systemDoc){
+          console.log(systemDoc);
 
 
 
           service.fetchExpensesForEdit(ids).then(function(model){
 
 
-              var bucket=[];
-              for(var i=0;i<model.length;i++){
 
-                model[i].days.forEach(function(l){
+
+              model.forEach(function(eachModel){
+
+                eachModel.days.forEach(function(l){
+                  console.log(l);
                    ids.forEach(function(doc){
 
                        var e=l.expenses.id(doc.id);
+                       console.log(e);
 
                        if(e){
+                        console.log(doc.expenseType);
                         if(doc.expenseType){
+                          console.log('test');
 
                          e.expenseType=doc.expenseType;
 
 
+                        }else{
+
+                          e.expenseType=e.expenseType;
                         }
                         if(doc.value){
 
                            e.value=Number(doc.value);
 
+                        }else{
+
+                          e.value=Number(doc.value);
                         }
                         if(doc.receiptUrls){
                           e.receiptUrls=doc.receiptUrls;
 
+                        }else{
+
+                          e.receiptUrls=e.receiptUrls;
                         }
                         if(doc.status){
 
                           e.status=doc.status;
+                        }else{
+
+                          e.status=e.status;
                         }
 
                         if(doc.date){
 
                           e.date=doc.date;
+                        }else{
+
+                          e.date=e.date;
+                        }
+
+                        if(!doc.subType){
+
+                          e.subType=e.subType;
+                        }else{
+
+                        if(doc.expenseType==='Other' || doc.expenseType==='Subsistence'){
+
+
+
+                               var sys=systemDoc.expensesRate.id(doc.subType);
+                               if(sys){
+
+                                sys.name=doc.subType;
+                                systemDoc.save();
+                               }
+
+                        }else{
+
+
+                            e.subType=doc.subType;
+
+                        }
                         }
 
 
@@ -347,7 +393,7 @@ module.exports = function(dbs){
 
                 });
 
-              }
+              });
              var bucket=[];
              model.forEach(function(mo){
 
