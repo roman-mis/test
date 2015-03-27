@@ -25,7 +25,7 @@ module.exports = function(mongoose,autoIncrement) {
                 description: String,
                 receiptUrls: [ String ],
                 status:{type:String,default:'submitted'},
-                date:{type:Date}
+                date:Date
             }]
         }]
     });

@@ -84,16 +84,18 @@ app.controller("expensesAuthorizationCtrl",
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
                         console.log($scope.expensesArray[expenseIndex].expenses[i].expenseType);
                         req.body.push({
-                            "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                            //"subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
-                            "date": $scope.expensesArray[expenseIndex].expenses[i].date,
-                            "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
-                            "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
-                            "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
+                            expenseType:  $scope.expensesArray[expenseIndex].expenses[i].expenseType,
+                            subType:      $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
+                            date:         $scope.expensesArray[expenseIndex].expenses[i].date,
+                            value:        $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            id:           $scope.expensesArray[expenseIndex].expenses[i]._id,
+                            receiptUrls:  $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
+                            status:       $scope.expensesArray[expenseIndex].expenses[i].status
                         });
                         break;
                     }
                 }
+                console.log(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     console.log(res);
                     $http.get('/api/candidates/expenses').success(function (expenses) {
