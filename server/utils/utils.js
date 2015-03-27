@@ -9,6 +9,28 @@ var bcrypt=require('bcryptjs'),
 var utils;
 
 module.exports=utils={
+
+	getDateValue:function(dt){
+		return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
+	},
+	areDateEqual:function(date1,date2){
+		if(date1 === date2){
+			return true;
+		}
+		else if((date1===null ||date1===undefined) && (date2===null ||date2===undefined)){
+			return true;
+		}
+		else if(date1 && date2){
+
+			return date1.getFullYear()===date2.getFullYear() && 
+				date1.getMonth()===date2.getMonth() && 
+				date1.getDate()===date2.getDate();
+
+		}
+		else{
+			return false;
+		}
+	},
 	findInArray:function(arr,key,keyName){
 		var foundValue=_.find(arr,function(val){
 			if(_.isObject(val)){
