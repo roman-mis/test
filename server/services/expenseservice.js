@@ -300,16 +300,19 @@ module.exports = function(dbs){
 
 
         system.forEach(function(systemDoc){
+          console.log(systemDoc);
 
 
 
           service.fetchExpensesForEdit(ids).then(function(model){
 
 
-              var bucket=[];
-              for(var i=0;i<model.length;i++){
 
-                model[i].days.forEach(function(l){
+
+              model.forEach(function(eachModel){
+
+                eachModel.days.forEach(function(l){
+                  console.log(l);
                    ids.forEach(function(doc){
 
                        var e=l.expenses.id(doc.id);
@@ -323,28 +326,49 @@ module.exports = function(dbs){
                          e.expenseType=doc.expenseType;
 
 
+                        }else{
+
+                          e.expenseType=e.expenseType;
                         }
                         if(doc.value){
 
                            e.value=Number(doc.value);
 
+                        }else{
+
+                          e.value=Number(doc.value);
                         }
                         if(doc.receiptUrls){
                           e.receiptUrls=doc.receiptUrls;
 
+                        }else{
+
+                          e.receiptUrls=e.receiptUrls;
                         }
                         if(doc.status){
 
                           e.status=doc.status;
+                        }else{
+
+                          e.status=e.status;
                         }
 
                         if(doc.date){
 
                           e.date=doc.date;
+                        }else{
+
+                          e.date=e.date;
                         }
+
+                        if(!doc.subType){
+
+                          e.subType=e.subType;
+                        }else{
+
                         if(doc.expenseType==='Other' || doc.expenseType==='Subsistence'){
 
-                          if(doc.subType){
+
 
                                var sys=systemDoc.expensesRate.id(doc.subType);
                                if(sys){
@@ -352,10 +376,13 @@ module.exports = function(dbs){
                                 sys.name=doc.subType;
                                 systemDoc.save();
                                }
-                          }
+
                         }else{
 
-                          e.subType=doc.subType;
+
+                            e.subType=doc.subType;
+
+                        }
                         }
 
 
@@ -366,7 +393,7 @@ module.exports = function(dbs){
 
                 });
 
-              }
+              });
              var bucket=[];
              model.forEach(function(mo){
 
