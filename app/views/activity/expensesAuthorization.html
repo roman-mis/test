@@ -99,10 +99,10 @@
                                                         <li>
                                                             <a style="cursor:pointer">Reject Item</a>
                                                         </li>
-                                                        <li>
+                                                        <li ng-click="selectAll($parent.$index, cat)">
                                                             <a style="cursor:pointer">Select All</a>
                                                         </li>
-                                                        <li>
+                                                        <li ng-click="inverseSelection($parent.$index, cat)">
                                                             <a style="cursor:pointer">Inverse Selection</a>
                                                         </li>
                                                         <li ng-click="deleteSelected($parent.$index, cat)">
