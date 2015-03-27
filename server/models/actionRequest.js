@@ -43,7 +43,7 @@ module.exports = function(mongoose) {
                 worker: Boolean,
                 paid: Boolean,
                 excluded: Boolean,
-                sick: Booelan,
+                sick: Boolean,
                 notes: String
             }
         ]

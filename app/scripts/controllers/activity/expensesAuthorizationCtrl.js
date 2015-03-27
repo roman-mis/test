@@ -132,7 +132,7 @@ app.controller("expensesAuthorizationCtrl",
             }
         }
 
-        $scope.deleteSelected = function (expenseIndex, category) {
+        $scope.deleteSelected = function (expenseIndex, category) { 
             var req = {};
             req.expenseIds = [];
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
@@ -142,7 +142,7 @@ app.controller("expensesAuthorizationCtrl",
                 }
             }
             console.log(req);
-            $http.delete('/api/candidates/expenses', req).success(function (res) {
+            $http.post('/api/candidates/expenses', req).success(function (res) {
                 console.log(res);
                 //$http.get('/api/candidates/expenses').success(function (expenses) {
                 //    $scope.expensesArray = expenses.object;

@@ -197,6 +197,10 @@ module.exports = function(db){
 
 	};
 	controller.deleteExpense=function(req,res){
+				console.log('%%%%%%%%%%%%%%%%%%%%%1');
+				console.log(req.body);
+				console.log(req.params);
+				console.log(req.expenseIds);
 
          expenseservice.deleteExpense(req.body.expenseIds).then(function(d){
                   res.json(d);
