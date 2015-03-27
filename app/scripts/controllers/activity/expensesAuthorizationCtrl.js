@@ -34,6 +34,9 @@ app.controller("expensesAuthorizationCtrl",
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                     $scope.expensesArray[i].expenses[j].checked = false;
                     $scope.expensesArray[i].expenses[j].edit = false;
+                    if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
+                        $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
+                    }
                     if ($scope.expensesArray[i].categories.indexOf($scope.expensesArray[i].expenses[j].expenseType) == -1) {
                         $scope.expensesArray[i].categories.push($scope.expensesArray[i].expenses[j].expenseType);
                         //$scope.expensesArray[i].editFlags.push(false);
@@ -61,31 +64,30 @@ app.controller("expensesAuthorizationCtrl",
         //}
 
         $scope.finishEditing = function (expenseIndex, itemId, save) {
-            //console.log(expenseIndex);
+            //console.log($scope.mealTypes);
             if (save) {
-                //$scope.expensesArray[expenseIndex].editFlags[categoryIndex] = false;
-                //for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
-                //    if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == $scope.expensesArray[expenseIndex].categories[categoryIndex]) {
-                //        $scope.expensesArray[expenseIndex].expenses[i].edit = false;
-                //        angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
-                //        req.body.push({
-                //            "expenseType": $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                //            "subType": $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
-                //            "value": $scope.expensesArray[expenseIndex].expenses[i].amount,
-                //            "id": $scope.expensesArray[expenseIndex].expenses[i]._id,
-                //            "receiptUrls": $scope.expensesArray[expenseIndex].expenses[i].receiptUrls
-                //        });
-                //    }
-                //}
                 var req = {};
                 req.body = [];
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
-                        console.log($scope.expensesArray[expenseIndex].expenses[i].expenseType);
+                        //console.log($scope.expensesArray[expenseIndex].expenses[i].expenseType);
+                        var subType = '';
+                        if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
+                            for (var j = 0; j < $scope.mealTypes.length; j++) {
+                                //console.log($scope.expensesArray[expenseIndex].expenses[i]);
+                                var newSub= $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
+                                if (newSub == $scope.mealTypes[j].name) {
+                                    subType = $scope.mealTypes[j]._id;
+                                    break;
+                                }
+                            }
+                        } else {
+                            subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
+                        }
                         req.body.push({
                             expenseType:  $scope.expensesArray[expenseIndex].expenses[i].expenseType,
-                            subType:      $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name,
+                            subType:      subType,
                             date:         $scope.expensesArray[expenseIndex].expenses[i].date,
                             value:        $scope.expensesArray[expenseIndex].expenses[i].amount,
                             id:           $scope.expensesArray[expenseIndex].expenses[i]._id,
@@ -98,12 +100,10 @@ app.controller("expensesAuthorizationCtrl",
                 console.log(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     console.log(res);
-                    $http.get('/api/candidates/expenses').success(function (expenses) {
-                        //console.log('getting expenses done !!');
-                        //console.log(expenses);
-                        $scope.expensesArray = expenses.object;
-                        init();
-                    });
+                    //$http.get('/api/candidates/expenses').success(function (expenses) {
+                    //    $scope.expensesArray = expenses.object;
+                    //    init();
+                    //});
                 });
             } else {
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
