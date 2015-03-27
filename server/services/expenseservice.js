@@ -170,8 +170,12 @@ module.exports = function(dbs){
     };
 
     service.fetchExpenses=function(val){
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+        console.log(val);
 
      var q=db.Expense.find().where('days.expenses._id').in(val);
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+
      return Q.nfcall(q.exec.bind(q));
 
     };
@@ -248,17 +252,20 @@ module.exports = function(dbs){
         });
     };
     service.deleteExpense=function(ids){
+        console.log('%%%%%%%%%%%%%%%%%%%%%2');
 
         return Q.promise(function(resolve,reject){
 
             service.fetchExpenses(ids).then(function(model){
 
+        console.log('%%%%%%%%%%%%%%%%%%%%%3');
 
                for(var i=0;i<model.length;i++){
 
                  model[i].days.forEach(function(l){
 
                         ids.forEach(function(id){
+        console.log('%%%%%%%%%%%%%%%%%%%%%4');
 
                         var v=l.expenses.id(id);
                         if(v){
@@ -271,10 +278,13 @@ module.exports = function(dbs){
                  });
 
                }
+        console.log('%%%%%%%%%%%%%%%%%%%%%5');
+
              var bucket=[];
              model.forEach(function(mo){
 
                bucket.push(Q.nfcall(mo.save.bind(mo)));
+        console.log('%%%%%%%%%%%%%%%%%%%%%6');
 
              });
 
