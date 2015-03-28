@@ -59,6 +59,15 @@ angular.module('origApp.controllers')
       HttpResource.model('users/send/passwardReset/'+$scope.allData[index]._id).query(params, function(data) {
           console.log(data)
       });
-    }
+    };
+
+    $scope.lockUnlock = function(index){
+      HttpResource.model('users/'+$scope.allData[index]._id+'/lockunlock/'+!$scope.allData[index].locked).create({}).post().then(function(data) {
+        console.log(data);
+        if(data.data.result){
+        }
+      });
+      $scope.allData[index].locked=!$scope.allData[index].locked;
+    };
 
 }]);

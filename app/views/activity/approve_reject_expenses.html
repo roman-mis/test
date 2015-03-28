@@ -1,0 +1,42 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">{{title}}&nbsp;Expenses</h3>
+</div>
+<div class="modal-body">
+    <table class="table table-striped" style="margin-bottom: 0;">
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Line no.</th>
+                <th>Type</th>
+                <th>Total</th>
+                <th ng-hide="approve">Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in items">
+                <td>{{ids[$index]}}</td>
+                <td>{{$index}}</td>
+                <td>{{item.expenseDetail.name}}</td>
+                <td>{{item.expenseDetail.total | currency:"&pound;"}}</td>
+                <td ng-hide="approve">
+                    <select ng-model="reasons[$index]">
+                        <option value="" selected>--reason to reject--</option>
+                        <option value="No Receipt">No Receipt</option>
+                        <option value="Receipt not valid">Receipt not valid</option>
+                        <option value="Not Wholly Necessary">Not Wholly Necessary</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" placeholder="Reason to Reject"
+                           ng-model="otherReason[index]"
+                           ng-show="reasons[$index]=='Other'" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">{{approve? 'Approve':'Reject'}}</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

@@ -12,8 +12,8 @@ angular.module('origApp.controllers')
     $scope.mileageRates = {};
 
     // var valuesName = [];
-    $scope.mileageRatesNames = ['petrolUpTo1400', 'petrol1401to2000', 'petrolAbove2000', 'diselUpTo1400',
-                             'disel1401to2000', 'diselAbove2000', 'lpgUpTo1400', 'lpg1401to2000', 'lpgAbove2000']
+    $scope.mileageRatesNames = ['petrolUpTo1400', 'petrol1401to2000', 'petrolAbove2001', 'dieselUpTo1600',
+                             'diesel1601to2000', 'dieselAbove2001', 'lpgUpTo1400', 'lpg1401to2000', 'lpgAbove2001']
 
 
     function loadData(){
@@ -78,6 +78,7 @@ angular.module('origApp.controllers')
     };
 
     $scope.save = function(){
+        console.log($scope.mileageRates);
         HttpResource.model('systems/mileagerates').create($scope.mileageRates).post().then(function() {
         });
     };

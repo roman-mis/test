@@ -52,7 +52,7 @@
         	<td>{{item.lastLogin | date:'yyyy-MM-dd'}}</td>
         	<td>{{item.createdDate | date:'yyyy-MM-dd'}}</td>
         	<td class="text-center"><span style="margin:4px" ui-sref="app.admin.user.home({id:item._id})"><i class="fa fa-eye"></i></span>
-        	<span style="margin:4px"><i class="fa fa-lock"></i></span>
+        	<span style="margin:4px" ng-click="lockUnlock($index)"><i ng-show="item.locked" class="fa fa-lock"></i><i ng-show="! item.locked" class="fa fa-unlock-alt"></i></span>
         	<span style="margin:4px" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></span>
         	</td>
       </tr>

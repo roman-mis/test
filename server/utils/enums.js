@@ -32,8 +32,8 @@ module.exports={
 	},
 	expenseStatus:{
 
-		'Approve':'approve',
-		'Reject':'reject'
+		'Approve':'approved',
+		'Reject':'rejected'
 	},
 	payFrequency:{
 		'Weekly':'weekly',

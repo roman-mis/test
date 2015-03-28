@@ -42,7 +42,6 @@ angular.module('origApp.controllers')
 
             $scope.save = function ($valid) {
                 if (!$valid) {
-                    $scope.submitted = true;
                     return;
                 }
                 $scope.isSaving = true;

@@ -9,6 +9,28 @@ var bcrypt=require('bcryptjs'),
 var utils;
 
 module.exports=utils={
+
+	getDateValue:function(dt){
+		return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
+	},
+	areDateEqual:function(date1,date2){
+		if(date1 === date2){
+			return true;
+		}
+		else if((date1===null ||date1===undefined) && (date2===null ||date2===undefined)){
+			return true;
+		}
+		else if(date1 && date2){
+
+			return date1.getFullYear()===date2.getFullYear() && 
+				date1.getMonth()===date2.getMonth() && 
+				date1.getDate()===date2.getDate();
+
+		}
+		else{
+			return false;
+		}
+	},
 	findInArray:function(arr,key,keyName){
 		var foundValue=_.find(arr,function(val){
 			if(_.isObject(val)){
@@ -61,7 +83,7 @@ module.exports=utils={
 	compareSecureString:function(secureString,plainString){
 		var deff=Q.defer();
 		bcrypt.compare(plainString,secureString,function(err,testResult){
-                    
+
 			deff.resolve(testResult);
         });
 
@@ -71,7 +93,7 @@ module.exports=utils={
 	updateModel:function(model,viewmodel){
 		var props=[];
 		_.forEach(viewmodel,function(val,key){
-					
+
 					if(val!==undefined){
 						model[key]=val;
 						props.push(key);
@@ -142,7 +164,7 @@ module.exports=utils={
 				}
 			});
 		});
-		
+
 	},
 	receiveFileStream:function(sourceStream,destinationFilePath){
 		return Q.Promise(function(resolve,reject){
@@ -163,14 +185,14 @@ module.exports=utils={
 			var tempDir=path.join(__dirname+'/..',process.env.TEMP_DIR||'/temp/');
 
 			console.log('Receiving file : '+ filename);
-			
+
 			var filePath=path.join(tempDir,filename);
 			utils.receiveFileStream(file,filePath)
 			.then(function(){
 				resolve(filePath);
 			},reject);
-			
-		     	
+
+
 		    });
 
 	},
@@ -217,7 +239,7 @@ module.exports=utils={
 									.toLowerCase()
 									.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
 							        .replace(/\s/g, '')
-							        .replace(/^(.)/, function($1) { return $1.toLowerCase(); }); 
+							        .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
 								record[headerName] = value.replace(/"/g, '') || null;
 							}
 						});
@@ -226,7 +248,7 @@ module.exports=utils={
 				}else{
 					csvData.push(data);
 				}
-				
+
 			 }).on('end', function(){
 			     resolve(csvData);
 			 });
