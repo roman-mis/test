@@ -7,14 +7,39 @@ angular.module('origApp.controllers')
 
             if (undefined !== parentScope) {
                 $scope.companyProfile = parentScope.companyProfile;
+                $scope.dropDownLists =  parentScope.dropDownLists;
             }
 
             $scope.cancel = function () {
                 $modalInstance.dismiss('canceled passed to parent');
             };
 
-            $scope.saveContact = function () {
-                CompanyProfileService.saveCompanyProfile($scope.companyProfile, 'contact').
+            function getParams(type) {
+
+                var controller;
+                switch (type) {
+
+                case '_edit_accounts':
+                    controller = 'accounts';
+                    break;
+                case '_edit_bankDetails':
+                    controller = 'bankDetails';
+                    break;
+                case '_edit_defaults':
+                    controller = 'defaults';
+                    break;
+                default:
+                    controller = 'contact';
+                }
+
+                return controller;
+            }
+
+            $scope.saveCompanyProfile = function (param) {
+
+                console.log(param);
+
+                CompanyProfileService.saveCompanyProfile($scope.companyProfile, param).
                     then(function (response) {
 
                         if ('saved successfully' === response) {
