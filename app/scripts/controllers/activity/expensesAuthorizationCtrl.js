@@ -20,8 +20,8 @@ app.controller("expensesAuthorizationCtrl",
         $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
-            //console.log('getting expenses done !!');
-            //console.log(expenses);
+            console.log('getting expenses done !!');
+            console.log(expenses);
             $scope.expensesArray = expenses.object;
             init();
         });
@@ -45,6 +45,7 @@ app.controller("expensesAuthorizationCtrl",
             $scope.cloned = [];
             angular.copy($scope.expensesArray, $scope.cloned);
             console.log($scope.expensesArray);
+            console.log("finished!!!")
         }
 
         function getMonday(d) {
@@ -115,7 +116,7 @@ app.controller("expensesAuthorizationCtrl",
                     }
                 }
             }
-        }
+        };
 
         $scope.deleteSelected = function (expenseIndex, category) {
             var req = {};
@@ -144,7 +145,7 @@ app.controller("expensesAuthorizationCtrl",
                     angular.copy($scope.expensesArray[expenseIndex].expenses, $scope.cloned[expenseIndex].expenses);
                 }
             });
-        }
+        };
 
         $scope.selectAll = function (expenseIndex, category) {
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
@@ -152,7 +153,7 @@ app.controller("expensesAuthorizationCtrl",
                     $scope.expensesArray[expenseIndex].expenses[i].checked = true;
                 }
             }
-        }
+        };
 
         $scope.inverseSelection = function (expenseIndex, category) {
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
@@ -164,7 +165,7 @@ app.controller("expensesAuthorizationCtrl",
                     }
                 }
             }
-        }
+        };
 
         //$scope.logs = function (x, y) {
         //    console.log(x); console.log(y);

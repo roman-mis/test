@@ -90,7 +90,7 @@ module.exports = function(dbs){
                                     l.expenses.forEach(function(i) {
 
                                         var t = {};
-                                        t.date = i.date;
+                                        t.date = daySpecific.date;
                                         t.startTime = daySpecific.startTime;
                                         t.endTime = daySpecific.endTime;
                                         t.postcodes = daySpecific.postcodes;
@@ -170,12 +170,8 @@ module.exports = function(dbs){
     };
 
     service.fetchExpenses=function(val){
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
-        console.log(val);
 
      var q=db.Expense.find().where('days.expenses._id').in(val);
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
-
      return Q.nfcall(q.exec.bind(q));
 
     };
@@ -252,20 +248,17 @@ module.exports = function(dbs){
         });
     };
     service.deleteExpense=function(ids){
-        console.log('%%%%%%%%%%%%%%%%%%%%%2');
 
         return Q.promise(function(resolve,reject){
 
             service.fetchExpenses(ids).then(function(model){
 
-        console.log('%%%%%%%%%%%%%%%%%%%%%3');
 
                for(var i=0;i<model.length;i++){
 
                  model[i].days.forEach(function(l){
 
                         ids.forEach(function(id){
-        console.log('%%%%%%%%%%%%%%%%%%%%%4');
 
                         var v=l.expenses.id(id);
                         if(v){
@@ -278,13 +271,10 @@ module.exports = function(dbs){
                  });
 
                }
-        console.log('%%%%%%%%%%%%%%%%%%%%%5');
-
              var bucket=[];
              model.forEach(function(mo){
 
                bucket.push(Q.nfcall(mo.save.bind(mo)));
-        console.log('%%%%%%%%%%%%%%%%%%%%%6');
 
              });
 
@@ -316,33 +306,55 @@ module.exports = function(dbs){
 
 
               var bucket=[];
-                       console.log('%%%%%%%%%%%%%%%%%%%%1');
-                       console.log(model.length);
-
               for(var i=0;i<model.length;i++){
 
                 model[i].days.forEach(function(l){
                    ids.forEach(function(doc){
 
                        var e=l.expenses.id(doc.id);
+
                        if(e){
-                        for(var key in doc){
-                          if(doc[key]){
-                            e[key] = doc[key];
-                          }
+                        if(doc.expenseType){
+
+                         e.expenseType=doc.expenseType;
+
+
                         }
+                        if(doc.value){
+
+                           e.value=Number(doc.value);
+
+                        }
+                        if(doc.receiptUrls){
+                          e.receiptUrls=doc.receiptUrls;
+
+                        }
+                        if(doc.status){
+
+                          e.status=doc.status;
+                        }
+
+                        if(doc.date){
+
+                          e.date=doc.date;
+                        }
+
+
+
 
                        }
                    });
+
                 });
-                  bucket.push(Q.nfcall(model[i].save.bind(model[i])));
+
               }
-             // var bucket=[];
-             // model.forEach(function(mo){
+             var bucket=[];
+             model.forEach(function(mo){
 
-             //   bucket.push(Q.nfcall(mo.save.bind(mo)));
+               bucket.push(Q.nfcall(mo.save.bind(mo)));
 
-             // });
+             });
+
              return Q.all(bucket).then(function(){
                  resolve({result:true})
 
