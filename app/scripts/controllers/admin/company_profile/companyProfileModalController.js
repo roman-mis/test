@@ -37,10 +37,14 @@ angular.module('origApp.controllers')
 
             $scope.saveCompanyProfile = function (param) {
 
+                $scope.isSaving = true;
+
                 console.log(param);
 
                 CompanyProfileService.saveCompanyProfile($scope.companyProfile, param).
                     then(function (response) {
+
+                        $scope.isSaving = false;
 
                         if ('saved successfully' === response) {
                             $modalInstance.close('saved');
