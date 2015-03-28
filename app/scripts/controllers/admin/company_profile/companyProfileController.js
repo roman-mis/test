@@ -43,41 +43,16 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
             return $state.includes('app.admin.' + stateKey);
         };
 
-        function getController(type) {
-
-            var controller;
-            switch (type) {
-
-            case '_edit_contact':
-                controller = 'contactModalController';
-                break;
-            case '_edit_accounts':
-                controller = 'accountsModalController';
-                break;
-            case '_edit_bankDetails':
-                controller = 'bankDetailsModalController';
-                break;
-            case '_edit_defaults':
-                controller = 'defaultsModalController';
-                break;
-            default:
-                controller = '';
-            }
-
-            return controller;
-        }
-
-
 
         $scope.openModal = function (type) {
 
             console.log(type);
 
-            var controller = getController(type);
+            $scope.type = type;
 
             var modalInstance = ModalService.open({
                 templateUrl: 'views/admin/companyProfile/partials/' + type + '.html',
-                controller: controller,
+                controller: 'contactModalController',
                 size: 'md',
                 parentScope: $scope
             });

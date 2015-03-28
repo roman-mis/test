@@ -174,6 +174,30 @@ module.exports = function(mongoose) {
                     validTo: Date
                 }
             ],
+            sspRate:[
+                {
+                    amount: Number,
+                    maxWeeks:Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            smpRate:[
+                {
+                    amount: Number,
+                    maxWeeks:Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            sppRate:[
+                {
+                    amount: Number,
+                    maxWeeks:Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
             workPatterns: [
                 {
                     monday: Boolean,
