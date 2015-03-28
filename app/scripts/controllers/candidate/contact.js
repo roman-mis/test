@@ -103,6 +103,7 @@ angular.module('origApp.controllers')
              parentScope.getCandidateResource().create($scope.data)
                     .patch('contactdetail')
                     .then(function(response) {
+                      console.log(response,$scope.data)
                       $scope.isSaving = false;
                       if (!HttpResource.flushError(response)) {
                         parentScope.contactDetail = jQuery.extend(parentScope.contactDetail, $scope.data);
@@ -149,7 +150,7 @@ angular.module('origApp.controllers')
             parentScope.getCandidateResource().create($scope.data)
                     .patch('contactdetail')
                     .then(function(response) {
-                      console.log(response);
+                      console.log(response, $scope.data);
                       $scope.isSaving = false;
                       if (!HttpResource.flushError(response)) {
                         parentScope.contactDetail = jQuery.extend(parentScope.contactDetail, $scope.data);

@@ -3,25 +3,16 @@
 angular.module('origApp.controllers')
         .controller('AgencyEditController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, $rootScope, MsgService) {
           $scope.countries = ConstantsResource.get('countries');
-          //$scope.status = parentScope.selectedAgency.status;
-          $scope.fields = [
-            { name: 'name', label: 'Name', required: ($scope.status == 'Live' || $scope.status == 'Submitted') ? true : false },
-            { name: 'address1', label: 'Address 1', required: ($scope.status == 'Live') ? true : false },
-            {name: 'address2', label: 'Address 2'},
-            {name: 'address3', label: 'Address 3'},
-            { name: 'town', label: 'Town', required: ($scope.status == 'Live') ? true : false },
-            {name: 'country', label: 'Country'},
-            { name: 'postCode', label: 'Postcode', required: ($scope.status == 'Live') ? true : false },
-            { name: 'companyRegNo', label: 'Company Reg No.', required: ($scope.status == 'Live') ? true : false },
-            { name: 'companyVatNo', label: 'Company VAT No.', required: ($scope.status == 'Live') ? true : false }
-          ];
+          // $scope.status = 'Submitted';
+          HttpResource.model('constants/agencyStatus').query({},function (res) {
+            console.log(res);
+            $scope.agencyStatus = res.data;
+          });
+          HttpResource.model('constants/countries').query({},function  (res) {
+            $scope.countries = res.data;
+            
+          });
           $scope.data = {};
-
-          if (parentScope.agency) {
-            $scope.fields.forEach(function(item) {
-              $scope.data[item.name] = parentScope.agency[item.name];
-            });
-          }
 
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
