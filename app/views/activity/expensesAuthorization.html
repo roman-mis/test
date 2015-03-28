@@ -23,22 +23,22 @@
                                     <i class="fa fa-bars"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
-                                    <li>
+                                    <li ng-click="approveMajorSelected()">
                                         <a style="cursor:pointer; color:#000000">Approve</a>
                                     </li>
-                                    <li>
+                                    <li ng-click="rejectMajorSelected()">
                                         <a style="cursor: pointer; color: #000000">Reject</a>
                                     </li>
-                                    <li>
+                                    <li ng-click="majorSelectAll()">
                                         <a style="cursor: pointer; color: #000000">Select All</a>
                                     </li>
-                                    <li>
+                                    <li ng-click="majorInverseSelection()">
                                         <a style="cursor: pointer; color: #000000">Inverse Selection</a>
                                     </li>
-                                    <li>
+                                    <!--<li>
                                         <a style="cursor: pointer; color: #000000">Edit</a>
-                                    </li>
-                                    <li>
+                                    </li>-->
+                                    <li ng-click="majorDeleteSelected()">
                                         <a style="cursor: pointer; color: #000000">Delete</a>
                                     </li>
                                 </ul>
@@ -68,7 +68,7 @@
                         <td>&nbsp;</td>
                         <td>{{expense.total | currency:"&pound;"}}</td>
                         <td>
-                            <input type="checkbox" />
+                            <input type="checkbox" ng-model="expense.majorChecked"/>
                         </td>
                     </tr>
                     <!--big table basic row-->
@@ -93,10 +93,10 @@
                                                         <i class="fa fa-bars"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-leftBottomBubble" role="menu">
-                                                        <li>
+                                                        <li ng-click="approveSelected($parent.$index, cat)">
                                                             <a style="cursor:pointer">Approve Item</a>
                                                         </li>
-                                                        <li>
+                                                        <li ng-click="rejectSelected($parent.$index, cat)">
                                                             <a style="cursor:pointer">Reject Item</a>
                                                         </li>
                                                         <li ng-click="selectAll($parent.$index, cat)">
@@ -126,8 +126,8 @@
                                                                 <th width="10%">Category</th>
                                                                 <th width="12%">Type</th>
                                                                 <th width="12%">Date</th>
-                                                                <th width="9%" class="text-right">Value</th>
                                                                 <th width="10%" class="text-right">Amount</th>
+                                                                <th width="9%" class="text-right">Value</th>
                                                                 <th width="9%" class="text-right">VAT</th>
                                                                 <th width="9%" class="text-right">Total</th>
                                                                 <th width="13%">Receipt</th>
@@ -161,15 +161,15 @@
                                                             <td width="12%" ng-show="item.edit">
                                                                 <div class="input-group" name="birthDate" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].date" orig-datepicker />
                                                             </td>
+                                                            <td width="10%" ng-hide="item.edit">{{item.amount}}</td>
+                                                            <td width="9%" ng-show="item.edit">
+                                                                <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
+                                                            </td>
                                                             <!--<td width="9%" ng-hide="item.edit">{{item.value | currency:"&pound;"}}</td>
                                                             <td width="9%" ng-show="item.edit">
                                                                 <input style="width: 5em" type="number" placeholder="value" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
                                                             </td>-->
                                                             <td width="9%"></td>
-                                                            <td width="10%" ng-hide="item.edit">{{item.amount | currency:"&pound;"}}</td>
-                                                            <td width="9%" ng-show="item.edit">
-                                                                <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
-                                                            </td>
                                                             <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0}}%</td>
                                                             <td width="10%">{{item.expenseDetail.total? item.expenseDetail.total:item.amount | currency:"&pound;"}}</td>
                                                             <td width="6%" ng-if="item.status == 'submitted' || item.status == 'approved'">
