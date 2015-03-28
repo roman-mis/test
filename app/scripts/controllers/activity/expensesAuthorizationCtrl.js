@@ -2,8 +2,8 @@
 var app = angular.module('origApp.controllers');
 
 app.controller("expensesAuthorizationCtrl",
-    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource',
-    function ($scope, $http, $rootScope, HttpResource, ConstantsResource) {
+    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal',
+    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal) {
 
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/activity/home', text: 'Activity' },
@@ -27,10 +27,10 @@ app.controller("expensesAuthorizationCtrl",
         });
 
         function init() {
-
             for (var i = 0; i < $scope.expensesArray.length; i++) {
                 $scope.expensesArray[i].startDate = getMonday($scope.expensesArray[i].claimDate);
                 $scope.expensesArray[i].categories = [];
+                $scope.expensesArray[i].majorChecked = false;
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                     $scope.expensesArray[i].expenses[j].checked = false;
                     $scope.expensesArray[i].expenses[j].edit = false;
@@ -164,6 +164,136 @@ app.controller("expensesAuthorizationCtrl",
                     }
                 }
             }
+        }
+
+        $scope.approveSelected = function (expenseIndex, category) {
+            var expToApprove = [];
+            var ids = [];
+            for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == category
+                    && $scope.expensesArray[expenseIndex].expenses[i].checked) {
+                    expToApprove.push($scope.expensesArray[expenseIndex].expenses[i]);
+                    ids.push($scope.expensesArray[expenseIndex].claimReference);
+                }
+            }
+            if (ids.length == 0) window.alert('No items selected');
+            else open('lg', expToApprove, ids, true);
+        }
+
+        $scope.rejectSelected = function (expenseIndex, category) {
+            var expToReject = [];
+            var ids = [];
+            for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == category
+                    && $scope.expensesArray[expenseIndex].expenses[i].checked) {
+                    expToReject.push($scope.expensesArray[expenseIndex].expenses[i]);
+                    ids.push($scope.expensesArray[expenseIndex].claimReference);
+                }
+            }
+            if (ids.length == 0) window.alert('No items selected');
+            else open('lg', expToReject, ids, false);
+        }
+
+        $scope.approveMajorSelected = function () {
+            var expToApprove = [];
+            var ids = [];
+            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                if ($scope.expensesArray[i].majorChecked) {
+                    for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                        expToApprove.push($scope.expensesArray[i].expenses[j]);
+                        ids.push($scope.expensesArray[i].claimReference);
+                    }
+                }
+            }
+            if (ids.length == 0) window.alert('No claims selected');
+            else open('lg', expToApprove, ids, true);
+        }
+
+        $scope.rejectMajorSelected = function () {
+            var expToReject = [];
+            var ids = [];
+            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                if ($scope.expensesArray[i].majorChecked) {
+                    for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                        expToReject.push($scope.expensesArray[i].expenses[j]);
+                        ids.push($scope.expensesArray[i].claimReference);
+                    }
+                }
+            }
+            if (ids.length == 0) window.alert('No claims selected');
+            else open('lg', expToReject, ids, false);
+        }
+
+        $scope.majorSelectAll = function () {
+            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                $scope.expensesArray[i].majorChecked = true;
+            }
+        }
+
+        $scope.majorInverseSelection = function () {
+            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                if ($scope.expensesArray[i].majorChecked) {
+                    $scope.expensesArray[i].majorChecked = false;
+                } else {
+                    $scope.expensesArray[i].majorChecked = true;
+                }
+            }
+        }
+
+        $scope.majorDeleteSelected = function () {
+            var req = {};
+            req.expenseIds = [];
+            var indeces = [];
+            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                if ($scope.expensesArray[i].majorChecked) {
+                    indeces.push(i);
+                    for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                        req.expenseIds.push($scope.expensesArray[i].expenses[j]._id);
+                    }
+                }
+            }
+            //console.log(req);
+            $http.post('/api/candidates/expenses', req).success(function (res) {
+                //console.log(res, indeces);
+                if (res.result) {
+                    for (var i = 0; i < indeces.length; i++) {
+                        $scope.expensesArray.splice(indeces[i] - i, 1);
+                    }
+                    angular.copy($scope.expensesArray, $scope.cloned);
+                }
+            });
+        }
+
+        function open(size, itemToEdit, ids, approve) {
+            var modalInstance = $modal.open({
+                templateUrl: 'views/activity/approve_reject_expenses.html',
+                controller: 'approvingRejectingCtrl',
+                size: size,
+                resolve: {
+                    item: function () {
+                        return itemToEdit;
+                    },
+                    approve: function () {
+                        return approve;
+                    },
+                    ids: function () {
+                        return ids;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                $http.get('/api/candidates/expenses').success(function (expenses) {
+                    for (var i = 0; i < $scope.expensesArray.length; i++) {
+                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                            $scope.expensesArray[i].expenses[j].status = expenses.object[i].expenses[j].status;
+                        }
+                    }
+                    angular.copy($scope.expensesArray, $scope.cloned);
+                });
+            }, function () {
+                console.log("Dismissed");
+            });
         }
 
         //$scope.logs = function (x, y) {
