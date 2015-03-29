@@ -21,7 +21,7 @@ app.controller("expensesAuthorizationCtrl",
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
             console.log('getting expenses done !!');
-            console.log(expenses);
+            //console.log(expenses);
             $scope.expensesArray = expenses.object;
             init();
         });
@@ -45,7 +45,6 @@ app.controller("expensesAuthorizationCtrl",
             $scope.cloned = [];
             angular.copy($scope.expensesArray, $scope.cloned);
             console.log($scope.expensesArray);
-            console.log("finished!!!")
         }
 
         function getMonday(d) {
@@ -56,7 +55,7 @@ app.controller("expensesAuthorizationCtrl",
         }
 
         $scope.finishEditing = function (expenseIndex, itemId, save) {
-            //console.log($scope.mealTypes);
+            //console.log(expenseIndex, itemId);
             if (save) {
                 var req = {};
                 req.body = [];

@@ -23,22 +23,22 @@
                                     <i class="fa fa-bars"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
-                                    <li>
+                                    <li ng-click="approveMajorSelected()">
                                         <a style="cursor:pointer; color:#000000">Approve</a>
                                     </li>
-                                    <li>
+                                    <li ng-click="rejectMajorSelected()">
                                         <a style="cursor: pointer; color: #000000">Reject</a>
                                     </li>
-                                    <li>
+                                    <li ng-click="majorSelectAll()">
                                         <a style="cursor: pointer; color: #000000">Select All</a>
                                     </li>
-                                    <li>
+                                    <li ng-click="majorInverseSelection()">
                                         <a style="cursor: pointer; color: #000000">Inverse Selection</a>
                                     </li>
-                                    <li>
+                                    <!--<li>
                                         <a style="cursor: pointer; color: #000000">Edit</a>
-                                    </li>
-                                    <li>
+                                    </li>-->
+                                    <li ng-click="majorDeleteSelected()">
                                         <a style="cursor: pointer; color: #000000">Delete</a>
                                     </li>
                                 </ul>
@@ -69,7 +69,7 @@
                         <td>&nbsp;</td>
                         <td>{{expense.total | currency:"&pound;"}}</td>
                         <td>
-                            <input type="checkbox" />
+                            <input type="checkbox" ng-model="expense.majorChecked" />
                         </td>
                     </tr>
                     <!--big table basic row-->
@@ -94,10 +94,10 @@
                                                         <i class="fa fa-bars"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-leftBottomBubble" role="menu">
-                                                        <li>
+                                                        <li ng-click="approveSelected($parent.$index, cat)">
                                                             <a style="cursor:pointer">Approve Item</a>
                                                         </li>
-                                                        <li>
+                                                        <li ng-click="rejectSelected($parent.$index, cat)">
                                                             <a style="cursor:pointer">Reject Item</a>
                                                         </li>
                                                         <li ng-click="selectAll($parent.$index, cat)">
@@ -147,22 +147,22 @@
                                                                 <div ng-if="item.edit">
                                                                     <select ng-if="item.expenseType=='Transport'"
                                                                             class="form-control ng-pristine ng-valid"
-                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
+                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
                                                                             ng-options="type.description as type.description for type in transportTypes"></select>
                                                                     <select ng-if="item.expenseType=='Subsistence'"
                                                                             class="form-control ng-pristine ng-valid"
-                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
+                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
                                                                             ng-options="type.name as type.name for type in mealTypes"></select>
                                                                     <select ng-if="item.expenseType=='Other'"
                                                                             class="form-control ng-pristine ng-valid"
-                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
+                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
                                                                             ng-options="type.name as type.name for type in otherTypes"></select>
                                                                 </div>
                                                             </td>
                                                             <td width="12%" class="text-left" >
                                                                 <div ng-hide="item.edit">{{item.date | date : "EEE dd/MM/yyyy"}}</div>
                                                                 <div width="12%" ng-if="item.edit">
-                                                                    <div class="input-group" name="birthDate" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].date" orig-datepicker />
+                                                                    <div class="input-group" name="birthDate" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].date" orig-datepicker />
                                                                 </div>
                                                             </td>
                                                             
@@ -170,7 +170,7 @@
                                                             <td width="10%">
                                                                 <div ng-hide="item.edit">{{item.amount | currency:"&pound;"}}</div>
                                                                 <div width="9%" ng-if="item.edit">
-                                                                    <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
+                                                                    <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
                                                                 </div>
                                                             </td>
                                                             <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0}}%</td>
@@ -224,13 +224,13 @@
                                                                 <div ng-hide="item.edit">{{item.status}}</div>
                                                                 <div width="10%" ng-if="item.edit">
                                                                     <select class="form-control ng-pristine ng-valid"
-                                                                            ng-model="cloned[$parent.$parent.$parent.$index].expenses[$parent.$index].status"
+                                                                            ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].status"
                                                                             ng-options="type.value as type.value for type in expenseStatus"></select>
                                                                 </div>
                                                             </td>
                                                             <td width="8%" class="text-center">
-                                                                <a ng-if="item.edit" style="cursor:pointer" ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$index, item._id, false)"><i class="fa fa-times"></i></a>
-                                                                <a ng-if="item.edit" style="cursor:pointer" ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$index, item._id, true)"><i class="fa fa-check"></i></a>
+                                                                <a ng-if="item.edit" style="cursor:pointer" ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$parent.$parent.$index, item._id, false)"><i class="fa fa-times"></i></a>
+                                                                <a ng-if="item.edit" style="cursor:pointer" ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$parent.$parent.$index, item._id, true)"><i class="fa fa-check"></i></a>
                                                                 <a ng-hide="item.edit" style="cursor:pointer" ng-click="item.edit = true"><i class="fa fa-pencil-square-o"></i></a>
                                                             </td>
                                                         </tr>
