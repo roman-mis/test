@@ -159,8 +159,6 @@ angular.module('origApp.controllers')
   					};
 
   				HttpResource.model('timesheets/bulk').create(saveTimesheets).post().then(function (response) {
-  					console.log(saveTimesheets);
-  					console.log('this is sparta',response);
   				});
 
 
