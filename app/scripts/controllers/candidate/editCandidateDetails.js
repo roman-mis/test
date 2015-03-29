@@ -3,7 +3,8 @@ angular.module('origApp.controllers')
     .controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource','$http',
         function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
             $scope.candidateId = $stateParams.candidateId;
-            $scope.candidate = parentScope.candidate;
+            $scope.candidate = {};
+            jQuery.extend($scope.candidate,parentScope.candidate);
             $scope.genders = [{ key: 'M', value: 'Male' }, { key: 'F', value: 'Female' }];
 
             console.log($scope.candidate);
@@ -58,6 +59,9 @@ angular.module('origApp.controllers')
                             console.log($scope.isValid);
                             $scope.form.age.$setValidity('age',$scope.isValid);
                         }
+                        HttpResource.model('candidates/'+$scope.candidateId+'/contactdetail').query({},function (res) {
+                                console.log(res);
+                            });
                         $scope.save = function () {
                             console.log($scope.candidate.emailAddress);
                             HttpResource.model('users').create($scope.candidate)
@@ -69,6 +73,7 @@ angular.module('origApp.controllers')
                                 .patch($scope.candidateId+'/contactdetail').then(function (res) {
                                     console.log(res);
                                 });
+                            
                             $modalInstance.dismiss('save');
                         };
                         $scope.cancel = function () {
