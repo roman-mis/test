@@ -90,7 +90,7 @@ module.exports = function(dbs){
                                     l.expenses.forEach(function(i) {
 
                                         var t = {};
-                                        t.date = i.date;
+                                        t.date = daySpecific.date;
                                         t.startTime = daySpecific.startTime;
                                         t.endTime = daySpecific.endTime;
                                         t.postcodes = daySpecific.postcodes;
@@ -252,20 +252,17 @@ module.exports = function(dbs){
         });
     };
     service.deleteExpense=function(ids){
-        console.log('%%%%%%%%%%%%%%%%%%%%%2');
 
         return Q.promise(function(resolve,reject){
 
             service.fetchExpenses(ids).then(function(model){
 
-        console.log('%%%%%%%%%%%%%%%%%%%%%3');
 
                for(var i=0;i<model.length;i++){
 
                  model[i].days.forEach(function(l){
 
                         ids.forEach(function(id){
-        console.log('%%%%%%%%%%%%%%%%%%%%%4');
 
                         var v=l.expenses.id(id);
                         if(v){
@@ -278,13 +275,11 @@ module.exports = function(dbs){
                  });
 
                }
-        console.log('%%%%%%%%%%%%%%%%%%%%%5');
 
              var bucket=[];
              model.forEach(function(mo){
 
                bucket.push(Q.nfcall(mo.save.bind(mo)));
-        console.log('%%%%%%%%%%%%%%%%%%%%%6');
 
              });
 
@@ -310,7 +305,7 @@ module.exports = function(dbs){
 
         system.forEach(function(systemDoc){
 
-
+          console.log(ids)
 
           service.fetchExpensesForEdit(ids).then(function(model){
 
@@ -330,6 +325,8 @@ module.exports = function(dbs){
                           if(doc[key]){
                             e[key] = doc[key];
                           }
+                          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+                          console.log(key)
                         }
 
                        }
