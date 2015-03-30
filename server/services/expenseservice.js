@@ -89,7 +89,7 @@ module.exports = function(dbs){
                                     l.expenses.forEach(function(i) {
 
                                         var t = {};
-                                        t.date = i.date;
+                                        t.date = l.date;
                                         t.startTime = daySpecific.startTime;
                                         t.endTime = daySpecific.endTime;
                                         t.postcodes = daySpecific.postcodes;
@@ -413,6 +413,9 @@ module.exports = function(dbs){
                 day.expenses.forEach(function(dayExpense){
                   dayExpenseIndex ++;
                   if(dayExpense._id+'' === data[i].id+''){
+                    console.log('**')
+                          console.log('this day')
+                          console.log('**')
                     var changeDay = false;
                     for(var key in data[i]){
                       if(key === 'date'){
@@ -426,6 +429,9 @@ module.exports = function(dbs){
                       expenses[i].days.forEach(function(targetNewDay){
                       
                         if(daysBetween(targetNewDay.date,new Date(data[i].date)) === 0){
+                          console.log('**')
+                          console.log('new day')
+                          console.log('**')  
                           foundTheTargetDay = true;
                           targetNewDay.expenses.push(dayExpense);
                           day.expenses.splice(dayExpenseIndex,1);
@@ -434,13 +440,19 @@ module.exports = function(dbs){
                         }
                       });
                       if(!foundTheTargetDay){
+                        console.log('**')
+                          console.log('create new day')
+                          console.log('**')
+                    
                         var newDay = {};
-                        newDay.date = day.date; 
+                        newDay.date = new Date(data[i].date); 
                         newDay.startTime = day.startTime; 
-                        newDay.endTime = day.endTime; 
+                        newDay.endTime = day.endTime;
                         newDay.expenses = [];
                         newDay.expenses.push(dayExpense);
                         day.expenses.splice(dayExpenseIndex,1);
+                        console.log('newDay')
+                        console.log(newDay)
                         expenses[i].days.push(newDay); 
                       }
                     }
@@ -472,11 +484,16 @@ module.exports = function(dbs){
       // Copy date parts of the timestamps, discarding the time parts.
       var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
       var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+      console.log(one)
+      console.log(two)
       // Do the math.
       var millisecondsPerDay = 1000 * 60 * 60 * 24;
       var millisBetween = two.getTime() - one.getTime();
       var days = millisBetween / millisecondsPerDay;
       // Round down.
+      console.log(Math.floor(days))
+      console.log('**')
+
       return Math.floor(days);
     }
 

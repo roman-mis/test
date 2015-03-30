@@ -3,7 +3,7 @@
 </div>
 <div class="main-content">
   <div style="height:20px;" class="breadcrumb">
-  <div  ng-if="!hideBreadcrumbs">
+  <div  ng-if="!hideBreadcrumbs && !permissions.breadCrump.hide">
     <a ng-href="{{b.link}}" ng-repeat-start="b in breadcrumbs" ng-class="{active: $last}">{{ b.text}}</a>
     <span ng-repeat-end ng-hide="$last"></span>
   </div>
