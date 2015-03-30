@@ -48,7 +48,7 @@ angular.module('origApp.controllers')
 
             var agencyId =  $scope.agency._id;
 
-            if (!$('#upload_company_logo').val()) {
+            if (!$scope.companyLogo) {
                 alert('Please select a file first.');
                 return;
             }

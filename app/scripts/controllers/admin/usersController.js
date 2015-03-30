@@ -1,8 +1,13 @@
 'use strict';
 
 angular.module('origApp.controllers')
-  .controller('usersController', ['$timeout','$scope', 'HttpResource', function($timeout,$scope, HttpResource) {
+  .controller('usersController', ['$timeout','$scope', 'HttpResource', '$rootScope', function($timeout,$scope, HttpResource, $rootScope) {
     
+    $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                              {link: '/admin/home', text: 'Admin'},
+                              {link: '/admin/users', text: 'Users'}
+                              ];
+
     $scope.options = {};
 
 
@@ -59,6 +64,15 @@ angular.module('origApp.controllers')
       HttpResource.model('users/send/passwardReset/'+$scope.allData[index]._id).query(params, function(data) {
           console.log(data)
       });
-    }
+    };
+
+    $scope.lockUnlock = function(index){
+      HttpResource.model('users/'+$scope.allData[index]._id+'/lockunlock/'+!$scope.allData[index].locked).create({}).post().then(function(data) {
+        console.log(data);
+        if(data.data.result){
+        }
+      });
+      $scope.allData[index].locked=!$scope.allData[index].locked;
+    };
 
 }]);

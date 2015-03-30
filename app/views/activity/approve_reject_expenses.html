@@ -1,0 +1,50 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">{{title}}&nbsp;Expenses</h3>
+</div>
+<div class="modal-body">
+    <table class="table table-striped" style="margin-bottom: 0;">
+        <thead>
+            <tr>
+                <th>Claim ID</th>
+                <th>Line no.</th>
+                <th>Type</th>
+                <th>Total</th>
+                <th ng-hide="approve">Reason</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="item in items" ng-form="form">
+            <tr>
+                <td>{{ids[$index]}}</td>
+                <td>{{$index}}</td>
+                <td>{{item.expenseDetail.name}}</td>
+                <td>{{item.expenseDetail.total | currency:"&pound;"}}</td>
+                <td ng-hide="approve">
+                    <select ng-model="reasons[$index]" required>
+                        <option value="" disabled selected style="display: none;">--Reason to Reject--</option>
+                        <option value="No Receipt">No Receipt</option>
+                        <option value="Receipt not valid">Receipt not valid</option>
+                        <option value="Not Wholly Necessary">Not Wholly Necessary</option>
+                        <option value="Other">Other (Please Specify)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr ng-if="reasons[$index]=='Other'">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <input required type="text" placeholder="Reason to Reject"
+                           ng-model="otherReason[index]" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-disabled="form.$invalid" disabled="disabled"
+            ng-click="ok()">
+        {{approve? 'Approve':'Reject'}}
+    </button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

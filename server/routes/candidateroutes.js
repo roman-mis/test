@@ -28,7 +28,7 @@ router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
 router.get('/expenses', restMiddleware(db),expensecontroller.getAllExpenses);
 
-router.delete('/expenses',expensecontroller.deleteExpense);
+router.post('/expenses',expensecontroller.deleteExpense);
 
 router.patch('/expenses/reject',expensecontroller.rejectExpense);
 

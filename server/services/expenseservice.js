@@ -2,50 +2,50 @@
 
 module.exports = function(dbs){
 
-	var db = dbs,
-		Q=require('q'),
-		queryutils=require('../utils/queryutils')(db),
-		service={};
+  var db = dbs,
+    Q=require('q'),
+    queryutils=require('../utils/queryutils')(db),
+    service={};
     var enums=require('../utils/enums');
-	service.getExpenses=function(request){
-		return Q.Promise(function(resolve,reject){
-			var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
+  service.getExpenses=function(request){
+    return Q.Promise(function(resolve,reject){
+      var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
 
-			queryutils.applySearch(q, db.Expense, request)
-				.then(resolve,reject);
-		});
-	};
+      queryutils.applySearch(q, db.Expense, request)
+        .then(resolve,reject);
+    });
+  };
 
-	service.getExpense=function(id, populate){
-		populate = typeof populate !== 'undefined' ? populate : false;
-		var q=db.Expense.findById(id);
+  service.getExpense=function(id, populate){
+    populate = typeof populate !== 'undefined' ? populate : false;
+    var q=db.Expense.findById(id);
 
-		if(populate){
-			q.populate('agency');
-			q.populate('user');
-			q.populate('createdBy');
-		}
+    if(populate){
+      q.populate('agency');
+      q.populate('user');
+      q.populate('createdBy');
+    }
 
-		return Q.nfcall(q.exec.bind(q));
-	};
+    return Q.nfcall(q.exec.bind(q));
+  };
 
 
-	service.saveExpenses = function(expenseDetails){
-		console.log(expenseDetails);console.log(expenseDetails.days);
-		console.log('here wer are');
-		var deff = Q.defer();
-		var expenseModel;
-		expenseModel = new db.Expense(expenseDetails);
-		expenseModel.save(function(err){
-			if(err){
-				deff.reject(err);
-			}else{
-				console.log('save success');
-				deff.resolve(expenseModel);
-			}
-		});
-		return deff.promise;
-	};
+  service.saveExpenses = function(expenseDetails){
+    console.log(expenseDetails);console.log(expenseDetails.days);
+    console.log('here wer are');
+    var deff = Q.defer();
+    var expenseModel;
+    expenseModel = new db.Expense(expenseDetails);
+    expenseModel.save(function(err){
+      if(err){
+        deff.reject(err);
+      }else{
+        console.log('save success');
+        deff.resolve(expenseModel);
+      }
+    });
+    return deff.promise;
+  };
 
   service.getAllExpenses = function(request) {
 
@@ -170,8 +170,12 @@ module.exports = function(dbs){
     };
 
     service.fetchExpenses=function(val){
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+        console.log(val);
 
      var q=db.Expense.find().where('days.expenses._id').in(val);
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+
      return Q.nfcall(q.exec.bind(q));
 
     };
@@ -271,6 +275,7 @@ module.exports = function(dbs){
                  });
 
                }
+
              var bucket=[];
              model.forEach(function(mo){
 
@@ -290,130 +295,160 @@ module.exports = function(dbs){
     };
 
 
-    service.editExpenses=function(ids){
-      console.log(ids);
+    service.editExpenses=function(data){
         return Q.promise(function(resolve,reject){
 
-           var q = db.System.find().select('statutoryTables expensesRate');
+        //    var q = db.System.find().select('statutoryTables expensesRate');
 
-          return Q.nfcall(q.exec.bind(q)).then(function(system){
-
-
-        system.forEach(function(systemDoc){
-          console.log(systemDoc);
+        //   return Q.nfcall(q.exec.bind(q)).then(function(system){
 
 
+        // system.forEach(function(systemDoc){
 
-          service.fetchExpensesForEdit(ids).then(function(model){
+        //   console.log(ids)
 
-
-
-
-              model.forEach(function(eachModel){
-
-                eachModel.days.forEach(function(l){
-                  console.log(l);
-                   ids.forEach(function(doc){
-
-                       var e=l.expenses.id(doc.id);
-                       console.log(e);
-
-                       if(e){
-                        console.log(doc.expenseType);
-                        if(doc.expenseType){
-                          console.log('test');
-
-                         e.expenseType=doc.expenseType;
+        //   service.fetchExpensesForEdit(ids).then(function(model){
 
 
-                        }else{
+        //       var bucket=[];
+        //                console.log('%%%%%%%%%%%%%%%%%%%%1');
+        //                console.log(model.length);
 
-                          e.expenseType=e.expenseType;
+        //       for(var i=0;i<model.length;i++){
+
+        //         model[i].days.forEach(function(l){
+        //            ids.forEach(function(doc){
+
+        //                var e=l.expenses.id(doc.id);
+        //                if(e){
+        //                 for(var key in doc){
+        //                   if(doc[key]){
+        //                     e[key] = doc[key];
+        //                   }
+        //                   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        //                   console.log(key)
+        //                 }
+
+        //                }
+        //            });
+        //         });
+        //           bucket.push(Q.nfcall(model[i].save.bind(model[i])));
+        //       }
+        //      // var bucket=[];
+        //      // model.forEach(function(mo){
+
+        //      //   bucket.push(Q.nfcall(mo.save.bind(mo)));
+
+        //      // });
+        //      return Q.all(bucket).then(function(){
+        //          resolve({result:true})
+
+        //      },reject);
+
+
+        //   },reject);
+        //  });
+        //  });
+          var readPromises  = [];
+          var WritePromises = [];
+          console.log(data);
+
+          for(var i = 0; i < data.length; i++){
+          console.log('data.body['+i+'].claimId');
+          console.log(data[i].claimId);
+            var q = db.Expense.findById(data[i].claimId);
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
+          }
+          Q.all(readPromises).then(function(expenses){
+            for(var i = 0; i < expenses.length; i++){
+            var dayIndex = -1;
+
+              expenses[i].days.forEach(function(day){
+                dayIndex ++;
+                var dayExpenseIndex = -1;
+                day.expenses.forEach(function(dayExpense){
+                  dayExpenseIndex ++;
+                  console.log('i  =>'+i);
+                  console.log('dayIndex  =>'+dayIndex);
+                  console.log('dayExpenseIndex  =>'+dayExpenseIndex);
+                  if(dayExpense._id+'' === data[i].id+''){
+                    console.log('******************3')
+                    console.log(dayExpenseIndex);
+                    var changeDay = false;
+                    for(var key in data[i]){
+                      if(key === 'date'){
+                        changeDay = true;
+                      }else{
+                        dayExpense[key] = data[i][key];
+                      }
+                    }
+                    if(changeDay){
+                      console.log(day._id);
+                          console.log('$$$$$$$$$$$$$$$$$$$$$$$$///$$$$$$$$$$$$$$$$$$');
+                      var foundTheTargetDay = false;
+                      expenses[i].days.forEach(function(targetNewDay){
+                        console.log(day._id);
+                        console.log(targetNewDay._id);
+                        console.log('**');
+                      
+                        if(daysBetween(targetNewDay.date,new Date(data[i].date)) === 0){
+                          foundTheTargetDay = true;
+                          targetNewDay.expenses.push(dayExpense);
+                          day.expenses.splice(dayExpenseIndex,1);
                         }
-                        if(doc.value){
+                      });
+                      if(!foundTheTargetDay){
+                        console.log('#$##$#$#$0')
 
-                           e.value=Number(doc.value);
+                        var newDay = {};
+                        newDay.date = day.date; 
+                        newDay.startTime = day.startTime; 
+                        newDay.endTime = day.endTime; 
+                        newDay.expenses = [];
+                        newDay.expenses.push(dayExpense);
+                        day.expenses.splice(dayExpenseIndex,1);
+                        expenses[i].days.push(newDay); 
+                      }
+                    }else{
 
-                        }else{
-
-                          e.value=Number(doc.value);
-                        }
-                        if(doc.receiptUrls){
-                          e.receiptUrls=doc.receiptUrls;
-
-                        }else{
-
-                          e.receiptUrls=e.receiptUrls;
-                        }
-                        if(doc.status){
-
-                          e.status=doc.status;
-                        }else{
-
-                          e.status=e.status;
-                        }
-
-                        if(doc.date){
-
-                          e.date=doc.date;
-                        }else{
-
-                          e.date=e.date;
-                        }
-
-                        if(!doc.subType){
-
-                          e.subType=e.subType;
-                        }else{
-
-                        if(doc.expenseType==='Other' || doc.expenseType==='Subsistence'){
-
-
-
-                               var sys=systemDoc.expensesRate.id(doc.subType);
-                               if(sys){
-
-                                sys.name=doc.subType;
-                                systemDoc.save();
-                               }
-
-                        }else{
-
-
-                            e.subType=doc.subType;
-
-                        }
-                        }
-
-
-
-
-                       }
-                   });
+                    }
+                    console.log(dayExpense);
+                  }
+                    console.log('end 1');
 
                 });
+                    console.log('end 2');
 
               });
-             var bucket=[];
-             model.forEach(function(mo){
-
-               bucket.push(Q.nfcall(mo.save.bind(mo)));
-
-             });
-
-             return Q.all(bucket).then(function(){
-                 resolve({result:true})
-
-             },reject);
-
-
-          },reject);
-         });
-         });
-
+                    console.log('end 3');
+                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+            }
+            
+            return Q.all(WritePromises).then(function(res){
+              console.log('#$##$#$#$1')
+              resolve({result:true,opjects:res});
+            },function(err){
+              reject(err);
+            });
+          },function(){
+            reject('can not find this claim');
+          });
         });
 
     };
 
-	return service;
+    
+    function daysBetween(first, second) {
+      // Copy date parts of the timestamps, discarding the time parts.
+      var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
+      var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+      // Do the math.
+      var millisecondsPerDay = 1000 * 60 * 60 * 24;
+      var millisBetween = two.getTime() - one.getTime();
+      var days = millisBetween / millisecondsPerDay;
+      // Round down.
+      return Math.floor(days);
+    }
+
+  return service;
 };
