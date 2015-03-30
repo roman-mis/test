@@ -1,19 +1,25 @@
 'use strict';
 
 angular.module('origApp.controllers')
-    .controller('AgencyLogoUploadController', function ($scope, $modalInstance, $http, parentScope, HttpResource) {
+    .controller('AgencyLogoUploadController', function ($scope, $modalInstance, $http, $stateParams, HttpResource) {
 
         $scope.temp = {};
+        var agencyId = $stateParams.agencyId;
+        var agency = {};
 
-        if (Object.keys(parentScope.agency).length) {
-            $scope.agency = parentScope.agency;
-            $scope.temp = {
-                logoFileName : $scope.agency.logoFileName,
-                dataUrl : $scope.agency.logoUrl
-            };
+        function getAgencyById(agencyId) {
 
+            return HttpResource.model('agencies').customGet(agencyId, {}, function (res) {
+
+                agency = res.data.object;
+                $scope.temp = {
+                    logoFileName : agency.logoFileName,
+                    dataUrl : agency.logoUrl
+                };
+            });
         }
 
+        getAgencyById(agencyId);
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -30,7 +36,7 @@ angular.module('origApp.controllers')
                 var picReader = new FileReader();
                 picReader.readAsDataURL(fileInfo);
 
-                picReader.addEventListener("load", function (event) {
+                picReader.addEventListener('load', function (event) {
                     $scope.temp.dataUrl = event.target.result;
                     $scope.$digest();
                 });
@@ -43,10 +49,8 @@ angular.module('origApp.controllers')
 
         });
 
-        /*Uploding file to aws S3*/
+        /*Uploading file to aws S3*/
         $scope.uploadCompanyLogo = function () {
-
-            var agencyId =  $scope.agency._id;
 
             if (!$scope.companyLogo) {
                 alert('Please select a file first.');
@@ -72,7 +76,7 @@ angular.module('origApp.controllers')
                         .then(function (response) {
                             $scope.isLogoUploading = false;
                             if (!HttpResource.flushError(response)) {
-                                $scope.agency = HttpResource.model('agencies').get(agencyId);
+                                getAgencyById(agencyId);
                             }
                         });
                 });

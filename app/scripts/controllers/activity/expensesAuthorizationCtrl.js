@@ -21,7 +21,7 @@ app.controller("expensesAuthorizationCtrl",
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
             console.log('getting expenses done !!');
-            //console.log(expenses);
+            console.log(expenses);
             $scope.expensesArray = expenses.object;
             init();
         });

@@ -7,7 +7,7 @@ function saveSystemModel(systemModel){
 
 module.exports=function(dbs){
 	var db = dbs,
-		
+
 		utils=require('../utils/utils'),
 		_ = require('lodash');
 
@@ -39,13 +39,13 @@ module.exports=function(dbs){
 					}else{
 						// Add
 						console.log('add');
-						
+
 						return createSystemModel(systemDetails)
 							.then(function(_systemModel){
 									resolve(_systemModel);
 								},reject);
 					}
-					
+
 				}, reject);
 		});
 	};
@@ -58,7 +58,7 @@ module.exports=function(dbs){
 					if(systemModel){
 						if(id){
 							console.log('edit');
-							
+
 							utils.updateSubModel(systemModel.paymentRates.id(id), paymentInfo);
 							return Q.nfcall(systemModel.save.bind(systemModel))
 							.then(function(){
@@ -84,7 +84,7 @@ module.exports=function(dbs){
 					if(systemModel){
 						if(id){
 							console.log('edit');
-							
+
 							utils.updateSubModel(systemModel.statutoryTables.vat.id(id), vatInfo);
 							return Q.nfcall(systemModel.save.bind(systemModel))
 							.then(function(){
@@ -103,7 +103,7 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getSystem=function(){		
+	service.getSystem=function(){
 		return Q.Promise(function(resolve,reject){
 			var q=db.System.findOne();
 			return Q.nfcall(q.exec.bind(q))
@@ -144,10 +144,10 @@ module.exports=function(dbs){
 			}else{
 				resolve(0);
 			}
-			
+
 		});
 	};
-    
+
     service.getStatutoryValue = function(name){
 		return Q.Promise(function(resolve,reject){
 			return service.getSystem()

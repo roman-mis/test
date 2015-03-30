@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('contactModalController', [ '$scope', '$modalInstance', 'parentScope', 'CompanyProfileService',
+    .controller('companyProfileModalController', [ '$scope', '$modalInstance', 'parentScope', 'CompanyProfileService',
         function ($scope, $modalInstance, parentScope, CompanyProfileService) {
 
             $scope.companyProfile = {};

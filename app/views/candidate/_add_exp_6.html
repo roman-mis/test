@@ -21,7 +21,7 @@
           <input type="text" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)"/>
           <div class="input-group" ng-show="addData.type && !isPpmDefined(addData.type)">
             <div class="input-group-addon">&#163;</div>
-            <input class="form-control" type="text" ng-model="addData.mileage">
+            <input class="form-control" type="number" ng-model="addData.mileage">
           </div>
           <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
         </div>
