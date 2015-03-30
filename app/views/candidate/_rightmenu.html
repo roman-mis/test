@@ -33,9 +33,12 @@
             </li>
             <!-- <li><a href="" ng-click="openAOEWin()"><i class="fa fa-cubes warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AOE</span></a>
             </li> -->
-            <li ng-if="!permissions.rightToolBar.ACTION REQUEST.hide"><a href="" ng-click="openCreateDocumentWin({})"><i class="fa fa-flash warning-brand"></i><span class="title">ACTION REQUEST</span></a>
-            </li>
+
             <li ng-if="!permissions.rightToolBar.AGENCIES.hide"><a href="" ng-click="openCreateTaskWin({activityType: 'task'})"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AGENCIES</span></a>
+            </li>
+             <li><a href="" ng-click="openSsp()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>SSP</span></a>
+            </li>
+            <li><a href="" ng-click="openMp()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>MP</span></a>
             </li>
         </ul>
     </div>

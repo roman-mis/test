@@ -31,7 +31,7 @@ module.exports = function(dbs){
     		endDate:req.query.endDate,
     		maxPeriods:req.query.maxPeriods
     	};
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'smp')
+    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'ssp')
     		.then(function(response){
     			res.json(response);
     		})
@@ -64,6 +64,7 @@ module.exports = function(dbs){
 
 
     controller.checkSppQualification=function(req,res){
+
     	var request={
     		intendedStartDate:req.query.intendedStartDate,
     		startDate:req.query.startDate,
