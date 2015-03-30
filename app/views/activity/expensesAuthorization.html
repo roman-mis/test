@@ -169,10 +169,15 @@
                                                                     </div>
                                                                 </td>
 
-                                                                <td width="9%"></td>
-                                                                <td width="10%">
+                                                                <td width="9%">
                                                                     <div ng-hide="item.edit">{{item.amount | currency:"&pound;"}}</div>
-                                                                    <div width="9%" ng-if="item.edit">
+                                                                    <div ng-if="item.edit">
+                                                                        <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
+                                                                    </div>
+                                                                </td>
+                                                                <td width="10%">
+                                                                    <div ng-hide="item.edit">{{item.amount}}</div>
+                                                                    <div ng-if="item.edit">
                                                                         <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
                                                                     </div>
                                                                 </td>

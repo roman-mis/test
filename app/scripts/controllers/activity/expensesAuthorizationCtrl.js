@@ -34,10 +34,14 @@ app.controller("expensesAuthorizationCtrl",
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                     $scope.expensesArray[i].expenses[j].checked = false;
                     $scope.expensesArray[i].expenses[j].edit = false;
+                    console.log($scope.expensesArray[i].expenses[j].date);
+                    $scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
+                    console.log($scope.expensesArray[i].expenses[j].date);
                     $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].startDate);
-                    if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
-                        $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
-                    }
+                    console.log($scope.expensesArray[i].expenses[j].validDates);
+                    //if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
+                    //    $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
+                    //}
                     if ($scope.expensesArray[i].categories.indexOf($scope.expensesArray[i].expenses[j].expenseType) == -1) {
                         $scope.expensesArray[i].categories.push($scope.expensesArray[i].expenses[j].expenseType);
                     }
@@ -92,6 +96,8 @@ app.controller("expensesAuthorizationCtrl",
                         } else {
                             subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                         }
+                        console.log($scope.expensesArray[expenseIndex].expenses[i].date);
+                        console.log($scope.expensesArray[expenseIndex].expenses[i].date.toISOString());
                         req.body.push({
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
@@ -113,11 +119,12 @@ app.controller("expensesAuthorizationCtrl",
                         $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
                         var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
                         $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
+                        //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
                         $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
                         $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
-                        if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
-                            $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
-                        }
+                        //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
+                        //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
+                        //}
                     });
                 });
             } else {
