@@ -57,30 +57,21 @@ module.exports = function(dbs){
             var q = db.System.find().select('statutoryTables expensesRate');
             return Q.nfcall(q.exec.bind(q)).then(function(system) {
                 system.forEach(function(systemDoc) {
-
                     var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
-
-
                     queryutils.applySearch(expensesQuery, db.Expense, request)
                         .then(function(expense) {
                             var bucket = [];
-
                             expense.rows.forEach(function(t) {
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
-
                                 bucketObject.claimReference = t.claimReference;
                                 bucketObject.claimDate = t.createdDate;
                                 bucketObject.expenses = [];
                                 bucketObject.userName = t.user;
                                 bucketObject.id = t._id;
-
                                 var secondValue = t.days;
-
                                 bucketObject.total = 0;
                                 secondValue.forEach(function(l) {
-
-
                                     var daySpecific = {};
                                     daySpecific.startTime = l.startTime;
                                     daySpecific.endTime = l.endTime;
@@ -88,7 +79,6 @@ module.exports = function(dbs){
                                     daySpecific.postcodes = l.postcodes;
                                     daySpecific.dayId = l._id;
                                     l.expenses.forEach(function(i) {
-
                                         var t = {};
                                         t.date = daySpecific.date;
                                         t.startTime = daySpecific.startTime;
@@ -97,7 +87,6 @@ module.exports = function(dbs){
                                         t.dayId = daySpecific.dayId;
                                         t.expenseType = i.expenseType;
                                         t._id = i._id;
-                                        t.amount = i.value;
                                         t.status = i.status;
                                         t.text = i.text;
                                         t.description = i.description;
@@ -105,41 +94,42 @@ module.exports = function(dbs){
                                         t.receiptUrls = i.receiptUrls;
                                         bucketObject.total += i.value;
                                         if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
-
                                             var sys = systemDoc.expensesRate.id(i.subType);
-
                                             if (sys) {
+                                                // t.amount = i.value;
+                                                t.amount = i.value/4.5;
+                                                t.value = 4.5;
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
                                                 t.expenseDetail.id = sys._id;
-
                                                 if (sys.taxApplicable) {
-
                                                     systemDoc.statutoryTables.vat.forEach(function(time) {
                                                         var validFrom = new Date(time.validFrom);
                                                         var validTo = new Date(time.validTo);
-
                                                         var current = new Date();
                                                         if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
-
                                                             t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.vat = time.amount + '%';
-
+                                                            t.expenseDetail.vat = time.amount /100 * 4.5;
                                                         }
-
-
                                                     });
                                                 }
-
-
                                             }
-
                                         }else{
-
+                                          t.amount = i.value/0.45;
+                                          t.value = 0.45;
                                           t.expenseDetail = {};
                                           t.expenseDetail.name=i.subType;
                                           t.expenseDetail.total=i.value;
                                           t.expenseDetail.vat=0+'%';
+                                          systemDoc.statutoryTables.vat.forEach(function(time) {
+                                            var validFrom = new Date(time.validFrom);
+                                            var validTo = new Date(time.validTo);
+                                            var current = new Date();
+                                            if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+                                                t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
+                                                t.expenseDetail.vat = time.amount;
+                                            }
+                                          });
                                         }
 
                                         bucketObject.expenses.push(t);
@@ -165,8 +155,42 @@ module.exports = function(dbs){
 
         });
 
+  /////////////////////////////////////////////////////////////////////////////////////////
+    // return Q.Promise(function(resolve, reject) {
+    // // //   var q = db.System.find().select('statutoryTables.vat expensesRate');
+    // // //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
+    // // //           console.log(system);
+    // // //           resolve(system);
+    // // //         },function(err){
+    // // //           reject(err);
+    // // //         });
+    // // //       }); 
 
 
+    //   var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
+    //   return queryutils.applySearch(expensesQuery, db.Expense, request)
+    //       .then(function(expenses){
+    //         console.log(expenses);
+    //         console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%0')
+
+    //         var q = db.System.find().select('mileageRates statutoryTables.vat expensesRate');
+    //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
+    //           console.log(system);
+    //           console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1')
+    //           resolve({system:system,expenses:expenses});
+    //         },function(err){
+    //           // resolve(expenses);
+    //         },function(err){
+    //           reject(err);
+    //         });
+    //       });
+
+
+    //       },function(err){
+    //         console.log(err);
+    //         reject(err);
+    //       });
+        // });
     };
 
     service.fetchExpenses=function(val){
@@ -351,11 +375,8 @@ module.exports = function(dbs){
         //  });
           var readPromises  = [];
           var WritePromises = [];
-          console.log(data);
-
+          var breakFrmLoops = false;
           for(var i = 0; i < data.length; i++){
-          console.log('data.body['+i+'].claimId');
-          console.log(data[i].claimId);
             var q = db.Expense.findById(data[i].claimId);
             readPromises.push(Q.nfcall(q.exec.bind(q)));
           }
@@ -368,12 +389,7 @@ module.exports = function(dbs){
                 var dayExpenseIndex = -1;
                 day.expenses.forEach(function(dayExpense){
                   dayExpenseIndex ++;
-                  console.log('i  =>'+i);
-                  console.log('dayIndex  =>'+dayIndex);
-                  console.log('dayExpenseIndex  =>'+dayExpenseIndex);
                   if(dayExpense._id+'' === data[i].id+''){
-                    console.log('******************3')
-                    console.log(dayExpenseIndex);
                     var changeDay = false;
                     for(var key in data[i]){
                       if(key === 'date'){
@@ -383,23 +399,18 @@ module.exports = function(dbs){
                       }
                     }
                     if(changeDay){
-                      console.log(day._id);
-                          console.log('$$$$$$$$$$$$$$$$$$$$$$$$///$$$$$$$$$$$$$$$$$$');
                       var foundTheTargetDay = false;
                       expenses[i].days.forEach(function(targetNewDay){
-                        console.log(day._id);
-                        console.log(targetNewDay._id);
-                        console.log('**');
                       
                         if(daysBetween(targetNewDay.date,new Date(data[i].date)) === 0){
                           foundTheTargetDay = true;
                           targetNewDay.expenses.push(dayExpense);
                           day.expenses.splice(dayExpenseIndex,1);
+                          breakFrmLoops = true;
+                          return;
                         }
                       });
                       if(!foundTheTargetDay){
-                        console.log('#$##$#$#$0')
-
                         var newDay = {};
                         newDay.date = day.date; 
                         newDay.startTime = day.startTime; 
@@ -409,23 +420,19 @@ module.exports = function(dbs){
                         day.expenses.splice(dayExpenseIndex,1);
                         expenses[i].days.push(newDay); 
                       }
-                    }else{
-
                     }
-                    console.log(dayExpense);
+                    breakFrmLoops = true;
+                    return;
                   }
-                    console.log('end 1');
-
                 });
-                    console.log('end 2');
-
+                if(breakFrmLoops){
+                  return;
+                }
               });
-                    console.log('end 3');
                     WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
             }
             
             return Q.all(WritePromises).then(function(res){
-              console.log('#$##$#$#$1')
               resolve({result:true,opjects:res});
             },function(err){
               reject(err);
