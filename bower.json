@@ -40,5 +40,8 @@
     "components-font-awesome": "~4.2.0",
     "moment": "~2.8.3"
   },
-  "appPath": "app"
+  "appPath": "app",
+  "resolutions": {
+    "moment": "~2.8.3"
+  }
 }

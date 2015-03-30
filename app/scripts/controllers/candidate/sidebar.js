@@ -94,6 +94,16 @@ angular.module('origApp.controllers')
               size:'lg'
             })
           };
+          $scope.openMp=function(){
+            console.log($scope.contactdetail);
+            ModalService.open({
+
+              templateUrl:'views/candidate/mp.html',
+              parentScope:$scope,
+              controller:'mpController',
+              size:'lg'
+            })
+          };
 
 		      $scope.openAddTimesheetWin = function() {
             ModalService.open({

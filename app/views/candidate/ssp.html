@@ -18,7 +18,7 @@
                         <div class="col-xs-6 col-sm-4 form-group control-label">Date employer informed</div>
                          <div  class="col-xs-6 col-sm-8 form-group no-padding-left">
 
-                                 <input type="text" ng-model="ssp.inform" name="inform" class="form-control" orig-datepicker  required/>
+                                 <input type="text" ng-model="ssp.dateInformed" name="inform" class="form-control" orig-datepicker  required/>
 
 
                                 <span ng-if="sick.inform.$invalid && submitted">
@@ -36,25 +36,23 @@
                         <div class="col-xs-6 col-sm-2 form-group control-label" style="text-align: right;">From</div>
                          <div class="col-xs-6 col-sm-3 form-group no-padding-left">
 
-                                 <input type="text" ng-model="ssp.sickDateFrom" class="form-control" orig-datepicker />
+                                 <input type="text" ng-model="ssp.startDate" class="form-control" orig-datepicker />
 
                              </div>
                         </div>
                         <div class="col-xs-6 col-sm-1 form-group control-label" style="text-align: right;">To</div>
                          <div class="col-xs-6 col-sm-3 form-group no-padding-left">
                              <div class="input-group date" id="datepickerTo">
-                                 <input type="text" class="form-control" ng-model="ssp.sickDateTo" orig-datepicker  />
+                                 <input type="text" class="form-control" ng-model="ssp.endDate" orig-datepicker  />
 
                              </div>
                         </div>
 
                         <div ng-if="!validDate">
 
-                       This candidate isn't qualified for ssp.
+                       {{sspMessage}}
                     </div>
-                    <div ng-if="validDate">
-                      This candidate is good to go for ssp.
-                   </div>
+
                     <button type="button" class="btn btn-primary" ng-click="checkDate()">Calculate</button>
 
                     </div>
@@ -164,7 +162,7 @@
                         </div>
 
                         <div class="col-xs-5 col-sm-6 text-right btnFooter form-group">
-                            <a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>
+                            <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
 
                   <input type="submit" name="submit" class="btn btn-primary" value="Submit">
                         </div>
