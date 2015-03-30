@@ -52,26 +52,34 @@ module.exports = function(dbs){
         request.orderBy = [{
             'submittedDate': -1
         }];
-
         return Q.Promise(function(resolve, reject) {
             var q = db.System.find().select('statutoryTables expensesRate');
             return Q.nfcall(q.exec.bind(q)).then(function(system) {
                 system.forEach(function(systemDoc) {
+
                     var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
+
+
                     queryutils.applySearch(expensesQuery, db.Expense, request)
                         .then(function(expense) {
                             var bucket = [];
+
                             expense.rows.forEach(function(t) {
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
+
                                 bucketObject.claimReference = t.claimReference;
                                 bucketObject.claimDate = t.createdDate;
                                 bucketObject.expenses = [];
                                 bucketObject.userName = t.user;
                                 bucketObject.id = t._id;
+
                                 var secondValue = t.days;
+
                                 bucketObject.total = 0;
                                 secondValue.forEach(function(l) {
+
+
                                     var daySpecific = {};
                                     daySpecific.startTime = l.startTime;
                                     daySpecific.endTime = l.endTime;
@@ -79,14 +87,16 @@ module.exports = function(dbs){
                                     daySpecific.postcodes = l.postcodes;
                                     daySpecific.dayId = l._id;
                                     l.expenses.forEach(function(i) {
+
                                         var t = {};
-                                        t.date = daySpecific.date;
+                                        t.date = i.date;
                                         t.startTime = daySpecific.startTime;
                                         t.endTime = daySpecific.endTime;
                                         t.postcodes = daySpecific.postcodes;
                                         t.dayId = daySpecific.dayId;
                                         t.expenseType = i.expenseType;
                                         t._id = i._id;
+                                        t.amount = i.value;
                                         t.status = i.status;
                                         t.text = i.text;
                                         t.description = i.description;
@@ -94,42 +104,55 @@ module.exports = function(dbs){
                                         t.receiptUrls = i.receiptUrls;
                                         bucketObject.total += i.value;
                                         if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
+
                                             var sys = systemDoc.expensesRate.id(i.subType);
+
                                             if (sys) {
-                                                // t.amount = i.value;
-                                                t.amount = i.value/4.5;
-                                                t.value = 4.5;
+                                              t.amount = i.value/4.5;
+                                              t.value = 4.5;  
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
                                                 t.expenseDetail.id = sys._id;
+
                                                 if (sys.taxApplicable) {
+
                                                     systemDoc.statutoryTables.vat.forEach(function(time) {
                                                         var validFrom = new Date(time.validFrom);
                                                         var validTo = new Date(time.validTo);
                                                         var current = new Date();
                                                         if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+
                                                             t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.vat = time.amount /100 * 4.5;
+                                                            t.expenseDetail.vat = time.amount /100 * 4.5+'';
+
                                                         }
+
+
                                                     });
                                                 }
+
+
                                             }
+
                                         }else{
-                                          t.amount = i.value/0.45;
-                                          t.value = 0.45;
+
                                           t.expenseDetail = {};
                                           t.expenseDetail.name=i.subType;
                                           t.expenseDetail.total=i.value;
-                                          t.expenseDetail.vat=0+'%';
+                                          t.expenseDetail.vat=0+'';
                                           systemDoc.statutoryTables.vat.forEach(function(time) {
-                                            var validFrom = new Date(time.validFrom);
-                                            var validTo = new Date(time.validTo);
-                                            var current = new Date();
-                                            if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
-                                                t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                t.expenseDetail.vat = time.amount;
-                                            }
-                                          });
+                                                        var validFrom = new Date(time.validFrom);
+                                                        var validTo = new Date(time.validTo);
+                                                        var current = new Date();
+                                                        if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+
+                                                            t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
+                                                            t.expenseDetail.vat = time.amount /100 ;
+
+                                                        }
+
+
+                                                    });
                                         }
 
                                         bucketObject.expenses.push(t);
