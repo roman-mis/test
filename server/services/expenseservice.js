@@ -147,7 +147,7 @@ module.exports = function(dbs){
                                                         if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
 
                                                             t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.vat = time.amount /100 ;
+                                                            t.expenseDetail.vat = time.amount /100 * 4.5+'';
 
                                                         }
 
@@ -162,10 +162,10 @@ module.exports = function(dbs){
 
                                 });
 
+                                console.log(bucketObject)
                                 bucket.push(bucketObject);
 
                             });
-
                             resolve(bucket);
                         });
 

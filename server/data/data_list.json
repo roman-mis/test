@@ -1086,8 +1086,30 @@
               "addExpesesWizard": {
                 "hide": false
               },
-              "addExpesesManually": {
-                "hide": false
+              "DPA": {
+                "hide": true
+              },
+
+              "calculator": {
+                "hide": true
+              },
+              "onboarding": {
+                "hide": true
+              },
+              "timesheet": {
+                "hide": true
+              },
+              "activity": {
+                "hide": true
+              },
+              "agencies": {
+                "hide": true
+              },
+              "ssp": {
+                "hide": true
+              },
+              "mp": {
+                "hide": true
               },
               "callLog": {
                 "hide": false,
@@ -1111,8 +1133,8 @@
                         "Expenses",
                         "Timesheets",
                         "General Query",
-                        "Payroll Query",
-                        "Payment not received",
+                        "Payment Query",
+                        "Payment Not Received",
                         "P45 Request"
                       ]
                     }
