@@ -115,17 +115,17 @@ app.controller("expensesAuthorizationCtrl",
                 //console.log(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     console.log(res);
-                    $http.get('/api/candidates/expenses').success(function (expenses) {
-                        $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
-                        var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
-                        $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
-                        //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                        $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
-                        $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
-                        //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
-                        //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
-                        //}
-                    });
+                    // $http.get('/api/candidates/expenses').success(function (expenses) {
+                    //     $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
+                    //     var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
+                    //     $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
+                    //     //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
+                    //     $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
+                    //     $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
+                    //     //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
+                    //     //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
+                    //     //}
+                    // });
                 });
             } else {
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
