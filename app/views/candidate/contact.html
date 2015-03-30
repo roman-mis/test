@@ -58,10 +58,8 @@
             
             <div class="form-group">
             <label class="col-sm-4 control-label">Phone<span ng-show = "candidate.status=='Live'||!data.mobile">*</span></label>
-            {{data.mobile}}
               <div class="col-sm-8">
                 <input name = "phone"type="text" class="form-control" ng-model="data.phone" ng-required = "candidate.status == 'Live'||!data.mobile" ng-pattern="ukPhone">
-                {{primaryContactForm.phone.$error.required}}
                 <div class="alert alert-danger" ng-if="primaryContactForm.phone.$error.required" role="alert" >
                   Please enter your phone or mobile number.
                 </div>
@@ -225,7 +223,7 @@
       <div class="form-group">
         <label class="col-sm-4 control-label">Account No.</label>
         <div class="col-sm-8">
-          <input name="accNo" type="text" class="form-control" ng-model="data.accountNo" ng-required="candidate.status == 'Live'" maxlength="8">
+          <input name="accNo" type="text" class="form-control" ng-model="data.accountNo" ng-required="candidate.status == 'Live'" maxlength="8" ng-pattern = "/^[0-9]+$/">
           <div class="alert alert-danger" ng-if="primaryContactForm.accNo.$error.required"> Please enter your account number.</div>
         </div>
       </div>
@@ -233,15 +231,15 @@
       <div class="form-group">
         <label class="col-sm-4 control-label">Sort Code</label>
         <div class="col-sm-8">
-          <input name="sortCode" type="text" class="form-control" ng-model="data.sortCode" ng-required="candidate.status == 'Live'" maxlength="6">
+          <input name="sortCode" type="text" class="form-control" ng-model="data.sortCode" ng-required="candidate.status == 'Live'" maxlength="6" ng-pattern="/^[0-9]+$/">
           <div class="alert alert-danger" ng-if="primaryContactForm.sortCode.$error.required"> Please enter your sort code.</div>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="col-sm-4 control-label">Name on Account</label>
+        <label class="col-sm-4 control-label">Bank Roll No.</label>
         <div class="col-sm-8">
-          <input name="bankRollNo" type="text" class="form-control" ng-model="data.bankRollNo" maxlength="18">
+          <input name="bankRollNo" type="text" class="form-control" ng-model="data.bankRollNo" maxlength="18" ng-pattern="/^[0-9]+$/">
         </div>
       </div>
     </form>
