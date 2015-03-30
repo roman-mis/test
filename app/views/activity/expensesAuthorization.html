@@ -169,15 +169,20 @@
                                                                     </div>
                                                                 </td>
 
-                                                                <td width="9%"></td>
+                                                                <td width="9%">
+                                                                    <div>{{item.value | currency:"&pound;"}}</div>
+                                                                    <!--<div ng-if="item.edit">
+                                                                        <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
+                                                                    </div>-->
+                                                                </td>
                                                                 <td width="10%">
-                                                                    <div ng-hide="item.edit">{{item.amount | currency:"&pound;"}}</div>
-                                                                    <div width="9%" ng-if="item.edit">
+                                                                    <div ng-hide="item.edit">{{item.amount}}</div>
+                                                                    <div ng-if="item.edit">
                                                                         <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
                                                                     </div>
                                                                 </td>
                                                                 <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0}}%</td>
-                                                                <td width="10%">{{item.expenseDetail.total? item.expenseDetail.total:item.amount | currency:"&pound;"}}</td>
+                                                                <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
 
                                                                 <td width="6%">
                                                                     <div ng-if="item.status == 'submitted' || item.status == 'approved'">
