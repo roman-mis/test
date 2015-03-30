@@ -1,24 +1,131 @@
 <div class="modal-header">
     <h3 class="modal-title">{{data.name?'Edit Agency Information':'Adding an agency'}}</h3>
 </div>
-<div class="modal-body">
-    <form name="agencyForm" class="form-horizontal" role="form" novalidate>
-        <div class="form-group" ng-repeat="field in fields">
+<div class="modal-body" style="margin:5px">
+    <form name="agencyForm" class="form-horizontal row" role="form" novalidate>
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Status*</label>
+            </div>
+            <div class=" col-sm-7">
+            <ui-select ng-model="data.status" name="status" theme="select2" search-enabled="false" ng-required="true">
+                    <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                    <ui-select-choices repeat="item.value as item in agencyStatus | filter: $select.search">
+                        <span ng-bind-html="item.value"></span>
+                    </ui-select-choices>
+                </ui-select>
+               
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-sm-5">
-                <label class="control-label">{{field.label}}</label>
-                <label class="control-label" ng-if="field.required">*</label>
+                <label class="control-label">Name<span ng-show="data.status == 'Live'|| data.status == 'Submitted'">*</span></label>
             </div>
             <div class="col-sm-7">
-            
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='name'||field.name=='address1'" ng-if="field.name != 'postCode' && field.name != 'companyRegNo' && field.name != 'companyVatNo' && field.name != 'country'">
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='postCode'" ng-if="field.name == 'postCode'" orig-postcode>
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='companyRegNo'" ng-if="field.name == 'companyRegNo'" ng-pattern="/^(\d{8})+$/">
-                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.name=='companyVatNo'" ng-if="field.name == 'companyVatNo'" ng-pattern="/^(\d{9})+$/">
-                <ui-select ng-model="data[field.name]" theme="select2" search-enabled="true" ng-if="field.name == 'country'" ng-required = "field.name=='country'">
+                <span type="text">
+                    <input type="text" class="form-control" ng-model="data.name" ng-required="data.status == 'Live'||data.status == 'Submitted'">
+                </span>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Address 1<span ng-show="data.status == 'Live'">*</span></label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text" class="form-control" ng-model="data.address1" ng-required="data.status == 'Live'">
+                </span>
+            </div>
+        </div> 
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Address 2</label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text" class="form-control" ng-model="data.address2">
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Address 3</label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text" class="form-control" ng-model="data.address3">
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Town <span ng-show="data.status == 'Live'">*</span></label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text" class="form-control" ng-model="data.town" ng-required="data.status == 'Live'">
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Country<span ng-show="data.status == 'Live'">*</span></label>
+            </div>
+            <div class=" col-sm-7">
+                <ui-select ng-model="data.country" name="country" theme="select2" search-enabled="false" ng-required="data.status == 'Live'">
                     <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="item.code as item in countries | filter: $select.search">{{item.name}}</ui-select-choices>
+                    <ui-select-choices repeat="item.code as item in countries | filter: $select.search">
+                        <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
                 </ui-select>
             </div>
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Post Code<span ng-show="data.status == 'Live'">*</span></label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text"  orig-postcode class="form-control" ng-model="data.postCode" ng-required="data.status == 'Live'">
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Company Reg No.<span ng-show="data.status == 'Live'">*</span></label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text"  class="form-control" ng-model="data.companyRegNo" ng-required="data.status == 'Live'" ng-pattern="/^(\d{8})+$/">
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class=" col-sm-5">
+                <label class="control-label">Company VAT No.<span ng-show="data.status == 'Live'">*</span></label>
+            </div>
+            <div class=" col-sm-7">
+                <span type="text">
+                    <input type="text"  class="form-control" ng-model="data.companyVatNo" ng-required="data.status == 'Live'" ng-pattern="/^(\d{9})+$/">
+                </span>
+            </div>
+        </div>
+
+
+
+
+        <!-- <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required" ng-if="field.name == 'companyRegNo'" ng-pattern="/^(\d{8})+$/">
+                <input type="{{field.type?field.type:'text'}}" class="form-control" ng-model="data[field.name]" ng-required="field.required" ng-if="field.name == 'companyVatNo'" ng-pattern="/^(\d{9})+$/"> -->
         </div>
     </form>
 </div>

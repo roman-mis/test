@@ -1,7 +1,10 @@
 'use strict';
 angular.module('origApp.controllers')
-  .controller('userHomeController', ['$scope','Notification', 'HttpResource','$stateParams', function($scope,Notification, HttpResource,$stateParams) {
-	$scope.user = {};
+  .controller('userHomeController', ['$scope','Notification', 'HttpResource','$stateParams','$rootScope', function($scope,Notification, HttpResource,$stateParams,$rootScope) {
+		
+		$scope.user = {_id:'',firstName:'',lastName:''};
+		
+
 	console.log('$stateParams');
 	console.log($stateParams);
 	HttpResource.model('constants/userTypes').customGet('',{},function(data){
@@ -11,6 +14,12 @@ angular.module('origApp.controllers')
 	HttpResource.model('users/'+$stateParams.id).customGet('',{},function(data){
 		console.log(data);
 		$scope.user = data.data.object;
+		console.log('/admin/users/'+$scope.user._id+'/home')
+		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                              {link: '/admin/home', text: 'Admin'},
+                              {link: '/admin/users', text: 'Users'},
+                              {link: '/admin/user/'+$scope.user._id+'/home', text: ''+$scope.user.firstName+' '+$scope.user.lastName}
+                              ];
 	});
 
 	$scope.update = function(){

@@ -1,8 +1,13 @@
 'use strict';
 
 angular.module('origApp.controllers')
-  .controller('usersController', ['$timeout','$scope', 'HttpResource', function($timeout,$scope, HttpResource) {
+  .controller('usersController', ['$timeout','$scope', 'HttpResource', '$rootScope', function($timeout,$scope, HttpResource, $rootScope) {
     
+    $rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                              {link: '/admin/home', text: 'Admin'},
+                              {link: '/admin/users', text: 'Users'}
+                              ];
+
     $scope.options = {};
 
 
