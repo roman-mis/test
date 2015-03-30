@@ -75,16 +75,26 @@ angular.module('origApp.controllers')
               backdrop: 'static'
             });
           };
-	
+
           $scope.openAOEWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/AOE.html',
               parentScope: $scope,
-              controller: 'AOEController',  
+              controller: 'AOEController',
               size: 'lg'
             });
           };
-  
+          $scope.openSsp=function(){
+            console.log($scope.contactdetail);
+            ModalService.open({
+
+              templateUrl:'views/candidate/ssp.html',
+              parentScope:$scope,
+              controller:'sspController',
+              size:'lg'
+            })
+          };
+
 		      $scope.openAddTimesheetWin = function() {
             ModalService.open({
               templateUrl: 'views/candidate/_add_timesheet.html',
@@ -94,7 +104,8 @@ angular.module('origApp.controllers')
               backdrop: 'static'
             });
           };
-		})
+		     })
+
 
         //DPA questions
         .controller('CandidateSidebarDPAController', function($scope, $modalInstance) {
@@ -111,7 +122,7 @@ angular.module('origApp.controllers')
           };
         })
 
-        //ngTagsInput 
+        //ngTagsInput
         .controller('CandidatengTagsInputController', function($scope) {
           $scope.tagsMonday = [
             {text: 'just'},
