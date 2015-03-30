@@ -20,8 +20,8 @@ app.controller("expensesAuthorizationCtrl",
         $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
-            console.log('getting expenses done !!');
-            console.log(expenses);
+            logs('getting expenses done !!');
+            logs(expenses);
             $scope.expensesArray = expenses.object;
             init();
         });
@@ -31,14 +31,25 @@ app.controller("expensesAuthorizationCtrl",
                 $scope.expensesArray[i].startDate = getMonday($scope.expensesArray[i].claimDate);
                 $scope.expensesArray[i].categories = [];
                 $scope.expensesArray[i].majorChecked = false;
+                $scope.expensesArray[i].total = 0;
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                     $scope.expensesArray[i].expenses[j].checked = false;
                     $scope.expensesArray[i].expenses[j].edit = false;
-                    console.log($scope.expensesArray[i].expenses[j].date);
+                    $scope.expensesArray[i].expenses[j].expenseDetail.total = 0;
+                    $scope.expensesArray[i].expenses[j].expenseDetail.total +=
+                        $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].value ? $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].value : 0;
+                    $scope.expensesArray[i].expenses[j].expenseDetail.total +=
+                        $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].expenseDetail.vat ? $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].expenseDetail.vat : 0;
+                    $scope.expensesArray[i].total += $scope.expensesArray[i].expenses[j].expenseDetail.total;
+                    //logs($scope.expensesArray[i].expenses[j].amount);
+                    //logs($scope.expensesArray[i].expenses[j].expenseDetail.vat);
+                    //logs($scope.expensesArray[i].expenses[j].value);
+                    //logs($scope.expensesArray[i].expenses[j].expenseDetail.total);
+                    //logs($scope.expensesArray[i].expenses[j].date);
                     $scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                    console.log($scope.expensesArray[i].expenses[j].date);
+                    //logs($scope.expensesArray[i].expenses[j].date);
                     $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].startDate);
-                    console.log($scope.expensesArray[i].expenses[j].validDates);
+                    //logs($scope.expensesArray[i].expenses[j].validDates);
                     //if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
                     //    $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
                     //}
@@ -49,7 +60,7 @@ app.controller("expensesAuthorizationCtrl",
             }
             $scope.cloned = [];
             angular.copy($scope.expensesArray, $scope.cloned);
-            console.log($scope.expensesArray);
+            logs($scope.expensesArray);
         }
 
         function getMonday(d) {
@@ -96,36 +107,38 @@ app.controller("expensesAuthorizationCtrl",
                         } else {
                             subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                         }
-                        console.log($scope.expensesArray[expenseIndex].expenses[i].date);
-                        console.log($scope.expensesArray[expenseIndex].expenses[i].date.toISOString());
+                        logs($scope.expensesArray[expenseIndex].expenses[i].date);
+                        logs($scope.expensesArray[expenseIndex].expenses[i].date.toISOString());
                         req.body.push({
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
-                            value: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            amount: $scope.expensesArray[expenseIndex].expenses[i].amount,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
                             status: $scope.expensesArray[expenseIndex].expenses[i].status
                         });
-                        console.log(req.body);
+                        logs(req.body);
                         break;
                     }
                 }
-                //console.log(req);
+                //logs(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     console.log(res);
-                    // $http.get('/api/candidates/expenses').success(function (expenses) {
-                    //     $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
-                    //     var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
-                    //     $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
-                    //     //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                    //     $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
-                    //     $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
-                    //     //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
-                    //     //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
-                    //     //}
-                    // });
+                    
+                    logs(res);
+                    $http.get('/api/candidates/expenses').success(function (expenses) {
+                        $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
+                        var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
+                        $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
+                        //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
+                        $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
+                        $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
+                        //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
+                        //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
+                        //}
+                    });
                 });
             } else {
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
@@ -148,7 +161,7 @@ app.controller("expensesAuthorizationCtrl",
                     indeces.push(i);
                 }
             }
-            //console.log(req);
+            //logs(req);
             $http.post('/api/candidates/expenses', req).success(function (res) {
                 //console.log(res, indeces);
                 if (res.result) {
@@ -272,7 +285,7 @@ app.controller("expensesAuthorizationCtrl",
                     }
                 }
             }
-            //console.log(req);
+            //logs(req);
             $http.post('/api/candidates/expenses', req).success(function (res) {
                 //console.log(res, indeces);
                 if (res.result) {
@@ -312,12 +325,16 @@ app.controller("expensesAuthorizationCtrl",
                     angular.copy($scope.expensesArray, $scope.cloned);
                 });
             }, function () {
-                console.log("Dismissed");
+                logs("Dismissed");
             });
         }
 
         //$scope.logs = function (x, y) {
-        //    console.log(x); console.log(y);
+        //    logs(x); logs(y);
         //}
+
+        function logs(record) {
+            console.log(record);
+        }
 
     }]);
