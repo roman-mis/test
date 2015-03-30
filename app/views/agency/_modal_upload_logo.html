@@ -4,35 +4,47 @@
 
 <div class="modal-body">
     <div class="row">
-        <div class="col-xs-4 col-sm-4 form-group full-row">
-            <img src="{{temp.dataUrl}}" id="logo" width="150" height="150" />
+        <div class="col-xs-4 col-sm-4 form-group full-row" >
+            <img ng-if="temp.dataUrl"  src="{{temp.dataUrl}}" id="logo" width="150" height="150" />
+            <h1 ng-if="!temp.dataUrl" class="text-center">?</h1>
         </div>
+
         <div class="col-xs-8 col-sm-8 full-row">
-            <h4 style="margin-top: 0;">Image details</h4>
-            <div class="row form-group">
+            <h4 ng-if="temp.dataUrl" style="margin-top: 0;">Image details</h4>
+
+            <div class="row form-group" >
+                <div class="col-xs-8 col-sm-8 form-group full-row" >
+                    <h4 ng-if="!temp.dataUrl">No logo uploaded. Why not add one?</h4>
+                </div>
+            </div>
+
+            <div class="row form-group" ng-if="temp.dataUrl">
                 <div class="col-xs-3">
                     Name : {{temp.logoFileName}}</div>
                 <div class="col-xs-9 img-details" id="uploadFile"></div>
             </div>
-            <div class="row form-group">
+
+            <div class="row form-group" ng-if="temp.dataUrl">
                 <div class="col-xs-3">Size : {{temp.logoSize | number:0}} <span
                         ng-if="temp.logoSize">KB</span>
                 </div>
                 <div class="col-xs-9 img-details" id="filesize"></div>
             </div>
+
+
             <div class="row" style="margin-top: 38px;">
                 <div class="col-xs-5 col-sm-4">
                     <div class="fileUpload btn btn-primary form-control">
                         <span onclick="$('#upload_company_logo').click();">Browse</span>
                         <input file-model="companyLogo" type="file"
-                               id="upload_company_logo" name="companyLogo" style="display: none;" />
+                               id="upload_company_logo" name="companyLogo" style="display: none;" ng-disabled="isLogoUploading"/>
                     </div>
                 </div>
 
 
                 <div class="col-xs-5 col-sm-6 no-padding">
                     <button type="button" class="btn btn-primary form-control img-details"
-                        ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
+                            ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
                         <span ng-show="!isLogoUploading" >Upload New Image</span>
                         <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
                     </button>
@@ -43,8 +55,8 @@
 </div><!-- /modal-body -->
 
 <div class="modal-footer">
-    <a href="" type="button" ng-click="cancel()" class="btn">Cancel</a>
-    <button class="btn btn-primary" ng-click="ok()">Done</button>
+    <a href="" type="button" ng-click="cancel()" class="btn" ng-disabled="isLogoUploading">Cancel</a>
+    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isLogoUploading">Done</button>
 </div><!-- /modal footer -->
 
 
