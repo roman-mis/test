@@ -65,34 +65,14 @@ angular.module('origApp.controllers')
         // edit primary contact information
         .controller('_EditPrimaryContactController', function($scope, $modalInstance, parentScope, HttpResource) {
           $scope.candidate = parentScope.candidate;
-          var ukMobile = /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
-          var ukPhone = /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/;
-          var emailPattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
-          $scope.patterns = function (index) {
-            switch(index){
-              case 0: return ukPhone;
-              case 1: return ukMobile;
-              case 2: return emailPattern;
-              case 3: return emailPattern;
-              case 4: return /./;
-              case 5: return /./;
-            }
-          };
-          console.log($scope.patterns(1));
+          $scope.ukMobile = /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
+          $scope.ukPhone = /^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/;
+          $scope.emailPattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
           
-          $scope.fields = [
-            {name: 'phone', label: 'Phone'},
-            {name: 'mobile', label: 'Mobile'},
-            {name: 'emailAddress', label: 'Email', type: 'email'},
-            {name: 'altEmail', label: 'Alt.Email', type: 'email'},
-            {name: 'facebook', label: 'Facebook'},
-            {name: 'linkedin', label: 'Linkedin'}
-          ];
+          
+          
           $scope.data = {};
 
-          $scope.fields.forEach(function(item) {
-            $scope.data[item.name] = parentScope.contactDetail[item.name];
-          });
 
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
@@ -116,30 +96,10 @@ angular.module('origApp.controllers')
 
         // edit primary address
         .controller('_EditPrimaryAddressController', function($scope, $modalInstance, parentScope, HttpResource) {
-          $scope.fields = [
-            {name: 'address1', label: 'Address 1'},
-            {name: 'address2', label: 'Address 2'},
-            {name: 'address3', label: 'Address 3'},
-            {name: 'town', label:'Town'},
-            {name: 'country', label:'Country'},
-            {name: 'postCode', label:'Post Code'},
-          ];
-          $scope.patterns = function (index) {
-            switch(index){
-              case 0: return /./;
-              case 1: return /./;
-              case 2: return /./;
-              case 3: return /./;
-              case 4: return /./;
-              case 5: return /([a-zA-Z]{2}[0-9]{1,2}\s{0,1}[0-9]{1,2}[a-zA-Z]{2})/;
-            }
-          };
+          
           $scope.data = {};
           $scope.nationalities = parentScope.nationalities;
           $scope.candidate = parentScope.candidate;
-          $scope.fields.forEach(function(item) {
-            $scope.data[item.name] = parentScope.contactDetail[item.name];
-          });
 
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
@@ -163,22 +123,12 @@ angular.module('origApp.controllers')
 
         // edit bank details
         .controller('_EditBankDetailsController', function($scope, $modalInstance, parentScope, HttpResource) {
-          $scope.candidate = parentScope.candidate;
-          $scope.fields = [
-            {name: 'accountName', label: 'Name on Account'},
-            {name: 'bankName', label: 'Bank Name'},
-            {name: 'accountNo', label: 'Account No.',maxLength:8},
-            {name: 'sortCode', label: 'Sort Code',maxLength:6},
-            {name: 'bankRollNo', label: 'Bankroll No.',maxLength:18}
-          ];
-          $scope.data = {};
-
-          $scope.fields.forEach(function(item) {
-            $scope.data[item.name] = parentScope.bankDetail[item.name];
-          });
-
           
-            
+          $scope.candidate = parentScope.candidate;
+          
+            $scope.data = {};           
+         
+
           
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
@@ -186,20 +136,16 @@ angular.module('origApp.controllers')
 
           $scope.ok = function() {
             $scope.isSaving = true;
-            // parentScope.getCandidateResource().create($scope.data)
-            //         .patch('bankdetail')
-            //         .then(function(response) {
-            //           $scope.isSaving = false;
-            //           if (!HttpResource.flushError(response)) {
-            //             parentScope.bankDetail = jQuery.extend(parentScope.bankDetail, $scope.data);
-            //             $modalInstance.close();
-            //           }
-            //         });
-
-            HttpResource.model('candidates').create($scope.data)
-            .patch(parentScope.candidateId+'/bankdetail').then(function (res) {
-              $scope.isSaving = false;
-              console.log(res,$scope.data);
-            });
+            parentScope.getCandidateResource().create($scope.data)
+                    .patch('bankdetail')
+                    .then(function(response) {
+                      $scope.isSaving = false;
+                      if (!HttpResource.flushError(response)) {
+                        parentScope.bankDetail = jQuery.extend(parentScope.bankDetail, $scope.data);
+                        $modalInstance.close();
+                      }
+                    });
+            
+            
           };
         });
