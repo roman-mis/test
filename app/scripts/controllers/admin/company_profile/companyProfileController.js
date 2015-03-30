@@ -33,7 +33,7 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
         // get company profile from the server
         CompanyProfileService.getCompanyProfile().then(function (data) {
             if (data.companyProfile) {
-                $scope.companyProfile = data.companyProfile.companyProfile;
+                $scope.companyProfile = data.companyProfile;
                 console.log('company profile.....');
                 console.log($scope.companyProfile);
             }
@@ -52,7 +52,7 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
 
             var modalInstance = ModalService.open({
                 templateUrl: 'views/admin/companyProfile/partials/' + type + '.html',
-                controller: 'contactModalController',
+                controller: 'companyProfileModalController',
                 size: 'md',
                 parentScope: $scope
             });

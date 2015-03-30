@@ -32,4 +32,28 @@ angular.module('origApp.directives')
 }
 
 
+}])
+.directive('checkSick',[function(){
+
+ return{
+
+
+  restrict:'A',
+  scope:{
+
+    inform:'=',
+    to:'=',
+    from:'='
+  },
+  link:function(scope,ele,attrs,c){
+  console.log(c);
+    scope.$watch('inform',function(newValue,oldValue){
+
+      var n=new Date(newValue);
+
+    //  if(n.valueOf)
+    })
+  }
+ }
+
 }]);
