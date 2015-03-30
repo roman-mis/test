@@ -316,6 +316,9 @@ module.exports = function(){
 				_branches.push(_branch);
 			});
 		}
+
+        var logoUrl = (agency.logoFileName) ? 'api/agencies/' + agency._id + '/file_redirect_url/' + agency.logoFileName : '';
+
 		return {
 			_id:agency._id,
 			name:agency.name,
@@ -329,8 +332,8 @@ module.exports = function(){
 			companyVatNo: agency.companyVatNo,
 			branches: _branches,
 			status:agency.status,
-            logoFileName: agency.logoFileName,
-            logoUrl: 'api/agencies/' + agency._id + '/file_redirect_url/' + agency.logoFileName
+            logoFileName: agency.logoFileName || '',
+            logoUrl: logoUrl
         };
 	}
 
