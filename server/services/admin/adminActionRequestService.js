@@ -5,8 +5,8 @@ module.exports=function(dbs){
 	var Q=require('q');
 	// var candidateService=require('../candidateservice')(db);
 	var candidateCommonService=require('../candidatecommonservice')(db);
-	var timesheetService=require('../timesheetService')(db);
-	var payrollService=require('../payrollService')(db);
+	var timesheetService=require('../timesheetservice')(db);
+	var payrollService=require('../payrollservice')(db);
 	var systemService=require('../systemservice')(db);
 	var enums=require('../../utils/enums');
 	var _=require('lodash');
@@ -52,7 +52,7 @@ module.exports=function(dbs){
 
 						var options={weeklyPay:0};
 						var currentRate;
-						
+
 						if(payType==='ssp'){
 							
 							
