@@ -47,9 +47,13 @@ app.controller("expensesAuthorizationCtrl",
                     //logs($scope.expensesArray[i].expenses[j].expenseDetail.total);
                     //logs($scope.expensesArray[i].expenses[j].date);
                     $scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                    //logs($scope.expensesArray[i].expenses[j].date);
+                    $scope.expensesArray[i].expenses[j].date.setHours(0, 0, 0, 0);
                     $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].startDate);
-                    //logs($scope.expensesArray[i].expenses[j].validDates);
+                    if (i == 0 && j == 0) {
+                        logs(new Date($scope.expensesArray[i].claimDate));
+                        logs($scope.expensesArray[i].expenses[j].date);
+                        logs($scope.expensesArray[i].expenses[j].validDates);
+                    }
                     //if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
                     //    $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
                     //}
@@ -74,7 +78,9 @@ app.controller("expensesAuthorizationCtrl",
             var days = [];
             days.push(start);
             for (var i = 1; i < 7; i++) {
-                days.push(new Date(new Date().setDate(start.getDate() + i)));
+                var date = new Date(new Date().setDate(start.getDate() + i));
+                date.setHours(0, 0, 0, 0);
+                days.push(date);
             }
             return days;
         }
@@ -108,12 +114,11 @@ app.controller("expensesAuthorizationCtrl",
                             subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                         }
                         logs($scope.expensesArray[expenseIndex].expenses[i].date);
-                        logs($scope.expensesArray[expenseIndex].expenses[i].date.toISOString());
                         req.body.push({
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
-                            amount: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            value: $scope.expensesArray[expenseIndex].expenses[i].amount,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
@@ -126,7 +131,7 @@ app.controller("expensesAuthorizationCtrl",
                 //logs(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     console.log(res);
-                    
+
                     logs(res);
                     $http.get('/api/candidates/expenses').success(function (expenses) {
                         $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
