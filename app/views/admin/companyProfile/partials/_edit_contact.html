@@ -3,30 +3,39 @@
         <h3 class="modal-title">Edit Contact</h3>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal" name="form" role="form" novalidate>
+        <form class="form-horizontal" name="contactForm" role="form" novalidate>
             <div class="row">
                 <div class="col-sm-12">
 
 
                     <div class="form-group">
-                        <label class="control-label col-xs-6">Company name</label>
+                        <label class="control-label col-xs-6">Company name<span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" ng-model="companyProfile.contact.companyName" name="companyName" ng-maxlength=36 />
-                            <div ng-show="profile.companyName.$invalid && submitted">
-                                <p ng-show="profile.companyName.$error.maxlength">
-                                   Please enter less than 36 character.
-                                </p>
+                            <input type="text" class="form-control"
+                                   ng-model="companyProfile.contact.companyName"
+                                   name="companyName"ng-maxlength="36" required/>
+                            <div ng-show="contactForm.companyName.$invalid || contactForm.companyName.$pristine">
+                                <div ng-show="contactForm.companyName.$error.maxlength"  class="alert alert-danger">
+                                    Company Name cannot exceed 36 character.
+                                </div>
+                                <div ng-show="contactForm.companyName.$error.required"  class="alert alert-danger">
+                                    Company Name cannot be empty.
+                                </div>
                             </div>
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        <label class="control-label col-xs-6">Address 1</label>
+                        <label class="control-label col-xs-6">Address 1 <span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" ng-model="companyProfile.contact.address1" name="address1" />
-                            <div ng-show="profile.address1.$invalid && submitted">
-                            <p ng-show="profile.address1.$error.required">Please enter address1.</p>
+                            <input type="text" class="form-control"
+                                   ng-model="companyProfile.contact.address1" name="address1"
+                                   required/>
+                            <div ng-show="contactForm.address1.$invalid || contactForm.companyName.$pristine">
+                                <div class="alert alert-danger"
+                                     ng-show="contactForm.address1.$error.required">Please enter
+                                Address 1. </div>
                             </div>
                         </div>
                     </div>
@@ -41,24 +50,29 @@
 
 
                     <div class="form-group">
-                        <label class="control-label col-xs-6">Town</label>
+                        <label class="control-label col-xs-6">Town<span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" ng-model="companyProfile.contact.town" name="town"/>
-                            <div ng-show="profile.town.$invalid && submitted">
-                                <p ng-show="profile.town.$error.required">Please enter town name.</p>
+                            <input type="text" class="form-control"
+                                   ng-model="companyProfile.contact.town" name="town" required/>
+                            <div ng-show="contactForm.town.$invalid || contactForm.town.$pristine">
+                                <div class="alert alert-danger"
+                                     ng-show="contactForm.town.$error.required">Please enter town
+                                name.</div>
                             </div>
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        <label class="control-label col-xs-6">Country</label>
+                        <label class="control-label col-xs-6">Country<span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" ng-model="companyProfile.contact.country" name="country"/>
-                            <div ng-show="profile.country.$invalid && submitted">
-                            <p ng-show="profile.country.$error.required">
-                             Please enter country name.
-                            </p>
+                            <input type="text" class="form-control"
+                                   ng-model="companyProfile.contact.country" name="country"
+                                   required/>
+                            <div ng-show="contactForm.country.$invalid || contactForm.country.$pristine">
+                                <div class="alert alert-danger" ng-show="contactForm.country.$error.required">
+                                    Please enter Country.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -68,10 +82,11 @@
                         <label class="control-label col-xs-6">Post Code</label>
                         <div class="col-xs-6">
                             <input type="text" class="form-control" ng-model="companyProfile.contact.postcode" name="postcode" ng-pattern='/^([A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKS-UW])\ [0-9][ABD-HJLNP-UW-Z]{2}|(GIR\ 0AA)|(SAN\ TA1)|(BFPO\ (C\/O\ )?[0-9]{1,4})|((ASCN|BBND|[BFS]IQQ|PCRN|STHL|TDCU|TKCA)\ 1ZZ))$/'  />
-                            <div ng-show="profile.postcode.$invalid && (profile.postcode.$dirty && submitted)">
-                                <p ng-show="profile.postcode.$error.pattern">
-                                    Invalid postal code.
-                                </p>
+                            <div ng-show="contactForm.postcode.$invalid || contactForm.postcode.$pristine">
+                                <div class="alert alert-danger"
+                                     ng-show="contactForm.postcode.$error.pattern">
+                                    Please enter valid Post Code.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,8 +104,8 @@
                         <label class="control-label col-xs-6">Fax</label>
                         <div class="col-xs-6">
                             <input type="number" class="form-control" ng-model="companyProfile.contact.fax" name="fax"/>
-                            <div ng-show="profile.fax.$dirty && profile.fax.$invalid && (profile.fax.$dirty  || submitted)">
-                            <p>Please enter valid fax.</p>
+                            <div ng-show="contactForm.fax.$invalid || contactForm.fax.$pristine">
+                                <div class="alert alert-danger" ng-show="contactForm.postcode.$error.number">Please enter valid fax.</div>
                             </div>
                         </div>
                     </div>
@@ -100,15 +115,14 @@
                         <label class="control-label col-xs-6">Email</label>
                         <div class="col-xs-6">
                             <input type="email" class="form-control" ng-model="companyProfile.contact.email" name="email"/>
-                            <div ng-show="profile.email.$invalid && (profile.email.$dirty  || submitted)">
-                             <p ng-show="profile.email.$error.email">
-                                Please enter valid email address.
-                             </p>
+                            <div
+                                    ng-show="contactForm.email.$invalid || contactForm.email.$pristine"  class="clearfix">
+                                <div class="alert alert-danger" ng-show="contactForm.email.$error.email">
+                                    Please enter valid email address.
+                                </div>
                             </div>
                         </div>
-                    </div>                   
-                
-
+                    </div>
                 </div>
             </div>
         </form>
@@ -116,11 +130,11 @@
 
 
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="saveContact()" ng-disabled="isSaving || form.$invalid">
+        <button class="btn btn-primary" ng-click="saveCompanyProfile('contacts')" ng-disabled="isSaving || contactForm.$invalid">
             <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+            <span ng-show="isSaving" ng-disabled="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
         </button>
-        <button class="btn btn-warning" ng-click="closeProfileFunction()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
     </div>
 
 </div>

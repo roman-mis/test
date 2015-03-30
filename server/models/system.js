@@ -78,7 +78,7 @@ module.exports = function(mongoose) {
             dieselAbove2001: Number,
             lpgUpTo1400: Number,
             lpg1401to2000: Number,
-            lpgAbove2001: Number
+            lpgAbove2001: Number   
         },
         cis: {
             userId: String,
@@ -170,6 +170,30 @@ module.exports = function(mongoose) {
             incomeTaxAdditionalRate: [
                 {
                     amount: Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            sspRate:[
+                {
+                    amount: Number,
+                    maxWeeks:Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            smpRate:[
+                {
+                    amount: Number,
+                    maxWeeks:Number,
+                    validFrom: Date,
+                    validTo: Date
+                }
+            ],
+            sppRate:[
+                {
+                    amount: Number,
+                    maxWeeks:Number,
                     validFrom: Date,
                     validTo: Date
                 }

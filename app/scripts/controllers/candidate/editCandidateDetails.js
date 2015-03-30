@@ -1,37 +1,42 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource','$http',
-        function($scope,$modalInstance,$stateParams, HttpResource, parentScope, $http){
+    .controller('editContactDetailsCtrl', ['$scope', '$modalInstance', '$stateParams', 'HttpResource','parentScope','ConstantsResource','Notification',
+        function($scope,$modalInstance,$stateParams, HttpResource, parentScope,ConstantsResource,Notification){
             $scope.candidateId = $stateParams.candidateId;
-            $scope.candidate = parentScope.candidate;
+            $scope.candidate = {};
+            $scope.candidate = angular.copy(parentScope.candidate);
             $scope.genders = [{ key: 'M', value: 'Male' }, { key: 'F', value: 'Female' }];
 
-            console.log($scope.candidate);
+            
             HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
                 console.log(res);
             });
 
             HttpResource.model('constants/candidateTitle').query({},function (res) {
-                console.log(res.data);
+                
                 $scope.titles = res.data;
-                console.log($scope.candidate.title);
+                
             });
 
             $scope.status = parentScope.candidate.status;
             $scope.lettersOnly = /^[A-Za-z]+$/;
-            console.log(parentScope.candidate.status);
+            
 
 
             HttpResource.model('constants/nationalities').query({},function (res) {
                 // body...
                 $scope.nationalities = res.data;
-                console.log($scope.nationalities);
+                
             });
 
 
 
 
-
+            $scope.nameError = function () {
+                
+              Notification.error({message:'First Name is required',delay:2000});
+              return;
+            };
             $scope.calcAge = function (dateString) {
                 var birthday = +new Date(dateString);
                 return ~~((Date.now() - birthday) / (31557600000));
@@ -43,38 +48,38 @@ angular.module('origApp.controllers')
 
                     $scope.$watch('candidate.birthDate', function (newVal) {
                         $scope.candidate.birthDate = newVal;
-                        console.log($scope.candidate.birthDate);
+                        
                         $scope.age=$scope.calcAge($scope.candidate.birthDate);
-                        console.log($scope.age);
+                        
 
 
                         // $scope.form.age = newVal;
                         if($scope.age<16 && $scope.status ==='Live'){
                             $scope.isValid = false;
-                            console.log($scope.isValid);
+                            
                             $scope.form.age.$setValidity('age',$scope.isValid);
                         }else{
                             $scope.isValid = true;
-                            console.log($scope.isValid);
+                            
                             $scope.form.age.$setValidity('age',$scope.isValid);
                         }
-                        $scope.save = function () {
-                            console.log($scope.candidate.emailAddress);
-                            HttpResource.model('users').create($scope.candidate)
-                                .patch($scope.candidateId).then(function (res) {
-
-                                    console.log(res);
-                                });
-                            HttpResource.model('candidates').create($scope.candidate)
-                                .patch($scope.candidateId+'/contactdetail').then(function (res) {
-                                    console.log(res);
-                                });
-                            $modalInstance.dismiss('save');
-                        };
-                        $scope.cancel = function () {
-                            $modalInstance.dismiss('cancel');
-                        };
+                        
                     });
                 }
             });
+            $scope.save = function () {
+                
+                HttpResource.model('users').create($scope.candidate)
+                .patch($scope.candidateId).then(function () {
+                    parentScope.candidate = angular.copy($scope.candidate);
+                    
+                });
+                HttpResource.model('candidates').create($scope.candidate)
+                .patch($scope.candidateId+'/contactdetail');
+
+                $modalInstance.dismiss('save');
+            };
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         }]);

@@ -2,57 +2,56 @@
 
 module.exports = function(dbs){
 
-	var db = dbs,
-		Q=require('q'),
-		queryutils=require('../utils/queryutils')(db),
-		service={};
+  var db = dbs,
+    Q=require('q'),
+    queryutils=require('../utils/queryutils')(db),
+    service={};
     var enums=require('../utils/enums');
-	service.getExpenses=function(request){
-		return Q.Promise(function(resolve,reject){
-			var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
+  service.getExpenses=function(request){
+    return Q.Promise(function(resolve,reject){
+      var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
 
-			queryutils.applySearch(q, db.Expense, request)
-				.then(resolve,reject);
-		});
-	};
+      queryutils.applySearch(q, db.Expense, request)
+        .then(resolve,reject);
+    });
+  };
 
-	service.getExpense=function(id, populate){
-		populate = typeof populate !== 'undefined' ? populate : false;
-		var q=db.Expense.findById(id);
+  service.getExpense=function(id, populate){
+    populate = typeof populate !== 'undefined' ? populate : false;
+    var q=db.Expense.findById(id);
 
-		if(populate){
-			q.populate('agency');
-			q.populate('user');
-			q.populate('createdBy');
-		}
+    if(populate){
+      q.populate('agency');
+      q.populate('user');
+      q.populate('createdBy');
+    }
 
-		return Q.nfcall(q.exec.bind(q));
-	};
+    return Q.nfcall(q.exec.bind(q));
+  };
 
 
-	service.saveExpenses = function(expenseDetails){
-		console.log(expenseDetails);console.log(expenseDetails.days);
-		console.log('here wer are');
-		var deff = Q.defer();
-		var expenseModel;
-		expenseModel = new db.Expense(expenseDetails);
-		expenseModel.save(function(err){
-			if(err){
-				deff.reject(err);
-			}else{
-				console.log('save success');
-				deff.resolve(expenseModel);
-			}
-		});
-		return deff.promise;
-	};
+  service.saveExpenses = function(expenseDetails){
+    console.log(expenseDetails);console.log(expenseDetails.days);
+    console.log('here wer are');
+    var deff = Q.defer();
+    var expenseModel;
+    expenseModel = new db.Expense(expenseDetails);
+    expenseModel.save(function(err){
+      if(err){
+        deff.reject(err);
+      }else{
+        console.log('save success');
+        deff.resolve(expenseModel);
+      }
+    });
+    return deff.promise;
+  };
 
   service.getAllExpenses = function(request) {
 
         request.orderBy = [{
             'submittedDate': -1
         }];
-
         return Q.Promise(function(resolve, reject) {
             var q = db.System.find().select('statutoryTables expensesRate');
             return Q.nfcall(q.exec.bind(q)).then(function(system) {
@@ -90,7 +89,7 @@ module.exports = function(dbs){
                                     l.expenses.forEach(function(i) {
 
                                         var t = {};
-                                        t.date = daySpecific.date;
+                                        t.date = l.date;
                                         t.startTime = daySpecific.startTime;
                                         t.endTime = daySpecific.endTime;
                                         t.postcodes = daySpecific.postcodes;
@@ -109,6 +108,8 @@ module.exports = function(dbs){
                                             var sys = systemDoc.expensesRate.id(i.subType);
 
                                             if (sys) {
+                                              t.amount = i.value;
+                                              t.value = 4.5;  
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
                                                 t.expenseDetail.id = sys._id;
@@ -118,12 +119,11 @@ module.exports = function(dbs){
                                                     systemDoc.statutoryTables.vat.forEach(function(time) {
                                                         var validFrom = new Date(time.validFrom);
                                                         var validTo = new Date(time.validTo);
-
                                                         var current = new Date();
                                                         if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
 
                                                             t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.vat = time.amount + '%';
+                                                            t.expenseDetail.vat = time.amount /100 * 4.5+'';
 
                                                         }
 
@@ -135,11 +135,25 @@ module.exports = function(dbs){
                                             }
 
                                         }else{
-
+                                          t.amount = i.value;
+                                          t.value = 0.45;      
                                           t.expenseDetail = {};
                                           t.expenseDetail.name=i.subType;
                                           t.expenseDetail.total=i.value;
-                                          t.expenseDetail.vat=0+'%';
+                                          t.expenseDetail.vat=0+'';
+                                          systemDoc.statutoryTables.vat.forEach(function(time) {
+                                                        var validFrom = new Date(time.validFrom);
+                                                        var validTo = new Date(time.validTo);
+                                                        var current = new Date();
+                                                        if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+
+                                                            t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
+                                                            t.expenseDetail.vat = time.amount /100 * 4.5+'';
+
+                                                        }
+
+
+                                                    });
                                         }
 
                                         bucketObject.expenses.push(t);
@@ -149,10 +163,10 @@ module.exports = function(dbs){
 
                                 });
 
+                                console.log(bucketObject)
                                 bucket.push(bucketObject);
 
                             });
-
                             resolve(bucket);
                         });
 
@@ -165,13 +179,51 @@ module.exports = function(dbs){
 
         });
 
+  /////////////////////////////////////////////////////////////////////////////////////////
+    // return Q.Promise(function(resolve, reject) {
+    // // //   var q = db.System.find().select('statutoryTables.vat expensesRate');
+    // // //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
+    // // //           console.log(system);
+    // // //           resolve(system);
+    // // //         },function(err){
+    // // //           reject(err);
+    // // //         });
+    // // //       }); 
 
 
+    //   var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
+    //   return queryutils.applySearch(expensesQuery, db.Expense, request)
+    //       .then(function(expenses){
+    //         console.log(expenses);
+    //         console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%0')
+
+    //         var q = db.System.find().select('mileageRates statutoryTables.vat expensesRate');
+    //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
+    //           console.log(system);
+    //           console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1')
+    //           resolve({system:system,expenses:expenses});
+    //         },function(err){
+    //           // resolve(expenses);
+    //         },function(err){
+    //           reject(err);
+    //         });
+    //       });
+
+
+    //       },function(err){
+    //         console.log(err);
+    //         reject(err);
+    //       });
+        // });
     };
 
     service.fetchExpenses=function(val){
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+        console.log(val);
 
      var q=db.Expense.find().where('days.expenses._id').in(val);
+        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+
      return Q.nfcall(q.exec.bind(q));
 
     };
@@ -271,6 +323,7 @@ module.exports = function(dbs){
                  });
 
                }
+
              var bucket=[];
              model.forEach(function(mo){
 
@@ -290,84 +343,160 @@ module.exports = function(dbs){
     };
 
 
-    service.editExpenses=function(ids){
+    service.editExpenses=function(data){
         return Q.promise(function(resolve,reject){
 
-           var q = db.System.find().select('statutoryTables expensesRate');
+        //    var q = db.System.find().select('statutoryTables expensesRate');
 
-          return Q.nfcall(q.exec.bind(q)).then(function(system){
-
-
-        system.forEach(function(systemDoc){
+        //   return Q.nfcall(q.exec.bind(q)).then(function(system){
 
 
+        // system.forEach(function(systemDoc){
 
-          service.fetchExpensesForEdit(ids).then(function(model){
+        //   console.log(ids)
 
-
-              var bucket=[];
-              for(var i=0;i<model.length;i++){
-
-                model[i].days.forEach(function(l){
-                   ids.forEach(function(doc){
-
-                       var e=l.expenses.id(doc.id);
-
-                       if(e){
-                        if(doc.expenseType){
-
-                         e.expenseType=doc.expenseType;
+        //   service.fetchExpensesForEdit(ids).then(function(model){
 
 
+        //       var bucket=[];
+        //                console.log('%%%%%%%%%%%%%%%%%%%%1');
+        //                console.log(model.length);
+
+        //       for(var i=0;i<model.length;i++){
+
+        //         model[i].days.forEach(function(l){
+        //            ids.forEach(function(doc){
+
+        //                var e=l.expenses.id(doc.id);
+        //                if(e){
+        //                 for(var key in doc){
+        //                   if(doc[key]){
+        //                     e[key] = doc[key];
+        //                   }
+        //                   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        //                   console.log(key)
+        //                 }
+
+        //                }
+        //            });
+        //         });
+        //           bucket.push(Q.nfcall(model[i].save.bind(model[i])));
+        //       }
+        //      // var bucket=[];
+        //      // model.forEach(function(mo){
+
+        //      //   bucket.push(Q.nfcall(mo.save.bind(mo)));
+
+        //      // });
+        //      return Q.all(bucket).then(function(){
+        //          resolve({result:true})
+
+        //      },reject);
+
+
+        //   },reject);
+        //  });
+        //  });
+          var readPromises  = [];
+          var WritePromises = [];
+          var breakFrmLoops = false;
+          for(var i = 0; i < data.length; i++){
+            var q = db.Expense.findById(data[i].claimId);
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
+          }
+          Q.all(readPromises).then(function(expenses){
+            for(var i = 0; i < expenses.length; i++){
+            var dayIndex = -1;
+
+              expenses[i].days.forEach(function(day){
+                dayIndex ++;
+                var dayExpenseIndex = -1;
+                day.expenses.forEach(function(dayExpense){
+                  dayExpenseIndex ++;
+                  if(dayExpense._id+'' === data[i].id+''){
+                    console.log('**')
+                          console.log('this day')
+                          console.log('**')
+                    var changeDay = false;
+                    for(var key in data[i]){
+                      if(key === 'date'){
+                        changeDay = true;
+                      }else{
+                        dayExpense[key] = data[i][key];
+                      }
+                    }
+                    if(changeDay){
+                      var foundTheTargetDay = false;
+                      expenses[i].days.forEach(function(targetNewDay){
+                      
+                        if(daysBetween(targetNewDay.date,new Date(data[i].date)) === 0){
+                          console.log('**')
+                          console.log('new day')
+                          console.log('**')  
+                          foundTheTargetDay = true;
+                          targetNewDay.expenses.push(dayExpense);
+                          day.expenses.splice(dayExpenseIndex,1);
+                          breakFrmLoops = true;
+                          return;
                         }
-                        if(doc.value){
-
-                           e.value=Number(doc.value);
-
-                        }
-                        if(doc.receiptUrls){
-                          e.receiptUrls=doc.receiptUrls;
-
-                        }
-                        if(doc.status){
-
-                          e.status=doc.status;
-                        }
-
-                        if(doc.date){
-
-                          e.date=doc.date;
-                        }
-
-
-
-
-                       }
-                   });
-
+                      });
+                      if(!foundTheTargetDay){
+                        console.log('**')
+                          console.log('create new day')
+                          console.log('**')
+                    
+                        var newDay = {};
+                        newDay.date = new Date(data[i].date); 
+                        newDay.startTime = day.startTime; 
+                        newDay.endTime = day.endTime; 
+                        newDay.expenses = [];
+                        newDay.expenses.push(dayExpense);
+                        day.expenses.splice(dayExpenseIndex,1);
+                        console.log('newDay')
+                        console.log(newDay)
+                        expenses[i].days.push(newDay); 
+                      }
+                    }
+                    breakFrmLoops = true;
+                    return;
+                  }
                 });
-
-              }
-             var bucket=[];
-             model.forEach(function(mo){
-
-               bucket.push(Q.nfcall(mo.save.bind(mo)));
-
-             });
-
-             return Q.all(bucket).then(function(){
-                 resolve({result:true})
-
-             },reject);
-
-
-          },reject);
-         });
-         });
-
+                if(breakFrmLoops){
+                  return;
+                }
+              });
+                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+            }
+            
+            return Q.all(WritePromises).then(function(res){
+              resolve({result:true,opjects:res});
+            },function(err){
+              reject(err);
+            });
+          },function(){
+            reject('can not find this claim');
+          });
         });
 
     };
 
-	return service;
+    
+    function daysBetween(first, second) {
+      // Copy date parts of the timestamps, discarding the time parts.
+      var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
+      var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+      console.log(one)
+      console.log(two)
+      // Do the math.
+      var millisecondsPerDay = 1000 * 60 * 60 * 24;
+      var millisBetween = two.getTime() - one.getTime();
+      var days = millisBetween / millisecondsPerDay;
+      // Round down.
+      console.log(Math.floor(days))
+      console.log('**')
+
+      return Math.floor(days);
+    }
+
+  return service;
 };

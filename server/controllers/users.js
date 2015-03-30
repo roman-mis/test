@@ -3,12 +3,12 @@
 
 module.exports = function(){
   var _=require('lodash');
-  
+
   var userservice=require('../services/userservice'),
     enums=require('../utils/enums');
 
     var controller={};
- 
+
     controller.sendPasswardReset = function(req,res){
       userservice.sendPasswardReset(req.params.id,req)
       .then(function(){
@@ -35,7 +35,7 @@ module.exports = function(){
         .then(function(){
           res.json({result:true});
         },res.sendFailureResponse);
-      
+
     };
 
     controller.lockunlock=function(req,res){
@@ -54,7 +54,7 @@ module.exports = function(){
           console.log(false);
           res.json({result:false,message:'Invalid code'});
         });
-        
+
     };
 
 
@@ -70,12 +70,12 @@ module.exports = function(){
           },function(err){
             res.sendFailureResponse(err);
           });
-          
+
         },function(){
           console.log(false);
           res.json({result:false,message:'Invalid code'});
         });
-        
+
     };
 
 
@@ -84,15 +84,17 @@ module.exports = function(){
     	userservice.getAllUsers(req._restOptions)
     		.then(function(result){
     			 var vms=_.map(result.rows,function(user){
-          
+
+
+
     	   			var vm=getUserViewModel(user);
     	       		return vm;
-          
+
         		});
-        
+
     		    var pagination=req._restOptions.pagination||{};
     		    var resp={result:true,objects:vms,meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
-    		    
+
     		    res.json(resp);
 
     		},res.sendFailureResponse);
@@ -120,17 +122,18 @@ module.exports = function(){
                 res.json({result:true});
               }
               else{
-                res.json(response);  
+                res.json(response);
               }
-              
+
           },res.sendFailureResponse);
     };
 
-    
+
 
     controller.getUser=function(req,res){
         userservice.getUser(req.params.id)
           .then(function(user){
+            console.log(user);
             if(user){
               var userVm=getUserViewModel(user);
               res.json({result:true,object:userVm});
@@ -145,7 +148,7 @@ module.exports = function(){
     function getUserViewModel(user){
       return {
         _id:user._id,title:user.title,firstName:user.firstName,lastName:user.lastName,
-        emailAddress:user.emailAddress,lastLogin:user.lastLogin,createdDate: user.createdDate,userType:user.userType
+        emailAddress:user.emailAddress,lastLogin:user.lastLogin,createdDate: user.createdDate,userType:user.userType,locked:user.locked
       };
     }
 
