@@ -25,7 +25,8 @@
 		<!-- </div> -->
 
 	<!-- </div> -->
-  <table class="table orig-grid">
+  <div class="orig-grid-wrapper">
+  <table class="table table-striped">
     <thead>
       <tr >
 	        <th class="text-center">
@@ -51,14 +52,15 @@
         	<td>{{item.emailAddress}}</td>
         	<td>{{item.lastLogin | date:'yyyy-MM-dd'}}</td>
         	<td>{{item.createdDate | date:'yyyy-MM-dd'}}</td>
-        	<td class="text-center"><span style="margin:4px" ui-sref="app.admin.user.home({id:item._id})"><i class="fa fa-eye"></i></span>
-        	<span style="margin:4px" ng-click="lockUnlock($index)"><i ng-show="item.locked" class="fa fa-lock"></i><i ng-show="! item.locked" class="fa fa-unlock-alt"></i></span>
-        	<span style="margin:4px" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></span>
+        	<td class="text-center"><a style="margin:4px;cursor:pointer" ui-sref="app.admin.user.home({id:item._id})"><i class="fa fa-eye"></i></a>
+        	<a class="clickable" style="margin:4px;cursor:pointer" ng-click="lockUnlock($index)"><i ng-show="item.locked" class="fa fa-lock"></i><i ng-show="! item.locked" class="fa fa-unlock-alt"></i></a>
+        	<a style="margin:4px;cursor:pointer" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></a>
         	</td>
       </tr>
 
     </tbody>
   </table>
+  </div>
   <div class="orig-grid-pagination-wrapper">
     <div class="page-rows-count">
       <label>Results per page</label><br>
