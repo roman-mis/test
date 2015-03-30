@@ -4,10 +4,28 @@ angular.module('origApp.controllers')
         function ($scope, $modalInstance, parentScope, CompanyProfileService) {
 
             $scope.companyProfile = {};
+            var mapCompanyProfile = {};
 
             if (undefined !== parentScope) {
                 $scope.companyProfile = parentScope.companyProfile;
                 $scope.dropDownLists =  parentScope.dropDownLists;
+
+
+                /*
+                 * Copies $scope.companyProfile and maps to mapCompanyProfile and replaces
+                 * mapCompanyProfile.defaults[item] with $scope.companyProfile.defaults[item].code
+                 * before sending it to server
+                 * */
+                angular.copy($scope.companyProfile, mapCompanyProfile);
+
+                var objDefaults = Object.keys(mapCompanyProfile.defaults);
+
+                objDefaults.forEach(function (item) {
+                    if ($scope.companyProfile.defaults[item].code) {
+                        $scope.companyProfile.defaults[item] = mapCompanyProfile.defaults[item].code;
+                    }
+                });
+
             }
 
             $scope.cancel = function () {
@@ -38,8 +56,6 @@ angular.module('origApp.controllers')
             $scope.saveCompanyProfile = function (param) {
 
                 $scope.isSaving = true;
-
-                console.log(param);
 
                 CompanyProfileService.saveCompanyProfile($scope.companyProfile, param).
                     then(function (response) {

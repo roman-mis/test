@@ -20,7 +20,7 @@ angular.module('origApp.controllers', [])
           });
           if(AuthService.isLoggedIn()){
             $rootScope.currentUser = AuthService.getCurrentUser();
-            // $rootScope.currentUser.userType = 'SA';
+            $rootScope.currentUser.userType = 'SA';
 	          userPermissions.getUserPermission($rootScope.currentUser.userType).then(function(data){
 	            console.log(data);            // if($location.path() === '/'){
 	            console.log('******************************');

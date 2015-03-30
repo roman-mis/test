@@ -108,7 +108,7 @@ module.exports = function(dbs){
                                             var sys = systemDoc.expensesRate.id(i.subType);
 
                                             if (sys) {
-                                              t.amount = i.value/4.5;
+                                              t.amount = i.value;
                                               t.value = 4.5;  
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
@@ -135,7 +135,8 @@ module.exports = function(dbs){
                                             }
 
                                         }else{
-
+                                          t.amount = i.value;
+                                          t.value = 0.45;      
                                           t.expenseDetail = {};
                                           t.expenseDetail.name=i.subType;
                                           t.expenseDetail.total=i.value;
@@ -447,7 +448,7 @@ module.exports = function(dbs){
                         var newDay = {};
                         newDay.date = new Date(data[i].date); 
                         newDay.startTime = day.startTime; 
-                        newDay.endTime = day.endTime;
+                        newDay.endTime = day.endTime; 
                         newDay.expenses = [];
                         newDay.expenses.push(dayExpense);
                         day.expenses.splice(dayExpenseIndex,1);
