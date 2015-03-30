@@ -289,7 +289,7 @@ module.exports = function (dbs) {
 
         candidateservice.getUser(req.params.id)
           .then(function (user) {
-
+              console.log(user);
               if (user) {
                   var vm = getContactInformationViewModel(user, user.contactDetail);
                   res.json({ result: true, object: vm });
@@ -457,7 +457,7 @@ module.exports = function (dbs) {
         return {
             '_id': user.id,'firstName':user.firstName, 'emailAddress': user.emailAddress, 'address1': worker.address1, 'address2': worker.address2,
             'address3': worker.address3, 'county': worker.county, 'postCode': worker.postCode, 'nationality': worker.nationality,
-            'contactNumber': worker.contactNumber, gender: worker.gender,
+            'contactNumber': worker.contactNumber, gender: worker.gender,'candidateNo':user.candidateNo,
             'phone': contact.phone, 'mobile': contact.mobile, 'altEmail': contact.altEmail,
             'facebook': contact.facebook, 'linkedin': contact.linkedin, 'google': contact.google, status: user.worker.status
         };
