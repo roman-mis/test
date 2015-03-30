@@ -52,7 +52,7 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
 
             var modalInstance = ModalService.open({
                 templateUrl: 'views/admin/companyProfile/partials/' + type + '.html',
-                controller: 'contactModalController',
+                controller: 'companyProfileModalController',
                 size: 'md',
                 parentScope: $scope
             });
