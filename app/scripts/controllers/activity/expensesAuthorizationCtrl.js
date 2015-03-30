@@ -88,16 +88,17 @@ app.controller("expensesAuthorizationCtrl",
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
                             value: $scope.expensesArray[expenseIndex].expenses[i].amount,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
-                            expenseId: $scope.expensesArray[expenseIndex].id,
+                            claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
                             status: $scope.expensesArray[expenseIndex].expenses[i].status
                         });
+                        console.log(req.body);
                         break;
                     }
                 }
                 //console.log(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
-                    //console.log(res);
+                    console.log(res);
                     $http.get('/api/candidates/expenses').success(function (expenses) {
                         $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
                         var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
