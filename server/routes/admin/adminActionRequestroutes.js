@@ -18,4 +18,4 @@ router.get('/:id/spp/verify', controller.checkSppQualification);
 
 router.post('/:id/ssp', controller.postSsp);
 
-router.post('/:id/ssp', controller.postSmp);
+router.post('/:id/smp', controller.postSmp);

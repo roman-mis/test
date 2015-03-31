@@ -5,22 +5,22 @@
 	<div class="modal-header">
             <h4 class="modal-title">Request for Paternity Pay</h4>
 	</div><!-- /modal-header -->
-				
+                <form ng-submit="submitInformation()">
 				<div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 form-group control-label">Contractor name</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label">Mark Gentry</div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label">{{contactdetail.firstName}}</div>
                         <div class="col-xs-6 col-sm-3 form-group control-label">Contractor ID</div>
-                        <div class="col-xs-6 col-sm-2 form-group control-label">900001</div>
+                        <div class="col-xs-6 col-sm-2 form-group control-label">{{contactdetail.candidateNo}}</div>
                     </div>
 
                     <div class="line-horizontal"></div>
                     <div class="row">
-                        <div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div> 
+                        <div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
                                 <input type="text" ng-model="spp.babyDueDate" class="form-control" orig-datepicker/>
                         </div>
-                        <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div> 
+                        <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
                             <select class="form-control">
                                 <option>Select</option>
@@ -28,7 +28,10 @@
                                 <option>The husband or partner of the mother (or adopter)</option>
                                 <option>The child’s adopter</option>
                             </select>
-                        </div> 
+                        </div>
+                        <div class="col-xs-12 col-sm-4 form-group text-right">
+                            <button type="button" class="btn btn-primary" ng-click="checkDateMp()">Calculate</button>
+                        </div>
                      </div>
 
 
@@ -38,48 +41,19 @@
                             <div class="wrapTable-scroll">
                                 <table class="table table-striped table-paternityPay">
                                     <tbody>
-                                        <tr>
-                                            <td>41</td>
-                                            <td>&pound;138.18</td>
-                                            <td>
-                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            </td>
+                                        <tr ng-repeat="s in spp.days">
+                                          <td ng-init="indexCount=$index;$indexCount=true;">{{s.weekNumber}}</td>
+                                                 <td><p ng-if='$indexCount'>{{s.amount | number : 2}}</p>
+
+                                                      <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a></td>
+                                                  <td>
+                                                  <a ng-click="$indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
+                                                   <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                                                </td>
+
+
                                         </tr>
-                                        <tr>
-                                            <td>42</td>
-                                            <td>&pound;138.18</td>
-                                            <td>
-                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>43</td>
-                                            <td>&pound;138.18</td>
-                                            <td>
-                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>44</td>
-                                            <td>&pound;138.18</td>
-                                            <td>
-                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            </td>
-                                        </tr>		
-                                        <tr>
-                                            <td>44</td>
-                                            <td>&pound;138.18</td>
-                                            <td>
-                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>44</td>
-                                            <td>&pound;138.18</td>
-                                            <td>
-                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            </td>
-                                        </tr>		
+
                                     </tbody>
                                 </table>
                             </div>
@@ -87,44 +61,52 @@
                     </div>
 
 				</div><!-- /modal-body -->
-				    
+
 				<div class="modal-footer modal-footer-textLeft">
                     <div class="row rowFooter">
                         <div class="col-xs-6 col-sm-7">
                             <fieldset class="fieldsetSPP">
                                 <legend>Upload certificate</legend>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 form-group">
-                                       <div class="fileUpload btn btn-primary form-control">
-                                            <span>Browse</span>
-                                            <input id="uploadBtn" type="file" class="upload" />
+                                  <div class="row" style="margin-top: 38px;">
+                                        <div class="col-xs-5 col-sm-4">
+                                            <div class="fileUpload btn btn-primary form-control">
+                                                <span onclick="$('#upload_company_logo').click();">Browse</span>
+                                                <input file-model="fileupload" type="file"
+                                                       id="upload_company_logo" name="companyLogo" style="display: none;" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-xs-5 col-sm-6 no-padding">
+                                            <button type="button" class="btn btn-primary form-control img-details"
+                                                ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
+                                                <span ng-show="!isLogoUploading" >Upload New Image</span>
+                                                <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 form-group">
-                                        <button type="button" class="btn btn-primary form-control">Upload</button>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <div class="col-xs-4 col-sm-3 label-control">Name</div>
-                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile"></div>
+                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName}}</div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <div class="col-xs-4 col-sm-3 label-control">Size</div>
-                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize"></div>
+                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize}}</div>
                                         </div>
                                     </div>
                                 </div>
 							</fieldset>
                         </div>
-                         
+
 					    <div class="col-xs-6 col-sm-5 form-group text-right btnFooter btnFooterApproval">
-							<a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>    
-								<button type="button" class="btn btn-primary">Send for approval</button>
+							<a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+								<button type="button" type="submit" class="btn btn-primary">Send for approval</button>
 						</div>
-                         
+
                     </div>
-                </div><!-- /modal footer -->
+                </div>
+            </form>

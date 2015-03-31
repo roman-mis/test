@@ -7,8 +7,8 @@
         <form name="sick" novalidate ng-submit="submitInformation(sick.$valid)">
         <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-6 col-sm-4 form-group control-label">{{contactdetail.firstName}}</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">Mark Gentry</div>
+                        <div class="col-xs-6 col-sm-4 form-group control-label">Candidate name</div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">{{contactdetail.firstName}}</div>
                         <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
                         <div class="col-xs-6 col-sm-2 form-group control-label no-padding-left">{{contactdetail.candidateNo}}</div>
                     </div>
@@ -78,7 +78,7 @@
 
                                            <td ng-init="indexCount=$index;$indexCount=true;">{{s.weekNumber}}</tb>
 
-                                            <td><p ng-if='$indexCount'>{{s.amount}}</p>
+                                            <td><p ng-if='$indexCount'>{{s.amount | number : 2}}</p>
 
                                                 <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a></td>
                                             <td class="text-right">

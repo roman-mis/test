@@ -48,21 +48,59 @@ angular.module('origApp.controllers')
         $modalInstance.dismiss('cancel');
     };
     $scope.checkDateMp=function(){
+             var n=new Date($scope.mp.startDate).valueOf();
+             var d=new Date($scope.mp.babyDueDate).valueOf();
+             var i=new Date($scope.mp.intendedStartDate).valueOf();
 
-              HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
-                console.log(data);
+             if(n <=(d-9072000000)){
+                console.log('teest');
+
+                $scope.validDate=true;
+                HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
+
                 $scope.mp.days=data.data.objects;
-                console.log($scope.mp);
+
 
             }, function(err) {})
+             }else{
+
+                $scope.validDate=false;
+                if(n >(d-9072000000)){
+
+                $scope.errorMsg='Start date should be 15 week before baby birth due.';
+                }else{
+
+                    $scope.errorMsg='Please fill all input boxes.';
+                }
+
+
+
+             }
+
+
 
     };
-    $scope.submitInformation=function(){
-            HttpResource.model('actionrequests/' + $scope.candidateId+'/ssp').create($scope.mp).post().then(function(response) {
+    $scope.submitInformation=function(val){
+         if (val === true && $scope.validDate === true && $scope.mp.days.length >0) {
+            HttpResource.model('actionrequests/' + $scope.candidateId+'/smp').create($scope.mp).post().then(function(response) {
                   $scope.mp={};
                   $scope.temp={};
                 });
+        }else{
 
+            $scope.submitted=true;
+            if($scope.mp.days.length===0){
+
+                $scope.validDate=false;
+                $scope.errorMsg='No days';
+            }
+        }
+
+
+    };
+    $scope.remove=function(i){
+        console.log(i);
+        $scope.mp.days.splice(i,1);
 
     };
 

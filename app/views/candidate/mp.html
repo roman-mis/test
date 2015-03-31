@@ -5,7 +5,7 @@
                     <h4 class="modal-title">Request for Maternity Pay</h4>
         </div><!-- /modal-header -->
 
-         <form name="sick" novalidate ng-submit="submitInformation()">
+         <form name="mpForm" novalidate ng-submit="submitInformation(mpForm.$valid)">
         <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 form-group control-label">Candidate name:</div>
@@ -18,29 +18,42 @@
                         <div class="col-xs-6 col-sm-3 form-group control-label">Start date</div>
                         <div class="col-xs-6 col-sm-2 form-group control-label no-padding-left">
 
-                           <input ng-model="mp.startDate" type="text" orig-datepicker class="form-control" />
+                           <input ng-model="mp.startDate" name="start" type="text" orig-datepicker class="form-control" required/>
+                           <span ng-if="mpForm.start.$invalid && submitted">
+                             <p ng-if="mpForm.start.$error.required">Please enter start date/informed date.</p>
+                           </span>
 
                         </div>
                         <div class="col-xs-6 col-sm-3 form-group control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-4 form-group no-padding-left">
                             <div class="input-group date" id="datepickerDate">
-                                 <input type="text" ng-model="mp.babyDueDate" orig-datepicker class="form-control" />
+                                 <input type="text" name="due" ng-model="mp.babyDueDate" orig-datepicker class="form-control" required/>
+                                 <span ng-if="mpForm.due.$invalid && submitted">
+                                 <p ng-if="mpForm.due.$error.required">Please enter baby due date.</p>
+                                 </span>
 
                              </div>
                         </div>
                     </div>
+
                     <div class="line-horizontal"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 control-label">Intended start date</div>
                         <div class="col-xs-6 col-sm-4 form-group no-padding-left">
                             <div class="input-group date" id="datepickerStartDate">
-                                 <input type="text" ng-model="mp.intendedStartDate" class="form-control" orig-datepicker />
+                                 <input type="text" name="intend" ng-model="mp.intendedStartDate" class="form-control" orig-datepicker required/>
+                                 <span ng-if="mpForm.intend.$invalid && submitted">
+                                   <p ng-if="mpForm.intend.$error.required">Please enter intended start date.</p>
+                                 </span>
 
                              </div>
                         </div>
                         <div class="col-xs-12 col-sm-4 form-group text-right">
                             <button type="button" class="btn btn-primary" ng-click="checkDateMp()">Calculate</button>
                         </div>
+                    </div>
+                     <div class="row" ng-if="!validateDate">
+                     {{errorMsg}}
                     </div>
           <div class="row">
             <div class="col-sm-12">
@@ -57,11 +70,12 @@
                   <tr ng-repeat="s in mp.days">
 
                      <td ng-init="indexCount=$index;$indexCount=true;">{{s.weekNumber}}</td>
-                     <td><p ng-if='$indexCount'>{{s.amount}}</p>
+                     <td><p ng-if='$indexCount'>{{s.amount | number : 2}}</p>
 
                           <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a></td>
                       <td>
                       <a ng-click="$indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
+                       <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
                     </td>
 
 
