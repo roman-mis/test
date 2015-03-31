@@ -16,13 +16,61 @@ module.exports = function(dbs){
 			imageUrl:req.body.imageUrl
 		};
 
-		adminActionRequestService.saveSsp(req.params.id,sspDetail)
+		_.forEach(sspDetail.days,function(detailDay){
+			detailDay.sick=true;
+		});
+
+		adminActionRequestService.saveActionRequest(req.params.id,sspDetail)
 			.then(function(response){
-				res.json({result:response.result,object:response.object.sspModel});
+				res.json({result:response.result,object:response.object.actionRequestModel});
 
 			})
 			.fail(res.sendFailureResponse);
 	};
+
+	controller.postSmp=function(req,res){
+		var detail={
+			'type':'smp',
+			'status':'submitted',
+			worker:req.params.id,
+			startDate:req.body.startDate,
+			intendedStartDate:req.body.intendedStartDate,
+			smp:{
+				babyDueDate:req.body.babyDueDate
+			},
+			days:req.body.days,
+			imageUrl:req.body.imageUrl
+
+		};
+
+		adminActionRequestService.saveActionRequest(req.params.id,detail)
+			.then(function(response){
+				res.json({result:response.result,object:response.object.actionRequestModel});
+
+			})
+			.fail(res.sendFailureResponse);
+
+	};
+
+	controller.postHolidayPay=function(req,res){
+		var detail={
+			'type':'holidaypay',
+			'status':'submitted',
+			holidayPay:{
+				amount:amount
+			}
+
+
+		};
+
+		adminActionRequestService.saveActionRequest(req.params.id,detail)
+			.then(function(response){
+				res.json({result:response.result,object:response.object.actionRequestModel});
+
+			})
+			.fail(res.sendFailureResponse);
+
+	}
 
     controller.checkSspQualification=function(req,res){
     	var request={

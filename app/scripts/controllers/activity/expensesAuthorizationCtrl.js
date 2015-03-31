@@ -47,9 +47,14 @@ app.controller("expensesAuthorizationCtrl",
                     //logs($scope.expensesArray[i].expenses[j].expenseDetail.total);
                     //logs($scope.expensesArray[i].expenses[j].date);
                     $scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                    //logs($scope.expensesArray[i].expenses[j].date);
-                    $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].startDate);
-                    //logs($scope.expensesArray[i].expenses[j].validDates);
+                    $scope.expensesArray[i].expenses[j].date.setHours(0, 0, 0, 0);
+                    $scope.expensesArray[i].expenses[j].date = $scope.expensesArray[i].expenses[j].date.toISOString();
+                    $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].expenses[j].date);
+                    //if (i == 0 && j == 0) {
+                    //    logs(new Date($scope.expensesArray[i].claimDate));
+                    //    logs($scope.expensesArray[i].expenses[j].date);
+                    //    logs($scope.expensesArray[i].expenses[j].validDates);
+                    //}
                     //if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
                     //    $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
                     //}
@@ -70,11 +75,14 @@ app.controller("expensesAuthorizationCtrl",
             return new Date(d.setDate(diff));
         }
 
-        function getWeek(start) {
+        function getWeek(anyDay) {
+            var start = getMonday(anyDay);
             var days = [];
-            days.push(start);
+            days.push(start.toISOString());
             for (var i = 1; i < 7; i++) {
-                days.push(new Date(new Date().setDate(start.getDate() + i)));
+                var date = new Date(new Date().setDate(start.getDate() + i));
+                date.setHours(0, 0, 0, 0);
+                days.push(date.toISOString());
             }
             return days;
         }
@@ -107,38 +115,44 @@ app.controller("expensesAuthorizationCtrl",
                         } else {
                             subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                         }
-                        logs($scope.expensesArray[expenseIndex].expenses[i].date);
-                        logs($scope.expensesArray[expenseIndex].expenses[i].date.toISOString());
+                        console.log($scope.expensesArray[expenseIndex].expenses[i].date);
                         req.body.push({
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
-                            amount: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            value: $scope.expensesArray[expenseIndex].expenses[i].amount,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
                             status: $scope.expensesArray[expenseIndex].expenses[i].status
                         });
-                        logs(req.body);
+                        //logs(req.body);
                         break;
                     }
                 }
                 //logs(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
-                    console.log(res);
-                    
                     logs(res);
-                    $http.get('/api/candidates/expenses').success(function (expenses) {
-                        $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
-                        var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
-                        $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
-                        //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                        $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
-                        $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
-                        //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
-                        //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
-                        //}
-                    });
+                    $scope.expensesArray[expenseIndex].total = 0;
+                    for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                        $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total = 0;
+                        $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total +=
+                        $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].value ? $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].value : 0;
+                        $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total +=
+                            $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat ? $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat : 0;
+                        $scope.expensesArray[expenseIndex].total += $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total;
+                    }
+                    // $http.get('/api/candidates/expenses').success(function (expenses) {
+                    //     $scope.expensesArray[expenseIndex].total = expenses.object[expenseIndex].total;
+                    //     var checked = $scope.expensesArray[expenseIndex].expenses[i].checked;
+                    //     $scope.expensesArray[expenseIndex].expenses[i] = expenses.object[expenseIndex].expenses[i];
+                    //     //$scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
+                    //     $scope.expensesArray[expenseIndex].expenses[i].checked = checked;
+                    //     $scope.expensesArray[expenseIndex].expenses[i].validDates = getWeek($scope.expensesArray[expenseIndex].startDate);
+                    //     //if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail && $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat) {
+                    //     //    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat.slice(0, -1);
+                    //     //}
+                    // });
                 });
             } else {
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
@@ -238,7 +252,7 @@ app.controller("expensesAuthorizationCtrl",
                     }
                 }
             }
-            if (ids.length == 0) window.alert('No claims selected');
+            if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
             else open('lg', expToApprove, ids, true);
         }
 
@@ -253,7 +267,7 @@ app.controller("expensesAuthorizationCtrl",
                     }
                 }
             }
-            if (ids.length == 0) window.alert('No claims selected');
+            if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
             else open('lg', expToReject, ids, false);
         }
 
@@ -328,10 +342,6 @@ app.controller("expensesAuthorizationCtrl",
                 logs("Dismissed");
             });
         }
-
-        //$scope.logs = function (x, y) {
-        //    logs(x); logs(y);
-        //}
 
         function logs(record) {
             console.log(record);

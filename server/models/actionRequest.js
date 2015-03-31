@@ -3,11 +3,11 @@
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
-module.exports = function(mongoose) {
+module.exports = function(mongoose,autoIncrement) {
   	
 
 	var schema= new BaseSchema({
-        type: String, // ssp, smp, spp, holidayPay, studentLoan
+        type: String, // ssp, smp, spp, holidaypay, studentloan
         status: String, // Submitted, Approved
 		worker: { type:Schema.Types.ObjectId, ref:'User' },
         dateInformed: Date,
@@ -50,6 +50,8 @@ module.exports = function(mongoose) {
         
 	});
 
+    schema.plugin(autoIncrement.plugin,{model:'ActionRequest',field:'requestReference',startAt:1,incrementBy:1});
+    
 
   	return mongoose.model('ActionRequest',schema);
 };
