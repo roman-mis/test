@@ -59,7 +59,7 @@ module.exports = function(dbs){
             return Q.nfcall(q.exec.bind(q)).then(function(system) {
                 system.forEach(function(systemDoc) {
 
-                    var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
+                    var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName worker.vehicleInformation');
 
 
                     queryutils.applySearch(expensesQuery, db.Expense, request)
@@ -73,7 +73,7 @@ module.exports = function(dbs){
                                 bucketObject.claimReference = t.claimReference;
                                 bucketObject.claimDate = t.createdDate;
                                 bucketObject.expenses = [];
-                                bucketObject.userName = t.user;
+                                bucketObject.user = t.user;
                                 bucketObject.id = t._id;
 
                                 var secondValue = t.days;
@@ -165,7 +165,7 @@ module.exports = function(dbs){
 
                                 });
 
-                                console.log(bucketObject)
+                                // console.log(bucketObject)
                                 bucket.push(bucketObject);
 
                             });
@@ -268,86 +268,68 @@ module.exports = function(dbs){
 
 
 
-service.sendMail  = function(user,status){
+service.sendMail  = function(user,expense,status,reason,claimReference){
   return Q.Promise(function(resolve,reject){
-    
-    // return service.getUser(id).then(function(user){
-    //     if(user){
-        //  user.resetPassword.activationCode=activationCode;
-        //  user.resetPassword.date=Date();
-
-          // return Q.nfcall(user.save.bind(user)).then(function(){
-            // return service.generateCode(user,enums.codeTypes.ChangePassword).then(function(code){
-              // var fullUrl = req.protocol + '://' + req.get('host') +'/'+status+'/'+req.query.emailAddress;
-              // var activationCode ='';
-              // var newActivationLink='';
-              // newActivationLink=fullUrl +'/'+code.code;
-              var mailModel={title:user.title,firstName:user.firstName,lastName:user.lastName,status:status};
+              var lastPart = '';
+              if(reason){
+                lastPart = ' due to '+ reason;
+              }
+              var message = 'Dear '+user.title+'. '+user.firstName + ' ' + user.lastName + '<br/>'+
+                            'your Expense of type '+ expense.subType + ' and amount of ' + expense.value +
+                            ' at the claim id Number '+ claimReference + ' has been ' + status +
+                            lastPart;
+                            console.log(message)
+              var mailModel={message:message};
               var mailOption={to:user.emailAddress};
-              console.log('&&&&&&&&&&&&&&&&&&&')
-              return mailer.sendEmail(mailOption,mailModel,'approve_reject_message').then(function(){
+              console.log(mailModel);
+              console.log(mailOption);
+              return mailer.sendEmail(mailOption,mailModel,'status_change').then(function(){
                   resolve({result:true,message:'mail sent'}); 
-                },reject);  
-            // },reject);
-          // },reject);
-      //   }else{
-
-      //     reject({result:false,name:'NOTFOUND',message:'User profile not found'});
-      //   }
-      // },reject);
-    
+                },reject);      
   });
 };
 
-    service.changeStatus=function(status,ids){
-        console.log(ids);
-        console.log('**');
-        console.log(status);
-
+    service.changeStatus=function(status,claims){
         return Q.promise(function(resolve,reject){
 
-          service.fetchExpenses(ids).then(function(model){
 
-             for(var i=0;i<model.length;i++){
-                model[i].days.forEach(function(l){
-
-                      ids.forEach(function(id){
-
-                           var v=l.expenses.id(id);
-                           if(v){
-                              v.status=status;
-                              console.log('^^^^^^^^^^^^^^^');
-                              console.log('******');
-                              console.log(v);
-                              service.sendMail(v.user,status);
-                           }
-                      });
-                });
-
-             }
-             var bucket=[];
-             model.forEach(function(mo){
-
-               bucket.push(Q.nfcall(mo.save.bind(mo)));
-
-             });
-
-             return Q.all(bucket).then(function(){
-                 resolve({result:true});
-
-             },reject);
-
-
+           var readPromises = [];
+           var mailPromises = [];
+          claims.objects.forEach(function(claim){
+            console.log('claim.claimId  ===> ' + claim.claimId);
+            var q = db.Expense.findById(claim.claimId).populate('user', 'title firstName lastName emailAddress');;
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
           });
 
-
+          Q.all(readPromises).then(function(expense){
+            for(var i = 0; i < expense.length; i++){
+              expense[i].days.forEach(function(day){
+                day.expenses.forEach(function(expenses){
+                    claims.objects[i].expenses.forEach(function(updatesExpenses){
+                      if(expenses._id+'' === updatesExpenses.id+''){
+                        expenses.status = status; 
+                        mailPromises.push(Q.nfcall(service.sendMail(expense[i].user,expenses,status,updatesExpenses.reason,expense[i].claimReference)));
+                      }
+                    });
+                });
+              });
+            }
+            Q.all(mailPromises).then(function(){
+              resolve({result:true});
+            },function(err){
+              console.log('***********1')
+              reject(err);
+            });
+          },function(err){
+            console.log('***********2') 
+            reject(err);
+          });
         });
     };
     service.deleteExpense=function(ids){
-
         return Q.promise(function(resolve,reject){
 
-            service.fetchExpenses(ids).then(function(model){
+          service.fetchExpenses(ids).then(function(model){
 
 
                for(var i=0;i<model.length;i++){
