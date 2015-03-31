@@ -2,11 +2,11 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource, $http, $modalInstance) {
+.controller('sppController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance) {
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
-    $scope.spp=null;
+
     $scope.spp.startDate=null;
     $scope.spp.maxPeriods=2;
     $scope.remove=function(i){

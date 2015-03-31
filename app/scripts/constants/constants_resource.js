@@ -21,8 +21,11 @@ angular.module('origApp.constants')
               }
               data[key] = api.customGet(key, {}, function(){
                 hashData[key] = _resource.makeHashData('code', data[key]);
+                console.log('hashData');
+                console.log(data[key]);
               });
               return data[key];
+
             },
             makeHashData: function(hashKey, items) {
               var ret = {};
