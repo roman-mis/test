@@ -19,3 +19,7 @@ router.get('/:id/spp/verify', controller.checkSppQualification);
 router.post('/:id/ssp', controller.postSsp);
 
 router.post('/:id/ssp', controller.postSmp);
+
+router.post('/:id/spp', controller.postSpp);
+
+router.post('/:id/holidaypay', controller.postHolidayPay);

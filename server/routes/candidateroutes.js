@@ -41,6 +41,7 @@ router.patch('/updateStatus/:id',candidatecontroller.updateStatus);
 
 
 router.get('/:id',candidatecontroller.getCandidate);
+router.get('/:id/payrollvalue',candidatecontroller.getCandidatePayrollValue);
 
 router.post('/', candidatecontroller.postCandidate );
 router.post('/admin', candidatecontroller.postCandidateByAdmin );

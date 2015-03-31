@@ -101,7 +101,16 @@ angular.module('origApp.controllers')
               parentScope:$scope,
               controller:'sppController',
               size:'lg'
-            })
+            });
+          };
+
+          $scope.openHolidayPayment=function(){
+            ModalService.open({
+              templateUrl:'views/candidate/holidayPayment.html',
+              parentScope:$scope,
+              controller:'holidayPaymentController',
+              size:'lg'
+            });
           };
 
           $scope.openSl=function(){

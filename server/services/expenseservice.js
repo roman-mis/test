@@ -7,6 +7,8 @@ module.exports = function(dbs){
     queryutils=require('../utils/queryutils')(db),
     service={};
     var enums=require('../utils/enums');
+    var mailer=require('../mailing/mailer');
+
   service.getExpenses=function(request){
     return Q.Promise(function(resolve,reject){
       var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
@@ -53,11 +55,11 @@ module.exports = function(dbs){
             'submittedDate': -1
         }];
         return Q.Promise(function(resolve, reject) {
-            var q = db.System.find().select('statutoryTables expensesRate');
+            var q = db.System.find().select('statutoryTables.vat expensesRate mileageRates');
             return Q.nfcall(q.exec.bind(q)).then(function(system) {
                 system.forEach(function(systemDoc) {
 
-                    var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
+                    var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName worker.vehicleInformation');
 
 
                     queryutils.applySearch(expensesQuery, db.Expense, request)
@@ -71,7 +73,7 @@ module.exports = function(dbs){
                                 bucketObject.claimReference = t.claimReference;
                                 bucketObject.claimDate = t.createdDate;
                                 bucketObject.expenses = [];
-                                bucketObject.userName = t.user;
+                                bucketObject.user = t.user;
                                 bucketObject.id = t._id;
 
                                 var secondValue = t.days;
@@ -163,11 +165,12 @@ module.exports = function(dbs){
 
                                 });
 
-                                console.log(bucketObject)
+                                // console.log(bucketObject)
                                 bucket.push(bucketObject);
 
                             });
-                            resolve(bucket);
+                            
+                            resolve({ claims: bucket, system: system });
                         });
 
 
@@ -221,7 +224,7 @@ module.exports = function(dbs){
         console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
         console.log(val);
 
-     var q=db.Expense.find().where('days.expenses._id').in(val);
+     var q=db.Expense.find().where('days.expenses._id').in(val).populate('user', 'title firstName lastName emailAddress');
         console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
 
      return Q.nfcall(q.exec.bind(q));
@@ -262,48 +265,83 @@ module.exports = function(dbs){
 
     }; */
 
-    service.changeStatus=function(status,ids){
 
+
+
+service.sendMail  = function(user,expense,status,reason,claimReference){
+  return Q.Promise(function(resolve,reject){
+              var lastPart = '';
+              if(reason){
+                lastPart = ' due to '+ reason;
+              }
+              var message = 'Dear '+user.title+'. '+user.firstName + ' ' + user.lastName + '<br/>'+
+                            'your Expense of type '+ expense.subType + ' and amount of ' + expense.value +
+                            ' at the claim id Number '+ claimReference + ' has been ' + status +
+                            lastPart;
+                            console.log(message)
+              var mailModel={message:message};
+              var mailOption={to:user.emailAddress};
+              console.log(mailModel);
+              console.log(mailOption);
+              return mailer.sendEmail(mailOption,mailModel,'status_change').then(function(){
+                  resolve({result:true,message:'mail sent'}); 
+                },reject);      
+  });
+};
+
+    service.changeStatus=function(status,claims){
         return Q.promise(function(resolve,reject){
 
-          service.fetchExpenses(ids).then(function(model){
 
-             for(var i=0;i<model.length;i++){
-                model[i].days.forEach(function(l){
-
-                      ids.forEach(function(id){
-
-                           var v=l.expenses.id(id);
-                           if(v){
-                              v.status=status;
-                           }
-                      });
-                });
-
-             }
-             var bucket=[];
-             model.forEach(function(mo){
-
-               bucket.push(Q.nfcall(mo.save.bind(mo)));
-
-             });
-
-             return Q.all(bucket).then(function(){
-                 resolve({result:true});
-
-             },reject);
-
-
+           var readPromises = [];
+           var mailPromises = [];
+           var writePromises = [];
+          claims.objects.forEach(function(claim){
+            console.log('claim.claimId  ===> ' + claim.claimId);
+            var q = db.Expense.findById(claim.claimId).populate('user', 'title firstName lastName emailAddress');;
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
           });
 
-
+          return Q.all(readPromises).then(function(expense){
+            for(var i = 0; i < expense.length; i++){
+              expense[i].days.forEach(function(day){
+                day.expenses.forEach(function(expenses){
+                    claims.objects[i].expenses.forEach(function(updatesExpenses){
+                      if(expenses._id+'' === updatesExpenses.id+''){
+                        expenses.status = status; 
+                        writePromises.push(service.sendMail(expense[i].user,expenses,status,updatesExpenses.reason,expense[i].claimReference));
+                      }
+                    });
+                });
+              });
+              // Q.all(mailPromises).then(function(){
+                // console.log('***************************000000')
+                writePromises.push(Q.nfcall(expense[i].save.bind(expense[i])));
+              //   // resolve({result:true});
+              // },function(err){
+              //   console.log('***********1')
+              //   reject(err);
+              // });
+            }
+            return Q.all(writePromises).then(function(){
+              console.log('***************************')
+              console.log('***************************')
+              console.log('***************************')
+                resolve({result:true});
+              },function(err){
+                console.log('***********11')
+                reject(err);
+              });
+          },function(err){
+            console.log('***********2') 
+            reject(err);
+          });
         });
     };
     service.deleteExpense=function(ids){
-
         return Q.promise(function(resolve,reject){
 
-            service.fetchExpenses(ids).then(function(model){
+          service.fetchExpenses(ids).then(function(model){
 
 
                for(var i=0;i<model.length;i++){
