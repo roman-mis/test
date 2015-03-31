@@ -64,7 +64,7 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
                 //console.log(res);
             });
         }
-        // $modalInstance.close();
+         $modalInstance.close();
     };
 
     $scope.cancel = function () {

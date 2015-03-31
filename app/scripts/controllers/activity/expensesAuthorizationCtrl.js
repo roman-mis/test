@@ -38,8 +38,20 @@ app.controller("expensesAuthorizationCtrl",
             init();
         });
 
+        function getVehicleInfo(userId, code) {
+            $http.get('/' + userId + '/vehicleinformation/' + code).success(function (res) {
+                logs(res, 'vehicle info')
+            });
+        }
+
         function init() {
             for (var i = 0; i < $scope.expensesArray.length; i++) {
+                //if (i == 0) {
+                //    logs($scope.expensesArray[i].user._id, 'user id');
+                //    logs($scope.expensesArray[i].user.worker.vehicleInformation[0]._id, 'vehicle code');
+                //    getVehicleInfo($scope.expensesArray[i].user._id, $scope.expensesArray[i].user.worker.vehicleInformation[0]._id);
+                //}
+
                 $scope.expensesArray[i].startDate = getMonday($scope.expensesArray[i].claimDate);
                 $scope.expensesArray[i].categories = [];
                 $scope.expensesArray[i].majorChecked = false;
@@ -371,7 +383,7 @@ app.controller("expensesAuthorizationCtrl",
                 $http.get('/api/candidates/expenses').success(function (expenses) {
                     for (var i = 0; i < $scope.expensesArray.length; i++) {
                         for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                            $scope.expensesArray[i].expenses[j].status = expenses.object[i].claims.expenses[j].status;
+                            $scope.expensesArray[i].expenses[j].status = expenses.object.claims[i].expenses[j].status;
 
                         }
                     }
