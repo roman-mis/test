@@ -7,6 +7,8 @@ module.exports = function(dbs){
     queryutils=require('../utils/queryutils')(db),
     service={};
     var enums=require('../utils/enums');
+    var mailer=require('../mailing/mailer');
+
   service.getExpenses=function(request){
     return Q.Promise(function(resolve,reject){
       var q=db.Expense.find().populate('agency').populate('user').populate('createdBy');
@@ -167,7 +169,7 @@ module.exports = function(dbs){
                                 bucket.push(bucketObject);
 
                             });
-                            resolve(bucket);
+                            resolve({claims:bucket,system:system});
                         });
 
 
@@ -221,7 +223,7 @@ module.exports = function(dbs){
         console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
         console.log(val);
 
-     var q=db.Expense.find().where('days.expenses._id').in(val);
+     var q=db.Expense.find().where('days.expenses._id').in(val).populate('user', 'title firstName lastName emailAddress');
         console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
 
      return Q.nfcall(q.exec.bind(q));
@@ -262,7 +264,44 @@ module.exports = function(dbs){
 
     }; */
 
+
+
+
+service.sendMail  = function(user,status){
+  return Q.Promise(function(resolve,reject){
+    
+    // return service.getUser(id).then(function(user){
+    //     if(user){
+        //  user.resetPassword.activationCode=activationCode;
+        //  user.resetPassword.date=Date();
+
+          // return Q.nfcall(user.save.bind(user)).then(function(){
+            // return service.generateCode(user,enums.codeTypes.ChangePassword).then(function(code){
+              // var fullUrl = req.protocol + '://' + req.get('host') +'/'+status+'/'+req.query.emailAddress;
+              // var activationCode ='';
+              // var newActivationLink='';
+              // newActivationLink=fullUrl +'/'+code.code;
+              var mailModel={title:user.title,firstName:user.firstName,lastName:user.lastName,status:status};
+              var mailOption={to:user.emailAddress};
+              console.log('&&&&&&&&&&&&&&&&&&&')
+              return mailer.sendEmail(mailOption,mailModel,'approve_reject_message').then(function(){
+                  resolve({result:true,message:'mail sent'}); 
+                },reject);  
+            // },reject);
+          // },reject);
+      //   }else{
+
+      //     reject({result:false,name:'NOTFOUND',message:'User profile not found'});
+      //   }
+      // },reject);
+    
+  });
+};
+
     service.changeStatus=function(status,ids){
+        console.log(ids);
+        console.log('**');
+        console.log(status);
 
         return Q.promise(function(resolve,reject){
 
@@ -276,6 +315,10 @@ module.exports = function(dbs){
                            var v=l.expenses.id(id);
                            if(v){
                               v.status=status;
+                              console.log('^^^^^^^^^^^^^^^');
+                              console.log('******');
+                              console.log(v);
+                              service.sendMail(v.user,status);
                            }
                       });
                 });

@@ -15,7 +15,7 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
             $scope.items.forEach(function (item) {
                 req.expenseIds.push(item._id);
             });
-            //console.log(req);
+            console.log(req);
             $http.patch('/api/candidates/expenses/approve', req).success(function (res) {
                 //console.log(res);
             });
@@ -30,7 +30,7 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
             $scope.items.forEach(function (item) {
                 req.expenseIds.push(item._id);
             });
-            //console.log(req);
+            console.log(req);
             $http.patch('/api/candidates/expenses/reject', req).success(function (res) {
                 //console.log(res);
             });
@@ -40,7 +40,7 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
                 });
             }
         }
-        $modalInstance.close();
+        // $modalInstance.close();
     };
 
     $scope.cancel = function () {
