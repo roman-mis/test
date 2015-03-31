@@ -2,10 +2,10 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance) {
+.controller('slController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance) {
 
     $scope.candidateId = parentScope.candidateId;
-    $scope.spp = {};
+    $scope.sl = {};
      
      HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
         $scope.contactdetail = data.data.object;

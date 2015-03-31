@@ -104,6 +104,15 @@ angular.module('origApp.controllers')
             })
           };
 
+          $scope.openSl=function(){
+            ModalService.open({
+              templateUrl:'views/candidate/sl.html',
+              parentScope:$scope,
+              controller:'slController',
+              size:'lg'
+            })
+          };
+
           $scope.openMp=function(){
             console.log($scope.contactdetail);
             ModalService.open({
