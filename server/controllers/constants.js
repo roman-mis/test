@@ -239,5 +239,9 @@ module.exports = function () {
     controller.getUserTypes = function (req, res) {
         res.json(dataList.userTypes);
     };
+
+    controller.relationships = function (req, res) {
+        res.json(dataList.Relationship);
+    };
   return controller;
 };

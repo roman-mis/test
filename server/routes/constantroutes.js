@@ -97,3 +97,5 @@ router.get('/expenseStatus', controller.getExpenseStatus);
 router.get('/profiles/:type/first', controller.getProfileFirst);
 router.get('/profiles/:type/permissions', controller.getProfilePermissions);
 router.get('/userTypes', controller.getUserTypes);
+
+router.get('/relationships',controller.relationships);

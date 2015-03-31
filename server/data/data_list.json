@@ -19,6 +19,22 @@
   ],
 
 
+  "Relationship": [
+    {
+      "code": "1",
+      "description": "The Father"
+    },
+    {
+      "code": "2",
+      "description": "The husband or partner of the mother(or adopter)"
+    },
+    {
+      "code": "3",
+      "description": "The child's adopter"
+    }
+  ],
+
+
   "PayFrequency": [
     {
       "code": "weekly",
