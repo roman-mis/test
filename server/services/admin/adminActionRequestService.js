@@ -15,16 +15,16 @@ module.exports=function(dbs){
 
 	var moment=require('moment');
 
-	service.saveSsp=function(id,sspDetails){
+	service.saveActionRequest=function(id,details){
 
 		return Q.Promise(function(resolve,reject){
 			return candidateCommonService.getUser(id)
 					.then(function(user){
 						if(user){
-							var sspModel=new db.ActionRequest(sspDetails);
-							return Q.nfcall(sspModel.save.bind(sspModel))
+							var actionRequestModel=new db.ActionRequest(details);
+							return Q.nfcall(actionRequestModel.save.bind(actionRequestModel))
 								.then(function(){
-									resolve({result:true,object:{'sspModel':sspModel,'user':user}});
+									resolve({result:true,object:{'actionRequestModel':actionRequestModel,'user':user}});
 								});
 
 						}
@@ -34,6 +34,8 @@ module.exports=function(dbs){
 					});
 		});
 	};
+
+
 
 	service.getActionRequestPayments=function(id,request,payType){
 		console.log('request is ');
