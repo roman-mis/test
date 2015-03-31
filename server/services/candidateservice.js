@@ -288,14 +288,14 @@
 
 	// service.getWorkerByUser=candidatecommonservice.getWorkerByUser;
 
-	service.updateBankDetails=function(userId){
+	service.updateBankDetails=function(userId, bankDetails){
 		var deff=Q.defer();
 
 		service.getUser(userId)
 		   .then(function(user){
 		   		if(user){
 		   			//db.sequelize.transaction(function(t){
-						// var props=utils.updateSubModel(user.worker.bankDetail,bankDetails);
+						utils.updateSubModel(user.worker.bankDetail,bankDetails);
 						return Q.nfcall(user.save.bind(user))
 							.then(function(){
 
