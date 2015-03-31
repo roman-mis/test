@@ -52,6 +52,30 @@ module.exports = function(dbs){
 
 	};
 
+	controller.postSmp=function(req,res){
+		var detail={
+			'type':'spp',
+			'status':'submitted',
+			worker:req.params.id,
+			
+			spp:{
+				babyDueDate:req.body.babyDueDate,
+				relationship:req.body.relationship
+			},
+			days:req.body.days,
+			imageUrl:req.body.imageUrl
+
+		};
+
+		adminActionRequestService.saveActionRequest(req.params.id,detail)
+			.then(function(response){
+				res.json({result:response.result,object:response.object.actionRequestModel});
+
+			})
+			.fail(res.sendFailureResponse);
+
+	};
+
 	controller.postHolidayPay=function(req,res){
 		var detail={
 			'type':'holidaypay',
