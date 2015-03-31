@@ -55,7 +55,7 @@ module.exports = function(dbs){
             'submittedDate': -1
         }];
         return Q.Promise(function(resolve, reject) {
-            var q = db.System.find().select('statutoryTables expensesRate');
+            var q = db.System.find().select('statutoryTables.vat expensesRate mileageRates');
             return Q.nfcall(q.exec.bind(q)).then(function(system) {
                 system.forEach(function(systemDoc) {
 
@@ -295,31 +295,43 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
 
            var readPromises = [];
            var mailPromises = [];
+           var writePromises = [];
           claims.objects.forEach(function(claim){
             console.log('claim.claimId  ===> ' + claim.claimId);
             var q = db.Expense.findById(claim.claimId).populate('user', 'title firstName lastName emailAddress');;
             readPromises.push(Q.nfcall(q.exec.bind(q)));
           });
 
-          Q.all(readPromises).then(function(expense){
+          return Q.all(readPromises).then(function(expense){
             for(var i = 0; i < expense.length; i++){
               expense[i].days.forEach(function(day){
                 day.expenses.forEach(function(expenses){
                     claims.objects[i].expenses.forEach(function(updatesExpenses){
                       if(expenses._id+'' === updatesExpenses.id+''){
                         expenses.status = status; 
-                        mailPromises.push(Q.nfcall(service.sendMail(expense[i].user,expenses,status,updatesExpenses.reason,expense[i].claimReference)));
+                        writePromises.push(service.sendMail(expense[i].user,expenses,status,updatesExpenses.reason,expense[i].claimReference));
                       }
                     });
                 });
               });
+              // Q.all(mailPromises).then(function(){
+                // console.log('***************************000000')
+                writePromises.push(Q.nfcall(expense[i].save.bind(expense[i])));
+              //   // resolve({result:true});
+              // },function(err){
+              //   console.log('***********1')
+              //   reject(err);
+              // });
             }
-            Q.all(mailPromises).then(function(){
-              resolve({result:true});
-            },function(err){
-              console.log('***********1')
-              reject(err);
-            });
+            return Q.all(writePromises).then(function(){
+              console.log('***************************')
+              console.log('***************************')
+              console.log('***************************')
+                resolve({result:true});
+              },function(err){
+                console.log('***********11')
+                reject(err);
+              });
           },function(err){
             console.log('***********2') 
             reject(err);
