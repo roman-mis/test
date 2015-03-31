@@ -21,9 +21,20 @@ app.controller("expensesAuthorizationCtrl",
 
         $http.get('/api/candidates/expenses').success(function (expenses) {
             logs('getting expenses done !!');
-            logs(expenses);
-            logs(expenses.object.system);
+            $scope.system = expenses.object.system[0];
+            logs($scope.system, 'system doc');
             $scope.expensesArray = expenses.object.claims;
+
+            $scope.system.statutoryTables.vat.forEach(function (time) {
+                var validFrom = new Date(time.validFrom);
+                var validTo = new Date(time.validTo);
+                var current = new Date();
+                if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+                    $scope.globalVat = time.amount / 100;
+                    logs($scope.globalVat, 'global vat');
+                }
+            });
+
             init();
         });
 
@@ -36,29 +47,30 @@ app.controller("expensesAuthorizationCtrl",
                 for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                     $scope.expensesArray[i].expenses[j].checked = false;
                     $scope.expensesArray[i].expenses[j].edit = false;
+
+                    $scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
+                    $scope.expensesArray[i].expenses[j].date.setHours(0, 0, 0, 0);
+                    $scope.expensesArray[i].expenses[j].date = $scope.expensesArray[i].expenses[j].date.toISOString();
+                    $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].expenses[j].date);
+
+                    $scope.system.expensesRate.forEach(function (doc) {
+                        if ($scope.expensesArray[i].expenses[j].expenseDetail.id == doc._id) {
+                            if (doc.taxApplicable) {
+                                $scope.expensesArray[i].expenses[j].expenseDetail.vat =
+                                    $scope.expensesArray[i].expenses[j].value * $scope.globalVat;
+                            } else {
+                                $scope.expensesArray[i].expenses[j].expenseDetail.vat = 0;
+                            }
+                        }
+                    });
+
                     $scope.expensesArray[i].expenses[j].expenseDetail.total = 0;
                     $scope.expensesArray[i].expenses[j].expenseDetail.total +=
                         $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].value ? $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].value : 0;
                     $scope.expensesArray[i].expenses[j].expenseDetail.total +=
                         $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].expenseDetail.vat ? $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].expenseDetail.vat : 0;
                     $scope.expensesArray[i].total += $scope.expensesArray[i].expenses[j].expenseDetail.total;
-                    //logs($scope.expensesArray[i].expenses[j].amount);
-                    //logs($scope.expensesArray[i].expenses[j].expenseDetail.vat);
-                    //logs($scope.expensesArray[i].expenses[j].value);
-                    //logs($scope.expensesArray[i].expenses[j].expenseDetail.total);
-                    //logs($scope.expensesArray[i].expenses[j].date);
-                    $scope.expensesArray[i].expenses[j].date = new Date($scope.expensesArray[i].expenses[j].date);
-                    $scope.expensesArray[i].expenses[j].date.setHours(0, 0, 0, 0);
-                    $scope.expensesArray[i].expenses[j].date = $scope.expensesArray[i].expenses[j].date.toISOString();
-                    $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].expenses[j].date);
-                    //if (i == 0 && j == 0) {
-                    //    logs(new Date($scope.expensesArray[i].claimDate));
-                    //    logs($scope.expensesArray[i].expenses[j].date);
-                    //    logs($scope.expensesArray[i].expenses[j].validDates);
-                    //}
-                    //if ($scope.expensesArray[i].expenses[j].expenseDetail && $scope.expensesArray[i].expenses[j].expenseDetail.vat) {
-                    //    $scope.expensesArray[i].expenses[j].expenseDetail.vat = $scope.expensesArray[i].expenses[j].expenseDetail.vat.slice(0, -1);
-                    //}
+
                     if ($scope.expensesArray[i].categories.indexOf($scope.expensesArray[i].expenses[j].expenseType) == -1) {
                         $scope.expensesArray[i].categories.push($scope.expensesArray[i].expenses[j].expenseType);
                     }
@@ -66,7 +78,7 @@ app.controller("expensesAuthorizationCtrl",
             }
             $scope.cloned = [];
             angular.copy($scope.expensesArray, $scope.cloned);
-            logs($scope.expensesArray);
+            logs($scope.expensesArray, 'Expenses Array');
         }
 
         function getMonday(d) {
@@ -81,7 +93,8 @@ app.controller("expensesAuthorizationCtrl",
             var days = [];
             days.push(start.toISOString());
             for (var i = 1; i < 7; i++) {
-                var date = new Date(new Date().setDate(start.getDate() + i));
+                var temp = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+                var date = new Date(temp.setDate(start.getDate() + i));
                 date.setHours(0, 0, 0, 0);
                 days.push(date.toISOString());
             }
@@ -89,7 +102,7 @@ app.controller("expensesAuthorizationCtrl",
         }
 
         $scope.finishEditing = function (expenseIndex, itemId, save) {
-            //console.log(expenseIndex, itemId);
+            //logs(expenseIndex, itemId);
             if (save) {
                 var req = {};
                 req.body = [];
@@ -102,6 +115,7 @@ app.controller("expensesAuthorizationCtrl",
                                 var newSub = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                                 if (newSub == $scope.mealTypes[j].name) {
                                     subType = $scope.mealTypes[j]._id;
+                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id = subType;
                                     break;
                                 }
                             }
@@ -110,13 +124,14 @@ app.controller("expensesAuthorizationCtrl",
                                 var newSub = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                                 if (newSub == $scope.otherTypes[j].name) {
                                     subType = $scope.otherTypes[j]._id;
+                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id = subType;
                                     break;
                                 }
                             }
                         } else {
                             subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
                         }
-                        console.log($scope.expensesArray[expenseIndex].expenses[i].date);
+                        //logs($scope.expensesArray[expenseIndex].expenses[i].date);
                         req.body.push({
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
@@ -133,9 +148,20 @@ app.controller("expensesAuthorizationCtrl",
                 }
                 //logs(req);
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
-                    logs(res);
+                    logs(res, 'Edit Response');
                     $scope.expensesArray[expenseIndex].total = 0;
                     for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                        $scope.system.expensesRate.forEach(function (doc) {
+                            if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id == doc._id) {
+                                if (doc.taxApplicable) {
+                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat =
+                                        $scope.expensesArray[expenseIndex].expenses[i].value * $scope.globalVat;
+                                } else {
+                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = 0;
+                                }
+                            }
+                        });
+
                         $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total = 0;
                         $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total +=
                         $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].value ? $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].value : 0;
@@ -178,7 +204,7 @@ app.controller("expensesAuthorizationCtrl",
             }
             //logs(req);
             $http.post('/api/candidates/expenses', req).success(function (res) {
-                //console.log(res, indeces);
+                //logs(res, indeces);
                 if (res.result) {
                     for (var i = 0; i < indeces.length; i++) {
                         $scope.expensesArray[expenseIndex].expenses.splice(indeces[i] - i, 1);
@@ -310,7 +336,7 @@ app.controller("expensesAuthorizationCtrl",
             }
             //logs(req);
             $http.post('/api/candidates/expenses', req).success(function (res) {
-                //console.log(res, indeces);
+                //logs(res, indeces);
                 if (res.result) {
                     for (var i = 0; i < indeces.length; i++) {
                         $scope.expensesArray.splice(indeces[i] - i, 1);
@@ -356,8 +382,9 @@ app.controller("expensesAuthorizationCtrl",
             });
         }
 
-        function logs(record) {
-            console.log(record);
+        function logs(record, label) {
+            if (label) console.log(label + ':', record);
+            else console.log(record);
         }
 
     }]);

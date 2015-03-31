@@ -152,6 +152,22 @@ module.exports = function (dbs) {
           });
     };
 
+    controller.getCandidatePayrollValue = function (req, res) {
+
+        candidateservice.getUser(req.params.id)
+            .then(function (user) {
+                if (user) {
+                    var vm = getCandidatePayrollValues(user);
+                    res.json({ result: true, object: vm });
+                }
+                else {
+                    res.status(400).json({ result: false, message: 'User not found' });
+                }
+            }, function (err) {
+                res.sendFailureResponse(err);
+            });
+    };
+
     controller.updateStatus = function (req, res) {
 
         candidateservice.updateStatus(req.params.id, req.body.status).
@@ -467,6 +483,15 @@ module.exports = function (dbs) {
         return {
             bankName: bankDetail.bankName, accountName: bankDetail.accountName,
             sortCode: bankDetail.sortCode, accountNo: bankDetail.accountNo, bankRollNo: bankDetail.bankRollNo
+        };
+    }
+
+    function getCandidatePayrollValues(usr) {
+        var worker = usr.worker || {};
+
+        return {
+            _id: usr._id, title: usr.title, firstName: usr.firstName, lastName: usr.lastName, emailAddress: usr.emailAddress,
+            payrollValues : worker.payrollValues
         };
     }
 
