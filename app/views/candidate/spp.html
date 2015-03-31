@@ -5,7 +5,7 @@
 	<div class="modal-header">
             <h4 class="modal-title">Request for Paternity Pay</h4>
 	</div><!-- /modal-header -->
-                <form ng-submit="submitInformation()">
+                <form name="sppForm" ng-submit="submitInformation(sppForm.$valid)">
 				<div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 form-group control-label">Contractor name</div>
@@ -16,19 +16,22 @@
 
                     <div class="line-horizontal"></div>
                     <div class="row">
+
                         <div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
                                 <input type="text" ng-model="spp.babyDueDate" class="form-control" orig-datepicker/>
                         </div>
                         <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
-                            <select class="form-control">
-                                <option>Select</option>
-                                <option>The father</option>
-                                <option>The husband or partner of the mother (or adopter)</option>
-                                <option>The child’s adopter</option>
+                            <select ng-model="spp.relationship" class="form-control">
+                                <option value="">Select</option>
+                                <option value="father">The father</option>
+                                <option value="h/p/a">The husband or partner of the mother (or adopter)</option>
+                                <option value="adopter">The child’s adopter</option>
                             </select>
+
                         </div>
+
                         <div class="col-xs-12 col-sm-4 form-group text-right">
                             <button type="button" class="btn btn-primary" ng-click="checkDateMp()">Calculate</button>
                         </div>

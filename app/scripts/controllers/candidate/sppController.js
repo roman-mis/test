@@ -6,11 +6,11 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
-    $scope.spp.intendedStartDate=null;
+    $scope.spp=null;
     $scope.spp.startDate=null;
-    $scope.spp.maxPeriods=39;
+    $scope.spp.maxPeriods=2;
     $scope.remove=function(i){
-        console.log(i);
+
         $scope.spp.days.splice(i,1);
 
     };

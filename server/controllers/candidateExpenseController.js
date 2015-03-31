@@ -176,7 +176,7 @@ module.exports = function(db){
 	};
 	controller.rejectExpense=function(req,res){
 
-		expenseservice.changeStatus(enums.expenseStatus.Reject,req.body.expenseIds).then(function(d){
+		expenseservice.changeStatus(enums.expenseStatus.Reject,req.body).then(function(d){
            res.json(d);
 
 		},function(err){
@@ -187,7 +187,7 @@ module.exports = function(db){
 
 	};
 	controller.approveExpense=function(req,res){
-    expenseservice.changeStatus(enums.expenseStatus.Approve,req.body.expenseIds).then(function(d){
+    expenseservice.changeStatus(enums.expenseStatus.Approve,req.body).then(function(d){
            res.json(d);
 
 		},function(err){
