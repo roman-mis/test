@@ -49,6 +49,20 @@ angular.module('origApp.controllers')
 
         });
 
+        $scope.deleteCompanyLogo = function () {
+            if (!$scope.temp.logoFileName) {
+                alert('There are no files to delete.');
+            }
+
+            HttpResource.model('agencies/' + agencyId + '/logo').delete({
+                fileName: $scope.temp.logoFileName
+            }).then(function () {
+                getAgencyById(agencyId);
+            }, function (error) {
+                /*@todo gracefully handle error*/
+            });
+        };
+
         /*Uploading file to aws S3*/
         $scope.uploadCompanyLogo = function () {
 

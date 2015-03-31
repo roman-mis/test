@@ -94,6 +94,16 @@ angular.module('origApp.controllers')
               size:'lg'
             })
           };
+
+          $scope.openSpp=function(){
+            ModalService.open({
+              templateUrl:'views/candidate/spp.html',
+              parentScope:$scope,
+              controller:'sppController',
+              size:'lg'
+            })
+          };
+
           $scope.openMp=function(){
             console.log($scope.contactdetail);
             ModalService.open({
