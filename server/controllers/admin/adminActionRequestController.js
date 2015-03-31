@@ -5,6 +5,7 @@ module.exports = function(dbs){
 		adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 
 	controller.postSsp=function(req,res){
+
 		var sspDetail={
 			'type':'ssp',
 			'status':'submitted',

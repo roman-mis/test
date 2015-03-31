@@ -241,7 +241,12 @@ module.exports = function () {
     };
 
     controller.relationships = function (req, res) {
-        res.json(dataList.Relationship);
+        res.json(dataList.Relationships);
     };
+
+    controller.slrAgreements = function(req, res){
+        res.json(dataList.SLRAgreements);
+    };
+
   return controller;
 };
