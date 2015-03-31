@@ -22,6 +22,7 @@ app.controller("expensesAuthorizationCtrl",
         $http.get('/api/candidates/expenses').success(function (expenses) {
             logs('getting expenses done !!');
             logs(expenses);
+            logs(expenses.object.system);
             $scope.expensesArray = expenses.object.claims;
             init();
         });
@@ -216,59 +217,67 @@ app.controller("expensesAuthorizationCtrl",
         $scope.approveSelected = function (expenseIndex, category) {
             var expToApprove = [];
             var ids = [];
+            var claimIds = [];
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                 if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == category
                     && $scope.expensesArray[expenseIndex].expenses[i].checked) {
                     expToApprove.push($scope.expensesArray[expenseIndex].expenses[i]);
                     ids.push($scope.expensesArray[expenseIndex].claimReference);
+                    claimIds.push($scope.expensesArray[expenseIndex].id);
                 }
             }
             if (ids.length == 0) window.alert('No items selected');
-            else open('lg', expToApprove, ids, true);
+            else open('lg', expToApprove, ids, claimIds, true);
         }
 
         $scope.rejectSelected = function (expenseIndex, category) {
             var expToReject = [];
             var ids = [];
+            var claimIds = [];
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                 if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == category
                     && $scope.expensesArray[expenseIndex].expenses[i].checked) {
                     expToReject.push($scope.expensesArray[expenseIndex].expenses[i]);
                     ids.push($scope.expensesArray[expenseIndex].claimReference);
+                    claimIds.push($scope.expensesArray[expenseIndex].id);
                 }
             }
             if (ids.length == 0) window.alert('No items selected');
-            else open('lg', expToReject, ids, false);
+            else open('lg', expToReject, ids, claimIds, false);
         }
 
         $scope.approveMajorSelected = function () {
             var expToApprove = [];
             var ids = [];
+            var claimIds = [];
             for (var i = 0; i < $scope.expensesArray.length; i++) {
                 if ($scope.expensesArray[i].majorChecked) {
                     for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                         expToApprove.push($scope.expensesArray[i].expenses[j]);
                         ids.push($scope.expensesArray[i].claimReference);
+                        claimIds.push($scope.expensesArray[i].id);
                     }
                 }
             }
             if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
-            else open('lg', expToApprove, ids, true);
+            else open('lg', expToApprove, ids, claimIds, true);
         }
 
         $scope.rejectMajorSelected = function () {
             var expToReject = [];
             var ids = [];
+            var claimIds = [];
             for (var i = 0; i < $scope.expensesArray.length; i++) {
                 if ($scope.expensesArray[i].majorChecked) {
                     for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                         expToReject.push($scope.expensesArray[i].expenses[j]);
                         ids.push($scope.expensesArray[i].claimReference);
+                        claimIds.push($scope.expensesArray[i].id);
                     }
                 }
             }
             if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
-            else open('lg', expToReject, ids, false);
+            else open('lg', expToReject, ids, claimIds, false);
         }
 
         $scope.majorSelectAll = function () {
@@ -311,7 +320,7 @@ app.controller("expensesAuthorizationCtrl",
             });
         }
 
-        function open(size, itemToEdit, ids, approve) {
+        function open(size, itemToEdit, ids, claimIds, approve) {
             var modalInstance = $modal.open({
                 templateUrl: 'views/activity/approve_reject_expenses.html',
                 controller: 'approvingRejectingCtrl',
@@ -325,6 +334,9 @@ app.controller("expensesAuthorizationCtrl",
                     },
                     ids: function () {
                         return ids;
+                    },
+                    claimIds: function () {
+                        return claimIds;
                     }
                 }
             });
@@ -334,6 +346,7 @@ app.controller("expensesAuthorizationCtrl",
                     for (var i = 0; i < $scope.expensesArray.length; i++) {
                         for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                             $scope.expensesArray[i].expenses[j].status = expenses.object[i].claims.expenses[j].status;
+
                         }
                     }
                     angular.copy($scope.expensesArray, $scope.cloned);
