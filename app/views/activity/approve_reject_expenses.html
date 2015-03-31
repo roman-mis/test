@@ -20,7 +20,7 @@
                     <td>{{item.expenseDetail.name}}</td>
                     <td>{{item.expenseDetail.total | currency:"&pound;"}}</td>
                     <td ng-hide="approve">
-                        <select ng-model="reasons[$index]" required>
+                        <select class="form-control" ng-model="reasons[$index]" required>
                             <option value="" disabled selected style="display: none;">--Reason to Reject--</option>
                             <option value="No Receipt">No Receipt</option>
                             <option value="Receipt not valid">Receipt not valid</option>
@@ -30,14 +30,13 @@
                     </td>
                 </tr>
                 <tr ng-if="reasons[$index]=='Other'">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <input required type="text" placeholder="Reason to Reject"
-                               ng-model="otherReason[index]" />
-                    </td>
+                    <td colspan="5">
+                        <div class="form-group col-xs-8 col-xs-offset-2">
+                            <span type="text">
+                                <input required class="form-control" placeholder="Reason to Reject"
+                                       ng-model="otherReason[index]" />
+                            </span>
+                        </div>
                 </tr>
             </tbody>
         </table>

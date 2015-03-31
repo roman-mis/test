@@ -167,7 +167,7 @@ module.exports = function(dbs){
                                 bucket.push(bucketObject);
 
                             });
-                            resolve(bucket);
+                            resolve({ claims: bucket, system: system });
                         });
 
 
