@@ -3,7 +3,7 @@
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
-module.exports = function(mongoose) {
+module.exports = function(mongoose,autoIncrement) {
   	
 
 	var schema= new BaseSchema({
