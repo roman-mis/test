@@ -81,7 +81,7 @@ module.exports = function(dbs){
 			'type':'holidaypay',
 			'status':'submitted',
 			holidayPay:{
-				amount:amount
+				amount:req.body.amount
 			}
 
 
