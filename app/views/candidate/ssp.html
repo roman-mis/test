@@ -73,13 +73,17 @@
                              <div class="wrapTable-scroll" >
                                  <table class="table table-striped" style="margin-bottom: 0;" >
                                      <tbody>
+                                    =
                                          <tr ng-repeat="s in ssp.days">
 
-                                           <td>{{s.weekNumber}}</tb>
-                                            <td><input type="number" ng-init="$index=true" ng-model="s.amount" ng-disabled="$index"></td>
+                                           <td ng-init="indexCount=$index;$indexCount=true;">{{s.weekNumber}}</tb>
+
+                                            <td><p ng-if='$indexCount'>{{s.amount}}</p>
+
+                                                <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a></td>
                                             <td class="text-right">
-                                                 <a ng-click="$index=false;"  class="edit-price"><i class="fa fa-edit"></i></a>&nbsp;
-                                                 <a href="#"><i class="fa fa-trash"></i></a>
+                                                 <a ng-click="$indexCount=false;"  class="edit-price"><i class="fa fa-edit"></i></a>&nbsp;
+                                                 <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
                                              </td>
                                          </tr>
 

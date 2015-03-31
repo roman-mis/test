@@ -8,12 +8,13 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.mp = {};
+    $scope.mp.maxPeriods=39;
 
 
 
     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
         $scope.contactdetail = data.data.object;
-        console.log($scope.contactdetail)
+       // console.log($scope.contactdetail)
     }, function(err) {})
 
 
@@ -21,7 +22,7 @@ angular.module('origApp.controllers')
 
         $modalInstance.dismiss('cancel');
     };
-        $scope.$watch('fileupload', function(fileInfo) {
+    $scope.$watch('fileupload', function(fileInfo) {
 
         if (fileInfo) {
 
@@ -42,6 +43,29 @@ angular.module('origApp.controllers')
         }
 
     });
+     $scope.closeModal = function() {
+
+        $modalInstance.dismiss('cancel');
+    };
+    $scope.checkDateMp=function(){
+
+              HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
+                console.log(data);
+                $scope.mp.days=data.data.objects;
+                console.log($scope.mp);
+
+            }, function(err) {})
+
+    };
+    $scope.submitInformation=function(){
+            HttpResource.model('actionrequests/' + $scope.candidateId+'/ssp').create($scope.mp).post().then(function(response) {
+                  $scope.mp={};
+                  $scope.temp={};
+                });
+
+
+    };
+
     $scope.uploadCompanyLogo = function() {
 
 
