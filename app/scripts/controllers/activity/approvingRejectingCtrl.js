@@ -19,6 +19,11 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
             $http.patch('/api/candidates/expenses/approve', req).success(function (res) {
                 //console.log(res);
             });
+            if (false) {
+                $http.patch('/api/candidates/expenses/notifyApprove', req).success(function (res) {
+                    //console.log(res);
+                });
+            }
         } else {
             var req = {};
             req.expenseIds = [];
@@ -29,6 +34,11 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
             $http.patch('/api/candidates/expenses/reject', req).success(function (res) {
                 //console.log(res);
             });
+            if (false) {
+                $http.patch('/api/candidates/expenses/notifyReject', req).success(function (res) {
+                    //console.log(res);
+                });
+            }
         }
         $modalInstance.close();
     };

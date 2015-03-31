@@ -15,16 +15,16 @@ module.exports=function(dbs){
 
 	var moment=require('moment');
 
-	service.saveSsp=function(id,sspDetails){
+	service.saveActionRequest=function(id,details){
 
 		return Q.Promise(function(resolve,reject){
 			return candidateCommonService.getUser(id)
 					.then(function(user){
 						if(user){
-							var sspModel=new db.ActionRequest(sspDetails);
-							return Q.nfcall(sspModel.save.bind(sspModel))
+							var actionRequestModel=new db.ActionRequest(details);
+							return Q.nfcall(actionRequestModel.save.bind(actionRequestModel))
 								.then(function(){
-									resolve({result:true,object:{'sspModel':sspModel,'user':user}});
+									resolve({result:true,object:{'actionRequestModel':actionRequestModel,'user':user}});
 								});
 
 						}
@@ -34,6 +34,8 @@ module.exports=function(dbs){
 					});
 		});
 	};
+
+
 
 	service.getActionRequestPayments=function(id,request,payType){
 		console.log('request is ');
@@ -50,34 +52,34 @@ module.exports=function(dbs){
 
 
 
-						var options={weeklyPay:0};
+						var options={periodicPay:0};
 						var currentRate;
 
 						if(payType==='ssp'){
 
-              console.log('here');
+              				console.log('here');
 							var currentRate=utils.getStatutoryValue('sspRate',system,new Date());
 
-							options.weeklyPay=currentRate?currentRate.amount:0;
+							options.periodicPay=currentRate?currentRate.amount:0;
 						}
 						else if(payType==='smp'){
 							console.log(payType);
 							console.log('smp');
 
 							currentRate=utils.getStatutoryValue('smpRate',system,new Date());
-							options.weeklyPay=currentRate?currentRate.amount:0;
+							options.periodicPay=currentRate?currentRate.amount:0;
 						}
 						else if(payType==='spp'){
 
 
 							currentRate=utils.getStatutoryValue('sppRate',system,new Date());
-							options.weeklyPay=currentRate?currentRate.amount:0;
+							options.periodicPay=currentRate?currentRate.amount:0;
 						}
 
 					/*	console.log('----currentRate----');
 						console.log(currentRate);*/
 
-						return calculateByWeeks(user,request,options)
+						return calculatePayPeriods(user,request,options)
 							.then(function(response){
 								console.log('week calculations done');
 								if(!response.result){
@@ -95,41 +97,29 @@ module.exports=function(dbs){
 									resolve({result:true,objects:records});
 								});
 							})
-							.catch(function(err){
-								console.log('error');
-								console.log(err);
-							});
-
-
+							;
 
 
 					})
-					.catch(function(err){
-						console.log('errrr');
-						console.log(err);
-					});
-		})
-		.then(null,function(err){
-			console.log('error in the code is');
-			console.log(err);
+					;
 		});
 	};
 
-	function calculateByWeeks(user,request,options){
+	function calculatePayPeriods(user,request,options){
 
 		var maxPeriods=request.maxPeriods||0;
 		console.log('max periods.... '+maxPeriods);
 
-		var dateInformed=request.dateInformed;
+		// var dateInformed=request.dateInformed;
 
 		var startDate=moment(request.startDate);
 		console.log('startDate:  '+request.startDate);
 		var endDate=request.endDate?moment(request.endDate):null;
 
 		console.log('endDate:  '+request.endDate);
-		var weeklyPay=options.weeklyPay//options.weeklyPay=88.45;
-		var perDayPay=weeklyPay/7;
-		var workingDaysPerWeek=5;
+		var periodicPay=options.periodicPay//options.periodicPay=88.45;
+		var perDayPay=periodicPay/7;
+		// var workingDaysPerWeek=5;
 
 		// var payFrequency=user.payrollTax.payFrequency||enums.payFrequency.Weekly;
 		return Q.Promise(function(resolve,reject){
@@ -142,7 +132,7 @@ module.exports=function(dbs){
 
 			var requestStartDays=startDate.clone().add(waitingDays,'days');
 			console.log('requestStartDays: '+requestStartDays.toISOString());
-			var weekIndex=-1;
+			// var weekIndex=-1;
 			var nextStartDate=requestStartDays.clone();
 			console.log('nextStartDate '+nextStartDate.toISOString());
 			var i=0;
@@ -156,7 +146,14 @@ module.exports=function(dbs){
 					console.log('nextStartDate '+ nextStartDate.toISOString() + ' Exceeded from endDate '+endDate.toISOString());
 					break;
 				}
-				var thisPeriodLastDate=nextStartDate.clone().day(5);
+
+				var thisPeriodLastDate;
+				if(payFrequency===enums.payFrequency.Weekly){
+					thisPeriodLastDate=nextStartDate.clone().day(5);
+				}
+				else{
+					thisPeriodLastDate=nextStartDate.clone().endOf('month');
+				}
 
 				var thisPeriodEndDate=endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():thisPeriodLastDate.clone();
 				var noOfDays=thisPeriodEndDate.diff(nextStartDate,'days')+1;
@@ -165,8 +162,14 @@ module.exports=function(dbs){
 				weeks[i].noOfDays=noOfDays;
 
 				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(1).toDate());
+				if(payFrequency===enums.payFrequency.Weekly){
+					nextStartDate=nextStartDate.clone().add(7,'days').day(1);
+				}
+				else{
+					nextStartDate=nextStartDate.add(1,'months').startOf('month');
+				}
 
-				nextStartDate=nextStartDate.clone().add(7,'days').day(1);
+				
 				i++;
 			}
 
@@ -177,12 +180,9 @@ module.exports=function(dbs){
 			});
 
 			resolve({result:true,objects:weeks,options:{perDayPay:perDayPay}});
-		})
-.then(null,function(err){
-	console.log('erererere');
-	console.log(err);
-});
+		});
 	}
+
 
 	function applyPeriodNumbers(user,records,options){
 		var perDayPay=options.perDayPay;

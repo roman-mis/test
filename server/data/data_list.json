@@ -19,6 +19,22 @@
   ],
 
 
+  "Relationship": [
+    {
+      "code": "1",
+      "description": "The Father"
+    },
+    {
+      "code": "2",
+      "description": "The husband or partner of the mother(or adopter)"
+    },
+    {
+      "code": "3",
+      "description": "The child's adopter"
+    }
+  ],
+
+
   "PayFrequency": [
     {
       "code": "weekly",
@@ -1048,6 +1064,9 @@
       },
       "permissions": {
         "fields": {
+            "breadCrump":{
+              "hide":true
+            },
             "taps": {
               "Home": {
                 "hide": false
@@ -1086,8 +1105,30 @@
               "addExpesesWizard": {
                 "hide": false
               },
-              "addExpesesManually": {
-                "hide": false
+              "DPA": {
+                "hide": true
+              },
+
+              "calculator": {
+                "hide": true
+              },
+              "onboarding": {
+                "hide": true
+              },
+              "timesheet": {
+                "hide": true
+              },
+              "activity": {
+                "hide": true
+              },
+              "agencies": {
+                "hide": true
+              },
+              "ssp": {
+                "hide": true
+              },
+              "mp": {
+                "hide": true
               },
               "callLog": {
                 "hide": false,
@@ -1111,8 +1152,8 @@
                         "Expenses",
                         "Timesheets",
                         "General Query",
-                        "Payroll Query",
-                        "Payment not received",
+                        "Payment Query",
+                        "Payment Not Received",
                         "P45 Request"
                       ]
                     }
@@ -1166,6 +1207,9 @@
       },
       "permissions": {
       	        "fields": {
+            "breadCrump":{
+            "hide":true
+            },
             "taps": {
               "Home": {
                 "hide": false
@@ -1212,6 +1256,9 @@
       },
       "permissions": {
         "fields": {
+          "breadCrump":{
+              "hide":false
+          },
           "leftMenu":{
             "hide": false
           },

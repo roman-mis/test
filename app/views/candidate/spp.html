@@ -1,0 +1,130 @@
+<!--
+        <div class="modal-dialog">
+			<div class="modal-content modal-content-560 ">
+			 -->
+	<div class="modal-header">
+            <h4 class="modal-title">Request for Paternity Pay</h4>
+	</div><!-- /modal-header -->
+				
+				<div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 form-group control-label">Contractor name</div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label">Mark Gentry</div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label">Contractor ID</div>
+                        <div class="col-xs-6 col-sm-2 form-group control-label">900001</div>
+                    </div>
+
+                    <div class="line-horizontal"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div> 
+                        <div class="col-xs-6 col-sm-8 form-group form-group">
+                                <input type="text" ng-model="spp.babyDueDate" class="form-control" orig-datepicker/>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div> 
+                        <div class="col-xs-6 col-sm-8 form-group form-group">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>The father</option>
+                                <option>The husband or partner of the mother (or adopter)</option>
+                                <option>The child’s adopter</option>
+                            </select>
+                        </div> 
+                     </div>
+
+
+                    <div class="line-horizontal"></div>
+					<div class="row">
+						<div class="col-sm-12">
+                            <div class="wrapTable-scroll">
+                                <table class="table table-striped table-paternityPay">
+                                    <tbody>
+                                        <tr>
+                                            <td>41</td>
+                                            <td>&pound;138.18</td>
+                                            <td>
+                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>42</td>
+                                            <td>&pound;138.18</td>
+                                            <td>
+                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>43</td>
+                                            <td>&pound;138.18</td>
+                                            <td>
+                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>44</td>
+                                            <td>&pound;138.18</td>
+                                            <td>
+                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>		
+                                        <tr>
+                                            <td>44</td>
+                                            <td>&pound;138.18</td>
+                                            <td>
+                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>44</td>
+                                            <td>&pound;138.18</td>
+                                            <td>
+                                                <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                        </tr>		
+                                    </tbody>
+                                </table>
+                            </div>
+						</div>
+                    </div>
+
+				</div><!-- /modal-body -->
+				    
+				<div class="modal-footer modal-footer-textLeft">
+                    <div class="row rowFooter">
+                        <div class="col-xs-6 col-sm-7">
+                            <fieldset class="fieldsetSPP">
+                                <legend>Upload certificate</legend>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 form-group">
+                                       <div class="fileUpload btn btn-primary form-control">
+                                            <span>Browse</span>
+                                            <input id="uploadBtn" type="file" class="upload" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 form-group">
+                                        <button type="button" class="btn btn-primary form-control">Upload</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <div class="col-xs-4 col-sm-3 label-control">Name</div>
+                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <div class="col-xs-4 col-sm-3 label-control">Size</div>
+                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize"></div>
+                                        </div>
+                                    </div>
+                                </div>
+							</fieldset>
+                        </div>
+                         
+					    <div class="col-xs-6 col-sm-5 form-group text-right btnFooter btnFooterApproval">
+							<a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>    
+								<button type="button" class="btn btn-primary">Send for approval</button>
+						</div>
+                         
+                    </div>
+                </div><!-- /modal footer -->

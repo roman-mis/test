@@ -63,7 +63,20 @@ module.exports = function(){
 	    },res.sendFailureResponse);
 	};
 
-	controller.getAllAgency=function (req,res){
+    controller.deleteAgencyLogo = function(req, res){
+
+        var objectName = req.params.fileName;
+        var folder=process.env.S3_AGENCY_FOLDER+req.params.id+'/';
+
+        awsService.deleteS3Object(objectName,folder)
+            .then(function(){
+                req.body.logoFileName = null;
+                req.body.logoUrl = null;
+                saveAgency(req, res, 'patch');
+            },res.sendFailureResponse);
+    };
+
+    controller.getAllAgency=function (req,res){
 
 		agencyservice.getAllAgencies(req._restOptions)
 	  	.then(function(result){
