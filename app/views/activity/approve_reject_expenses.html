@@ -31,13 +31,13 @@
                 </tr>
                 <tr ng-if="reasons[$index]=='Other'">
                     <td colspan="5">
-                    <div class="form-group col-xs-8 col-xs-offset-4">
-                        <span type="text">
-                        <input required class="form-control" placeholder="Reason to Reject"
-                               ng-model="otherReason[index]" />
-                        </span>
-                    </div>
 
+                        <div class="form-group col-xs-8 col-xs-offset-2">
+                            <span type="text">
+                                <input required class="form-control" placeholder="Reason to Reject"
+                                       ng-model="otherReason[$index]" />
+                            </span>
+                        </div>
                 </tr>
             </tbody>
         </table>
