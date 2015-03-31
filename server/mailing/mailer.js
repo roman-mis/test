@@ -72,11 +72,11 @@ module.exports={
 			// awsConfig
 			return transporter.sendMail(opt,function(err,result){
 				transporter.close();
+				console.log('##########################');
 				console.log(err);
 				console.log(result);
-				if(err){
+				if(result.rejected.length){
 					reject(err,result);
-
 				}
 				else{
 					resolve(result);
