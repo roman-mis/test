@@ -30,15 +30,20 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
 
         });
 
-        // get company profile from the server
-        CompanyProfileService.getCompanyProfile().then(function (data) {
-            if (data.companyProfile) {
-                $scope.companyProfile = data.companyProfile;
-                console.log('company profile.....');
-                console.log($scope.companyProfile);
-            }
+        getCompanyProfile();
 
-        });
+        // get company profile from the server
+        function getCompanyProfile() {
+            CompanyProfileService.getCompanyProfile().then(function (data) {
+                if (data.companyProfile) {
+                    $scope.companyProfile = data.companyProfile;
+                    console.log('company profile.....');
+                    console.log($scope.companyProfile);
+                }
+
+            });
+        }
+
         $scope.isTabActive = function (stateKey) {
             return $state.includes('app.admin.' + stateKey);
         };
@@ -60,6 +65,7 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
             modalInstance.result.then(function (data) {
                 // save data
                 console.log('save ' + data);
+                getCompanyProfile();
             }, function (reason) {
                 console.log(reason);
             });

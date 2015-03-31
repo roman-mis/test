@@ -3,48 +3,43 @@ var userPassword='andyboss';
 describe('Checking mailbox', function() {
 
   it('should navigate to mail.yandex.com', function () {
-    browser.driver.get('https://mail.yandex.com/');
+    browser.driver.get('https://mail.yandex.com/lite/inbox');
   });
 
 
   it('should find login button and fill it', function () {
     browser.driver.findElement(by.css('[name="login"]')).sendKeys('originemtest');
     browser.driver.findElement(by.css('[name="passwd"]')).sendKeys('andyboss');
-    browser.driver.findElement(by.css('.b-mail-button__button')).click();
+    //browser.driver.findElement(by.css('.b-mail-button__button')).click();
+    browser.driver.findElement(by.css('.action-button')).click();
   });
 
-  it('waiting full version to be loaded', function () {
+  it('waiting for browser to enter mail box', function () {
     browser.driver.wait(function () {
       return browser.driver.getCurrentUrl().then(function (url) {
-        return (url.indexOf('neo2') !== -1);
+        return (url.indexOf('lite') !== -1);
       });
     }, 20000);
   });
-/*
-  it('should enter lite version', function () {
-    browser.driver.get('https://mail.yandex.com/lite/inbox');
-    browser.driver.wait(function () {
-      return browser.driver.getCurrentUrl().then(function (url) {
-        return (url.indexOf('lite') !== -1);
-      });
-    }, 7000);
-  });*/
-  it('should enter lite version', function () {
-    browser.driver.get('https://mail.yandex.com/lite/inbox');
 
-    var time=new Date();
-    browser.driver.wait(function(){
-      return browser.driver.getCurrentUrl().then(function (url) {
-        if(new Date() - time>7000){
-          time=new Date();
-          browser.driver.get('https://mail.yandex.com/lite/inbox');
-          console.log('reloading browser..');
-        }
-        return (url.indexOf('lite') !== -1);
-      });
-    }, 22000)
-  });
+/*   
+  it('should enter lite version', function () {
+	browser.driver.get('https://mail.yandex.com/lite/inbox');
 
+	var time=new Date();
+	browser.driver.wait(function(){
+	  return browser.driver.getCurrentUrl().then(function (url) {
+		if(new Date() - time>7000){
+		  time=new Date();
+		  browser.driver.get('https://mail.yandexAAAAAAAA.com/lite/inbox');
+		  console.log('reloading browser..');
+		}
+		return (url.indexOf('lite') !== -1);
+	  });
+	}, 22000)
+  }); */
+  
+	/* https://github.com/juliemr/webdriverjs-retry RETRY LIB TODO */
 
   it('element with emails should appear', function () {
     browser.driver.wait(function () {

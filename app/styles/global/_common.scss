@@ -48,6 +48,10 @@ input[disabled] {
     cursor: default!important;
 }
 
+textarea {
+    resize: vertical;
+}
+
 .modal-open {
     overflow: hidden;
 }
@@ -74,10 +78,9 @@ input[disabled] {
     &:hover {
         @include box-shadow-hover();
     }
-}
-
-.form-button .btn:hover {
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    .form-button &:hover {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
 }
 
 .btn-success {
@@ -181,6 +184,7 @@ header.container-fluid {
             p {
                 word-break: keep-all;
                 margin: 0;
+                text-transform: capitalize;
             }
             @media (max-width: $grid-break) {
                 margin-bottom: 5px;
@@ -265,17 +269,21 @@ header.container-fluid {
                 border: 1px solid $gray-light;
                 height: $st-length;
                 width: 100%;
+                &:hover {
+                    background-color: #fff;
+                }
             }
             .dropdown-menu {
                 right: 0;
                 left: auto;
                 display: none;
+                background-color: #fff;
                 li {
                     a {
                         padding: 0 30px 0 10px;
                         color: $gray;
                         &:hover {
-                            background-color: #fff;
+                            background-color: $gray-lightest;
                         }
                         .fa {
                             display: inline-block;
@@ -289,6 +297,9 @@ header.container-fluid {
                 }
             }
             &.open {
+                button {
+                    background-color: #fff;
+                }
                 .dropdown-menu {
                     display: block;
                 }
@@ -381,12 +392,12 @@ header.container-fluid {
                 text-align: center;
             }
             .user-meta-box {
-                height: 60px;
+                height: 47px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 @media (min-width: $screen-lg) {
-                    height: 64px;
+                    height: 53px;
                     padding: 0 4px;
                 }
                 .user-date {
@@ -763,26 +774,57 @@ header.container-fluid {
         .table > tfoot > tr > th,
         .table > tfoot > tr > td {
             padding: 4px 12px;
-            font-size: 13px;
+            font-size: 13px;  
             vertical-align: top;
-            font-family: $main-font;
+            font-family: $main-font;            
+        }
+        table:not(.expenses-auth) > thead > tr > th,
+        table:not(.expenses-auth) > thead > tr > td,
+        table:not(.expenses-auth) > tbody > tr > th,
+        table:not(.expenses-auth) > tbody > tr > td,
+        table:not(.expenses-auth) > tfoot > tr > th,
+        table:not(.expenses-auth) > tfoot > tr > td {            
         }
         .table {
+            thead  tr th {
+                border: none;
+                background-color: $green-light;
+                color: $white;
+                text-transform: uppercase;
+                font-weight: normal;
+                a {
+                    color: $gray-lightest;
+                }
+            }
+            tbody {
+                tr {
+                    td {
+                        a {
+                            color: $green-light;
+                            &:hover {
+                                color: $green;
+                            }
+                        }
+                        .action_wrapper a {
+                        }
+                    }
+                    &:nth-child(even) {
+                    }
+                }
+            }
+        }        
+        table:not(.expenses-auth) {
             border-collapse: separate;
             border-spacing: 3px;
             margin: 0 -1px;
-            thead {
-                tr {
-                    th {
-                        border: none;
-                        background-color: $green-light;
-                        color: $white;
-                        text-transform: uppercase;
-                        font-weight: normal;
-                        a {
-                            color: $gray-lightest;
-                        }
-                    }
+            thead  tr th {
+                border: none;
+                background-color: $green-light;
+                color: $white;
+                text-transform: uppercase;
+                font-weight: normal;
+                a {
+                    color: $gray-lightest;
                 }
             }
             tbody {
@@ -1488,7 +1530,7 @@ td > input[type="checkbox"] {
 }
 
 .absent {
-    color: #F44336;
+    color: #E65100;
 }
 
 .table td .btn {
