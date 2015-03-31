@@ -52,7 +52,7 @@ module.exports = function(dbs){
 
 	};
 
-	controller.postSmp=function(req,res){
+	controller.postSpp=function(req,res){
 		var detail={
 			'type':'spp',
 			'status':'submitted',
