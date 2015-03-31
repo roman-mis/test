@@ -371,7 +371,8 @@ app.controller("expensesAuthorizationCtrl",
                 $http.get('/api/candidates/expenses').success(function (expenses) {
                     for (var i = 0; i < $scope.expensesArray.length; i++) {
                         for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                            $scope.expensesArray[i].expenses[j].status = expenses.object.claims[i].expenses[j].status;
+                            $scope.expensesArray[i].expenses[j].status = expenses.object[i].claims.expenses[j].status;
+
                         }
                     }
                     angular.copy($scope.expensesArray, $scope.cloned);
