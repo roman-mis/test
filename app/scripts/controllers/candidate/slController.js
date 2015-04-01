@@ -18,4 +18,11 @@ angular.module('origApp.controllers')
         $scope.candidateInfo = data.data.object;
      //   $scope.fullname = ($scope.candidateInfo.firstName + ' ' + $scope.candidateInfo.lastName);
     }, function(err) {});
+    $scope.submitAction=function(values){
+
+       HttpResource.model('actionrequests/' + $scope.candidateId+'/studentloan').create(values).post().then(function(response) {
+                  $scope.sl={};
+
+                });
+    };
 });
