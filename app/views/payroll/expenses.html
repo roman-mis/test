@@ -186,7 +186,7 @@
                         <!--First green row-->
                         <tbody>
                             <!--First table body-->
-                            <tr ng-repeat-start="claim in allData" ng-if="claim.show">
+                            <tr ng-repeat-start="claim in allData">
                                 <!--big table basic row-->
                                 <td>
                                     <a data-toggle="collapse" ng-click="collapseIcon[$index].minusIcon = !collapseIcon[$index].minusIcon;test1[$index] = !test1[$index]" data-target="{{'#accordion'+$index}}" class="clickable" style="cursor:pointer">
@@ -222,7 +222,7 @@
                                 </td>
                             </tr>
                             <!--big table basic row-->
-                            <tr ng-repeat-end ng-if="claim.show">
+                            <tr ng-repeat-end>
                                 <!--big table detailed row-->
                                 <td colspan="12" class="td-collapsed">
                                     <div id="{{'accordion'+$index}}" class="collapse">
@@ -280,7 +280,7 @@
                                                                         <td width="9%">
                                                                             <div>{{item.value | currency:"&pound;"}}</div>
                                                                         </td>
-                                                                        <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0 | currency:"&pound;"}}</td>
+                                                                        <td width="10%">{{item.expenseDetail.vat | currency:"&pound;"}}</td>
                                                                         <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
 
 
