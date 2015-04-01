@@ -1,150 +1,164 @@
+<div class="modal-header">
+    <h3 class="modal-title">Request Statutory Sick Pay</h3>
+</div><!-- /modal-header -->
 
+<form  name="sick" novalidate
+       ng-submit="submitInformation(sick.$valid)">
 
-        <div class="modal-header">
-                    <h4 class="modal-title">Request Statutory Sick Pay
-</h4>
-        </div><!-- /modal-header -->
-        <form name="sick" novalidate ng-submit="submitInformation(sick.$valid)">
-        <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-4 form-group control-label">Candidate name</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">{{contactdetail.firstName}}</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-                        <div class="col-xs-6 col-sm-2 form-group control-label no-padding-left">{{contactdetail.candidateNo}}</div>
-                    </div>
-                    <div class="line-horizontal"></div>
+    <div class="modal-body">
 
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-4 form-group control-label">Date employer informed</div>
-                         <div  class="col-xs-6 col-sm-8 form-group no-padding-left">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
+            <div class="col-xs-6 col-sm-4 form-group no-padding-left text-right">{{contactdetail.firstName}}</div>
+            <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+            <div class="col-xs-6 col-sm-2 form-group no-padding-left text-right">{{contactdetail.candidateNo}}</div>
+        </div>
 
-                                 <input type="text" ng-model="ssp.dateInformed" name="inform" class="form-control" orig-datepicker  required/>
+        <div class="line-horizontal"></div>
 
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 control-label">Date employer informed</div>
+            <div class="col-xs-6 col-sm-8 form-group no-padding-left">
 
-                                <span ng-if="sick.inform.$invalid && submitted">
+                <input type="text" ng-model="ssp.dateInformed" name="inform"
+                       orig-datepicker  required/>
 
-                                    <p ng-show="sick.inform.$error.required">Please enter informed date.</p>
+                        <span ng-if="sick.inform.$invalid && submitted">
+                        <p ng-show="sick.inform.$error.required">Please enter informed date.</p>
+                        </span>
 
-                                </span>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 control-label">Date of sick note</div>
+            <div class="col-xs-6 col-sm-2 control-label" style="text-align: right;">From</div>
+            <div class="col-xs-6 col-sm-3 form-group no-padding-left">
 
+                <input type="text" name="start" ng-model="ssp.startDate" orig-datepicker required />
+                         <span ng-if="sick.start.$invalid && submitted">
+                             <p ng-show="sick.start.$error.required">Please enter date of sick note.</p>
+                         </span>
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-3 form-group control-label">Date of sick note</div>
-                        <div class="col-xs-6 col-sm-2 form-group control-label" style="text-align: right;">From</div>
-                         <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+            </div>
+            <div class="col-xs-6 col-sm-1 control-label" style="text-align: right;">To</div>
+            <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                <div class="input-group date">
 
-                                 <input type="text" name="start" ng-model="ssp.startDate" class="form-control" orig-datepicker required />
-                                   <span ng-if="sick.start.$invalid && submitted">
+                    <input type="text" name="end" ng-model="ssp.endDate" orig-datepicker required  />
+                            <span ng-if="sick.end.$invalid && submitted">
+                                <p ng-show="sick.end.$error.required">Please enter date of sick end.</p>
+                            </span>
 
-                                    <p ng-show="sick.start.$error.required">Please enter date of sick note.</p>
+                </div>
+            </div>
 
-                                </span>
-                             </div>
-                        </div>
-                        <div class="col-xs-6 col-sm-1 form-group control-label" style="text-align: right;">To</div>
-                         <div class="col-xs-6 col-sm-3 form-group no-padding-left">
-                             <div class="input-group date" id="datepickerTo">
-                                 <input type="text" name="end" class="form-control" ng-model="ssp.endDate" orig-datepicker required  />
-                                  <span ng-if="sick.end.$invalid && submitted">
+            <div class="col-xs-12 col-sm-12 form-group no-padding-left">
 
-                                    <p ng-show="sick.end.$error.required">Please enter date of sick end.</p>
+                <button type="button" class="btn btn-primary pull-right" ng-click="checkDate()"
+                        >Calculate</button>
+            </div>
+            <div class="col-xs-12 col-sm-12 form-group no-padding-left">
 
-                                </span>
+                <div ng-if="!validDate">
 
-                             </div>
-                        </div>
+                    {{sspMessage}}
+                </div>
+            </div>
 
-                        <div ng-if="!validDate">
+        </div>
 
-                       {{sspMessage}}
-                    </div>
+        <div class="line-horizontal"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-striped" style="margin-bottom: 0;">
+                    <tbody>
 
-                    <button type="button" class="btn btn-primary" ng-click="checkDate()">Calculate</button>
+                    <tr ng-repeat="s in ssp.days">
+                        <td ng-if="s.monthNumber >0">
 
-                    </div>
-
-
-                    <div class="line-horizontal"></div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                             <div class="wrapTable-scroll" >
-                                 <table class="table table-striped" style="margin-bottom: 0;" >
-                                     <tbody>
-                                    =
-                                         <tr ng-repeat="s in ssp.days">
-                                           <td ng-if="s.monthNumber >0">
-                                            Month Number:{{s.monthNumber}}
+                              Month Number:{{s.monthNumber}}
                                            </td>
                                            <td ng-if="s.monthNumber <=0 || !s.monthNumber">
                                              Week Number:{{s.weekNumber}}
                                            </td>
 
+                                            <td ng-init="indexCount=$index;$indexCount=true;"><span ng-if='$indexCount'>{{s.amount | number : 2}}</span>
 
-                                            <td ng-init="indexCount=$index;$indexCount=true;"><p ng-if='$indexCount'>{{s.amount | number : 2}}</p>
+                            <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a>
+                        </td>
+                        <td class="text-right">
+                            <a ng-click="$indexCount=false;"  class="edit-price"><i class="fa fa-edit"></i></a>&nbsp;
+                            <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
 
-                                                <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a></td>
-                                            <td class="text-right">
-                                                 <a ng-click="$indexCount=false;"  class="edit-price"><i class="fa fa-edit"></i></a>&nbsp;
-                                                 <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
-                                             </td>
-                                         </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- /modal-body -->
 
-                                     </tbody>
-                                </table>
-                            </div>
+
+<div class="modal-footer" id="modal-footer-left">
+    <div class="row rowFooter">
+        <div class="col-xs-7 col-sm-6">
+            <fieldset class="fieldsetRequestP45">
+                <legend>Upload sick note</legend>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <div class="fileUpload btn btn-primary form-control">
+
+                            <span onclick="$('#upload_company_logo').click();">Browse</span>
+                            <input file-model="fileupload" type="file"
+                                   id="upload_company_logo" name="companyLogo" style="display: none;" />
+
+
+                            <!--<span>Browse</span>-->
+                            <!--<input id="uploadBtn" type="file" class="upload">-->
                         </div>
                     </div>
-        </div><!-- /modal-body -->
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <!--<button type="button" class="btn btn-primary form-control">Upload</button>-->
 
-        <div class="modal-footer" id="modal-footer-left">
-                   <div class="row rowFooter">
-                        <div class="col-xs-7 col-sm-6">
-                            <fieldset class="fieldsetRequestP45">
-                                <legend>Upload sick note</legend>
-                                   <div class="row" style="margin-top: 38px;">
-                                        <div class="col-xs-5 col-sm-4">
-                                            <div class="fileUpload btn btn-primary form-control">
-                                                <span onclick="$('#upload_company_logo').click();">Browse</span>
-                                                <input file-model="fileupload" type="file"
-                                                       id="upload_company_logo" name="companyLogo" style="display: none;" />
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-xs-5 col-sm-6 no-padding">
-                                            <button type="button" class="btn btn-primary form-control img-details"
-                                                ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
-                                                <span ng-show="!isLogoUploading" >Upload New Image</span>
-                                                <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <div class="col-xs-4 col-sm-3 label-control">{{temp.logoFileName}}</div>
-                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <div class="col-xs-4 col-sm-3 label-control">{{temp.logoSize}}</div>
-                                            <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize"></div>
-                                        </div>
-                                    </div>
-                                </div>
-              </fieldset>
-                        </div>
-
-                        <div class="col-xs-5 col-sm-6 text-right btnFooter form-group">
-                            <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-
-                  <input type="submit" name="submit" class="btn btn-primary" value="Submit">
-                        </div>
-
+                        <button type="button" class="btn btn-primary form-control img-details"
+                                ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
+                            <span ng-show="!isLogoUploading" >Upload New Image</span>
+                            <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
+                        </button>
                     </div>
                 </div>
-            </form>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="col-xs-4 col-sm-3 label-control">{{temp.logoFileName}}</div>
+                            <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="col-xs-4 col-sm-3 label-control">{{temp.logoSize}}</div>
+                            <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize"></div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="col-xs-5 col-sm-6 text-right btnFooter form-group">
+            <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+
+            <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+        </div>
+
+    </div>
+</div>
+</form>
+
+
+
+
+
+
+
+
