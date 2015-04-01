@@ -6,7 +6,6 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.sl = {};
-    $scope.mapLists = {};
 
 
     HttpResource.model('constants/slrAgreements').customGet('', {}, function(data) {

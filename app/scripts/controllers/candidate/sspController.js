@@ -16,19 +16,31 @@ angular.module('origApp.controllers')
         console.log($scope.contactdetail)
     }, function(err) {})
     $scope.submitInformation = function(val) {
-        if (val === true && $scope.validDate === true) {
+        if (val === true && $scope.validDate === true && $scope.ssp.days.length >0) {
 
                 HttpResource.model('actionrequests/' + $scope.candidateId+'/ssp').create($scope.ssp).post().then(function(response) {
                   $scope.ssp={};
+                  $scope.temp={};
                 });
         } else {
 
             $scope.submitted = true;
+
+            if($scope.ssp.days.length===0){
+              $scope.validDate = false;
+
+              $scope.sspMessage='No  Statutory data';
+            }
         }
     };
     $scope.changeAmount=function(i){
 
         i=false;
+    };
+    $scope.remove=function(i){
+        console.log(i);
+        $scope.ssp.days.splice(i,1);
+
     };
     $scope.checkDate = function() {
 

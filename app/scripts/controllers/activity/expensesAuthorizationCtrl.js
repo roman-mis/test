@@ -19,6 +19,14 @@ app.controller("expensesAuthorizationCtrl",
         });
         $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
+        $http.get('/api/constants/fuels').success(function (res) {
+            logs(res, 'fuels');
+            $scope.fuels = res;
+        });
+        //$http.get('/api/constants/enginesizes').success(function (res) {
+        //    logs(res, 'engine sizes')
+        //});
+
         $http.get('/api/candidates/expenses').success(function (expenses) {
             logs('getting expenses done !!');
             $scope.system = expenses.object.system[0];
@@ -39,7 +47,7 @@ app.controller("expensesAuthorizationCtrl",
         });
 
         function getVehicleInfo(userId, code) {
-            $http.get('/' + userId + '/vehicleinformation/' + code).success(function (res) {
+            $http.get('/api/candidates/' + userId + '/vehicleinformation/' + code).success(function (res) {
                 logs(res, 'vehicle info')
             });
         }
@@ -65,6 +73,9 @@ app.controller("expensesAuthorizationCtrl",
                     $scope.expensesArray[i].expenses[j].date = $scope.expensesArray[i].expenses[j].date.toISOString();
                     $scope.expensesArray[i].expenses[j].validDates = getWeek($scope.expensesArray[i].expenses[j].date);
 
+                    // initializing vat
+                    $scope.expensesArray[i].expenses[j].expenseDetail.vat = 0;
+                    // calculating vat for Subsistence and Other
                     $scope.system.expensesRate.forEach(function (doc) {
                         if ($scope.expensesArray[i].expenses[j].expenseDetail.id == doc._id) {
                             if (doc.taxApplicable) {
@@ -76,6 +87,39 @@ app.controller("expensesAuthorizationCtrl",
                         }
                     });
 
+                    // calculating vat for Transport
+                    if ($scope.expensesArray[i].expenses[j].expenseType == 'Transport'
+                        && $scope.expensesArray[i].expenses[j].subType == 'Car / Van') {
+                        var fuelType = $scope.expensesArray[i].user.worker.vehicleInformation[0].fuelType;
+                        var engineSize = $scope.expensesArray[i].user.worker.vehicleInformation[0].engineSize;
+                        var piece = {
+                            fuelCode: fuelType,
+                            engineCode: engineSize
+                        }
+                        $scope.fuels.forEach(function (item) {
+                            if (fuelType == item.code) {
+                                piece.fuelType = item.description;
+                                item.engineSizes.forEach(function (minor) {
+                                    if (engineSize == minor.code) {
+                                        piece.engineSize = minor.description;
+                                    }
+                                });
+                            }
+                        });
+                        //logs(piece, 'Piece');
+                        if (piece.fuelCode == '1' && piece.engineCode == '1') {
+                            $scope.expensesArray[i].expenses[j].expenseDetail.vat =
+                                $scope.system.mileageRates.petrolUpTo1400 * $scope.globalVat;
+                        } else if (piece.fuelCode == '2' && piece.engineCode == '1') {
+                            $scope.expensesArray[i].expenses[j].expenseDetail.vat =
+                                $scope.system.mileageRates.dieselUpTo1600 * $scope.globalVat;
+                        } else if (piece.fuelCode == '3' && piece.engineCode == '1') {
+                            $scope.expensesArray[i].expenses[j].expenseDetail.vat =
+                                $scope.system.mileageRates.lpgUpTo1400 * $scope.globalVat;
+                        }
+                    }
+
+                    // calculating total based on vat, amount and value
                     $scope.expensesArray[i].expenses[j].expenseDetail.total = 0;
                     $scope.expensesArray[i].expenses[j].expenseDetail.total +=
                         $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].value ? $scope.expensesArray[i].expenses[j].amount * $scope.expensesArray[i].expenses[j].value : 0;
@@ -163,6 +207,7 @@ app.controller("expensesAuthorizationCtrl",
                     logs(res, 'Edit Response');
                     $scope.expensesArray[expenseIndex].total = 0;
                     for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
+                        // recalculating vat for Subsistence and Other
                         $scope.system.expensesRate.forEach(function (doc) {
                             if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id == doc._id) {
                                 if (doc.taxApplicable) {
@@ -174,6 +219,7 @@ app.controller("expensesAuthorizationCtrl",
                             }
                         });
 
+                        // recalculating total based on vat, amount and value
                         $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total = 0;
                         $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total +=
                         $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].value ? $scope.expensesArray[expenseIndex].expenses[i].amount * $scope.expensesArray[expenseIndex].expenses[i].value : 0;
