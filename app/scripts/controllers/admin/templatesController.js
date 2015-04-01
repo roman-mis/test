@@ -103,9 +103,11 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
         for(var i = 0; i < $scope.gridOptions.allData.length; i++){
         	$scope.gridOptions.data[i] =[];
         	for(var j = 0; j < $scope.gridOptions.rowdata.length; j++){
-        		$scope.gridOptions.data[i][j] =
-        		$scope.gridOptions.allData[i][$scope.gridOptions.rowdata[j]];
-
+                    $scope.gridOptions.data[i][j] =
+                        $scope.gridOptions.allData[i][$scope.gridOptions.rowdata[j]];
+                if(j == 0 || j == 1) {
+                    $scope.gridOptions.data[i][j] = capitalize($scope.gridOptions.data[i][j]);
+                }
         	}
         }
 
@@ -115,6 +117,10 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
         }
       });
     };
+
+    function capitalize(input){
+            return input.substring(0,1).toUpperCase()+input.substring(1);
+    }
 
     $scope.loadAllAdminTemplates();
 
