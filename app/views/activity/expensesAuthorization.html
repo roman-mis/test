@@ -87,7 +87,8 @@
                                             <td style="width:20px">
                                                 <a data-toggle="collapse" ng-click="test2[$index] = !test2[$index]" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer"><i class="fa fa-minus-square-o"></i></a>
                                             </td>
-                                            <td col-span="9"><b>{{cat}}</b></td>
+                                            <td col-span="9"><b>{{cat}}</b>
+                                            </td>
                                             <td style="width:20px">
                                                 <div class="dropdown text-left">
                                                     <a style="cursor:pointer" data-toggle="dropdown">
@@ -145,27 +146,16 @@
                                                                 <td width="12%" class="text-left">
                                                                     <div ng-hide="item.edit">{{item.expenseDetail.name}}</div>
                                                                     <div ng-if="item.edit">
-                                                                        <select ng-if="item.expenseType=='Transport'"
-                                                                                class="form-control ng-pristine ng-valid"
-                                                                                ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
-                                                                                ng-options="type.description as type.description for type in transportTypes"></select>
-                                                                        <select ng-if="item.expenseType=='Subsistence'"
-                                                                                class="form-control ng-pristine ng-valid"
-                                                                                ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
-                                                                                ng-options="type.name as type.name for type in mealTypes"></select>
-                                                                        <select ng-if="item.expenseType=='Other'"
-                                                                                class="form-control ng-pristine ng-valid"
-                                                                                ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name"
-                                                                                ng-options="type.name as type.name for type in otherTypes"></select>
+                                                                        <select ng-if="item.expenseType=='Transport'" class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name" ng-options="type.description as type.description for type in transportTypes"></select>
+                                                                        <select ng-if="item.expenseType=='Subsistence'" class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name" ng-options="type.name as type.name for type in mealTypes"></select>
+                                                                        <select ng-if="item.expenseType=='Other'" class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name" ng-options="type.name as type.name for type in otherTypes"></select>
                                                                     </div>
                                                                 </td>
                                                                 <td width="12%" class="text-left">
                                                                     <div ng-hide="item.edit">{{item.date | date : "EEE dd/MM/yyyy"}}</div>
                                                                     <div width="12%" ng-if="item.edit">
                                                                         <!--<div class="input-group" name="birthDate" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].date" orig-datepicker />-->
-                                                                        <select class="form-control ng-pristine ng-valid"
-                                                                                ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].date"
-                                                                                ng-options="date | date:'EEE dd/MM/yyyy' for date in item.validDates"></select>
+                                                                        <select class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].date" ng-options="date | date:'EEE dd/MM/yyyy' for date in item.validDates"></select>
                                                                     </div>
                                                                 </td>
 
@@ -232,9 +222,7 @@
                                                                 <td width="10%" style="text-transform: capitalize">
                                                                     <div ng-hide="item.edit">{{item.status}}</div>
                                                                     <div width="10%" ng-if="item.edit">
-                                                                        <select class="form-control ng-pristine ng-valid"
-                                                                                ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].status"
-                                                                                ng-options="type.value as type.value for type in expenseStatus"></select>
+                                                                        <select class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].status" ng-options="type.value as type.value for type in expenseStatus"></select>
                                                                     </div>
                                                                 </td>
                                                                 <td width="8%" class="text-center">
