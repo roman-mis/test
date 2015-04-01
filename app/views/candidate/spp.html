@@ -9,9 +9,9 @@
 				<div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 form-group control-label">Contractor name</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label">{{contactdetail.firstName}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label">{{candidateInfo.firstName}}  {{candidateInfo.lastName}} </div>
                         <div class="col-xs-6 col-sm-3 form-group control-label">Contractor ID</div>
-                        <div class="col-xs-6 col-sm-2 form-group control-label">{{contactdetail.candidateNo}}</div>
+                        <div class="col-xs-6 col-sm-2 form-group control-label">{{candidateInfo.candidateRef}}</div>
                     </div>
 
                     <div class="line-horizontal"></div>
@@ -34,12 +34,14 @@
                         </div>
                         <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
-                            <select ng-model="spp.relationship" class="form-control">
-                                <option value="">Select</option>
-                                <option value="father">The father</option>
-                                <option value="h/p/a">The husband or partner of the mother (or adopter)</option>
-                                <option value="adopter">The child’s adopter</option>
-                            </select>
+                            <select class="form-control" ng-model="spp.relationship" ng-options="opt.code as opt.description for opt in relationships"></select>
+                       <!--     <select class="form-control">
+                                <option>Select</option>
+                                <option>The father</option>
+                                <option>The husband or partner of the mother (or adopter)</option>
+                                <option>The child’s adopter</option>
+                            </select> -->
+                        </div>
 
                         </div>
 

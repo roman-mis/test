@@ -7,6 +7,14 @@ angular.module('origApp.controllers')
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
 
+     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
+        $scope.relationships = data.data;
+        console.log('getting relationships:' +$scope.relationships);
+    }, function(err) {});
+
+     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+        $scope.candidateInfo = data.data.object;
+    }, function(err) {});
     $scope.spp.maxPeriods=2;
     $scope.remove=function(i){
 
@@ -14,10 +22,6 @@ angular.module('origApp.controllers')
 
     };
 
-    HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-        $scope.contactdetail = data.data.object;
-        console.log($scope.contactdetail)
-    }, function(err) {});
     $scope.checkDateMp=function(){
 
         var n=new Date($scope.spp.startDate).valueOf();

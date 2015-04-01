@@ -6,9 +6,15 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.sl = {};
+
+
+    HttpResource.model('constants/slrAgreements').customGet('', {}, function(data) {
+        $scope.constantsLists = data.data;
+        console.log('getting relationships:' +$scope.constantsLists[0].code);
+    }, function(err) {});
      
-     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-        $scope.contactdetail = data.data.object;
-        console.log($scope.contactdetail)
-    }, function(err) {})
+     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+        $scope.candidateInfo = data.data.object;
+     //   $scope.fullname = ($scope.candidateInfo.firstName + ' ' + $scope.candidateInfo.lastName);
+    }, function(err) {});
 });
