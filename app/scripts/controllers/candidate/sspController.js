@@ -16,7 +16,7 @@ angular.module('origApp.controllers')
     }, function(err) {})
     $scope.submitInformation = function(val) {
         if (val === true && $scope.validDate === true && $scope.ssp.days.length >0) {
-
+                $scope.submitted=false;
                 HttpResource.model('actionrequests/' + $scope.candidateId+'/ssp').create($scope.ssp).post().then(function(response) {
                   $scope.ssp={};
                   $scope.temp={};
@@ -57,7 +57,7 @@ angular.module('origApp.controllers')
             $scope.validDate = true;
             $scope.sspMessage=null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {'dateInformed':$scope.ssp.dateInformed,'startDate':$scope.ssp.startDate,'endDate':$scope.ssp.endDate,'maxPeriods':29}, function(data) {
-            //     console.log(data);
+                console.log(data.data.objects);
                 $scope.ssp.days=data.data.objects;
 
             }, function(err) {})

@@ -102,9 +102,9 @@ angular.module('origApp.controllers')
         });
     };
     $scope.submitInformation = function(val) {
-        console.log(val);
 
         if (val === true && $scope.validDate === true && $scope.spp.days.length > 0) {
+            $scope.submitted=false;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.spp).post().then(function(response) {
                 $scope.spp = {};
                 $scope.temp = {};
