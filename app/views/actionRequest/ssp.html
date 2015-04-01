@@ -1,15 +1,15 @@
+<form  name="sick" novalidate ng-submit="submitInformation(sick.$valid)">
+
 <div class="modal-header">
-    <h3 class="modal-title">Request Statutory Sick Pay</h3>
+    <h4 class="modal-title">Request Statutory Sick Pay</h4>
 </div><!-- /modal-header -->
 
-<form  name="sick" novalidate
-       ng-submit="submitInformation(sick.$valid)">
 
     <div class="modal-body">
 
         <div class="row">
             <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
-            <div class="col-xs-6 col-sm-4 form-group no-padding-left text-right">{{contactdetail.firstName}}</div>
+            <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.firstName }} {{ candidate.lastName }}</div>
             <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
             <div class="col-xs-6 col-sm-2 form-group no-padding-left text-right">{{contactdetail.candidateNo}}</div>
         </div>

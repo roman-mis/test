@@ -7,6 +7,8 @@ angular.module('origApp.controllers')
 
 
     $scope.candidateId = parentScope.candidateId;
+    $scope.candidate = parentScope.candidate;
+
     $scope.ssp = {};
 
 
