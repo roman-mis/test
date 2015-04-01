@@ -21,7 +21,8 @@ angular.module('origApp.controllers')
     $scope.submitAction=function(values){
 
        HttpResource.model('actionrequests/' + $scope.candidateId+'/studentloan').create(values).post().then(function(response) {
-                  $scope.sl={};
+                  $scope.sl.haveLoan=false;
+                  $scope.sl.payDirectly=false;
 
                 });
     };
