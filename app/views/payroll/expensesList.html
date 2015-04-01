@@ -1,0 +1,54 @@
+<div class="meta-box padding-10 container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped expenses-auth">
+                <thead>
+                    <tr>
+                        <th>Contractor ID</th>
+                        <th>Contractor Name</th>
+                        <th>Date Requested</th>
+                        <th>Type</th>
+                        <th>Period Actioned</th>
+                        <th>User Requested</th>
+                        <th>Request Ref.</th>
+						<th>Status</th>
+						<th></th>						
+                    </tr>
+                </thead>
+ 
+                <tbody ng-repeat="expense in expensesArray">
+                    <tr ng-repeat="item in expense.expenses" ng-if="item.status == 'approved'">
+                        <!--<td>900001</td>
+                        <td>Mark Gentry</td>
+                        <td>Mon 02/16/2015</td>
+						<td>Statutory Sick Pay</td>
+						<td></td>
+						<td>User Name</td>
+						<td>requestReference</td>
+                        <td>Submitted {{item.status}}</td>-->
+                        <td>{{expense.claimReference}}</td>
+                        <td>{{expense.userName.firstName}}&nbsp;{{expense.userName.lastName}}</td>
+                        <td>{{expense.startDate | date : "EEE dd/MM/yyyy"}} (?)</td>
+						<td>{{item.expenseDetail.name}}</td>
+						<td>Period (?)</td>
+						<td>User Name (?)</td>
+						<td>requestReference (?)</td>
+                        <td style="text-transform: capitalize">{{item.status}}</td>
+                        <td class="text-center">
+                            <div class="dropdown text-center">
+                                <a href="#" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-folder-open-o"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-rightBubble" role="menu" aria-labelledby="dLabel">
+                                    <li><a href="#">Open</a></li>
+                                    <li><a href="#">Change Status</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>                      
+				</tbody>
+            </table>
+    
+        </div>
+    </div>	
+</div><!-- /container -->
