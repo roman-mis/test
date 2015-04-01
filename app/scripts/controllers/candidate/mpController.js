@@ -95,6 +95,8 @@ angular.module('origApp.controllers')
                 $scope.mp = {};
                 $scope.temp = {};
             });
+            $scope.submitted=true;
+
         } else {
 
             $scope.submitted = true;

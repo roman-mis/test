@@ -1,7 +1,8 @@
+<form nam="slFrom" novalidate ng-submit="submitAction()">
 <div class="modal-header">
     <h4 class="modal-title">Student Loan Request</h4>
 </div><!-- /modal-header -->
-                
+
 <div class="modal-body">
     <div class="row">
         <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
@@ -14,6 +15,7 @@
             <tbody>
                 <tr>
                     <td>
+
                         <div class="alert alert-success" role="alert">
                             <div></div>
                                 {{constantsLists[0].description}}
@@ -22,10 +24,10 @@
                     </td>
                     <td style="padding-left: 10px;">
                         <label class="switch_wrap" for="field">
-                            <input id="field" type="checkbox" />
+                            <input id="field" type="checkbox" ng-model="sl.haveLoan" />
                                 <div class="switch">
                                     <span class="bullet"></span>
-                                </div> 
+                                </div>
                         </label>
                     </td>
                 </tr>
@@ -38,18 +40,20 @@
                     </td>
                     <td style="padding-left: 10px;">
                         <label class="switch_wrap" for="field1">
-                            <input id="field1" type="checkbox" />
+                            <input id="field1" type="checkbox" ng-model="sl.payDirectly" />
                                 <div class="switch">
                                     <span class="bullet"></span>
-                                </div> 
+                                </div>
                         </label>
                     </td>
                 </tr>
             </tbody>
         </table>
 </div><!-- /modal-body -->
-                    
+
     <div class="modal-footer">
         <a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>
-            <button type="button" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
     </div><!-- /modal footer -->
+
+</form>
