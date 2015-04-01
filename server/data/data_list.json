@@ -1139,7 +1139,13 @@
               "ssp": {
                 "hide": true
               },
+              "spp": {
+                "hide": true
+              },
               "mp": {
+                "hide": true
+              },
+              "holidayPayment": {
                 "hide": true
               },
               "callLog": {
