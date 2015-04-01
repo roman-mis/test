@@ -25,3 +25,4 @@ router.post('/:id/spp', controller.postSpp);
 
 router.post('/:id/holidaypay', controller.postHolidayPay);
 
+router.post('/:id/studentloan',controller.postStudentLoan);
