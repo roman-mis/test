@@ -69,10 +69,10 @@
                     <tbody>
                     <tr ng-repeat="s in spp.days">
                         <td ng-if="s.monthNumber >0">
-                            Month Number:{{s.monthNumber}}
+                            Month {{s.monthNumber}}
                         </td>
                         <td ng-if="s.monthNumber <=0 || !s.monthNumber">
-                            Week Number:{{s.weekNumber}}
+                            Week {{s.weekNumber}}
                         </td>
 
                         <td ng-init="indexCount=$index;$indexCount=true;"><span
