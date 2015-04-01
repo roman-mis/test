@@ -85,6 +85,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':'holidaypay',
 			'status':'submitted',
+			worker:req.params.id,
 			holidayPay:{
 				amount:req.body.amount
 			},
@@ -107,6 +108,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':'studentloan',
 			'status':'submitted',
+			worker:req.params.id,
 			studentLoan:{
 				haveLoan:req.body.haveLoan,
 				payDirectly:req.body.payDirectly
