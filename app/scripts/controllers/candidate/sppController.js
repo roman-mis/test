@@ -6,9 +6,14 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
-     
-     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-        $scope.contactdetail = data.data.object;
-        console.log($scope.contactdetail)
-    }, function(err) {})
+
+
+     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
+        $scope.relationships = data.data;
+        console.log('getting relationships:' +$scope.relationships);
+    }, function(err) {});
+
+     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+        $scope.candidateInfo = data.data.object;
+    }, function(err) {});
 });
