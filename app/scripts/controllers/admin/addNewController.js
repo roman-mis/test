@@ -2,12 +2,12 @@
 var app = angular.module('origApp.controllers');
 
 app.controller('addNewController',['$rootScope', '$interval','$scope', '$stateParams', '$location', 'HttpResource', 'adminTemplate',
-	function($rootScope, $interval, $scope, $stateParams, $location, HttpResource, adminTemplate){	
-		
+	function($rootScope, $interval, $scope, $stateParams, $location, HttpResource, adminTemplate){
+
 
 		// defined values
 		var fields = ['templateType','name','subType','title','templateBody'];
-		var differentTypes =['call_log','task','document','email','payslip','invoice'];		
+		var differentTypes =['call_log','task','document','email','payslip','invoice'];
 		// initialization
 		$scope.data={details:{}};
 		$scope.mergeFields = ['please select type first'];
@@ -31,20 +31,20 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 				$location.path('admin/templates');
 			}
 		}
-		
+
 
 		function breadCrumbAddNewValue(){
         	var s = (($stateParams.type === 'edit')?'Edit ' : 'Add New ')+ breadCrumbformate($scope.data.details.templateType);
 			return s;
         }
-        
+
 		$rootScope.breadcrumbs = [
 		{link:'/', text:'Home'},
         {link: '/admin/home', text: 'Admin'},
         {link: '/admin/templates', text: 'Templates'},
         {link: '/admin/add_new/'+$scope.data.details.templateType, text: breadCrumbAddNewValue()}];
 
-        
+
 		$scope.data.details.current ={};
 		$scope.data.details.current.subType = $scope.data.details.subType;
 
@@ -54,10 +54,10 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 				function(){
 					console.log($scope.templatesDropdowns);
 					$scope.selectSybType(adminTemplate.details.subType);
-        
+
 				});
         ////**////
-        
+
 
         function breadCrumbformate(s){
         	if(!s){
@@ -87,13 +87,13 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 	        						$scope.mergeFields = $scope.mergeFields.concat($scope.templatesDropdowns[i].mergeFieldsGroups[m].mergeFields);
 	        						break;
 	        					}
-	        					
+
 	        				}
 	        			console.log($scope.mergeFields);
 	        			}
 	        			// $scope.mergeFields= $scope.templatesDropdowns[i].data[j].mergeFields;
 	        			$scope.data.details.current.subType = selectedSubType;
-	        			
+
 	        			$scope.data.details.mergeFields='';
 	        			$scope.data.details.subType = $scope.data.details.current.subType;
 	        		}
@@ -121,7 +121,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	return s;
         };
 
-        
+
         $scope.setMergeField = function(mergeField){
         	console.log('******************************');
         	console.log($scope.selection);
@@ -129,12 +129,12 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         	//if the selection not defined
         	if(!$scope.selection || !$scope.selection.startContainer.data){
         		$scope.data.details.templateBody += mergeField;
-        		return; 
+        		return;
         	}
 
         	if($scope.selection.startContainer.data ===
         		$scope.selection.endContainer.data){
-        		
+
         		$scope.assign('startContainer',
         			$scope.selection.startOffset,
         			$scope.selection.endOffset,
@@ -156,7 +156,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
         			$scope.selection.startContainer.length,
         			mergeField);
 
-        	}      	
+        	}
         };
 
         $scope.assign = function(container,startOffset,endOffset,data){
@@ -168,7 +168,7 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 
 		$scope.paste = function(){
 			$scope.data=adminTemplate;
-			
+
 		};
 
 		$scope.isNotEmpty = function(vars){

@@ -6,6 +6,7 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
+ //   $scope.spp.startDate=null;
 
     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
         $scope.relationships = data.data;
@@ -20,6 +21,10 @@ angular.module('origApp.controllers')
 
         $scope.spp.days.splice(i, 1);
 
+    };
+     $scope.cancel=function(i,v){
+
+        $scope.spp.days[i].amount=v;
     };
 
     $scope.checkDateMp = function() {

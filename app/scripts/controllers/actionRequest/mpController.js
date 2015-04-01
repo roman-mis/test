@@ -48,6 +48,10 @@ angular.module('origApp.controllers')
 
         $modalInstance.dismiss('cancel');
     };
+    $scope.cancel=function(i,v){
+
+        $scope.mp.days[i].amount=v;
+    };
     $scope.checkDateMp = function() {
         var n = new Date($scope.mp.startDate).valueOf();
         var d = new Date($scope.mp.babyDueDate).valueOf();

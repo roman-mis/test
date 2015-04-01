@@ -26,7 +26,7 @@ angular.module('origApp.controllers', [])
 	            console.log('******************************');
 
 		          $scope.permissions = userPermissions.permissions.permissions.fields;
-              console.log($scope.permissions)
+              console.log($scope.permissions);
 	          });
           }
         });

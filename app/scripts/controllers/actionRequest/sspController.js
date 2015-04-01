@@ -37,9 +37,13 @@ angular.module('origApp.controllers')
         i=false;
     };
     $scope.remove=function(i){
-        console.log(i);
+
         $scope.ssp.days.splice(i,1);
 
+    };
+    $scope.cancel=function(i,v){
+
+        $scope.ssp.days[i].amount=v;
     };
     $scope.checkDate = function() {
 
@@ -57,7 +61,7 @@ angular.module('origApp.controllers')
             $scope.validDate = true;
             $scope.sspMessage=null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {'dateInformed':$scope.ssp.dateInformed,'startDate':$scope.ssp.startDate,'endDate':$scope.ssp.endDate,'maxPeriods':29}, function(data) {
-                console.log(data.data.objects);
+
                 $scope.ssp.days=data.data.objects;
 
             }, function(err) {})
@@ -107,7 +111,7 @@ angular.module('origApp.controllers')
                 logoFileName: fileInfo.name,
                 logoSize: fileSize
             };
-            console.log($scope.temp);
+
         }
 
     });
