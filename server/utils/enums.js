@@ -41,5 +41,18 @@ module.exports={
 		'FourWeekly':'fourweekly',
 		'Monthly':'monthly'
 
+	},
+	statuses:{
+		'Submitted':'submitted',
+		'Approved':'approved',
+		'Rejected':'rejected',
+		'Referred':'referred'
+	},
+	actionRequestTypes:{
+		'SSP':'ssp',
+		'SMP':'smp',
+		'SPP':'spp',
+		'HolidayPay':'holidaypay',
+		'SLR':'studentloan'
 	}
 };
