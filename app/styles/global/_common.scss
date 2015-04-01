@@ -1347,7 +1347,7 @@ body {
 }
 
 .tOuter-dropdown {
-    right: 70px;
+    right: 50px;
 }
 
 .tInner-dropdown {
@@ -1356,7 +1356,7 @@ body {
 
 .dropdown-menu-leftBottomBubble::before {
     position: absolute;
-    top: 6px;
+    top: 3px;
     right: -14px;
     display: inline-block;
     border-bottom: 7px solid transparent;
@@ -1369,7 +1369,7 @@ body {
 
 .dropdown-menu-leftBottomBubble::after {
     position: absolute;
-    top: 7px;
+    top: 4px;
     right: -12px;
     display: inline-block;
     border-bottom: 6px solid transparent;
@@ -1536,4 +1536,10 @@ td > input[type="checkbox"] {
 .table td .btn {
     padding: 0 12px;
     outline: none;
+}
+
+.table select.form-control {
+    padding: 0;
+    word-break: break-all;
+    height: inherit;
 }

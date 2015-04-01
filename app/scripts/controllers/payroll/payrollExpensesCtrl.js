@@ -7,17 +7,15 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
                                   { link: '/payroll/expenses', text: 'Expenses' }
         ];
 
-        // console.log(1111111111)
-        $scope.loadAllDate = function () {
+        $scope.loadAllData = function () {
             $http.get('/api/candidates/expenses').success(function (expenses) {
-                console.log('getting expenses done !!');
-                console.log(expenses);
+                logs(expenses, 'Claims and system');
                 $scope.allData = expenses.object.claims;
                 logs($scope.allData, 'All Claims');
                 putAccessories();
             });
         };
-        $scope.loadAllDate();
+        $scope.loadAllData();
 
         function putAccessories() {
             $scope.majorCheck = false;
