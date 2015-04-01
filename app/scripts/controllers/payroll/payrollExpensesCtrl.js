@@ -12,22 +12,38 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
                 logs(expenses, 'Claims and system');
                 $scope.allData = expenses.object.claims;
                 logs($scope.allData, 'All Claims');
-                putAccessories();
+                putExtras();
             });
         };
         $scope.loadAllData();
 
-        function putAccessories() {
-            $scope.majorCheck = false;
+        function putExtras() {
             $scope.allData.forEach(function (claim) {
                 claim.claimCheck = false;
+                claim.startDate = getMonday(claim.claimDate);
+                claim.show = true;
+                claim.expenses.forEach(function (expense) {
+                    if (expense.status != 'approved') {
+                        claim.show = false;
+                    }
+                });
+                if (claim.expenses.length == 0) claim.show = false;
+
+                claim.categories = [];
+                claim.expenses.forEach(function (expense) {
+                    if (claim.categories.indexOf(expense.expenseType) == -1) {
+                        claim.categories.push(expense.expenseType);
+                    }
+                });
             });
         }
 
-        $scope.g = function (d) {
-            console.log(d)
-            return d;
-        };
+        function getMonday(d) {
+            d = new Date(d);
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1);
+            return new Date(d.setDate(diff));
+        }
 
         Date.prototype.getWeek = function () {
             var onejan = new Date(this.getFullYear(), 0, 1);
@@ -41,18 +57,39 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
             return t;
         };
 
-        $scope.majorCheckChange = function () {
+        $scope.selectAll = function () {
             $scope.allData.forEach(function (claim) {
-                claim.claimCheck = $scope.majorCheck;
+                if(claim.show) claim.claimCheck = true;
             });
         }
 
         $scope.inverseSelection = function () {
-            $scope.majorCheck = false;
             $scope.allData.forEach(function (claim) {
-                if (claim.claimCheck) claim.claimCheck = false;
-                else claim.claimCheck = true;
+                if (claim.show) {
+                    if (claim.claimCheck) claim.claimCheck = false;
+                    else claim.claimCheck = true;
+                }
             });
+        }
+
+        $scope.setSubmitted = function (claimId) {
+            var batchIds = [claimId];
+            logs(batchIds, 'set submitted to claim');
+
+        }
+
+        $scope.batchSetSubmitted = function () {
+            var batchIds = [];
+            $scope.allData.forEach(function (claim) {
+                if (claim.claimCheck) {
+                    batchIds.push(claim.id);
+                }
+            });
+            if (batchIds.length == 0) window.alert('No claims selected');
+            else {
+                logs(batchIds, 'batch set submitted to claims');
+
+            }
         }
 
         function logs(record, label) {
