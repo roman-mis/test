@@ -4,6 +4,7 @@ module.exports = function(dbs){
 	var utils=require('../../utils/utils');
 	var _ =require('lodash');
 	var systemservice = require('../../services/systemservice')(dbs);
+	var adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 
 	controller.postSsp=function(req,res){
 
