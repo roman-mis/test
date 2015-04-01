@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
           var currentDate = new Date();
           $scope.minDate = currentDate;
           $scope.expenseData.claimDate = $scope.expenseData.claimDate || currentDate;
-          $scope.weekEndingDay = 0;
+          $scope.weekEndingDay = 1;
 
           $scope.$watch('expenseData.claimDate', function() {
             setTimeout(function() {
