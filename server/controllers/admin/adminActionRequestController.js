@@ -93,6 +93,8 @@ module.exports = function(dbs){
 
 
 		};
+		console.log('detail');
+		console.log(detail);
 
 		adminActionRequestService.saveActionRequest(req.params.id,detail)
 			.then(function(response){
