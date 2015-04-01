@@ -1,4 +1,4 @@
-<form nam="slFrom" novalidate ng-submit="submitAction()">
+<form nam="slFrom" novalidate ng-submit="submitAction(sl)">
 <div class="modal-header">
     <h4 class="modal-title">Student Loan Request</h4>
 </div><!-- /modal-header -->
@@ -52,7 +52,7 @@
 </div><!-- /modal-body -->
 
     <div class="modal-footer">
-        <a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>
+        <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
             <button type="submit" class="btn btn-primary">Save</button>
     </div><!-- /modal footer -->
 
