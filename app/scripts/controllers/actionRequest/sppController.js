@@ -2,39 +2,52 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance) {
+.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance) {
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
+ //   $scope.spp.startDate=null;
 
-     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
+    HttpResource.model('constants/relationships').customGet('', {}, function(data) {
         $scope.relationships = data.data;
-        console.log('getting relationships:' +$scope.relationships);
+        console.log('getting relationships:' + $scope.relationships);
     }, function(err) {});
 
-     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+    HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
         $scope.candidateInfo = data.data.object;
     }, function(err) {});
-    $scope.spp.startDate=null;
-    $scope.spp.maxPeriods=2;
-    $scope.remove=function(i){
+    $scope.spp.maxPeriods = 2;
+    $scope.remove = function(i) {
 
-        $scope.spp.days.splice(i,1);
+        $scope.spp.days.splice(i, 1);
 
     };
+     $scope.cancel=function(i,v){
 
-    HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-        $scope.contactdetail = data.data.object;
-        console.log($scope.contactdetail)
-    }, function(err) {});
-    $scope.checkDateMp=function(){
+        $scope.spp.days[i].amount=v;
+    };
 
-        HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
+    $scope.checkDateMp = function() {
+
+        if ($scope.spp.babyDueDate) {
+            $scope.validDate = true;
+            $scope.errorMsg = null;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
                 console.log(data);
-                $scope.spp.days=data.data.objects;
+                $scope.spp.days = data.data.objects;
 
 
-            }, function(err) {})
+            }, function(err) {});
+        } else {
+
+            $scope.validDate = false;
+            if ($scope.sppForm.due.$error.required) {
+
+                $scope.submitted = true;
+            }
+
+        }
+
     };
     $scope.$watch('fileupload', function(fileInfo) {
 
@@ -60,8 +73,6 @@ angular.module('origApp.controllers')
 
     $scope.uploadCompanyLogo = function() {
 
-
-
         if (!$('#upload_company_logo').val()) {
             alert('Please select a file first.');
             return;
@@ -75,7 +86,7 @@ angular.module('origApp.controllers')
             mimeType: mimeType,
             fileName: fileName
         }, function(response) {
-          //  console.log(response);
+            //  console.log(response);
             $scope.signedUrl = response.data.signedRequest;
             $http({
                 method: 'PUT',
@@ -87,22 +98,34 @@ angular.module('origApp.controllers')
                 }
             }).success(function(l) {
 
-            //    console.log(response);
-                $scope.spp.imageUrl=response.data.url;
+                //    console.log(response);
+                $scope.spp.imageUrl = response.data.url;
                 $scope.isLogoUploading = false;
             });
 
 
         });
     };
-    $scope.submitInformation=function(){
-       HttpResource.model('actionrequests/' + $scope.candidateId+'/smp').create($scope.spp).post().then(function(response) {
-                  $scope.spp={};
-                  $scope.temp={};
-                });
+    $scope.submitInformation = function(val) {
+
+        if (val === true && $scope.validDate === true && $scope.spp.days.length > 0) {
+            $scope.submitted=false;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.spp).post().then(function(response) {
+                $scope.spp = {};
+                $scope.temp = {};
+            });
+        } else {
+
+            $scope.submitted = true;
+            if ($scope.spp && $scope.spp.days && $scope.spp.days.length === 0) {
+
+                $scope.validDate = false;
+                $scope.errorMsg = 'No data.';
+            }
+        }
 
     };
-      $scope.closeModal = function() {
+    $scope.closeModal = function() {
 
         $modalInstance.dismiss('cancel');
     };

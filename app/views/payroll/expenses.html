@@ -1,0 +1,152 @@
+<div class="">
+  
+  <div class="orig-grid-wrapper">
+
+  <!-- <div class="col-xs-12"> -->
+    
+    <div class="form-group">  
+      <div class="col-xs-3">
+        <span type="text">
+          <input placeholder="Name" class="form-control" ng-change="filter()" ng-model="options.filter" />
+        </span> 
+      </div>
+    </div>
+      
+    <div class="form-group">
+      <div class="col-xs-3">
+        <span type="text">
+          <input placeholder="E-mail" class="form-control" ng-change="filter()" ng-model="options.filterEmail" />
+        </span>
+      </div>
+    </div>
+
+    <!-- <div class="col-xs-2"> -->
+      <button class="col-xs-1 btn btn-success">Go</button>
+    <!-- </div> -->
+
+  <!-- </div> -->
+  <div class="orig-grid-wrapper">
+  <table class="table table-striped">
+    <thead>
+      <tr >
+          <th class="text-center">
+          <div>ID</div>
+        </th>
+        <th class="text-center">
+          <div>Contractor ID</div>
+        </th>
+        <th class="text-center">
+          <div>First Name</div>
+        </th>
+        <th class="text-center">
+          <div>Last Name</div>
+        </th>
+        <th class="text-center">
+          <div>Week No Applied</div>
+        </th>
+        <th class="text-center">
+          <div>Claim Date</div>
+        </th>
+        <th class="text-center">
+          <div>Gross</div>
+        </th>
+        <th class="text-center">
+          <div>Vat</div>
+        </th>
+        <th class="text-center">
+          <div>Total</div>
+        </th>
+        <th class="text-center">
+          <div><input type="checkbox" /></div>
+        <th class="text-center">
+          <div>.</div>
+        </th>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat-start="item in allData">
+        <td>
+          {{item.claimReference}}
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          {{item.user.firstName}}
+        </td>
+        <td>
+          {{item.user.lastName}}
+        </td>
+        <td>
+          {{getWeek(item.claimDate)}}
+        </td>
+        <td>
+          {{item.claimDate | date:'yyyy-MM-dd'}}
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td class="text-center">
+          <input type="checkbox" />
+        </td>
+        <td class="text-center">
+          <div class="dropdown">
+            <a style="cursor:pointer" data-toggle="dropdown">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-leftBottomBubble" role="menu">
+                <li ng-click="approveSelected($parent.$index, cat)">
+                    <a style="cursor: pointer; text-decoration: none">Change Status</a>
+                </li>
+                <li ng-click="rejectSelected($parent.$index, cat)">
+                    <a style="cursor: pointer; text-decoration: none">Approve</a>
+                </li>
+                <li ng-click="selectAll($parent.$index, cat)">
+                    <a style="cursor: pointer; text-decoration: none">Hold</a>
+                </li>
+                <li ng-click="inverseSelection($parent.$index, cat)">
+                    <a style="cursor: pointer; text-decoration: none">Delete</a>
+                </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr ng-repeat-end>
+          <td colspan="11"></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="orig-grid-pagination-wrapper">
+    <div class="page-rows-count">
+      <label>Results per page</label><br>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="20">20</button>
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="40">40</button>
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="60">60</button>
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="80">80</button>
+      </div>
+    </div>
+    <pagination
+      total-items="options.totalItems"
+      ng-model="options.currentPage"
+      items-per-page="options.limit"
+      max-size="options.maxVisiblePages"
+      class="pagination"
+      boundary-links="true"
+      rotate="false"
+      num-pages="options.numPages"
+      ng-change="loadAllUsers()"></pagination>
+  </div>
+</div>
+
+
+
+</div>

@@ -4,7 +4,6 @@ module.exports = function(dbs){
 	var utils=require('../../utils/utils');
 	var _ =require('lodash');
 	var systemservice = require('../../services/systemservice')(dbs);
-	var	adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 
 	controller.postSsp=function(req,res){
 
@@ -86,6 +85,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':'holidaypay',
 			'status':'submitted',
+			worker:req.params.id,
 			holidayPay:{
 				amount:req.body.amount
 			},
@@ -93,6 +93,8 @@ module.exports = function(dbs){
 
 
 		};
+		console.log('detail');
+		console.log(detail);
 
 		adminActionRequestService.saveActionRequest(req.params.id,detail)
 			.then(function(response){
@@ -108,6 +110,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':'studentloan',
 			'status':'submitted',
+			worker:req.params.id,
 			studentLoan:{
 				haveLoan:req.body.haveLoan,
 				payDirectly:req.body.payDirectly
