@@ -10,7 +10,6 @@ angular.module('origApp.controllers')
     $scope.ssp = {};
 
 
-
     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
         $scope.contactdetail = data.data.object;
         console.log($scope.contactdetail)
@@ -26,7 +25,7 @@ angular.module('origApp.controllers')
 
             $scope.submitted = true;
 
-            if($scope.ssp.days.length===0){
+            if($scope.ssp && $scope.ssp.days && $scope.ssp.days.length===0){
               $scope.validDate = false;
 
               $scope.sspMessage='No  Statutory data';
@@ -78,6 +77,10 @@ angular.module('origApp.controllers')
             if((sickDayTo-sickDayFrom) < 345600000){
 
                 $scope.sspMessage="Date of sick note from and Date of sick note to should be greater than or equal to 4 days.";
+            }
+            if($scope.sick.inform.$error.required && $scope.sick.start.$error.required && $scope.sick.end.$error.required){
+
+                $scope.submitted=true;
             }
 
 
