@@ -1,9 +1,10 @@
 'use strict';
 var controller={};
 module.exports = function(dbs){
-	var systemservice = require('../../services/systemservice')(dbs),
-		adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs),
-		_=require('lodash');
+	var utils=require('../../utils/utils');
+	var _ =require('lodash');
+	var systemservice = require('../../services/systemservice')(dbs);
+	var adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 
 	controller.postSsp=function(req,res){
 
@@ -93,6 +94,8 @@ module.exports = function(dbs){
 
 
 		};
+		console.log('detail');
+		console.log(detail);
 
 		adminActionRequestService.saveActionRequest(req.params.id,detail)
 			.then(function(response){
@@ -188,5 +191,46 @@ module.exports = function(dbs){
     			res.sendFailureResponse(err);
     		});
     };
+
+
+    controller.getActionRequestData = function(req, res){
+    	adminActionRequestService.getActionRequestData()
+    		.then(function(response){
+    			console.log(response);
+    			var actionrequests = getActionRequestDataVm(response);
+    		console.log('response');
+    		res.json({objects:actionrequests});
+    		})
+    		.then(null,function(err){
+    			console.log('err');
+    			console.log(err);
+    			res.sendFailureResponse(err);
+    		});
+    };
+
+
+
+    function getActionRequestDataVm(data){
+    	var actionRequest=[];
+    	
+			_.forEach(data, function(actionrequests){
+				var actionRequestData = {
+					user: {
+						id : actionrequests.worker._id,
+						contractorName : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
+						},
+					dateRequested : actionrequests.worker.createdDate,
+					status : actionrequests.status,
+					type : actionrequests.type,
+					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')	
+				};
+				actionRequest.push(actionRequestData);
+			});
+		
+
+    	
+    	return actionRequest;
+    }
+
     return controller;
 };

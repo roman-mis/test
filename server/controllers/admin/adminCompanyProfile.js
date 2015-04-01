@@ -18,8 +18,7 @@ module.exports = function(){
 	  	.then(null, function(err){
 	  		res.sendFailureResponse(err);
 	  		console.log(err);
-	  	})
-	  	;    
+	  	});    
     };
 
 

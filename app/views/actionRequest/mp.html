@@ -2,16 +2,16 @@
       <div class="modal-content modal-content-560">
 
         <div class="modal-header">
-                    <h4 class="modal-title">Request for Maternity Pay</h4>
+                    <h4 class="modal-title">Request Statutory Maternity Pay</h4>
         </div><!-- /modal-header -->
 
          <form name="mpForm" novalidate ng-submit="submitInformation(mpForm.$valid)">
         <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-6 col-sm-4 form-group control-label">Candidate name:</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">{{contactdetail.firstName}}</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-                        <div class="col-xs-6 col-sm-2 form-group control-label no-padding-left">{{contactdetail.candidateNo}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate name:</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.firstName}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateNo}}</div>
                     </div>
                     <div class="line-horizontal"></div>
                     <div class="row">
@@ -70,10 +70,10 @@
                   <tr ng-repeat="s in mp.days">
 
                     <td ng-if="s.monthNumber >0">
-                                            Month:{{s.monthNumber}}
+                                            Month {{s.monthNumber}}
                                            </td>
                                            <td ng-if="s.monthNumber <=0 || !s.monthNumber">
-                                             Week:{{s.weekNumber}}
+                                             Week {{s.weekNumber}}
                                            </td>
                      <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><p ng-if='indexCount'>{{s.amount | number : 2}}</p>
 
@@ -135,7 +135,7 @@
 
                         <div class="col-xs-6 col-sm-6  text-right btnFooter">
                             <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Send for approval</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                      </div>
                 </div><!-- /modal footer -->

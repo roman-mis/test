@@ -3,13 +3,13 @@
 			<div class="modal-content modal-content-560 ">
 			 -->
 	<div class="modal-header">
-            <h4 class="modal-title">Request for Paternity Pay</h4>
+            <h4 class="modal-title">Request Statutory Paternity Pay</h4>
 	</div><!-- /modal-header -->
                 <form name="sppForm" novalidate ng-submit="submitInformation(sppForm.$valid)">
 				<div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-6 col-sm-4 form-group control-label">Contractor name</div>
-                        <div class="col-xs-6 col-sm-3 form-group control-label">{{candidateInfo.firstName}}  {{candidateInfo.lastName}} </div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label">Contractor name</div>
+                        <div class="col-xs-6 col-sm-4 form-group control-label">{{candidateInfo.firstName}}  {{candidateInfo.lastName}} </div>
                         <div class="col-xs-6 col-sm-3 form-group control-label">Contractor ID</div>
                         <div class="col-xs-6 col-sm-2 form-group control-label">{{candidateInfo.candidateRef}}</div>
                     </div>
@@ -57,10 +57,10 @@
                                     <tbody>
                                         <tr ng-repeat="s in spp.days">
                                               <td ng-if="s.monthNumber >0">
-                                            Month:{{s.monthNumber}}
+                                            Month {{s.monthNumber}}
                                            </td>
                                            <td ng-if="s.monthNumber <=0 || !s.monthNumber">
-                                             Week:{{s.weekNumber}}
+                                             Week {{s.weekNumber}}
                                            </td>
 
                                                  <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount;"><p ng-if='indexCount'>{{s.amount | number : 2}}</p>
@@ -124,7 +124,7 @@
 
 					    <div class="col-xs-6 col-sm-5 form-group text-right btnFooter btnFooterApproval">
 							<a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-								<button  type="submit" class="btn btn-primary">Send for approval</button>
+								<button  type="submit" class="btn btn-primary">Save</button>
 						</div>
 
                     </div>
