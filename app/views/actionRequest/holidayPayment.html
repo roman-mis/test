@@ -8,12 +8,12 @@
                 <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
                 <div class="col-xs-6 col-sm-3 form-group text-right">{{ candidate.firstName }} {{ candidate.lastName }}</div>
                 <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
-                <div class="col-xs-6 col-sm-3 form-group text-right">{{ candidate._id }}</div>
+                <div class="col-xs-6 col-sm-3 form-group text-right">{{ contactdetail.candidateNo }}</div>
             </div>
             <div class="line-horizontal"></div>
             <div class="row">
                 <div class="col-xs-8 form-group">Holiday fund available</div>
-                <div class="col-xs-4 form-group text-right">&pound; {{ candidate.payrollValues.holidayPayRetained || 0 }}</div>
+                <div class="col-xs-4 form-group text-right">&pound; {{ candidate.payrollValues || 0 }}</div>
             </div>
 
             <div class="row">

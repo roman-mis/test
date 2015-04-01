@@ -7,7 +7,11 @@ angular.module('origApp.controllers')
         $scope.candidateId = parentScope.candidateId;
         $scope.holidayPayment = {};
         $scope.candidate = parentScope.candidate;
-        $scope.candidate.payrollValues={};
+         HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
+        $scope.contactdetail = data.data.object;
+        console.log($scope.contactdetail)
+        }, function(err) {});
+
         HttpResource.model('candidates/' + $scope.candidateId + '/payrollvalue').customGet('', {}, function (data) {
             $scope.candidate.payrollValues.holidayPayRetained = data.data.object.payrollValues.holidayPayRetained || '';
         }, function (err) { });
