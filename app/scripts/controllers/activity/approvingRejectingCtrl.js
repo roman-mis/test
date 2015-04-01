@@ -9,20 +9,31 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
     $scope.claimIds = claimIds;
     $scope.reasons = [];
     $scope.otherReason = [];
-    //console.log(item);
+    $scope.uniqueClaimIds = [];
+    $scope.claimIds.forEach(function (id) {
+        if ($scope.uniqueClaimIds.indexOf(id) == -1) {
+            $scope.uniqueClaimIds.push(id);
+        }
+    });
 
     $scope.ok = function () {
         if (approve) {
             var req = {};
             req.objects = [];
-            $scope.items.forEach(function (item, i) {
+            $scope.uniqueClaimIds.forEach(function (uniId) {
                 var obj = {
-                    claimId: $scope.claimIds[i],
-                    data: {
-                        id: item._id,
-                        reason: ''
+                    claimId: uniId,
+                    expenses: []
+                };
+                $scope.items.forEach(function (item, i) {
+                    if ($scope.claimIds[i] == uniId) {
+                        var data = {
+                            id: item._id,
+                            reason: ''
+                        }
                     }
-                }
+                    obj.expenses.push(data);
+                });
                 req.objects.push(obj);
             });
             console.log(req);
@@ -32,14 +43,20 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
         } else {
             var req = {};
             req.objects = [];
-            $scope.items.forEach(function (item, i) {
+            $scope.uniqueClaimIds.forEach(function (uniId) {
                 var obj = {
-                    claimId: $scope.claimIds[i],
-                    data: {
-                        id: item._id,
-                        reason: $scope.reasons[i] != 'Other' ? $scope.reasons[i] : $scope.otherReason[i]
+                    claimId: uniId,
+                    expenses: []
+                };
+                $scope.items.forEach(function (item, i) {
+                    if ($scope.claimIds[i] == uniId) {
+                        var data = {
+                            id: item._id,
+                            reason: $scope.reasons[i] != 'Other' ? $scope.reasons[i] : $scope.otherReason[i]
+                        }
                     }
-                }
+                    obj.expenses.push(data);
+                });
                 req.objects.push(obj);
             });
             console.log(req);
@@ -47,7 +64,7 @@ app.controller('approvingRejectingCtrl', function ($scope, $modalInstance, $http
                 //console.log(res);
             });
         }
-        $modalInstance.close();
+         $modalInstance.close();
     };
 
     $scope.cancel = function () {

@@ -44,24 +44,26 @@ angular.module('origApp.controllers')
         $scope.tempValue = $scope.mileageRates[$scope.mileageRatesNames[index]];
     };
 
+    $scope.save = function(index){
+        if(Number($scope.tempValue)){
+                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue);      
+            }else{
+                Notification.error({message: 'Values must be Number', delay: 2000});
+            }
+            hideAllEdites();
+        console.log($scope.mileageRates);
+        HttpResource.model('systems/mileagerates').create($scope.mileageRates).post().then(function() {
+        });
+    };
+
     $scope.getEvent = function(event, index){
         if(event.keyCode === 27){
             console.log($scope.tempValue);
             hideAllEdites();
         }else if(event.keyCode === 13){
-            if(Number($scope.tempValue)){
-                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue);      
-            }else{
-                Notification.error({message: 'Values must be Number', delay: 2000});
-            }
-            hideAllEdites();
+            $scope.save(index);
         }else if(event.keyCode === 9){
-            if(Number($scope.tempValue)){
-                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue);      
-                $scope.showEditFn(index + 1);
-            }else{
-                Notification.error({message: 'Values must be Number', delay: 2000});
-            }
+            $scope.save(index);
         }
     };
 
@@ -75,12 +77,6 @@ angular.module('origApp.controllers')
     
     $scope.leave = function(index){
         $scope.viewIcon[index] = false;
-    };
-
-    $scope.save = function(){
-        console.log($scope.mileageRates);
-        HttpResource.model('systems/mileagerates').create($scope.mileageRates).post().then(function() {
-        });
     };
 
     $scope.clearUnsaved = function(){

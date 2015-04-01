@@ -136,12 +136,22 @@ module.exports=function(dbs){
 			var nextStartDate=requestStartDays.clone();
 			console.log('nextStartDate '+nextStartDate.toISOString());
 			var i=0;
+			var totalWeeks=i;
+			var maxPeriodLastDate=null;
+			if(maxPeriods>0){
+				maxPeriodLastDate=nextStartDate.clone().add(maxPeriods,'weeks');
+			}
+
 			while(true){
 				console.log('current nextStartDate is '+nextStartDate.toISOString());
-				if(maxPeriods>0 && maxPeriods<(i+1)){
-					console.log('max periods '+ maxPeriods + ' Exceeded');
+				if(maxPeriodLastDate && maxPeriodLastDate.diff(nextStartDate)<0){
+					console.log('max Period '+maxPeriods  + ' exceeded');
 					break;
 				}
+				// if(maxPeriods>0 && maxPeriods<(i+1)){
+				// 	console.log('max periods '+ maxPeriods + ' Exceeded');
+				// 	break;
+				// }
 				if(endDate && nextStartDate>endDate){
 					console.log('nextStartDate '+ nextStartDate.toISOString() + ' Exceeded from endDate '+endDate.toISOString());
 					break;
@@ -155,7 +165,9 @@ module.exports=function(dbs){
 					thisPeriodLastDate=nextStartDate.clone().endOf('month');
 				}
 
-				var thisPeriodEndDate=endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():thisPeriodLastDate.clone();
+				var thisPeriodEndDate=endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():
+						maxPeriodLastDate && thisPeriodLastDate.diff(maxPeriodLastDate,'days')>0?maxPeriodLastDate.clone() 
+						:thisPeriodLastDate.clone();
 				var noOfDays=thisPeriodEndDate.diff(nextStartDate,'days')+1;
 				console.log('noOfDays '+noOfDays);
 				weeks[i]={'days':[],amount:0,periodStartDate:null,weekNumber:-1,monthNumber:-1};
@@ -171,6 +183,11 @@ module.exports=function(dbs){
 
 				
 				i++;
+
+				if(payFrequency===enums.payFrequency.Weekly){
+					totalWeeks=i;
+				}
+
 			}
 
 
@@ -301,6 +318,12 @@ module.exports=function(dbs){
 			});
 		})
 
+	};
+
+	service.getActionRequestData = function(){
+		console.log('testing');
+		var q=db.ActionRequest.find().populate('worker').populate('user');
+	return Q.nfcall(q.exec.bind(q));
 	};
 
 	return service;

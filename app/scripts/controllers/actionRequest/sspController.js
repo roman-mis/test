@@ -7,8 +7,9 @@ angular.module('origApp.controllers')
 
 
     $scope.candidateId = parentScope.candidateId;
-    $scope.ssp = {};
+    $scope.candidate = parentScope.candidate;
 
+    $scope.ssp = {};
 
 
     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
@@ -16,19 +17,35 @@ angular.module('origApp.controllers')
         console.log($scope.contactdetail)
     }, function(err) {})
     $scope.submitInformation = function(val) {
-        if (val === true && $scope.validDate === true) {
-
+        if (val === true && $scope.validDate === true && $scope.ssp.days.length >0) {
+                $scope.submitted=false;
                 HttpResource.model('actionrequests/' + $scope.candidateId+'/ssp').create($scope.ssp).post().then(function(response) {
                   $scope.ssp={};
+                  $scope.temp={};
                 });
         } else {
 
             $scope.submitted = true;
+
+            if($scope.ssp && $scope.ssp.days && $scope.ssp.days.length===0){
+              $scope.validDate = false;
+
+              $scope.sspMessage='No  Statutory data';
+            }
         }
     };
     $scope.changeAmount=function(i){
 
         i=false;
+    };
+    $scope.remove=function(i){
+
+        $scope.ssp.days.splice(i,1);
+
+    };
+    $scope.cancel=function(i,v){
+
+        $scope.ssp.days[i].amount=v;
     };
     $scope.checkDate = function() {
 
@@ -46,7 +63,7 @@ angular.module('origApp.controllers')
             $scope.validDate = true;
             $scope.sspMessage=null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {'dateInformed':$scope.ssp.dateInformed,'startDate':$scope.ssp.startDate,'endDate':$scope.ssp.endDate,'maxPeriods':29}, function(data) {
-            //     console.log(data);
+
                 $scope.ssp.days=data.data.objects;
 
             }, function(err) {})
@@ -66,6 +83,10 @@ angular.module('origApp.controllers')
             if((sickDayTo-sickDayFrom) < 345600000){
 
                 $scope.sspMessage="Date of sick note from and Date of sick note to should be greater than or equal to 4 days.";
+            }
+            if($scope.sick.inform.$error.required && $scope.sick.start.$error.required && $scope.sick.end.$error.required){
+
+                $scope.submitted=true;
             }
 
 
@@ -92,7 +113,7 @@ angular.module('origApp.controllers')
                 logoFileName: fileInfo.name,
                 logoSize: fileSize
             };
-            console.log($scope.temp);
+
         }
 
     });

@@ -88,7 +88,7 @@ angular.module('origApp.controllers')
             console.log($scope.contactdetail);
             ModalService.open({
 
-              templateUrl:'views/candidate/ssp.html',
+              templateUrl:'views/actionRequest/ssp.html',
               parentScope:$scope,
               controller:'sspController',
               size:'lg'
@@ -97,9 +97,27 @@ angular.module('origApp.controllers')
 
           $scope.openSpp=function(){
             ModalService.open({
-              templateUrl:'views/candidate/spp.html',
+              templateUrl:'views/actionRequest/spp.html',
               parentScope:$scope,
               controller:'sppController',
+              size:'lg'
+            });
+          };
+
+          $scope.openHolidayPayment=function(){
+            ModalService.open({
+              templateUrl:'views/actionRequest/holidayPayment.html',
+              parentScope:$scope,
+              controller:'holidayPaymentController',
+              size:'lg'
+            });
+          };
+
+          $scope.openSl=function(){
+            ModalService.open({
+              templateUrl:'views/actionRequest/sl.html',
+              parentScope:$scope,
+              controller:'slController',
               size:'lg'
             })
           };
@@ -108,7 +126,7 @@ angular.module('origApp.controllers')
             console.log($scope.contactdetail);
             ModalService.open({
 
-              templateUrl:'views/candidate/mp.html',
+              templateUrl:'views/actionRequest/mp.html',
               parentScope:$scope,
               controller:'mpController',
               size:'lg'

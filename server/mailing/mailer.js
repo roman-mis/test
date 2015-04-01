@@ -74,11 +74,13 @@ module.exports={
 				transporter.close();
 				console.log(err);
 				console.log(result);
-				if(err){
+				if(result.rejected.length){
+				console.log('##########################err');
 					reject(err,result);
-
 				}
 				else{
+				console.log('##########################true');
+
 					resolve(result);
 				}
 			});

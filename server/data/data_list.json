@@ -19,7 +19,7 @@
   ],
 
 
-  "Relationship": [
+  "Relationships": [
     {
       "code": "1",
       "description": "The Father"
@@ -31,6 +31,18 @@
     {
       "code": "3",
       "description": "The child's adopter"
+    }
+  ],
+
+
+  "SLRAgreements": [
+    {
+      "code": "haveLoan",
+      "description": "Have you left a course of UK higher education before last April and received your first UK Student Loan instalment on or after 1 September 1998 and not fully repaid your student loan?"
+    },
+    {
+      "code": "payDirectly",
+      "description": "Are you repaying your UK Student Loan by agreement with the UK Student Loans Company to make monthly payments through your bank or building society account?"
     }
   ],
 
@@ -1127,7 +1139,13 @@
               "ssp": {
                 "hide": true
               },
+              "spp": {
+                "hide": true
+              },
               "mp": {
+                "hide": true
+              },
+              "holidayPayment": {
                 "hide": true
               },
               "callLog": {

@@ -23,9 +23,12 @@
                                             </span>
                                         </div>
                                         <div style="width:100%" ng-show="showEdit[0]">
-                                            <div style="width:95%;display:inline-block"  type="number">
+                                            <div style="width:85    %;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,0)"  >
                                             </div>
+                                            <span ng-show="viewIcon[0]" ng-click="save(0)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[0]" ng-click="hide(0)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -48,6 +51,9 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,1)"  >
                                             </div>
+                                            <span ng-show="viewIcon[1]" ng-click="save(1)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[1]" ng-click="hide(1)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -70,6 +76,10 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,2)"  >
                                             </div>
+
+                                            <span ng-show="viewIcon[2]" ng-click="save(2)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[2]" ng-click="hide(2)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -84,7 +94,7 @@
                                     <div>
                                         <div style="width:100%" ng-hide="showEdit[3]"  ng-dblclick="showEditFn(3)">
                                             &nbsp;{{ mileageRates[mileageRatesNames[3]]}}
-                                            <span ng-show="viewIcon[3]" ng-click="showEditFn(4)" style="position:absolute; right:20px; cursor:pointer">
+                                            <span ng-show="viewIcon[3]" ng-click="showEditFn(3)" style="position:absolute; right:20px; cursor:pointer">
                                                 <i style="color:green;" class="fa fa-pencil"></i>
                                             </span>
                                         </div>
@@ -92,6 +102,10 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,3)"  >
                                             </div>
+
+                                            <span ng-show="viewIcon[3]" ng-click="save(3)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[3]" ng-click="hide(3)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -114,6 +128,10 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,4)"  >
                                             </div>
+
+                                            <span ng-show="viewIcon[4]" ng-click="save(4)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[4]" ng-click="hide(4)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -136,6 +154,10 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,5)"  >
                                             </div>
+
+                                            <span ng-show="viewIcon[5]" ng-click="save(5)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[5]" ng-click="hide(5)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -159,6 +181,10 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,6)"  >
                                             </div>
+
+                                            <span ng-show="viewIcon[6]" ng-click="save(6)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[6]" ng-click="hide(6)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -181,6 +207,10 @@
                                             <div style="width:95%;display:inline-block"  type="number">
                                                 <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,7)"  >
                                             </div>
+
+                                            <span ng-show="viewIcon[7]" ng-click="save(7)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
                                             <span ng-show="viewIcon[7]" ng-click="hide(7)" style="cursor:pointer">
                                                 <i style="color:red;" class="fa fa-times"></i>
                                             </span>
@@ -190,12 +220,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-8 col-xs-offset-4 pull-right text-right">
-                        <button class="btn btn-primary btn-danger" ng-click="clearUnsaved()"><i class="fa fa-trash"></i>&#160;  Clear Unsaved Data</button>
-                        <button class="btn btn-success" ng-click="save()"><i class="fa fa-floppy-o"></i>&#160; Save</button>
-                    </div>
                 </div>
             </div>
         </div>
