@@ -19,17 +19,15 @@
 
                         <div class="col-xs-6 col-sm-4 form-group control-label">Start Date</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
-                                <input type="text" ng-model="spp.startDate" name="start" class="form-control" orig-datepicker required/>
-                                <span ng-if="sppFrom.start.$invalid && submitted">
-                                    <p ng-if="sspFrom.start.$error.required">Please enter start date.</p>
-                                </span>
+                                <input type="text" ng-model="spp.startDate" name="start" class="form-control" orig-datepicker/>
+
                         </div>
 
                         <div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
                                 <input type="text" name="due" ng-model="spp.babyDueDate" class="form-control" orig-datepicker required/>
-                                <span ng-if="sppFrom.due.$invalid && submitted">
-                                    <p ng-if="sspFrom.due.$error.required">Please enter baby due date.</p>
+                                <span ng-if="sppForm.due.$invalid && submitted">
+                                    <p ng-if="sppForm.due.$error.required">Please enter baby due date.</p>
                                 </span>
                         </div>
                         <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div>

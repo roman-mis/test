@@ -2,54 +2,46 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance) {
+.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance) {
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
 
-     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
+    HttpResource.model('constants/relationships').customGet('', {}, function(data) {
         $scope.relationships = data.data;
-        console.log('getting relationships:' +$scope.relationships);
+        console.log('getting relationships:' + $scope.relationships);
     }, function(err) {});
 
-     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+    HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
         $scope.candidateInfo = data.data.object;
     }, function(err) {});
-    $scope.spp.maxPeriods=2;
-    $scope.remove=function(i){
+    $scope.spp.maxPeriods = 2;
+    $scope.remove = function(i) {
 
-        $scope.spp.days.splice(i,1);
+        $scope.spp.days.splice(i, 1);
 
     };
 
-    $scope.checkDateMp=function(){
+    $scope.checkDateMp = function() {
 
-        var n=new Date($scope.spp.startDate).valueOf();
-        var b=new Date($scope.spp.babyDueDate).valueOf();
-        if(n <=(b-9072000000)){
-          $scope.validDate=true;
-          $scope.errorMsg=null;
-
-          HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
+        if ($scope.spp.babyDueDate) {
+            $scope.validDate = true;
+            $scope.errorMsg = null;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
                 console.log(data);
-                $scope.spp.days=data.data.objects;
+                $scope.spp.days = data.data.objects;
 
 
             }, function(err) {});
+        } else {
 
-        }else{
+            $scope.validDate = false;
+            if ($scope.sppForm.due.$error.required) {
 
-            $scope.validDate=false;
-               if(n >(b-9072000000)){
-
-                $scope.errorMsg='Start date should be 15 week before baby birth due.';
-                }else{
-
-                    $scope.errorMsg='Please fill all input boxes.';
-                }
+                $scope.submitted = true;
+            }
 
         }
-
 
     };
     $scope.$watch('fileupload', function(fileInfo) {
@@ -76,8 +68,6 @@ angular.module('origApp.controllers')
 
     $scope.uploadCompanyLogo = function() {
 
-
-
         if (!$('#upload_company_logo').val()) {
             alert('Please select a file first.');
             return;
@@ -91,7 +81,7 @@ angular.module('origApp.controllers')
             mimeType: mimeType,
             fileName: fileName
         }, function(response) {
-          //  console.log(response);
+            //  console.log(response);
             $scope.signedUrl = response.data.signedRequest;
             $http({
                 method: 'PUT',
@@ -103,33 +93,34 @@ angular.module('origApp.controllers')
                 }
             }).success(function(l) {
 
-            //    console.log(response);
-                $scope.spp.imageUrl=response.data.url;
+                //    console.log(response);
+                $scope.spp.imageUrl = response.data.url;
                 $scope.isLogoUploading = false;
             });
 
 
         });
     };
-    $scope.submitInformation=function(val){
+    $scope.submitInformation = function(val) {
         console.log(val);
-        if(val === true && $scope.validDate === true && $scope.spp.days.length >0){
-       HttpResource.model('actionrequests/' + $scope.candidateId+'/smp').create($scope.spp).post().then(function(response) {
-                  $scope.spp={};
-                  $scope.temp={};
-                });
-   }else{
 
-    $scope.submitted=true;
-    if($scope.spp && $scope.spp.days && $scope.spp.days.length===0){
+        if (val === true && $scope.validDate === true && $scope.spp.days.length > 0) {
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.spp).post().then(function(response) {
+                $scope.spp = {};
+                $scope.temp = {};
+            });
+        } else {
 
-                $scope.validDate=false;
-                $scope.errorMsg='No days';
+            $scope.submitted = true;
+            if ($scope.spp && $scope.spp.days && $scope.spp.days.length === 0) {
+
+                $scope.validDate = false;
+                $scope.errorMsg = 'No data.';
             }
-   }
+        }
 
     };
-      $scope.closeModal = function() {
+    $scope.closeModal = function() {
 
         $modalInstance.dismiss('cancel');
     };

@@ -8,14 +8,14 @@ angular.module('origApp.controllers')
 
     $scope.candidateId = parentScope.candidateId;
     $scope.mp = {};
-    $scope.mp.maxPeriods=39;
+    $scope.mp.maxPeriods = 39;
     $scope.mp.days;
 
 
 
     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
         $scope.contactdetail = data.data.object;
-       // console.log($scope.contactdetail)
+        // console.log($scope.contactdetail)
     }, function(err) {})
 
 
@@ -44,64 +44,72 @@ angular.module('origApp.controllers')
         }
 
     });
-     $scope.closeModal = function() {
+    $scope.closeModal = function() {
 
         $modalInstance.dismiss('cancel');
     };
-    $scope.checkDateMp=function(){
-             var n=new Date($scope.mp.startDate).valueOf();
-             var d=new Date($scope.mp.babyDueDate).valueOf();
-             var i=new Date($scope.mp.intendedStartDate).valueOf();
+    $scope.checkDateMp = function() {
+        var n = new Date($scope.mp.startDate).valueOf();
+        var d = new Date($scope.mp.babyDueDate).valueOf();
+        var i = new Date($scope.mp.intendedStartDate).valueOf();
 
-             if(n <=(d-9072000000)){
+        if (n <= (d - 9072000000)) {
 
 
-                $scope.validDate=true;
-                HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
+            $scope.validDate = true;
+            $scope.errorMsg = null;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
 
-                $scope.mp.days=data.data.objects;
+                $scope.mp.days = data.data.objects;
 
 
             }, function(err) {})
-             }else{
+        } else {
 
-                $scope.validDate=false;
-                if(n >(d-9072000000)){
+            $scope.validDate = false;
+            if (n > (d - 9072000000)) {
 
-                $scope.errorMsg='Start date should be 15 week before baby birth due.';
-                }else{
+                $scope.errorMsg = 'Start date should be 15 week before baby birth due.';
+            } else {
 
-                    $scope.errorMsg='Please fill all input boxes.';
+                if ($scope.mpForm.start.$error.required || $scope.mpForm.due.$error.required || $scope.mpForm.intend.$error.required) {
+                    $scope.errorMsg = null;
+                    $scope.submitted = true;
+                } else {
+
+                    $scope.errorMsg = 'Please fill all input boxes.';
+
                 }
+            }
 
 
 
-             }
+        }
 
 
 
     };
-    $scope.submitInformation=function(val){
-         if (val === true && $scope.validDate === true && $scope.mp.days.length >0) {
-            HttpResource.model('actionrequests/' + $scope.candidateId+'/smp').create($scope.mp).post().then(function(response) {
-                  $scope.mp={};
-                  $scope.temp={};
-                });
-        }else{
+    $scope.submitInformation = function(val) {
+        if (val === true && $scope.validDate === true && $scope.mp.days.length > 0) {
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function(response) {
+                $scope.mp = {};
+                $scope.temp = {};
+            });
+        } else {
 
-            $scope.submitted=true;
-            if($scope.mp && $scope.mp.days && $scope.mp.days.length===0){
+            $scope.submitted = true;
+            if ($scope.mp && $scope.mp.days && $scope.mp.days.length === 0) {
 
-                $scope.validDate=false;
-                $scope.errorMsg='No days';
+                $scope.validDate = false;
+                $scope.errorMsg = 'No data.';
             }
         }
 
 
     };
-    $scope.remove=function(i){
+    $scope.remove = function(i) {
 
-        $scope.mp.days.splice(i,1);
+        $scope.mp.days.splice(i, 1);
 
     };
 
@@ -122,7 +130,7 @@ angular.module('origApp.controllers')
             mimeType: mimeType,
             fileName: fileName
         }, function(response) {
-          //  console.log(response);
+            //  console.log(response);
             $scope.signedUrl = response.data.signedRequest;
             $http({
                 method: 'PUT',
@@ -134,8 +142,8 @@ angular.module('origApp.controllers')
                 }
             }).success(function(l) {
 
-            //    console.log(response);
-                $scope.mp.imageUrl=response.data.url;
+                //    console.log(response);
+                $scope.mp.imageUrl = response.data.url;
                 $scope.isLogoUploading = false;
             });
 
