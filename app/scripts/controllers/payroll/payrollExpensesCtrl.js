@@ -136,6 +136,13 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
             logs(req, 'set submitted to claim');
             $http.post('/api/candidates/expenses/setClaimsSubmitted', req).success(function (res) {
                 logs(res, 'response');
+                if (res.result) {
+                    $scope.allData.forEach(function (claim, i) {
+                        if (claim.id == claimId) {
+                            $scope.allData.splice(i, 1);
+                        }
+                    });
+                }
             });
         }
 
@@ -143,7 +150,7 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
             var req = [];
             $scope.allData.forEach(function (claim) {
                 if (claim.claimCheck) {
-                    batchIds.push(claim.id);
+                    req.push(claim.id);
                 }
             });
             if (req.length == 0) window.alert('No claims selected');
@@ -151,6 +158,15 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
                 logs(req, 'batch set submitted to claims');
                 $http.post('/api/candidates/expenses/setClaimsSubmitted', req).success(function (res) {
                     logs(res, 'response');
+                    if (res.result) {
+                        req.forEach(function (id) {
+                            $scope.allData.forEach(function (claim, i) {
+                                if (claim.id == id) {
+                                    $scope.allData.splice(i, 1);
+                                }
+                            });
+                        });
+                    }
                 });
             }
         }
