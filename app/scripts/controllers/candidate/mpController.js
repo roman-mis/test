@@ -9,6 +9,7 @@ angular.module('origApp.controllers')
     $scope.candidateId = parentScope.candidateId;
     $scope.mp = {};
     $scope.mp.maxPeriods=39;
+    $scope.mp.days;
 
 
 
@@ -53,7 +54,7 @@ angular.module('origApp.controllers')
              var i=new Date($scope.mp.intendedStartDate).valueOf();
 
              if(n <=(d-9072000000)){
-                console.log('teest');
+
 
                 $scope.validDate=true;
                 HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
@@ -89,7 +90,7 @@ angular.module('origApp.controllers')
         }else{
 
             $scope.submitted=true;
-            if($scope.mp.days.length===0){
+            if($scope.mp && $scope.mp.days && $scope.mp.days.length===0){
 
                 $scope.validDate=false;
                 $scope.errorMsg='No days';
@@ -99,7 +100,7 @@ angular.module('origApp.controllers')
 
     };
     $scope.remove=function(i){
-        console.log(i);
+
         $scope.mp.days.splice(i,1);
 
     };

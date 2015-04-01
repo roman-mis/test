@@ -5,7 +5,7 @@
 	<div class="modal-header">
             <h4 class="modal-title">Request for Paternity Pay</h4>
 	</div><!-- /modal-header -->
-                <form name="sppForm" ng-submit="submitInformation(sppForm.$valid)">
+                <form name="sppForm" novalidate ng-submit="submitInformation(sppForm.$valid)">
 				<div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 form-group control-label">Contractor name</div>
@@ -17,9 +17,20 @@
                     <div class="line-horizontal"></div>
                     <div class="row">
 
+                        <div class="col-xs-6 col-sm-4 form-group control-label">Start Date</div>
+                        <div class="col-xs-6 col-sm-8 form-group form-group">
+                                <input type="text" ng-model="spp.startDate" name="start" class="form-control" orig-datepicker required/>
+                                <span ng-if="sppFrom.start.$invalid && submitted">
+                                    <p ng-if="sspFrom.start.$error.required">Please enter start date.</p>
+                                </span>
+                        </div>
+
                         <div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
-                                <input type="text" ng-model="spp.babyDueDate" class="form-control" orig-datepicker/>
+                                <input type="text" name="due" ng-model="spp.babyDueDate" class="form-control" orig-datepicker required/>
+                                <span ng-if="sppFrom.due.$invalid && submitted">
+                                    <p ng-if="sspFrom.due.$error.required">Please enter baby due date.</p>
+                                </span>
                         </div>
                         <div class="col-xs-6 col-sm-4 form-group control-label" style="padding-right:0;">Confirm relationship</div>
                         <div class="col-xs-6 col-sm-8 form-group form-group">
@@ -35,6 +46,9 @@
                         <div class="col-xs-12 col-sm-4 form-group text-right">
                             <button type="button" class="btn btn-primary" ng-click="checkDateMp()">Calculate</button>
                         </div>
+                          <div class="row" ng-if="!validateDate">
+                             {{errorMsg}}
+                            </div>
                      </div>
 
 
@@ -107,7 +121,7 @@
 
 					    <div class="col-xs-6 col-sm-5 form-group text-right btnFooter btnFooterApproval">
 							<a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-								<button type="button" type="submit" class="btn btn-primary">Send for approval</button>
+								<button  type="submit" class="btn btn-primary">Send for approval</button>
 						</div>
 
                     </div>

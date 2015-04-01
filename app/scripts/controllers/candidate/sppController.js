@@ -7,7 +7,6 @@ angular.module('origApp.controllers')
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
 
-    $scope.spp.startDate=null;
     $scope.spp.maxPeriods=2;
     $scope.remove=function(i){
 
@@ -21,12 +20,33 @@ angular.module('origApp.controllers')
     }, function(err) {});
     $scope.checkDateMp=function(){
 
-        HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
+        var n=new Date($scope.spp.startDate).valueOf();
+        var b=new Date($scope.spp.babyDueDate).valueOf();
+        if(n <=(b-9072000000)){
+          $scope.validDate=true;
+          $scope.errorMsg=null;
+
+          HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
                 console.log(data);
                 $scope.spp.days=data.data.objects;
 
 
-            }, function(err) {})
+            }, function(err) {});
+
+        }else{
+
+            $scope.validDate=false;
+               if(n >(b-9072000000)){
+
+                $scope.errorMsg='Start date should be 15 week before baby birth due.';
+                }else{
+
+                    $scope.errorMsg='Please fill all input boxes.';
+                }
+
+        }
+
+
     };
     $scope.$watch('fileupload', function(fileInfo) {
 
@@ -87,11 +107,22 @@ angular.module('origApp.controllers')
 
         });
     };
-    $scope.submitInformation=function(){
+    $scope.submitInformation=function(val){
+        console.log(val);
+        if(val === true && $scope.validDate === true && $scope.spp.days.length >0){
        HttpResource.model('actionrequests/' + $scope.candidateId+'/smp').create($scope.spp).post().then(function(response) {
                   $scope.spp={};
                   $scope.temp={};
                 });
+   }else{
+
+    $scope.submitted=true;
+    if($scope.spp && $scope.spp.days && $scope.spp.days.length===0){
+
+                $scope.validDate=false;
+                $scope.errorMsg='No days';
+            }
+   }
 
     };
       $scope.closeModal = function() {
