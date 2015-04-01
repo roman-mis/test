@@ -25,3 +25,5 @@ router.post('/:id/spp', controller.postSpp);
 
 router.post('/:id/holidaypay', controller.postHolidayPay);
 
+router.get('/',controller.getActionRequestData);
+

@@ -320,6 +320,12 @@ module.exports=function(dbs){
 
 	};
 
+	service.getActionRequestData = function(){
+		console.log('testing');
+		var q=db.ActionRequest.find().populate('worker').populate('user');
+	return Q.nfcall(q.exec.bind(q));
+	};
+
 	return service;
 };
 
