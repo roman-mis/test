@@ -62,7 +62,7 @@ module.exports = function(dbs){
 			'type':enums.actionRequestTypes.SPP,
 			'status':enums.statuses.Submitted,
 			worker:req.params.id,
-			
+
 			spp:{
 				babyDueDate:req.body.babyDueDate,
 				relationship:req.body.relationship
@@ -130,7 +130,7 @@ module.exports = function(dbs){
 
 	};
 
-	
+
 
     controller.checkSspQualification=function(req,res){
     	var request={
@@ -209,7 +209,7 @@ module.exports = function(dbs){
 
     function getActionRequestDataVm(data){
     	var actionRequest=[];
-    	   	
+
 			_.forEach(data, function(actionrequests){
 				var actionRequestData = {
 					id : actionrequests._id,
@@ -220,13 +220,13 @@ module.exports = function(dbs){
 					dateRequested : actionrequests.worker.createdDate,
 					status : actionrequests.status,
 					type : actionrequests.type,
-					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')	
+					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
 				};
 				actionRequest.push(actionRequestData);
 			});
-		
 
-    	
+
+
     	return actionRequest;
     }
 

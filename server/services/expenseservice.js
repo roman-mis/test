@@ -118,7 +118,7 @@ module.exports = function(dbs){
 
                                             if (sys) {
                                               t.amount = i.value;
-                                              t.value = 4.5;  
+                                              t.value = 4.5;
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
                                                 t.expenseDetail.id = sys._id;
@@ -145,7 +145,7 @@ module.exports = function(dbs){
 
                                         }else{
                                           t.amount = i.value;
-                                          t.value = 0.45;      
+                                          t.value = 0.45;
                                           t.expenseDetail = {};
                                           t.expenseDetail.name=i.subType;
                                           t.expenseDetail.total=i.value;
@@ -178,7 +178,7 @@ module.exports = function(dbs){
                                 }
 
                             });
-                            
+
                             resolve({ claims: bucket, system: system });
                         });
 
@@ -200,7 +200,7 @@ module.exports = function(dbs){
     // // //         },function(err){
     // // //           reject(err);
     // // //         });
-    // // //       }); 
+    // // //       });
 
 
     //   var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
@@ -293,8 +293,8 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
               console.log(mailModel);
               console.log(mailOption);
               return mailer.sendEmail(mailOption,mailModel,'status_change').then(function(){
-                  resolve({result:true,message:'mail sent'}); 
-                },reject);      
+                  resolve({result:true,message:'mail sent'});
+                },reject);
   });
 };
 
@@ -317,7 +317,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                 day.expenses.forEach(function(expenses){
                     claims.objects[i].expenses.forEach(function(updatesExpenses){
                       if(expenses._id+'' === updatesExpenses.id+''){
-                        expenses.status = status; 
+                        expenses.status = status;
                         writePromises.push(service.sendMail(expense[i].user,expenses,status,updatesExpenses.reason,expense[i].claimReference));
                       }
                     });
@@ -342,7 +342,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                 reject(err);
               });
           },function(err){
-            console.log('***********2') 
+            console.log('***********2')
             reject(err);
           });
         });
@@ -423,11 +423,11 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                     if(changeDay){
                       var foundTheTargetDay = false;
                       expenses[i].days.forEach(function(targetNewDay){
-                      
+
                         if(daysBetween(targetNewDay.date,new Date(data[i].date)) === 0){
                           console.log('**')
                           console.log('new day')
-                          console.log('**')  
+                          console.log('**')
                           foundTheTargetDay = true;
                           targetNewDay.expenses.push(dayExpense);
                           day.expenses.splice(dayExpenseIndex,1);
@@ -439,17 +439,17 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                         console.log('**')
                           console.log('create new day')
                           console.log('**')
-                    
+
                         var newDay = {};
-                        newDay.date = new Date(data[i].date); 
-                        newDay.startTime = day.startTime; 
-                        newDay.endTime = day.endTime; 
+                        newDay.date = new Date(data[i].date);
+                        newDay.startTime = day.startTime;
+                        newDay.endTime = day.endTime;
                         newDay.expenses = [];
                         newDay.expenses.push(dayExpense);
                         day.expenses.splice(dayExpenseIndex,1);
                         console.log('newDay')
                         console.log(newDay)
-                        expenses[i].days.push(newDay); 
+                        expenses[i].days.push(newDay);
                       }
                     }
                     breakFrmLoops = true;
@@ -462,7 +462,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
               });
                     WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
             }
-            
+
             return Q.all(WritePromises).then(function(res){
               resolve({result:true,opjects:res});
             },function(err){
@@ -507,7 +507,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
 
     };
 
-    
+
     function daysBetween(first, second) {
       // Copy date parts of the timestamps, discarding the time parts.
       var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());

@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Contractor ID</th>
+                        <th>Contractor Name</th>
+                        <th>Date Requested</th>
+                        <th>Type</th>
+                        <th>Period Actioned</th>
+                        <th>User Requested</th>
+                        <th>Request Ref.</th>
+            <th>Status</th>
+            <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                  <tr ng-repeat="l in lists">
+                   <td>{{l.user.id}}</td>
+                   <td>{{l.user.contractorName}}</td>
+                   <td>{{l.dateRequested | date:'medium'}}</td>
+                   <td>{{l.type}}</td>
+                   <td>-</td>
+                   <td>-</td>
+                   <td>{{l.requestRef}}</td>
+                   <td>{{l.status}}</td>
+                   <td class="text-center">
+                    <div class="dropdown text-left" style="cursor:pointer">
+                            <a data-toggle="dropdown">
+                                <i class="fa fa-folder-open-o"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown pull-right" role="menu">
+                               <li><a ng-click="callModal(l.id);">Open</a></li>
+                                <!--    <li><a href="#">Change Status</a></li> -->
+
+                            </ul>
+                        </div>
+
+                   </td>
+
+                  </tr>
+
+
+        </tbody>
+            </table>
+
+        </div>
+    </div>
+</div><!-- /container -->

@@ -34,7 +34,13 @@ angular.module('origApp').config(function($stateProvider) {
     url:'/expenses',
     templateUrl:'views/payroll/expenses.html',
     controller:'payrollExpensesCtrl'
-  });
- 
+  })
+  .state('app.payroll.actionRequest',{
+
+    url:'/actionRequest',
+    templateUrl:'views/actionRequest/home.html',
+    controller:'actionRequestController'
+  })
+
 
 });
