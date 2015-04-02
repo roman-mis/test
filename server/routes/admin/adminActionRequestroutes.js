@@ -27,4 +27,6 @@ router.post('/:userId/holidaypay', controller.postHolidayPay);
 
 router.get('/',controller.getActionRequestData);
 
+router.get('/:id',controller.getActionRequestDataById);
+
 router.post('/:userId/studentloan',controller.postStudentLoan);

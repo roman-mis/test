@@ -198,7 +198,39 @@ module.exports = function(dbs){
 
 
 
+controller.getActionRequestDataById =function(req, res){
+	adminActionRequestService.getActionRequestDataById(req.params.id)
+    		.then(function(response){
+    		if(response){
+    			var actionrequests = getActionRequestDataByIdVm(response);
+    			res.json({result:true,objects: actionrequests});
+    		}else{
+    			res.json({result:false, message : 'actionRequestData not found.'});
+    		}
+    		})
+    		.then(null,function(err){
+    			res.sendFailureResponse(err);
+    		});
+};
 
+
+ function getActionRequestDataByIdVm(data){
+ 	
+ 	return {
+ 		id: data._id,
+ 		worker : {
+ 			id : data.worker._id,
+ 			name : data.worker.firstName + ' ' + data.worker.lastName,
+ 			candidateRef : utils.padLeft(data.worker.candidateNo || '0', 7, '0')
+ 		}, 
+ 		dateRequested : data.worker.createdDate,
+		status : data.status,
+		type : data.type,
+		periodActioned : '',
+		requestRef: utils.padLeft(data.requestReference || '0', 7, '0'),
+		createdBy : data.createdBy.firstName + ' ' + data.createdBy.lastName
+ 	 }
+ 	}
 
 
     function getActionRequestDataVm(data){
@@ -210,22 +242,21 @@ module.exports = function(dbs){
 					worker: {
 						id : actionrequests.worker._id,
 						name : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
-						candidateRef : utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
+						candidateNo : utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
 						},
 					dateRequested : actionrequests.worker.createdDate,
 					status : actionrequests.status,
 					type : actionrequests.type,
 					periodActioned : '',
 					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
-					createdBy : actionrequests.createdBy	
+					createdBy : actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName	
 				};
 				actionRequest.push(actionRequestData);
 			});
-		
-
     	
     	return actionRequest;
     }
+    
 
     return controller;
 };

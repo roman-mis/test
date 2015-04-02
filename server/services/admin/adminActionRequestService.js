@@ -37,7 +37,7 @@ module.exports=function(dbs){
 
 	service.updateActionRequest=function(id,details,status){
 		return Q.Promise(function(resolve,reject){
-			return service.getActionRequest(id)
+			return service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
 						actionRequest=utils.updateSubModel(actionRequest,details);
@@ -52,10 +52,7 @@ module.exports=function(dbs){
 		});
 	}
 
-	service.getActionRequest=function(id){
-		return db.ActionRequest.findById(id).exec();
-	};
-
+	
 	service.getActionRequestPayments=function(id,request,payType){
 		console.log('request is ');
 		console.log(request);
@@ -340,8 +337,12 @@ module.exports=function(dbs){
 	};
 
 	service.getActionRequestData = function(){
-		console.log('testing');
-		var q=db.ActionRequest.find().populate('worker').populate('user');
+		var q=db.ActionRequest.find().populate('worker').populate('createdBy').populate('user');
+	return Q.nfcall(q.exec.bind(q));
+	};
+
+	service.getActionRequestDataById = function(id){
+		var q=db.ActionRequest.findById(id).populate('worker').populate('createdBy').populate('user');
 	return Q.nfcall(q.exec.bind(q));
 	};
 
