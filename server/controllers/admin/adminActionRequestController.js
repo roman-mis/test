@@ -6,12 +6,13 @@ module.exports = function(dbs){
 	var systemservice = require('../../services/systemservice')(dbs);
 	var adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 	var enums=require('../../utils/enums');
+	var Q=require('q');
 	controller.postSsp=function(req,res){
 
-		var sspDetail={
+		var detail={
 			'type':enums.actionRequestTypes.SSP,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			dateInformed:req.body.dateInformed,
 			startDate:req.body.startDate,
 			endDate:req.body.endDate,
@@ -20,23 +21,19 @@ module.exports = function(dbs){
 			createdBy:req.user.id
 		};
 
-		_.forEach(sspDetail.days,function(detailDay){
-			detailDay.sick=true;
-		});
+		// _.forEach(detail.days,function(detailDay){
+		// 	// detailDay.sick=true;
+		// });
 
-		adminActionRequestService.saveActionRequest(req.params.id,sspDetail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
 
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SSP);
 	};
 
 	controller.postSmp=function(req,res){
 		var detail={
 			'type':enums.actionRequestTypes.SMP,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			startDate:req.body.startDate,
 			intendedStartDate:req.body.intendedStartDate,
 			smp:{
@@ -48,12 +45,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SMP);
 
 	};
 
@@ -61,7 +53,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.SPP,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			
 			spp:{
 				babyDueDate:req.body.babyDueDate,
@@ -73,12 +65,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SPP);
 
 	};
 
@@ -86,7 +73,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.HolidayPay,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			holidayPay:{
 				amount:req.body.amount
 			},
@@ -94,15 +81,8 @@ module.exports = function(dbs){
 
 
 		};
-		console.log('detail');
-		console.log(detail);
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.HolidayPay);
 
 	};
 
@@ -111,7 +91,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.SLR,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			studentLoan:{
 				haveLoan:req.body.haveLoan,
 				payDirectly:req.body.payDirectly
@@ -121,13 +101,24 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SLR);
+
+	};
+
+	function postActionRequest(req,res,detail,actionRequestType){
+		console.log('detail');
+		console.log(detail);
+		return Q.Promise(function(resolve,reject){
+			adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
-
+				resolve(response);
 			})
-			.fail(res.sendFailureResponse);
-
+			.fail(function(err){
+				res.sendFailureResponse(err);
+				reject(err);
+			});
+		});
 	};
 
 	
@@ -139,7 +130,7 @@ module.exports = function(dbs){
     		endDate:req.query.endDate,
     		maxPeriods:req.query.maxPeriods
     	};
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'ssp')
+    	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'ssp')
     		.then(function(response){
     			res.json(response);
     		})
@@ -159,7 +150,7 @@ module.exports = function(dbs){
 
     	};
     	// request.endDate=moments(request.startDate).add()
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'smp')
+    	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'smp')
     		.then(function(response){
     			res.json(response);
     		})
@@ -181,7 +172,7 @@ module.exports = function(dbs){
 
     	};
     	// request.endDate=moments(request.startDate).add()
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'spp')
+    	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'spp')
     		.then(function(response){
     			res.json(response);
     		})
@@ -198,31 +189,35 @@ module.exports = function(dbs){
     		.then(function(response){
     			console.log(response);
     			var actionrequests = getActionRequestDataVm(response);
-    		console.log('response');
     		res.json({objects:actionrequests});
     		})
     		.then(null,function(err){
-    			console.log('err');
-    			console.log(err);
     			res.sendFailureResponse(err);
     		});
     };
 
 
 
+
+
+
     function getActionRequestDataVm(data){
     	var actionRequest=[];
-    	
+    	   	
 			_.forEach(data, function(actionrequests){
 				var actionRequestData = {
-					user: {
+					id : actionrequests._id,
+					worker: {
 						id : actionrequests.worker._id,
-						contractorName : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
+						name : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
+						candidateRef : utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
 						},
 					dateRequested : actionrequests.worker.createdDate,
 					status : actionrequests.status,
 					type : actionrequests.type,
-					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')	
+					periodActioned : '',
+					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
+					createdBy : actionrequests.createdBy	
 				};
 				actionRequest.push(actionRequestData);
 			});

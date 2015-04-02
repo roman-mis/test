@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
 
 
-.controller('slController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance) {
+.controller('slController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance,MsgService) {
 
     $scope.candidateId = parentScope.candidateId;
     $scope.sl = {'haveLoan':false,'payDirectly':false}
@@ -23,7 +23,10 @@ angular.module('origApp.controllers')
        HttpResource.model('actionrequests/' + $scope.candidateId+'/studentloan').create(values).post().then(function(response) {
                   $scope.sl.haveLoan=false;
                   $scope.sl.payDirectly=false;
+                   MsgService.success('Successfully submitted.');
 
+                },function (error) {
+                    MsgService.danger(error);
                 });
     };
     $scope.closeModal = function() {

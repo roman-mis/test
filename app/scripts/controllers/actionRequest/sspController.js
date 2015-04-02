@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
 
 
-.controller('sspController', function($scope, parentScope, HttpResource, $http, $modalInstance) {
+.controller('sspController', function($scope, parentScope, HttpResource, $http, $modalInstance,MsgService) {
 
 
 
@@ -22,6 +22,10 @@ angular.module('origApp.controllers')
                 HttpResource.model('actionrequests/' + $scope.candidateId+'/ssp').create($scope.ssp).post().then(function(response) {
                   $scope.ssp={};
                   $scope.temp={};
+                  MsgService.success('Successfully submitted.');
+
+                },function (error) {
+                    MsgService.danger(error);
                 });
         } else {
 
