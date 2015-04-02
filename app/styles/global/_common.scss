@@ -785,7 +785,7 @@ header.container-fluid {
         table:not(.expenses-auth) > tfoot > tr > th,
         table:not(.expenses-auth) > tfoot > tr > td {            
         }
-/*        .table {
+        /*.table {
             thead  tr th {
                 border: none;
                 background-color: $green-light;
@@ -812,7 +812,11 @@ header.container-fluid {
                     }
                 }
             }
-        }  */      
+        }  */
+        
+        .table.expenses-auth td {
+            vertical-align: middle;            
+        }
         table:not(.expenses-auth) {
             border-collapse: separate;
             border-spacing: 3px;
