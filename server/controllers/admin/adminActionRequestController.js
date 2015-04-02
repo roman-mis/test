@@ -228,7 +228,10 @@ controller.getActionRequestDataById =function(req, res){
 		type : data.type,
 		periodActioned : '',
 		requestRef: utils.padLeft(data.requestReference || '0', 7, '0'),
-		createdBy : data.createdBy.firstName + ' ' + data.createdBy.lastName,
+		createdBy : {
+			id : data.createdBy._id,
+			name : data.createdBy.firstName + ' ' + data.createdBy.lastName
+		},
 		dateInformed : data.dateInformed,
 		intendedStartDate : data.intendedStartDate,
 		actualStartDate : data.actualStartDate,
@@ -260,18 +263,21 @@ controller.getActionRequestDataById =function(req, res){
 					type : actionrequests.type,
 					periodActioned : '',
 					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
-					createdBy : actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName,
+					createdBy : {
+						id : actionrequests.createdBy._id,
+						name :actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName
+					},
 					dateInformed : actionrequests.dateInformed,
 					intendedStartDate : actionrequests.intendedStartDate,
 					actualStartDate : actionrequests.actualStartDate,
 					startDate : actionrequests.startDate,
-					endDate : actionrequests.endDate,
-					smp : actionrequests.smp,
+					endDate : actionrequests.endDate
+				/*	smp : actionrequests.smp,
 					spp : actionrequests.spp,
 					holidayPay : actionrequests.holidayPay,
 					studentLoan : actionrequests.studentLoan,
 					imageUrl : actionrequests.imageUrl,
-					days : actionrequests.days		
+					days : actionrequests.days	 */	
 				};
 				actionRequest.push(actionRequestData);
 			});
