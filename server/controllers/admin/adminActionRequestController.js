@@ -25,6 +25,7 @@ module.exports = function(dbs){
 		// 	// detailDay.sick=true;
 		// });
 
+
 		postActionRequest(req,res,detail,enums.actionRequestTypes.SSP);
 	};
 
