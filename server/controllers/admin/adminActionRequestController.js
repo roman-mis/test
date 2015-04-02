@@ -11,7 +11,7 @@ module.exports = function(dbs){
 		var sspDetail={
 			'type':enums.actionRequestTypes.SSP,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			dateInformed:req.body.dateInformed,
 			startDate:req.body.startDate,
 			endDate:req.body.endDate,
@@ -24,7 +24,7 @@ module.exports = function(dbs){
 			detailDay.sick=true;
 		});
 
-		adminActionRequestService.saveActionRequest(req.params.id,sspDetail)
+		adminActionRequestService.saveActionRequest(req.params.userId,sspDetail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
 
@@ -36,7 +36,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.SMP,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			startDate:req.body.startDate,
 			intendedStartDate:req.body.intendedStartDate,
 			smp:{
@@ -48,7 +48,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
+		adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
 
@@ -61,7 +61,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.SPP,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			
 			spp:{
 				babyDueDate:req.body.babyDueDate,
@@ -73,7 +73,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
+		adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
 
@@ -86,7 +86,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.HolidayPay,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			holidayPay:{
 				amount:req.body.amount
 			},
@@ -97,7 +97,7 @@ module.exports = function(dbs){
 		console.log('detail');
 		console.log(detail);
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
+		adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
 
@@ -111,7 +111,7 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.SLR,
 			'status':enums.statuses.Submitted,
-			worker:req.params.id,
+			worker:req.params.userId,
 			studentLoan:{
 				haveLoan:req.body.haveLoan,
 				payDirectly:req.body.payDirectly
@@ -121,7 +121,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.id,detail)
+		adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
 
@@ -139,7 +139,7 @@ module.exports = function(dbs){
     		endDate:req.query.endDate,
     		maxPeriods:req.query.maxPeriods
     	};
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'ssp')
+    	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'ssp')
     		.then(function(response){
     			res.json(response);
     		})
@@ -159,7 +159,7 @@ module.exports = function(dbs){
 
     	};
     	// request.endDate=moments(request.startDate).add()
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'smp')
+    	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'smp')
     		.then(function(response){
     			res.json(response);
     		})
@@ -181,7 +181,7 @@ module.exports = function(dbs){
 
     	};
     	// request.endDate=moments(request.startDate).add()
-    	adminActionRequestService.getActionRequestPayments(req.params.id,request,'spp')
+    	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'spp')
     		.then(function(response){
     			res.json(response);
     		})
