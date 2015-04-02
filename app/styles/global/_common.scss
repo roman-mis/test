@@ -52,6 +52,10 @@ textarea {
     resize: vertical;
 }
 
+select {
+    transition: background .1s;
+}
+
 .modal-open {
     overflow: hidden;
 }
@@ -152,6 +156,11 @@ textarea {
 .padding-10 {
     padding: 10px;
 }
+
+.gutter-right {
+    margin-right: 12px;
+}
+
 /*Header Section*/
 
 header.container-fluid {
@@ -317,7 +326,9 @@ header.container-fluid {
     border-collapse: collapse;
     border-spacing: 0;
     table-layout: fixed;
-    .left-sidebar, .candidate-right-sidebar, .right-sidebar {
+    .left-sidebar, 
+    .candidate-right-sidebar, 
+    .right-sidebar {
         display: table-cell;
         position: relative;
         z-index: 1;
