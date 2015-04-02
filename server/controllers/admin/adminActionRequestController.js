@@ -6,9 +6,10 @@ module.exports = function(dbs){
 	var systemservice = require('../../services/systemservice')(dbs);
 	var adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 	var enums=require('../../utils/enums');
+	var Q=require('Q');
 	controller.postSsp=function(req,res){
 
-		var sspDetail={
+		var detail={
 			'type':enums.actionRequestTypes.SSP,
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
@@ -20,16 +21,11 @@ module.exports = function(dbs){
 			createdBy:req.user.id
 		};
 
-		_.forEach(sspDetail.days,function(detailDay){
-			detailDay.sick=true;
-		});
+		// _.forEach(detail.days,function(detailDay){
+		// 	// detailDay.sick=true;
+		// });
 
-		adminActionRequestService.saveActionRequest(req.params.userId,sspDetail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SSP);
 	};
 
 	controller.postSmp=function(req,res){
@@ -48,12 +44,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.userId,detail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SMP);
 
 	};
 
@@ -73,12 +64,7 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.userId,detail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SPP);
 
 	};
 
@@ -94,15 +80,8 @@ module.exports = function(dbs){
 
 
 		};
-		console.log('detail');
-		console.log(detail);
 
-		adminActionRequestService.saveActionRequest(req.params.userId,detail)
-			.then(function(response){
-				res.json({result:response.result,object:response.object.actionRequestModel});
-
-			})
-			.fail(res.sendFailureResponse);
+		postActionRequest(req,res,detail,enums.actionRequestTypes.HolidayPay);
 
 	};
 
@@ -121,13 +100,24 @@ module.exports = function(dbs){
 
 		};
 
-		adminActionRequestService.saveActionRequest(req.params.userId,detail)
+		postActionRequest(req,res,detail,enums.actionRequestTypes.SLR);
+
+	};
+
+	function postActionRequest(req,res,detail,actionRequestType){
+		console.log('detail');
+		console.log(detail);
+		return Q.Promise(function(resolve,reject){
+			adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function(response){
 				res.json({result:response.result,object:response.object.actionRequestModel});
-
+				resolve(response);
 			})
-			.fail(res.sendFailureResponse);
-
+			.fail(function(err){
+				res.sendFailureResponse(err);
+				reject(err);
+			});
+		});
 	};
 
 	

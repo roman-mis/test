@@ -15,10 +15,10 @@ module.exports=function(dbs){
 
 	var moment=require('moment');
 
-	service.saveActionRequest=function(id,details){
+	service.saveActionRequest=function(userId,details){
 
 		return Q.Promise(function(resolve,reject){
-			return candidateCommonService.getUser(id)
+			return candidateCommonService.getUser(userId)
 					.then(function(user){
 						if(user){
 							var actionRequestModel=new db.ActionRequest(details);
@@ -35,7 +35,26 @@ module.exports=function(dbs){
 		});
 	};
 
+	service.updateActionRequest=function(id,details,status){
+		return Q.Promise(function(resolve,reject){
+			return service.getActionRequest(id)
+				.then(function(actionRequest){
+					if(actionRequest){
+						actionRequest=utils.updateSubModel(actionRequest,details);
+						actionRequest['status']=status?status.toLowerCase():actionRequest['status'];
 
+						return Q.nfcall(actionRequest.save.bind(actionRequest));
+					}
+					else{
+						reject({result:false,name:'NOTFOUND',message:'Previous Action request not found'});
+					}
+				});
+		});
+	}
+
+	service.getActionRequest=function(id){
+		return db.ActionRequest.findById(id).exec();
+	};
 
 	service.getActionRequestPayments=function(id,request,payType){
 		console.log('request is ');
