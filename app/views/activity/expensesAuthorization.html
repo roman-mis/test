@@ -3,6 +3,16 @@
 </div>-->
 
 <div class="meta-box padding-10 container-fluid">
+    <div class="row" ng-if="pendingRejections.length != 0">
+        <div class="col-xs-12; text-right">
+            <h3>
+                Pending Rejections: {{pendingRejections.length}} &nbsp;
+                <button type="button" class="btn btn-default"
+                        ng-disabled="pendingRejections.length == 0"
+                        ng-click="reviewSummary()">Review Summary</button>
+            </h3>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-striped expenses-auth">
@@ -87,7 +97,8 @@
                                             <td style="width:20px">
                                                 <a data-toggle="collapse" ng-click="test2[$index] = !test2[$index]" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer"><i class="fa fa-minus-square-o"></i></a>
                                             </td>
-                                            <td col-span="9"><b>{{cat}}</b>
+                                            <td col-span="9">
+                                                <b>{{cat}}</b>
                                             </td>
                                             <td style="width:20px">
                                                 <div class="dropdown text-left">
@@ -160,7 +171,7 @@
                                                                 </td>
 
                                                                 <td width="10%">
-                                                                    <div ng-hide="item.edit">{{item.amount}}</div>
+                                                                    <div ng-hide="item.edit">{{item.amount | currency:""}}</div>
                                                                     <div ng-if="item.edit">
                                                                         <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
                                                                     </div>
