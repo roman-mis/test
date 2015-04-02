@@ -13,14 +13,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
 // endbower
 
-// purecss grids and responsiveness bundle
-@import "_pure";
-
-
 @import "global/index";
 @import "pages/index";
 @import "add_timesheet";
-
-body > div.page-container.container-fluid.lty-body.ng-scope > div.main-content.ng-scope > div.ng-scope > div > div.orig-grid-wrapper.ng-isolate-scope > div > ul > li.ng-scope.active2 > a {
-    background-color: $green;
-}
