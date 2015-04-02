@@ -169,6 +169,7 @@ module.exports = function(db){
 
 
 	controller.getAllExpenses=function(req,res){
+      	var approvedOnly = false;
       	return expenseservice.getAllExpenses(req._restOptions).then(function(expense){
       //		console.log(expense);
      		res.json({result:true,object:expense});
@@ -186,6 +187,41 @@ module.exports = function(db){
 
 
 	};
+
+	controller.setClaimsSubmitted=function(req,res){
+
+		expenseservice.setClaimsSubmitted(req.body).then(function(d){
+      res.json(d);
+		},function(err){
+
+       	res.sendFailureResponse(err);
+		});
+
+
+	};
+
+
+	controller.getAllApprovedExpenses=function(req,res){
+				var approvedOnly = true;
+      	return expenseservice.getAllExpenses(req._restOptions,approvedOnly).then(function(expense){
+      //		console.log(expense);
+     		res.json({result:true,object:expense});
+		}).then(null, res.sendFailureResponse);
+	};
+	controller.rejectExpense=function(req,res){
+
+		expenseservice.changeStatus(enums.expenseStatus.Reject,req.body).then(function(d){
+           res.json(d);
+
+		},function(err){
+
+       	res.sendFailureResponse(err);
+		});
+
+
+	};
+
+
 	controller.approveExpense=function(req,res){
     expenseservice.changeStatus(enums.expenseStatus.Approve,req.body).then(function(d){
            res.json(d);

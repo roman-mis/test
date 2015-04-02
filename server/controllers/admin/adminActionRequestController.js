@@ -1,15 +1,16 @@
 'use strict';
 var controller={};
 module.exports = function(dbs){
-	var systemservice = require('../../services/systemservice')(dbs),
-		adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs),
-		_=require('lodash');
-
+	var utils=require('../../utils/utils');
+	var _ =require('lodash');
+	var systemservice = require('../../services/systemservice')(dbs);
+	var adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
+	var enums=require('../../utils/enums');
 	controller.postSsp=function(req,res){
 
 		var sspDetail={
-			'type':'ssp',
-			'status':'submitted',
+			'type':enums.actionRequestTypes.SSP,
+			'status':enums.statuses.Submitted,
 			worker:req.params.id,
 			dateInformed:req.body.dateInformed,
 			startDate:req.body.startDate,
@@ -33,8 +34,8 @@ module.exports = function(dbs){
 
 	controller.postSmp=function(req,res){
 		var detail={
-			'type':'smp',
-			'status':'submitted',
+			'type':enums.actionRequestTypes.SMP,
+			'status':enums.statuses.Submitted,
 			worker:req.params.id,
 			startDate:req.body.startDate,
 			intendedStartDate:req.body.intendedStartDate,
@@ -58,8 +59,8 @@ module.exports = function(dbs){
 
 	controller.postSpp=function(req,res){
 		var detail={
-			'type':'spp',
-			'status':'submitted',
+			'type':enums.actionRequestTypes.SPP,
+			'status':enums.statuses.Submitted,
 			worker:req.params.id,
 			
 			spp:{
@@ -83,8 +84,8 @@ module.exports = function(dbs){
 
 	controller.postHolidayPay=function(req,res){
 		var detail={
-			'type':'holidaypay',
-			'status':'submitted',
+			'type':enums.actionRequestTypes.HolidayPay,
+			'status':enums.statuses.Submitted,
 			worker:req.params.id,
 			holidayPay:{
 				amount:req.body.amount
@@ -108,8 +109,8 @@ module.exports = function(dbs){
 
 	controller.postStudentLoan=function(req,res){
 		var detail={
-			'type':'studentloan',
-			'status':'submitted',
+			'type':enums.actionRequestTypes.SLR,
+			'status':enums.statuses.Submitted,
 			worker:req.params.id,
 			studentLoan:{
 				haveLoan:req.body.haveLoan,
@@ -190,5 +191,44 @@ module.exports = function(dbs){
     			res.sendFailureResponse(err);
     		});
     };
+
+
+    controller.getActionRequestData = function(req, res){
+    	adminActionRequestService.getActionRequestData()
+    		.then(function(response){
+    			console.log(response);
+    			var actionrequests = getActionRequestDataVm(response);
+    		res.json({objects:actionrequests});
+    		})
+    		.then(null,function(err){
+    			res.sendFailureResponse(err);
+    		});
+    };
+
+
+
+    function getActionRequestDataVm(data){
+    	var actionRequest=[];
+    	   	
+			_.forEach(data, function(actionrequests){
+				var actionRequestData = {
+					id : actionrequests._id,
+					user: {
+						id : actionrequests.worker._id,
+						contractorName : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
+						},
+					dateRequested : actionrequests.worker.createdDate,
+					status : actionrequests.status,
+					type : actionrequests.type,
+					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')	
+				};
+				actionRequest.push(actionRequestData);
+			});
+		
+
+    	
+    	return actionRequest;
+    }
+
     return controller;
 };

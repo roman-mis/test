@@ -4,7 +4,7 @@
     <thead>
       <tr >
         <td class="col-xs-2 btn-success text-center">
-          <img style="width:20px;height:20px" src="/images/64px/0371-insert-template.png" alt="">
+          <img style="width:15px;height:15px" src="/images/64px/0371-insert-template.png" alt="">
         </td>
         <td class="col-xs-2 btn-success text-center" ng-repeat="col in options.columns">
           {{col}}
@@ -14,7 +14,8 @@
     <tbody>
       <tr  ng-repeat="raw in options.data" >
         <td   class="col-xs-1 text-center">
-          <img style="width:20px;height:20px" ng-src='{{options.getImage(options.allData[$index].templateType)}}' alt="">
+          <img style="width:15px;height:15px"
+               ng-src='{{options.getImage(options.allData[$index].templateType)}}' alt="">
         </td>
         <td class="col-xs-2 text-center" ng-repeat="col in raw track by $index">
           {{col| date:'yyyy-MM-dd'}}
