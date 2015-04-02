@@ -8,7 +8,79 @@ var bcrypt=require('bcryptjs'),
 
 var utils;
 
+function cloneItem(item,ky,parentKy,excludedAttribs,includedAttribs){
+	// console.log('cloning');
+	// console.log(item);
+	var consolidatedKey=parentKy && ky!==''?parentKy+'.'+ky:(ky!==''?ky:(parentKy||''));
+	console.log('consolidatedKy   '+consolidatedKey);
+	console.log('ky    '+ky);
+	var newItem={};
+	if(_.isArray(item) ){
+		newItem=[];
+		console.log('is array '+ky);
+		
+	}
+	_.forEach(item,function(itemVal,itemKy){
+		
+		
+		var isOk=false;
+		var newItemKey=(_.isArray(item)?'':itemKy);
+		console.log('newItemKey   '+ newItemKey);
+		var itemFullKey=consolidatedKey && newItemKey!==''?consolidatedKey+'.'+newItemKey:(newItemKey!==''?newItemKey:consolidatedKey);
+		console.log('full key '+itemFullKey);
+
+		// if(includedAttribs && includedAttribs.length>0){
+		// 	_.forEach(includedAttribs,function(atr){
+
+		// 		if(atr.toLowerCase()===itemFullKey.toLowerCase()){
+		// 			isOk=true;
+		// 			return false;
+		// 		}
+		// 	});
+		// }
+		// else 
+		if(excludedAttribs && excludedAttribs.length>0){
+			isOk=true;
+			_.forEach(excludedAttribs,function(atr){
+
+				if(atr.toLowerCase()===itemFullKey.toLowerCase()){
+					isOk=false;
+					return false;
+				}
+			});
+		}
+		else{
+			isOk=true;
+		}
+		// console.log('itemKy '+itemKy);
+		if(isOk && _.isObject(itemVal)){
+			console.log('going for sub object');
+			var cln=cloneItem(itemVal,newItemKey,consolidatedKey,excludedAttribs,includedAttribs);
+			if(_.isArray(item) ){
+				newItem.push(cln);
+				
+			}
+			else{
+				newItem[itemKy]=cln;
+				
+			}
+			
+		}
+		else if(isOk){
+			newItem[itemKy]=itemVal;
+		}
+	});
+
+	return newItem;
+}
 module.exports=utils={
+	cloneObject:function(obj,excludedAttribs){
+		var clonedItem= cloneItem(obj,'','',excludedAttribs);
+		// console.log('final cloned item');
+		// console.log(clonedItem);
+		return clonedItem;
+		
+	},
 	 getStatutoryValue:function(name,system,currentDate) {
             
         //    log('Looking for Statutory Value: ' + name);
