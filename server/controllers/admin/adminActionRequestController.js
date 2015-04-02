@@ -6,7 +6,7 @@ module.exports = function(dbs){
 	var systemservice = require('../../services/systemservice')(dbs);
 	var adminActionRequestService = require('../../services/admin/adminActionRequestService')(dbs);
 	var enums=require('../../utils/enums');
-	var Q=require('Q');
+	var Q=require('q');
 	controller.postSsp=function(req,res){
 
 		var detail={
@@ -24,6 +24,7 @@ module.exports = function(dbs){
 		// _.forEach(detail.days,function(detailDay){
 		// 	// detailDay.sick=true;
 		// });
+
 
 		postActionRequest(req,res,detail,enums.actionRequestTypes.SSP);
 	};
