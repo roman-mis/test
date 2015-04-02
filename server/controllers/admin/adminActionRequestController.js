@@ -198,23 +198,26 @@ module.exports = function(dbs){
 
 
 
+
+
+
     function getActionRequestDataVm(data){
     	var actionRequest=[];
     	   	
 			_.forEach(data, function(actionrequests){
 				var actionRequestData = {
 					id : actionrequests._id,
-					user: {
-						contractorId : actionrequests.worker._id,
-						userId : actionrequests.createdBy,
-						contractorName : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
-						contractorNo : actionrequests.worker.candidateNo
+					worker: {
+						id : actionrequests.worker._id,
+						name : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
+						candidateRef : utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
 						},
 					dateRequested : actionrequests.worker.createdDate,
 					status : actionrequests.status,
 					type : actionrequests.type,
-					periodActioned : actionrequests.periodActioned || '',
-					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')	
+					periodActioned : '',
+					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
+					createdBy : actionrequests.createdBy	
 				};
 				actionRequest.push(actionRequestData);
 			});
