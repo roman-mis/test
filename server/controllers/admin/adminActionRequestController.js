@@ -228,7 +228,18 @@ controller.getActionRequestDataById =function(req, res){
 		type : data.type,
 		periodActioned : '',
 		requestRef: utils.padLeft(data.requestReference || '0', 7, '0'),
-		createdBy : data.createdBy.firstName + ' ' + data.createdBy.lastName
+		createdBy : data.createdBy.firstName + ' ' + data.createdBy.lastName,
+		dateInformed : data.dateInformed,
+		intendedStartDate : data.intendedStartDate,
+		actualStartDate : data.actualStartDate,
+		startDate : data.startDate,
+		endDate : data.endDate,
+		smp : data.smp,
+		spp : data.spp,
+		holidayPay : data.holidayPay,
+		studentLoan : data.studentLoan,
+		imageUrl : data.imageUrl,
+		days : data.days
  	 }
  	}
 
@@ -249,13 +260,25 @@ controller.getActionRequestDataById =function(req, res){
 					type : actionrequests.type,
 					periodActioned : '',
 					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
-					createdBy : actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName	
+					createdBy : actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName,
+					dateInformed : actionrequests.dateInformed,
+					intendedStartDate : actionrequests.intendedStartDate,
+					actualStartDate : actionrequests.actualStartDate,
+					startDate : actionrequests.startDate,
+					endDate : actionrequests.endDate,
+					smp : actionrequests.smp,
+					spp : actionrequests.spp,
+					holidayPay : actionrequests.holidayPay,
+					studentLoan : actionrequests.studentLoan,
+					imageUrl : actionrequests.imageUrl,
+					days : actionrequests.days		
 				};
 				actionRequest.push(actionRequestData);
 			});
     	
     	return actionRequest;
     }
+    
     
 
     return controller;
