@@ -27,8 +27,12 @@ router.get('/loggedinuser',candidatecontroller.getLoggedInUser);
 router.get('/',restMiddleware(db),candidatecontroller.getAllCandidate);
 
 router.get('/expenses', restMiddleware(db),expensecontroller.getAllExpenses);
+router.get('/expenses/approvedOnly', restMiddleware(db),expensecontroller.getAllApprovedExpenses);
+
 
 router.post('/expenses',expensecontroller.deleteExpense);
+
+router.post('/expenses/setClaimsSubmitted',expensecontroller.setClaimsSubmitted);
 
 router.patch('/expenses/reject',expensecontroller.rejectExpense);
 
