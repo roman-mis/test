@@ -204,12 +204,15 @@ module.exports = function(dbs){
 				var actionRequestData = {
 					id : actionrequests._id,
 					user: {
-						id : actionrequests.worker._id,
+						contractorId : actionrequests.worker._id,
+						userId : actionrequests.createdBy,
 						contractorName : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
+						contractorNo : actionrequests.worker.candidateNo
 						},
 					dateRequested : actionrequests.worker.createdDate,
 					status : actionrequests.status,
 					type : actionrequests.type,
+					periodActioned : actionrequests.periodActioned || '',
 					requestRef: utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')	
 				};
 				actionRequest.push(actionRequestData);
