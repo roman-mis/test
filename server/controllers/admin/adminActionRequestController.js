@@ -198,12 +198,9 @@ module.exports = function(dbs){
     		.then(function(response){
     			console.log(response);
     			var actionrequests = getActionRequestDataVm(response);
-    		console.log('response');
     		res.json({objects:actionrequests});
     		})
     		.then(null,function(err){
-    			console.log('err');
-    			console.log(err);
     			res.sendFailureResponse(err);
     		});
     };
@@ -212,9 +209,10 @@ module.exports = function(dbs){
 
     function getActionRequestDataVm(data){
     	var actionRequest=[];
-    	
+    	   	
 			_.forEach(data, function(actionrequests){
 				var actionRequestData = {
+					id : actionrequests._id,
 					user: {
 						id : actionrequests.worker._id,
 						contractorName : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
