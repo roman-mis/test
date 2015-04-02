@@ -789,13 +789,6 @@ header.container-fluid {
             vertical-align: top;
             font-family: $main-font;            
         }
-        table:not(.expenses-auth) > thead > tr > th,
-        table:not(.expenses-auth) > thead > tr > td,
-        table:not(.expenses-auth) > tbody > tr > th,
-        table:not(.expenses-auth) > tbody > tr > td,
-        table:not(.expenses-auth) > tfoot > tr > th,
-        table:not(.expenses-auth) > tfoot > tr > td {            
-        }
         /*.table {
             thead  tr th {
                 border: none;
