@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
 
 
-.controller('mpController', function($scope, parentScope, HttpResource, $http, $modalInstance) {
+.controller('mpController', function($scope, parentScope, HttpResource, $http, $modalInstance,MsgService) {
 
 
 
@@ -98,7 +98,10 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function(response) {
                 $scope.mp = {};
                 $scope.temp = {};
-            });
+                MsgService.success('Successfully submitted.');
+            },function (error) {
+                    MsgService.danger(error);
+                });
             $scope.submitted=true;
 
         } else {

@@ -49,7 +49,7 @@ module.exports = function(dbs){
     return deff.promise;
   };
 
-  service.getAllExpenses = function(request) {
+  service.getAllExpenses = function(request,approvedOnly) {
 
         request.orderBy = [{
             'submittedDate': -1
@@ -67,6 +67,8 @@ module.exports = function(dbs){
                             var bucket = [];
 
                             expense.rows.forEach(function(t) {
+                            var pushIt = false;
+                              
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
 
@@ -79,7 +81,7 @@ module.exports = function(dbs){
                                 var secondValue = t.days;
 
                                 bucketObject.total = 0;
-                                secondValue.forEach(function(l) {
+                                secondValue.some(function(l) {
 
 
                                     var daySpecific = {};
@@ -88,8 +90,12 @@ module.exports = function(dbs){
                                     daySpecific.date = l.date;
                                     daySpecific.postcodes = l.postcodes;
                                     daySpecific.dayId = l._id;
-                                    l.expenses.forEach(function(i) {
-
+                                    l.expenses.some(function(i) {
+                                      pushIt = true;
+                                      if(approvedOnly && i.status !== 'approved' ){
+                                        pushIt = false;
+                                        return true;
+                                      }
                                         var t = {};
                                         t.date = l.date;
                                         t.startTime = daySpecific.startTime;
@@ -159,14 +165,18 @@ module.exports = function(dbs){
                                         }
 
                                         bucketObject.expenses.push(t);
-
+                                        if(!pushIt){
+                                          return true;
+                                        }
                                     });
 
 
                                 });
 
                                 // console.log(bucketObject)
-                                bucket.push(bucketObject);
+                                if(pushIt){
+                                  bucket.push(bucketObject);
+                                }
 
                             });
                             
@@ -181,43 +191,6 @@ module.exports = function(dbs){
             }, reject);
 
         });
-
-  /////////////////////////////////////////////////////////////////////////////////////////
-    // return Q.Promise(function(resolve, reject) {
-    // // //   var q = db.System.find().select('statutoryTables.vat expensesRate');
-    // // //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
-    // // //           console.log(system);
-    // // //           resolve(system);
-    // // //         },function(err){
-    // // //           reject(err);
-    // // //         });
-    // // //       }); 
-
-
-    //   var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
-    //   return queryutils.applySearch(expensesQuery, db.Expense, request)
-    //       .then(function(expenses){
-    //         console.log(expenses);
-    //         console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%0')
-
-    //         var q = db.System.find().select('mileageRates statutoryTables.vat expensesRate');
-    //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
-    //           console.log(system);
-    //           console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1')
-    //           resolve({system:system,expenses:expenses});
-    //         },function(err){
-    //           // resolve(expenses);
-    //         },function(err){
-    //           reject(err);
-    //         });
-    //       });
-
-
-    //       },function(err){
-    //         console.log(err);
-    //         reject(err);
-    //       });
-        // });
     };
 
     service.fetchExpenses=function(val){
@@ -240,33 +213,6 @@ module.exports = function(dbs){
       q=db.Expense.find().where('days.expenses._id').in(b);
       return Q.nfcall(q.exec.bind(q));
     };
-  /*  service.sendMail=function(contactDetails){
-
-      return Q.promise(function(resolve,reject){
-
-
-      var promises=[];
-      for(var i=0;i<contactDetails.length;i++){
-
-        var mailModel={title:contactDetails[i].title,firstName:contactDetails[i].firstName,lastName:contactDetails[i].lastName,reason:contactDetails[i].reason};
-        var mailOption={to:contactDetails[i].to};
-        promises.push(mailer.sendEmail(mailOption,mailModel,'status_change'));
-        if(contactDetails.length-1===i){
-
-          Q.allSettled(promises).then(function(d){
-
-                console.log(d);
-          })
-        }
-
-      }
-    });
-   //   console.log(contactDetails);
-
-    }; */
-
-
-
 
 service.sendMail  = function(user,expense,status,reason,claimReference){
   return Q.Promise(function(resolve,reject){
@@ -278,7 +224,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                             'your Expense of type '+ expense.subType + ' and amount of ' + expense.value +
                             ' at the claim id Number '+ claimReference + ' has been ' + status +
                             lastPart;
-                            console.log(message)
+                            console.log(message);
               var mailModel={message:message};
               var mailOption={to:user.emailAddress};
               console.log(mailModel);
@@ -383,58 +329,6 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
 
     service.editExpenses=function(data){
         return Q.promise(function(resolve,reject){
-
-        //    var q = db.System.find().select('statutoryTables expensesRate');
-
-        //   return Q.nfcall(q.exec.bind(q)).then(function(system){
-
-
-        // system.forEach(function(systemDoc){
-
-        //   console.log(ids)
-
-        //   service.fetchExpensesForEdit(ids).then(function(model){
-
-
-        //       var bucket=[];
-        //                console.log('%%%%%%%%%%%%%%%%%%%%1');
-        //                console.log(model.length);
-
-        //       for(var i=0;i<model.length;i++){
-
-        //         model[i].days.forEach(function(l){
-        //            ids.forEach(function(doc){
-
-        //                var e=l.expenses.id(doc.id);
-        //                if(e){
-        //                 for(var key in doc){
-        //                   if(doc[key]){
-        //                     e[key] = doc[key];
-        //                   }
-        //                   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        //                   console.log(key)
-        //                 }
-
-        //                }
-        //            });
-        //         });
-        //           bucket.push(Q.nfcall(model[i].save.bind(model[i])));
-        //       }
-        //      // var bucket=[];
-        //      // model.forEach(function(mo){
-
-        //      //   bucket.push(Q.nfcall(mo.save.bind(mo)));
-
-        //      // });
-        //      return Q.all(bucket).then(function(){
-        //          resolve({result:true})
-
-        //      },reject);
-
-
-        //   },reject);
-        //  });
-        //  });
           var readPromises  = [];
           var WritePromises = [];
           var breakFrmLoops = false;
@@ -506,6 +400,41 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                     WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
             }
             
+            return Q.all(WritePromises).then(function(res){
+              resolve({result:true,opjects:res});
+            },function(err){
+              reject(err);
+            });
+          },function(){
+            reject('can not find this claim');
+          });
+        });
+
+    };
+
+
+
+
+    service.setClaimsSubmitted=function(data){
+        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&****************************')
+        console.log(data);
+        return Q.promise(function(resolve,reject){
+          var readPromises  = [];
+          var WritePromises = [];
+          for(var i = 0; i < data.length; i++){
+            var q = db.Expense.findById(data[i]);
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
+          }
+          Q.all(readPromises).then(function(expenses){
+            console.log(expenses.length)
+            for(var i = 0; i < expenses.length; i++){
+              expenses[i].days.forEach(function(day){
+                day.expenses.forEach(function(dayExpense){
+                  dayExpense.status = 'submitted';
+                });
+              });
+                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+            }
             return Q.all(WritePromises).then(function(res){
               resolve({result:true,opjects:res});
             },function(err){

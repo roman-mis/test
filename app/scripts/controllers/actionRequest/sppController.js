@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance) {
+.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance,MsgService) {
 
     $scope.candidateId = parentScope.candidateId;
     $scope.spp = {};
@@ -113,7 +113,10 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.spp).post().then(function(response) {
                 $scope.spp = {};
                 $scope.temp = {};
-            });
+                MsgService.success('Successfully submitted.');
+            },function (error) {
+                    MsgService.danger(error);
+                });
         } else {
 
             $scope.submitted = true;
