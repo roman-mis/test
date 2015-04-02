@@ -49,7 +49,7 @@ module.exports = function(dbs){
     return deff.promise;
   };
 
-  service.getAllExpenses = function(request) {
+  service.getAllExpenses = function(request,approvedOnly) {
 
         request.orderBy = [{
             'submittedDate': -1
@@ -66,7 +66,11 @@ module.exports = function(dbs){
                         .then(function(expense) {
                             var bucket = [];
 
-                            expense.rows.forEach(function(t) {
+                            var pushIt = true;
+                            expense.rows.some(function(t) {
+                              if(!pushIt){
+                                return true;
+                              }
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
 
@@ -79,7 +83,7 @@ module.exports = function(dbs){
                                 var secondValue = t.days;
 
                                 bucketObject.total = 0;
-                                secondValue.forEach(function(l) {
+                                secondValue.some(function(l) {
 
 
                                     var daySpecific = {};
@@ -88,8 +92,11 @@ module.exports = function(dbs){
                                     daySpecific.date = l.date;
                                     daySpecific.postcodes = l.postcodes;
                                     daySpecific.dayId = l._id;
-                                    l.expenses.forEach(function(i) {
-
+                                    l.expenses.some(function(i) {
+                                      if(approvedOnly && i.status !== 'approved' ){
+                                        pushIt = false;
+                                        return true;
+                                      }
                                         var t = {};
                                         t.date = l.date;
                                         t.startTime = daySpecific.startTime;
@@ -166,7 +173,9 @@ module.exports = function(dbs){
                                 });
 
                                 // console.log(bucketObject)
-                                bucket.push(bucketObject);
+                                if(pushIt){
+                                  bucket.push(bucketObject);
+                                }
 
                             });
                             
@@ -383,58 +392,6 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
 
     service.editExpenses=function(data){
         return Q.promise(function(resolve,reject){
-
-        //    var q = db.System.find().select('statutoryTables expensesRate');
-
-        //   return Q.nfcall(q.exec.bind(q)).then(function(system){
-
-
-        // system.forEach(function(systemDoc){
-
-        //   console.log(ids)
-
-        //   service.fetchExpensesForEdit(ids).then(function(model){
-
-
-        //       var bucket=[];
-        //                console.log('%%%%%%%%%%%%%%%%%%%%1');
-        //                console.log(model.length);
-
-        //       for(var i=0;i<model.length;i++){
-
-        //         model[i].days.forEach(function(l){
-        //            ids.forEach(function(doc){
-
-        //                var e=l.expenses.id(doc.id);
-        //                if(e){
-        //                 for(var key in doc){
-        //                   if(doc[key]){
-        //                     e[key] = doc[key];
-        //                   }
-        //                   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        //                   console.log(key)
-        //                 }
-
-        //                }
-        //            });
-        //         });
-        //           bucket.push(Q.nfcall(model[i].save.bind(model[i])));
-        //       }
-        //      // var bucket=[];
-        //      // model.forEach(function(mo){
-
-        //      //   bucket.push(Q.nfcall(mo.save.bind(mo)));
-
-        //      // });
-        //      return Q.all(bucket).then(function(){
-        //          resolve({result:true})
-
-        //      },reject);
-
-
-        //   },reject);
-        //  });
-        //  });
           var readPromises  = [];
           var WritePromises = [];
           var breakFrmLoops = false;
@@ -506,6 +463,38 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                     WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
             }
             
+            return Q.all(WritePromises).then(function(res){
+              resolve({result:true,opjects:res});
+            },function(err){
+              reject(err);
+            });
+          },function(){
+            reject('can not find this claim');
+          });
+        });
+
+    };
+
+
+
+
+    service.setClaimsSubmitted=function(data){
+        return Q.promise(function(resolve,reject){
+          var readPromises  = [];
+          var WritePromises = [];
+          for(var i = 0; i < data.length; i++){
+            var q = db.Expense.findById(data[i]);
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
+          }
+          Q.all(readPromises).then(function(expenses){
+            for(var i = 0; i < expenses.length; i++){
+              expenses[i].days.forEach(function(day){
+                day.expenses.forEach(function(dayExpense){
+                  dayExpense.status = 'submitted';
+                });
+              });
+                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+            }
             return Q.all(WritePromises).then(function(res){
               resolve({result:true,opjects:res});
             },function(err){
