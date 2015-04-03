@@ -14,20 +14,7 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
 
         // get dropdowns from the server
         CompanyProfileService.getDropDownData().then(function (data) {
-
-            var objectKeysData = Object.keys(data);
-
             $scope.dropDownLists = data;
-
-            // Maps dropDownLists
-            objectKeysData.forEach(function (objkeys) {
-                $scope.mapLists[objkeys] = {};
-
-                data[objkeys].forEach(function (item) {
-                    $scope.mapLists[objkeys][item.code] = item.description;
-                });
-            });
-
         });
 
         getCompanyProfile();

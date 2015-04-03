@@ -12,19 +12,21 @@ module.exports = function(app){
   app.use('/api/actionrequests',restMiddleware(db),routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[]), router);
 };
 
-router.get('/:id/ssp/verify', controller.checkSspQualification);
-router.get('/:id/smp/verify', controller.checkSmpQualification);
-router.get('/:id/spp/verify', controller.checkSppQualification);
+router.get('/:userId/ssp/verify', controller.checkSspQualification);
+router.get('/:userId/smp/verify', controller.checkSmpQualification);
+router.get('/:userId/spp/verify', controller.checkSppQualification);
 
-router.post('/:id/ssp', controller.postSsp);
+router.post('/:userId/ssp', controller.postSsp);
 
 
-router.post('/:id/smp', controller.postSmp);
+router.post('/:userId/smp', controller.postSmp);
 
-router.post('/:id/spp', controller.postSpp);
+router.post('/:userId/spp', controller.postSpp);
 
-router.post('/:id/holidaypay', controller.postHolidayPay);
+router.post('/:userId/holidaypay', controller.postHolidayPay);
 
 router.get('/',controller.getActionRequestData);
 
-router.post('/:id/studentloan',controller.postStudentLoan);
+router.get('/:id',controller.getActionRequestDataById);
+
+router.post('/:userId/studentloan',controller.postStudentLoan);
