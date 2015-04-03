@@ -1,0 +1,41 @@
+.orig-button {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 200px;
+    height: 36px;
+    color: $gray-lightest;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: color 0, background-color .1s, box-shadow .1s;
+    &:hover {
+        @include box-shadow-hover();
+        
+    }
+    &:hover,
+    &:focus {
+        .fa, .title {
+            color: $white;
+        }
+    }
+    > .fa {
+        display: inline-block;
+        width: 40px;
+        height: 100%;
+        line-height: 36px;
+        flex-shrink: 0;
+        text-align: center;
+        background-color: $green-light;
+    }
+    .title {
+        display: inline-block;
+        width: calc(100% - 40px);
+        height: 100%;
+        line-height: 36px;
+        text-transform: uppercase;
+        padding-left: 10px;
+        text-align: left;
+        background-color: $gray;
+        border-bottom: 4px solid $gray-light;
+    }
+}

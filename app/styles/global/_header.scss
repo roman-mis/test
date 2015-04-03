@@ -1,0 +1,35 @@
+header.main-header {
+    padding: $grid-gutter-width-md;
+    background-color: $gray;
+    color: $gray-lightest;
+    > .header-row {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        @media (max-width: $grid-break) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
+
+.header-logo-wrapper {
+    min-width: 168px;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .logo-img {
+        height: 32px;
+        margin-right: 5px;
+    }
+    .logo-brand {
+        word-break: keep-all;
+        margin: 0;
+        text-transform: capitalize;
+    }
+    @media (max-width: $grid-break) {
+        margin-bottom: 5px;
+    }
+}
