@@ -1,0 +1,15 @@
+.orig-alert-message {
+    position: fixed;
+    left: 50%;
+    top: 0px;
+    z-index: 9999;
+    max-width: 90%;
+    text-align: center;
+    margin-bottom: 0;
+    transition: top 0.5s ease-out, opacity 0.2s ease-out;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    visibility: hidden;
+    .fa {
+        margin-right: 4px;
+    }
+}

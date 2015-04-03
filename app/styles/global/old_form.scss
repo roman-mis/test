@@ -33,6 +33,14 @@ select.form-control {
     }
 }
 
+select {
+    transition: background .1s;
+}
+
+textarea {
+    resize: vertical;
+}
+
 button {
     transition: background-color .1s;
     &:focus {
