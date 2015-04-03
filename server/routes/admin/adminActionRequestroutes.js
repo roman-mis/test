@@ -29,4 +29,6 @@ router.get('/',controller.getActionRequestData);
 
 router.get('/:id',controller.getActionRequestDataById);
 
+router.patch('/:id',controller.updateActionRequest);
+
 router.post('/:userId/studentloan',controller.postStudentLoan);

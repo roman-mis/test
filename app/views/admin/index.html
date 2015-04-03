@@ -1,141 +1,159 @@
 <div class="animation">
-<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-12">				
-				<div class="cube" style="margin: 0">
-					<div ui-view class="animate" style="width:100%"></div>
-				</div>
+    <div class="container-fluid">
+        <div class="row gutter-right">
+            <div class="col-sm-12 nonepadding">
+                <div class="cube" style="margin: 0">
+                    <div ui-view class="animate" style="width:100%"></div>
+                </div>
 
-				<script type="text/ng-template" id="page1.html">
-				   <div class="row firstLevel-menu">
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0004-office.png" alt=""></p>
-								<h3 class="text-center">Company profile</h3>								
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0115-users.png" alt=""></p>
-								<h3 class="text-center">Users</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-						<a href="#">
-							<p class="admin-icon"><img src="/images/64px/0186-list-numbered.png" alt=""></p>
-							<h3 class="text-center">Lists</h3>
-						</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a class="pointer" ng-click="direction('front');go('admin/two')">
-								<p class="admin-icon"><img src="/images/64px/0371-insert-template.png" alt=""></p>
-								<h3 class="text-center">Templates</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a class="pointer" ng-click="direction('front');go('/three')">
-								<p class="admin-icon"><img  src="/images/64px/0034-library.png" alt=""></p>
-								<h3 class="text-center">HMRC</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img  src="/images/64px/0189-tree.png" alt=""></p>
-								<h3 class="text-center">Third party software integration</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0099-floppy-disk.png" alt=""></p>
-								<h3 class="text-center">Backups</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0185-clipboard.png" alt=""></p>
-								<h3 class="text-center">Data checking</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0062-coin-pound.png" alt=""></p>
-								<h3 class="text-center">Payment rate</h3>
-							</a>
-						</div>
-					</div>
-				</script>
-				
-				<script type="text/ng-template" id="page2.html">
-				   <div class="row secondLevel-menu">
-						<div class="col-xs-12" style="margin-bottom: 16px;">
-							<a class="pull-right pointer" ng-click="direction('back');go('/one')"><i class="fa fa-reply"></i>&nbsp; Back</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0101-database.png" alt=""></p>
-								<h3 class="text-center">Call Log Content</h3>								
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0275-spell-check.png" alt=""></p>
-								<h3 class="text-center">Task Content</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-						<a href="#">
-							<p class="admin-icon"><img src="/images/64px/0049-folder-open.png" alt=""></p>
-							<h3 class="text-center">Documents</h3>
-						</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0070-envelop.png" alt=""></p>
-								<h3 class="text-center"> Email</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0039-file-text2.png" alt=""></p>
-								<h3 class="text-center">Invoices</h3>
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0005-newspaper.png" alt=""></p>
-								<h3 class="text-center"> Payslips</h3>
-							</a>
-						</div>	
-					</div>
-				</script>
-				<script type="text/ng-template" id="page3.html">
-					
-				   <div class="row secondLevel-menu">
-						<div class="col-xs-12">
-							<a class="pull-right pointer" ng-click="direction('back');go('/one')"><i class="fa fa-reply"></i>&nbsp; Back</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0265-notification.png" alt=""></p>
-								<h3 class="text-center">RTI Submissions</h3>								
-							</a>
-						</div>
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0156-stats-dots.png" alt=""></p>
-								<h3 class="text-center"> Approved Mileage Rates</h3>
-							</a>
-						</div>	
-						<div class="col-xs-6 col-sm-4 col-md-2">
-							<a href="#">
-								<p class="admin-icon"><img src="/images/64px/0370-table2.png" alt=""></p>
-								<h3 class="text-center"> Statutory tables</h3>
-							</a>
-						</div>			
-					</div>
-				</script>	
-			</div>
-			
-		</div>
-	</div>
+                <script type="text/ng-template" id="page1.html">
+                    <div class="row firstLevel-menu">
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0004-office.png" alt="">
+                                </p>
+                                <h3 class="text-center">Company profile</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0115-users.png" alt="">
+                                </p>
+                                <h3 class="text-center">Users</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0186-list-numbered.png" alt="">
+                                </p>
+                                <h3 class="text-center">Lists</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a class="pointer" ng-click="direction('front');go('admin/two')">
+                                <p class="admin-icon"><img src="/images/64px/0371-insert-template.png" alt="">
+                                </p>
+                                <h3 class="text-center">Templates</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a class="pointer" ng-click="direction('front');go('/three')">
+                                <p class="admin-icon"><img src="/images/64px/0034-library.png" alt="">
+                                </p>
+                                <h3 class="text-center">HMRC</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0189-tree.png" alt="">
+                                </p>
+                                <h3 class="text-center">Third party software integration</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0099-floppy-disk.png" alt="">
+                                </p>
+                                <h3 class="text-center">Backups</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0185-clipboard.png" alt="">
+                                </p>
+                                <h3 class="text-center">Data checking</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0062-coin-pound.png" alt="">
+                                </p>
+                                <h3 class="text-center">Payment rate</h3>
+                            </a>
+                        </div>
+                    </div>
+                </script>
+
+                <script type="text/ng-template" id="page2.html">
+                    <div class="row secondLevel-menu">
+                        <div class="col-xs-12" style="margin-bottom: 16px;">
+                            <a class="pull-right pointer" ng-click="direction('back');go('/one')"><i class="fa fa-reply"></i>&nbsp; Back</a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0101-database.png" alt="">
+                                </p>
+                                <h3 class="text-center">Call Log Content</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0275-spell-check.png" alt="">
+                                </p>
+                                <h3 class="text-center">Task Content</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0049-folder-open.png" alt="">
+                                </p>
+                                <h3 class="text-center">Documents</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0070-envelop.png" alt="">
+                                </p>
+                                <h3 class="text-center"> Email</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0039-file-text2.png" alt="">
+                                </p>
+                                <h3 class="text-center">Invoices</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0005-newspaper.png" alt="">
+                                </p>
+                                <h3 class="text-center"> Payslips</h3>
+                            </a>
+                        </div>
+                    </div>
+                </script>
+                <script type="text/ng-template" id="page3.html">
+
+                    <div class="row secondLevel-menu">
+                        <div class="col-xs-12">
+                            <a class="pull-right pointer" ng-click="direction('back');go('/one')"><i class="fa fa-reply"></i>&nbsp; Back</a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0265-notification.png" alt="">
+                                </p>
+                                <h3 class="text-center">RTI Submissions</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0156-stats-dots.png" alt="">
+                                </p>
+                                <h3 class="text-center"> Approved Mileage Rates</h3>
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-2">
+                            <a href="#">
+                                <p class="admin-icon"><img src="/images/64px/0370-table2.png" alt="">
+                                </p>
+                                <h3 class="text-center"> Statutory tables</h3>
+                            </a>
+                        </div>
+                    </div>
+                </script>
+            </div>
+
+        </div>
+    </div>
 </div>

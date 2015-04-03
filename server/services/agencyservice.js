@@ -395,7 +395,6 @@ service.patchConsultant=function(consultantId, consultantInfo){
 					var agency=consultant.agency;
 					var branch=consultant.branch;
 					utils.updateSubModel(consultant, consultantInfo);
-					
 					if(consultantInfo.emailAddress && consultantInfo.emailAddress!==consultant.emailAddress){
 						//check duplicate email address.
 						console.log('checking duplicate user');

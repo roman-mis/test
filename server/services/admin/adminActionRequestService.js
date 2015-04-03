@@ -35,15 +35,19 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.updateActionRequest=function(id,details,status){
+	service.updateActionRequest=function(id,details){
 		return Q.Promise(function(resolve,reject){
-			return service.getActionRequestDataById(id)
+		 service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
-						actionRequest=utils.updateSubModel(actionRequest,details);
-						actionRequest['status']=status?status.toLowerCase():actionRequest['status'];
-
-						return Q.nfcall(actionRequest.save.bind(actionRequest));
+					/*	actionRequest=utils.updateSubModel(actionRequest,details);
+					//	actionRequest['status']=status?status.toLowerCase():actionRequest['status'];
+						return Q.nfcall(actionRequest.save.bind(actionRequest)); */
+						utils.updateSubModel(actionRequest, details);
+						Q.nfcall(actionRequest.save.bind(actionRequest))
+						.then(function(){
+							resolve({result:true, objects:actionRequest});
+						},reject);
 					}
 					else{
 						reject({result:false,name:'NOTFOUND',message:'Previous Action request not found'});
@@ -337,12 +341,12 @@ module.exports=function(dbs){
 	};
 
 	service.getActionRequestData = function(){
-		var q=db.ActionRequest.find().populate('worker').populate('createdBy').populate('user');
+		var q=db.ActionRequest.find().populate('worker').populate('createdBy');
 	return Q.nfcall(q.exec.bind(q));
 	};
 
 	service.getActionRequestDataById = function(id){
-		var q=db.ActionRequest.findById(id).populate('worker').populate('createdBy').populate('user');
+		var q=db.ActionRequest.findById(id).populate('worker').populate('createdBy');
 	return Q.nfcall(q.exec.bind(q));
 	};
 

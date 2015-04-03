@@ -5,8 +5,56 @@ var utils=require('../../../server/utils/utils');
 var chai=require('chai');
 var bcrypt=require('bcryptjs');
 var expect=chai.expect;
-
+console.log('sss');
 describe('utils tests',function(){
+	describe.only('cloneObject Tests',function(){
+		var obj={
+			    "dateInformed":"May 16 2015 12:54:43 GMT+0545",
+			    "startDate":"May 5 2015 12:54:43 GMT+0545",
+			    "endDate":"May 15 2015 12:54:43 GMT+0545",
+			    "days":[
+			        {
+			            
+			            "amount": 59.220000000000006,
+			            "weekNumber": 2
+			            },
+			            {
+			            "amount": 39.480000000000004,
+			            "weekNumber": 4
+			            }
+			        ]
+			};
+		it('should return proper cloned object without skipping attributes',function(done){
+			var clonedObj=utils.cloneObject(obj,null,null);
+			expect(clonedObj).to.deep.equal(obj);
+			done();
+
+		});
+
+		it('should ignore certain attributes',function(done){
+			var clonedObj=utils.cloneObject(obj,['endDate','days.weekNumber'],null);
+			expect(clonedObj).to.not.deep.equal(obj);
+			expect(clonedObj).to.deep.equal({
+			    "dateInformed":"May 16 2015 12:54:43 GMT+0545",
+			    "startDate":"May 5 2015 12:54:43 GMT+0545",
+			    "days":[
+			        {
+			            
+			            "amount": 59.220000000000006
+			            },
+			            {
+			            "amount": 39.480000000000004
+			            }
+			        ]
+			});
+			expect(clonedObj).to.not.contain.keys('endDate');
+			done();
+
+		});
+
+		
+	});
+
 	describe('findInArray Tests',function(){
 		it('should return proper value from the array of objects',function(done){
 			var arr=[{'key':'Key1','value':'value1'},{'key':'Key2','value':'value2'},{'key':'Key3','value':'value3'}];
