@@ -190,5 +190,26 @@ module.exports=function(db){
 		});
 	};
 
+	service.getTimesheetsWithAgency = function(){
+		return Q.Promise(function(resolve,reject){
+			var q=db.Timesheet.find().populate('agency', '_id name');
+			console.log('^^^^^^^^^^^^^')
+			return Q.nfcall(q.exec.bind(q)).then(function(res){
+				resolve(res);
+			},function(err){
+				reject(err);
+			});
+		});
+	};
+
+	service.changeStatus = function(id){
+		return Q.Promise(function(resolve,reject){
+			service.getTimesheet(id).then(function(res){
+				resolve(res);
+			},function(err){
+				reject(err);
+			});
+		});
+	};
 	return service;
 };

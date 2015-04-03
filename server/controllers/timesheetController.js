@@ -126,5 +126,37 @@ module.exports = function(dbs){
 			});
 	};
 
+	controller.getTimesheetsWithAgency = function(req,res){
+		return timesheetservice.getTimesheetsWithAgency()
+	    	.then(function(result){
+	    		// console.log(result)
+	    		var temp;
+	    		var timesheets = [];
+	    		result.forEach(function(timesheet){
+	    			temp = filter(timesheet);
+	    			// console.log(temp)
+
+	    			if(temp){
+	    				timesheets.push(temp);
+	    			}
+	    		});
+	      		res.json({result:true, object:timesheets});
+    		},function(err){
+		    	res.sendFailureResponse(err);
+	   		});
+	};
+
+	function filter(input){
+		var output;
+		if(input.agency){
+			output = {};
+			output.agency = input.agency;
+			output.id = input._id;
+			output.total = input.total;
+		}
+
+		return output;
+	}
+
 	return controller;
 };
