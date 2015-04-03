@@ -1,72 +1,65 @@
 'use strict';
 angular.module('origApp.services')
-.factory('CompanyProfileService', function(HttpResource, $q,$rootScope) {
+    .factory('CompanyProfileService', function(HttpResource, $q,$rootScope) {
 
-  var companyProfile = {};
-  var acAPI = HttpResource.model('systems/companyProfile');
+        var companyProfile = {};
+        var acAPI = HttpResource.model('systems/companyProfile');
 
-  function _getCompanyProfile(){
-    var d = $q.defer();
+        function _getCompanyProfile(){
+            var d = $q.defer();
 
-    if(companyProfile.length > 0){
-      d.resolve(companyProfile);
-    }
-    else {
-      acAPI.query({}, function(data) {
-        if(data.data.companyProfile){
-          companyProfile = data.data;
-          d.resolve(companyProfile);
+            if(companyProfile.length > 0){
+                d.resolve(companyProfile);
+            }
+            else {
+                acAPI.query({}, function(data) {
+                    if(data.data.companyProfile){
+                        companyProfile = data.data;
+                        d.resolve(companyProfile);
+                    }
+                    else {
+                        d.reject('no data');
+                    }
+                });
+            }
+
+            return d.promise;
         }
-        else {
-          d.reject('no data');
+
+        function _saveCompanyProfile(data, tab) {
+            var d = $q.defer();
+            if (tab === 'contact') {
+                companyProfile = data.contact;
+            } else if (tab === 'accounts') {
+                companyProfile=data.accounts;
+            } else if (tab ==='bankDetails') {
+                companyProfile = data.bankDetails;
+            } else if( tab ==='defaults') {
+                companyProfile = data.defaults;
+            }
+
+            if (data&& tab){
+                HttpResource.model('systems/companyProfile/' + tab)
+                    .create(companyProfile).post().then(function(result){
+                    });
+            }
+            d.resolve('saved successfully');
+            return d.promise;
         }
-      });
-    }
-    
-    return d.promise;
-  }
 
-  function _saveCompanyProfile(data, tab){
-    var d = $q.defer();
-  if(tab==='contact'){
-  
-    companyProfile=data.contact;
-  }else if(tab==='accounts'){
-    companyProfile=data.accounts;
-  }else if(tab ==='bankDetails'){
-    companyProfile = data.bankDetails;
-  }else if(tab ==='defaults'){
-    companyProfile = data.defaults;
-  }
+        function _getDropDownData(){
+            var d = $q.defer();
+            HttpResource.model('constants').customGet('/adminCompanyProfileData/', {},
+                function(data){
+                    d.resolve(data.data);
+                });
+            return d.promise;
+        }
 
-    if (data&& tab){
-      console.log('getting tab');
-      console.log(tab);
-      HttpResource.model('systems/companyProfile/' + tab)
-      .create(companyProfile).post().then(function(result){
-        console.log('getting result');
-        console.log(result);
-      });
-      $rootScope.$emit('profileSave',companyProfile,tab);
-      console.log(companyProfile);
-    }
-    d.resolve('saved successfully');
-    return d.promise;
-  }
+        return {
+            getCompanyProfile: _getCompanyProfile,
+            saveCompanyProfile: _saveCompanyProfile,
+            getDropDownData: _getDropDownData
+        };
 
-  function _getDropDownData(){
-    var d = $q.defer();
-    HttpResource.model('constants').customGet('/adminCompanyProfileData/', {},
-      function(data){
-        d.resolve(data.data);
-      });
-    return d.promise;
-  }
-
-  return {
-    getCompanyProfile: _getCompanyProfile,
-    saveCompanyProfile: _saveCompanyProfile,
-    getDropDownData: _getDropDownData
-  };
-
-});
+    });

@@ -6,7 +6,8 @@ var express = require('express'),
 	   controller=require('../../controllers/admin/adminActionRequestController')(db),
 	   expressJwt = require('express-jwt'),
 	   restMiddleware=require('../../middlewares/restmiddleware'),
-	   routeskipper=require('../../middlewares/route-skipper');
+	   routeskipper=require('../../middlewares/route-skipper'),
+	   routeDefaultModifier=require('../../middlewares/routeDefaultModifier');
 
 module.exports = function(app){
   app.use('/api/actionrequests',restMiddleware(db),routeskipper(expressJwt({secret:process.env.JWT_SECRET}),[]), router);
@@ -28,5 +29,10 @@ router.post('/:userId/holidaypay', controller.postHolidayPay);
 router.get('/',controller.getActionRequestData);
 
 router.get('/:id',controller.getActionRequestDataById);
+
+router.patch('/:id/',routeDefaultModifier({params:{status:''}}),controller.updateActionRequest);
+router.patch('/:id/:status',controller.updateActionRequest);
+
+router.patch('/:id/:status',controller.updateActionRequest);
 
 router.post('/:userId/studentloan',controller.postStudentLoan);

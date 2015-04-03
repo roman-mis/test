@@ -195,15 +195,50 @@ module.exports=utils={
 				});
 		return props;
 	},
-	updateSubModel:function(model,viewmodel){
-		console.log(model);
-		console.log(viewmodel);
+	updateSubModel:function(model,viewmodel,includeId){
+		
 		var props=[];
 		model=model||{};
+		var oldArrayModel;
+		if(_.isArray(model)){
+			oldArrayModel=_.cloneDeep(model);
+			model.length=0;
+
+		}
+
 		_.forEach(viewmodel,function(val,key){
-					if(val!==undefined && key!=='_id'){
-						model[key]=val;
-						props.push(key);
+					if(val!==undefined && (key!=='_id'||includeId)){
+						if(_.isObject(val)){
+							var shouldIncludeId=true;
+							var newModel=model[key];
+							if(_.isArray(model) && val && val._id){
+								
+								var foundElements=_.find(oldArrayModel,function(itm){
+									
+									var isCompared=itm && itm._id && itm._id.toString()===val._id.toString();
+									console.log('isCompared=='+isCompared);
+									return itm && itm._id && itm._id.toString()===val._id.toString();
+								});
+								
+								if(foundElements){
+									
+									newModel=foundElements;
+								}
+								else{
+									newModel={};
+								}
+								model.push(newModel);
+							}
+
+							utils.updateSubModel(newModel,val,shouldIncludeId);
+
+						}
+						else{
+							model[key]=val;
+							
+						}
+
+						props.push(key);	
 					}
 				});
 		return props;

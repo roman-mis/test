@@ -24,8 +24,6 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
             CompanyProfileService.getCompanyProfile().then(function (data) {
                 if (data.companyProfile) {
                     $scope.companyProfile = data.companyProfile;
-                    console.log('company profile.....');
-                    console.log($scope.companyProfile);
                 }
 
             });
@@ -54,7 +52,7 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
                 console.log('save ' + data);
                 getCompanyProfile();
             }, function (reason) {
-                console.log(reason);
+                getCompanyProfile();
             });
         };
 
@@ -63,18 +61,5 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
             closeProfile.returnValue().dismiss();
         };
 
-
-        $rootScope.$on('profileSave', function (event, data, tab) {
-            console.log('tab getting:' + tab);
-            if (tab === 'contact') {
-                $scope.companyProfile.contact = data;
-            } else if (tab === 'accounts') {
-                $scope.companyProfile.accounts = data;
-            } else if (tab ==='bankDetails') {
-                $scope.companyProfile.bankDetails = data;
-            } else if (tab === 'defaults') {
-                $scope.companyProfile.defaults = data;
-            }
-        });
 
     }]);
