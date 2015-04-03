@@ -36,11 +36,7 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat-start="expense in claim.expenses" ng-if="expense.type == cat">
-                    <td>
-                        <a style="cursor:pointer" ng-click="expense.revoke()">
-                            <i class="fa fa-minus-circle"></i>
-                        </a>
-                    </td>
+                    <td></td>
                     <td>{{expense.subType}}</td>
                     <td>{{expense.total | currency:"&pound;"}}</td>
                     <td>
@@ -52,7 +48,11 @@
                             <option value="Other">Other (Please Elaborate)</option>
                         </select>
                     </td>
-                    <td></td>
+                    <td>
+                        <a style="cursor:pointer" ng-click="expense.revoke()">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </td>
                 </tr>
                 <tr ng-repeat-end ng-if="expense.reason == 'Other' && expense.type == cat">
                     <td colspan="5">
