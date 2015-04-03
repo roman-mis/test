@@ -27,6 +27,8 @@ app.controller("expensesAuthorizationCtrl",
         //    logs(res, 'engine sizes')
         //});
 
+        $scope.pendingRejections = [];
+
         $http.get('/api/candidates/expenses').success(function (expenses) {
             logs('getting expenses done !!');
             $scope.system = expenses.object.system[0];
@@ -164,6 +166,18 @@ app.controller("expensesAuthorizationCtrl",
                 req.body = [];
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
+                        if ($scope.expensesArray[expenseIndex].expenses[i] != $scope.cloned[expenseIndex].expenses[i].status
+                            && $scope.cloned[expenseIndex].expenses[i].status == 'rejected') {
+                            if ($scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]) == -1) {
+                                $scope.pendingRejections.push($scope.expensesArray[expenseIndex].expenses[i]);
+                            }
+                        }
+                        if ($scope.expensesArray[expenseIndex].expenses[i] != $scope.cloned[expenseIndex].expenses[i].status
+                            && $scope.expensesArray[expenseIndex].expenses[i].status == 'rejected'
+                            && $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]) != -1) {
+                            $scope.pendingRejections.splice(
+                                $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]), 1);
+                        }
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
                         var subType = '';
                         if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
@@ -301,67 +315,79 @@ app.controller("expensesAuthorizationCtrl",
         $scope.approveSelected = function (expenseIndex, category) {
             var expToApprove = [];
             var ids = [];
-            var claimIds = [];
+            var claimInfo = [];
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                 if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == category
                     && $scope.expensesArray[expenseIndex].expenses[i].checked) {
                     expToApprove.push($scope.expensesArray[expenseIndex].expenses[i]);
                     ids.push($scope.expensesArray[expenseIndex].claimReference);
-                    claimIds.push($scope.expensesArray[expenseIndex].id);
+                    claimInfo.push({
+                        claimId: $scope.expensesArray[expenseIndex].id,
+                        userName: $scope.expensesArray[expenseIndex].user.firstName + ' ' + $scope.expensesArray[expenseIndex].user.lastName
+                    });
                 }
             }
             if (ids.length == 0) window.alert('No items selected');
-            else open('lg', expToApprove, ids, claimIds, true);
+            else approve(expToApprove, claimInfo);
         }
 
         $scope.rejectSelected = function (expenseIndex, category) {
             var expToReject = [];
             var ids = [];
-            var claimIds = [];
+            var claimInfo = [];
             for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                 if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == category
                     && $scope.expensesArray[expenseIndex].expenses[i].checked) {
                     expToReject.push($scope.expensesArray[expenseIndex].expenses[i]);
                     ids.push($scope.expensesArray[expenseIndex].claimReference);
-                    claimIds.push($scope.expensesArray[expenseIndex].id);
+                    claimInfo.push({
+                        claimId: $scope.expensesArray[expenseIndex].id,
+                        userName: $scope.expensesArray[expenseIndex].user.firstName + ' ' + $scope.expensesArray[expenseIndex].user.lastName
+                    });
                 }
             }
             if (ids.length == 0) window.alert('No items selected');
-            else open('lg', expToReject, ids, claimIds, false);
+            else reject(expToReject, claimInfo);
         }
 
         $scope.approveMajorSelected = function () {
             var expToApprove = [];
             var ids = [];
-            var claimIds = [];
+            var claimInfo = [];
             for (var i = 0; i < $scope.expensesArray.length; i++) {
                 if ($scope.expensesArray[i].majorChecked) {
                     for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                         expToApprove.push($scope.expensesArray[i].expenses[j]);
                         ids.push($scope.expensesArray[i].claimReference);
-                        claimIds.push($scope.expensesArray[i].id);
+                        claimInfo.push({
+                            claimId: $scope.expensesArray[i].id,
+                            userName: $scope.expensesArray[i].user.firstName + ' ' + $scope.expensesArray[i].user.lastName
+                        });
                     }
                 }
             }
             if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
-            else open('lg', expToApprove, ids, claimIds, true);
+            else approve(expToApprove, claimInfo);
         }
 
         $scope.rejectMajorSelected = function () {
             var expToReject = [];
             var ids = [];
-            var claimIds = [];
+            var claimInfo = [];
             for (var i = 0; i < $scope.expensesArray.length; i++) {
                 if ($scope.expensesArray[i].majorChecked) {
                     for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
                         expToReject.push($scope.expensesArray[i].expenses[j]);
                         ids.push($scope.expensesArray[i].claimReference);
-                        claimIds.push($scope.expensesArray[i].id);
+                        claimInfo.push({
+                            claimId: $scope.expensesArray[i].id,
+                            userName: $scope.expensesArray[i].user.firstName + ' ' + $scope.expensesArray[i].user.lastName
+                        });
                     }
                 }
             }
             if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
-            else open('lg', expToReject, ids, claimIds, false);
+            else reject(expToReject, claimInfo);
         }
 
         $scope.majorSelectAll = function () {
@@ -404,23 +430,120 @@ app.controller("expensesAuthorizationCtrl",
             });
         }
 
-        function open(size, itemToEdit, ids, claimIds, approve) {
+        function approve(exp, claimInfo) {
+            var uniqueClaimIds = [];
+            claimInfo.forEach(function (info) {
+                if (uniqueClaimIds.indexOf(info.claimId) == -1) {
+                    uniqueClaimIds.push(info.claimId);
+                }
+            });
+            var req = {};
+            req.objects = [];
+            uniqueClaimIds.forEach(function (uniId) {
+                var obj = {
+                    claimId: uniId,
+                    expenses: []
+                };
+                exp.forEach(function (item, i) {
+                    if (claimInfo[i].claimId == uniId) {
+                        var data = {
+                            id: item._id,
+                            reason: ''
+                        }
+                        obj.expenses.push(data);
+                    }
+                });
+                req.objects.push(obj);
+            });
+            console.log(req);
+            $http.patch('/api/candidates/expenses/approve', req).success(function (res) {
+                if (res.result) {
+                    req.objects.forEach(function (claim) {
+                        claim.expenses.forEach(function (exp) {
+                            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                                var found = false;
+                                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                                    if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
+                                        $scope.expensesArray[i].expenses[j].status = 'approved';
+                                        if ($scope.pendingRejections.indexOf($scope.expensesArray[i].expenses[j]) != -1) {
+                                            $scope.pendingRejections.splice(
+                                                $scope.pendingRejections.indexOf($scope.expensesArray[i].expenses[j]), 1);
+                                        }
+                                        found = true;
+                                        break
+                                    }
+                                }
+                                if (found) break
+                            }
+                        });
+                    });
+                    angular.copy($scope.expensesArray, $scope.cloned);
+                }
+            });
+        }
+
+        function reject(exp, claimInfo) {
+            var uniqueClaimIds = [];
+            claimInfo.forEach(function (info) {
+                if (uniqueClaimIds.indexOf(info.claimId) == -1) {
+                    uniqueClaimIds.push(info.claimId);
+                }
+            });
+            var req = {};
+            req.objects = [];
+            uniqueClaimIds.forEach(function (uniId) {
+                var obj = {
+                    claimId: uniId,
+                    expenses: []
+                };
+                exp.forEach(function (item, i) {
+                    if (claimInfo[i].claimId == uniId) {
+                        if ($scope.pendingRejections.indexOf(item) == -1) {
+                            $scope.pendingRejections.push(item);
+                        }
+                        var data = {
+                            id: item._id,
+                            reason: ''
+                        }
+                        obj.expenses.push(data);
+                    }
+                });
+                req.objects.push(obj);
+            });
+            console.log(req);
+            $http.patch('/api/candidates/expenses/reject', req).success(function (res) {
+                if (res.result) {
+                    req.objects.forEach(function (claim) {
+                        claim.expenses.forEach(function (exp) {
+                            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                                var found = false;
+                                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                                    if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
+                                        $scope.expensesArray[i].expenses[j].status = 'rejected';
+                                        found = true;
+                                        break
+                                    }
+                                }
+                                if (found) break
+                            }
+                        });
+                    });
+                    angular.copy($scope.expensesArray, $scope.cloned);
+                }
+            });
+        }
+
+        function reviewSummaryModal(size, items, claimInfo) {
             var modalInstance = $modal.open({
-                templateUrl: 'views/activity/approve_reject_expenses.html',
-                controller: 'approvingRejectingCtrl',
+                templateUrl: 'views/activity/reject_summary.html',
+                controller: 'rejectSummaryCtrl',
                 size: size,
                 resolve: {
                     item: function () {
-                        return itemToEdit;
+                        return items;
                     },
-                    approve: function () {
-                        return approve;
-                    },
-                    ids: function () {
-                        return ids;
-                    },
-                    claimIds: function () {
-                        return claimIds;
+                    claimInfo: function () {
+                        return claimInfo;
                     }
                 }
             });
@@ -438,6 +561,28 @@ app.controller("expensesAuthorizationCtrl",
             }, function () {
                 logs("Dismissed");
             });
+        }
+
+        $scope.reviewSummary = function () {
+            var claimInfo = [];
+            for (var k = 0; k < $scope.pendingRejections.length; k++) {
+                for (var i = 0; i < $scope.expensesArray.length; i++) {
+                    var found = false;
+                    for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                        if ($scope.expensesArray[i].expenses[j]._id == $scope.pendingRejections[k]._id) {
+                            claimInfo.push({
+                                claimId: $scope.expensesArray[i].id,
+                                claimRef: $scope.expensesArray[i].claimReference,
+                                userName: $scope.expensesArray[i].user.firstName + ' ' + $scope.expensesArray[i].user.lastName
+                            });
+                            found = true;
+                            break
+                        }
+                    }
+                    if (found) break
+                }
+            }
+            reviewSummaryModal('lg', $scope.pendingRejections, claimInfo);
         }
 
         function logs(record, label) {
