@@ -294,11 +294,18 @@ controller.getActionRequestDataById =function(req, res){
 			startDate : req.body.startDate,
 			endDate : req.body.endDate,
 			intendedStartDate : req.body.intendedStartDate,
+			actualStartDate  : req.body.actualStartDate,
 			requestRef : req.body.requestRef,
+			smp :req.body.smp,
+			spp : req.body.spp,
+			holidayPay : req.body.holidayPay,
+			studentLoan : req.body.studentLoan,
 			imageUrl : req.body.imageUrl,
-			days : req.body.days
+			days : req.body.days,
+			updatedDate : req.body.updatedDate,
+			updatedBy : req.body.updatedBy
 		}; 
-		
+	
 		adminActionRequestService.updateActionRequest(req.params.id, details)
 			.then(function(response){
 				console.log('response received ');

@@ -40,9 +40,6 @@ module.exports=function(dbs){
 		 service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
-					/*	actionRequest=utils.updateSubModel(actionRequest,details);
-					//	actionRequest['status']=status?status.toLowerCase():actionRequest['status'];
-						return Q.nfcall(actionRequest.save.bind(actionRequest)); */
 						utils.updateSubModel(actionRequest, details);
 						Q.nfcall(actionRequest.save.bind(actionRequest))
 						.then(function(){
