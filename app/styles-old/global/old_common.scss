@@ -10,8 +10,34 @@
     box-shadow: 0 0 5px 0 rgba(189, 221, 158, 0.75);
 }
 
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: $gray-lightest;
+    font-size: 14px;
+    font-family: $main-font;
+}
+
 table {
     display: -moz-deck;
+}
+
+a,
+i,
+li {
+    transition: color .1s;
+    transition: background-color .1s;
+}
+
+li.active,
+li.active a,
+.dropdown-menu a > i {
+    transition-duration: 0;
 }
 
 .pointer {
@@ -20,6 +46,18 @@ table {
 
 input[disabled] {
     cursor: default!important;
+}
+
+textarea {
+    resize: vertical;
+}
+
+select {
+    transition: background .1s;
+}
+
+.modal-open {
+    overflow: hidden;
 }
 
 .modal-lg {
@@ -36,6 +74,34 @@ input[disabled] {
     position: relative;
     .dropdown-menu {
         top: -285px !important;
+    }
+}
+
+.form-button,
+.btn {
+    &:hover {
+        @include box-shadow-hover();
+    }
+    .form-button &:hover {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+.btn-success {
+    background: $green-light;
+    border-color: $green-light;
+    &:hover {
+        background: $green-light;
+        border-color: $green-light;
+    }
+}
+
+.btn-warning {
+    background: $state-warning-bg;
+    border-color: $state-warning-bg;
+    &:hover {
+        background: $gray;
+        border-color: $gray;
     }
 }
 
@@ -75,6 +141,10 @@ input[disabled] {
     background-color: $green!important;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .no-bg {
     background: #fff!important;
 }
@@ -87,10 +157,17 @@ input[disabled] {
     padding: 10px;
 }
 
+.gutter-right {
+    margin-right: 12px;
+}
+
 /*Header Section*/
 
 header.container-fluid {
     box-sizing: border-box;
+    padding: 12px $grid-gutter-width-md;
+    background-color: $gray;
+    color: $gray-lightest;
     .row-header {
         font-size: $font-size-base;
         font-family: $font-family-base;
@@ -255,8 +332,7 @@ header.container-fluid {
         display: table-cell;
         position: relative;
         z-index: 1;
-        height: 100%;
-        width: 224px;
+        
         vertical-align: top;
         .sidebar-menu-inner {
             bottom: 0;
@@ -711,13 +787,6 @@ header.container-fluid {
             font-size: 13px;  
             vertical-align: top;
             font-family: $main-font;            
-        }
-        table:not(.expenses-auth) > thead > tr > th,
-        table:not(.expenses-auth) > thead > tr > td,
-        table:not(.expenses-auth) > tbody > tr > th,
-        table:not(.expenses-auth) > tbody > tr > td,
-        table:not(.expenses-auth) > tfoot > tr > th,
-        table:not(.expenses-auth) > tfoot > tr > td {            
         }
         /*.table {
             thead  tr th {

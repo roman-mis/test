@@ -1,32 +1,13 @@
-<header class="container-fluid">
-    <div class="row-header">
+<header class="container-fluid main-header">
+    <div class="header-row">
         <div class="header-logo-wrapper">
-            <a href='#' class='logo'>
-                <img src="images/logo.png" alt="image" />
+            <a href='#' class='logo-wrapper'>
+                <img src="images/logo.png" alt="image" class="logo-img" />
             </a>
-            <p>Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</p>
-            <p></p>
+            <p class="logo-brand">Welcome, {{currentUser.firstName}} {{currentUser.lastName}}</p>
         </div>
         <div class="header-inputs-wrapper search-wrapper">
-            <form class="form-inline search-form">
-                <div class="form-group search-group">
-                    <input type="text" class="form-control" id="search" name="search" placeholder="Search"/>
-                    <i class="fa fa-search"></i>
-                </div>
-                    
-                <div class="form-group button-group">
-                    <span class="sitemenu" dropdown>
-                        <button type="button" dropdown-toggle><i class="fa fa-bars"></i></button>
-                        <ul class="dropdown-menu">
-                            <li ng-if="!(permissions.permissions.fields.topToolBar.advancedSearch.hide)"><a href><i class="fa fa-search-plus"></i> &nbsp;Advanced search</a></li>
-                            <li ng-if="!(permissions.topToolBar.myProfile.hide)"><a href><i class="fa fa-user"></i> &nbsp;My profile</a></li>
-                            <li class="divider"></li>
-                            <li><a href ng-click="logout()"><i class="fa fa-sign-out"></i> &nbsp;Logout</a></li>
-                        </ul>
-                    </span>
-                </div>
-            </form>
+            <div ng-include="'views/partials/header-search.html'"></div>
         </div>
     </div>
-
 </header>

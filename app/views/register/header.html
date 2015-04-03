@@ -1,11 +1,13 @@
-<header class="container-fluid">
-  <div class="row-header">
-    <div class="header-logo-wrapper">
-      <img src="/images/logo.png" alt="image"/>
-      <p>Originem Payroll Portal</p>
+<header class="container-fluid main-header">
+    <div class="header-row">
+        <div class="header-logo-wrapper">
+            <a href='#' class='logo-wrapper'>
+                <img src="images/logo.png" alt="image" class="logo-img" />
+            </a>
+            <p class="logo-brand">Originem Payroll Portal</p>
+        </div>
+        <div class="header-inputs-wrapper">
+            <div ng-include="'views/partials/login-form.html'"></div>
+        </div>
     </div>
-    <div class="header-inputs-wrapper">
-      <div ng-include="'views/partials/login-form.html'"></div> 
-    </div>
-  </div>
 </header>

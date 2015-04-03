@@ -16,13 +16,13 @@ $grid-gutter-width-md: 12px;
 
 /*Color*/
 $gray-darker: #555;
-$gray: #616161; 
-$gray-light: #9e9e9e; 
+$gray: #616161; // #7c7e7f;
+$gray-light: #9e9e9e; //#a6a4a2;
 $gray-lighter: #d5d2cf;
-$gray-lightest: #eee; 
+$gray-lightest: #eee; // #f1efef
 $white: #fafafa;
 
-$green: #059347; 
+$green: #059347; // #009646;
 $green-light: #79c44a;
 
 $sky: #9ad3ef;
@@ -51,14 +51,10 @@ $body-border-color: $gray-light;
 $body-background-color: $gray-lightest;
 
 $background-color: $gray-lightest;
-$header-background-color: #808285;
-$body-border-color: #d4d4d4;
-$body-background-color: #ffffff;
+$header-background-color:#808285;
+$body-border-color:#d4d4d4;
+$body-background-color:#ffffff;
 
 /* Fonts */
-$main-font: 'Questrial', 'Helvetica Neue', Helvetica, arial, sans-serif;
-$secondary-font: $font-family-sans-serif;
+$main-font: 'Questrial', sans-serif;
 $line-height-base: 1; // 1.34
-
-/*Paths*/
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
