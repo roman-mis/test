@@ -1,0 +1,62 @@
+.table > thead > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > th,
+.table > tbody > tr > td,
+.table > tfoot > tr > th,
+.table > tfoot > tr > td {
+    padding: 4px 12px;
+    font-size: 13px;
+    vertical-align: top;
+    font-family: $main-font;
+}
+
+.table > thead > tr > th {
+    border: 0;
+}
+
+.orig-table {
+    border-collapse: separate;
+    border-spacing: 3px;
+    margin: 0 -1px;
+    thead th {
+        border: none;
+        background-color: $green-light;
+        color: $white;
+        text-transform: uppercase;
+        font-weight: normal;
+        a {
+            color: $gray-lightest;
+        }
+    }
+    tbody > tr {
+        cursor: pointer;
+        td {
+            border: none;
+            color: $gray;
+            a {
+                text-decoration: underline;
+                color: $green-light;
+                &:hover {
+                    color: $green;
+                }
+            }
+        }
+        &:nth-child(even) {
+            background-color: $gray-lightest;
+        }
+        &:hover {
+            background-color: $gray-lighter;
+        }
+    }
+}
+
+.orig-grid-pagination-wrapper {
+    margin: 5px;
+    font-size: 14px;
+    .page-rows-count {
+        float: left;
+    }
+    .pagination {
+        float: right;
+    }
+}

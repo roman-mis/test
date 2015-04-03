@@ -6,6 +6,10 @@
     box-shadow: 0 0 5px 0 rgba(189, 221, 158, 0.75);
 }
 
+@mixin button-transition() {
+    transition: color .15s, background-color .15s, box-shadow .15s;
+}
+
 html,
 body {
     margin: 0;
@@ -18,7 +22,7 @@ body {
 }
 
 a {
-    transition: color .15s, background-color .1s, box-shadow .1s;
+    @include button-transition();
 }
 
 ul {
@@ -30,38 +34,6 @@ ul {
     overflow: hidden;
 }
 
-.form-button,
-.btn {
-    &:hover {
-        @include box-shadow-hover();
-    }
-    .form-button &:hover {
-        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
-    }
-}
-
-.btn-success {
-    background: $green-light;
-    border-color: $green-light;
-    &:hover {
-        background: $green-light;
-        border-color: $green-light;
-    }
-}
-
-.btn-warning {
-    background: $state-warning-bg;
-    border-color: $state-warning-bg;
-    &:hover {
-        background: $gray;
-        border-color: $gray;
-    }
-}
-
-.gutter-right {
-    margin-right: 12px;
-}
-
 .page-container {
     display: flex;
     justify-content: space-between;
@@ -69,11 +41,9 @@ ul {
     flex-flow: row nowrap;
     width: 100%;
     height: 100%;
-    .left-sidebar, .right-sidebar, .candidate-right-sidebar {
+    .left-sidebar, .right-sidebar {
         height: 100%;
-        width: 224px;
-    }
-    .main-content {
+        max-width: 212px;
         width: 100%;
     }
     .main-menu {
@@ -88,11 +58,13 @@ ul {
         }
     }
     .left-sidebar {
+        padding-right: $grid-gutter-width-md;
         @media(max-width: $screen-md-max) {
             width: 66px;
         }
     }
     .right-sidebar {
+        padding-left: $grid-gutter-width-md;
         .company-logo {
             @media(max-width: $screen-sm-max) {
                 display: none;
@@ -104,6 +76,39 @@ ul {
         }
         @media(max-width: $screen-sm-max) {
             width: 56px;
+        }
+    }
+    .main-content {
+        width: 100%;
+        .breadcrumb {
+            padding: $grid-gutter-width-md 0;
+            background: transparent;
+            margin-bottom: 0;
+            a {
+                color: $green-light;
+                &:hover,
+                &.active {
+                    color: $green;
+                }
+            }
+            span {
+                display: inline-block;
+                width: 6px;
+                height: 13px;
+                background: url('../images/breadcrumb_sep.png') transparent center center no-repeat;
+                margin: 0 10px;
+                position: relative;
+                top: 2px;
+            }
+        }
+        .meta-box {
+            background-color: #fff;
+            color: $gray;
+            border: 1px solid $gray-lighter;
+            margin-bottom: 15px;
+            .meta-box-inner {
+                padding: $grid-gutter-width;
+            }
         }
     }
 }

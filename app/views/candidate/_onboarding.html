@@ -1,89 +1,88 @@
 <div class="candidate-modal candidate-modal-onboarding">
-  <div class="modal-header">
-    <h3 class="modal-title">Welcome to the new customer onboarding wizard</h3>
-  </div>
-  <div class="modal-body">
-    <form name="onboardingForm" class="form-horizontal" role="form" novalidate>
-      <fieldset>
-        <legend>Select Agency</legend>
-        <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
-          <ui-select-match>{{$select.selected.name}}</ui-select-match>
-          <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
-        </ui-select>
-      </fieldset>
-      <fieldset>
-        <legend>Online Referral</legend>
-        <div class="form-group col-sm-8">
-          <label class="col-sm-4">Agency Name</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" ng-model="data.agencyName">
-          </div>
-        </div>
-        <div class="form-group col-sm-4">
-          <label class="col-sm-8">PAYE Rate</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" ng-model="data.payeRate">
-          </div>
-        </div>
-        <div class="form-group col-sm-8">
-          <label class="col-sm-4">Consultant Name</label>
-          <div class="col-sm-8">
-            <ui-select ng-model="data.consultant" theme="select2" search-enabled="false">
-              <ui-select-match>{{$select.selected.firstName}} {{$select.selected.lastName}}</ui-select-match>
-              <ui-select-choices repeat="item._id as item in getAgencyConsultants(data.agency)">{{item.firstName}} {{item.lastName}}</ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
-        <div class="form-group col-sm-4">
-          <label class="col-sm-8">Outsourced Rate</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control" ng-model="data.outsourcedRate">
-          </div>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Product type Selected</legend>
-        <ui-select ng-model="data.serviceUsed" theme="select2" search-enabled="false">
-          <ui-select-match>{{$select.selected.description}}</ui-select-match>
-          <ui-select-choices repeat="item.code as item in serviceUsed">{{item.description}}</ui-select-choices>
-        </ui-select>
-      </fieldset>
-      <fieldset>
-        <legend>Requirements for Selected Product</legend>
-        <div class="checkbox-item" ng-repeat="req in data.serviceUsedObj.requirementList">
-          <label><input type="checkbox" checklist-model="data.requirements" checklist-value="req"> {{req}}</label>
-        </div>
-        <input type="button" class="btn btn-default pull-right" value="View onboarding script" 
-               ng-click="showScript(data.serviceUsedObj.onboardingScript)" ng-show="data.serviceUsedObj.onboardingScript">
-      </fieldset>
-      <div class="links">
-        <a href="" ng-disabled="onboardingForm.$invalid || isCompleting || isSaving" ng-click="save(false)">
-          <span ng-show="!isSaving"><i class="fa fa-chevron-left"></i>Pause onboarding call</span>
-          <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i>Saving onboarding call...</span>
-        </a>
-        <a href=""><i class="fa fa-chevron-left"></i>Refer back to Agency</a>
-        <a href=""><i class="fa fa-chevron-left"></i>Go To Salary Calculator</a>
-        <a href=""><i class="fa fa-chevron-left"></i>Go To Email Manager</a>
-        <a href=""><i class="fa fa-chevron-left"></i>Go To Text Manager</a>
-      </div>
-	  <div class="clearfix"></div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-    <button class="btn btn-primary" ng-click="save(true)" ng-disabled="onboardingForm.$invalid || isCompleting || isSaving">
-      <div ng-show="!isCompleting"><i class="fa fa-save"></i> &nbsp; Save & Complete</div>
-      <div ng-show="isCompleting"><i class="fa fa-spinner fa-spin"></i> &nbsp; Completing...</div>
-    </button>
-  </div>
+    <div class="modal-header">
+        <h3 class="modal-title">Welcome to the new customer onboarding wizard</h3>
+    </div>
+    <div class="modal-body">
+        <form name="onboardingForm" class="form-horizontal" role="form" novalidate>
+            <fieldset>
+                <legend>Select Agency</legend>
+                <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
+                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+                </ui-select>
+            </fieldset>
+            <fieldset>
+                <legend>Online Referral</legend>
+                <div class="form-group col-sm-8">
+                    <label class="col-sm-4">Agency Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="data.agencyName">
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="col-sm-8">PAYE Rate</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-model="data.payeRate">
+                    </div>
+                </div>
+                <div class="form-group col-sm-8">
+                    <label class="col-sm-4">Consultant Name</label>
+                    <div class="col-sm-8">
+                        <ui-select ng-model="data.consultant" theme="select2" search-enabled="false">
+                            <ui-select-match>{{$select.selected.firstName}} {{$select.selected.lastName}}</ui-select-match>
+                            <ui-select-choices repeat="item._id as item in getAgencyConsultants(data.agency)">{{item.firstName}} {{item.lastName}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="col-sm-8">Outsourced Rate</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-model="data.outsourcedRate">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Product type Selected</legend>
+                <ui-select ng-model="data.serviceUsed" theme="select2" search-enabled="false">
+                    <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                    <ui-select-choices repeat="item.code as item in serviceUsed">{{item.description}}</ui-select-choices>
+                </ui-select>
+            </fieldset>
+            <fieldset>
+                <legend>Requirements for Selected Product</legend>
+                <div class="checkbox-item" ng-repeat="req in data.serviceUsedObj.requirementList">
+                    <label>
+                        <input type="checkbox" checklist-model="data.requirements" checklist-value="req"> {{req}}</label>
+                </div>
+                <input type="button" class="btn btn-default pull-right" value="View onboarding script" ng-click="showScript(data.serviceUsedObj.onboardingScript)" ng-show="data.serviceUsedObj.onboardingScript">
+            </fieldset>
+            <div class="links">
+                <a href="" ng-disabled="onboardingForm.$invalid || isCompleting || isSaving" ng-click="save(false)">
+                    <span ng-show="!isSaving"><i class="fa fa-chevron-left"></i>Pause onboarding call</span>
+                    <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i>Saving onboarding call...</span>
+                </a>
+                <a href=""><i class="fa fa-chevron-left"></i>Refer back to Agency</a>
+                <a href=""><i class="fa fa-chevron-left"></i>Go To Salary Calculator</a>
+                <a href=""><i class="fa fa-chevron-left"></i>Go To Email Manager</a>
+                <a href=""><i class="fa fa-chevron-left"></i>Go To Text Manager</a>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-click="save(true)" ng-disabled="onboardingForm.$invalid || isCompleting || isSaving">
+            <div ng-show="!isCompleting"><i class="fa fa-save"></i> &nbsp; Save & Complete</div>
+            <div ng-show="isCompleting"><i class="fa fa-spinner fa-spin"></i> &nbsp; Completing...</div>
+        </button>
+    </div>
 </div>
 
-
 <script type="text/ng-template" id="views/candidate/_onboarding_script.html">
-  <div class="modal-header">
-    <h3 class="modal-title">Onboarding Script</h3>
-  </div>
-  <div class="modal-body">
-    <div ng-bind-html="onboardingScript"></div>
-  </div>
+    <div class="modal-header">
+        <h3 class="modal-title">Onboarding Script</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-bind-html="onboardingScript"></div>
+    </div>
 </script>

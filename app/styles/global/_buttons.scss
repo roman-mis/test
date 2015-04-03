@@ -1,3 +1,28 @@
+.btn {
+    @include button-transition();
+    &:hover {
+        @include box-shadow-hover();
+    }
+}
+
+.btn-success {
+    background: $green-light;
+    border-color: $green-light;
+    &:hover {
+        background: $green-light;
+        border-color: $green-light;
+    }
+}
+
+.btn-warning {
+    background: $state-warning-bg;
+    border-color: $state-warning-bg;
+    &:hover {
+        background: $gray;
+        border-color: $gray;
+    }
+}
+
 .orig-button {
     display: flex;
     flex-direction: row;
@@ -7,10 +32,9 @@
     color: $gray-lightest;
     margin-bottom: 5px;
     cursor: pointer;
-    transition: color 0, background-color .1s, box-shadow .1s;
+    transition: color 0, background-color .15s, box-shadow .15s;
     &:hover {
         @include box-shadow-hover();
-        
     }
     &:hover,
     &:focus {
@@ -28,14 +52,18 @@
         background-color: $green-light;
     }
     .title {
+        $icon-gutter: 10px;
         display: inline-block;
         width: calc(100% - 40px);
         height: 100%;
         line-height: 36px;
         text-transform: uppercase;
-        padding-left: 10px;
+        padding-left: $icon-gutter;
         text-align: left;
         background-color: $gray;
         border-bottom: 4px solid $gray-light;
+        .fa {
+            margin-right: $icon-gutter / 2;
+        }
     }
 }
