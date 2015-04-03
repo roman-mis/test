@@ -7,7 +7,7 @@ var bcrypt=require('bcryptjs');
 var expect=chai.expect;
 console.log('sss');
 describe('utils tests',function(){
-	describe.only('cloneObject Tests',function(){
+	describe('cloneObject Tests',function(){
 		var obj={
 			    "dateInformed":"May 16 2015 12:54:43 GMT+0545",
 			    "startDate":"May 5 2015 12:54:43 GMT+0545",
@@ -154,31 +154,74 @@ describe('utils tests',function(){
 			});
 	});
 
-	describe('updateSubModel tests', function(){
-		it('should should update model with values from viewmodel', function(done){
-			var model = { 
-					'youtubeId': '1234',
-    				       'keywords': "hello",
-    					'watches': [ {
-        					'dateAdded': "12345",
-        					'keyword': 'now',
-        					'watcher': 'me'
-    					} ],
-    					'dateAdded': '2000 AD',
+	describe.only('updateSubModel tests', function(){
+		var model={};
+		beforeEach(function(){
+			model = { 
+					'youtubeId': '1234', 'keywords': "hello", 'watches': [ {
+						'_id':'232323232',
+						'dateAdded': "12345",
+						'keyword': 'now',
+						'watcher': 'me'
+					}, {
+						
+						'dateAdded': "12345",
+						'keyword': 'now 2',
+						'watcher': 'me 2'
+					}, {
+						'_id':'54545454545',
+						'dateAdded': "12345",
+						'keyword': 'now 3',
+						'watcher': 'me 3'
+					} ],
+					'dateAdded': '2000 AD',
+					subModel:{'submodelProp1':'val1','submodelProp2':'val2'}
 			};
+		});
+		it('should update model with values from viewmodel', function(done){
 			
 			
-			var viewmodel = { 'addedField':'123val', 'addedField2': '456val', "_id":"1q2w3e4r"};
+			var viewmodel = { 'dateAdded':'2001 AD', 'youtubeId': undefined, "_id":"1q2w3e4r"};
 			var props = utils.updateSubModel(model, viewmodel);
-			//model = utils.updateSubModel(model, viewmodel);
-			console.log("props is......");
-			console.log(props);
-			console.log("model is....");
-			console.log(model);
-			expect(props).to.be.ok();
-			expect(props).to.include('addedField');
-			expect(props).to.include('addedField2');
-			expect(props).to.not.have.property('_id');
+			
+			expect(model).to.be.ok();
+			expect(model.dateAdded).to.be.equal(viewmodel.dateAdded);
+			expect(model.youtubeId).to.not.be.an('undefined');
+			
+			done();
+		});
+
+		it('should update sub model ',function(done){
+			var viewmodel = { subModel:{'submodelProp2':'val2changed'}};
+			var props = utils.updateSubModel(model, viewmodel);
+			expect(model).to.be.ok();
+			expect(model.subModel.submodelProp2).to.be.equal(viewmodel.subModel.submodelProp2);
+			
+
+			done();
+		});
+
+		it('should update array sub model ',function(done){
+			var viewmodel = { "watches":[ {
+						'_id':'232323232',
+						'dateAdded': "555555"
+						
+					}, {
+						'_id':'6666666',
+						'dateAdded': "44444",
+						'keyword': 'now 4',
+						'watcher': 'me 4'
+					}]};
+			var oldWatchFirstElementkeyword=model.watches[0].keyword;
+
+			var props = utils.updateSubModel(model, viewmodel);
+			expect(model).to.be.ok();
+			expect(model.watches).to.have.length(viewmodel.watches.length);
+			// console.log('final model updated is ');
+			// console.log(model);
+			expect(model.watches).to.include(viewmodel.watches[1]);
+			expect(model.watches[0].dateAdded).to.be.equal(viewmodel.watches[0].dateAdded);
+			expect(model.watches[0].keyword).to.be.equal(oldWatchFirstElementkeyword);
 			done();
 		});
 	});

@@ -35,15 +35,16 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.updateActionRequest=function(id,details){
+	service.updateActionRequest=function(id,details,status){
 		return Q.Promise(function(resolve,reject){
 		 service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
-					/*	actionRequest=utils.updateSubModel(actionRequest,details);
-					//	actionRequest['status']=status?status.toLowerCase():actionRequest['status'];
-						return Q.nfcall(actionRequest.save.bind(actionRequest)); */
 						utils.updateSubModel(actionRequest, details);
+						if(status!==''){
+							actionRequest.status=status;
+						}
+						
 						Q.nfcall(actionRequest.save.bind(actionRequest))
 						.then(function(){
 							resolve({result:true, objects:actionRequest});
