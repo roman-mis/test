@@ -36,7 +36,11 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat-start="expense in claim.expenses" ng-if="expense.type == cat">
-                    <td></td>
+                    <td>
+                        <a style="cursor:pointer" ng-click="expense.revoke()">
+                            <i class="fa fa-minus-circle"></i>
+                        </a>
+                    </td>
                     <td>{{expense.subType}}</td>
                     <td>{{expense.total | currency:"&pound;"}}</td>
                     <td>
@@ -65,8 +69,9 @@
         </table>
     </div>
     <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">Save</button>
         <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()">
-            Send Notifications
+            Reject & Send Notifications
         </button>
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
