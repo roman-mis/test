@@ -541,7 +541,7 @@ app.controller("expensesAuthorizationCtrl",
             //});
         }
 
-        function reviewSummaryModal(size, items, claimInfo) {
+        function reviewSummaryModal(size, items, claimInfo, rootScope) {
             var modalInstance = $modal.open({
                 templateUrl: 'views/activity/reject_summary.html',
                 controller: 'rejectSummaryCtrl',
@@ -552,6 +552,9 @@ app.controller("expensesAuthorizationCtrl",
                     },
                     claimInfo: function () {
                         return claimInfo;
+                    },
+                    rootScope: function () {
+                        return rootScope;
                     }
                 }
             });
@@ -559,8 +562,9 @@ app.controller("expensesAuthorizationCtrl",
             modalInstance.result.then(function () {
                 logs('Successfully Rejected');
                 $scope.pendingRejections = [];
-            }, function () {
-                logs("Dismissed");
+            }, function (msg) {
+                logs(msg, 'Dismissed');
+                //logs($scope.summary, 'summary');
             });
         }
 
@@ -583,7 +587,7 @@ app.controller("expensesAuthorizationCtrl",
                     if (found) break
                 }
             }
-            reviewSummaryModal('lg', $scope.pendingRejections, claimInfo);
+            reviewSummaryModal('lg', $scope.pendingRejections, claimInfo, $scope);
         }
 
         function logs(record, label) {

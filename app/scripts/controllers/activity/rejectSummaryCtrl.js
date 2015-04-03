@@ -1,7 +1,7 @@
 ﻿'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, item, claimInfo) {
+app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, item, claimInfo, rootScope) {
     $scope.items = item;
     $scope.claimInfo = claimInfo;
     $scope.reasons = [];
@@ -40,6 +40,20 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
                     reason: '',
                     other: ''
                 }
+                if (rootScope.summary) {
+                    for (var j = 0; j < rootScope.summary.length; j++) {
+                        if (rootScope.summary[j].claimId == obj.claimId) {
+                            for (var k = 0; k < rootScope.summary[j].expenses.length; k++) {
+                                if (rootScope.summary[j].expenses[k].id == data.id) {
+                                    data.reason = rootScope.summary[j].expenses[k].reason;
+                                    data.other = rootScope.summary[j].expenses[k].other;
+                                    break
+                                }
+                            }
+                            break
+                        }
+                    }
+                }
                 obj.expenses.push(data);
             }
         });
@@ -56,7 +70,12 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
         $modalInstance.close();
     };
 
+    $scope.save = function () {
+        rootScope.summary = $scope.objects;
+        $modalInstance.dismiss('saved');
+    }
+
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $modalInstance.dismiss('cancelled');
     };
 });
