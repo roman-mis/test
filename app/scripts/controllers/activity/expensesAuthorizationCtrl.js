@@ -558,6 +558,7 @@ app.controller("expensesAuthorizationCtrl",
 
             modalInstance.result.then(function () {
                 logs('Successfully Rejected');
+                $scope.pendingRejections = [];
             }, function () {
                 logs("Dismissed");
             });
