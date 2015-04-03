@@ -1,33 +1,39 @@
-<div class="modal-header">
+<!-- <div class="modal-header">
     <h4 class="modal-title " id="myModalLabel">Run Payroll</h4>
 </div>
-    
-<div class="modal-body">
-    <div ng-show="firstStep">
+ -->    
+ <div class="">
+     
+<div class="orig-grid-wrapper">
+    <div>
         <form class="form-horizontal">
             <div class="row">
-				<div class="col-sm-5">
-					<div class="form-group">
-						<label class="col-xs-6 control-label">Pay Frequency</label>
-						<div class="col-xs-6">
-							<select ng-change="getPayrollRunWorker()" ng-model="pay.frequency" ng-options="option.code as option.description for option in PayFrequency" class="form-control">
-								<option>Select</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-7">
-					<div class="form-group">
-						<label  class="col-xs-3 control-label">Agency</label>
-						<div class="col-xs-9">
-							<select ng-change="getPayrollRunWorker()" ng-model="agency.id" ng-options="option.agency._id as option.agency.name for option in payroll.agencies" class="form-control">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                    <div class="col-xs-3">
+                        <label class="control-label">Pay Frequency</label>
+                    </div>
+                        <div class="col-xs-8">
+                            <select ng-change="getPayrollRunWorker()" ng-model="pay.frequency" ng-options="option.code as option.description for option in PayFrequency" class="form-control">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="form-group">
+                    <div class="col-xs-2">
+                        <label  class="control-label pull-right">Agency</label>
+                    </div>
+                        <div class="col-xs-8">
+                            <select ng-change="getPayrollRunWorker()" ng-model="agency.id" ng-options="option.agency._id as option.agency.name for option in payroll.agencies" class="form-control">
                                 <option ng-selected="true">Select</option>
                             </select>
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-		</form>
+        </form>
         <div class="row">
             <div class="col-xs-12">
                 <table class="table table-striped scroll">
@@ -48,12 +54,12 @@
                             <td class="ref">{{worker.candidateRef}}</td>
                             <td class="fullName">{{worker.firstName}} {{worker.lastName}}</td>
                         </tr>
-						
-					</tbody>
+                        
+                    </tbody>
                 </table>
             </div>
         </div>
-		
+        
         <div class="row">
             <div class="col-xs-1 text-center">TS</div>
             <div class="col-xs-1 text-center no-padding">Holiday</div>
@@ -79,15 +85,13 @@
 </div>
 
 <div class="modal-footer">
-    <div ng-show="firstStep">
-        <a ng-click="close()" class="btn">Cancel &#38; Return to Payroll Home</a>
-        <button ng-click="runPayroll()" class="btn btn-primary">Run Payroll</button>
+    <div>
+        <!-- <a ng-click="close()" class="btn">Cancel &#38; Return to Payroll Home</a> -->
+        <button ui-sref="app.payroll.home" class="btn btn-success"> <i class="fa fa-reply"></i> Return</button>
+        <button ng-click="runPayroll()" class="btn btn-success">Run Payroll</button>
     </div>
-	
-    <div ng-show="secondStep">
-        <a ng-click="close()" class="btn">close &#38; Return to Payroll Home</a>
-    </div>
-</div>	
+</div>  
 
 
 
+ </div>

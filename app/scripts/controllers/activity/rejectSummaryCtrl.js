@@ -18,6 +18,34 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
         if (!found) $scope.uniqueClaims.push(info);
     });
 
+    $scope.objects = [];
+    $scope.uniqueClaims.forEach(function (uni) {
+        var obj = {
+            claimId: uni.claimId,
+            claimRef: uni.claimRef,
+            userName: uni.userName,
+            expenses: [],
+            categories: []
+        };
+        $scope.items.forEach(function (item, i) {
+            if ($scope.claimInfo[i].claimId == uni.claimId) {
+                if (obj.categories.indexOf(item.expenseType) == -1) {
+                    obj.categories.push(item.expenseType);
+                }
+                var data = {
+                    id: item._id,
+                    type: item.expenseType,
+                    subType: item.expenseDetail.name,
+                    total: item.expenseDetail.total,
+                    reason: '',
+                    other: ''
+                }
+                obj.expenses.push(data);
+            }
+        });
+        $scope.objects.push(obj);
+    });
+
     $scope.ok = function () {
         //if (approve) {
         //    var req = {};
@@ -44,7 +72,7 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
         //    });
         //} else {
         var req = {};
-        req.objects = [];
+        req = [];
         $scope.uniqueClaims.forEach(function (uni) {
             var obj = {
                 claimId: uni.claimId,
@@ -59,7 +87,7 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
                     obj.expenses.push(data);
                 }
             });
-            req.objects.push(obj);
+            req.push(obj);
         });
         console.log(req);
         //$http.patch('/api/candidates/expenses/reject', req).success(function (res) {

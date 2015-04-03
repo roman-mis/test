@@ -457,21 +457,28 @@ app.controller("expensesAuthorizationCtrl",
             });
             console.log(req);
             $http.patch('/api/candidates/expenses/approve', req).success(function (res) {
-                //console.log(res);
-                $http.get('/api/candidates/expenses').success(function (expenses) {
-                    for (var i = 0; i < $scope.expensesArray.length; i++) {
-                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                            $scope.expensesArray[i].expenses[j].status = expenses.object.claims[i].expenses[j].status;
-                            if ($scope.expensesArray[i].expenses[j].status != 'rejected'
-                                && $scope.pendingRejections.indexOf($scope.expensesArray[i].expenses[j]) != -1) {
-                                $scope.pendingRejections.splice(
-                                    $scope.pendingRejections.indexOf($scope.expensesArray[i].expenses[j]), 1);
+                if (res.result) {
+                    req.objects.forEach(function (claim) {
+                        claim.expenses.forEach(function (exp) {
+                            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                                var found = false;
+                                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                                    if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
+                                        $scope.expensesArray[i].expenses[j].status = 'approved';
+                                        if ($scope.pendingRejections.indexOf($scope.expensesArray[i].expenses[j]) != -1) {
+                                            $scope.pendingRejections.splice(
+                                                $scope.pendingRejections.indexOf($scope.expensesArray[i].expenses[j]), 1);
+                                        }
+                                        found = true;
+                                        break
+                                    }
+                                }
+                                if (found) break
                             }
-
-                        }
-                    }
+                        });
+                    });
                     angular.copy($scope.expensesArray, $scope.cloned);
-                });
+                }
             });
         }
 
@@ -505,15 +512,24 @@ app.controller("expensesAuthorizationCtrl",
             });
             console.log(req);
             $http.patch('/api/candidates/expenses/reject', req).success(function (res) {
-                //console.log(res);
-                $http.get('/api/candidates/expenses').success(function (expenses) {
-                    for (var i = 0; i < $scope.expensesArray.length; i++) {
-                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                            $scope.expensesArray[i].expenses[j].status = expenses.object.claims[i].expenses[j].status;
-                        }
-                    }
+                if (res.result) {
+                    req.objects.forEach(function (claim) {
+                        claim.expenses.forEach(function (exp) {
+                            for (var i = 0; i < $scope.expensesArray.length; i++) {
+                                var found = false;
+                                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                                    if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
+                                        $scope.expensesArray[i].expenses[j].status = 'rejected';
+                                        found = true;
+                                        break
+                                    }
+                                }
+                                if (found) break
+                            }
+                        });
+                    });
                     angular.copy($scope.expensesArray, $scope.cloned);
-                });
+                }
             });
         }
 
@@ -557,7 +573,6 @@ app.controller("expensesAuthorizationCtrl",
                             claimInfo.push({
                                 claimId: $scope.expensesArray[i].id,
                                 claimRef: $scope.expensesArray[i].claimReference,
-                                categories: $scope.expensesArray[i].categories,
                                 userName: $scope.expensesArray[i].user.firstName + ' ' + $scope.expensesArray[i].user.lastName
                             });
                             found = true;

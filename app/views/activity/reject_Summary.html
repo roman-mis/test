@@ -3,42 +3,64 @@
 </div>
 <form novalidate name="form">
     <div class="modal-body">
-        <table class="table table-striped" style="margin-bottom: 0;">
-            <thead>
+        <table class="table table-striped">
+            <thead ng-repeat-start="claim in objects">
                 <tr>
-                    <th>Claim ID</th>
-                    <th>Category</th>
+                    <th colspan="5">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h3 style="color: #0b830b">
+                                    Claim ID:&nbsp;
+                                    {{claim.claimRef}}
+                                </h3>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3 style="color: #0b830b">
+                                    Full Name:&nbsp;
+                                    {{claim.userName}}
+                                </h3>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-repeat-end>
+                <tr ng-repeat-start="cat in claim.categories">
+                    <th colspan="5" style="color: #933c03">{{$index + 1}}.&nbsp;{{cat}}</th>
+                </tr>
+                <tr>
+                    <th></th>
                     <th>Type</th>
                     <th>Total</th>
                     <th>Reason</th>
+                    <th></th>
                 </tr>
-            </thead>
-            <tbody ng-repeat="item in items">
-                <tr>
-                    <td>{{claimInfo[$index].claimRef}}</td>
-                    <td>{{item.expenseType}}</td>
-                    <td>{{item.expenseDetail.name}}</td>
-                    <td>{{item.expenseDetail.total | currency:"&pound;"}}</td>
+                <tr ng-repeat-start="expense in claim.expenses" ng-if="expense.type == cat">
+                    <td></td>
+                    <td>{{expense.subType}}</td>
+                    <td>{{expense.total | currency:"&pound;"}}</td>
                     <td>
-                        <select class="form-control" ng-model="reasons[$index]" required>
-                            <option value="" disabled selected style="display: none;">--Reason to Reject--</option>
+                        <select class="form-control" ng-model="expense.reason" required>
+                            <option value="" disabled selected style="display: none;">-Select-</option>
                             <option value="No Receipt">No Receipt</option>
                             <option value="Receipt not valid">Receipt not valid</option>
                             <option value="Not Wholly Necessary">Not Wholly Necessary</option>
-                            <option value="Other">Other (Please Specify)</option>
+                            <option value="Other">Other (Please Elaborate)</option>
                         </select>
                     </td>
+                    <td></td>
                 </tr>
-                <tr ng-if="reasons[$index]=='Other'">
+                <tr ng-repeat-end ng-if="expense.reason == 'Other' && expense.type == cat">
                     <td colspan="5">
-
                         <div class="form-group col-xs-8 col-xs-offset-2">
                             <span type="text">
-                                <input required class="form-control" placeholder="Reason to Reject"
-                                       ng-model="otherReason[$index]" />
+                                <input required class="form-control" placeholder="'Please Elaborate"
+                                       ng-model="expense.other" />
                             </span>
                         </div>
+                    </td>
                 </tr>
+                <tr ng-repeat-end></tr>
             </tbody>
         </table>
     </div>

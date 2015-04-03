@@ -180,7 +180,7 @@ module.exports = function(dbs){
 
                             });
                             
-                            resolve({ claims: bucket, system: system });
+                            resolve({ claims: bucket, system: system ,totalCount: expense.count});
                         });
 
 
