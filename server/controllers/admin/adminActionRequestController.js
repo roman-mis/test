@@ -215,7 +215,7 @@ controller.getActionRequestDataById =function(req, res){
 
 
  function getActionRequestDataByIdVm(data){
- 	
+ 	var createdBy = data.createdBy || {};
  	return {
  		id: data._id,
  		worker : {
@@ -229,8 +229,8 @@ controller.getActionRequestDataById =function(req, res){
 		periodActioned : '',
 		requestRef: utils.padLeft(data.requestReference || '0', 7, '0'),
 		createdBy : {
-			id : data.createdBy._id,
-			name : data.createdBy.firstName + ' ' + data.createdBy.lastName
+			id : createdBy._id,
+			name : (createdBy.firstName || '') + ' ' + (createdBy.lastName || '')
 		},
 		dateInformed : data.dateInformed,
 		intendedStartDate : data.intendedStartDate,
@@ -251,6 +251,7 @@ controller.getActionRequestDataById =function(req, res){
     	var actionRequest=[];
     	   	
 			_.forEach(data, function(actionrequests){
+				var createdBy=actionrequests.createdBy||{};
 				var actionRequestData = {
 					id : actionrequests._id,
 					worker: {
@@ -264,8 +265,8 @@ controller.getActionRequestDataById =function(req, res){
 					periodActioned : '',
 					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
 					createdBy : {
-						id : actionrequests.createdBy._id,
-						name :actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName
+						id : createdBy._id,
+						name :(createdBy.firstName||'') + ' ' + (createdBy.lastName || '')
 					},
 					dateInformed : actionrequests.dateInformed,
 					intendedStartDate : actionrequests.intendedStartDate,
@@ -285,7 +286,29 @@ controller.getActionRequestDataById =function(req, res){
     	return actionRequest;
     }
     
-    
+    controller.updateActionRequest = function(req, res){
+   
+    	
+		var details = {
+			dateInformed : req.body.dateInformed,
+			startDate : req.body.startDate,
+			endDate : req.body.endDate,
+			intendedStartDate : req.body.intendedStartDate,
+			requestRef : req.body.requestRef,
+			imageUrl : req.body.imageUrl,
+			days : req.body.days
+		}; 
+		
+		adminActionRequestService.updateActionRequest(req.params.id, details)
+			.then(function(response){
+				console.log('response received ');
+				console.log(response);
+				res.json(response);
+			}).then(null,function(err){
+    			res.sendFailureResponse(err);
+    		})
+
+	};
 
     return controller;
 };
