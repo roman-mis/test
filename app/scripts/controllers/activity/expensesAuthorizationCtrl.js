@@ -2,8 +2,8 @@
 var app = angular.module('origApp.controllers');
 
 app.controller("expensesAuthorizationCtrl",
-    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal',
-    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal) {
+    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal', 'Notification',
+    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal, Notification) {
 
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/activity/home', text: 'Activity' },
@@ -166,19 +166,25 @@ app.controller("expensesAuthorizationCtrl",
                 req.body = [];
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
-                        if ($scope.expensesArray[expenseIndex].expenses[i] != $scope.cloned[expenseIndex].expenses[i].status
+                        var newStatus = $scope.cloned[expenseIndex].expenses[i].status;
+                        if ($scope.expensesArray[expenseIndex].expenses[i].status != $scope.cloned[expenseIndex].expenses[i].status
                             && $scope.cloned[expenseIndex].expenses[i].status == 'rejected') {
+                            newStatus = $scope.expensesArray[expenseIndex].expenses[i].status;
                             if ($scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]) == -1) {
                                 $scope.pendingRejections.push($scope.expensesArray[expenseIndex].expenses[i]);
                             }
+                            Notification.primary('Marked for Rejection');
                         }
-                        if ($scope.expensesArray[expenseIndex].expenses[i] != $scope.cloned[expenseIndex].expenses[i].status
+
+                        if ($scope.expensesArray[expenseIndex].expenses[i].status != $scope.cloned[expenseIndex].expenses[i].status
                             && $scope.expensesArray[expenseIndex].expenses[i].status == 'rejected'
                             && $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]) != -1) {
                             $scope.pendingRejections.splice(
                                 $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]), 1);
                         }
+
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
+
                         var subType = '';
                         if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
                             for (var j = 0; j < $scope.mealTypes.length; j++) {
@@ -210,7 +216,7 @@ app.controller("expensesAuthorizationCtrl",
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
-                            status: $scope.expensesArray[expenseIndex].expenses[i].status
+                            status: newStatus
                         });
                         //logs(req.body);
                         break;
@@ -511,26 +517,28 @@ app.controller("expensesAuthorizationCtrl",
                 req.objects.push(obj);
             });
             console.log(req);
-            $http.patch('/api/candidates/expenses/reject', req).success(function (res) {
-                if (res.result) {
-                    req.objects.forEach(function (claim) {
-                        claim.expenses.forEach(function (exp) {
-                            for (var i = 0; i < $scope.expensesArray.length; i++) {
-                                var found = false;
-                                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                                    if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
-                                        $scope.expensesArray[i].expenses[j].status = 'rejected';
-                                        found = true;
-                                        break
-                                    }
-                                }
-                                if (found) break
+            Notification.primary('Marked for Rejection');
+            req.objects.forEach(function (claim) {
+                claim.expenses.forEach(function (exp) {
+                    for (var i = 0; i < $scope.expensesArray.length; i++) {
+                        var found = false;
+                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                            if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
+                                $scope.expensesArray[i].expenses[j].status = 'rejected';
+                                found = true;
+                                break
                             }
-                        });
-                    });
-                    angular.copy($scope.expensesArray, $scope.cloned);
-                }
+                        }
+                        if (found) break
+                    }
+                });
             });
+            angular.copy($scope.expensesArray, $scope.cloned);
+            //$http.patch('/api/candidates/expenses/reject', req).success(function (res) {
+            //    if (res.result) {
+                    
+            //    }
+            //});
         }
 
         function reviewSummaryModal(size, items, claimInfo) {
@@ -549,15 +557,7 @@ app.controller("expensesAuthorizationCtrl",
             });
 
             modalInstance.result.then(function () {
-                $http.get('/api/candidates/expenses').success(function (expenses) {
-                    for (var i = 0; i < $scope.expensesArray.length; i++) {
-                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                            $scope.expensesArray[i].expenses[j].status = expenses.object.claims[i].expenses[j].status;
-
-                        }
-                    }
-                    angular.copy($scope.expensesArray, $scope.cloned);
-                });
+                logs('Successfully Rejected');
             }, function () {
                 logs("Dismissed");
             });
