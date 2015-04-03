@@ -296,7 +296,7 @@ controller.getActionRequestDataById =function(req, res){
 			updatedBy : req.user._id
 		}; 
 	
-		adminActionRequestService.updateActionRequest(req.params.id, details)
+		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);

@@ -35,12 +35,16 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.updateActionRequest=function(id,details){
+	service.updateActionRequest=function(id,details,status){
 		return Q.Promise(function(resolve,reject){
 		 service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
 						utils.updateSubModel(actionRequest, details);
+						if(status!==''){
+							actionRequest.status=status;
+						}
+						
 						Q.nfcall(actionRequest.save.bind(actionRequest))
 						.then(function(){
 							resolve({result:true, objects:actionRequest});
