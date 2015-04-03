@@ -681,16 +681,27 @@ module.exports = function(){
 	};
 
 	function addTimesheets(agency,timesheets){
-		agency.timesheets = [];
-
+		var newAgency = {};
+		newAgency.timesheets = [];
+		newAgency.id = agency._id;
+		newAgency.name = agency.name;
 		// console.log(agency);
 		_.forEach(timesheets.rows, function(timesheet){
 				if(timesheet.agency+'' === agency._id+''){
-					agency.timesheets.push(timesheet);
+					var newTimesheet = {};
+					newTimesheet.id = timesheet._id;
+					newTimesheet.status = timesheet.status;
+					newTimesheet.total = timesheet.total;
+					newAgency.timesheets.push(newTimesheet);
 				}
 			});
-
-		return agency;
+		console.log('**')
+		console.log('---------------------')
+		console.log('---------------------')
+		console.log('---------------------')
+		console.log('**')
+		
+		return newAgency;
 	}
 
   return controller;

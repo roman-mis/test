@@ -1,8 +1,8 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll','$modalInstance',
-	function($rootScope,$scope,HttpResource,ModalService,$http,payroll,$modalInstance){
+app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll',
+	function($rootScope,$scope,HttpResource,$http,payroll){
 		$scope.pay = {frequency:''};
 		$scope.agency = {id:''};
 		$scope.p = {};
@@ -10,9 +10,16 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 		$scope.selection = {type: false};
 		$scope.agencyList = [];
 		$scope.PayFrequency = [];
-		$scope.firstStep = true;
-		$scope.secondStep = false;
+		// $scope.firstStep = true;
+		// $scope.secondStep = false;
 
+		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$')
+
+
+$rootScope.breadcrumbs = [{link:'/', text:'Home'},
+                          {link: '/payroll/home', text: 'Payroll'},
+                          {link: '/payroll/home/runPayroll', text: 'Run Payroll'}
+                          ];
 
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
@@ -77,9 +84,9 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
  //    close(null, 500);
  //  };
 
-	$scope.close = function(){
-		$modalInstance.close();
-	};
+	// $scope.close = function(){
+	// 	$modalInstance.close();
+	// };
 
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
@@ -95,8 +102,8 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 	    // if(!response.data.result){
 	    	$scope.response = response.data.logs;
 	    	console.log($scope.response);
-				$scope.firstStep = false;
-				$scope.secondStep = true;
+				// $scope.firstStep = false;
+				// $scope.secondStep = true;
 	    // }else{
 	    // 	$scope.close();
 	    // }
