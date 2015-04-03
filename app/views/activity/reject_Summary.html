@@ -1,5 +1,5 @@
 ﻿<div class="modal-header">
-    <h3 class="modal-title">{{title}}&nbsp;Expenses</h3>
+    <h3 class="modal-title">Rejections Summary</h3>
 </div>
 <form novalidate name="form">
     <div class="modal-body">
@@ -7,19 +7,19 @@
             <thead>
                 <tr>
                     <th>Claim ID</th>
-                    <th>Line no.</th>
+                    <th>Category</th>
                     <th>Type</th>
                     <th>Total</th>
-                    <th ng-hide="approve">Reason</th>
+                    <th>Reason</th>
                 </tr>
             </thead>
             <tbody ng-repeat="item in items">
                 <tr>
-                    <td>{{ids[$index]}}</td>
-                    <td>{{$index}}</td>
+                    <td>{{claimInfo[$index].claimRef}}</td>
+                    <td>{{item.expenseType}}</td>
                     <td>{{item.expenseDetail.name}}</td>
                     <td>{{item.expenseDetail.total | currency:"&pound;"}}</td>
-                    <td ng-hide="approve">
+                    <td>
                         <select class="form-control" ng-model="reasons[$index]" required>
                             <option value="" disabled selected style="display: none;">--Reason to Reject--</option>
                             <option value="No Receipt">No Receipt</option>
@@ -43,8 +43,8 @@
         </table>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-disabled="form.$invalid && !approve" ng-click="ok()">
-            {{approve? 'Approve':'Reject'}}
+        <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()">
+            Send Notifications
         </button>
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>

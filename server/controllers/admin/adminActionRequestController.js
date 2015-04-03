@@ -36,9 +36,7 @@ module.exports = function(dbs){
 			worker:req.params.userId,
 			startDate:req.body.startDate,
 			intendedStartDate:req.body.intendedStartDate,
-			smp:{
-				babyDueDate:req.body.babyDueDate
-			},
+			smp:req.body.smp,
 			days:req.body.days,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
@@ -55,10 +53,7 @@ module.exports = function(dbs){
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
 			
-			spp:{
-				babyDueDate:req.body.babyDueDate,
-				relationship:req.body.relationship
-			},
+			spp:req.body.spp,
 			days:req.body.days,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
@@ -74,9 +69,7 @@ module.exports = function(dbs){
 			'type':enums.actionRequestTypes.HolidayPay,
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
-			holidayPay:{
-				amount:req.body.amount
-			},
+			holidayPay:req.body.holidayPay,
 			createdBy:req.user.id
 
 
@@ -92,10 +85,7 @@ module.exports = function(dbs){
 			'type':enums.actionRequestTypes.SLR,
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
-			studentLoan:{
-				haveLoan:req.body.haveLoan,
-				payDirectly:req.body.payDirectly
-			},
+			studentLoan:req.body.studentLoan,
 			createdBy:req.user.id
 
 
@@ -203,7 +193,7 @@ controller.getActionRequestDataById =function(req, res){
     		.then(function(response){
     		if(response){
     			var actionrequests = getActionRequestDataByIdVm(response);
-    			res.json({result:true,objects: actionrequests});
+    			res.json({result:true,object: actionrequests});
     		}else{
     			res.json({result:false, message : 'actionRequestData not found.'});
     		}
@@ -215,7 +205,7 @@ controller.getActionRequestDataById =function(req, res){
 
 
  function getActionRequestDataByIdVm(data){
- 	
+ 	var createdBy = data.createdBy || {};
  	return {
  		id: data._id,
  		worker : {
@@ -229,8 +219,8 @@ controller.getActionRequestDataById =function(req, res){
 		periodActioned : '',
 		requestRef: utils.padLeft(data.requestReference || '0', 7, '0'),
 		createdBy : {
-			id : data.createdBy._id,
-			name : data.createdBy.firstName + ' ' + data.createdBy.lastName
+			id : createdBy._id,
+			name : (createdBy.firstName || '') + ' ' + (createdBy.lastName || '')
 		},
 		dateInformed : data.dateInformed,
 		intendedStartDate : data.intendedStartDate,
@@ -251,6 +241,7 @@ controller.getActionRequestDataById =function(req, res){
     	var actionRequest=[];
     	   	
 			_.forEach(data, function(actionrequests){
+				var createdBy=actionrequests.createdBy||{};
 				var actionRequestData = {
 					id : actionrequests._id,
 					worker: {
@@ -264,8 +255,8 @@ controller.getActionRequestDataById =function(req, res){
 					periodActioned : '',
 					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
 					createdBy : {
-						id : actionrequests.createdBy._id,
-						name :actionrequests.createdBy.firstName + ' ' + actionrequests.createdBy.lastName
+						id : createdBy._id,
+						name :(createdBy.firstName||'') + ' ' + (createdBy.lastName || '')
 					},
 					dateInformed : actionrequests.dateInformed,
 					intendedStartDate : actionrequests.intendedStartDate,
@@ -285,7 +276,39 @@ controller.getActionRequestDataById =function(req, res){
     	return actionRequest;
     }
     
-    
+    controller.updateActionRequest = function(req, res){
+   
+    	
+		var details = {
+			dateInformed : req.body.dateInformed,
+			startDate : req.body.startDate,
+			endDate : req.body.endDate,
+			intendedStartDate : req.body.intendedStartDate,
+			actualStartDate  : req.body.actualStartDate,
+			// requestRef : req.body.requestRef,
+			smp :req.body.smp,
+			spp : req.body.spp,
+			holidayPay : req.body.holidayPay,
+			studentLoan : req.body.studentLoan,
+			imageUrl : req.body.imageUrl,
+			days : req.body.days,
+			updatedDate : Date(),
+			updatedBy : req.user._id
+		}; 
+	
+		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
+			.then(function(response){
+				console.log('response received ');
+				console.log(response);
+				res.json(response);
+			}).then(null,function(err){
+    			res.sendFailureResponse(err);
+    		})
+
+	};
+
+
+
 
     return controller;
 };
