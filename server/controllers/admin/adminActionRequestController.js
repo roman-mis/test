@@ -216,11 +216,8 @@ controller.getActionRequestDataById =function(req, res){
 
 
  function getActionRequestDataByIdVm(data){
-<<<<<<< HEAD
 
-=======
  	var createdBy = data.createdBy || {};
->>>>>>> 5bf0cff041ef791f74c723900ea0a12ca3a9b938
  	return {
  		id: data._id,
  		worker : {
@@ -291,14 +288,10 @@ controller.getActionRequestDataById =function(req, res){
 
     	return actionRequest;
     }
-<<<<<<< HEAD
 
-
-=======
-    
     controller.updateActionRequest = function(req, res){
-   
-    	
+
+
 		var details = {
 			dateInformed : req.body.dateInformed,
 			startDate : req.body.startDate,
@@ -307,8 +300,8 @@ controller.getActionRequestDataById =function(req, res){
 			requestRef : req.body.requestRef,
 			imageUrl : req.body.imageUrl,
 			days : req.body.days
-		}; 
-		
+		};
+
 		adminActionRequestService.updateActionRequest(req.params.id, details)
 			.then(function(response){
 				console.log('response received ');
@@ -319,7 +312,6 @@ controller.getActionRequestDataById =function(req, res){
     		})
 
 	};
->>>>>>> 5bf0cff041ef791f74c723900ea0a12ca3a9b938
 
     return controller;
 };

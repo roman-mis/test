@@ -53,9 +53,9 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-12 form-group no-padding-left">
+            <div class="col-xs-12 col-sm-12 form-group no-padding-left" ng-if='!showMe'>
 
-                <button type="button" class="btn btn-primary pull-right" ng-click="checkDate()"
+                <button type="button" class="btn btn-primary pull-right"  ng-click="checkDate()"
                         >Calculate</button>
             </div>
             <div class="col-xs-12 col-sm-12 form-group no-padding-left">
@@ -149,18 +149,22 @@
 
         <div class="col-xs-5 col-sm-6 text-right btnFooter form-group">
             <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-
-            <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+            <div class="btn-group" ng-if="showMe">
+                                <button type="button" class="btn btn-primary">Action</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a href="#">Save</a></li>
+                                    <li><a href="#">Save and Approve</a></li>
+                                    <li><a href="#">Save and Reject</a></li>
+                                    <li><a href="#">Save and Refer</a></li>
+                                </ul>
+                            </div>
+            <input type="submit" name="submit" class="btn btn-primary" ng-if="!showMe" value="Submit">
         </div>
 
     </div>
 </div>
 </form>
-
-
-
-
-
-
-
-

@@ -7,7 +7,11 @@ angular.module('origApp.controllers')
 
 
     $scope.candidateId = parentScope.candidateId;
-    $scope.mp = {};
+    if(!$scope.mp){
+      $scope.mp = {};
+
+
+    }
     $scope.mp.maxPeriods = 39;
     $scope.mp.days;
 

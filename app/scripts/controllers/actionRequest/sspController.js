@@ -5,11 +5,16 @@ angular.module('origApp.controllers')
 .controller('sspController', function($scope, parentScope, HttpResource, $http, $modalInstance,MsgService) {
 
 
-
-    $scope.candidateId = parentScope.candidateId;
+    console.log(parentScope);
+    $scope.candidateId =parentScope.candidateId;
     $scope.candidate = parentScope.candidate;
+    $scope.showMe=parentScope.showMe?parentScope.showMe:false;
 
-    $scope.ssp = {};
+    if(!$scope.ssp){
+      $scope.ssp = {};
+
+
+    }
 
 
     HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {

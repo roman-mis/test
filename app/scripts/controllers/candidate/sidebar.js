@@ -193,9 +193,3 @@ angular.module('origApp.controllers')
             $modalInstance.close();
           };
         });
-
-
-
-
-
-
