@@ -17,41 +17,79 @@
 
     <div class="main-menu">
         <ul id='left-menu' class='main-menu'>
-            <li ng-if="!permissions.rightToolBar.DPA.hide"><a href="" ng-click="openDPAWin()"><i class="fa fa-question-circle sky-brand"></i><span class="title">DPA </span></a>
+            <li ng-if="!permissions.rightToolBar.DPA.hide"><a href="" ng-click="openDPAWin()"><i
+                    class="fa fa-question-circle sky-brand"></i><span class="title">DPA
+                Questions </span></a>
             </li >
-            <li ng-if="!permissions.rightToolBar.onboarding.hide"><a href="" ng-click="openOnboardingWin()"><i class="fa fa-thumbs-o-up sky-brand"></i><span class="title">ONBOARDING</span></a>
+            <li ng-if="!permissions.rightToolBar.onboarding.hide"><a href=""
+                                                                     ng-click="openOnboardingWin()"><i class="fa fa-thumbs-o-up sky-brand"></i><span class="title">On Boarding</span></a>
             </li>
-            <li ng-if="!permissions.rightToolBar.calculator.hide"><a href="" ng-click="openSalaryCalculatorWin()"><i class="fa fa-calculator sky-brand"></i><span class="title">CALCULATOR</span></a>
+            <li ng-if="!permissions.rightToolBar.calculator.hide"><a href=""
+                                                                     ng-click="openSalaryCalculatorWin()"><i class="fa fa-calculator sky-brand"></i><span class="title">Salary Calculator</span></a>
             </li>
-            <li ng-if="!permissions.rightToolBar.callLog.hide"><a href="" ng-click="openCreateTaskWin({activityType: 'callLog'})"><i class="fa fa-phone warning-brand"></i><span class="title"><span><i class="fa fa-plus-square-o"></i></span><span ng-if="!permissions.rightToolBar.callLog.newName"> Call Log </span> <span ng-if="permissions.rightToolBar.callLog.newName">{{permissions.rightToolBar.callLog.newName}}</span ></span><!-- <span>ss{{permissions.rightToolBar.callLog}}</span> --></a>
+            <li ng-if="!permissions.rightToolBar.callLog.hide"><a href=""
+                                                                  ng-click="openCreateTaskWin({activityType: 'callLog'})"><i class="fa fa-phone warning-brand"></i><span class="title"><span><i class="fa fa-plus-square-o"></i></span><span ng-if="!permissions.rightToolBar.callLog.newName">Add Call Log </span> <span ng-if="permissions.rightToolBar.callLog.newName">{{permissions.rightToolBar.callLog.newName}}</span ></span><!-- <span>ss{{permissions.rightToolBar.callLog}}</span> --></a>
             </li>
-            <li ng-if="!permissions.rightToolBar.addExpesesWizard.hide || !permissions.rightToolBar.addExpesesManually.hide"><a href="" ng-click="openAddExpensesWin()"><i class="fa fa-gbp warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>EXPENSES</span></a>
+
+            <li ng-if="!permissions.rightToolBar.addExpesesWizard.hide || !permissions.rightToolBar.addExpesesManually.hide">
+                <a href="" ng-click="openAddExpensesWin()"><i class="fa fa-gbp warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Add Expenses</span></a>
+
             </li>
-            <li  ng-if="!permissions.rightToolBar.timesheet.hide"><a href="" ng-click="openAddTimesheetWin()"><i class="fa fa-table warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>TIMESHEET</span></a>
+
+            <li  ng-if="!permissions.rightToolBar.timesheet.hide">
+                <a href="" ng-click="openAddTimesheetWin()"><i class="fa fa-table warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Add Timesheet</span></a>
             </li>
-            <li ng-if="!permissions.rightToolBar.activity.hides"><a href="" ng-click="openAddActivityWin()"><i class="fa fa-clock-o warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Activity</span></a>
+
+            <li ng-if="!permissions.rightToolBar.activity.hides"><a href=""
+                                                                    ng-click="openAddActivityWin()"><i class="fa fa-clock-o warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>Add Activity</span></a>
             </li>
-            <li><a href="" ng-click="openAOEWin()"><i class="fa fa-cubes warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AOE</span></a>
+
+            <!--<li><a href="" ng-click="openAOEWin()"><i class="fa fa-cubes warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AOE</span></a>-->
+            <!--</li>-->
+
+           <!--@todo add permission-->
+            <li>
+                <a href="" ng-init="isActionRequestCollapsed='true'"
+                   ng-click="isActionRequestCollapsed = !isActionRequestCollapsed"><i
+                        class="fa fa-scissors btn-success"></i><span class="title">Action Request
+                </span></a>
+            </li>
+
+
+            <li collapse="isActionRequestCollapsed" style="height: 0;">
+                <a href="" ng-if="!permissions.rightToolBar.ssp.hide" ng-click="openSsp()"><i
+                    class="fa fa-medkit  btn-success"></i><span class="title"><i class="fa fa-plus-square-o"></i>SSP</span></a>
+            </li>
+            <li collapse="isActionRequestCollapsed"  style="height: 0;">
+                <a href="" ng-if="!permissions.rightToolBar.mp.hide" ng-click="openMp()"><i
+                    class="fa fa-female btn-success"></i><span class="title"><i
+                        class="fa fa-plus-square-o"></i>SMP</span></a>
+            </li>
+            <li  collapse="isActionRequestCollapsed"  style="height: 0;">
+                <a href="" ng-if="!permissions.rightToolBar.spp.hide" ng-click="openSpp()"><i
+                    class="fa fa-male btn-success"></i><span class="title"><i
+                        class="fa fa-plus-square-o"></i>SPP</span></a>
+            </li>
+
+            <li  collapse="isActionRequestCollapsed"  style="height: 0;">
+                <a href="" ng-if="!permissions.rightToolBar.holidayPayment.hide"
+                          ng-click="openHolidayPayment()"><i
+                        class="fa fa-plane  btn-success"></i><span class="title"><i
+                    class="fa fa-plus-square-o"></i>Holiday Payment</span></a>
+            </li>
+
+            <li collapse="isActionRequestCollapsed"  style="height: 0;"><a href=""
+                                                        ng-if="!permissions.rightToolBar.holidayPayment.hide"
+                ng-click="openSl()"><i class="fa fa-credit-card  btn-success"></i><span
+                    class="title"><i
+                class="fa fa-plus-square-o"></i>SL</span></a>
             </li>
 
             <li ng-if="!permissions.rightToolBar.agencies.hide"><a href="" ng-click="openCreateTaskWin({activityType: 'task'})"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AGENCIES</span></a>
             </li>
-             <li><a href="" ng-if="!permissions.rightToolBar.ssp.hide" ng-click="openSsp()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>SSP</span></a>
-            </li>
-            <li><a href="" ng-if="!permissions.rightToolBar.mp.hide" ng-click="openMp()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>SMP</span></a>
-            </li>
-            <li><a href="" ng-if="!permissions.rightToolBar.spp.hide" ng-click="openSpp()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>SPP</span></a>
-            </li>
-
-            <li><a href="" ng-if="!permissions.rightToolBar.holidayPayment.hide" ng-click="openHolidayPayment()"><i class="fa fa-group green-brand"></i><span class="title"><i
-                    class="fa fa-plus-square-o"></i>Holiday Payment</span></a>
-            </li>
-
-            <li><a href="" ng-if="!permissions.rightToolBar.holidayPayment.hide" ng-click="openSl()"><i class="fa fa-group green-brand"></i><span class="title"><i
-                    class="fa fa-plus-square-o"></i>SL</span></a>
-            </li>
-            <li><a href="" ng-if="!permissions.rightToolBar.holidayPayment.hide" ng-click="openHolidayPayment()"><i class="fa fa-group green-brand"></i><span class="title"><i></li>
 
         </ul>
 
     </div>
+
+</div>
