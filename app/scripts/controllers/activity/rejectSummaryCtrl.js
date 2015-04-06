@@ -1,7 +1,7 @@
 ﻿'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, item, claimInfo) {
+app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, item, claimInfo, rootScope) {
     $scope.items = item;
     $scope.claimInfo = claimInfo;
     $scope.reasons = [];
@@ -34,17 +34,50 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
                 }
                 var data = {
                     id: item._id,
+                    date: item.date,
                     type: item.expenseType,
                     subType: item.expenseDetail.name,
                     total: item.expenseDetail.total,
                     reason: '',
-                    other: ''
+                    other: '',
+                    revoke: function () {
+                        revoke(obj.claimId, item._id);
+                    }
+                }
+                if (rootScope.summary) {
+                    for (var j = 0; j < rootScope.summary.length; j++) {
+                        if (rootScope.summary[j].claimId == obj.claimId) {
+                            for (var k = 0; k < rootScope.summary[j].expenses.length; k++) {
+                                if (rootScope.summary[j].expenses[k].id == data.id) {
+                                    data.reason = rootScope.summary[j].expenses[k].reason;
+                                    data.other = rootScope.summary[j].expenses[k].other;
+                                    break
+                                }
+                            }
+                            break
+                        }
+                    }
                 }
                 obj.expenses.push(data);
             }
         });
         $scope.objects.push(obj);
     });
+
+    function revoke(claimId, expenseId) {
+        for (var i = 0; i < $scope.objects.length; i++) {
+            if ($scope.objects[i].claimId == claimId) {
+                for (var j = 0; j < $scope.objects[i].expenses.length; j++) {
+                    if ($scope.objects[i].expenses[j].id == expenseId) {
+                        $scope.objects[i].expenses.splice(j, 1);
+                        break
+                    }
+                }
+                break
+            }
+        }
+        rootScope.revoke(claimId, expenseId);
+    }
 
     $scope.ok = function () {
         var req = {};
@@ -56,7 +89,12 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
         $modalInstance.close();
     };
 
+    $scope.save = function () {
+        rootScope.summary = $scope.objects;
+        $modalInstance.dismiss('saved');
+    }
+
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $modalInstance.dismiss('cancelled');
     };
 });

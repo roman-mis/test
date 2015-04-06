@@ -16,6 +16,7 @@ angular.module('origApp.controllers')
                 }, 500);
             };
 
+
             //define grid structure
             $scope.gridOptions = {
                 limit: 20,
@@ -49,10 +50,10 @@ angular.module('origApp.controllers')
                     params._offset = ($scope.gridOptions.currentPage - 1) * $scope.gridOptions.limit;
                 } else {
                     params._offset = 0;
-                }
-                if ($scope.filterFirstName) {
-                    params.firstName_contains = $scope.filterFirstName;
-                }
+                }            
+               if ($scope.filterFirstName) {
+                    params.firstName_contains= $scope.filterFirstName;
+                } 
                 $scope.gridOptions.data = cddAPI.query(params, function () {
 
                     if ($scope.gridOptions.data.meta) {

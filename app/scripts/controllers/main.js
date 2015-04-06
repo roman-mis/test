@@ -18,6 +18,8 @@ angular.module('origApp.controllers', [])
             },0);
 
           });
+
+          
           if(AuthService.isLoggedIn()){
             $rootScope.currentUser = AuthService.getCurrentUser();
             // $rootScope.currentUser.userType = 'SA';

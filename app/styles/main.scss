@@ -2,6 +2,15 @@
 
 $fa-var-check: '';
 
+<<<<<<< HEAD
+=======
+@import "libs/angular-ui-select/select2";
+
+$fa-var-check: "";
+$icon-font-path: "../fonts/"; //all fonts are deployed in fonts folder when building the system that is deployed to the server. should not reference to the bower_components folder
+
+// bower:scss
+>>>>>>> 3975abe1ccea894d39bc8f37bf9ed0b2831d62fe
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 @import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
 

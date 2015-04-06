@@ -25,6 +25,17 @@ module.exports = function(db){
 		  	});
 		};
 
+		controller.getTimesheetBatchesWithTimesheet=function (req,res){
+			timesheetBatchService.getTimesheetBatchesWithTimesheet(req._restOptions)
+		  	.then(function(result){
+		    	var resp={result:true,objects:result, meta:{totalCount:result.count}};
+		    
+			    res.json(resp);
+		  	},function(err){
+		  		res.sendFailureResponse(err);
+		  	});
+		};
+
 		function getTimesheetBatchVm(timesheetBatch){
 			return {
 				_id: timesheetBatch._id,

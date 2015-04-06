@@ -98,7 +98,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/ssp.html',
                 parentScope:$scope,
                 controller:'sspController',
-                size:'lg'
+                size:'md'
             })
         };
 
@@ -198,6 +198,7 @@ angular.module('origApp.controllers')
         };
         $scope.ok = function() {
             $modalInstance.close();
+
         };
     });
 
