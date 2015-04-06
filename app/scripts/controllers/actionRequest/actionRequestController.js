@@ -17,7 +17,7 @@ $scope.callModal=function(id,type,createdBy){
 
   HttpResource.model('actionrequests/'+id+'').customGet('',{},function(data){
     console.log('from data');
-    console.log(data.data.objects);
+    console.log(data.data.object);
 // return;
    var controller;
    var parentScope={};
@@ -37,12 +37,12 @@ $scope.callModal=function(id,type,createdBy){
 
        controller='smpController';
        $scope.smpObject={};
-       $scope.smpObject.startDate=data.data.objects.startDate;
-       $scope.smpObject.smp=data.data.objects.smp;
-       $scope.smpObject.id=data.data.objects.id;
-       $scope.smpObject.intendedStartDate=data.data.objects.intendedStartDate;
-       $scope.smpObject.days=data.data.objects.days;
-       $scope.smpObject.imageUrl=data.data.objects.imageUrl;
+       $scope.smpObject.startDate=data.data.object.startDate;
+       $scope.smpObject.smp=data.data.object.smp;
+       $scope.smpObject.id=data.data.object.id;
+       $scope.smpObject.intendedStartDate=data.data.object.intendedStartDate;
+       $scope.smpObject.days=data.data.object.days;
+       $scope.smpObject.imageUrl=data.data.object.imageUrl;
        break;
 
    }
