@@ -225,9 +225,11 @@ module.exports = function (dbs) {
 
             body   = '';
             for(var j = 0; j < mailInfo.expense.length; j++){
-                body = body + '<span style="margin-right:15px;width:200px"><b>Subtype</b>: ' +  mailInfo.expense[j].description + '</span>'+ 
-                              '<span style="margin-right:15px;width:100px"><b>Value</b>: ' +  mailInfo.expense[j].value + '</span>'+
-                              '<span style=" color:red;"><b>Rejected</b></span> ' + mailInfo.reason[j] + '</span>' + 
+                console.log(mailInfo.expense[j]);
+                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+ 
+                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+ 
+                              '<div style="margin-right:15px;width:100px;display: inline-block;"><b>total</b>: ' +  mailInfo.expense[j].total + '</div>'+
+                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' + 
                               '<hr>';  
             }
             message = '<h3>' + header + '</h3>' + body;
@@ -271,7 +273,7 @@ module.exports = function (dbs) {
                                     console.log('####$$$$$#####');
                                     expenses.status = status;
                                     mailInfoItem.reason.push(updatesExpenses.reason !== 'Other' ? updatesExpenses.reason : updatesExpenses.other);
-                                    mailInfoItem.expense.push(expenses);
+                                    mailInfoItem.expense.push(updatesExpenses);
                                 }
                             });
                         });
