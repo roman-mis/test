@@ -47,7 +47,7 @@ module.exports=function(dbs){
 						
 						Q.nfcall(actionRequest.save.bind(actionRequest))
 						.then(function(){
-							resolve({result:true, objects:actionRequest});
+							resolve({result:true, object:actionRequest});
 						},reject);
 					}
 					else{
