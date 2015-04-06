@@ -42,8 +42,13 @@ angular.module('origApp').config(function($stateProvider) {
     controller:'actionRequestController'
   })
   .state('app.payroll.timesheets', {
-    url:'/timesheets',
-    templateUrl:'views/payroll/timesheets.html',
-    controller:'payrollTimesheetsCtrl'
+      url: '/timesheets',
+      templateUrl: 'views/payroll/timesheets.html',
+      controller: 'payrollTimesheetsCtrl'
+  })
+   .state('app.payroll.approveTimesheets', {
+      url: '/approveTimesheets',
+      templateUrl: 'views/payroll/approveTimesheets.html',
+      controller: 'payrollApproveTimesheetsCtrl'
   });
 });
