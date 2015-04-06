@@ -175,11 +175,17 @@ module.exports = function(dbs){
 
 
     controller.getActionRequestData = function(req, res){
-    	adminActionRequestService.getActionRequestData()
+    	adminActionRequestService.getActionRequestData(req._restOptions)
     		.then(function(response){
     			console.log(response);
-    			var actionrequests = getActionRequestDataVm(response);
-    		res.json({objects:actionrequests});
+	    			
+	    		var actionrequests = getActionRequestDataVm(response.rows);
+	            var pagination = req._restOptions.pagination || {};
+	            var resp = { result: true, objects: actionrequests, meta: { limit: pagination.limit, offset: pagination.offset, totalCount: response.count } };
+	            //console.log('about to send the message to client');
+
+	            res.json(resp);
+
     		})
     		.then(null,function(err){
     			res.sendFailureResponse(err);
