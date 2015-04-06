@@ -34,6 +34,7 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
                 }
                 var data = {
                     id: item._id,
+                    date: item.date,
                     type: item.expenseType,
                     subType: item.expenseDetail.name,
                     total: item.expenseDetail.total,
