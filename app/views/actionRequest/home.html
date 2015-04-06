@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="row">
+<div class="">
+    <div class="">
         <div class="col-xs-12">
             <table class="table table-striped">
                 <thead>
@@ -20,8 +20,8 @@
                 <tbody>
                   <tr ng-repeat="l in lists">
                    <td>{{l.worker.candidateNo}}</td>
-                   <td>{{l.worker.name}}</td>
-                   <td>{{l.dateRequested | date:'medium'}}</td>
+                   <td>{{l.worker.name | capitalizeAll}}</td>
+                   <td>{{l.dateRequested | date:'MM/dd/yyyy'}}</td>
                    <td>{{l.type}}</td>
                    <td>{{l.periodActioned}}</td>
                    <td>{{l.createdBy.name}}</td>
