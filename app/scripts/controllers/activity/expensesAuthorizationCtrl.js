@@ -590,7 +590,7 @@ app.controller("expensesAuthorizationCtrl",
             reviewSummaryModal('lg', $scope.pendingRejections, claimInfo, $scope);
         }
 
-        $scope.undoRejections = function () {
+        $scope.cancelRejections = function () {
             var req = {};
             req.body = [];
             var claimIndex, expenseIndex;
