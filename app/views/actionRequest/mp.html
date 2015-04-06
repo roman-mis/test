@@ -7,16 +7,18 @@
 
     <form name="mpForm" novalidate ng-submit="submitInformation(mpForm.$valid)">
         <div class="modal-body">
-            <div class="row">
-                <div class="col-xs-6 col-sm-4 form-group control-label">Candidate name:</div>
-                <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">{{contactdetail.firstName}}</div>
-                <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-                <div class="col-xs-6 col-sm-2 form-group control-label no-padding-left">{{contactdetail.candidateNo}}</div>
-            </div>
-            <div class="line-horizontal"></div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-3 form-group control-label">Start date</div>
-                <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate name:</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.firstName}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
+                    </div>
+                    <div class="line-horizontal"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 form-group control-label">Start date</div>
+                        <div class="col-xs-6 col-sm-2 form-group control-label no-padding-left">
+
 
                     <input ng-model="mp.startDate" name="start" type="text" orig-datepicker required/>
                            <span ng-if="mpForm.start.$invalid && submitted">

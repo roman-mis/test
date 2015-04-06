@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Contractor ID</th>
+                        <th>Contractor Name</th>
+                        <th>Date Requested</th>
+                        <th>Type</th>
+                        <th>Period Actioned</th>
+                        <th>User Requested</th>
+                        <th>Request Ref.</th>
+            <th>Status</th>
+            <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                  <tr ng-repeat="l in lists">
+                   <td>{{l.worker.candidateNo}}</td>
+                   <td>{{l.worker.name}}</td>
+                   <td>{{l.dateRequested | date:'medium'}}</td>
+                   <td>{{l.type}}</td>
+                   <td>{{l.periodActioned}}</td>
+                   <td>{{l.createdBy.name}}</td>
+                   <td>{{l.requestRef}}</td>
+                   <td>{{l.status}}</td>
+                   <td class="text-center">
+                    <a ng-click="callModal(l.id,l.type,l.createdBy);"> <i class="fa fa-folder-open-o"></i></a>
+
+                   </td>
+
+                  </tr>
+
+
+        </tbody>
+            </table>
+
+        </div>
+    </div>
+</div><!-- /container -->

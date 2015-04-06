@@ -15,13 +15,13 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
    $scope.periodType = 'weekly';
    $scope.payroll = {};
 
-   HttpResource.model('constants/candidateProfile').customGet('', {}, function (data) {
-       //if (data.statusText === 'OK') {
-           console.log('candidateProfile');
-            console.log(data);
-           //$scope.periodTypeValues = data.data;
-       //}
-   });
+   // HttpResource.model('constants/candidateProfile').customGet('', {}, function (data) {
+   //     //if (data.statusText === 'OK') {
+   //         console.log('candidateProfile');
+   //          console.log(data);
+   //         //$scope.periodTypeValues = data.data;
+   //     //}
+   // });
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
         if(data.statusText === 'OK' ){
@@ -32,19 +32,28 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     });
 
 	
-    $scope.openRunPayroll = function(){
+    // $scope.openRunPayroll = function(){
+    //     ModalService.open({
+    //       templateUrl: 'views/payroll/runPayroll.html',
+    //       parentScope: $scope,
+    //       controller: 'runPayrollController',
+    //       size: 'lg'
+    //   });
+    // };
+
+    $scope.openReceiptFunds = function(){
+        console.log(220);
         ModalService.open({
-          templateUrl: 'views/payroll/runPayroll.html',
+          templateUrl: 'views/payroll/receiptFunds.html',
           parentScope: $scope,
-          controller: 'runPayrollController',
-          size: 'lg'
+          controller: 'receiptFundsCtrl'
       });
     };
 
     $scope.openCreateValidation = function(){
         console.log(220);
         ModalService.open({
-          templateUrl: 'views/payroll/createValidation.html',
+          templateUrl: 'views/payroll/.html',
           parentScope: $scope,
           controller: 'createValidationController',
           size: 'lg'

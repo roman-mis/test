@@ -198,6 +198,7 @@ angular.module('origApp.controllers')
         };
         $scope.ok = function() {
             $modalInstance.close();
+
         };
     });
 
