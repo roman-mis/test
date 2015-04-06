@@ -115,6 +115,8 @@ module.exports=function(dbs){
 								console.log('records[records.length-1].periodStartDate.toDate()    '+records[records.length-1].periodStartDate); */
 								return applyPeriodNumbers(user,records,response.options)
 								.then(function(){
+									console.log('---------Final records are-----');
+									console.log(records);
 									resolve({result:true,objects:records});
 								});
 							})
@@ -179,11 +181,12 @@ module.exports=function(dbs){
 				}
 
 				var thisPeriodLastDate;
-				if(payFrequency===enums.payFrequency.Weekly){
-					thisPeriodLastDate=nextStartDate.clone().day(5);
+				if(payFrequency===enums.payFrequency.Monthly){
+					thisPeriodLastDate=nextStartDate.clone().endOf('month');
+					
 				}
 				else{
-					thisPeriodLastDate=nextStartDate.clone().endOf('month');
+					thisPeriodLastDate=nextStartDate.clone().day(5);
 				}
 
 				var thisPeriodEndDate=endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():
@@ -195,11 +198,12 @@ module.exports=function(dbs){
 				weeks[i].noOfDays=noOfDays;
 
 				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(1).toDate());
-				if(payFrequency===enums.payFrequency.Weekly){
-					nextStartDate=nextStartDate.clone().add(7,'days').day(1);
+				if(payFrequency===enums.payFrequency.Monthly){
+					nextStartDate=nextStartDate.add(1,'months').startOf('month');
+					
 				}
 				else{
-					nextStartDate=nextStartDate.add(1,'months').startOf('month');
+					nextStartDate=nextStartDate.clone().add(7,'days').day(1);
 				}
 
 				
@@ -224,6 +228,7 @@ module.exports=function(dbs){
 
 	function applyPeriodNumbers(user,records,options){
 		var perDayPay=options.perDayPay;
+		var payFrequency=user.worker.payrollTax.payFrequency;
 
 		var q=db.TaxTable.find().gte('startDate',records[0].periodStartDate).lte('startDate',records[records.length-1].periodStartDate);
 		console.log('query formed');
@@ -244,8 +249,15 @@ module.exports=function(dbs){
 					if(taxTable){
 						// console.log('taxTable found ');
 						// console.log(taxTable);
-						week.weekNumber=taxTable.weekNumber;
-						week.monthNumber=taxTable.monthNumber;
+						if(payFrequency===enums.payFrequency.Monthly){
+							week.monthNumber=taxTable.monthNumber;
+							
+						}
+						else{
+							week.weekNumber=taxTable.weekNumber;
+						}
+						
+						
 					}
 
 					// week.amount=perDayPay * week.days.length;
