@@ -121,6 +121,7 @@ module.exports = function(dbs){
     	};
     	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'ssp')
     		.then(function(response){
+                console.log(response);
     			res.json(response);
     		})
     		.then(null,function(err){
@@ -174,11 +175,17 @@ module.exports = function(dbs){
 
 
     controller.getActionRequestData = function(req, res){
-    	adminActionRequestService.getActionRequestData()
+    	adminActionRequestService.getActionRequestData(req._restOptions)
     		.then(function(response){
     			console.log(response);
-    			var actionrequests = getActionRequestDataVm(response);
-    		res.json({objects:actionrequests});
+	    			
+	    		var actionrequests = getActionRequestDataVm(response.rows);
+	            var pagination = req._restOptions.pagination || {};
+	            var resp = { result: true, objects: actionrequests, meta: { limit: pagination.limit, offset: pagination.offset, totalCount: response.count } };
+	            //console.log('about to send the message to client');
+
+	            res.json(resp);
+
     		})
     		.then(null,function(err){
     			res.sendFailureResponse(err);
@@ -296,13 +303,14 @@ controller.getActionRequestDataById =function(req, res){
 			updatedDate : Date(),
 			updatedBy : req.user._id
 		};
-
+		console.log('details');
+		console.log(details);
 		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
 
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);
-				var updatedActionRequestData = getUpdatedActionRequestDataVm(response);
+				var updatedActionRequestData = getActionRequestDataByIdVm(response.object);
 				res.json({object : updatedActionRequestData});
 			}).then(null,function(err){
     			res.sendFailureResponse(err);

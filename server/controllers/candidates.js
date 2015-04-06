@@ -505,7 +505,8 @@ module.exports = function (dbs) {
         //console.log('id '+usr.id);
         //console.log(usr);
         return {
-            _id: usr._id, title: usr.title, firstName: usr.firstName, lastName: usr.lastName, emailAddress: usr.emailAddress,
+            _id: usr._id, title: usr.title,
+            fullName : (usr.firstName + ' ' + usr.lastName), firstName: usr.firstName, lastName: usr.lastName, emailAddress: usr.emailAddress,
             birthDate: worker.birthDate, niNumber: worker.taxDetail.niNumber,
             contactNumber: worker.contactNumber, address1: worker.address1, address2: worker.address2, address3: worker.address3,
             town: worker.town, county: worker.county, postCode: worker.postCode, gender: worker.gender, nationality: worker.nationality,

@@ -31,7 +31,9 @@ router.get('/',controller.getActionRequestData);
 router.get('/:id',controller.getActionRequestDataById);
 
 router.patch('/:id/',routeDefaultModifier({params:{status:''}}),controller.updateActionRequest);
-router.patch('/:id/:status',controller.updateActionRequest);
+router.patch('/:id/approve',routeDefaultModifier({params:{status:'approved'}}),controller.updateActionRequest);
+router.patch('/:id/reject',routeDefaultModifier({params:{status:'rejected'}}),controller.updateActionRequest);
+router.patch('/:id/refer',routeDefaultModifier({params:{status:'referred'}}),controller.updateActionRequest);
 
 
 router.post('/:userId/studentloan',controller.postStudentLoan);
