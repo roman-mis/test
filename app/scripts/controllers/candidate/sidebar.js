@@ -91,15 +91,15 @@ angular.module('origApp.controllers')
                 size: 'lg'
             });
         };
-        $scope.openSsp=function(){
+        $scope.openSsp = function () {
             console.log($scope.contactdetail);
             ModalService.open({
 
-                templateUrl:'views/actionRequest/ssp.html',
-                parentScope:$scope,
-                controller:'sspController',
-                size:'md'
-            })
+                templateUrl: 'views/actionRequest/ssp.html',
+                parentScope: $scope,
+                controller: 'sspController',
+                size: 'md'
+            });
         };
 
         $scope.openSpp=function(){
