@@ -303,13 +303,14 @@ controller.getActionRequestDataById =function(req, res){
 			updatedDate : Date(),
 			updatedBy : req.user._id
 		};
-
+		console.log('details');
+		console.log(details);
 		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
 
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);
-				var updatedActionRequestData = getUpdatedActionRequestDataVm(response);
+				var updatedActionRequestData = getActionRequestDataByIdVm(response.object);
 				res.json({object : updatedActionRequestData});
 			}).then(null,function(err){
     			res.sendFailureResponse(err);
