@@ -12,6 +12,7 @@ module.exports=function(dbs){
 	var _=require('lodash');
 	var service={};
 	var utils=require('../../utils/utils');
+	var queryutils=require('../../utils/queryutils')(db);
 
 	var moment=require('moment');
 
@@ -353,8 +354,13 @@ module.exports=function(dbs){
 
 	};
 
-	service.getActionRequestData = function(){
-		var q=db.ActionRequest.find().populate('worker').populate('createdBy');
+	service.getActionRequestData = function(request){
+		return Q.Promise(function(resolve,reject){
+			var q=db.ActionRequest.find().populate('worker').populate('createdBy');
+			return queryutils.applySearch(q,db.ActionRequest,request)
+				.then(resolve,reject);
+		});
+		
 	return Q.nfcall(q.exec.bind(q));
 	};
 
