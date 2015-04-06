@@ -12,3 +12,4 @@ module.exports = function(app){
 };
 
 router.get('/', restMiddleware(db), controller.getAllTimesheetBatches);
+router.get('/with/timesheets', restMiddleware(db), controller.getTimesheetBatchesWithTimesheet);

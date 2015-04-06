@@ -6,7 +6,7 @@
 @import "libs/angular-ui-select/select2";
 
 $fa-var-check: "";
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$icon-font-path: "../fonts/"; //all fonts are deployed in fonts folder when building the system that is deployed to the server. should not reference to the bower_components folder
 
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
