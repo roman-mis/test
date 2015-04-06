@@ -593,6 +593,7 @@ app.controller("expensesAuthorizationCtrl",
         $scope.undoRejections = function () {
             var req = {};
             req.body = [];
+            var claimIndex, expenseIndex;
             $scope.pendingRejections.forEach(function (item) {
                 for (var i = 0; i < $scope.expensesArray.length; i++) {
                     var found = false;
@@ -631,6 +632,8 @@ app.controller("expensesAuthorizationCtrl",
                                 receiptUrls: $scope.expensesArray[i].expenses[j].receiptUrls,
                                 status: 'submitted'
                             });
+                            claimIndex = i;
+                            expenseIndex = j;
                             found = true;
                             break
                         }
@@ -642,11 +645,11 @@ app.controller("expensesAuthorizationCtrl",
             $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                 logs(res, 'Edit Response');
                 if (res.result) {
-                    $scope.expensesArray[i].expenses[j].status = 'submitted';
-                    $scope.cloned[i].expenses[j].status = 'submitted';
+                    $scope.expensesArray[claimIndex].expenses[expenseIndex].status = 'submitted';
+                    $scope.cloned[claimIndex].expenses[expenseIndex].status = 'submitted';
+                    $scope.pendingRejections = [];
                 }
             });
-            $scope.pendingRejections = [];
         }
 
         $scope.revoke = function (claimId, expenseId) {

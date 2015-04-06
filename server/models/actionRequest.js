@@ -4,12 +4,12 @@ var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
 module.exports = function(mongoose,autoIncrement) {
-  	
+
 
 	var schema= new BaseSchema({
         type: String, // ssp, smp, spp, holidaypay, studentloan
         status: String, // Submitted, Approved
-		worker: { type:Schema.Types.ObjectId, ref:'User' },
+		    worker: { type:Schema.Types.ObjectId, ref:'User' },
         dateInformed: Date,
         intendedStartDate: Date,
         actualStartDate: Date,
@@ -34,8 +34,8 @@ module.exports = function(mongoose,autoIncrement) {
             payDirectly: Boolean
         },
         imageUrl: String,
-        days: [ 
-            { 
+        days: [
+            {
                 weekNumber: Number,
                 monthNumber: Number,
                 amountPaid: Number,
@@ -47,11 +47,11 @@ module.exports = function(mongoose,autoIncrement) {
                 notes: String
             }
         ]
-        
+
 	});
 
     schema.plugin(autoIncrement.plugin,{model:'ActionRequest',field:'requestReference',startAt:1,incrementBy:1});
-    
+
 
   	return mongoose.model('ActionRequest',schema);
 };

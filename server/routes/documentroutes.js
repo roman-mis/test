@@ -24,4 +24,3 @@ router.get('/timesheet/signedUrl',routeDefaultModifier({params:{folder:'timeshee
 router.get('/actionrequest/signedUrl',routeDefaultModifier({params:{folder:'actionrequest'}}),controller.getUploadDocSignedUrl);
 router.get('/timesheet/:fileName',routeDefaultModifier({params:{folder:'timesheet'}}),controller.viewDoc);
 router.delete('/timesheet/:fileName',routeDefaultModifier({params:{folder:'timesheet'}}),controller.deleteDoc);
-

@@ -7,16 +7,21 @@ angular.module('origApp.controllers')
 
 
     $scope.candidateId = parentScope.candidateId;
-    $scope.mp = {};
+    if(!$scope.mp){
+      $scope.mp = {};
+
+
+    }
     $scope.mp.maxPeriods = 39;
     $scope.mp.days;
 
 
 
-    HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-        $scope.contactdetail = data.data.object;
-        // console.log($scope.contactdetail)
-    }, function(err) {})
+    HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+          console.log(data);
+       $scope.contactdetail = data.data.object;
+     //   $scope.fullname = ($scope.candidateInfo.firstName + ' ' + $scope.candidateInfo.lastName);
+    }, function(err) {});
 
 
     $scope.closeModal = function() {
