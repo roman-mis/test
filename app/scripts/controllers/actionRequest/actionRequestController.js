@@ -50,7 +50,7 @@ angular.module('origApp.controllers')
                     parentScope: parentScope,
                     scope: $scope,
                     controller: controller,
-                    size: 'lg'
+                    size: 'md'
                 });
 
                 modalInstance.result.then(function (data) {
