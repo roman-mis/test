@@ -593,7 +593,7 @@ app.controller("expensesAuthorizationCtrl",
         $scope.cancelRejections = function () {
             var req = {};
             req.body = [];
-            var claimIndex, expenseIndex;
+            var indeces = [];
             $scope.pendingRejections.forEach(function (item) {
                 for (var i = 0; i < $scope.expensesArray.length; i++) {
                     var found = false;
@@ -632,8 +632,10 @@ app.controller("expensesAuthorizationCtrl",
                                 receiptUrls: $scope.expensesArray[i].expenses[j].receiptUrls,
                                 status: 'submitted'
                             });
-                            claimIndex = i;
-                            expenseIndex = j;
+                            indeces.push({
+                                claimIndex: i,
+                                expenseIndex: j
+                            });
                             found = true;
                             break
                         }
@@ -645,8 +647,10 @@ app.controller("expensesAuthorizationCtrl",
             $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                 logs(res, 'Edit Response');
                 if (res.result) {
-                    $scope.expensesArray[claimIndex].expenses[expenseIndex].status = 'submitted';
-                    $scope.cloned[claimIndex].expenses[expenseIndex].status = 'submitted';
+                    for (var i = 0; i < indeces.length; i++) {
+                        $scope.expensesArray[indeces[i].claimIndex].expenses[indeces[i].expenseIndex].status = 'submitted';
+                        $scope.cloned[indeces[i].claimIndex].expenses[indeces[i].expenseIndex].status = 'submitted';
+                    }
                     $scope.pendingRejections = [];
                 }
             });
