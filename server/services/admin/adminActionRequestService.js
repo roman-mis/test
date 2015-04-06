@@ -79,7 +79,8 @@ module.exports=function(dbs){
 
 						if(payType==='ssp'){
 
-              				console.log('here');
+                            console.log('ssp');
+                            console.log(JSON.stringify(system));
 							var currentRate=utils.getStatutoryValue('sspRate',system,new Date());
 
 							options.periodicPay=currentRate?currentRate.amount:0;
@@ -311,7 +312,7 @@ module.exports=function(dbs){
 								});
 								var totalPeriods=0;
 								var totalAmounts=0;
-								var averateAmount=0;
+								var averageAmount=0;
 								_.forEach(periodicTimesheets,function(periodicTimesheet,ky){
 									if(periodicTimesheet.length>0){
 										var aTotalAmount=0;

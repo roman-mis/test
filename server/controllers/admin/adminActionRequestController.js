@@ -121,6 +121,7 @@ module.exports = function(dbs){
     	};
     	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'ssp')
     		.then(function(response){
+                console.log(response);
     			res.json(response);
     		})
     		.then(null,function(err){
