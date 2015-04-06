@@ -186,9 +186,6 @@ module.exports = function(dbs){
 
 	            res.json(resp);
 
-
-
-    			res.json({objects:actionrequests});
     		})
     		.then(null,function(err){
     			res.sendFailureResponse(err);
