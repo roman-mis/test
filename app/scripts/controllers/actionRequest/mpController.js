@@ -1,7 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
 
-
 .controller('mpController', function($scope, parentScope, HttpResource, $http, $modalInstance, MsgService) {
     $scope.candidateId = parentScope.candidateId;
     if(!$scope.mp){
