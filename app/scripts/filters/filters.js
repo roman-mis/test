@@ -15,6 +15,14 @@
             }
           };
         })
+ .filter('capitalizeAll', function() {
+  return function(input) {
+            // input will be the string we pass in
+            if (input){
+              return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
+            }
+          };
+        })
  .filter('formatDate', function() {
   return function(input, format) {
     format = format || 'DD/MM/YYYY HH:mm:ss';

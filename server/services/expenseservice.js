@@ -225,9 +225,11 @@ module.exports = function (dbs) {
 
             body   = '';
             for(var j = 0; j < mailInfo.expense.length; j++){
-                body = body + '<span style="margin-right:15px"><b>Subtype</b>: ' +  mailInfo.expense[j].description + '</span>'+ 
-                              '<span style="margin-right:15px"><b>Value</b>: ' +  mailInfo.expense[j].value + '</span>'+
-                              '<span style=" color:red;"><b>Rejected</b></span> ' + mailInfo.reason[j] + '</span>' + 
+                console.log(mailInfo.expense[j]);
+                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+ 
+                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+ 
+                              '<div style="margin-right:15px;width:100px;display: inline-block;"><b>total</b>: ' +  mailInfo.expense[j].total + '</div>'+
+                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' + 
                               '<hr>';  
             }
             message = '<h3>' + header + '</h3>' + body;
@@ -268,10 +270,10 @@ module.exports = function (dbs) {
                             claim.expenses.forEach(function (updatesExpenses) {
                                 console.log(3);
                                 if (expenses._id + '' === updatesExpenses.id + '') {
-                                    console.log('####$$$$$#####')
+                                    console.log('####$$$$$#####');
                                     expenses.status = status;
                                     mailInfoItem.reason.push(updatesExpenses.reason !== 'Other' ? updatesExpenses.reason : updatesExpenses.other);
-                                    mailInfoItem.expense.push(expenses);
+                                    mailInfoItem.expense.push(updatesExpenses);
                                 }
                             });
                         });
@@ -282,13 +284,18 @@ module.exports = function (dbs) {
                     Q.nfcall(expense.save.bind(expense)).then(function(){
                         console.log('save claim num' + claimCounter);
                         console.log('sending mail');
-                        service.sendMail(mailInfoItem).then(function(){
-                            if(claimCounter === claims.objects.length){
-                                resolve({ result: true });
-                            }   
-                        },function(err){
-                            reject(err);
-                        });
+                        console.log(status);
+                        if(status === 'rejected'){
+                            service.sendMail(mailInfoItem).then(function(){
+                                if(claimCounter === claims.objects.length){
+                                    resolve({ result: true });
+                                }   
+                            },function(err){
+                                reject(err);
+                            });                            
+                        }else{
+                            resolve({ result: true });
+                        }
                     },function(err){
                         reject(err);
                     });
@@ -374,6 +381,7 @@ module.exports = function (dbs) {
                 var q = db.Expense.findById(claim);
                 Q.nfcall(q.exec.bind(q)).then(function(expense){
                     for (var i = 0; i < data.length; i++) {
+                        breakFrmDaysLoop = false;
                         if(claim === data[i].claimId + ''){
                             var dayIndex = -1;
                             expense.days.some(function (day) {

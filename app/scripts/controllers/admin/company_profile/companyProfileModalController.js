@@ -7,7 +7,7 @@ angular.module('origApp.controllers')
             var mapCompanyProfile = {};
 
             if (undefined !== parentScope) {
-                $scope.companyProfile = parentScope.companyProfile;
+                $scope.companyProfile = JSON.parse(JSON.stringify(parentScope.companyProfile));
                 $scope.dropDownLists =  parentScope.dropDownLists;
 
 
