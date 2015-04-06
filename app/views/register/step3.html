@@ -24,7 +24,41 @@
                 <input type="text" ng-model="candidate.details.jobTitle" name="jobtitle" class="form-control" placeholder=" Job Title" maxlength="50" />
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.details.sector" name="sector" class="form-control" placeholder=" Sector" maxlength="50"/>
+                <!-- <input type="text" ng-model="candidate.details.sector" name="sector" class="form-control" placeholder=" Sector" maxlength="50"/> -->
+                <select ng-model="candidate.details.sector" name="sector" class="form-control">
+                    <option value='Accountancy and financial management'>Accountancy and financial management</option>
+                    <option value='Agriculture, animal and plant resources'>Agriculture, animal and plant resources</option>
+                    <option value='Banking, insurance and financial services'>Banking, insurance and financial services</option>
+                    <option value='Business administration'>Business administration</option>
+                    <option value='Charities and voluntary sector'>Charities and voluntary sector</option>
+                    <option value='Construction, civil engineering and QS'>Construction, civil engineering and QS</option>
+                    <option value='Emergency services and armed forces'>Emergency services and armed forces</option>
+                    <option value='Engineering'>Engineering</option>
+                    <option value='Environment and natural resources'>Environment and natural resources</option>
+                    <option value='Hospitality'>Hospitality</option>
+                    <option value='Sport, leisure and tourism'>Sport, leisure and tourism</option>
+                    <option value='Human resources'>Human resources</option>
+                    <option value='Recruitment and training'>Recruitment and training</option>
+                    <option value='IT and telecoms'>IT and telecoms</option>
+                    <option value='Languages and culture'>Languages and culture</option>
+                    <option value='Law, legal services'>Law, legal services</option>
+                    <option value='Library and information services'>Library and information services</option>
+                    <option value='Logistics and transport'>Logistics and transport</option>
+                    <option value='Management consulting'>Management consulting</option>
+                    <option value='Management, business and administration'>Management, business and administration</option>
+                    <option value='Manufacturing and processing'>Manufacturing and processing</option>
+                    <option value='Marketing, advertising and PR'>Marketing, advertising and PR</option>
+                    <option value='Media and publishing'>Media and publishing</option>
+                    <option value='Medical and healthcare'>Medical and healthcare</option>
+                    <option value='Performing and creative arts'>Performing and creative arts</option>
+                    <option value='Property'>Property</option>
+                    <option value='Public sector and civil service'>Public sector and civil service</option>
+                    <option value='Retail, sales and customer services'>Retail, sales and customer services</option>
+                    <option value='Science, research and development'>Science, research and development</option>
+                    <option value='Social, community and youth'>Social, community and youth</option>
+                    <option value='Teaching and education'>Teaching and education</option>
+                    <option value='Other'>Other</option>
+                </select>
             </div>
             <div class="form-group">
                 <div class="input-group date" name="startDate" ng-model="candidate.details.startDate" placeholder="* Start Date" orig-datepicker required/>
