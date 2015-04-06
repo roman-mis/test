@@ -36,9 +36,7 @@ module.exports = function(dbs){
 			worker:req.params.userId,
 			startDate:req.body.startDate,
 			intendedStartDate:req.body.intendedStartDate,
-			smp:{
-				babyDueDate:req.body.babyDueDate
-			},
+			smp:req.body.smp,
 			days:req.body.days,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
@@ -53,13 +51,8 @@ module.exports = function(dbs){
 		var detail={
 			'type':enums.actionRequestTypes.SPP,
 			'status':enums.statuses.Submitted,
-
 			worker:req.params.userId,
-
-			spp:{
-				babyDueDate:req.body.babyDueDate,
-				relationship:req.body.relationship
-			},
+			spp:req.body.spp,
 			days:req.body.days,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
@@ -75,9 +68,7 @@ module.exports = function(dbs){
 			'type':enums.actionRequestTypes.HolidayPay,
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
-			holidayPay:{
-				amount:req.body.amount
-			},
+			holidayPay:req.body.holidayPay,
 			createdBy:req.user.id
 
 
@@ -93,10 +84,7 @@ module.exports = function(dbs){
 			'type':enums.actionRequestTypes.SLR,
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
-			studentLoan:{
-				haveLoan:req.body.haveLoan,
-				payDirectly:req.body.payDirectly
-			},
+			studentLoan:req.body.studentLoan,
 			createdBy:req.user.id
 
 
@@ -256,12 +244,12 @@ controller.getActionRequestDataById =function(req, res){
 				var createdBy=actionrequests.createdBy||{};
 				var actionRequestData = {
 					id : actionrequests._id,
-					worker: {
+					worker: actionrequests.worker ? {
 						id : actionrequests.worker._id,
 						name : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
 						candidateNo : utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
-						},
-					dateRequested : actionrequests.worker.createdDate,
+						}:{},
+					dateRequested : actionrequests.worker?actionrequests.worker.createdDate:null,
 					status : actionrequests.status,
 					type : actionrequests.type,
 
@@ -297,12 +285,20 @@ controller.getActionRequestDataById =function(req, res){
 			startDate : req.body.startDate,
 			endDate : req.body.endDate,
 			intendedStartDate : req.body.intendedStartDate,
-			requestRef : req.body.requestRef,
+			actualStartDate  : req.body.actualStartDate,
+			// requestRef : req.body.requestRef,
+			smp :req.body.smp,
+			spp : req.body.spp,
+			holidayPay : req.body.holidayPay,
+			studentLoan : req.body.studentLoan,
 			imageUrl : req.body.imageUrl,
-			days : req.body.days
+			days : req.body.days,
+			updatedDate : Date(),
+			updatedBy : req.user._id
 		};
 
-		adminActionRequestService.updateActionRequest(req.params.id, details)
+		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
+
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);

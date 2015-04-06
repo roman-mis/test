@@ -14,26 +14,35 @@ HttpResource.model('actionrequests').customGet('', {}, function(data) {
       };
 
 $scope.callModal=function(id,type,createdBy){
+
   HttpResource.model('actionrequests/'+id+'').customGet('',{},function(data){
+    console.log('from data');
+    console.log(data.data.objects);
+// return;
    var controller;
    var parentScope={};
    parentScope.candidate={};
    parentScope.candidate.firstName=createdBy.name;
-   parentScope.candidate.id=createdBy.id;
+  // parentScope.candidate.id=createdBy.id;
+  console.log(parentScope);
    parentScope.candidateId=createdBy.id;
-   parentScope.showMe=true;
-  console.log(data.data.objects);
    switch(type){
      case 'ssp':
+       parentScope.showMe=true;
        $scope.ssp=data.data.objects;
-       controller='sspController';
+       controller='sspControllers';
 
        break;
      case 'smp':
+
+       controller='smpController';
        $scope.smpObject={};
        $scope.smpObject.startDate=data.data.objects.startDate;
-       $scope.smp.smp=data.data.objects.smp;
-       controller='smpController';
+       $scope.smpObject.smp=data.data.objects.smp;
+       $scope.smpObject.id=data.data.objects.id;
+       $scope.smpObject.intendedStartDate=data.data.objects.intendedStartDate;
+       $scope.smpObject.days=data.data.objects.days;
+       $scope.smpObject.imageUrl=data.data.objects.imageUrl;
        break;
 
    }

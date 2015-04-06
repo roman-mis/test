@@ -3,7 +3,7 @@
 <div class="modal-header">
     <h4 class="modal-title">Request Statutory Sick Pay</h4>
 </div><!-- /modal-header -->
-
+{{ssp}}
 
     <div class="modal-body">
 
@@ -11,7 +11,7 @@
             <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
             <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.firstName }} {{ candidate.lastName }}</div>
             <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
-            <div class="col-xs-6 col-sm-2 form-group no-padding-left text-right">{{contactdetail.candidateNo}}</div>
+            <div class="col-xs-6 col-sm-2 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
         </div>
 
         <div class="line-horizontal"></div>
@@ -156,10 +156,10 @@
                                   <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li><a href="#">Save</a></li>
-                                    <li><a href="#">Save and Approve</a></li>
-                                    <li><a href="#">Save and Reject</a></li>
-                                    <li><a href="#">Save and Refer</a></li>
+                                    <li><a ng-click="save()">Save</a></li>
+                                    <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
+                                    <li><a ng-click="saveAndReject();">Save and Reject</a></li>
+                                    <li><a ng-click="saveAndRefer();">Save and Refer</a></li>
                                 </ul>
                             </div>
             <input type="submit" name="submit" class="btn btn-primary" ng-if="!showMe" value="Submit">

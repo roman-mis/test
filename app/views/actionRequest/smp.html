@@ -2,28 +2,27 @@
 				<div class="modal-header">
                     <h4 class="modal-title">Request Statutory Maternity Pay</h4>
 				</div><!-- /modal-header -->
-
 				<div class="modal-body">
                     <div class="row">
                         <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
-                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">Mark Gentry</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.firstName }}</div>
                         <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
-                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">900001</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
                     </div>
                     <div class="line-horizontal"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-3 control-label">Start date</div>
                         <div class="col-xs-6 col-sm-3 form-group no-padding-left">
                              <div class="input-group date" id="datepickerStartDate">
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                 <input type="text" ng-model="smpObject.startDate" orig-datepicker class="form-control">
                              </div>
                         </div>
                         <div class="col-xs-6 col-sm-3 control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-3 form-group  no-padding-left">
-                            <div class="input-group date" id="datepickerDate">
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                            <div class="input-group date"    id="datepickerDate">
+                                 <input type="text" ng-model="smpObject.smp.babyDueDate" orig-datepicker class="form-control">
+
                              </div>
                         </div>
                     </div>
@@ -32,11 +31,11 @@
                         <div class="col-xs-6 col-sm-3 control-label no-padding-right">Intended start date</div>
                         <div class="col-xs-6 col-sm-3 form-group no-padding-left">
                             <div class="input-group date" id="datepickerIndendedStartDate">
-                                 <input type="text" class="form-control">
-                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                 <input type="text" ng-model="smpObject.intendedStartDate" orig-datepicker class="form-control">
                              </div>
                         </div>
                     </div>
+
 					<div class="row">
 						<div class="col-sm-12">
 							<table class="table table-striped table-maternityPay">
@@ -53,187 +52,26 @@
 									</tr>
 								</thead>
 
+
 								<tbody>
-									<tr>
-										<td>Week 1</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked </td>
-										<td>
-											<a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 2</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-											<a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 3</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-											<a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 4</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked </td>
-										<td>
-											<a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-                                    </tr>
-									<tr>
-										<td>Week 5</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-                                        <td>
-											<a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 6</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-                                            <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 7</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-                                            <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 8</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-                                            <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 9</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-                                            <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Week 10</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>
-											<input type="checkbox">
-										</td>
-										<td>£138.18</td>
-										<td>£138.18</td>
-										<td>Worked</td>
-										<td>
-                                            <a href="#" class="pull-right"><i class="fa fa-edit"></i></a>
-										</td>
-									</tr>
+
+                  <tr ng-repeat="s in smpObject.days">
+
+                      <td ng-if="s.monthNumber >0">
+                                            Month {{s.monthNumber}}
+                                           </td>
+                                           <td ng-if="s.monthNumber <=0 || !s.monthNumber">
+                                             Week {{s.weekNumber}}
+                                           </td>
+                     <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><p ng-if='indexCount'>{{s.amount | number : 2}}</p>
+
+                          <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a>  <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a></td>
+                      <td>
+                      <a ng-click="indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
+                       <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                    </td>
+                  </tr>
+
 
 								</tbody>
 							</table>
@@ -244,17 +82,24 @@
                         <div class="col-xs-6 col-sm-5">
                            <fieldset class="fieldsetSMP">
                                 <legend>Upload certificate</legend>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 form-group">
-                                       <div class="fileUpload btn btn-primary form-control">
-                                            <span>Browse</span>
-                                            <input id="uploadBtn" type="file" class="upload">
+                                 <div class="row" style="margin-top: 38px;">
+                                        <div class="col-xs-5 col-sm-4">
+                                            <div class="fileUpload btn btn-primary form-control">
+                                                <span onclick="$('#upload_company_logo').click();">Browse</span>
+                                                <input file-model="fileupload" type="file"
+                                                       id="upload_company_logo" name="companyLogo" style="display: none;" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-xs-5 col-sm-6 no-padding">
+                                            <button type="button" class="btn btn-primary form-control img-details"
+                                                ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
+                                                <span ng-show="!isLogoUploading" >Upload New Image</span>
+                                                <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 form-group">
-                                        <button type="button" class="btn btn-primary form-control">Upload</button>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="form-group">
@@ -284,10 +129,9 @@
                                     <span>Date employer informed</span>
                                 </div>
                                  <div class="col-xs-12 col-sm-6 form-group no-padding-left">
-                                     <div class="input-group date" id="datepickerInformedDate">
-                                         <input type="text" class="form-control">
-                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                     </div>
+
+                                         <input type="text" ng-model="smpObject.dateInformed" orig-datepicker class="form-control">
+
                                 </div>
 
                             </div>
@@ -296,24 +140,25 @@
                                     <span>Actual start date</span>
                                 </div>
                                  <div class="col-xs-12 col-sm-6 form-group no-padding-left">
-                                     <div class="input-group date" id="datepickerActualStartDate">
-                                         <input type="text" class="form-control">
-                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                     </div>
+
+                                         <input type="text" orig-datepicker ng-model="smpObject.actualStartDate" class="form-control">
+
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 no-padding-left">
                                     <span>Baby early?</span>
                                 </div>
-                                 <div class="col-xs-6 col-sm-6 form-group no-padding-left">
-                                    <div class="checkbox" style="margin: 0;">
+
+                                 <div class="col-xs-6 col-sm-6 form-group "  >
+                                    <div  style="margin: 0;">
                                         <label>
-                                            <input type="checkbox"> Yes
+                                            <input type="checkbox" ng-click="smpObject.smp.babyEarly=true" ng-checked="smpObject.smp.babyEarly===true"> Yes
                                         </label>
                                         &nbsp;
                                         <label>
-                                            <input type="checkbox"> No
+                                            <input type="checkbox" ng-click="smpObject.smp.babyEarly=false" ng-checked="smpObject.smp.babyEarly===false" > No
                                         </label>
                                         <a href="#" class="pull-right"><i class="fa fa-question-circle"></i></a>
                                      </div>
@@ -324,10 +169,10 @@
                                     <span>Actual birth date</span>
                                 </div>
                                  <div class="col-xs-12 col-sm-6 form-group no-padding-left">
-                                     <div class="input-group date" id="datepickerActualBirthDate">
-                                         <input type="text" class="form-control">
-                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                     </div>
+
+                                         <input type="text" ng-model="smpObject.smp.actualBirthDate" orig-datepicker class="form-control">
+
+
                                 </div>
                             </div>
                         </div>
@@ -335,7 +180,7 @@
                 </div><!-- /modal-body -->
 
 				<div class="modal-footer">
-					<a href="#" type="button" class="btn" data-dismiss="modal">Cancel</a>
+					<a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
 					 <!-- Split button -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary">Action</button>
@@ -344,10 +189,10 @@
                           <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                            <li><a href="#">Save</a></li>
-                            <li><a href="#">Save and Approve</a></li>
-                            <li><a href="#">Save and Reject</a></li>
-                            <li><a href="#">Save and Refer</a></li>
+                                    <li><a ng-click="save()">Save</a></li>
+                                    <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
+                                    <li><a ng-click="saveAndReject();">Save and Reject</a></li>
+                                    <li><a ng-click="saveAndRefer();">Save and Refer</a></li>
                         </ul>
                     </div>
                 </div><!-- /modal footer -->

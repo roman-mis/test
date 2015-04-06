@@ -5,10 +5,8 @@ angular.module('origApp.controllers')
 .controller('sspController', function($scope, parentScope, HttpResource, $http, $modalInstance,MsgService) {
 
 
-    console.log(parentScope);
     $scope.candidateId =parentScope.candidateId;
     $scope.candidate = parentScope.candidate;
-    $scope.showMe=parentScope.showMe?parentScope.showMe:false;
 
     if(!$scope.ssp){
       $scope.ssp = {};
@@ -17,9 +15,9 @@ angular.module('origApp.controllers')
     }
 
 
-    HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
+   HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
         $scope.contactdetail = data.data.object;
-        console.log($scope.contactdetail)
+        // console.log($scope.contactdetail)
     }, function(err) {})
     $scope.submitInformation = function(val) {
         if (val === true && $scope.validDate === true && $scope.ssp.days.length >0) {
@@ -163,6 +161,7 @@ angular.module('origApp.controllers')
 
         });
     };
+
     /*   $scope.$watch('ssp.inform',function(newValue,oldValue){
 
              $scope.checkDate();
