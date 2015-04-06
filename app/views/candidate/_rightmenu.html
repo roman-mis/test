@@ -47,39 +47,40 @@
             <!--<li><a href="" ng-click="openAOEWin()"><i class="fa fa-cubes warning-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AOE</span></a>-->
             <!--</li>-->
 
-           <!--@todo add permission-->
-            <li>
-                <a href="" ng-init="isActionRequestCollapsed='true'"
-                   ng-click="isActionRequestCollapsed = !isActionRequestCollapsed"><i
-                        class="fa fa-scissors btn-success"></i><span class="title">Action Request
-                </span></a>
-            </li>
+            <div  ng-if="!permissions.rightToolBar.actionRequest.hide">
+                <li>
+                    <a href=""
+                       ng-click="toggle()" ><i
+                            class="fa fa-scissors btn-success"></i><span class="title">Action Request
+                    </span></a>
+                </li>
+
+            </div>
 
 
             <li collapse="isActionRequestCollapsed" style="height: 0;">
-                <a href="" ng-if="!permissions.rightToolBar.ssp.hide" ng-click="openSsp()"><i
+                <a href="" ng-click="openSsp()"><i
                     class="fa fa-medkit  btn-success"></i><span class="title"><i class="fa fa-plus-square-o"></i>SSP</span></a>
             </li>
             <li collapse="isActionRequestCollapsed"  style="height: 0;">
-                <a href="" ng-if="!permissions.rightToolBar.mp.hide" ng-click="openMp()"><i
+                <a href="" ng-click="openMp()"><i
                     class="fa fa-female btn-success"></i><span class="title"><i
                         class="fa fa-plus-square-o"></i>SMP</span></a>
             </li>
             <li  collapse="isActionRequestCollapsed"  style="height: 0;">
-                <a href="" ng-if="!permissions.rightToolBar.spp.hide" ng-click="openSpp()"><i
+                <a href="" ng-click="openSpp()"><i
                     class="fa fa-male btn-success"></i><span class="title"><i
                         class="fa fa-plus-square-o"></i>SPP</span></a>
             </li>
 
             <li  collapse="isActionRequestCollapsed"  style="height: 0;">
-                <a href="" ng-if="!permissions.rightToolBar.holidayPayment.hide"
-                          ng-click="openHolidayPayment()"><i
+                <a href="" ng-click="openHolidayPayment()"><i
                         class="fa fa-plane  btn-success"></i><span class="title"><i
                     class="fa fa-plus-square-o"></i>Holiday Payment</span></a>
             </li>
 
             <li collapse="isActionRequestCollapsed"  style="height: 0;"><a href=""
-                                                        ng-if="!permissions.rightToolBar.holidayPayment.hide"
+
                 ng-click="openSl()"><i class="fa fa-credit-card  btn-success"></i><span
                     class="title"><i
                 class="fa fa-plus-square-o"></i>SL</span></a>

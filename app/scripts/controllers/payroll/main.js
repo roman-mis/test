@@ -32,19 +32,28 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     });
 
 	
-    $scope.openRunPayroll = function(){
+    // $scope.openRunPayroll = function(){
+    //     ModalService.open({
+    //       templateUrl: 'views/payroll/runPayroll.html',
+    //       parentScope: $scope,
+    //       controller: 'runPayrollController',
+    //       size: 'lg'
+    //   });
+    // };
+
+    $scope.openReceiptFunds = function(){
+        console.log(220);
         ModalService.open({
-          templateUrl: 'views/payroll/runPayroll.html',
+          templateUrl: 'views/payroll/receiptFunds.html',
           parentScope: $scope,
-          controller: 'runPayrollController',
-          size: 'lg'
+          controller: 'receiptFundsCtrl'
       });
     };
 
     $scope.openCreateValidation = function(){
         console.log(220);
         ModalService.open({
-          templateUrl: 'views/payroll/createValidation.html',
+          templateUrl: 'views/payroll/.html',
           parentScope: $scope,
           controller: 'createValidationController',
           size: 'lg'

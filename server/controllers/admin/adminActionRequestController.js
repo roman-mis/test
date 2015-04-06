@@ -192,7 +192,7 @@ controller.getActionRequestDataById =function(req, res){
     		.then(function(response){
     		if(response){
     			var actionrequests = getActionRequestDataByIdVm(response);
-    			res.json({result:true,objects: actionrequests});
+    			res.json({result:true,object: actionrequests});
     		}else{
     			res.json({result:false, message : 'actionRequestData not found.'});
     		}
@@ -308,6 +308,9 @@ controller.getActionRequestDataById =function(req, res){
     		})
 
 	};
+
+
+
 
     return controller;
 };
