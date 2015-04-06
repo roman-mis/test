@@ -300,7 +300,8 @@ controller.getActionRequestDataById =function(req, res){
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);
-				res.json(response);
+				var updatedActionRequestData = getUpdatedActionRequestDataVm(response);
+				res.json({object : updatedActionRequestData});
 			}).then(null,function(err){
     			res.sendFailureResponse(err);
     		})
@@ -308,6 +309,39 @@ controller.getActionRequestDataById =function(req, res){
 	};
 
 
+	function getUpdatedActionRequestDataVm(data){
+
+		return{
+		id: data.object._id,
+ 		worker : {
+ 			id : data.object.worker._id,
+ 			name : data.object.worker.firstName + ' ' + data.object.worker.lastName,
+ 			candidateRef : utils.padLeft(data.object.worker.candidateNo || '0', 7, '0')
+ 		}, 
+ 		dateRequested : data.object.worker.createdDate,
+		status : data.object.status,
+		type : data.object.type,
+		periodActioned : '',
+		requestRef: utils.padLeft(data.object.requestReference || '0', 7, '0'),
+		createdBy : {
+			id : data.object.createdBy._id,
+			name : (data.object.createdBy.firstName) + ' ' + (data.object.createdBy.lastName)
+		},
+		dateInformed : data.object.dateInformed,
+		intendedStartDate : data.object.intendedStartDate,
+		actualStartDate : data.object.actualStartDate,
+		startDate : data.object.startDate,
+		endDate : data.object.endDate,
+		smp : data.object.smp,
+		spp : data.object.spp,
+		holidayPay : data.object.holidayPay,
+		studentLoan : data.object.studentLoan,
+		imageUrl : data.object.imageUrl,
+		days : data.object.days,
+		updatedDate : data.object.updatedDate,
+		updatedBy : data.object.updatedBy  
+		}
+	}
 
 
     return controller;
