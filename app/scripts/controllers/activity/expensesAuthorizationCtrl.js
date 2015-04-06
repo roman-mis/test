@@ -638,7 +638,7 @@ app.controller("expensesAuthorizationCtrl",
                     if (found) break
                 }
             });
-            //logs(req, 'request');
+            logs(req, 'request');
             $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                 logs(res, 'Edit Response');
                 if (res.result) {

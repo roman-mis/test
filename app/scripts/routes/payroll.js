@@ -34,6 +34,11 @@ angular.module('origApp').config(function($stateProvider) {
     url:'/expenses',
     templateUrl:'views/payroll/expenses.html',
     controller:'payrollExpensesCtrl'
+  })
+  .state('app.payroll.timesheets', {
+    url:'/timesheets',
+    templateUrl:'views/payroll/timesheets.html',
+    controller:'payrollTimesheetsCtrl'
   });
  
 

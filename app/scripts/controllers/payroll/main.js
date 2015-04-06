@@ -15,13 +15,13 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
    $scope.periodType = 'weekly';
    $scope.payroll = {};
 
-   HttpResource.model('constants/candidateProfile').customGet('', {}, function (data) {
-       //if (data.statusText === 'OK') {
-           console.log('candidateProfile');
-            console.log(data);
-           //$scope.periodTypeValues = data.data;
-       //}
-   });
+   // HttpResource.model('constants/candidateProfile').customGet('', {}, function (data) {
+   //     //if (data.statusText === 'OK') {
+   //         console.log('candidateProfile');
+   //          console.log(data);
+   //         //$scope.periodTypeValues = data.data;
+   //     //}
+   // });
 
     HttpResource.model('constants/payfrequencies').customGet('',{},function(data){
         if(data.statusText === 'OK' ){
