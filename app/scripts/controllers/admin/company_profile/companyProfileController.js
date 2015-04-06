@@ -48,11 +48,9 @@ app.controller('companyProfileController', ['$scope', '$rootScope', 'CompanyProf
             });
 
             modalInstance.result.then(function (data) {
-                // save data
-                console.log('save ' + data);
                 getCompanyProfile();
             }, function (reason) {
-                getCompanyProfile();
+//                getCompanyProfile();
             });
         };
 
