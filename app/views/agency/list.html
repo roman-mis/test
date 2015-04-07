@@ -1,14 +1,21 @@
-<div class="candidate-layout">
-    <div class="candidate-center">
-        <div class="candidate-main padding-10 meta-box container-fluid">
-            <div class="col-xs-12 row top-search-row">
-                <div class="candidate-search">
-                    <input class="form-control" type="text" placeholder="Search" />
+<div class="table-view-layout">
+    <div class="table-view-main-content">
+        <div class="table-view padding-10 meta-box container-fluid">
+            <div class="tv-search-row">
+                <div class="tv-search-container">
+                    <div class="tv-search">
+                        <input class="form-control" type="text" placeholder="Search" />
+                    </div>
+                    <div class="tv-search-btn">
+                        <button class="btn btn-success form-control">Go</button>
+                    </div>
                 </div>
-                <div class="candidate-search-btn">
-                    <button class="btn btn-success form-control">Go</button>
+                <div class="col-sm-3 col-lg-2 nonepadding text-right">
+                    <button ng-click="addNewAgency()" class="btn btn-success">
+                        <i class="fa fa-plus"></i> Add Agency
+                    </button>
                 </div>
-                <button ng-click="addNewAgency()" style="position: absolute;right:0px" class="col-xs-2 btn btn-success pull-left" ><div>Add Agency <i class="fa fa-plus"></i> </div></button>
+
             </div>
             <div class="row">
                 <div class="col-sm-12" id="agency_list">

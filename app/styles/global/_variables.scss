@@ -14,6 +14,8 @@ $screen-md-max: ($screen-lg - 1);
 $grid-gutter-width: 18px;
 $grid-gutter-width-md: 12px;
 
+$control-width: 200px;
+
 /*Colors*/
 $gray-darker: #555;
 $gray: #616161; 
@@ -58,12 +60,19 @@ $background-color: $gray-lightest;
 /* Fonts */
 $main-font: 'Questrial', 'Helvetica Neue', Helvetica, arial, sans-serif;
 $secondary-font: 'Helvetica Neue', Helvetica, arial, sans-serif;
-$line-height-base: 1; // 1.34
+$line-height-base: 1;
 
 /*Paths*/
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
-/*Other Bootstrap variables*/
-$input-height-base: 33px;
+/*Other*/
+$input-height-base: 32px;
+$input-height: 28px;
+$padding-base-horizontal: 10px;
+
 $link-color: $green-light;
 $link-hover-color: $green;
+$brand-primary: $green;
+$pagination-color: $link-hover-color;
+
+$trans-duration: .15s;

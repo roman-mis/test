@@ -11,7 +11,7 @@ select.form-control {
     background-color: $white;
     outline: none;
     transition: all .15s;
-    @include button-transition();
+    @include basic-transition();
     &::placeholder {
         color: $gray;
         outline: none;
@@ -36,7 +36,7 @@ select.form-control {
     background-color: $gray-lightest;
     border: 1px solid $gray-light;
     height: 28px;
-    width: 32px;
+    width: $input-height-base;
     text-align: center;
     padding-left: 0;
     padding-right: 0;
@@ -49,6 +49,10 @@ select.form-control {
     border: 1px solid $gray-light;
     border-radius: 0px;
     border-right: 0px;
+}
+
+.form-control:focus {
+    box-shadow: 0;
 }
 /*Date Picker*/
 
@@ -148,5 +152,95 @@ div.ng-dirty.ng-invalid.input-group {
     .fileinput {
         opacity: 0;
         z-index: 5;
+    }
+}
+
+/*Angular-UI-Select*/
+
+div.select2.select2-container {
+    width: 100%;
+    height: $input-height;
+    border: 1px solid $gray-light;
+    a, .select2-arrow {
+        background-color: $white;
+    }
+    &:hover {
+        @include box-green-shadow();
+        a,
+        .select2-arrow {
+            background-color: #fff;
+        }
+    }
+    a {
+        height: $input-height - 2px;
+        border-radius: 0;
+        border-width: 0;
+        background-image: none; 
+        line-height: $input-height - 2px;
+        padding: 0 $padding-base-horizontal;
+        .ng-binding {
+            height: $input-height - 2px;
+            line-height: $input-height - 2px;
+        }
+        .select2-arrow {
+            width: $input-height-base;
+            border-radius: 0;
+            background: none;
+            border-left: 1px solid $gray-light;
+            b {
+                background: none;
+                display: inline-block;
+                font: normal normal normal 14px/1 FontAwesome;
+                font-size: inherit;
+                text-align: center;
+                text-rendering: auto;
+                cursor: pointer;
+                &::before {
+                    content: "\f0dd";
+                    position: absolute;
+                    top: 3px;
+                    left: 0;
+                    right: 0;
+                }
+            }
+        }
+    }
+    .select2-drop-active {
+        border: 1px solid $gray-light;
+        border-radius: 0;
+    }
+    .select2-search {
+        margin-top: 5px;
+    }
+}
+
+div.select2.select2-container.select2-dropdown-open {
+    a .select2-arrow {
+        b::before {
+            content: "\f0de";
+            line-height: $input-height - 2px;
+            top: 3px;
+        }
+    }
+}
+
+div.select2.select2-container {
+    &.ng-invalid-required[search-enabled="false"] {
+        .select2-chosen.ng-binding {
+            display: block !important;
+            white-space: normal;
+        }
+        .select2-chosen > span {
+            line-height: $input-height - 2px;
+        }
+    }
+    .select2-choice > .select2-chosen {
+        font-size: 14px;
+        line-height: $input-height - 2px;
+        height: $input-height - 2px;
+        white-space: normal;
+    }
+    .ui-select-choices-row {
+        transition-duration: 0;
     }
 }
