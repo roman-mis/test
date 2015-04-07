@@ -8,10 +8,6 @@ angular.module('origApp.controllers')
         $scope.validDate = true;
 
 
-        if (!$scope.ssp) {
-            $scope.ssp = {};
-        }
-
         function getCandidateContactDetails() {
             HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
                 $scope.contactdetail = data.data.object;
@@ -60,6 +56,9 @@ angular.module('origApp.controllers')
 
         $scope.checkDate = function () {
 
+            if (!$scope.ssp) {
+                $scope.ssp = {};
+            }
             var n = new Date($scope.ssp.dateInformed).valueOf();
 
             var sickDayFrom = new Date($scope.ssp.startDate).valueOf();
@@ -121,7 +120,7 @@ angular.module('origApp.controllers')
 
         $scope.upload = function () {
             if (!$scope.fileupload) {
-                alert('Please select a file first.');
+                MsgService.danger('Please select a file first.');
                 return;
             }
             var file = $scope.fileupload;
