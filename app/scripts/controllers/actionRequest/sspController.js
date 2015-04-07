@@ -1,20 +1,24 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('sspModalController', function ($scope, parentScope, HttpResource, $http, MsgService, $modalInstance) {
 
-        $scope.candidateId = parentScope.candidateId;
+
+    .controller('sspController', function($scope, parentScope, HttpResource, $http, $modalInstance,MsgService) {
+
+
+        $scope.candidateId =parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
-        $scope.showMe = parentScope.showMe;
 
-        function getCandidateContactDetails() {
-            HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-                $scope.contactdetail = data.data.object;
-            }, function (err) {
-                console.log(err);
-            });
+        if (!$scope.ssp) {
+            $scope.ssp = {};
         }
 
-        getCandidateContactDetails();
+        function getCandidateDetails(){
+            HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
+                $scope.contactdetail = data.data.object;
+            }, function (err) {});
+        }
+
+        getCandidateDetails();
 
 
         $scope.submitInformation = function (val) {
@@ -32,23 +36,22 @@ angular.module('origApp.controllers')
 
                 $scope.submitted = true;
 
-                if ($scope.ssp && $scope.ssp.days && $scope.ssp.days.length === 0 ) {
+                if ($scope.ssp && $scope.ssp.days && $scope.ssp.days.length ==0 ) {
                     $scope.validDate = false;
                     $scope.sspMessage = 'No  Statutory data';
                 }
             }
         };
-
-        $scope.cancel = function (i, v) {
-            $scope.ssp.days[i].amount = v;
+        $scope.changeAmount = function (i) {
+            i = false;
         };
 
         $scope.remove = function (i) {
             $scope.ssp.days.splice(i, 1);
         };
 
-        $scope.changeAmount = function (i) {
-            i = false;
+        $scope.cancel = function (i, v) {
+            $scope.ssp.days[i].amount = v;
         };
 
         $scope.checkDate = function () {
@@ -70,9 +73,7 @@ angular.module('origApp.controllers')
 
                     $scope.ssp.days = data.data.objects;
 
-                }, function (err) {
-                    console.log(err);
-                });
+                }, function (err) {});
 
 
             } else {
@@ -88,6 +89,10 @@ angular.module('origApp.controllers')
                     $scope.submitted = true;
                 }
             }
+        };
+
+        $scope.closeModal = function () {
+            $modalInstance.dismiss('cancel');
         };
 
         $scope.$watch('fileupload', function (fileInfo) {
@@ -147,37 +152,19 @@ angular.module('origApp.controllers')
             });
         };
 
-        $scope.save = function () {
-            HttpResource.model('actionrequests').create($scope)
-                .patch($scope.ssp.id).then(function () {
-                    MsgService.success('Successfully saved.');
-                    $scope.closeModal();
-                });
-        };
-        $scope.saveAndApprove = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id + '').create('')
-                .patch('approve').then(function () {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
-                });
-        };
-        $scope.saveAndReject = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id + '').create('')
-                .patch('reject').then(function () {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
-                });
-        };
-        $scope.saveAndRefer = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id + '').create('')
-                .patch('refer').then(function () {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
-                });
-        };
+        /*   $scope.$watch('ssp.inform',function(newValue,oldValue){
 
-        $scope.closeModal = function () {
-            $modalInstance.close();
-        };
+         $scope.checkDate();
+
+         });
+         $scope.$watch('ssp.sickDateFrom',function(){
+
+         $scope.checkDate();
+         });
+         $scope.$watch('ssp.sickDateTo',function(){
+         $scope.checkDate();
+
+         })   */
+
 
     });
