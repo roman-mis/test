@@ -156,21 +156,21 @@ angular.module('origApp.controllers')
                 });
         };
         $scope.saveAndApprove = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.ssp.id).create({days : $scope.ssp.days})
                 .patch('approve').then(function () {
                     MsgService.success('Successfully saved and approved.');
                     $scope.closeModal();
                 });
         };
         $scope.saveAndReject = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.ssp.id).create({days : $scope.ssp.days})
                 .patch('reject').then(function () {
                     MsgService.success('Successfully saved and approved.');
                     $scope.closeModal();
                 });
         };
         $scope.saveAndRefer = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.ssp.id).create({days : $scope.ssp.days})
                 .patch('refer').then(function () {
                     MsgService.success('Successfully saved and approved.');
                     $scope.closeModal();
