@@ -22,10 +22,15 @@ angular.module('origApp.controllers')
         $scope.spp.days.splice(i, 1);
 
     };
-     $scope.cancel=function(i,v){
+    $scope.removeDaysFromPayrollSppModal=function(i){
 
-        $scope.spp.days[i].amount=v;
+        $scope.sppObject.days.splice(i, 1);
     };
+    $scope.cancelAmountFromPayrollSppModal=function(i,v){
+
+        $scope.sppObject.days[i].amount=v;
+    };
+    $scope.cancelAmountFromSppModa
 
     $scope.checkDateMp = function() {
 
@@ -99,7 +104,12 @@ angular.module('origApp.controllers')
             }).success(function(l) {
 
                 //    console.log(response);
-                $scope.spp.imageUrl = response.data.url;
+                if($scope.sppObject){
+                    $scope.sppObject.imageUrl=$scope.temp.logoFileName;
+                    $scope.isLogoUploading = false;
+                    return;
+                }
+                $scope.spp.imageUrl = $scope.temp.logoFileName;
                 $scope.isLogoUploading = false;
             });
 
@@ -132,4 +142,11 @@ angular.module('origApp.controllers')
 
         $modalInstance.dismiss('cancel');
     };
+    $scope.save = function () {
+            HttpResource.model('actionrequests').create($scope.sppObject)
+                .patch($scope.id).then(function () {
+                    MsgService.success('Successfully saved.');
+                    $scope.closeModal();
+                });
+        };
 });

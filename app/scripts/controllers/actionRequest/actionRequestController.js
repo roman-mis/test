@@ -18,13 +18,13 @@ angular.module('origApp.controllers')
 
         }
 
-        $scope.callModal = function (id, type, createdBy) {
+        $scope.callModal = function (id, type, worker) {
             HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
                 var controller;
                 var parentScope = {};
                 parentScope.candidate = {};
-                parentScope.candidate.firstName = createdBy.name;
-                parentScope.candidateId = createdBy.id;
+                parentScope.candidate.firstName = worker.name;
+                parentScope.candidateId = worker.id;
                 switch (type) {
                 case 'ssp':
                     parentScope.showMe = true;
@@ -40,11 +40,25 @@ angular.module('origApp.controllers')
                     $scope.smpObject.intendedStartDate = data.data.object.intendedStartDate;
                     $scope.smpObject.days = data.data.object.days;
                     $scope.smpObject.imageUrl = data.data.object.imageUrl;
+                    $scope.temp={};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
                     break;
                 case 'studentloan':
                     controller='slController',
                     $scope.studentLoan=data.data.object.studentLoan;
                     $scope.id=data.data.object.id;
+                    break;
+                case 'spp':
+                    controller='sppController';
+                    type='sppModal';
+                    $scope.id=data.data.object.id;
+                    $scope.sppObject={};
+                    $scope.sppObject.spp=data.data.object.spp;
+                    $scope.sppObject.days=data.data.object.days;
+                    $scope.sppObject.imageUrl=data.data.object.imageUrl;
+                    $scope.temp={};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
+                    break;
 
                 }
                 var modalInstance = ModalService.open({
