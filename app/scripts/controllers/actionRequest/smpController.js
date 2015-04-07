@@ -3,12 +3,12 @@ angular.module('origApp.controllers')
 .controller('smpController',function($scope,parentScope,HttpResource,ModalService,MsgService,$modalInstance){
   $scope.candidateId =parentScope.candidateId;
   $scope.candidate = parentScope.candidate;
-  HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
-    $scope.contactdetail = data.data.object;
-     //   $scope.fullname = ($scope.candidateInfo.firstName + ' ' + $scope.candidateInfo.lastName);
-   }, function(err) {
-    console.log(err);
-  });
+  // HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+  //   $scope.contactdetail = data.data.object;
+  //    //   $scope.fullname = ($scope.candidateInfo.firstName + ' ' + $scope.candidateInfo.lastName);
+  //  }, function(err) {
+  //   console.log(err);
+  // });
 
   $scope.cancel=function(i,v){
 
