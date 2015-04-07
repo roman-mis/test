@@ -149,7 +149,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.save = function () {
-            HttpResource.model('actionrequests').create($scope)
+            HttpResource.model('actionrequests').create({days : $scope.ssp.days})
                 .patch($scope.ssp.id).then(function () {
                     MsgService.success('Successfully saved.');
                     $scope.closeModal();
