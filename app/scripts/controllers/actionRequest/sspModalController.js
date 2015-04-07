@@ -25,6 +25,7 @@ angular.module('origApp.controllers')
                         $scope.ssp = {};
                         $scope.temp = {};
                         MsgService.success('Successfully submitted.');
+                        $scope.closeModal();
                     }, function (error) {
                         MsgService.danger(error);
                     });
@@ -32,7 +33,7 @@ angular.module('origApp.controllers')
 
                 $scope.submitted = true;
 
-                if ($scope.ssp && $scope.ssp.days && $scope.ssp.days.length === 0 ) {
+                if ($scope.ssp && $scope.ssp.days && $scope.ssp.days.length === 0) {
                     $scope.validDate = false;
                     $scope.sspMessage = 'No  Statutory data';
                 }

@@ -7,10 +7,14 @@
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-xs-6 col-sm-4 form-group control-label">Candidate Name</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label">{{ candidate.firstName }} {{ candidate.lastName }}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">Candidate Name</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">{{ candidate.firstName }} {{
+                candidate.lastName }} {{ssp.worker.name}}</div>
             <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-            <div class="col-xs-6 col-sm-2 form-group control-label">{{contactdetail.candidateRef}}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label" ng-if="!ssp.worker" >{{candidate.candidateRef}}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label"
+                 ng-if="ssp.worker">
+                {{ssp.worker.candidateRef}}</div>
         </div>
         <div class="line-horizontal"></div>
         <div class="row">
