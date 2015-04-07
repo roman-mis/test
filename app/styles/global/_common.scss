@@ -1,9 +1,9 @@
 @mixin box-shadow-hover() {
-    box-shadow: 1px 1px 3px 0 rgba(50, 50, 50, 0.5);
+    box-shadow: 1px 1px 5px 0 rgba(50, 50, 50, .5);
 }
 
 @mixin box-green-shadow() {
-    box-shadow: 0 0 5px 0 rgba(189, 221, 158, 0.75);
+    box-shadow: 0 0 7px 0 rgba(189, 221, 158, .75);
 }
 
 @mixin button-transition() {
@@ -62,6 +62,27 @@ ul {
         @media(max-width: $screen-md-max) {
             width: 66px;
         }
+        .user-meta-box {
+            height: 50px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .user-date {
+                    p {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .datetime {
+                        color: $gray;
+                    }
+                    .week-info {
+                        color: $green-light;
+                        @media(max-width: $screen-md-max) {
+                            font-size: 11px;
+                        }
+                    }
+                }
+        }
     }
     .right-sidebar {
         padding-left: $grid-gutter-width-md;
@@ -81,7 +102,7 @@ ul {
     .main-content {
         width: 100%;
         .breadcrumb {
-            padding: $grid-gutter-width-md 0;
+            padding: 17px 0;
             background: transparent;
             margin-bottom: 0;
             a {

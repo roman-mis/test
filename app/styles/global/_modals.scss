@@ -1,0 +1,200 @@
+.orig-alert-message {
+    position: fixed;
+    left: 50%;
+    top: 0;
+    z-index: 9999;
+    max-width: 90%;
+    text-align: center;
+    margin-bottom: 0;
+    transition: top 0.5s ease-out, opacity .2s ease-out;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    visibility: hidden;
+    .fa {
+        margin-right: 4px;
+    }
+}
+
+.modal-open {
+    overflow: hidden;
+}
+
+.modal-lg {
+    @media (min-width: $screen-xs-max) and (max-width: $screen-sm-max) {
+        width: 750px;
+    }
+}
+
+.candidate-modal {
+    .modal-body {
+        p {
+            margin: 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 9px;
+        }
+        input[type=number] {
+            padding: 0 0 0 12px;
+        }
+    }
+    label {
+        font-weight: normal;
+        font-size: 1em;
+    }
+    legend {
+        margin-bottom: 0;
+        font-size: 18px;
+        width: auto;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .form-group {
+        margin-left: 0;
+        margin-right: 0;
+        label {
+            line-height: 28px;
+            margin-bottom: 0;
+        }
+    }
+    fieldset {
+        .form-group {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    .checkbox-item {
+        position: relative;
+        input[type=checkbox] {
+            margin-right: 10px;
+        }
+    }
+    .links {
+        margin: 10px 0 0 10px;
+        a {
+            display: block;
+            margin-bottom: 5px;
+            float: left;
+            width: 33.33%;
+            @media(max-width: $screen-xs-max) {
+                width: 50%;
+            }
+            .fa {
+                margin-right: 5px;
+            }
+        }
+    }
+    .modal-note {
+        font-size: 15px;
+    }
+    .div-center {
+        /*width: 186px;*/
+        
+        margin: 50px auto;
+    }
+    .button-container-center {
+        margin: 33px auto;
+        .btn-136 {
+            width: 136px;
+        }
+    }
+    .div-center-dates {
+        width: 290px;
+        margin: 10px auto;
+    }
+    .inline-datepicker {
+        display: inline-block;
+        width: 280px;
+    }
+    .table-scroll {
+        max-height: 250px;
+        overflow-y: scroll;
+        margin-right: 0;
+    }
+    .list-alert-checkbox {
+        list-style: none;
+        padding: 0;
+        li {
+            margin: 10px 0;
+            div {
+                display: table-cell;
+                vertical-align: middle;
+                /* padding: 15px;   */
+            }
+            .alert {
+                width: 99%;
+            }
+            .alert-question {
+                width: 70%;
+                @media(max-width: $screen-xs-max) {
+                    width: 50%;
+                }
+            }
+        }
+    }
+    .no-padding {
+        padding: 0;
+    }
+    /* ngTagsInput */
+    
+    .orig-tags-input {
+        .tags {
+            border: 2px solid #a6a4a2;
+            background-color: #f1efef;
+            outline: none;
+            .tag-item {
+                background: #428bca;
+                border-color: #357ebd;
+                color: #fff;
+                word-break: break-all;
+                height: auto;
+                margin: 2px;
+            }
+        }
+        .host {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+    .fileUpload {
+        position: relative;
+        overflow: hidden;
+        input.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+    }
+    .inputUploadFile {
+        padding: 8px 12px;
+        font-size: 14px;
+        color: #666;
+        border: 1px solid #D8D8D8;
+        font-family: inherit;
+        width: 50%;
+    }
+}
+
+#claim_datepicker table {
+    td, th {
+        user-select: none;
+    }
+    &:focus {
+        outline: none;
+    }
+    thead button,
+    td button {
+        border: none!important;
+        border-radius: 0!important;
+        box-shadow: none!important;
+        outline: none!important;
+    }
+}

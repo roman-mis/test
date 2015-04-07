@@ -2,6 +2,8 @@
 
 $fa-var-check: '';
 
+@import "global/variables";
+
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 @import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
 
