@@ -1,6 +1,12 @@
 <div class="table-view-layout">
     <div class="table-view-main-content">
-        <div class="candidate-main meta-box container-fluid">
+        <div class="table-view meta-box container-fluid tv-item-main">
+            <div class="meta-box-inner row">
+                <div class="col-xs-5 col-sm-3">
+                    <label>Agency Status</label>
+                    <select class="form-control" ng-model="selectedAgency.status" ng-options="item.value as item.value for item in status" ng-change="updateStatus()"></select>
+                </div>
+            </div>
             <div class="row visible-xs">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" ng-click="tab.isMenuCollapsed = !tab.isMenuCollapsed">
@@ -10,15 +16,6 @@
                         <span class="icon-bar"></span>
                     </button>
                     <span class="navbar-brand visible-xs">{{tab.caption}}</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-10"></div>
-                <div class="col-xs-5 col-sm-3">
-                    <label style="color:green">Agency Status</label>
-                    <select class="form-control" ng-model="selectedAgency.status"
-                            ng-options="item.value as item.value for item in status"
-                            ng-change="updateStatus()"></select>
                 </div>
             </div>
             <section class="tabs-wrapper row">
@@ -56,4 +53,4 @@
     <div class="sidemenu right-sidebar">
         <div ng-include="'views/agency/_rightmenu.html'"></div>
     </div>
-</div>	
+</div>

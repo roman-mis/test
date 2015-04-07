@@ -26,6 +26,10 @@ select.form-control {
     }
 }
 
+.form-control {
+    height: $input-height;
+}
+
 .form-group {
     margin-bottom: 5px;
 }
@@ -33,9 +37,9 @@ select.form-control {
 .input-group-btn > button.btn.btn-default {
     line-height: normal;
     border-radius: 0;
-    background-color: $gray-lightest;
+    background-color: $white;
     border: 1px solid $gray-light;
-    height: 28px;
+    height: $input-height;
     width: $input-height-base;
     text-align: center;
     padding-left: 0;
@@ -54,6 +58,7 @@ select.form-control {
 .form-control:focus {
     box-shadow: 0;
 }
+
 /*Date Picker*/
 
 .orig-datepicker {
@@ -66,7 +71,7 @@ select.form-control {
     .input-group-btn {
         z-index: 10;
         button {
-            height: 28px;
+            height: $input-height;
             border-left: 1px solid $gray-light;
         }
     }
@@ -74,7 +79,7 @@ select.form-control {
         button {
             background-color: #fff;
             border-color: $gray-light;
-            margin-left: 0px;
+            margin-left: 0;
             @include box-green-shadow();
         }
     }
@@ -82,7 +87,7 @@ select.form-control {
 /*IU-Select (Bootstrap Theme)*/
 
 .ui-select-bootstrap button {
-    height: 27px;
+    height: $input-height - 1px;
     border-radius: 0;
     background: $gray-lightest;
 }
@@ -90,9 +95,9 @@ select.form-control {
 .ui-select-bootstrap button .caret {
     &::after {
         content: " ";
-        width: 27px;
-        height: 27px;
-        border-left: solid 1px #CCC;
+        width: $input-height - 1px;
+        height: $input-height - 1px;
+        border-left: solid 1px #ccc;
         position: absolute;
         top: -22px;
         left: -20px;
@@ -101,7 +106,7 @@ select.form-control {
 /*Checkbox*/
 
 .checkbox {
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .checkbox input[type=checkbox]:checked + label:after {
@@ -130,15 +135,6 @@ div.ng-dirty.ng-invalid.select2,
 div.ng-dirty.ng-invalid.input-group {
     border-color: red;
 }
-
-.nonepadding {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-.clear {
-    clear: both;
-}
 /*S3FileUploader*/
 
 .fileupoad-area {
@@ -154,7 +150,6 @@ div.ng-dirty.ng-invalid.input-group {
         z-index: 5;
     }
 }
-
 /*Angular-UI-Select*/
 
 div.select2.select2-container {
@@ -166,8 +161,7 @@ div.select2.select2-container {
     }
     &:hover {
         @include box-green-shadow();
-        a,
-        .select2-arrow {
+        a, .select2-arrow {
             background-color: #fff;
         }
     }
@@ -175,7 +169,7 @@ div.select2.select2-container {
         height: $input-height - 2px;
         border-radius: 0;
         border-width: 0;
-        background-image: none; 
+        background-image: none;
         line-height: $input-height - 2px;
         padding: 0 $padding-base-horizontal;
         .ng-binding {
@@ -225,7 +219,7 @@ div.select2.select2-container.select2-dropdown-open {
 }
 
 div.select2.select2-container {
-    &.ng-invalid-required[search-enabled="false"] {
+    .ng-invalid-required[search-enabled="false"] {
         .select2-chosen.ng-binding {
             display: block !important;
             white-space: normal;
@@ -234,13 +228,42 @@ div.select2.select2-container {
             line-height: $input-height - 2px;
         }
     }
-    .select2-choice > .select2-chosen {
-        font-size: 14px;
-        line-height: $input-height - 2px;
-        height: $input-height - 2px;
-        white-space: normal;
-    }
-    .ui-select-choices-row {
-        transition-duration: 0;
+}
+
+.select2-choice > .select2-chosen {
+    line-height: $input-height - 2px;
+    height: $input-height - 2px;
+    white-space: normal;
+}
+
+/*Dropdown calendar*/
+
+.orig-datepicker {
+    > ul.dropdown-menu {
+        padding: 3px;
+        > li:first-child {
+            thead tr:first-child button {
+                border: none;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+            tbody td > button {
+                border: none;
+                transition-duration: .1s;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+            tbody td > button.active {
+                background-color: $green;
+                span {
+                    color: #fff;
+                }
+            }
+        }
+        > li:nth-child(2) {
+            display: none;
+        }
     }
 }

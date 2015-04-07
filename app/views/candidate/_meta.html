@@ -18,7 +18,7 @@
             
         </div>
         <div class="col-sm-4 col-md-3">
-            <label style="color:#539347">Candidate Status</label>
+            <label>Candidate Status</label>
             <ui-select ng-model = "candidate.status" theme="select2" search-enabled="false" ng-change = "editCandidateStatus()">
                 <ui-select-match>{{$select.selected.value}}</ui-select-match>
                 <ui-select-choices repeat = "item.value as item in candidateStatus">{{item.value}}</ui-select-choices>
