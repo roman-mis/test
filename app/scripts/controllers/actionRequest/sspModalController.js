@@ -148,34 +148,47 @@ angular.module('origApp.controllers')
             });
         };
 
-        $scope.save = function () {
-            HttpResource.model('actionrequests').create({days : $scope.ssp.days})
-                .patch($scope.ssp.id).then(function () {
-                    MsgService.success('Successfully saved.');
-                    $scope.closeModal();
-                });
-        };
-        $scope.saveAndApprove = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id).create({days : $scope.ssp.days})
-                .patch('approve').then(function () {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
+        $scope.save = function (actionName) {
+            var data = {
+                dateInformed : $scope.ssp.dateInformed,
+                startDate : $scope.ssp.startDate,
+                endDate : $scope.ssp.endDate,
+                days : $scope.ssp.days
+            };
 
-                });
-        };
-        $scope.saveAndReject = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id).create({days : $scope.ssp.days})
-                .patch('reject').then(function () {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
-                });
-        };
-        $scope.saveAndRefer = function () {
-            HttpResource.model('actionrequests/' + $scope.ssp.id).create({days : $scope.ssp.days})
-                .patch('refer').then(function () {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
-                });
+            var param, successMsg;
+
+            switch (actionName) {
+            case 'saveAndApprove':
+                param = 'approve';
+                successMsg = 'Sick Pay has been Approved.';
+                break;
+            case 'saveAndReject':
+                param = 'reject';
+                successMsg = 'Sick Pay has been Rejected.';
+                break;
+            case 'saveAndRefer':
+                param = 'refer';
+                successMsg = 'Sick Pay has been Rffered.';
+                break;
+            }
+
+            if ('save' === actionName) {
+                HttpResource.model('actionrequests').create(data)
+                    .patch($scope.ssp.id).then(function () {
+                        MsgService.success('Successfully saved.');
+                        $scope.closeModal();
+                    });
+            } else {
+                HttpResource.model('actionrequests/' + $scope.ssp.id).create(data)
+                    .patch(param).then(function () {
+                        MsgService.success(successMsg);
+                        $scope.closeModal();
+                    }, function (err) {
+                        MsgService.danger(err);
+                    });
+            }
+
         };
 
         $scope.closeModal = function () {
