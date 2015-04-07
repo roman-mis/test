@@ -251,9 +251,17 @@ module.exports=function(dbs){
 					var taxTable=_.first(_.filter(taxTables,function(tbl){
 						//console.log('comparing dates : ');
 						//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
-						var taxTableDate=moment(tbl.startDate).day(0).toDate();
-						console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableDate);
-						var ret= utils.areDateEqual(week.periodStartDate,taxTableDate);
+						var taxTableStartDate;
+						if(payFrequency===enums.payFrequency.Monthly){
+							taxTableStartDate=moment(tbl.startDate).startOf('month').toDate();
+							
+						}
+						else{
+							taxTableStartDate=moment(tbl.startDate).day(0).toDate();
+						}
+						
+						console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableStartDate);
+						var ret= utils.areDateEqual(week.periodStartDate,taxTableStartDate);
 						console.log(ret);
 						return ret;
 					}));
