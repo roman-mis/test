@@ -77,7 +77,10 @@ angular.module('origApp.controllers')
     };
 
     $scope.submitInformation = function(val) {
+        console.log($scope.mp);
         if (val === true && $scope.validDate === true && $scope.mp.days.length > 0) {
+            $scope.mp.smp={};
+            $scope.mp.smp.babyDueDate = $scope.mp.babyDueDate;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function() {
                 $scope.mp = {};
                 $scope.temp = {};
