@@ -8,7 +8,7 @@ module.exports = function(mongoose) {
         worker: { type:Schema.Types.ObjectId, ref:'User' },
         batch: { type:Schema.Types.ObjectId, ref:'TimesheetBatch' },
         agency: { type:Schema.Types.ObjectId, ref:'Agency' },
-        status: String, // submitted, preValidation, validated, invoiced, receipted, approved, readyToPayroll, payrolled
+        status: String, // submitted, preValidation, validated, invoiced, receipted, approved, readyToPayroll, payrolled, held, deleted
         payFrequency: String, // weekly, 2weekly etc.
         weekEndingDate: Date,
         elements: [
