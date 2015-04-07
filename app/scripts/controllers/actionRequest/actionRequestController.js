@@ -19,14 +19,11 @@ angular.module('origApp.controllers')
         }
 
         $scope.callModal = function (id, type, createdBy) {
-
             HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
                 var controller;
                 var parentScope = {};
                 parentScope.candidate = {};
                 parentScope.candidate.firstName = createdBy.name;
-                // parentScope.candidate.id=createdBy.id;
-                console.log(parentScope);
                 parentScope.candidateId = createdBy.id;
                 switch (type) {
                 case 'ssp':
@@ -44,6 +41,11 @@ angular.module('origApp.controllers')
                     $scope.smpObject.days = data.data.object.days;
                     $scope.smpObject.imageUrl = data.data.object.imageUrl;
                     break;
+                case 'studentloan':
+                    controller='slController',
+                    $scope.studentLoan=data.data.object.studentLoan;
+                    $scope.id=data.data.object.id;
+
                 }
                 var modalInstance = ModalService.open({
                     templateUrl: 'views/actionRequest/' + type + '.html',
