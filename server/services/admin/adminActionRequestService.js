@@ -41,13 +41,21 @@ module.exports=function(dbs){
 		 service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
-						utils.updateSubModel(actionRequest, details);
+						// console.log('days before update submodel ');
+						// console.log(actionRequest.days);
+						utils.updateSubModel(actionRequest, details,true);
 						if(status!==''){
 							actionRequest.status=status;
 						}
-						
+
+
+						console.log('days after update submodel  ....');
+						console.log(actionRequest.days);
+						actionRequest.days=details.days;
 						Q.nfcall(actionRequest.save.bind(actionRequest))
 						.then(function(){
+							console.log('after save');
+							console.log(actionRequest.days);
 							resolve({result:true, object:actionRequest});
 						},reject);
 					}
@@ -232,7 +240,7 @@ module.exports=function(dbs){
 		var perDayPay=options.perDayPay;
 		var payFrequency=user.worker.payrollTax.payFrequency;
 
-		var q=db.TaxTable.find().gte('startDate',records[0].periodStartDate).lte('startDate',records[records.length-1].periodStartDate);
+		var q=db.TaxTable.find().or([{'startDate':{$gte:records[0].periodStartDate}},{'startDate':{$lte:records[records.length-1].periodStartDate}}]);
 		console.log('query formed');
 		return Q.Promise(function(resolve,reject){
 			return q.exec(function(err,taxTables){
