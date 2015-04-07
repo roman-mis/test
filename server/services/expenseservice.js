@@ -66,13 +66,9 @@ module.exports = function (dbs) {
                         .then(function (expense) {
                             var bucket = [];
 
-<<<<<<< HEAD
-                            expense.rows.forEach(function(t) {
-                            var pushIt = false;
-=======
+
                             expense.rows.forEach(function (t) {
                                 var pushIt = false;
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
 
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
@@ -121,13 +117,9 @@ module.exports = function (dbs) {
                                             var sys = systemDoc.expensesRate.id(i.subType);
 
                                             if (sys) {
-<<<<<<< HEAD
-                                              t.amount = i.value;
-                                              t.value = 4.5;
-=======
+
                                                 t.amount = i.value;
                                                 t.value = 4.5;
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
                                                 t.expenseDetail.id = sys._id;
@@ -152,23 +144,7 @@ module.exports = function (dbs) {
 
                                             }
 
-<<<<<<< HEAD
-                                        }else{
-                                          t.amount = i.value;
-                                          t.value = 0.45;
-                                          t.expenseDetail = {};
-                                          t.expenseDetail.name=i.subType;
-                                          t.expenseDetail.total=i.value;
-                                          t.expenseDetail.vat=0+'';
-                                          systemDoc.statutoryTables.vat.forEach(function(time) {
-                                                        var validFrom = new Date(time.validFrom);
-                                                        var validTo = new Date(time.validTo);
-                                                        var current = new Date();
-                                                        if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
 
-                                                            t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.vat = time.amount /100 * 4.5+'';
-=======
                                         } else {
                                             t.amount = i.value;
                                             t.value = 0.45;
@@ -184,7 +160,7 @@ module.exports = function (dbs) {
 
                                                     t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
                                                     t.expenseDetail.vat = time.amount / 100 * 4.5 + '';
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
+
 
                                                 }
 
@@ -208,11 +184,9 @@ module.exports = function (dbs) {
 
                             });
 
-<<<<<<< HEAD
-                            resolve({ claims: bucket, system: system });
-=======
+
                             resolve({ claims: bucket, system: system, totalCount: expense.count });
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
+
                         });
 
 
@@ -284,51 +258,7 @@ module.exports = function (dbs) {
         return Q.nfcall(q.exec.bind(q));
     };
 
-<<<<<<< HEAD
-service.sendMail  = function(user,expense,status,reason,claimReference){
-  return Q.Promise(function(resolve,reject){
-              var lastPart = '';
-              if(reason){
-                lastPart = ' due to '+ reason;
-              }
-              var message = 'Dear '+user.title+'. '+user.firstName + ' ' + user.lastName + '<br/>'+
-                            'your Expense of type '+ expense.subType + ' and amount of ' + expense.value +
-                            ' at the claim id Number '+ claimReference + ' has been ' + status +
-                            lastPart;
-                            console.log(message);
-              var mailModel={message:message};
-              var mailOption={to:user.emailAddress};
-              console.log(mailModel);
-              console.log(mailOption);
-              return mailer.sendEmail(mailOption,mailModel,'status_change').then(function(){
-                  resolve({result:true,message:'mail sent'});
-                },reject);
-  });
-};
 
-    service.changeStatus=function(status,claims){
-        return Q.promise(function(resolve,reject){
-
-
-           var readPromises = [];
-           var mailPromises = [];
-           var writePromises = [];
-          claims.objects.forEach(function(claim){
-            console.log('claim.claimId  ===> ' + claim.claimId);
-            var q = db.Expense.findById(claim.claimId).populate('user', 'title firstName lastName emailAddress');;
-            readPromises.push(Q.nfcall(q.exec.bind(q)));
-          });
-
-          return Q.all(readPromises).then(function(expense){
-            for(var i = 0; i < expense.length; i++){
-              expense[i].days.forEach(function(day){
-                day.expenses.forEach(function(expenses){
-                    claims.objects[i].expenses.forEach(function(updatesExpenses){
-                      if(expenses._id+'' === updatesExpenses.id+''){
-                        expenses.status = status;
-                        writePromises.push(service.sendMail(expense[i].user,expenses,status,updatesExpenses.reason,expense[i].claimReference));
-                      }
-=======
     service.sendMail = function (user, expense, status, reason, claimReference) {
         return Q.Promise(function (resolve, reject) {
             var lastPart = '';
@@ -375,7 +305,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                                 }
                             });
                         });
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
+
                     });
                     // Q.all(mailPromises).then(function(){
                     // console.log('***************************000000')
@@ -398,15 +328,8 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
             }, function (err) {
                 console.log('***********2')
                 reject(err);
-<<<<<<< HEAD
-              });
-          },function(err){
-            console.log('***********2')
-            reject(err);
-          });
-=======
+
             });
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
         });
     };
     service.deleteExpense = function (ids) {
@@ -452,85 +375,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
     };
 
 
-<<<<<<< HEAD
-    service.editExpenses=function(data){
-        return Q.promise(function(resolve,reject){
-          var readPromises  = [];
-          var WritePromises = [];
-          var breakFrmLoops = false;
-          for(var i = 0; i < data.length; i++){
-            var q = db.Expense.findById(data[i].claimId);
-            readPromises.push(Q.nfcall(q.exec.bind(q)));
-          }
-          Q.all(readPromises).then(function(expenses){
-            for(var i = 0; i < expenses.length; i++){
-            var dayIndex = -1;
 
-              expenses[i].days.forEach(function(day){
-                dayIndex ++;
-                var dayExpenseIndex = -1;
-                day.expenses.forEach(function(dayExpense){
-                  dayExpenseIndex ++;
-                  if(dayExpense._id+'' === data[i].id+''){
-                    console.log('**')
-                          console.log('this day')
-                          console.log('**')
-                    var changeDay = false;
-                    for(var key in data[i]){
-                      if(key === 'date'){
-                        changeDay = true;
-                      }else{
-                        dayExpense[key] = data[i][key];
-                      }
-                    }
-                    if(changeDay){
-                      var foundTheTargetDay = false;
-                      expenses[i].days.forEach(function(targetNewDay){
-
-                        if(daysBetween(targetNewDay.date,new Date(data[i].date)) === 0){
-                          console.log('**')
-                          console.log('new day')
-                          console.log('**')
-                          foundTheTargetDay = true;
-                          targetNewDay.expenses.push(dayExpense);
-                          day.expenses.splice(dayExpenseIndex,1);
-                          breakFrmLoops = true;
-                          return;
-                        }
-                      });
-                      if(!foundTheTargetDay){
-                        console.log('**')
-                          console.log('create new day')
-                          console.log('**')
-
-                        var newDay = {};
-                        newDay.date = new Date(data[i].date);
-                        newDay.startTime = day.startTime;
-                        newDay.endTime = day.endTime;
-                        newDay.expenses = [];
-                        newDay.expenses.push(dayExpense);
-                        day.expenses.splice(dayExpenseIndex,1);
-                        console.log('newDay')
-                        console.log(newDay)
-                        expenses[i].days.push(newDay);
-                      }
-                    }
-                    breakFrmLoops = true;
-                    return;
-                  }
-                });
-                if(breakFrmLoops){
-                  return;
-                }
-              });
-                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
-            }
-
-            return Q.all(WritePromises).then(function(res){
-              resolve({result:true,opjects:res});
-            },function(err){
-              reject(err);
-=======
     service.editExpenses = function (data) {
         return Q.promise(function (resolve, reject) {
             var readPromises = [];
@@ -611,7 +456,7 @@ service.sendMail  = function(user,expense,status,reason,claimReference){
                 });
             }, function () {
                 reject('can not find this claim');
->>>>>>> 1c7e66c87d7b51af7ce33ca62e071f4a07221d82
+
             });
         });
 
