@@ -18,6 +18,7 @@ angular.module('origApp.controllers')
 
         }
 
+
         $scope.callModal = function (id, type, createdBy) {
 
             HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
@@ -26,7 +27,6 @@ angular.module('origApp.controllers')
                 parentScope.candidate = {};
                 // parentScope.candidate.firstName = createdBy.name;
                 // parentScope.candidate.id=createdBy.id;
-                console.log(parentScope);
                 parentScope.candidateId = data.data.object.worker.id;
                 parentScope.candidate = data.data.object.worker;
                 console.log(parentScope);
@@ -39,13 +39,28 @@ angular.module('origApp.controllers')
                 case 'smp':
                     controller = 'smpController';
                     $scope.smpObject = {};
-                    $scope.smpObject.startDate = data.data.object.startDate;
-                    $scope.smpObject.smp = data.data.object.smp;
-                    $scope.smpObject.id = data.data.object.id;
-                    $scope.smpObject.intendedStartDate = data.data.object.intendedStartDate;
-                    $scope.smpObject.days = data.data.object.days;
-                    $scope.smpObject.imageUrl = data.data.object.imageUrl;
+                    $scope.smpObject = data.data.object;
+                    $scope.temp={};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
                     break;
+                case 'studentloan':
+                    controller='slController',
+                    $scope.studentLoan=data.data.object.studentLoan;
+                    $scope.id=data.data.object.id;
+                    break;
+                case 'spp':
+                    controller='sppController';
+                    type='sppModal';
+                    $scope.id=data.data.object.id;
+                    $scope.sppObject={};
+                    console.log(data.data.object.spp);
+                    $scope.sppObject.spp=data.data.object.spp;
+                    $scope.sppObject.days=data.data.object.days;
+                    $scope.sppObject.imageUrl=data.data.object.imageUrl;
+                    $scope.temp={};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
+                    break;
+
                 }
                 var modalInstance = ModalService.open({
                     templateUrl: 'views/actionRequest/' + type + '.html',

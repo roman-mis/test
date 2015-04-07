@@ -80,7 +80,10 @@ angular.module('origApp.controllers')
   $scope.save=function(){
     HttpResource.model('actionrequests').create($scope.smpObject)
       .patch($scope.smpObject.id).then(function () {
+
         MsgService.success('Successfully saved.');
+        $scope.closeModal();
+
 
     });
   };
