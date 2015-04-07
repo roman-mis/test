@@ -77,7 +77,7 @@ angular.module('origApp.controllers')
     };
     $scope.save=function(){
 
-      HttpResource.model('actionrequests').create('')
+      HttpResource.model('actionrequests').create($scope)
       .patch($scope.smpObject.id).then(function () {
         MsgService.success('Successfully saved.');
 

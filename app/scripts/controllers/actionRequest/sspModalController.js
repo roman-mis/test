@@ -144,7 +144,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.save = function () {
-            HttpResource.model('actionrequests').create('')
+            HttpResource.model('actionrequests').create($scope)
                 .patch($scope.ssp.id).then(function () {
                     MsgService.success('Successfully saved.');
                     $scope.closeModal();

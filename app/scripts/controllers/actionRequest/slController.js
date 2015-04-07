@@ -5,6 +5,7 @@ angular.module('origApp.controllers')
 .controller('slController', function($scope, parentScope, HttpResource,  ConstantsResource, $http, $modalInstance,MsgService) {
 
     $scope.candidateId = parentScope.candidateId;
+
     $scope.sl = {'haveLoan':false,'payDirectly':false}
 
 
@@ -33,4 +34,13 @@ angular.module('origApp.controllers')
 
         $modalInstance.dismiss('cancel');
     };
+    $scope.submitStudentLoan=function(){
+
+           HttpResource.model('actionrequests').create($scope)
+                .patch($scope.id).then(function () {
+                    MsgService.success('Successfully saved.');
+                    $scope.closeModal();
+                });
+
+    }
 });
