@@ -66,6 +66,7 @@ module.exports = function (dbs) {
                         .then(function (expense) {
                             var bucket = [];
 
+
                             expense.rows.forEach(function (t) {
                                 var pushIt = false;
 
@@ -116,6 +117,7 @@ module.exports = function (dbs) {
                                             var sys = systemDoc.expensesRate.id(i.subType);
 
                                             if (sys) {
+
                                                 t.amount = i.value;
                                                 t.value = 4.5;
                                                 t.expenseDetail = {};
@@ -142,6 +144,7 @@ module.exports = function (dbs) {
 
                                             }
 
+
                                         } else {
                                             t.amount = i.value;
                                             t.value = 0.45;
@@ -157,6 +160,7 @@ module.exports = function (dbs) {
 
                                                     t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
                                                     t.expenseDetail.vat = time.amount / 100 * 4.5 + '';
+
 
                                                 }
 
@@ -179,6 +183,7 @@ module.exports = function (dbs) {
                                 }
 
                             });
+
 
                             resolve({ claims: bucket, system: system, totalCount: expense.count });
                         });
@@ -214,8 +219,9 @@ module.exports = function (dbs) {
         return Q.nfcall(q.exec.bind(q));
     };
 
+
     service.sendMail = function (mailInfo) {
-        console.log(mailInfo);
+
         return Q.Promise(function (resolve, reject) {
             var message = '';
             var header = '';
@@ -226,11 +232,11 @@ module.exports = function (dbs) {
             body   = '';
             for(var j = 0; j < mailInfo.expense.length; j++){
                 console.log(mailInfo.expense[j]);
-                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+ 
-                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+ 
+                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+
+                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+
                               '<div style="margin-right:15px;width:100px;display: inline-block;"><b>total</b>: ' +  mailInfo.expense[j].total + '</div>'+
-                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' + 
-                              '<hr>';  
+                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' +
+                              '<hr>';
             }
             message = '<h3>' + header + '</h3>' + body;
             var mailModel = { message: message };
@@ -277,6 +283,7 @@ module.exports = function (dbs) {
                                 }
                             });
                         });
+
                     });
                     console.log('getMailInfoItem ' + claimCounter);
                     mailInfo.push(mailInfoItem);
@@ -289,10 +296,10 @@ module.exports = function (dbs) {
                             service.sendMail(mailInfoItem).then(function(){
                                 if(claimCounter === claims.objects.length){
                                     resolve({ result: true });
-                                }   
+                                }
                             },function(err){
                                 reject(err);
-                            });                            
+                            });
                         }else{
                             resolve({ result: true });
                         }
@@ -302,6 +309,7 @@ module.exports = function (dbs) {
                 },function(err){
                     reject(err);
                 });
+
             });
         });
     };
@@ -346,6 +354,7 @@ module.exports = function (dbs) {
         });
 
     };
+
 
 
     service.editExpenses = function (data) {
@@ -455,7 +464,8 @@ module.exports = function (dbs) {
                     console.log(err);
                     reject(err);
                 });
-                
+
+
             });
         });
     };

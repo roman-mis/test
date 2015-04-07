@@ -24,10 +24,12 @@ angular.module('origApp.controllers')
                 var controller;
                 var parentScope = {};
                 parentScope.candidate = {};
-                parentScope.candidate.firstName = createdBy.name;
+                // parentScope.candidate.firstName = createdBy.name;
                 // parentScope.candidate.id=createdBy.id;
                 console.log(parentScope);
-                parentScope.candidateId = createdBy.id;
+                parentScope.candidateId = data.data.object.worker.id;
+                parentScope.candidate = data.data.object.worker;
+                console.log(parentScope);
                 switch (type) {
                 case 'ssp':
                     parentScope.showMe = true;
