@@ -186,7 +186,6 @@ module.exports = function (dbs) {
 
 
                             resolve({ claims: bucket, system: system, totalCount: expense.count });
-
                         });
 
 
@@ -197,44 +196,6 @@ module.exports = function (dbs) {
             }, reject);
 
         });
-
-  /////////////////////////////////////////////////////////////////////////////////////////
-    // return Q.Promise(function(resolve, reject) {
-    // // //   var q = db.System.find().select('statutoryTables.vat expensesRate');
-    // // //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
-    // // //           console.log(system);
-    // // //           resolve(system);
-    // // //         },function(err){
-    // // //           reject(err);
-    // // //         });
-    // // //       });
-
-
-    //   var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName');
-    //   return queryutils.applySearch(expensesQuery, db.Expense, request)
-    //       .then(function(expenses){
-    //         console.log(expenses);
-    //         console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%0')
-
-    //         var q = db.System.find().select('mileageRates statutoryTables.vat expensesRate');
-    //         return Q.nfcall(q.exec.bind(q)).then(function(system) {
-    //           console.log(system);
-    //           console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1')
-    //           resolve({system:system,expenses:expenses});
-    //         },function(err){
-    //           // resolve(expenses);
-    //         },function(err){
-    //           reject(err);
-    //         });
-    //       });
-
-
-    //       },function(err){
-    //         console.log(err);
-    //         reject(err);
-    //       });
-        // });
-
     };
 
     service.fetchExpenses = function (val) {
@@ -259,19 +220,27 @@ module.exports = function (dbs) {
     };
 
 
-    service.sendMail = function (user, expense, status, reason, claimReference) {
+    service.sendMail = function (mailInfo) {
+
         return Q.Promise(function (resolve, reject) {
-            var lastPart = '';
-            if (reason) {
-                lastPart = ' due to ' + reason;
+            var message = '';
+            var header = '';
+            var body = '';
+            header = '<span style="color:green;margin-right:30px">Claim ID: ' + mailInfo.claimReference + '</span>' +
+                     '<span style="color:green;"> Full Name: '  +mailInfo.user.title + '. ' + mailInfo.user.firstName + ' ' + mailInfo.user.lastName + '</span>';
+
+            body   = '';
+            for(var j = 0; j < mailInfo.expense.length; j++){
+                console.log(mailInfo.expense[j]);
+                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+
+                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+
+                              '<div style="margin-right:15px;width:100px;display: inline-block;"><b>total</b>: ' +  mailInfo.expense[j].total + '</div>'+
+                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' +
+                              '<hr>';
             }
-            var message = 'Dear ' + user.title + '. ' + user.firstName + ' ' + user.lastName + '<br/>' +
-                          'your Expense of type ' + expense.subType + ' and amount of ' + expense.value +
-                          ' at the claim id Number ' + claimReference + ' has been ' + status +
-                          lastPart;
-            console.log(message);
+            message = '<h3>' + header + '</h3>' + body;
             var mailModel = { message: message };
-            var mailOption = { to: user.emailAddress };
+            var mailOption = { to: mailInfo.user.emailAddress };
             console.log(mailModel);
             console.log(mailOption);
             return mailer.sendEmail(mailOption, mailModel, 'status_change').then(function () {
@@ -282,52 +251,64 @@ module.exports = function (dbs) {
 
     service.changeStatus = function (status, claims) {
         return Q.promise(function (resolve, reject) {
-
-
-            var readPromises = [];
-            var mailPromises = [];
-            var writePromises = [];
+            console.log('**************//*****************');
+            console.log(claims.objects);
+            console.log('**************//*****************');
+            // console.log(claims)
+            var claimCounter = 0;
+            var mailInfo = [];
             claims.objects.forEach(function (claim) {
+                // console.log(claimCounter);
                 console.log('claim.claimId  ===> ' + claim.claimId);
-                var q = db.Expense.findById(claim.claimId).populate('user', 'title firstName lastName emailAddress');;
-                readPromises.push(Q.nfcall(q.exec.bind(q)));
-            });
-
-            return Q.all(readPromises).then(function (expense) {
-                for (var i = 0; i < expense.length; i++) {
-                    expense[i].days.forEach(function (day) {
+                var q = db.Expense.findById(claim.claimId).populate('user', 'title firstName lastName emailAddress');
+                Q.nfcall(q.exec.bind(q)).then(function(expense){
+                    claimCounter++;
+                    console.log('get the claim ' + claimCounter);
+                    var mailInfoItem = {};
+                    mailInfoItem.claimReference = expense.claimReference;
+                    mailInfoItem.user = expense.user;
+                    mailInfoItem.reason = [];
+                    mailInfoItem.expense = [];
+                    expense.days.forEach(function (day) {
+                        console.log(1);
                         day.expenses.forEach(function (expenses) {
-                            claims.objects[i].expenses.forEach(function (updatesExpenses) {
+                            console.log(2);
+                            claim.expenses.forEach(function (updatesExpenses) {
+                                console.log(3);
                                 if (expenses._id + '' === updatesExpenses.id + '') {
+                                    console.log('####$$$$$#####');
                                     expenses.status = status;
-                                    var reason = updatesExpenses.reason != 'Other' ? updatesExpenses.reason : updatesExpenses.other;
-                                    writePromises.push(service.sendMail(expense[i].user, expenses, status, reason, expense[i].claimReference));
+                                    mailInfoItem.reason.push(updatesExpenses.reason !== 'Other' ? updatesExpenses.reason : updatesExpenses.other);
+                                    mailInfoItem.expense.push(updatesExpenses);
                                 }
                             });
                         });
 
                     });
-                    // Q.all(mailPromises).then(function(){
-                    // console.log('***************************000000')
-                    writePromises.push(Q.nfcall(expense[i].save.bind(expense[i])));
-                    //   // resolve({result:true});
-                    // },function(err){
-                    //   console.log('***********1')
-                    //   reject(err);
-                    // });
-                }
-                return Q.all(writePromises).then(function () {
-                    console.log('***************************')
-                    console.log('***************************')
-                    console.log('***************************')
-                    resolve({ result: true });
-                }, function (err) {
-                    console.log('***********11')
+                    console.log('getMailInfoItem ' + claimCounter);
+                    mailInfo.push(mailInfoItem);
+
+                    Q.nfcall(expense.save.bind(expense)).then(function(){
+                        console.log('save claim num' + claimCounter);
+                        console.log('sending mail');
+                        console.log(status);
+                        if(status === 'rejected'){
+                            service.sendMail(mailInfoItem).then(function(){
+                                if(claimCounter === claims.objects.length){
+                                    resolve({ result: true });
+                                }
+                            },function(err){
+                                reject(err);
+                            });
+                        }else{
+                            resolve({ result: true });
+                        }
+                    },function(err){
+                        reject(err);
+                    });
+                },function(err){
                     reject(err);
                 });
-            }, function (err) {
-                console.log('***********2')
-                reject(err);
 
             });
         });
@@ -377,96 +358,122 @@ module.exports = function (dbs) {
 
 
     service.editExpenses = function (data) {
-        return Q.promise(function (resolve, reject) {
-            var readPromises = [];
-            var WritePromises = [];
-            var breakFrmLoops = false;
-            for (var i = 0; i < data.length; i++) {
-                var q = db.Expense.findById(data[i].claimId);
-                readPromises.push(Q.nfcall(q.exec.bind(q)));
-            }
-            Q.all(readPromises).then(function (expenses) {
-                for (var i = 0; i < expenses.length; i++) {
-                    var dayIndex = -1;
-
-                    expenses[i].days.forEach(function (day) {
-                        dayIndex++;
-                        var dayExpenseIndex = -1;
-                        day.expenses.forEach(function (dayExpense) {
-                            dayExpenseIndex++;
-                            if (dayExpense._id + '' === data[i].id + '') {
-                                console.log('**')
-                                console.log('this day')
-                                console.log('**')
-                                var changeDay = false;
-                                for (var key in data[i]) {
-                                    if (key === 'date') {
-                                        changeDay = true;
-                                    } else {
-                                        dayExpense[key] = data[i][key];
-                                    }
-                                }
-                                if (changeDay) {
-                                    var foundTheTargetDay = false;
-                                    expenses[i].days.forEach(function (targetNewDay) {
-
-                                        if (daysBetween(targetNewDay.date, new Date(data[i].date)) === 0) {
-                                            console.log('**')
-                                            console.log('new day')
-                                            console.log('**')
-                                            foundTheTargetDay = true;
-                                            targetNewDay.expenses.push(dayExpense);
-                                            day.expenses.splice(dayExpenseIndex, 1);
-                                            breakFrmLoops = true;
-                                            return;
-                                        }
-                                    });
-                                    if (!foundTheTargetDay) {
-                                        console.log('**')
-                                        console.log('create new day')
-                                        console.log('**')
-
-                                        var newDay = {};
-                                        newDay.date = new Date(data[i].date);
-                                        newDay.startTime = day.startTime;
-                                        newDay.endTime = day.endTime;
-                                        newDay.expenses = [];
-                                        newDay.expenses.push(dayExpense);
-                                        day.expenses.splice(dayExpenseIndex, 1);
-                                        console.log('newDay')
-                                        console.log(newDay)
-                                        expenses[i].days.push(newDay);
-                                    }
-                                }
-                                breakFrmLoops = true;
-                                return;
-                            }
-                        });
-                        if (breakFrmLoops) {
-                            return;
-                        }
-                    });
-                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+        console.log('**');
+        console.log(data);
+        console.log('**');
+        //get unique claims
+        var claims = [];
+        data.forEach(function(dataElement){
+            var found = false;
+            for(var i = 0; i < claims.length; i++){
+                if(claims[i] + '' === dataElement.claimId + ''){
+                    found = true;
+                    break;
                 }
+            }
+            if(!found){
+                claims.push(dataElement.claimId);
+            }
+        });
+        //end
+        console.log('***************************//***************')
+        console.log('claims');
+        console.log(claims);
 
-                return Q.all(WritePromises).then(function (res) {
-                    resolve({ result: true, opjects: res });
-                }, function (err) {
+        return Q.promise(function (resolve, reject) {
+            // var readPromises = [];
+            var allResponses = [];
+            var breakFrmDaysLoop = false;
+            var claimsCounter  = 0;
+            claims.forEach(function(claim){
+                claimsCounter++;
+                var q = db.Expense.findById(claim);
+                Q.nfcall(q.exec.bind(q)).then(function(expense){
+                    for (var i = 0; i < data.length; i++) {
+                        breakFrmDaysLoop = false;
+                        if(claim === data[i].claimId + ''){
+                            var dayIndex = -1;
+                            expense.days.some(function (day) {
+                                dayIndex++;
+                                var dayExpenseIndex = -1;
+                                day.expenses.some(function (dayExpense) {
+                                    dayExpenseIndex++;
+                                    if (dayExpense._id + '' === data[i].id + '') {
+                                        breakFrmDaysLoop = true;
+                                        var changeDay = false;
+                                        for (var key in data[i]) {
+                                            if (key === 'date') {
+                                                changeDay = true;
+                                            } else {
+                                                dayExpense[key] = data[i][key];
+                                            }
+                                        }
+                                        if (changeDay) {
+                                            var foundTheTargetDay = false;
+                                            expense.days.some(function (targetNewDay) {
+                                                if (daysBetween(targetNewDay.date, new Date(data[i].date)) === 0) {
+                                                    console.log('**');
+                                                    console.log('foundTheTargetDay ===> true');
+                                                    console.log('**');
+                                                    foundTheTargetDay = true;
+                                                    targetNewDay.expenses.push(dayExpense);
+                                                    day.expenses.splice(dayExpenseIndex, 1);
+                                                    return true;
+                                                }
+                                            });
+                                            //if didn't found this day ... create new one
+                                            if (!foundTheTargetDay) {
+                                                console.log('**');
+                                                console.log('create new day');
+                                                console.log('**');
+                                                var newDay = {};
+                                                newDay.date = new Date(data[i].date);
+                                                newDay.startTime = day.startTime;
+                                                newDay.endTime = day.endTime;
+                                                newDay.expenses = [];
+                                                newDay.expenses.push(dayExpense);
+                                                day.expenses.splice(dayExpenseIndex, 1);
+                                                expense.days.push(newDay);
+                                            }
+
+                                        }
+                                    }
+                                    console.log('dayFinished');
+                                });
+                                if (breakFrmDaysLoop) {
+                                    console.log('breakFrmDaysLoop');
+                                    return true;
+                                }
+                            });
+                            console.log('I ===> '+ i);
+                        }
+                    }
+                    console.log('push the promise');
+                    Q.nfcall(expense.save.bind(expense)).then(function(res){
+                        allResponses.push(res);
+                        console.log('claimsCounter ===> '+ claimsCounter);
+                        if(claimsCounter === claims.length){
+                            console.log('******/resolving/********');
+                            console.log('******/resolving/********');
+                            resolve({ result: true });
+                        }
+                    },function(err){
+                        reject(err);
+                    });
+                },function(err){
+                    console.log(err);
                     reject(err);
                 });
-            }, function () {
-                reject('can not find this claim');
+
 
             });
         });
-
     };
 
 
 
-
     service.setClaimsSubmitted = function (data) {
-        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&****************************')
+        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&****************************');
         console.log(data);
         return Q.promise(function (resolve, reject) {
             var readPromises = [];

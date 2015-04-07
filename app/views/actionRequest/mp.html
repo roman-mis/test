@@ -87,12 +87,16 @@
                             <td ng-if="s.monthNumber <=0 || !s.monthNumber">
                                 Week {{s.weekNumber}}
                             </td>
-                            <td ng-init="indexCount=$index;$indexCount=true;"><p ng-if='$indexCount'>{{s.amount | number : 2}}</p>
+                             <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
 
-                                <input type="number"  ng-model="s.amount" ng-if='!$indexCount'><a ng-click='$indexCount=true' ng-show='!$indexCount'>Ok</a></td>
-                            <td>
-                                <a ng-click="$indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
-                                <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+
+                                <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a>
+                                <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
+                            </td>
+                            <td class="text-right">
+                                <a href="" ng-click="indexCount=false;"  class="edit-price"><i
+                                        class="fa fa-edit"></i></a>&nbsp;
+                                <a href="" ng-click='remove($index);'><i class="fa fa-trash"></i></a>
                             </td>
 
 
@@ -113,17 +117,17 @@
                         <div class="row" style="margin-top: 38px;">
                             <div class="col-xs-5 col-sm-4">
                                 <div class="fileUpload btn btn-primary form-control">
-                                    <span onclick="$('#upload_company_logo').click();">Browse</span>
+                                    <span onclick="$('#upload_file').click();">Browse</span>
                                     <input file-model="fileupload" type="file"
-                                           id="upload_company_logo" name="companyLogo" style="display: none;" />
+                                           id="upload_file" name="companyLogo" style="display: none;" />
                                 </div>
                             </div>
 
 
                             <div class="col-xs-5 col-sm-6 no-padding">
                                 <button type="button" class="btn btn-primary form-control img-details"
-                                        ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
-                                    <span ng-show="!isLogoUploading" >Upload New Image</span>
+                                        ng-disabled="isLogoUploading" ng-click="uploadFile()">
+                                    <span ng-show="!isLogoUploading" >Upload</span>
                                     <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
                                 </button>
                             </div>
