@@ -39,7 +39,7 @@ angular.module('origApp.controllers')
 
 
     if (!$('#upload_file').val()) {
-      alert('Please select a file first.');
+      MsgService.danger('Please select a file first.');
       return;
     }
     var file = $scope.fileupload;
