@@ -208,7 +208,7 @@ module.exports=function(dbs){
 				weeks[i]={'days':[],amount:0,periodStartDate:null,weekNumber:-1,monthNumber:-1};
 				weeks[i].noOfDays=noOfDays;
 
-				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(1).toDate());
+				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(0).toDate());
 				if(payFrequency===enums.payFrequency.Monthly){
 					nextStartDate=nextStartDate.add(1,'months').startOf('month');
 					
@@ -251,9 +251,9 @@ module.exports=function(dbs){
 					var taxTable=_.first(_.filter(taxTables,function(tbl){
 						//console.log('comparing dates : ');
 						//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
-						// var tblMomenentDate=moment(tbl);
-						console.log('comparing dates  '+week.periodStartDate + '      with      '+tbl.startDate);
-						var ret= utils.areDateEqual(week.periodStartDate,tbl.startDate);
+						var taxTableDate=moment(tbl.startDate).day(0).toDate();
+						console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableDate);
+						var ret= utils.areDateEqual(week.periodStartDate,taxTableDate);
 						console.log(ret);
 						return ret;
 					}));
