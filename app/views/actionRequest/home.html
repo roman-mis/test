@@ -24,9 +24,9 @@
                    <td>{{l.dateRequested | date:'MM/dd/yyyy'}}</td>
                    <td>{{l.type}}</td>
                    <td>{{l.periodActioned}}</td>
-                   <td>{{l.createdBy.name}}</td>
+                   <td>{{l.createdBy.name  | capitalizeAll}}</td>
                    <td>{{l.requestRef}}</td>
-                   <td>{{l.status}}</td>
+                   <td>{{l.status | capitalize}}</td>
                    <td class="text-center">
                     <a href="javascript:void(0)" title="Edit" ng-click="callModal(l.id,l.type,l.createdBy);"> <i class="fa fa-folder-open-o"></i></a>
                    </td>
