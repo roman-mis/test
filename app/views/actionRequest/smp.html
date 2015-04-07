@@ -4,7 +4,7 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
-      <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.firstName}}</div>
+      <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.name | capitalizeAll}}</div>
       <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
       <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
     </div>
