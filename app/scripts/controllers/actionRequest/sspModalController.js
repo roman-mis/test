@@ -5,6 +5,12 @@ angular.module('origApp.controllers')
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
         $scope.showMe = parentScope.showMe;
+        $scope.validDate = true;
+
+
+        if (!$scope.ssp) {
+            $scope.ssp = {};
+        }
 
         function getCandidateContactDetails() {
             HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
@@ -174,8 +180,8 @@ angular.module('origApp.controllers')
             }
 
             if ('save' === actionName) {
-                HttpResource.model('actionrequests').create(data)
-                    .patch($scope.ssp.id).then(function () {
+                HttpResource.model('actionrequests').create(data).
+                    patch($scope.ssp.id).then(function () {
                         MsgService.success('Successfully saved.');
                         $scope.closeModal();
                     });
