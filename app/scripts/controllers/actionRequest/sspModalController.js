@@ -9,7 +9,9 @@ angular.module('origApp.controllers')
         function getCandidateContactDetails() {
             HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
                 $scope.contactdetail = data.data.object;
-            }, function (err) {});
+            }, function (err) {
+                console.log(err);
+            });
         }
 
         getCandidateContactDetails();
@@ -30,7 +32,7 @@ angular.module('origApp.controllers')
 
                 $scope.submitted = true;
 
-                if ($scope.ssp && $scope.ssp.days && $scope.ssp.days.length ==0 ) {
+                if ($scope.ssp && $scope.ssp.days && $scope.ssp.days.length === 0 ) {
                     $scope.validDate = false;
                     $scope.sspMessage = 'No  Statutory data';
                 }
@@ -68,7 +70,9 @@ angular.module('origApp.controllers')
 
                     $scope.ssp.days = data.data.objects;
 
-                }, function (err) {});
+                }, function (err) {
+                    console.log(err);
+                });
 
 
             } else {
