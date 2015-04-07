@@ -64,8 +64,8 @@
         </div>
 
         <div class="row ">
-            <div class="col-xs-12 form-group" ng-if="!validDate">
-                {{sspMessage}}
+            <div class="col-xs-12 form-group" ng-if="!validDate" class="alert alert-danger">
+               {{sspMessage}}.
             </div>
         </div>
 
@@ -99,7 +99,8 @@
                             <td class="text-right">
                                 <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i
                                         class="fa fa-edit"></i></a>&nbsp;
-                                <a  href="javascript:void(0)" ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                                <a  href="javascript:void(0)" ng-click='remove($index);' ng-if='!showMe'><i
+                                        class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         </tbody>
@@ -161,10 +162,10 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a   href="javascript:void(0)" ng-click="save()">Save</a></li>
-                        <li><a   href="javascript:void(0)" ng-click="saveAndApprove()">Save and Approve</a></li>
-                        <li><a   href="javascript:void(0)" ng-click="saveAndReject();">Save and Reject</a></li>
-                        <li><a   href="javascript:void(0)" ng-click="saveAndRefer();">Save and Refer</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('save')">Save</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('saveAndApprove')">Save and Approve</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('saveAndReject');">Save and Reject</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('saveAndRefer');">Save and Refer</a></li>
                     </ul>
                 </div>
                 <input type="submit" name="submit" class="btn btn-primary" ng-if="!showMe" value="Submit">
