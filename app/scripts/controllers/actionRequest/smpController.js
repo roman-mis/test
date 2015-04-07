@@ -1,14 +1,9 @@
 'use strict';
+
 angular.module('origApp.controllers')
-.controller('smpController',function($scope,parentScope,HttpResource,ModalService,MsgService,$modalInstance){
+.controller('smpController',function($scope, parentScope, HttpResource, $http, ModalService, MsgService, $modalInstance){
   $scope.candidateId =parentScope.candidateId;
   $scope.candidate = parentScope.candidate;
-  // HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
-  //   $scope.contactdetail = data.data.object;
-  //    //   $scope.fullname = ($scope.candidateInfo.firstName + ' ' + $scope.candidateInfo.lastName);
-  //  }, function(err) {
-  //   console.log(err);
-  // });
 
   $scope.cancel=function(i,v){
 
@@ -19,10 +14,9 @@ angular.module('origApp.controllers')
     $scope.smpObject.days.splice(i, 1);
 
   };
+
   $scope.$watch('fileupload', function(fileInfo) {
-
     if (fileInfo) {
-
       var fileSize = (fileInfo.size / 1024);
       var picReader = new FileReader();
       picReader.readAsDataURL(fileInfo);
@@ -34,18 +28,18 @@ angular.module('origApp.controllers')
 
       $scope.temp = {
         logoFileName: fileInfo.name,
-        logoSize: fileSize
+        logoSize: fileSize.toFixed(0) + ' KB'
       };
       console.log($scope.temp);
     }
 
   });
-  $scope.uploadCompanyLogo = function() {
+  $scope.uploadFile = function() {
 
 
 
-    if (!$('#upload_company_logo').val()) {
-      alert('Please select a file first.');
+    if (!$('#upload_file').val()) {
+      MsgService.danger('Please select a file first.');
       return;
     }
     var file = $scope.fileupload;
@@ -67,9 +61,7 @@ angular.module('origApp.controllers')
                 'Content-Type': mimeType,
                 'x-amz-acl': 'public-read'
               }
-            }).success(function(l) {
-
-                //    console.log(response);
+            }).success(function() {
                 $scope.smpObject.imageUrl = response.data.url;
                 $scope.isLogoUploading = false;
               });
@@ -80,11 +72,8 @@ angular.module('origApp.controllers')
   $scope.save=function(){
     HttpResource.model('actionrequests').create($scope.smpObject)
       .patch($scope.smpObject.id).then(function () {
-
         MsgService.success('Successfully saved.');
         $scope.closeModal();
-
-
     });
   };
   $scope.saveAndApprove=function(){

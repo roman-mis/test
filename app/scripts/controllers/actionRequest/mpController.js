@@ -105,8 +105,8 @@ angular.module('origApp.controllers')
 
     $scope.uploadFile = function() {
         if (!$('#upload_file').val()) {
-            alert('Please select a file first.');
-            return;
+          MsgService.danger('Please select a file first.');
+          return;
         }
         var file = $scope.fileupload;
         var fileName = new Date().getTime().toString() + '_' + file.name;
