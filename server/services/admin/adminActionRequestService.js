@@ -245,7 +245,7 @@ module.exports=function(dbs){
 		return Q.Promise(function(resolve,reject){
 			return q.exec(function(err,taxTables){
 				console.log('taxTables');
-				console.log(taxTables.length);
+				console.log(taxTables);
 				_.forEach(records,function(week,idx){
 					var taxTable=_.first(_.filter(taxTables,function(tbl){
 						//console.log('comparing dates : ');
