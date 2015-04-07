@@ -109,7 +109,8 @@ module.exports=function(dbs){
 
 					/*	console.log('----currentRate----');
 						console.log(currentRate);*/
-
+						console.log('user pay frequency is ');
+						console.log(user.worker.payrollTax.payFrequency);
 						return calculatePayPeriods(user,request,options)
 							.then(function(response){
 								console.log('week calculations done');
@@ -251,8 +252,9 @@ module.exports=function(dbs){
 						//console.log('comparing dates : ');
 						//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
 						// var tblMomenentDate=moment(tbl);
+						console.log('comparing dates  '+week.periodStartDate + '      with      '+tbl.startDate);
 						var ret= utils.areDateEqual(week.periodStartDate,tbl.startDate);
-						//console.log(ret);
+						console.log(ret);
 						return ret;
 					}));
 

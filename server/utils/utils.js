@@ -108,7 +108,7 @@ module.exports=utils={
 		return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
 	},
 	areDateEqual:function(date1,date2){
-		console.log('comparing dates  '+date1 + '      with      '+date2);
+		
 		
 		if(date1 === date2){
 			return true;
