@@ -18,13 +18,18 @@ angular.module('origApp.controllers')
 
         }
 
-        $scope.callModal = function (id, type, worker) {
+
+        $scope.callModal = function (id, type, createdBy) {
+
             HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
                 var controller;
                 var parentScope = {};
                 parentScope.candidate = {};
-                parentScope.candidate.firstName = worker.name;
-                parentScope.candidateId = worker.id;
+                // parentScope.candidate.firstName = createdBy.name;
+                // parentScope.candidate.id=createdBy.id;
+                parentScope.candidateId = data.data.object.worker.id;
+                parentScope.candidate = data.data.object.worker;
+                console.log(parentScope);
                 switch (type) {
                 case 'ssp':
                     parentScope.showMe = true;
@@ -34,12 +39,7 @@ angular.module('origApp.controllers')
                 case 'smp':
                     controller = 'smpController';
                     $scope.smpObject = {};
-                    $scope.smpObject.startDate = data.data.object.startDate;
-                    $scope.smpObject.smp = data.data.object.smp;
-                    $scope.smpObject.id = data.data.object.id;
-                    $scope.smpObject.intendedStartDate = data.data.object.intendedStartDate;
-                    $scope.smpObject.days = data.data.object.days;
-                    $scope.smpObject.imageUrl = data.data.object.imageUrl;
+                    $scope.smpObject = data.data.object;
                     $scope.temp={};
                     $scope.temp.logoFileName = data.data.object.imageUrl;
                     break;
@@ -53,6 +53,7 @@ angular.module('origApp.controllers')
                     type='sppModal';
                     $scope.id=data.data.object.id;
                     $scope.sppObject={};
+                    console.log(data.data.object.spp);
                     $scope.sppObject.spp=data.data.object.spp;
                     $scope.sppObject.days=data.data.object.days;
                     $scope.sppObject.imageUrl=data.data.object.imageUrl;

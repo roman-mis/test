@@ -2,7 +2,7 @@
         <div class="modal-header">
                     <h4 class="modal-title">Request Statutory Paternity Pay</h4>
         </div><!-- /modal-header -->
-
+{{sppObject}}
         <div class="modal-body">
                     <div class="row">
                          <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
@@ -41,10 +41,10 @@
 
                                         <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount;"><p ng-if='indexCount'>{{s.amount | number : 2}}</p>
 
-                                            <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a> <a ng-click='cancelAmountFromPayrollSppModal($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a></td>
+                                            <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a> <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a></td>
                                         <td>
                                             <a ng-click="indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            <a ng-click='removeDaysFromPayrollSppModal($index);'><i class="fa fa-trash"></i></a>
+                                            <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
                                         </td>
 
                                     </tr>

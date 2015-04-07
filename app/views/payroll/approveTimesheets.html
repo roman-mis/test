@@ -3,23 +3,6 @@
 </div>-->
 
 <div class="meta-box padding-10 container-fluid gutter-right">
-    <!-- <div class="row" ng-if="pendingRejections.length != 0">
-        <div class="col-xs-12; text-right">
-            <h3>
-                Pending Rejections: {{pendingRejections.length}} &nbsp;
-                <button type="button" class="btn btn-success"
-                        ng-disabled="pendingRejections.length == 0"
-                        ng-click="reviewSummary()">
-                    Review Summary
-                </button>
-                <button type="button" class="btn btn-warning"
-                        ng-disabled="pendingRejections.length == 0"
-                        ng-click="undoRejections()">
-                    Undo Rejections (Revoke Status)
-                </button>
-            </h3>
-        </div>
-    </div> -->
     <div class="row">
         <div class="col-xs-12">
             <div class="group-control">
@@ -42,8 +25,9 @@
                         <th>Batch Number</th>
                         <th>Agency Name</th>
                         <th>branch Name</th>
-                        <th>Creation Date</th>
-                        <th></th>
+                        <th>Total Timesheets</th>
+                        <th>Gross</th>
+                        <th>VAT</th>
                         <th>Total</th>
                         <th>
                             <div class="dropdown text-left">
@@ -86,8 +70,9 @@
                         <td>{{timesheetBatch.batchNumber}}</td>
                         <td>{{timesheetBatch.agency.name}}</td>
                         <td>{{timesheetBatch.branch.name}}</td>
-                        <td>{{timesheetBatch.startDate | date : "EEE dd/MM/yyyy"}}</td>
+                        <td></td>
                         <td>&nbsp;</td>
+                        <td></td>
                         <td>{{timesheetBatches.total | currency:"&pound;"}}</td>
                         <td>
                             <input type="checkbox" ng-model="expense.majorChecked" />
@@ -104,10 +89,10 @@
                                         <!--First green row-->
                                         <tr>
                                             <th><i class="fa fa-level-down"></i></th>
-                                            <th>Worker Name</th>
+                                            <th>Full Name</th>
                                             <th>Status</th>
-                                            <th>net</th>
-                                            <th>vat</th>
+                                            <th>NET</th>
+                                            <th>VAT</th>
                                             <th>Total</th>
                                             <th>
                                                 <div class="dropdown text-left">
@@ -149,7 +134,11 @@
                                             <td>
                                                 <b>{{timesheet.worker.firstName}} {{timesheet.worker.lastName}}</b>
                                             </td>
-                                            <td>{{timesheet.status}}</td>
+                                            <td>
+                                                <div>
+                                                    {{timesheet.status}}
+                                                </div>
+                                            </td>
                                             <td>{{timesheet.net}}</td>
                                             <td>{{timesheet.vat}}</td>
                                             <td>{{timesheet.total}}</td>

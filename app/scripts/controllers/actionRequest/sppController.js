@@ -5,7 +5,10 @@ angular.module('origApp.controllers')
 .controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance,MsgService) {
 
     $scope.candidateId = parentScope.candidateId;
-    $scope.spp = {};
+    if(!$scope.sppObject){
+    $scope.sppObject={}
+    $scope.sppObject.spp = {};
+     }
  //   $scope.spp.startDate=null;
 
     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
@@ -16,17 +19,14 @@ angular.module('origApp.controllers')
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
         $scope.candidateInfo = data.data.object;
     }, function(err) {});
-    $scope.spp.maxPeriods = 2;
+    $scope.sppObject.maxPeriods = 2;
     $scope.remove = function(i) {
 
-        $scope.spp.days.splice(i, 1);
-
-    };
-    $scope.removeDaysFromPayrollSppModal=function(i){
-
         $scope.sppObject.days.splice(i, 1);
+
     };
-    $scope.cancelAmountFromPayrollSppModal=function(i,v){
+
+    $scope.cancel=function(i,v){
 
         $scope.sppObject.days[i].amount=v;
     };
@@ -34,12 +34,12 @@ angular.module('origApp.controllers')
 
     $scope.checkDateMp = function() {
 
-        if ($scope.spp.babyDueDate) {
+        if ($scope.sppObject.spp.babyDueDate) {
             $scope.validDate = true;
             $scope.errorMsg = null;
-            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.sppObject, function(data) {
                 console.log(data);
-                $scope.spp.days = data.data.objects;
+                $scope.sppObject.days = data.data.objects;
 
 
             }, function(err) {});
@@ -104,12 +104,8 @@ angular.module('origApp.controllers')
             }).success(function(l) {
 
                 //    console.log(response);
-                if($scope.sppObject){
-                    $scope.sppObject.imageUrl=$scope.temp.logoFileName;
-                    $scope.isLogoUploading = false;
-                    return;
-                }
-                $scope.spp.imageUrl = $scope.temp.logoFileName;
+
+                $scope.sppObject.imageUrl = $scope.temp.logoFileName;
                 $scope.isLogoUploading = false;
             });
 
@@ -118,10 +114,12 @@ angular.module('origApp.controllers')
     };
     $scope.submitInformation = function(val) {
 
-        if (val === true && $scope.validDate === true && $scope.spp.days.length > 0) {
+        if (val === true && $scope.validDate === true && $scope.sppObject.days.length > 0) {
             $scope.submitted=false;
-            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.spp).post().then(function(response) {
-                $scope.spp = {};
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.sppObject).post().then(function(response) {
+
+                $scope.sppObject.spp={};
+                $scope.sppObject.days = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
             },function (error) {
@@ -130,7 +128,7 @@ angular.module('origApp.controllers')
         } else {
 
             $scope.submitted = true;
-            if ($scope.spp && $scope.spp.days && $scope.spp.days.length === 0) {
+            if ($scope.sppObject && $scope.sppObject.days && $scope.sppObject.days.length === 0) {
 
                 $scope.validDate = false;
                 $scope.errorMsg = 'No data.';

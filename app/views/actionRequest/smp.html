@@ -4,9 +4,9 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
-      <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.firstName}}</div>
+      <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.name | capitalizeAll}}</div>
       <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
-      <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
+      <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{candidate.candidateRef}}</div>
     </div>
     <div class="line-horizontal"></div>
     <div class="row">
@@ -187,10 +187,10 @@
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-    <li><a ng-click="save()">Save</a></li>
-    <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
-    <li><a ng-click="saveAndReject();">Save and Reject</a></li>
-    <li><a ng-click="saveAndRefer();">Save and Refer</a></li>
+    <li><a href="" ng-click="save()">Save</a></li>
+    <li><a href="" ng-click="saveAndApprove()">Save and Approve</a></li>
+    <li><a href="" ng-click="saveAndReject();">Save and Reject</a></li>
+    <li><a href="" ng-click="saveAndRefer();">Save and Refer</a></li>
   </ul>
 </div>
 </div><!-- /modal footer -->
