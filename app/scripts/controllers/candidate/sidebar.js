@@ -97,7 +97,7 @@ angular.module('origApp.controllers')
 
                 templateUrl: 'views/actionRequest/ssp.html',
                 parentScope: $scope,
-                controller: 'sspController',
+                controller: 'sspModalController',
                 size: 'md'
             });
         };

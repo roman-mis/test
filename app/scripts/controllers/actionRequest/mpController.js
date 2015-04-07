@@ -8,18 +8,21 @@ angular.module('origApp.controllers')
     }
     
     $scope.mp.maxPeriods = 39;
-    $scope.mp.days;
 
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
         console.log(data);
         $scope.contactdetail = data.data.object;
-    }, function(err) {});
-        $scope.closeModal = function() {
-        $modalInstance.dismiss('cancel');
+    }, function(err) {
+        console.log(err);
+    });
+
+    $scope.closeModal = function() {
+    $modalInstance.dismiss('cancel');
     };
 
     $scope.$watch('fileupload', function(fileInfo) {
         if (fileInfo) {
+            console.log(fileInfo);
             var fileSize = (fileInfo.size / 1024);
             var picReader = new FileReader();
             picReader.readAsDataURL(fileInfo);
@@ -31,7 +34,7 @@ angular.module('origApp.controllers')
 
             $scope.temp = {
                 logoFileName: fileInfo.name,
-                logoSize: fileSize
+                logoSize: fileSize.toFixed(0) + ' KB'
             };
             console.log($scope.temp);
         }
@@ -48,9 +51,11 @@ angular.module('origApp.controllers')
     $scope.checkDateMp = function() {
         var n = new Date($scope.mp.startDate).valueOf();
         var d = new Date($scope.mp.babyDueDate).valueOf();
-        var i = new Date($scope.mp.intendedStartDate).valueOf();
+        
+        // May Need Some Validation on the Intended Date as well, Remove for now
+        // var i = new Date($scope.mp.intendedStartDate).valueOf();
 
-        if (n <= (d - 9072000000)) {
+        if (n <= (d - 6652800000 )) { // Previously 9072000000 = 15 weeks, Now 6652800000 = 11 weeks
             $scope.validDate = true;
             $scope.errorMsg = null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
@@ -58,8 +63,8 @@ angular.module('origApp.controllers')
             }, function(){});
         } else {
             $scope.validDate = false;
-            if (n > (d - 9072000000)) {
-                $scope.errorMsg = 'Start date should be 15 week before baby birth due.';
+            if (n > (d - 6652800000)) {
+                $scope.errorMsg = 'Start date should be 11 weeks before Baby birth due date.';
             } else {
                 if ($scope.mpForm.start.$error.required || $scope.mpForm.due.$error.required || $scope.mpForm.intend.$error.required) {
                     $scope.errorMsg = null;
@@ -72,11 +77,15 @@ angular.module('origApp.controllers')
     };
 
     $scope.submitInformation = function(val) {
+        console.log($scope.mp);
         if (val === true && $scope.validDate === true && $scope.mp.days.length > 0) {
-            HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function(response) {
+            $scope.mp.smp={};
+            $scope.mp.smp.babyDueDate = $scope.mp.babyDueDate;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function() {
                 $scope.mp = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
+                $modalInstance.dismiss('cancel');
             },function (error) {
                 MsgService.danger(error);
             });
@@ -96,8 +105,8 @@ angular.module('origApp.controllers')
 
     $scope.uploadFile = function() {
         if (!$('#upload_file').val()) {
-            alert('Please select a file first.');
-            return;
+          MsgService.danger('Please select a file first.');
+          return;
         }
         var file = $scope.fileupload;
         var fileName = new Date().getTime().toString() + '_' + file.name;

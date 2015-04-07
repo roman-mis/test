@@ -41,13 +41,21 @@ module.exports=function(dbs){
 		 service.getActionRequestDataById(id)
 				.then(function(actionRequest){
 					if(actionRequest){
-						utils.updateSubModel(actionRequest, details);
+						// console.log('days before update submodel ');
+						// console.log(actionRequest.days);
+						utils.updateSubModel(actionRequest, details,true);
 						if(status!==''){
 							actionRequest.status=status;
 						}
-						
+
+
+						console.log('days after update submodel  ....');
+						console.log(actionRequest.days);
+						actionRequest.days=details.days;
 						Q.nfcall(actionRequest.save.bind(actionRequest))
 						.then(function(){
+							console.log('after save');
+							console.log(actionRequest.days);
 							resolve({result:true, object:actionRequest});
 						},reject);
 					}
@@ -101,7 +109,8 @@ module.exports=function(dbs){
 
 					/*	console.log('----currentRate----');
 						console.log(currentRate);*/
-
+						console.log('user pay frequency is ');
+						console.log(user.worker.payrollTax.payFrequency);
 						return calculatePayPeriods(user,request,options)
 							.then(function(response){
 								console.log('week calculations done');
@@ -199,7 +208,7 @@ module.exports=function(dbs){
 				weeks[i]={'days':[],amount:0,periodStartDate:null,weekNumber:-1,monthNumber:-1};
 				weeks[i].noOfDays=noOfDays;
 
-				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(1).toDate());
+				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(0).toDate());
 				if(payFrequency===enums.payFrequency.Monthly){
 					nextStartDate=nextStartDate.add(1,'months').startOf('month');
 					
@@ -232,19 +241,20 @@ module.exports=function(dbs){
 		var perDayPay=options.perDayPay;
 		var payFrequency=user.worker.payrollTax.payFrequency;
 
-		var q=db.TaxTable.find().gte('startDate',records[0].periodStartDate).lte('startDate',records[records.length-1].periodStartDate);
+		var q=db.TaxTable.find().or([{'startDate':{$gte:records[0].periodStartDate}},{'startDate':{$lte:records[records.length-1].periodStartDate}}]);
 		console.log('query formed');
 		return Q.Promise(function(resolve,reject){
 			return q.exec(function(err,taxTables){
 				console.log('taxTables');
-				console.log(taxTables.length);
+				console.log(taxTables);
 				_.forEach(records,function(week,idx){
 					var taxTable=_.first(_.filter(taxTables,function(tbl){
 						//console.log('comparing dates : ');
 						//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
-						// var tblMomenentDate=moment(tbl);
-						var ret= utils.areDateEqual(week.periodStartDate,tbl.startDate);
-						//console.log(ret);
+						var taxTableDate=moment(tbl.startDate).day(0).toDate();
+						console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableDate);
+						var ret= utils.areDateEqual(week.periodStartDate,taxTableDate);
+						console.log(ret);
 						return ret;
 					}));
 

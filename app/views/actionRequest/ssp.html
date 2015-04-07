@@ -7,21 +7,28 @@
 
     <div class="modal-body">
         <div class="row">
-            <div class="col-xs-6 col-sm-4 form-group control-label">Candidate Name</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label">{{ candidate.firstName }} {{ candidate.lastName }}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">Candidate Name</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">{{ candidate.firstName }} {{
+                candidate.lastName }} {{ssp.worker.name}}</div>
             <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-            <div class="col-xs-6 col-sm-2 form-group control-label">{{contactdetail.candidateRef}}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label" ng-if="!ssp.worker" >{{candidate.candidateRef}}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label"
+                 ng-if="ssp.worker">
+                {{ssp.worker.candidateRef}}</div>
         </div>
         <div class="line-horizontal"></div>
         <div class="row">
             <div class="col-xs-6 col-sm-4 form-group control-label">Date Informed</div>
-            <div class="col-xs-6 col-sm-8 form-group no-padding-left">
+            <div class="col-xs-6 col-sm-4 form-group no-padding-left">
                 <div id="datepickerDate" class="input-group date">
                     <input type="text" ng-model="ssp.dateInformed" name="inform"
                            orig-datepicker  required/>
 
                         <span ng-if="sick.inform.$invalid && submitted">
-                        <p ng-show="sick.inform.$error.required">Please enter informed date.</p>
+                        <p class="alert alert-danger" ng-show="sick.inform.$error.required">Please
+                            enter
+                            informed
+                            date.</p>
                         </span>
                 </div>
             </div>
@@ -33,7 +40,8 @@
                 <div id="datepickerFrom" class="input-group date">
                     <input type="text" name="start" ng-model="ssp.startDate" orig-datepicker required />
                          <span ng-if="sick.start.$invalid && submitted">
-                             <p ng-show="sick.start.$error.required">Please enter date of sick note.</p>
+                             <p ng-show="sick.start.$error.required" class="alert alert-danger">Please enter date of sick
+                                 note.</p>
                          </span>
                 </div>
             </div>
@@ -42,23 +50,25 @@
                 <div id="datepickerTo" class="input-group date">
                     <input type="text" name="end" ng-model="ssp.endDate" orig-datepicker required  />
                             <span ng-if="sick.end.$invalid && submitted">
-                                <p ng-show="sick.end.$error.required">Please enter date of sick end.</p>
+                                <p ng-show="sick.end.$error.required" class="alert alert-danger">Please enter date of sick
+                                    end.</p>
                             </span>
                 </div>
             </div>
         </div>
-        <div class="row ">
-            <div class="col-xs-12 form-group" ng-if='!showMe'>
+        <div class="row " ng-if='!showMe'>
+            <div class="col-xs-12 form-group" >
                 <button class="btn btn-primary form-control" type="button" ng-click="checkDate()">Check if
                     qualifies</button>
             </div>
         </div>
 
         <div class="row ">
-            <div class="col-xs-12 form-group" ng-if="!validDate">
-                {{sspMessage}}
+            <div class="col-xs-12 form-group" ng-if="!validDate" class="alert alert-danger">
+               {{sspMessage}}.
             </div>
         </div>
+
 
         <div class="line-horizontal"></div>
         <div class="row">
@@ -81,13 +91,16 @@
                             <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
 
 
-                                <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a>
-                                <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
+                                <input type="number"  ng-model="s.amount" ng-if='!indexCount'>
+                                &nbsp; <a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;'
+                                        ng-show='!indexCount'>Ok</a>
+                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
                             </td>
                             <td class="text-right">
-                                <a href="" ng-click="indexCount=false;"  class="edit-price"><i
+                                <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i
                                         class="fa fa-edit"></i></a>&nbsp;
-                                <a href="" ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                                <a  href="javascript:void(0)" ng-click='remove($index);' ng-if='!showMe'><i
+                                        class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         </tbody>
@@ -100,7 +113,7 @@
 
     <div id="modal-footer-left" class="modal-footer">
         <div class="row rowFooter">
-            <div class="col-xs-6 col-sm-6">
+            <div class="col-xs-7 col-sm-6">
                 <fieldset class="fieldsetRequestP45">
                     <legend>Upload Sick Note</legend>
                     <div class="row">
@@ -120,13 +133,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-10">
-                            <input type="text" disabled="" ng-model="fileupload.name"
-                                   class="form-control"
-                                   id="uploadFile">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="col-xs-4 col-sm-3 label-control">Name</div>
+                                <div id="uploadFile" class="col-xs-8 col-sm-9 label-control file-details">
+                                    <span>{{ fileupload.name}}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xs-2 control-label">
-                            <i class="fa fa-check"></i>
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="col-xs-4 col-sm-3 label-control">Size</div>
+                                <div id="filesize" class="col-xs-8 col-sm-9 label-control file-details">
+                                   <span>{{fileupload.size / 1024 | number:2}} KB</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -141,10 +162,10 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a  href="" ng-click="save()">Save</a></li>
-                        <li><a  href="" ng-click="saveAndApprove()">Save and Approve</a></li>
-                        <li><a  href="" ng-click="saveAndReject();">Save and Reject</a></li>
-                        <li><a  href="" ng-click="saveAndRefer();">Save and Refer</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('save')">Save</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('saveAndApprove')">Save and Approve</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('saveAndReject');">Save and Reject</a></li>
+                        <li><a   href="javascript:void(0)" ng-click="save('saveAndRefer');">Save and Refer</a></li>
                     </ul>
                 </div>
                 <input type="submit" name="submit" class="btn btn-primary" ng-if="!showMe" value="Submit">
