@@ -5,13 +5,17 @@ angular.module('origApp.controllers')
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
         $scope.showMe = parentScope.showMe;
+        if(!$scope.ssp){
+
+            $scope.ssp={};
+        };
 
         function getCandidateContactDetails() {
-            HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-                $scope.contactdetail = data.data.object;
-            }, function (err) {
-                console.log(err);
-            });
+            console.log($scope.candidateId);
+             HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+                console.log(data);
+                    $scope.candidateInfo = data.data.object;
+                }, function(err) {});
         }
 
         getCandidateContactDetails();
@@ -80,13 +84,20 @@ angular.module('origApp.controllers')
                 $scope.validDate = false;
 
                 if (n < sickDayTo) {
+                    console.log('1');
                     $scope.sspMessage = 'Informed date is less than ssp start date';
                 } else if (n > validTill) {
+                    console.log('2');
                     $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
                 } else if ((sickDayTo - sickDayFrom) < 345600000) {
+                    console.log('3');
                     $scope.sspMessage = 'Date of sick note from and Date of sick note to should be greater than or equal to 4 days.';
-                } else if ($scope.sick.inform.$error.required && $scope.sick.start.$error.required && $scope.sick.end.$error.required) {
+                } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
+                    console.log('4');
                     $scope.submitted = true;
+                }else{
+
+                    console.log('5');
                 }
             }
         };
@@ -114,8 +125,9 @@ angular.module('origApp.controllers')
         });
 
         $scope.upload = function () {
+            console.log($scope.fileupload);
             if (!$scope.fileupload) {
-                alert('Please select a file first.');
+                MsgService.danger('Please select a file first.');
                 return;
             }
             var file = $scope.fileupload;
@@ -140,7 +152,8 @@ angular.module('origApp.controllers')
                 }).success(function (l) {
 
                     //    console.log(response);
-                    $scope.ssp.imageUrl = response.data.url;
+                    $scope.ssp.imageUrl = $scope.temp.logoFileName;
+                 //   $scope.ssp.imageUrl = response.data.url;
                     $scope.isLogoUploading = false;
                 });
 

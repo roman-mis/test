@@ -13,9 +13,9 @@ angular.module('origApp.controllers')
         }
 
         function getCandidateDetails(){
-            HttpResource.model('candidates/' + $scope.candidateId + '/contactdetail').customGet('', {}, function(data) {
-                $scope.contactdetail = data.data.object;
-            }, function (err) {});
+            HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+                    $scope.candidateInfo = data.data.object;
+                }, function(err) {});
         }
 
         getCandidateDetails();
@@ -85,7 +85,7 @@ angular.module('origApp.controllers')
                     $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
                 } else if ((sickDayTo - sickDayFrom) < 345600000) {
                     $scope.sspMessage = 'Date of sick note from and Date of sick note to should be greater than or equal to 4 days.';
-                } else if ($scope.sick.inform.$error.required && $scope.sick.start.$error.required && $scope.sick.end.$error.required) {
+                } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
                     $scope.submitted = true;
                 }
             }
@@ -144,7 +144,8 @@ angular.module('origApp.controllers')
                 }).success(function (l) {
 
                     //    console.log(response);
-                    $scope.ssp.imageUrl = response.data.url;
+
+                     $scope.ssp.imageUrl = $scope.temp.logoFileName;
                     $scope.isLogoUploading = false;
                 });
 

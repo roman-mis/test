@@ -6,7 +6,7 @@ angular.module('origApp.controllers')
     if(!$scope.mp){
         $scope.mp = {};
     }
-    
+
     $scope.mp.maxPeriods = 39;
 
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
@@ -51,11 +51,9 @@ angular.module('origApp.controllers')
     $scope.checkDateMp = function() {
         var n = new Date($scope.mp.startDate).valueOf();
         var d = new Date($scope.mp.babyDueDate).valueOf();
-        
-        // May Need Some Validation on the Intended Date as well, Remove for now
-        // var i = new Date($scope.mp.intendedStartDate).valueOf();
 
-        if (n <= (d - 6652800000 )) { // Previously 9072000000 = 15 weeks, Now 6652800000 = 11 weeks
+
+        if (n >= (d - 6652800000 )) { // employee can take earliest leave is 11 weeks before the expected child birth due date.
             $scope.validDate = true;
             $scope.errorMsg = null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
@@ -63,8 +61,8 @@ angular.module('origApp.controllers')
             }, function(){});
         } else {
             $scope.validDate = false;
-            if (n > (d - 6652800000)) {
-                $scope.errorMsg = 'Start date should be 11 weeks before Baby birth due date.';
+            if (n < (d - 6652800000)) {
+                $scope.errorMsg = 'The earliest leave can be taken is 11 weeks before the expected week of childbirth.';
             } else {
                 if ($scope.mpForm.start.$error.required || $scope.mpForm.due.$error.required || $scope.mpForm.intend.$error.required) {
                     $scope.errorMsg = null;
@@ -127,7 +125,7 @@ angular.module('origApp.controllers')
                     'x-amz-acl': 'public-read'
                 }
             }).success(function() {
-                $scope.mp.imageUrl = response.data.url;
+                 $scope.mp.imageUrl = $scope.temp.logoFileName;
                 $scope.isLogoUploading = false;
             });
         });

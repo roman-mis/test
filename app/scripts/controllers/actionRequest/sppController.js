@@ -79,7 +79,7 @@ angular.module('origApp.controllers')
     $scope.uploadCompanyLogo = function() {
 
         if (!$('#upload_company_logo').val()) {
-            alert('Please select a file first.');
+            MsgService.danger('Please select a file first.');
             return;
         }
         var file = $scope.fileupload;
@@ -122,6 +122,7 @@ angular.module('origApp.controllers')
                 $scope.sppObject.days = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
+                $scope.closeModal();
             },function (error) {
                     MsgService.danger(error);
                 });
@@ -142,7 +143,7 @@ angular.module('origApp.controllers')
     };
     $scope.save = function () {
             HttpResource.model('actionrequests').create($scope.sppObject)
-                .patch($scope.id).then(function () {
+                .patch($scope.sppObject.id).then(function () {
                     MsgService.success('Successfully saved.');
                     $scope.closeModal();
                 });

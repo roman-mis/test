@@ -54,11 +54,9 @@
                             ng-click="checkDateMp()">Calculate</button>
 
                 </div>
-                <div class="col-xs-12 col-sm-12 form-group no-padding-left">
+                <div ng-if="!validDate && errorMsg" class="col-xs-12 col-sm-12 form-group no-padding-left alert alert-danger">
+                 {{errorMsg}}
 
-                    <div ng-if="!validDate">
-                        {{errorMsg}}
-                    </div>
                 </div>
 
             </div>
@@ -130,15 +128,15 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <p>
-                                    <div class="col-xs-4 col-sm-3 label-control text-right">Name :</div>
-                                    <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName}}</div>
+                                    <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control text-right">Name :</div>
+                                    <div ng-if="temp.logoFileName" class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName}}</div>
                                     </p>
                                 </div>
                             </div>
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <div class="col-xs-4 col-sm-3 label-control text-right">Size :</div>
-                                    <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize}}</div>
+                                    <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control text-right">Size :</div>
+                                    <div ng-if="temp.logoSize" class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize | number:2 }}</div>
                                 </div>
                             </div>
                         </div>

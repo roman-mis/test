@@ -2,7 +2,6 @@
         <div class="modal-header">
                     <h4 class="modal-title">Request Statutory Paternity Pay</h4>
         </div><!-- /modal-header -->
-{{sppObject}}
         <div class="modal-body">
                     <div class="row">
                          <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
@@ -38,13 +37,16 @@
                                         <td ng-if="s.monthNumber <=0 || !s.monthNumber">
                                             Week {{s.weekNumber}}
                                         </td>
-
-                                        <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount;"><p ng-if='indexCount'>{{s.amount | number : 2}}</p>
+                                        <td></td>
+                                        <td></td>
+                                        <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount;"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
 
                                             <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a> <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a></td>
+
+
                                         <td>
                                             <a ng-click="indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
-                                            <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                                            <a ng-click='remove($index);' ><i class="fa fa-trash"></i></a>
                                         </td>
 
                                     </tr>
@@ -60,18 +62,18 @@
                         <div class="col-xs-6 col-sm-7">
                             <fieldset class="fieldsetSPP">
                                 <legend>Upload certificate</legend>
-                                <div class="row" style="margin-top: 38px;">
-                                  <div class="col-xs-5 col-sm-4">
+                                <div class="row">
+                                  <div class="col-xs-12 col-sm-6 form-group">
                                       <div class="fileUpload btn btn-primary form-control">
                                           <span onclick="$('#upload_company_logo').click();">Browse</span>
                                           <input file-model="fileupload" type="file"
-                                                 id="upload_company_logo" name="companyLogo" style="display: none;" />
+                                                 id="upload_company_logo" class="upload" />
                                       </div>
                                   </div>
 
 
-                                  <div class="col-xs-5 col-sm-6 no-padding">
-                                      <button type="button" class="btn btn-primary form-control img-details"
+                                  <div class="col-xs-12 col-sm-6 form-group">
+                                      <button type="button" class="btn btn-primary form-control"
                                               ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
                                           <span ng-show="!isLogoUploading" >Upload</span>
                                           <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
@@ -81,14 +83,14 @@
                               <div class="row">
                                   <div class="col-xs-12">
                                       <div class="form-group">
-                                          <div class="col-xs-4 col-sm-3 label-control">Name</div>
-                                          <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName}}</div>
+                                          <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
+                                          <div ng-if="temp.logoFileName" class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName | limitTo:17}}...</div>
                                       </div>
                                   </div>
                                   <div class="col-xs-12">
                                       <div class="form-group">
-                                          <div class="col-xs-4 col-sm-3 label-control">Size</div>
-                                          <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize}}</div>
+                                          <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control">Size</div>
+                                          <div ng-if="temp.logoSize" class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize | number:2}} KB</div>
                                       </div>
                                   </div>
                               </div>

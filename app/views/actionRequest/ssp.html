@@ -8,10 +8,9 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-xs-6 col-sm-3 form-group control-label">Candidate Name</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label">{{ candidate.firstName }} {{
-                candidate.lastName }} {{ssp.worker.name}}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label">{{candidateInfo.firstName}}  {{candidateInfo.lastName}}</div>
             <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label" ng-if="!ssp.worker" >{{candidate.candidateRef}}</div>
+            <div class="col-xs-6 col-sm-3 form-group control-label" ng-if="!ssp.worker" >{{candidateInfo.candidateRef}}</div>
             <div class="col-xs-6 col-sm-3 form-group control-label"
                  ng-if="ssp.worker">
                 {{ssp.worker.candidateRef}}</div>
@@ -63,17 +62,17 @@
             </div>
         </div>
 
-        <div class="row ">
+        <div class="row " ng-if="!validDate && sspMessage">
             <div class="col-xs-12 form-group" ng-if="!validDate">
-                {{sspMessage}}
+                <p class="alert alert-danger" >{{sspMessage}}</p>
             </div>
         </div>
 
 
         <div class="line-horizontal"></div>
         <div class="row">
-            <div class="col-xs-12" ng-if="ssp.days">
-                <p>&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
+            <div class="col-xs-12" ng-if="ssp.days && !showMe">
+                <p class="alert alert-success">&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
             </div>
             <div class="col-xs-12">
                 <div class="wrapTable-scroll">
@@ -99,7 +98,7 @@
                             <td class="text-right">
                                 <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i
                                         class="fa fa-edit"></i></a>&nbsp;
-                                <a  href="javascript:void(0)" ng-click='remove($index);' ng-if='!showMe'><i
+                                <a  href="javascript:void(0)" ng-click='remove($index);' ><i
                                         class="fa fa-trash"></i></a>
                             </td>
                         </tr>
@@ -135,17 +134,17 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <div class="col-xs-4 col-sm-3 label-control">Name</div>
+                                <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
                                 <div id="uploadFile" class="col-xs-8 col-sm-9 label-control file-details">
-                                    <span>{{ fileupload.name}}</span>
+                                    <span ng-if="temp.logoFileName">{{temp.logoFileName | limitTo:17}}...</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <div class="col-xs-4 col-sm-3 label-control">Size</div>
+                                <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control">Size:</div>
                                 <div id="filesize" class="col-xs-8 col-sm-9 label-control file-details">
-                                   <span>{{fileupload.size / 1024 | number:2}} KB</span>
+                                   <span ng-if="temp.logoSize">{{temp.logoSize | number:2}} KB</span>
                                 </div>
                             </div>
                         </div>

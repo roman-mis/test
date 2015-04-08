@@ -106,7 +106,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12" ng-if="temp.logoFileName || temp.logoSize">
       <div class="form-group">
         <div class="col-xs-12 label-control">
           <p>File details</p>
@@ -115,14 +115,14 @@
     </div>
     <div class="col-xs-12">
       <div class="form-group">
-        <div class="col-xs-4 col-sm-3 label-control">Name</div>
-        <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile"></div>
+        <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
+        <div ng-if="temp.logoFileName" class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName | limitTo:17}}...</div>
       </div>
     </div>
     <div class="col-xs-12">
       <div class="form-group">
-        <div class="col-xs-4 col-sm-3 label-control">Size</div>
-        <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize"></div>
+        <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control">Size:</div>
+        <div ng-if="temp.logoSize" class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize | number:2}} KB</div>
       </div>
     </div>
   </div>

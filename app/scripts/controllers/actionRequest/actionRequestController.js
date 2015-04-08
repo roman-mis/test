@@ -19,22 +19,22 @@ angular.module('origApp.controllers')
         }
 
 
-        $scope.callModal = function (id, type, createdBy) {
+        $scope.callModal = function (id, template) {
 
             HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
                 var controller;
                 var parentScope = {};
                 parentScope.candidate = {};
-                // parentScope.candidate.firstName = createdBy.name;
-                // parentScope.candidate.id=createdBy.id;
                 parentScope.candidateId = data.data.object.worker.id;
                 parentScope.candidate = data.data.object.worker;
-                console.log(parentScope);
-                switch (type) {
+                console.log(data);
+                switch (template) {
                 case 'ssp':
                     parentScope.showMe = true;
                     $scope.ssp = data.data.object;
                     controller = 'sspModalController';
+                    $scope.temp={};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
                     break;
                 case 'smp':
                     controller = 'smpController';
@@ -50,20 +50,23 @@ angular.module('origApp.controllers')
                     break;
                 case 'spp':
                     controller='sppController';
-                    type='sppModal';
-                    $scope.id=data.data.object.id;
+                    template='sppModal';
                     $scope.sppObject={};
-                    console.log(data.data.object.spp);
-                    $scope.sppObject.spp=data.data.object.spp;
-                    $scope.sppObject.days=data.data.object.days;
-                    $scope.sppObject.imageUrl=data.data.object.imageUrl;
+                    $scope.sppObject=data.data.object;
                     $scope.temp={};
                     $scope.temp.logoFileName = data.data.object.imageUrl;
                     break;
+                case 'holidaypay':
+                    controller='holidayPaymentController',
+                    template='holidayPayment';
+                    $scope.showMe=true;
+                    $scope.hpObject={};
+                    $scope.hpObject=data.data.object;
+
 
                 }
                 var modalInstance = ModalService.open({
-                    templateUrl: 'views/actionRequest/' + type + '.html',
+                    templateUrl: 'views/actionRequest/' + template + '.html',
                     parentScope: parentScope,
                     scope: $scope,
                     controller: controller,
