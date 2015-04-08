@@ -4,7 +4,7 @@ angular.module('origApp.controllers')
 
 .controller('actionRequestController', function($scope, HttpResource, ModalService) {
 
-       /* $scope.$scope = $scope; Dont know why this is being used ?*/
+        $scope.$scope = $scope;
 
         $scope.status = {
             isopen: false
@@ -63,7 +63,7 @@ angular.module('origApp.controllers')
 
         $scope.callModal = function (id, template) {
 
-        HttpResource.model('actionrequests/' + id + '').customGet('', {}, function(data) {
+        HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
             var controller;
             var parentScope = {};
             parentScope.candidate = {};
