@@ -1,39 +1,37 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('sspModalController', function ($scope, parentScope, HttpResource, $http, MsgService, $modalInstance) {
+    .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance) {
 
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
         $scope.showMe = parentScope.showMe;
-        if(!$scope.ssp){
+        if (!$scope.ssp) {
 
-            $scope.ssp={};
+            $scope.ssp = {};
         };
         $scope.validDate = true;
 
         function getCandidateContactDetails() {
-            console.log($scope.candidateId);
-             HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
-                console.log(data);
-                    $scope.candidateInfo = data.data.object;
-                }, function(err) {});
+            HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
+                $scope.candidateInfo = data.data.object;
+            }, function(err) {});
         }
 
         getCandidateContactDetails();
 
 
-        $scope.submitInformation = function (val) {
+        $scope.submitInformation = function(val) {
             if (val === true && $scope.validDate === true && $scope.ssp.days.length > 0) {
                 $scope.submitted = false;
                 HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').
-                    create($scope.ssp).post().then(function (response) {
-                        $scope.ssp = {};
-                        $scope.temp = {};
-                        MsgService.success('Successfully submitted.');
-                        $scope.closeModal();
-                    }, function (error) {
-                        MsgService.danger(error);
-                    });
+                create($scope.ssp).post().then(function(response) {
+                    $scope.ssp = {};
+                    $scope.temp = {};
+                    MsgService.success('Successfully submitted.');
+                    $scope.closeModal();
+                }, function(error) {
+                    MsgService.danger(error);
+                });
             } else {
 
                 $scope.submitted = true;
@@ -45,19 +43,19 @@ angular.module('origApp.controllers')
             }
         };
 
-        $scope.cancel = function (i, v) {
+        $scope.cancel = function(i, v) {
             $scope.ssp.days[i].amount = v;
         };
 
-        $scope.remove = function (i) {
+        $scope.remove = function(i) {
             $scope.ssp.days.splice(i, 1);
         };
 
-        $scope.changeAmount = function (i) {
+        $scope.changeAmount = function(i) {
             i = false;
         };
 
-        $scope.checkDate = function () {
+        $scope.checkDate = function() {
 
             if (!$scope.ssp) {
                 $scope.ssp = {};
@@ -71,16 +69,19 @@ angular.module('origApp.controllers')
 
 
             if (n >= sickDayTo && n <= validTill && (sickDayTo - sickDayFrom >= 345600000)) {
-                console.log($scope.candidateId);
 
                 $scope.validDate = true;
                 $scope.sspMessage = null;
-                HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {'dateInformed':$scope.ssp.dateInformed,'startDate':$scope.ssp.startDate,'endDate':$scope.ssp.endDate,'maxPeriods':29}, function(data) {
+                HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {
+                    'dateInformed': $scope.ssp.dateInformed,
+                    'startDate': $scope.ssp.startDate,
+                    'endDate': $scope.ssp.endDate,
+                    'maxPeriods': 29
+                }, function(data) {
 
                     $scope.ssp.days = data.data.objects;
 
-                }, function (err) {
-                    console.log(err);
+                }, function(err) {
                 });
 
 
@@ -88,25 +89,20 @@ angular.module('origApp.controllers')
                 $scope.validDate = false;
 
                 if (n < sickDayTo) {
-                    console.log('1');
                     $scope.sspMessage = 'Informed date is less than ssp start date';
                 } else if (n > validTill) {
-                    console.log('2');
                     $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
                 } else if ((sickDayTo - sickDayFrom) < 345600000) {
-                    console.log('3');
                     $scope.sspMessage = 'Date of sick note from and Date of sick note to should be greater than or equal to 4 days.';
                 } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
-                    console.log('4');
                     $scope.submitted = true;
-                }else{
+                } else {
 
-                    console.log('5');
                 }
             }
         };
 
-        $scope.$watch('fileupload', function (fileInfo) {
+        $scope.$watch('fileupload', function(fileInfo) {
 
             if (fileInfo) {
 
@@ -114,7 +110,7 @@ angular.module('origApp.controllers')
                 var picReader = new FileReader();
                 picReader.readAsDataURL(fileInfo);
 
-                picReader.addEventListener('load', function (event) {
+                picReader.addEventListener('load', function(event) {
                     $scope.temp.dataUrl = event.target.result;
                     $scope.$digest();
                 });
@@ -128,8 +124,7 @@ angular.module('origApp.controllers')
 
         });
 
-        $scope.upload = function () {
-            console.log($scope.fileupload);
+        $scope.upload = function() {
             if (!$scope.fileupload) {
                 MsgService.danger('Please select a file first.');
                 return;
@@ -142,7 +137,7 @@ angular.module('origApp.controllers')
             HttpResource.model('documents/actionrequest').customGet('signedUrl', {
                 mimeType: mimeType,
                 fileName: fileName
-            }, function (response) {
+            }, function(response) {
                 //  console.log(response);
                 $scope.signedUrl = response.data.signedRequest;
                 $http({
@@ -153,11 +148,11 @@ angular.module('origApp.controllers')
                         'Content-Type': mimeType,
                         'x-amz-acl': 'public-read'
                     }
-                }).success(function (l) {
+                }).success(function(l) {
 
                     //    console.log(response);
                     $scope.ssp.imageUrl = $scope.temp.logoFileName;
-                 //   $scope.ssp.imageUrl = response.data.url;
+                    //   $scope.ssp.imageUrl = response.data.url;
                     $scope.isLogoUploading = false;
                 });
 
@@ -165,50 +160,50 @@ angular.module('origApp.controllers')
             });
         };
 
-        $scope.save = function (actionName) {
+        $scope.save = function(actionName) {
             var data = {
-                dateInformed : $scope.ssp.dateInformed,
-                startDate : $scope.ssp.startDate,
-                endDate : $scope.ssp.endDate,
-                days : $scope.ssp.days
+                dateInformed: $scope.ssp.dateInformed,
+                startDate: $scope.ssp.startDate,
+                endDate: $scope.ssp.endDate,
+                days: $scope.ssp.days
             };
 
             var param, successMsg;
 
             switch (actionName) {
-            case 'saveAndApprove':
-                param = 'approve';
-                successMsg = 'Sick Pay has been Approved.';
-                break;
-            case 'saveAndReject':
-                param = 'reject';
-                successMsg = 'Sick Pay has been Rejected.';
-                break;
-            case 'saveAndRefer':
-                param = 'refer';
-                successMsg = 'Sick Pay has been Rffered.';
-                break;
+                case 'saveAndApprove':
+                    param = 'approve';
+                    successMsg = 'Sick Pay has been Approved.';
+                    break;
+                case 'saveAndReject':
+                    param = 'reject';
+                    successMsg = 'Sick Pay has been Rejected.';
+                    break;
+                case 'saveAndRefer':
+                    param = 'refer';
+                    successMsg = 'Sick Pay has been Rffered.';
+                    break;
             }
 
             if ('save' === actionName) {
                 HttpResource.model('actionrequests').create(data).
-                    patch($scope.ssp.id).then(function () {
-                        MsgService.success('Successfully saved.');
-                        $scope.closeModal();
-                    });
+                patch($scope.ssp.id).then(function() {
+                    MsgService.success('Successfully saved.');
+                    $scope.closeModal();
+                });
             } else {
                 HttpResource.model('actionrequests/' + $scope.ssp.id).create(data)
-                    .patch(param).then(function () {
+                    .patch(param).then(function() {
                         MsgService.success(successMsg);
                         $scope.closeModal();
-                    }, function (err) {
+                    }, function(err) {
                         MsgService.danger(err);
                     });
             }
 
         };
 
-        $scope.closeModal = function () {
+        $scope.closeModal = function() {
             $modalInstance.close();
         };
 

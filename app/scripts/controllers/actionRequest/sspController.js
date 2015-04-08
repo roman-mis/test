@@ -65,7 +65,6 @@ angular.module('origApp.controllers')
 
 
             if (n >= sickDayTo && n <= validTill && (sickDayTo - sickDayFrom >= 345600000)) {
-                console.log($scope.candidateId);
 
                 $scope.validDate = true;
                 $scope.sspMessage = null;
@@ -119,7 +118,7 @@ angular.module('origApp.controllers')
 
         $scope.upload = function () {
             if (!$scope.fileupload) {
-                alert('Please select a file first.');
+                MsgService.success('Please select a file first.');
                 return;
             }
             var file = $scope.fileupload;
@@ -131,7 +130,7 @@ angular.module('origApp.controllers')
                 mimeType: mimeType,
                 fileName: fileName
             }, function (response) {
-                //  console.log(response);
+
                 $scope.signedUrl = response.data.signedRequest;
                 $http({
                     method: 'PUT',
@@ -143,29 +142,12 @@ angular.module('origApp.controllers')
                     }
                 }).success(function (l) {
 
-                    //    console.log(response);
-
                      $scope.ssp.imageUrl = $scope.temp.logoFileName;
-                    $scope.isLogoUploading = false;
+                     $scope.isLogoUploading = false;
                 });
 
 
             });
         };
-
-        /*   $scope.$watch('ssp.inform',function(newValue,oldValue){
-
-         $scope.checkDate();
-
-         });
-         $scope.$watch('ssp.sickDateFrom',function(){
-
-         $scope.checkDate();
-         });
-         $scope.$watch('ssp.sickDateTo',function(){
-         $scope.checkDate();
-
-         })   */
-
 
     });

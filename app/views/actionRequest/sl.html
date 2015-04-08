@@ -1,4 +1,4 @@
-<form nam="slFrom" novalidate ng-submit="submitAction(sl)">
+<form nam="slFrom" novalidate ng-submit="submitAction()">
 <div class="modal-header">
     <h4 class="modal-title">Student Loan Request</h4>
 </div><!-- /modal-header -->
@@ -26,7 +26,7 @@
                     </td>
                     <td style="padding-left: 10px;">
                         <label class="switch_wrap" for="field">
-                            <input id="field" type="checkbox" ng-model="sl.haveLoan" />
+                            <input id="field" type="checkbox" ng-model="studentLoan.haveLoan" />
                                 <div class="switch">
                                     <span class="bullet"></span>
                                 </div>
@@ -42,7 +42,7 @@
                     </td>
                     <td style="padding-left: 10px;">
                         <label class="switch_wrap" for="field1">
-                            <input id="field1" type="checkbox" ng-model="sl.payDirectly" />
+                            <input id="field1" type="checkbox" ng-model="studentLoan.payDirectly" />
                                 <div class="switch">
                                     <span class="bullet"></span>
                                 </div>

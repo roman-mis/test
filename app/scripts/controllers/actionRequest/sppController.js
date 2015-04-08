@@ -2,18 +2,17 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance,MsgService) {
+.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance, MsgService) {
 
     $scope.candidateId = parentScope.candidateId;
-    if(!$scope.sppObject){
-    $scope.sppObject={}
-    $scope.sppObject.spp = {};
-     }
- //   $scope.spp.startDate=null;
+    if (!$scope.sppObject) {
+        $scope.sppObject = {}
+        $scope.sppObject.spp = {};
+    }
+    //   $scope.spp.startDate=null;
 
     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
         $scope.relationships = data.data;
-        console.log('getting relationships:' + $scope.relationships);
     }, function(err) {});
 
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
@@ -26,9 +25,9 @@ angular.module('origApp.controllers')
 
     };
 
-    $scope.cancel=function(i,v){
+    $scope.cancel = function(i, v) {
 
-        $scope.sppObject.days[i].amount=v;
+        $scope.sppObject.days[i].amount = v;
     };
     $scope.cancelAmountFromSppModa
 
@@ -38,7 +37,6 @@ angular.module('origApp.controllers')
             $scope.validDate = true;
             $scope.errorMsg = null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.sppObject, function(data) {
-                console.log(data);
                 $scope.sppObject.days = data.data.objects;
 
 
@@ -71,7 +69,6 @@ angular.module('origApp.controllers')
                 logoFileName: fileInfo.name,
                 logoSize: fileSize
             };
-            console.log($scope.temp);
         }
 
     });
@@ -84,14 +81,12 @@ angular.module('origApp.controllers')
         }
         var file = $scope.fileupload;
         var fileName = new Date().getTime().toString() + '_' + file.name;
-        console.log(fileName);
         var mimeType = file.type || 'text/plain';
         $scope.isLogoUploading = true;
         HttpResource.model('documents/actionrequest').customGet('signedUrl', {
             mimeType: mimeType,
             fileName: fileName
         }, function(response) {
-            //  console.log(response);
             $scope.signedUrl = response.data.signedRequest;
             $http({
                 method: 'PUT',
@@ -103,7 +98,6 @@ angular.module('origApp.controllers')
                 }
             }).success(function(l) {
 
-                //    console.log(response);
 
                 $scope.sppObject.imageUrl = $scope.temp.logoFileName;
                 $scope.isLogoUploading = false;
@@ -115,17 +109,17 @@ angular.module('origApp.controllers')
     $scope.submitInformation = function(val) {
 
         if (val === true && $scope.validDate === true && $scope.sppObject.days.length > 0) {
-            $scope.submitted=false;
+            $scope.submitted = false;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.sppObject).post().then(function(response) {
 
-                $scope.sppObject.spp={};
+                $scope.sppObject.spp = {};
                 $scope.sppObject.days = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
                 $scope.closeModal();
-            },function (error) {
-                    MsgService.danger(error);
-                });
+            }, function(error) {
+                MsgService.danger(error);
+            });
         } else {
 
             $scope.submitted = true;
@@ -141,11 +135,11 @@ angular.module('origApp.controllers')
 
         $modalInstance.dismiss('cancel');
     };
-    $scope.save = function () {
-            HttpResource.model('actionrequests').create($scope.sppObject)
-                .patch($scope.sppObject.id).then(function () {
-                    MsgService.success('Successfully saved.');
-                    $scope.closeModal();
-                });
-        };
+    $scope.save = function() {
+        HttpResource.model('actionrequests').create($scope.sppObject)
+            .patch($scope.sppObject.id).then(function() {
+                MsgService.success('Successfully saved.');
+                $scope.closeModal();
+            });
+    };
 });

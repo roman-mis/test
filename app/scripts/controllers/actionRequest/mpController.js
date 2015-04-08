@@ -3,26 +3,22 @@ angular.module('origApp.controllers')
 
 .controller('mpController', function($scope, parentScope, HttpResource, $http, $modalInstance, MsgService) {
     $scope.candidateId = parentScope.candidateId;
-    if(!$scope.mp){
+    if (!$scope.mp) {
         $scope.mp = {};
     }
 
     $scope.mp.maxPeriods = 39;
 
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
-        console.log(data);
         $scope.contactdetail = data.data.object;
-    }, function(err) {
-        console.log(err);
-    });
+    }, function(err) {});
 
     $scope.closeModal = function() {
-    $modalInstance.dismiss('cancel');
+        $modalInstance.dismiss('cancel');
     };
 
     $scope.$watch('fileupload', function(fileInfo) {
         if (fileInfo) {
-            console.log(fileInfo);
             var fileSize = (fileInfo.size / 1024);
             var picReader = new FileReader();
             picReader.readAsDataURL(fileInfo);
@@ -36,7 +32,6 @@ angular.module('origApp.controllers')
                 logoFileName: fileInfo.name,
                 logoSize: fileSize.toFixed(0) + ' KB'
             };
-            console.log($scope.temp);
         }
 
     });
@@ -44,8 +39,8 @@ angular.module('origApp.controllers')
     $scope.closeModal = function() {
         $modalInstance.dismiss('cancel');
     };
-    $scope.cancel=function(i,v){
-        $scope.mp.days[i].amount=v;
+    $scope.cancel = function(i, v) {
+        $scope.mp.days[i].amount = v;
     };
 
     $scope.checkDateMp = function() {
@@ -53,12 +48,12 @@ angular.module('origApp.controllers')
         var d = new Date($scope.mp.babyDueDate).valueOf();
 
 
-        if (n >= (d - 6652800000 )) { // employee can take earliest leave is 11 weeks before the expected child birth due date.
+        if (n >= (d - 6652800000)) { // employee can take earliest leave is 11 weeks before the expected child birth due date.
             $scope.validDate = true;
             $scope.errorMsg = null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
                 $scope.mp.days = data.data.objects;
-            }, function(){});
+            }, function() {});
         } else {
             $scope.validDate = false;
             if (n < (d - 6652800000)) {
@@ -75,19 +70,18 @@ angular.module('origApp.controllers')
     };
 
     $scope.submitInformation = function(val) {
-        console.log($scope.mp);
         if (val === true && $scope.validDate === true && $scope.mp.days.length > 0) {
-            $scope.mp.smp={};
+            $scope.mp.smp = {};
             $scope.mp.smp.babyDueDate = $scope.mp.babyDueDate;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function() {
                 $scope.mp = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
                 $modalInstance.dismiss('cancel');
-            },function (error) {
+            }, function(error) {
                 MsgService.danger(error);
             });
-            $scope.submitted=true;
+            $scope.submitted = true;
 
         } else {
             $scope.submitted = true;
@@ -103,12 +97,11 @@ angular.module('origApp.controllers')
 
     $scope.uploadFile = function() {
         if (!$('#upload_file').val()) {
-          MsgService.danger('Please select a file first.');
-          return;
+            MsgService.danger('Please select a file first.');
+            return;
         }
         var file = $scope.fileupload;
         var fileName = new Date().getTime().toString() + '_' + file.name;
-        console.log(fileName);
         var mimeType = file.type || 'text/plain';
         $scope.isLogoUploading = true;
         HttpResource.model('documents/actionrequest').customGet('signedUrl', {
@@ -125,7 +118,7 @@ angular.module('origApp.controllers')
                     'x-amz-acl': 'public-read'
                 }
             }).success(function() {
-                 $scope.mp.imageUrl = $scope.temp.logoFileName;
+                $scope.mp.imageUrl = $scope.temp.logoFileName;
                 $scope.isLogoUploading = false;
             });
         });
