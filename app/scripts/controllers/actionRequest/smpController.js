@@ -28,8 +28,8 @@ angular.module('origApp.controllers')
 
                 $scope.temp = {
                     logoFileName: fileInfo.name,
-                    logoSize: fileSize.toFixed(0) + ' KB'
-                };
+                    logoSize: fileSize
+                 };
             }
 
         });
@@ -59,7 +59,8 @@ angular.module('origApp.controllers')
                         'x-amz-acl': 'public-read'
                     }
                 }).success(function() {
-                    $scope.smpObject.imageUrl = response.data.url;
+
+                    $scope.smpObject.imageUrl = $scope.temp.logoFileName;
                     $scope.isLogoUploading = false;
                 });
 
@@ -78,6 +79,7 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
                 .patch('approve').then(function() {
                     MsgService.success('Successfully saved and approved.');
+                    $scope.closeModal();
 
                 });
 
@@ -87,6 +89,7 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
                 .patch('reject').then(function() {
                     MsgService.success('Successfully saved and approved.');
+                    $scope.closeModal();
 
                 });
 
@@ -96,6 +99,7 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
                 .patch('refer').then(function() {
                     MsgService.success('Successfully saved and approved.');
+                    $scope.closeModal();
 
                 });
 

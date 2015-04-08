@@ -60,29 +60,33 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="wrapTable-scroll">
-                <table class="table table-striped table-paternityPay">
-                    <tbody>
-                    <tr ng-repeat="s in sppObject.days">
-                        <td ng-if="s.monthNumber >0">
-                            Month {{s.monthNumber}}
-                        </td>
-                        <td ng-if="s.monthNumber <=0 || !s.monthNumber">
-                            Week {{s.weekNumber}}
-                        </td>
+                <table class="table table-striped">
+                        <tbody>
+                        <tr ng-repeat="s in sppObject.days">
+                            <td ng-if="s.monthNumber >0">
 
-                        <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount;"><p ng-if='indexCount'>{{s.amount | number : 2}}</p>
+                                Month {{s.monthNumber}}
+                            </td>
+                            <td ng-if="s.monthNumber <=0 || !s.monthNumber">
+                                Week {{s.weekNumber}}
+                            </td>
 
-                            <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a> <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a></td>
-                        <td>
-                            <a ng-click="indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
-                            <a ng-click='remove($index);'><i class="fa fa-trash"></i></a>
-                        </td>
+                            <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
 
 
-                    </tr>
-
-                    </tbody>
+                                <input type="number"  ng-model="s.amount" ng-if='!indexCount'>
+                                &nbsp; <a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;'
+                                        ng-show='!indexCount'>Ok</a>
+                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
+                            </td>
+                            <td class="text-right">
+                                <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i class="fa fa-edit"></i></a>&nbsp;
+                                <a  href="javascript:void(0)" ng-click='remove($index);' ><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
                 </table>
+
             </div>
         </div>
     </div>

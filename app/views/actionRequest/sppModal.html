@@ -13,13 +13,13 @@
                     <div class="row">
                         <div class="col-xs-6 col-sm-4 control-label">Baby due date</div>
                         <div class="col-xs-6 col-sm-8 form-group">
-                            <input type="text" class="form-control" ng-model="sppObject.spp.babyDueDate" orig-datepicker>
+                            <input type="text"  ng-model="sppObject.spp.babyDueDate" orig-datepicker>
 
                         </div>
                         <div class="col-xs-6 col-sm-4 control-label no-padding-right">Confirm relationship</div>
                         <div class="col-xs-6 col-sm-8 form-group">
                             <select class="form-control" ng-model="sppObject.spp.relationship" ng-options="opt.code as opt.description for opt in relationships">
-                                <option>Select</option>
+                                <option value="">Select</option>
 
                             </select>
                         </div>

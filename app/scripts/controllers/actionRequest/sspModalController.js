@@ -150,9 +150,7 @@ angular.module('origApp.controllers')
                     }
                 }).success(function(l) {
 
-                    //    console.log(response);
                     $scope.ssp.imageUrl = $scope.temp.logoFileName;
-                    //   $scope.ssp.imageUrl = response.data.url;
                     $scope.isLogoUploading = false;
                 });
 
