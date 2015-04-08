@@ -29,6 +29,7 @@ angular.module('origApp.controllers')
                         $scope.ssp = {};
                         $scope.temp = {};
                         MsgService.success('Successfully submitted.');
+                        $scope.closeModal();
                     }, function (error) {
                         MsgService.danger(error);
                     });

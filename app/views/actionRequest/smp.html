@@ -69,8 +69,8 @@
     <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount">
       <span ng-if='indexCount'>{{s.amount | number : 2}}</span>
       <input type="number"  ng-model="s.amount" ng-if='!indexCount'>
-      <a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a>
-      <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
+      &nbsp;<a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a>
+      &nbsp;<a href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
     </td>
     <td></td>
     <td></td>
