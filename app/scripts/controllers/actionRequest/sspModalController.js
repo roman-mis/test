@@ -163,7 +163,8 @@ angular.module('origApp.controllers')
                 dateInformed: $scope.ssp.dateInformed,
                 startDate: $scope.ssp.startDate,
                 endDate: $scope.ssp.endDate,
-                days: $scope.ssp.days
+                days: $scope.ssp.days,
+                imageUrl:$scope.ssp.imageUrl
             };
 
             var param, successMsg;
