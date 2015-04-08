@@ -18,6 +18,7 @@ angular.module('origApp.controllers')
     }, function(err) {});
 
     HttpResource.model('candidates/' + $scope.candidateId + '/payrollvalue').customGet('', {}, function(data) {
+        console.log(data);
         $scope.candidate.payrollValues.holidayPayRetained = data.data.object.payrollValues.holidayPayRetained || '';
     }, function(err) {});
 
