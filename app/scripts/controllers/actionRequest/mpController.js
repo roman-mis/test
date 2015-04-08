@@ -30,7 +30,7 @@ angular.module('origApp.controllers')
 
             $scope.temp = {
                 logoFileName: fileInfo.name,
-                logoSize: fileSize.toFixed(0) + ' KB'
+                logoSize: fileSize
             };
         }
 
