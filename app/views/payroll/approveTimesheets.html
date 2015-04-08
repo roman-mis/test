@@ -91,9 +91,10 @@
                                             <th><i class="fa fa-level-down"></i></th>
                                             <th>Full Name</th>
                                             <th>Status</th>
-                                            <th>NET</th>
-                                            <th>VAT</th>
-                                            <th>Total</th>
+                                            <th class="text-right">NET</th>
+                                            <th class="text-right">VAT</th>
+                                            <th class="text-right">Total</th>
+                                            <th></th>
                                             <th>
                                                 <div class="dropdown text-left">
                                                     <a style="cursor:pointer" data-toggle="dropdown">
@@ -106,7 +107,7 @@
                                                         <li ng-click="">
                                                             <a style="cursor: pointer; color: #000000">Approve</a>
                                                         </li>
-                                                        <li ng-click="timesheetBatch.edit = true;">
+                                                        <li>
                                                             <a style="cursor: pointer; color: #000000">Edit</a>
                                                         </li>
                                                         <li ng-click="">
@@ -134,18 +135,27 @@
                                             <td>
                                                 <b>{{timesheet.worker.firstName}} {{timesheet.worker.lastName}}</b>
                                             </td>
-                                            <td>
-                                                <div ng-hide="timesheetBatch.edit">
+                                            <td width="12%" class="text-left">
+                                                <div ng-hide="timesheet.edit" style="text-transform:capitalize">
                                                     {{timesheet.status}}
                                                 </div>
-                                                <div ng-show="timesheetBatch.edit">
+                                                <div ng-show="timesheet.edit">
                                                     <select ng-options="item.value as item.value for item in timesheetStatus"
-                                                            ng-model="cloned[$parent.$index].timesheets[$index].status"></select>
+                                                            ng-model="cloned[$parent.$index].timesheets[$index].status"
+                                                            style="text-transform:capitalize"></select>
                                                 </div>
                                             </td>
-                                            <td>{{timesheet.net}}</td>
-                                            <td>{{timesheet.vat}}</td>
-                                            <td>{{timesheet.total}}</td>
+                                            <td width="12%" class="text-right">
+                                                <div ng-hide="timesheet.edit" style="text-transform:capitalize">
+                                                    {{timesheet.net}}
+                                                </div>
+                                                <div ng-show="timesheet.edit">
+                                                    <input style="width: 5em" type="number" placeholder="net" ng-model="cloned[$parent.$index].timesheets[$index].net" />
+                                                </div>
+                                            </td>
+                                            <td class="text-right">{{timesheet.vat}}</td>
+                                            <td class="text-right">{{timesheet.total}}</td>
+                                            <td></td>
                                             <td style="width:20px">
                                                 <div class="dropdown text-left">
                                                     <a style="cursor:pointer" data-toggle="dropdown">
@@ -158,7 +168,7 @@
                                                         <li ng-click="">
                                                             <a style="cursor: pointer; color: #000000">Approve</a>
                                                         </li>
-                                                        <li ng-click="">
+                                                        <li ng-click="timesheet.edit = true;">
                                                             <a style="cursor: pointer; color: #000000">Edit</a>
                                                         </li>
                                                         <li ng-click="">
@@ -180,13 +190,14 @@
                                                                     <i class="fa fa-level-down"></i>
                                                                 </th>
                                                                 <!--<th width="10%">Category</th>-->
-                                                                <th class="text-center">Description</th>
-                                                                <th class="text-center">Element Type</th>
-                                                                <th class="text-center">Payment Rate</th>
-                                                                <th class="text-center">Units</th>
-                                                                <th class="text-center">VAT</th>
-                                                                <th class="text-center">Amount</th>
-                                                                <th></th>
+                                                                <th class="text-left">Description</th>
+                                                                <th class="text-left">Element Type</th>
+                                                                <th class="text-right">Payment Rate</th>
+                                                                <th class="text-right">Units</th>
+                                                                <th class="text-right">VAT</th>
+                                                                <th class="text-right">Amount</th>
+                                                                <th class="text-right"></th>
+                                                                <th class="text-right"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -194,13 +205,14 @@
                                                                 <td>
                                                                     <input type="checkbox" ng-model="item.checked" />
                                                                 </td>
-                                                                <td class="text-center">{{element.description}}</td>
-                                                                <td class="text-center">{{element.elementType}}</td>
-                                                                <td class="text-center">{{element.payRate}}</td>
-                                                                <td class="text-center">{{element.units}}</td>
-                                                                <td class="text-center">{{element.vat}}</td>
-                                                                <td class="text-center">{{element.amount}}</td>
-                                                                <td class="text-center"></td>
+                                                                <td class="text-left">{{element.description}}</td>
+                                                                <td class="text-left">{{element.elementType}}</td>
+                                                                <td class="text-right">{{element.payRate}}</td>
+                                                                <td class="text-right">{{element.units}}</td>
+                                                                <td class="text-right">{{element.vat}}</td>
+                                                                <td class="text-right">{{element.amount}}</td>
+                                                                <td class="text-right"></td>
+                                                                <td class="text-right"></td>
                                                             </tr>
                                                         </tbody>
                                                         <!--<tr>
