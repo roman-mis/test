@@ -4,23 +4,66 @@ angular.module('origApp.controllers')
 
 .controller('actionRequestController', function($scope, HttpResource, ModalService) {
 
+        $scope.$scope = $scope;
 
-    $scope.status = {
-        isopen: false
-    };
+        $scope.status = {
+            isopen: false
+        };
 
-    listActionRequest();
+        //define grid structure
+        $scope.gridOptions = {
+            limit: 20,
+            totalItems: 0,
+            isPagination: true,
+            onLimitChanged: function () {
+                $scope.loadActionRequestList();
+            },
+            onPageChanged: function () {
+                $scope.loadActionRequestList();
+            },
+            columns: [
+                { field: 'contractorId', display: 'Contractor ID', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.candidateNo}}</div>' },
+                { field: 'contractorName', display: 'Contractor Name', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.name | capitalizeAll}}</div>' },
+                { field: 'dateRequested', display: 'Date Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.dateRequested | date:"MM/dd/yyyy"}}</div>' },
+                { field: 'type', display: 'Type', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.type | capitalizeAll}}</div>' },
+                { field: 'periodActioned', display: 'Period Actioned', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.periodActioned}}</div>' },
+                { field: 'userRequested', display: 'User Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.createdBy.name  | capitalizeAll}}</div>' },
+                { field: 'requestRef.', display: 'Request Ref.', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.requestRef}}</div>' },
+                { field: 'status.', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)" {{row.status | capitalize}}</div>' },
+                { field: 'status.', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> <a href=""><i class="fa fa-folder-open-o"></i></a></div>' }
+            ],
+            data: []
+        };
 
-    function listActionRequest() {
-        HttpResource.model('actionrequests').customGet('', {}, function(data) {
-            $scope.lists = data.data.objects;
-        }, function(err) {});
+        // HTTP resource
+        var cddAPI = HttpResource.model('actionrequests');
 
-    }
 
-    $scope.callModal = function(id, template) {
+        $scope.loadActionRequestList = function () {
+            var params = {};
+            if ($scope.gridOptions.limit) {
+                params._limit = $scope.gridOptions.limit;
+            }
+            if ($scope.gridOptions.currentPage) {
+                params._offset = ($scope.gridOptions.currentPage - 1) * $scope.gridOptions.limit;
+            } else {
+                params._offset = 0;
+            }
 
-        HttpResource.model('actionrequests/' + id + '').customGet('', {}, function(data) {
+            $scope.gridOptions.data = cddAPI.query(params, function () {
+
+                if ($scope.gridOptions.data.meta) {
+                    $scope.gridOptions.totalItems = $scope.gridOptions.data.meta.totalCount;
+                }
+            });
+        };
+
+        $scope.loadActionRequestList();
+
+
+        $scope.callModal = function (id, template) {
+
+        HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
             var controller;
             var parentScope = {};
             parentScope.candidate = {};
