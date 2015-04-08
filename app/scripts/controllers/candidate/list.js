@@ -41,6 +41,7 @@ angular.module('origApp.controllers')
             // HTTP resource
             var cddAPI = HttpResource.model('candidates');
 
+
             $scope.loadCandidates = function () {
                 var params = {};
                 if ($scope.gridOptions.limit) {
