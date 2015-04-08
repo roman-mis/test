@@ -32,14 +32,14 @@ angular.module('origApp.controllers')
 
             $scope.temp = {
                 logoFileName: fileInfo.name,
-                logoSize: fileSize.toFixed(0) + ' KB'
+                logoSize: fileSize
             };
         }
 
     });
 
     $scope.closeModal = function() {
-        $modalInstance.dismiss('cancel');
+        $modalInstance.close('cancel');
     };
     $scope.cancel = function(i, v) {
         $scope.mp.days[i].amount = v;

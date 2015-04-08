@@ -1,4 +1,4 @@
-        <form name="holiday" novalidate ng-submit="sendPayroll(holiday.$valid)"
+        <form name="holiday" novalidate ng-submit="sendPayroll(holiday.$valid)">
         <div class="modal-header">
             <h4 class="modal-title">Holiday Pay Request</h4>
         </div><!-- /modal-header -->
@@ -12,7 +12,8 @@
             <div class="line-horizontal"></div>
             <div class="row">
                 <div class="col-xs-8 form-group">Holiday fund available</div>
-                <div class="col-xs-4 form-group text-right">&pound; {{ candidate.payrollValues.holidayPayRetained || 0 }}</div>
+                {{}}
+                <div class="col-xs-4 form-group text-right">&pound; {{ candidate.payrollValues.holidayPayRetained?(candidate.payrollValues.holidayPayRetained || 0):0 }}</div>
             </div>
 
             <div class="row">
@@ -34,7 +35,7 @@
         </div><!-- /modal-body -->
 
         <div class="modal-footer">
-            <a href="" ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+            <a href="javascript:void(0)" ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
             <button ng-if="!showMe" type="submit"  class="btn btn-primary">Save</button>
             <button ng-if="showMe" ng-click="savePayroll()" type="button" class="btn btn-primary">Save</button>
         </div><!-- /modal footer -->

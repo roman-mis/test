@@ -8,146 +8,146 @@
     <form name="mpForm" novalidate ng-submit="submitInformation(mpForm.$valid)">
         <div class="modal-body">
 
-            <div class="row">
-                <div class="col-xs-6 col-sm-3 form-group">Candidate name:</div>
-                <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.firstName | capitalizeAll}}</div>
-                <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
-                <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
-            </div>
-            <div class="line-horizontal"></div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-3 form-group control-label">Start date</div>
-                <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate name:</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.firstName | capitalizeAll}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{contactdetail.candidateRef}}</div>
+                    </div>
+                    <div class="line-horizontal"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 form-group control-label">Start date</div>
+                        <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">
 
 
                     <input ng-model="mp.startDate" name="start" type="text" orig-datepicker required/>
-                    <span ng-if="mpForm.start.$invalid && submitted">
-                       <p class="alert alert-danger" ng-if="mpForm.start.$error.required">Please enter the start date.</p>
-                   </span>
+                           <span ng-if="mpForm.start.$invalid && submitted">
+                             <p class="alert alert-danger" ng-if="mpForm.start.$error.required">Please enter the start date.</p>
+                           </span>
 
-               </div>
-               <div class="col-xs-6 col-sm-3 form-group control-label">Baby due date</div>
-               <div class="col-xs-6 col-sm-3 form-group no-padding-left">
-                <input type="text" name="due" ng-model="mp.babyDueDate" orig-datepicker required/>
-                <span ng-if="mpForm.due.$invalid && submitted">
-                   <p class="alert alert-danger" ng-if="mpForm.due.$error.required">Please enter the baby due date.</p>
-               </span>
+                </div>
+                <div class="col-xs-6 col-sm-3 form-group control-label">Baby due date</div>
+                <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                        <input type="text" name="due" ng-model="mp.babyDueDate" orig-datepicker required/>
+                                 <span ng-if="mpForm.due.$invalid && submitted">
+                                 <p class="alert alert-danger" ng-if="mpForm.due.$error.required">Please enter the baby due date.</p>
+                                 </span>
 
-           </div>
-       </div>
-
-       <div class="line-horizontal"></div>
-       <div class="row">
-        <div class="col-xs-6 col-sm-3 control-label">Intended start date</div>
-        <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">
-            <input type="text" name="intend" ng-model="mp.intendedStartDate" orig-datepicker required/>
-            <span ng-if="mpForm.intend.$invalid && submitted">
-             <p class="alert alert-danger" ng-if="mpForm.intend.$error.required">Please enter the intended start date.</p>
-         </span>
-
-     </div>
-
-
-     <div class="col-xs-6 col-sm-3  col-md-offset-3 form-group no-padding-left">
-
-        <button type="button" class="btn btn-primary pull-right"
-        ng-click="checkDateMp()">Calculate</button>
-
-    </div>
-    <div ng-if="!validDate && errorMsg" class="col-xs-12 col-sm-12 form-group no-padding-left alert alert-danger">
-       {{errorMsg}}
-
-   </div>
-
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <table class="table table-striped table-maternityPay">
-            <thead>
-                <tr>
-                    <th>Week No.</th>
-                    <th>Paid</th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="s in mp.days">
-
-                    <td ng-if="s.monthNumber >0">
-                        Month {{s.monthNumber}}
-                    </td>
-                    <td ng-if="s.monthNumber <=0 || !s.monthNumber">
-                        Week {{s.weekNumber}}
-                    </td>
-                    <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
-
-
-                        <input type="number"  ng-model="s.amount" ng-if='!indexCount'>&nbsp;<a href="" ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a>
-                        &nbsp;<a href="" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
-                    </td>
-                    <td class="text-right">
-                        <a href="" ng-click="indexCount=false;"  class="edit-price"><i
-                            class="fa fa-edit"></i></a>&nbsp;
-                            <a href="" ng-click='remove($index);'><i class="fa fa-trash"></i></a>
-                        </td>
-
-
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div><!-- /modal-body -->
-
-<div class="modal-footer modal-footer-textLeft">
-    <div class="row rowFooter">
-        <div class="col-xs-6 col-sm-6">
-            <fieldset class="fieldsetSMP">
-                <legend>Upload certificate</legend>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="fileUpload btn btn-primary form-control">
-                            <span onclick="$('#upload_file').click();">Browse</span>
-                            <input file-model="fileupload" type="file"
-                            id="upload_file" name="companyLogo" style="display: none;" />
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <button type="button" class="btn btn-primary form-control img-details"
-                        ng-disabled="isLogoUploading" ng-click="uploadFile()">
-                        <span ng-show="!isLogoUploading" >Upload</span>
-                        <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
-                    </button>
                 </div>
             </div>
+
+            <div class="line-horizontal"></div>
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <p>
-                            <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control text-right">Name :</div>
-                            <div ng-if="temp.logoFileName" class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName}}</div>
-                        </p>
-                    </div>
+                <div class="col-xs-6 col-sm-3 control-label">Intended start date</div>
+                <div class="col-xs-6 col-sm-3 form-group control-label no-padding-left">
+                        <input type="text" name="intend" ng-model="mp.intendedStartDate" orig-datepicker required/>
+                                 <span ng-if="mpForm.intend.$invalid && submitted">
+                                   <p class="alert alert-danger" ng-if="mpForm.intend.$error.required">Please enter the intended start date.</p>
+                                 </span>
+
                 </div>
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control text-right">Size :</div>
-                        <div ng-if="temp.logoSize" class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize | number:2 }}</div>
-                    </div>
+
+
+                <div class="col-xs-6 col-sm-3  col-md-offset-3 form-group no-padding-left">
+
+                    <button type="button" class="btn btn-primary pull-right"
+                            ng-click="checkDateMp()">Calculate</button>
+
+                </div>
+                <div ng-if="!validDate && errorMsg" class="col-xs-12 col-sm-12 form-group no-padding-left alert alert-danger">
+                 {{errorMsg}}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped table-maternityPay">
+                        <thead>
+                        <tr>
+                            <th>Week No.</th>
+                            <th>Paid</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr ng-repeat="s in mp.days">
+
+                            <td ng-if="s.monthNumber >0">
+                                Month {{s.monthNumber}}
+                            </td>
+                            <td ng-if="s.monthNumber <=0 || !s.monthNumber">
+                                Week {{s.weekNumber}}
+                            </td>
+                             <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
+
+
+                                <input type="number"  ng-model="s.amount" ng-if='!indexCount'>&nbsp;<a href="" ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'><i class="fa fa-check"></i></a>
+                                &nbsp;<a href="" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'><i class="fa fa-remove"></i></a>
+                            </td>
+                            <td class="text-right">
+                                <a href="" ng-click="indexCount=false;"  class="edit-price"><i
+                                        class="fa fa-edit"></i></a>&nbsp;
+                                <a href="" ng-click='remove($index);'><i class="fa fa-trash"></i></a>
+                            </td>
+
+
+                        </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </fieldset>
-    </div>
 
-    <div class="col-xs-6 col-sm-6 text-right">
-        <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-</div>
-</div><!-- /modal footer -->
+        </div><!-- /modal-body -->
+
+        <div class="modal-footer modal-footer-textLeft">
+            <div class="row rowFooter">
+                <div class="col-xs-6 col-sm-6">
+                    <fieldset class="fieldsetSMP">
+                        <legend>Upload certificate</legend>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="fileUpload btn btn-primary form-control">
+                                    <span onclick="$('#upload_file').click();">Browse</span>
+                                    <input file-model="fileupload" type="file"
+                                           id="upload_file" name="companyLogo" style="display: none;" />
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-primary form-control img-details"
+                                        ng-disabled="isLogoUploading" ng-click="uploadFile()">
+                                    <span ng-show="!isLogoUploading" >Upload</span>
+                                    <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <p>&nbsp;</p>
+                                    <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control text-right">Name:</div>
+                                    <div ng-if="temp.logoFileName" class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName | limitTo:15}}</div>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control text-right">Size :</div>
+                                    <div ng-if="temp.logoSize" class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize | number:2 }} kb</div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 text-right">
+                    <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div><!-- /modal footer -->
 </div>
 </form>

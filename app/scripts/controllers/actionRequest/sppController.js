@@ -132,8 +132,7 @@ angular.module('origApp.controllers')
 
     };
     $scope.closeModal = function() {
-
-        $modalInstance.dismiss('cancel');
+        $modalInstance.close('close');
     };
     $scope.save = function() {
         HttpResource.model('actionrequests').create($scope.sppObject)
