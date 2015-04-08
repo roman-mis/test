@@ -93,8 +93,8 @@
 
                                 <input type="number"  ng-model="s.amount" ng-if='!indexCount'>
                                 &nbsp; <a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;'
-                                        ng-show='!indexCount'>Ok</a>
-                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
+                                        ng-show='!indexCount'><i class="fa fa-check"></i></a>
+                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'><i class="fa fa-remove"></i></a>
                             </td>
                             <td class="text-right">
                                 <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i
