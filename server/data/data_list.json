@@ -237,6 +237,17 @@
         }
     ],
 
+    "mileageRatesDefault":{
+        "petrolUpTo1400":0.51,
+        "petrol1401to2000":0.15 ,
+        "petrolAbove2001":0.26 ,
+        "dieselUpTo1600": 0.12,
+        "diesel1601to2000": 0.15,
+        "dieselAbove2001": 0.2,
+        "lpgUpTo1400": 0.1,
+        "lpg1401to2000": 0.12,
+        "lpgAbove2001": 0.18
+    },
 
     "Holidays": [
         {

@@ -100,3 +100,4 @@ router.get('/userTypes', controller.getUserTypes);
 
 router.get('/relationships',controller.relationships);
 router.get('/slrAgreements', controller.slrAgreements);
+router.get('/mileageRatesDefault', controller.mileageRatesDefault);

@@ -228,7 +228,7 @@ module.exports = function (dbs) {
                 console.log(mailInfo.expense[j]);
                 body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+ 
                               '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+ 
-                              '<div style="margin-right:15px;width:100px;display: inline-block;"><b>total</b>: ' +  mailInfo.expense[j].total + '</div>'+
+                              '<div style="margin-right:15px;width:100px;display: inline-block;"><b>Total</b>: ' +  mailInfo.expense[j].total + '</div>'+
                               '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' + 
                               '<hr>';  
             }
@@ -449,9 +449,12 @@ module.exports = function (dbs) {
                             resolve({ result: true });
                         }
                     },function(err){
+                    console.log('err2');
+                    console.log(err);
                         reject(err);
                     });
                 },function(err){
+                    console.log('err1');
                     console.log(err);
                     reject(err);
                 });
