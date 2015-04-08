@@ -8,6 +8,7 @@ angular.module('origApp.controllers')
             $scope.isActionRequestCollapsed = !$scope.isActionRequestCollapsed;
         };
 
+
         $scope.openDPAWin = function () {
             ModalService.open({
                 templateUrl: 'views/candidate/_dpa_questions.html',
