@@ -178,7 +178,7 @@ module.exports = function(dbs){
     	adminActionRequestService.getActionRequestData(req._restOptions)
     		.then(function(response){
     			console.log(response);
-	    			
+
 	    		var actionrequests = getActionRequestDataVm(response.rows);
 	            var pagination = req._restOptions.pagination || {};
 	            var resp = { result: true, objects: actionrequests, meta: { limit: pagination.limit, offset: pagination.offset, totalCount: response.count } };
@@ -303,13 +303,14 @@ controller.getActionRequestDataById =function(req, res){
 			updatedDate : Date(),
 			updatedBy : req.user._id
 		};
-
+		console.log('details');
+		console.log(details);
 		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
 
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);
-				var updatedActionRequestData = getUpdatedActionRequestDataVm(response);
+				var updatedActionRequestData = getActionRequestDataByIdVm(response.object);
 				res.json({object : updatedActionRequestData});
 			}).then(null,function(err){
     			res.sendFailureResponse(err);
@@ -326,7 +327,7 @@ controller.getActionRequestDataById =function(req, res){
  			id : data.object.worker._id,
  			name : data.object.worker.firstName + ' ' + data.object.worker.lastName,
  			candidateRef : utils.padLeft(data.object.worker.candidateNo || '0', 7, '0')
- 		}, 
+ 		},
  		dateRequested : data.object.worker.createdDate,
 		status : data.object.status,
 		type : data.object.type,
@@ -348,7 +349,7 @@ controller.getActionRequestDataById =function(req, res){
 		imageUrl : data.object.imageUrl,
 		days : data.object.days,
 		updatedDate : data.object.updatedDate,
-		updatedBy : data.object.updatedBy  
+		updatedBy : data.object.updatedBy
 		}
 	}
 

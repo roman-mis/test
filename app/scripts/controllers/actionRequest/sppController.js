@@ -2,39 +2,42 @@
 angular.module('origApp.controllers')
 
 
-.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance,MsgService) {
+.controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance, MsgService) {
 
     $scope.candidateId = parentScope.candidateId;
-    $scope.spp = {};
- //   $scope.spp.startDate=null;
+    if (!$scope.sppObject) {
+        $scope.sppObject = {}
+        $scope.sppObject.spp = {};
+    }
+    //   $scope.spp.startDate=null;
 
     HttpResource.model('constants/relationships').customGet('', {}, function(data) {
         $scope.relationships = data.data;
-        console.log('getting relationships:' + $scope.relationships);
     }, function(err) {});
 
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
         $scope.candidateInfo = data.data.object;
     }, function(err) {});
-    $scope.spp.maxPeriods = 2;
+    $scope.sppObject.maxPeriods = 2;
     $scope.remove = function(i) {
 
-        $scope.spp.days.splice(i, 1);
+        $scope.sppObject.days.splice(i, 1);
 
     };
-     $scope.cancel=function(i,v){
 
-        $scope.spp.days[i].amount=v;
+    $scope.cancel = function(i, v) {
+
+        $scope.sppObject.days[i].amount = v;
     };
+    $scope.cancelAmountFromSppModa
 
     $scope.checkDateMp = function() {
 
-        if ($scope.spp.babyDueDate) {
+        if ($scope.sppObject.spp.babyDueDate) {
             $scope.validDate = true;
             $scope.errorMsg = null;
-            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.spp, function(data) {
-                console.log(data);
-                $scope.spp.days = data.data.objects;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.sppObject, function(data) {
+                $scope.sppObject.days = data.data.objects;
 
 
             }, function(err) {});
@@ -66,7 +69,6 @@ angular.module('origApp.controllers')
                 logoFileName: fileInfo.name,
                 logoSize: fileSize
             };
-            console.log($scope.temp);
         }
 
     });
@@ -74,19 +76,17 @@ angular.module('origApp.controllers')
     $scope.uploadCompanyLogo = function() {
 
         if (!$('#upload_company_logo').val()) {
-            alert('Please select a file first.');
+            MsgService.danger('Please select a file first.');
             return;
         }
         var file = $scope.fileupload;
         var fileName = new Date().getTime().toString() + '_' + file.name;
-        console.log(fileName);
         var mimeType = file.type || 'text/plain';
         $scope.isLogoUploading = true;
         HttpResource.model('documents/actionrequest').customGet('signedUrl', {
             mimeType: mimeType,
             fileName: fileName
         }, function(response) {
-            //  console.log(response);
             $scope.signedUrl = response.data.signedRequest;
             $http({
                 method: 'PUT',
@@ -98,8 +98,8 @@ angular.module('origApp.controllers')
                 }
             }).success(function(l) {
 
-                //    console.log(response);
-                $scope.spp.imageUrl = response.data.url;
+
+                $scope.sppObject.imageUrl = $scope.temp.logoFileName;
                 $scope.isLogoUploading = false;
             });
 
@@ -108,19 +108,22 @@ angular.module('origApp.controllers')
     };
     $scope.submitInformation = function(val) {
 
-        if (val === true && $scope.validDate === true && $scope.spp.days.length > 0) {
-            $scope.submitted=false;
-            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.spp).post().then(function(response) {
-                $scope.spp = {};
+        if (val === true && $scope.validDate === true && $scope.sppObject.days.length > 0) {
+            $scope.submitted = false;
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.sppObject).post().then(function(response) {
+
+                $scope.sppObject.spp = {};
+                $scope.sppObject.days = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
-            },function (error) {
-                    MsgService.danger(error);
-                });
+                $scope.closeModal();
+            }, function(error) {
+                MsgService.danger(error);
+            });
         } else {
 
             $scope.submitted = true;
-            if ($scope.spp && $scope.spp.days && $scope.spp.days.length === 0) {
+            if ($scope.sppObject && $scope.sppObject.days && $scope.sppObject.days.length === 0) {
 
                 $scope.validDate = false;
                 $scope.errorMsg = 'No data.';
@@ -131,5 +134,12 @@ angular.module('origApp.controllers')
     $scope.closeModal = function() {
 
         $modalInstance.dismiss('cancel');
+    };
+    $scope.save = function() {
+        HttpResource.model('actionrequests').create($scope.sppObject)
+            .patch($scope.sppObject.id).then(function() {
+                MsgService.success('Successfully saved.');
+                $scope.closeModal();
+            });
     };
 });

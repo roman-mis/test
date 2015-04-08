@@ -1070,6 +1070,33 @@
         }
     ],
 
+	"timesheetStatus": [
+        {
+            "code": 1,
+            "value": "submitted"
+        },
+        {
+            "code": 2,
+            "value": "pre-validation"
+        },
+        {
+            "code": 3,
+            "value": "validated"
+        },
+        {
+            "code": 4,
+            "value": "receipted"
+        },
+        {
+            "code": 5,
+            "value": "approved"
+        },
+        {
+            "code": 6,
+            "value": "processed"
+        }
+    ],
+
     "profiles": {
         "WK": {
             "first": {
