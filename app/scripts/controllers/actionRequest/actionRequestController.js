@@ -2,59 +2,122 @@
 angular.module('origApp.controllers')
 
 
-.controller('actionRequestController', function($scope,HttpResource,ModalService) {
+.controller('actionRequestController', function($scope, HttpResource, ModalService) {
 
-HttpResource.model('actionrequests').customGet('', {}, function(data) {
-      $scope.lists=data.data.objects;
-      console.log($scope.lists);
-    }, function(err) {});
+        $scope.$scope = $scope;
 
-    $scope.status = {
-        isopen: false
-      };
+        $scope.status = {
+            isopen: false
+        };
 
-$scope.callModal=function(id,type,createdBy){
+        //define grid structure
+        $scope.gridOptions = {
+            limit: 20,
+            totalItems: 0,
+            isPagination: true,
+            onLimitChanged: function () {
+                $scope.loadActionRequestList();
+            },
+            onPageChanged: function () {
+                $scope.loadActionRequestList();
+            },
+            columns: [
+                { field: 'contractorId', display: 'Contractor ID', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.candidateNo}}</div>' },
+                { field: 'contractorName', display: 'Contractor Name', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.name | capitalizeAll}}</div>' },
+                { field: 'dateRequested', display: 'Date Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.dateRequested | date:"MM/dd/yyyy"}}</div>' },
+                { field: 'type', display: 'Type', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.type | capitalizeAll}}</div>' },
+                { field: 'periodActioned', display: 'Period Actioned', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.periodActioned}}</div>' },
+                { field: 'userRequested', display: 'User Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.createdBy.name  | capitalizeAll}}</div>' },
+                { field: 'requestRef.', display: 'Request Ref.', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.requestRef}}</div>' },
+                { field: 'status.', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)" {{row.status | capitalize}}</div>' },
+                { field: 'status.', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> <a href=""><i class="fa fa-folder-open-o"></i></a></div>' }
+            ],
+            data: []
+        };
 
-  HttpResource.model('actionrequests/'+id+'').customGet('',{},function(data){
-    console.log('from data');
-    console.log(data.data.object);
-// return;
-   var controller;
-   var parentScope={};
-   parentScope.candidate={};
-   parentScope.candidate.firstName=createdBy.name;
-  // parentScope.candidate.id=createdBy.id;
-  console.log(parentScope);
-   parentScope.candidateId=createdBy.id;
-   switch(type){
-     case 'ssp':
-       parentScope.showMe=true;
-       $scope.ssp=data.data.objects;
-       controller='sspControllers';
+        // HTTP resource
+        var cddAPI = HttpResource.model('actionrequests');
 
-       break;
-     case 'smp':
 
-       controller='smpController';
-       $scope.smpObject={};
-       $scope.smpObject.startDate=data.data.object.startDate;
-       $scope.smpObject.smp=data.data.object.smp;
-       $scope.smpObject.id=data.data.object.id;
-       $scope.smpObject.intendedStartDate=data.data.object.intendedStartDate;
-       $scope.smpObject.days=data.data.object.days;
-       $scope.smpObject.imageUrl=data.data.object.imageUrl;
-       break;
+        $scope.loadActionRequestList = function () {
+            var params = {};
+            if ($scope.gridOptions.limit) {
+                params._limit = $scope.gridOptions.limit;
+            }
+            if ($scope.gridOptions.currentPage) {
+                params._offset = ($scope.gridOptions.currentPage - 1) * $scope.gridOptions.limit;
+            } else {
+                params._offset = 0;
+            }
 
-   }
-   ModalService.open({
-     templateUrl: 'views/actionRequest/'+type+'.html',
-     parentScope:parentScope,
-     scope: $scope,
-     controller:controller,
-     size: 'lg'
-   });
+            $scope.gridOptions.data = cddAPI.query(params, function () {
 
-   });
+                if ($scope.gridOptions.data.meta) {
+                    $scope.gridOptions.totalItems = $scope.gridOptions.data.meta.totalCount;
+                }
+            });
+        };
 
-};
+        $scope.loadActionRequestList();
+
+
+        $scope.callModal = function (id, template) {
+
+        HttpResource.model('actionrequests/' + id + '').customGet('', {}, function (data) {
+            var controller;
+            var parentScope = {};
+            parentScope.candidate = {};
+            parentScope.candidateId = data.data.object.worker.id;
+            parentScope.candidate = data.data.object.worker;
+            switch (template) {
+                case 'ssp':
+                    parentScope.showMe = true;
+                    $scope.ssp = data.data.object;
+                    controller = 'sspModalController';
+                    $scope.temp = {};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
+                    break;
+                case 'smp':
+                    controller = 'smpController';
+                    $scope.smpObject = {};
+                    $scope.smpObject = data.data.object;
+                    $scope.temp = {};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
+                    break;
+                case 'studentloan':
+                    controller = 'slController',
+                    $scope.studentLoan = data.data.object.studentLoan;
+                    $scope.id = data.data.object.id;
+                    break;
+                case 'spp':
+                    controller = 'sppController';
+                    template = 'sppModal';
+                    $scope.sppObject = {};
+                    $scope.sppObject = data.data.object;
+                    $scope.temp = {};
+                    $scope.temp.logoFileName = data.data.object.imageUrl;
+                    break;
+                case 'holidaypay':
+                    controller = 'holidayPaymentController',
+                    template = 'holidayPayment';
+                    $scope.showMe = true;
+                    $scope.hpObject = {};
+                    $scope.hpObject = data.data.object;
+
+            }
+            var modalInstance = ModalService.open({
+                templateUrl: 'views/actionRequest/' + template + '.html',
+                parentScope: parentScope,
+                scope: $scope,
+                controller: controller,
+                size: 'md'
+            });
+
+            modalInstance.result.then(function(data) {
+                listActionRequest();
+            }, function(reason) {
+
+            });
+        });
+    };
 });

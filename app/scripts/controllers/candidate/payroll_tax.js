@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidatePayrollTaxController', function($scope, $stateParams, HttpResource) {
+        .controller('CandidatePayrollTaxController', function($scope, $stateParams, HttpResource, ModalService) {
           $scope.candidateId = $stateParams.candidateId;
           $scope.candidate = $scope.$parent.candidate;
           console.log($scope.candidate)
@@ -15,6 +15,14 @@ angular.module('origApp.controllers')
           $scope.loadTax = function() {
             $scope.tax = candidateResource.get('payrolltax');
           };
+
+          $scope.openTaxSetting = function () {
+            ModalService.open({
+                templateUrl: 'views/candidate/_payroll_tax_settings.html',
+                parentScope: $scope,
+                controller: 'CandidatePayrollTaxController'
+            });
+        };
 
           //save tax information
           $scope.saveTax = function() {

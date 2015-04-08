@@ -8,6 +8,7 @@ angular.module('origApp.controllers')
             $scope.isActionRequestCollapsed = !$scope.isActionRequestCollapsed;
         };
 
+
         $scope.openDPAWin = function () {
             ModalService.open({
                 templateUrl: 'views/candidate/_dpa_questions.html',
@@ -91,15 +92,15 @@ angular.module('origApp.controllers')
                 size: 'lg'
             });
         };
-        $scope.openSsp=function(){
-            console.log($scope.contactdetail);
+        $scope.openSsp = function () {
+
             ModalService.open({
 
-                templateUrl:'views/actionRequest/ssp.html',
-                parentScope:$scope,
-                controller:'sspController',
-                size:'lg'
-            })
+                templateUrl: 'views/actionRequest/ssp.html',
+                parentScope: $scope,
+                controller: 'sspModalController',
+                size: 'md'
+            });
         };
 
         $scope.openSpp=function(){

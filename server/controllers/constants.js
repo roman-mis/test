@@ -228,6 +228,10 @@ module.exports = function () {
         res.json(dataList.expenseStatus);
     };
 
+    controller.getTimesheetStatus = function (req, res) {
+        res.json(dataList.timesheetStatus);
+    };
+
     controller.getProfileFirst = function (req, res) {
         res.json(dataList.profiles[req.params.type].first);
     };
@@ -244,7 +248,7 @@ module.exports = function () {
         res.json(dataList.Relationships);
     };
 
-    controller.slrAgreements = function(req, res){
+    controller.slrAgreements = function (req, res) {
         res.json(dataList.SLRAgreements);
     };
 
@@ -252,7 +256,5 @@ module.exports = function () {
         res.json(dataList.mileageRatesDefault);
     };
         
-
-
   return controller;
 };
