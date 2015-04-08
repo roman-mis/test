@@ -11,7 +11,9 @@ angular.module('origApp.controllers')
 
     HttpResource.model('candidates/' + $scope.candidateId).customGet('', {}, function(data) {
         $scope.contactdetail = data.data.object;
-    }, function(err) {});
+    }, function(err) {
+        console.log(err);
+    });
 
     $scope.closeModal = function() {
         $modalInstance.dismiss('cancel');
@@ -57,7 +59,7 @@ angular.module('origApp.controllers')
         } else {
             $scope.validDate = false;
             if (n < (d - 6652800000)) {
-                $scope.errorMsg = 'The earliest leave can be taken is 11 weeks before the expected week of childbirth.';
+                $scope.errorMsg = 'The difference between start date and baby due date should not be more than 11 weeks.';
             } else {
                 if ($scope.mpForm.start.$error.required || $scope.mpForm.due.$error.required || $scope.mpForm.intend.$error.required) {
                     $scope.errorMsg = null;
