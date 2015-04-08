@@ -202,7 +202,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.closeModal = function() {
-            $modalInstance.close();
+            $modalInstance.close('close');
         };
 
     });

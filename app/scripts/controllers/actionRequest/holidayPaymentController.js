@@ -47,7 +47,7 @@ angular.module('origApp.controllers')
     };
 
     $scope.closeModal = function() {
-        $modalInstance.dismiss('cancel');
+        $modalInstance.close('cancel');
     };
 
 

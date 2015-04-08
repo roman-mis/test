@@ -114,9 +114,11 @@ angular.module('origApp.controllers')
             });
 
             modalInstance.result.then(function(data) {
-                listActionRequest();
+                $scope.loadActionRequestList();
             }, function(reason) {
-
+//                console.log('reason');
+//                console.log(reason);
+//                $scope.loadActionRequestList();
             });
         });
     };
