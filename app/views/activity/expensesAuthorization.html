@@ -15,7 +15,7 @@
                 <button type="button" class="btn btn-warning"
                         ng-disabled="pendingRejections.length == 0"
                         ng-click="cancelRejections()">
-                    Cancel Rejections (Revoke Status)
+                    Cancel Rejections
                 </button>
             </h3>
         </div>
@@ -100,15 +100,15 @@
                                         <!--category-->
                                         <tr ng-repeat-start="cat in expense.categories">
                                             <!--category basic info-->
-                                            <td style="width:20px"> 
-                                            <div ng-click="test2[$index] = !test2[$index]">
-                                                <a data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer">
-                                                <span   style="font-size:12px" class="fa-stack fa-lg">
-                                                    <i ng-if="test2[$index]" class="fa fa-minus-square-o fa-stack-1x"></i>
-                                                    <i ng-if="!test2[$index]" class="fa fa-plus-square-o fa-stack-1x"></i>
-                                                </span>
-                                                </a>
-                                            </div>
+                                            <td style="width:20px">
+                                                <div ng-click="test2[$index] = !test2[$index]">
+                                                    <a data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer">
+                                                        <span style="font-size:12px" class="fa-stack fa-lg">
+                                                            <i ng-if="test2[$index]" class="fa fa-minus-square-o fa-stack-1x"></i>
+                                                            <i ng-if="!test2[$index]" class="fa fa-plus-square-o fa-stack-1x"></i>
+                                                        </span>
+                                                    </a>
+                                                </div>
                                             </td>
                                             <td col-span="9">
                                                 <b>{{cat}}</b>
@@ -156,12 +156,12 @@
                                                                 <th width="9%" class="text-right">Value</th>
                                                                 <th width="9%" class="text-right">VAT</th>
                                                                 <th width="9%" class="text-right">Total</th>
-                                                                <th width="10%" class="text-right">Receipt</th>
-                                                                <th width="11%">Status</th>
+                                                                <th width="10%" class="text-center">Receipt</th>
+                                                                <th width="11%" class="text-left">Status</th>
                                                                 <th width="6%"></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody >
+                                                        <tbody>
                                                             <tr ng-repeat="item in expense.expenses" ng-if="item.expenseType==cat">
                                                                 <td width="2%">
                                                                     <input type="checkbox" ng-model="item.checked" />
@@ -177,7 +177,7 @@
                                                                 </td>
                                                                 <td width="12%" class="text-left">
                                                                     <div ng-hide="item.edit">{{item.date | date : "EEE dd/MM/yyyy"}}</div>
-                                                                    <div width="12%" ng-if="item.edit">
+                                                                    <div ng-if="item.edit">
                                                                         <!--<div class="input-group" name="birthDate" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].date" orig-datepicker />-->
                                                                         <select class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].date" ng-options="date | date:'EEE dd/MM/yyyy' for date in item.validDates"></select>
                                                                     </div>
@@ -191,15 +191,15 @@
                                                                 </td>
 
                                                                 <td width="9%">
-                                                                    <div>{{item.value | currency:"&pound;"}}</div>
-                                                                    <!--<div ng-if="item.edit">
-                                                                        <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
-                                                                    </div>-->
+                                                                    <div ng-hide="item.edit && cat != 'Transport'">{{item.value | currency:"&pound;"}}</div>
+                                                                    <div ng-if="item.edit && cat != 'Transport'">
+                                                                        <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
+                                                                    </div>
                                                                 </td>
                                                                 <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0 | currency:"&pound;"}}</td>
                                                                 <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
 
-                                                                <td width="6%">
+                                                                <td width="6%" class="text-center">
                                                                     <div ng-if="item.status == 'submitted' || item.status == 'approved'">
                                                                         <div class="dropdown">
                                                                             <a style="cursor:pointer" ng-click="test3[$index] =!test3[$index]" data-toggle="dropdown">
@@ -243,10 +243,10 @@
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td width="12%" style="text-transform: capitalize">
+                                                                <td width="12%" class="text-left" style="text-transform: capitalize; text-align:left">
                                                                     <div ng-hide="item.edit">{{item.status}}</div>
-                                                                    <div width="10%" ng-if="item.edit">
-                                                                        <select class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].status" ng-options="type.value as type.value for type in expenseStatus"></select>
+                                                                    <div ng-if="item.edit">
+                                                                        <select class="form-control ng-pristine ng-valid" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].status" ng-options="type.value as type.value for type in expenseStatus" style="text-transform: capitalize"></select>
                                                                     </div>
                                                                 </td>
                                                                 <td width="8%" class="text-center">

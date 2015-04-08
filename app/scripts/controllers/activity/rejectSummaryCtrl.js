@@ -40,8 +40,8 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
                     total: item.expenseDetail.total,
                     reason: '',
                     other: '',
-                    revoke: function () {
-                        revoke(obj.claimId, item._id);
+                    cancel: function () {
+                        cancel(obj.claimId, item._id);
                     }
                 }
                 if (rootScope.summary) {
@@ -64,7 +64,7 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
         $scope.objects.push(obj);
     });
 
-    function revoke(claimId, expenseId) {
+    function cancel(claimId, expenseId) {
         for (var i = 0; i < $scope.objects.length; i++) {
             if ($scope.objects[i].claimId == claimId) {
                 for (var j = 0; j < $scope.objects[i].expenses.length; j++) {
@@ -76,7 +76,7 @@ app.controller('rejectSummaryCtrl', function ($scope, $modalInstance, $http, ite
                 break
             }
         }
-        rootScope.revoke(claimId, expenseId);
+        rootScope.cancel(claimId, expenseId);
     }
 
     $scope.ok = function () {

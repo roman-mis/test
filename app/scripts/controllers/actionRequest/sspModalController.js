@@ -9,6 +9,7 @@ angular.module('origApp.controllers')
 
             $scope.ssp={};
         };
+        $scope.validDate = true;
 
         function getCandidateContactDetails() {
             console.log($scope.candidateId);
@@ -58,6 +59,9 @@ angular.module('origApp.controllers')
 
         $scope.checkDate = function () {
 
+            if (!$scope.ssp) {
+                $scope.ssp = {};
+            }
             var n = new Date($scope.ssp.dateInformed).valueOf();
 
             var sickDayFrom = new Date($scope.ssp.startDate).valueOf();
@@ -187,8 +191,8 @@ angular.module('origApp.controllers')
             }
 
             if ('save' === actionName) {
-                HttpResource.model('actionrequests').create(data)
-                    .patch($scope.ssp.id).then(function () {
+                HttpResource.model('actionrequests').create(data).
+                    patch($scope.ssp.id).then(function () {
                         MsgService.success('Successfully saved.');
                         $scope.closeModal();
                     });

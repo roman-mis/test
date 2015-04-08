@@ -99,7 +99,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 form-group">
-        <button type="button" class="btn btn-primary form-control img-details" ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
+        <button type="button" class="btn btn-primary form-control img-details" ng-disabled="isLogoUploading" ng-click="uploadFile()">
           <span ng-show="!isLogoUploading" >Upload</span>
           <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
         </button>
@@ -115,14 +115,24 @@
     </div>
     <div class="col-xs-12">
       <div class="form-group">
+<<<<<<< HEAD
         <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
         <div ng-if="temp.logoFileName" class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName | limitTo:17}}...</div>
+=======
+        <div class="col-xs-4 col-sm-3 label-control">Name</div>
+        <div class="col-xs-8 col-sm-9 label-control file-details" id="uploadFile">{{temp.logoFileName}}</div>
+>>>>>>> aa478a2e24c341e71560ddd48d870ef39fa54d52
       </div>
     </div>
     <div class="col-xs-12">
       <div class="form-group">
+<<<<<<< HEAD
         <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control">Size:</div>
         <div ng-if="temp.logoSize" class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize | number:2}} KB</div>
+=======
+        <div class="col-xs-4 col-sm-3 label-control">Size</div>
+        <div class="col-xs-8 col-sm-9 label-control file-details" id="filesize">{{temp.logoSize}}</div>
+>>>>>>> aa478a2e24c341e71560ddd48d870ef39fa54d52
       </div>
     </div>
   </div>
