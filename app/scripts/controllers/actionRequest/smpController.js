@@ -78,6 +78,7 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
                 .patch('approve').then(function() {
                     MsgService.success('Successfully saved and approved.');
+                    $scope.closeModal();
 
                 });
 
@@ -87,6 +88,7 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
                 .patch('reject').then(function() {
                     MsgService.success('Successfully saved and approved.');
+                    $scope.closeModal();
 
                 });
 
@@ -96,6 +98,7 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
                 .patch('refer').then(function() {
                     MsgService.success('Successfully saved and approved.');
+                    $scope.closeModal();
 
                 });
 
