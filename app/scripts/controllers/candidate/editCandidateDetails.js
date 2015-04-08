@@ -67,7 +67,7 @@ angular.module('origApp.controllers')
                     });
                 }
             });
-            $scope.save = function () {
+            $scope.saveCandidate = function () {
                 
                 HttpResource.model('users').create($scope.candidate)
                 .patch($scope.candidateId).then(function () {
@@ -79,7 +79,7 @@ angular.module('origApp.controllers')
 
                 $modalInstance.dismiss('save');
             };
-            $scope.cancel = function () {
+            $scope.cancelCandidate = function () {
                 $modalInstance.dismiss('cancel');
             };
         }]);
