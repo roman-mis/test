@@ -76,7 +76,7 @@ angular.module('origApp.controllers')
         };
         $scope.saveAndApprove = function() {
 
-            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create($scope.smpObject)
                 .patch('approve').then(function() {
                     MsgService.success('Successfully saved and approved.');
                     $scope.closeModal();
@@ -86,7 +86,7 @@ angular.module('origApp.controllers')
         };
         $scope.saveAndReject = function() {
 
-            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create($scope.smpObject)
                 .patch('reject').then(function() {
                     MsgService.success('Successfully saved and approved.');
                     $scope.closeModal();
@@ -96,7 +96,7 @@ angular.module('origApp.controllers')
         };
         $scope.saveAndRefer = function() {
 
-            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create($scope.smpObject)
                 .patch('refer').then(function() {
                     MsgService.success('Successfully saved and approved.');
                     $scope.closeModal();
