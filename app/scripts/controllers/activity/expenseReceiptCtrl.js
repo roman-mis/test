@@ -136,6 +136,12 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
         $scope.uploading = false;
     }
 
+    $scope.deleteReceipt = function (receipt) {
+        var index = $scope.actualUrls.indexOf(receipt);
+        $scope.actualUrls.splice(index, 1);
+        $scope.receiptUrls.splice(index, 1);
+    }
+
     $scope.ok = function () {            
         $modalInstance.close();
     };

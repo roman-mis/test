@@ -773,6 +773,7 @@ app.controller("expensesAuthorizationCtrl",
                 } else {
                     subType = expense.expenseDetail.name;
                 }
+
                 //logs(expense.date);
                 req.body.push({
                     expenseType: expense.expenseType,
@@ -785,6 +786,7 @@ app.controller("expensesAuthorizationCtrl",
                     receiptUrls: expense.receiptUrls,
                     status: expense.status
                 });
+
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     logs(res, 'Edit Response');
                 });
