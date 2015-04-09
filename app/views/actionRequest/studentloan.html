@@ -48,9 +48,23 @@
                         </tbody>
                     </table>
         </div><!-- /modal-body -->
-
-        <div class="modal-footer">
+       <div class="modal-footer">
                     <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-                    <button type="button" ng-click="submitStudentLoan()" class="btn btn-primary">Save</button>
-                </div><!-- /modal footer -->
+                     <!-- Split button -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Action</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a ng-click="submitStudentLoan();">Save</a></li>
+                            <li><a ng-click="saveAndApprove();">Save and Approve</a></li>
+                            <li><a ng-click="saveAndReject();">Save and Reject</a></li>
+                            <li><a ng-click="saveAndRefer();">Save and Refer</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
       </div>
