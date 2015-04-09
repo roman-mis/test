@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Vat Number</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control"
+                            <input type="text" class="form-control"
                                    ng-model="companyProfile.accounts.vatNumber"
                                    name="vatNumber" ng-pattern="/^(GB)?(\ )?[0-9]\d{2}(\ )?[0-9]\d{3}(\ )?(0[0-9]|[1-8][0-9]|9[0-6])(\ )?([0-9]\d{2})?|(GB)?(\ )?GD(\ )?([0-4][0-9][0-9])|(GB)?(\ )?HA(\ )?([5-9][0-9][0-9])$/" />
                             <div ng-show="accountsForm.vatNumber.$invalid || accountsForm.vatNumber.$pristine">
@@ -28,15 +28,15 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Company Registration Number</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" ng-model="companyProfile.accounts.companyRegNo" name="reg" ng-maxlength=8/>
+                            <input type = "text" class="form-control" ng-model="companyProfile.accounts.companyRegNo" name="reg" maxlength=8 ng-pattern = "/^[0-9]*$/"/>
                             <div ng-show="accountsForm.reg.$invalid || accountsForm.reg.$pristine">
                                 <div class="alert alert-danger"
-                                     ng-show="accountsForm.reg.$error.number">
+                                     ng-show="accountsForm.reg.$error.pattern">
                                     Please enter valid Company Registration Number.
                                 </div>
                                 <div class="alert alert-danger"
                                      ng-show="accountsForm.reg.$error.maxlength">
-                                    Please enter registration number than 8 digits.
+                                    Please enter registration number less than 8 digits.
                                 </div>
                             </div>
                         </div>
@@ -46,12 +46,12 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">UTR Number</label>
                         <div class="col-xs-6">
-                            <input type="number" name="utr" class="form-control" ng-model="companyProfile.accounts.utrNumber" ng-maxlength=10 />
+                            <input type="text" name="utr" class="form-control" ng-model="companyProfile.accounts.utrNumber" maxlength=10 ng-pattern = "/^[0-9]*$/"/>
 
 
                             <div ng-show="accountsForm.utr.$invalid || accountsForm.utr.$pristine">
                                 <div class="alert alert-danger"
-                                     ng-show="accountsForm.utr.$error.number">
+                                     ng-show="accountsForm.utr.$error.pattern">
                                     Please enter valid UTR Number.
                                 </div>
                                 <div class="alert alert-danger"
