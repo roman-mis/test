@@ -18,6 +18,7 @@ router.delete('/delete/:fileName',controller.deleteTempDocument);
 
 router.get('/receipts/signedUrl',controller.getUploadReceiptSignedUrl);
 router.get('/receipts/:receiptName',controller.viewReceipt);
+router.get('/receipts/viewsignedurl/:fileName',routeDefaultModifier({params:{folder:'receipts'}}),controller.viewDocSignedUrl);
 router.delete('/receipts/:receiptName',controller.deleteReceipt);
 
 router.get('/timesheet/signedUrl',routeDefaultModifier({params:{folder:'timesheet'}}),controller.getUploadDocSignedUrl);
