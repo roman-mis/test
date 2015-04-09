@@ -725,6 +725,25 @@ app.controller("expensesAuthorizationCtrl",
             //}
         }
 
+        $scope.viewReceipt = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'views/activity/expenseReceipt.html',
+                controller: 'expenseReceiptCtrl',
+                size: 'md',
+                resolve: {
+                    rootScope: function () {
+                        return $scope;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                
+            }, function (msg) {
+                logs(msg, 'Dismissed');
+            });
+        }
+
         function logs(record, label) {
             if (label) console.log(label + ':', record);
             else console.log(record);

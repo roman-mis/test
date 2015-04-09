@@ -1,0 +1,50 @@
+﻿<div class="modal-content">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Expenses Receipt</h4>
+    </div><!-- /modal-header -->
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 form-group full-row" style="text-align:center">
+                <img src="http://placehold.it/150x150" id="logo" width="150" height="150" />
+                <div>- preview -</div>
+            </div>
+            <div class="col-xs-8 col-sm-8 full-row">
+                <!--<div ng-show="generatingPreview">
+                    <i class="fa fa-spinner fa-pulse"></i>&nbsp;Generating preview
+                </div>-->
+                <h4 style="margin-top: 0;">Image details &nbsp;&nbsp;<i id="iconCheck"></i></h4>
+                <div class="row form-group">
+                    <div class="col-xs-3">Name</div>
+                    <div class="col-xs-9 img-details" id="uploadFile"></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-3">Size</div>
+                    <div class="col-xs-9 img-details" id="filesize"></div>
+                </div>
+                <div class="row" style="margin-top: 38px;">
+                    <div class="col-xs-5 col-sm-4">
+                        <div>
+                            <button class="btn btn-primary btn-block form-control" onclick="$('#uploadBtn').click();">Browse</button>
+                            <input id="uploadBtn" type="file" accept="image/*" onchange="angular.element(this).scope().generatePreview(this)" style="display: none;" />
+                        </div>
+                    </div>
+                    <div class="col-xs-5 col-sm-6 no-padding">
+                        <button ng-click="" type="button" class="btn btn-primary form-control img-details">Upload</button>
+                    </div>
+                    <div class="col-xs-1 col-sm-2 ">
+                        <a class="cursor:pointer"><i class="fa fa-trash fa-2x" style="padding-top: 3px;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /modal-body -->
+
+    <div class="modal-footer">
+        <a class="btn cursor:pointer" ng-click="cancel()">Cancel</a>
+        <!--<button class="btn btn-primary">Print</button>-->
+        <button class="btn btn-success" ng-click="ok()">Done</button>
+    </div><!-- /modal footer -->
+
+</div><!-- /modal content -->
