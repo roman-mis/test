@@ -3,7 +3,6 @@ angular.module('origApp.controllers')
         .controller('CandidateSidebarAddExp10Controller', function($scope, HttpResource, ConstantsResource) {
           
           $scope.types = ConstantsResource.get('otherexpensetypes');
-
           $scope.ok = function() {
             $scope.isSaving = true;
             HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses')
@@ -24,5 +23,6 @@ angular.module('origApp.controllers')
             expense: $scope.attachReceiptsToSendData($scope.expenseData.receiptListData),
             vehicleInformation: $scope.expenseData.vehicleInfo
           };
+          console.log($scope.sendData);
 
         });

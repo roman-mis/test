@@ -95,12 +95,11 @@
             </div>
                     </div>
         </div><!-- /modal-body -->
-
-        <div class="modal-footer modal-footer-textLeft">
-                    <div class="row rowFooter">
-                        <div class="col-xs-6 col-sm-7">
+        <div class="modal-footer" id="modal-footer-left">
+                   <div class="row rowFooter">
+                        <div class="col-xs-7 col-sm-6">
                             <fieldset class="fieldsetSPP">
-                                <legend class="text-center">Upload certificate</legend>
+                                <legend>Upload sick note</legend>
                                 <div class="row">
                                   <div class="col-xs-12 col-sm-6 form-group">
                                       <div class="fileUpload btn btn-primary form-control">
@@ -136,10 +135,23 @@
               </fieldset>
                         </div>
 
-              <div class="col-xs-6 col-sm-5 form-group text-right btnFooter btnFooterApproval">
-              <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-                <button type="button" ng-click="save();" class="btn btn-primary">Save</button>
-            </div>
+                        <div class="col-xs-5 col-sm-6 text-right btnFooter form-group">
+                            <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+                  <!-- Split button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Action</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a ng-click="save();">Save</a></li>
+                                    <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
+                                    <li><a ng-click="saveAndReject()">Save and Reject</a></li>
+                                    <li><a ng-click="saveAndRefer()">Save and Refer</a></li>
+                                </ul>
+                            </div>
+                        </div>
 
                     </div>
-                </div><!-- /modal footer -->
+                </div>
