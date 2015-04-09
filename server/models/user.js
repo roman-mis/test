@@ -136,7 +136,40 @@ module.exports = function(mongoose,autoIncrement) {
         ],
         payrollValues: {
             holidayPayRetained: Number
-        }
+        },
+        marginFee:{
+          
+            margin:{
+                  fixedFee:Number,
+                  percentageOfTimesheets:{
+                    minAmount:Number,
+                    maxAmount:Number,
+                    ranges:[
+                      {
+                        from:Number,
+                        to:Number,
+                        charged:Number
+                      }
+                    
+                    ]
+                  },
+                  totalHours:{
+                    minAmount:Number,
+                    maxAmount:Number,
+                    ranges:[
+                      {
+                        from:Number,
+                        to:Number,
+                        charged:Number
+                      }
+                    
+                    ]
+                  },
+                  fixedOnTimesheets:Number
+
+
+                }
+          }
       },
         documents:[{
             
