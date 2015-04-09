@@ -3,6 +3,12 @@ var SpecReporter = require('jasmine-spec-reporter');
 var fs = require('fs');
 var awsservice=require('./awsservice');
 
+var dummyLogin = ['./spec/dummy_data.js', './spec/login.js'];
+var navigateCandidate = [
+  './spec/candidate/search_current_candidate.js',
+  './spec/candidate/checking_tabs.js',
+  './spec/candidate/contact_tab.js'
+];
 
 exports.config = {
 
@@ -21,7 +27,7 @@ exports.config = {
     main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js'/*,'./spec/candidates.js','./spec/sidebar.js'*/],
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
     remote: ['./spec/dummy_data.js','./spec/login.js','./spec/search_current_candidate.js','./spec/candidates.js'],
-    dummy: ['./spec/dummy_data.js','./spec/login.js']
+    dummy: dummyLogin.concat(navigateCandidate)
   },
 
   onPrepare: function () {
