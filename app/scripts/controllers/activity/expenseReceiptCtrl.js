@@ -5,6 +5,8 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     //$scope.generatingPreview = false;
     var canceller = $q.defer();
     var uploadCancelled = false;
+    var signedRequest;
+    var uploadSuccess = false;
     $scope.uploadedImg = {};
 
     $scope.validFile = false;
@@ -15,13 +17,20 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     $scope.actualUrls = [];
     $scope.receiptUrls.forEach(function (justName) {
         console.log(justName);
-        $http.get('/api/documents/receipts/' + justName).success(function (res) {
-            logs(res, 'actual url');
-            $scope.actualUrls.push({
-                name: justName,
-                img: res
-            });
+        setTimeout(function () {
+            window.open($http.get('/api/documents/receipt/' + justName), 'docviewFrame');
+        }, 100);
+        $scope.actualUrls.push({
+            name: justName,
+            img: justName
         });
+        //$http.get('/api/documents/receipts/' + justName).success(function (res) {
+        //    logs(res, 'actual url');
+        //    $scope.actualUrls.push({
+        //        name: justName,
+        //        img: res
+        //    });
+        //});
     });
 
     var readFile = function (file) {
@@ -84,7 +93,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
                 mimeType: fileType,
                 fileName: fileName
             }, function (response) {
-                var signedRequest = response.data.signedRequest;
+                signedRequest = response.data.signedRequest;
                 $http({
                     method: 'PUT',
                     url: signedRequest,
@@ -94,6 +103,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
                 }).success(function () {
                     //get view url of file
                     $scope.uploading = false;
+                    uploadSuccess = true;
                     if (uploadCancelled) {
                         $scope.uploadStatus = 'Uploaded cancelled';
                     } else {
@@ -118,7 +128,8 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     }
 
     $scope.ok = function () {
-        $scope.receiptUrls.push(fileName);
+        if (uploadSuccess)
+            $scope.receiptUrls.push(fileName);
         $modalInstance.close();
     };
 
