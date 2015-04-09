@@ -11,6 +11,8 @@ angular.module('origApp.controllers')
           
           $scope.onTypeChanged = function(){
             $scope.addData.cost = $scope.addData.type ? $scope.addData.type.amount : '0.00';
+            $scope.addData.value = $scope.addData.type ? $scope.addData.type.amount : '0.00';
+            $scope.addData.amount = 1;
           };
 
           

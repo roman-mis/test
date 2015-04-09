@@ -137,7 +137,7 @@ module.exports = function(db){
 		var total = 0;
 		expense.days.forEach(function(day){
 			day.expenses.forEach(function(ex) {
-				total = total + ex.value;
+				total = total + ex.value*ex.amount;
 			});
 		});
 
