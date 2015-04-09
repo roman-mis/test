@@ -36,14 +36,14 @@ angular.module('origApp.controllers')
         });
     };
     $scope.closeModal = function() {
-        $modalInstance.close('cancel');
+        $modalInstance.dismiss('cancel');
     };
     $scope.submitStudentLoan = function() {
 
         HttpResource.model('actionrequests').create($scope)
             .patch($scope.id).then(function() {
                 MsgService.success('Successfully saved.');
-                $scope.closeModal();
+                $modalInstance.dismiss('cancel');
             });
 
     }
