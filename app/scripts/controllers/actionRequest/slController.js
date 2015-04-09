@@ -36,7 +36,6 @@ angular.module('origApp.controllers')
         });
     };
     $scope.closeModal = function() {
-
         $modalInstance.dismiss('cancel');
     };
     $scope.submitStudentLoan = function() {
@@ -44,7 +43,7 @@ angular.module('origApp.controllers')
         HttpResource.model('actionrequests').create($scope)
             .patch($scope.id).then(function() {
                 MsgService.success('Successfully saved.');
-                $scope.closeModal();
+                $modalInstance.dismiss('cancel');
             });
 
     }

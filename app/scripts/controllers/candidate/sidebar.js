@@ -89,7 +89,7 @@ angular.module('origApp.controllers')
                 templateUrl: 'views/candidate/AOE.html',
                 parentScope: $scope,
                 controller: 'AOEController',
-                size: 'lg'
+                size: 'md'
             });
         };
         $scope.openSsp = function () {
@@ -108,7 +108,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/spp.html',
                 parentScope:$scope,
                 controller:'sppController',
-                size:'lg'
+                size:'md'
             });
         };
 
@@ -117,7 +117,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/holidayPayment.html',
                 parentScope:$scope,
                 controller:'holidayPaymentController',
-                size:'lg'
+                size:'md'
             });
         };
 
@@ -126,7 +126,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/sl.html',
                 parentScope:$scope,
                 controller:'slController',
-                size:'lg'
+                size:'md'
             })
         };
 
@@ -137,7 +137,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/mp.html',
                 parentScope:$scope,
                 controller:'mpController',
-                size:'lg'
+                size:'md'
             })
         };
 

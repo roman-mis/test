@@ -116,7 +116,7 @@ angular.module('origApp.controllers')
                 $scope.sppObject.days = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
-                $scope.closeModal();
+                $modalInstance.close();
             }, function(error) {
                 MsgService.danger(error);
             });
@@ -132,8 +132,7 @@ angular.module('origApp.controllers')
 
     };
     $scope.closeModal = function() {
-
-        $modalInstance.dismiss('cancel');
+       $modalInstance.dismiss('close');
     };
     $scope.save = function() {
         HttpResource.model('actionrequests').create($scope.sppObject)

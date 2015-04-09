@@ -76,10 +76,10 @@
                 <p class="alert alert-success">&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
             </div>
             <div class="col-xs-12">
-                <div class="wrapTable-scroll">
+                <div class="wrapTable-scroll" style="max-height: 250px;overflow-y: scroll;">
                     <table class="table table-striped">
                         <tbody>
-                        <tr ng-repeat="s in ssp.days">
+                        <tr ng-repeat="s in ssp.days" >
                             <td ng-if="s.monthNumber >0">
 
                                 Month {{s.monthNumber}}
@@ -93,8 +93,8 @@
 
                                 <input type="number"  ng-model="s.amount" ng-if='!indexCount'>
                                 &nbsp; <a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;'
-                                        ng-show='!indexCount'>Ok</a>
-                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a>
+                                        ng-show='!indexCount'><i class="fa fa-check"></i></a>
+                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'><i class="fa fa-remove"></i></a>
                             </td>
                             <td class="text-right">
                                 <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i
@@ -110,12 +110,11 @@
         </div>
     </div>
 
-
     <div id="modal-footer-left" class="modal-footer">
         <div class="row rowFooter">
             <div class="col-xs-7 col-sm-6">
                 <fieldset class="fieldsetRequestP45">
-                    <legend>Upload Sick Note</legend>
+                    <legend class="text-center">Upload Sick Note</legend>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 form-group">
                             <div class="fileUpload btn btn-primary form-control">
@@ -172,4 +171,5 @@
             </div>
         </div>
     </div>
+
 </form>

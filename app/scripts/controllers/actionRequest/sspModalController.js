@@ -163,7 +163,8 @@ angular.module('origApp.controllers')
                 dateInformed: $scope.ssp.dateInformed,
                 startDate: $scope.ssp.startDate,
                 endDate: $scope.ssp.endDate,
-                days: $scope.ssp.days
+                days: $scope.ssp.days,
+                imageUrl:$scope.ssp.imageUrl
             };
 
             var param, successMsg;
@@ -193,7 +194,7 @@ angular.module('origApp.controllers')
                 HttpResource.model('actionrequests/' + $scope.ssp.id).create(data)
                     .patch(param).then(function() {
                         MsgService.success(successMsg);
-                        $scope.closeModal();
+                        $modalInstance.close();
                     }, function(err) {
                         MsgService.danger(err);
                     });
@@ -202,7 +203,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.closeModal = function() {
-            $modalInstance.close();
+            $modalInstance.dismiss('close');
         };
 
     });
