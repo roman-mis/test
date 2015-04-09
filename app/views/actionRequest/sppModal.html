@@ -4,6 +4,47 @@
         </div><!-- /modal-header -->
         <div class="modal-body">
                     <div class="row">
+                        <div class="col-xs-6 col-sm-3 form-group">Contractor name</div>
+                        <div class="col-xs-6 col-sm-3 form-group text-right no-padding-left">{{candidateInfo.firstName}}  {{candidateInfo.lastName}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group">Contractor ID</div>
+                        <div class="col-xs-6 col-sm-3 form-group text-right no-padding-left">{{candidateInfo.candidateRef}}</div>
+                    </div>
+                    <div class="line-horizontal"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 control-label">Baby due date</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                            <input type="text"  ng-model="sppObject.spp.babyDueDate" orig-datepicker>
+                        </div>
+                        <div class="col-xs-6 col-sm-3 control-label">Actual birth date</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                            <input type="text"  ng-model="sppObject.spp.actualBirthDate" orig-datepicker>
+                        </div>
+                        <div class="col-xs-6 col-sm-3 control-label" style="padding-right:0;">Confirm relationship</div>
+                        <div class="col-xs-6 col-sm-9 form-group no-padding-left">
+                           <select class="form-control" ng-model="sppObject.spp.relationship" ng-options="opt.code as opt.description for opt in relationships">
+                                <option value="">Select relationship</option>
+
+                            </select>
+                        </div>
+                     </div>
+                    <div class="line-horizontal"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 control-label" style="padding-right:0;">Date leave to start</div>
+                        <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+
+                                 <input type="text" ng-model="sppObject.actualStartDate" orig-datepicker class="form-control">
+
+                        </div>
+                        <div class="col-xs-6 col-sm-4 control-label">Duration in weeks</div>
+                        <div class="col-xs-6 col-sm-2 form-group no-padding-left">
+                            <select ng-model="sppObject.spp.numberWeeks" class="form-control">
+                                <option value="">Select</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                    </div>
+                 <!--   <div class="row">
                          <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
                         <div class="col-xs-6 col-sm-4 form-group no-padding-left text-right">{{candidateInfo.firstName}}  {{candidateInfo.lastName}}</div>
                         <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
@@ -23,11 +64,11 @@
 
                             </select>
                         </div>
-                     </div>
+                     </div> -->
                     <div class="line-horizontal"></div>
           <div class="row">
             <div class="col-sm-12">
-                            <div class="wrapTable-scroll">
+                            <div class="wrapTable-scroll" style="max-height: 250px;overflow-y: scroll;">
                                 <table class="table table-striped table-paternityPay">
                                     <tbody>
                                       <tr ng-repeat="s in sppObject.days">
@@ -40,12 +81,10 @@
                                         <td></td>
                                         <td></td>
                                         <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount;"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
-
-                                            <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'>Ok</a> <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'>Cancel</a></td>
-
-
-                                        <td>
-                                            <a ng-click="indexCount=false;" class="pull-right"><i class="fa fa-edit"></i></a>
+                                            <input type="number"  ng-model="s.amount" ng-if='!indexCount'><a ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'><i class="fa fa-check"></i>
+                                            </a> <a ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'><i class="fa fa-remove"></i></a></td>
+                                        <td class="text-right">
+                                            <a ng-click="indexCount=false;"><i class="fa fa-edit"></i></a>
                                             <a ng-click='remove($index);' ><i class="fa fa-trash"></i></a>
                                         </td>
 
@@ -56,12 +95,11 @@
             </div>
                     </div>
         </div><!-- /modal-body -->
-
-        <div class="modal-footer modal-footer-textLeft">
-                    <div class="row rowFooter">
-                        <div class="col-xs-6 col-sm-7">
+        <div class="modal-footer" id="modal-footer-left">
+                   <div class="row rowFooter">
+                        <div class="col-xs-7 col-sm-6">
                             <fieldset class="fieldsetSPP">
-                                <legend>Upload certificate</legend>
+                                <legend>Upload sick note</legend>
                                 <div class="row">
                                   <div class="col-xs-12 col-sm-6 form-group">
                                       <div class="fileUpload btn btn-primary form-control">
@@ -97,10 +135,23 @@
               </fieldset>
                         </div>
 
-              <div class="col-xs-6 col-sm-5 form-group text-right btnFooter btnFooterApproval">
-              <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-                <button type="button" ng-click="save();" class="btn btn-primary">Save</button>
-            </div>
+                        <div class="col-xs-5 col-sm-6 text-right btnFooter form-group">
+                            <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+                  <!-- Split button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Action</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <li><a ng-click="save();">Save</a></li>
+                                    <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
+                                    <li><a ng-click="saveAndReject()">Save and Reject</a></li>
+                                    <li><a ng-click="saveAndRefer()">Save and Refer</a></li>
+                                </ul>
+                            </div>
+                        </div>
 
                     </div>
-                </div><!-- /modal footer -->
+                </div>

@@ -29,8 +29,8 @@ angular.module('origApp.controllers')
                 { field: 'periodActioned', display: 'Period Actioned', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.periodActioned}}</div>' },
                 { field: 'userRequested', display: 'User Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.createdBy.name  | capitalizeAll}}</div>' },
                 { field: 'requestRef.', display: 'Request Ref.', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.requestRef}}</div>' },
-                { field: 'status.', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)" {{row.status | capitalize}}</div>' },
-                { field: 'status.', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> <a href=""><i class="fa fa-folder-open-o"></i></a></div>' }
+                { field: 'status', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.status | capitalize}}</div>' },
+                { field: '', display: '', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> <a href=""><i class="fa fa-folder-open-o"></i></a></div>' }
             ],
             data: []
         };
@@ -96,6 +96,7 @@ angular.module('origApp.controllers')
                     $scope.sppObject = data.data.object;
                     $scope.temp = {};
                     $scope.temp.logoFileName = data.data.object.imageUrl;
+                    parentScope.showMe = true;
                     break;
                 case 'holidaypay':
                     controller = 'holidayPaymentController',
@@ -103,6 +104,7 @@ angular.module('origApp.controllers')
                     $scope.showMe = true;
                     $scope.hpObject = {};
                     $scope.hpObject = data.data.object;
+                    $scope.id=data.data.object.id;
 
             }
             var modalInstance = ModalService.open({
@@ -114,9 +116,11 @@ angular.module('origApp.controllers')
             });
 
             modalInstance.result.then(function(data) {
-                listActionRequest();
+                $scope.loadActionRequestList();
             }, function(reason) {
-
+//                console.log('reason');
+//                console.log(reason);
+//                $scope.loadActionRequestList();
             });
         });
     };

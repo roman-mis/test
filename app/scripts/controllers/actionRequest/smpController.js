@@ -71,42 +71,41 @@ angular.module('origApp.controllers')
             HttpResource.model('actionrequests').create($scope.smpObject)
                 .patch($scope.smpObject.id).then(function() {
                     MsgService.success('Successfully saved.');
-                    $scope.closeModal();
+                    $modalInstance.close();
                 });
         };
         $scope.saveAndApprove = function() {
 
-            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create($scope.smpObject)
                 .patch('approve').then(function() {
                     MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
+                   $modalInstance.close();
 
                 });
 
         };
         $scope.saveAndReject = function() {
 
-            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create($scope.smpObject)
                 .patch('reject').then(function() {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
+                    MsgService.success('Successfully saved and rejected.');
+                   $modalInstance.close();
 
                 });
 
         };
         $scope.saveAndRefer = function() {
 
-            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create('')
+            HttpResource.model('actionrequests/' + $scope.smpObject.id + '').create($scope.smpObject)
                 .patch('refer').then(function() {
-                    MsgService.success('Successfully saved and approved.');
-                    $scope.closeModal();
+                    MsgService.success('Successfully saved and referred.');
+                    $modalInstance.close();
 
                 });
 
         };
         $scope.closeModal = function() {
-
-            $modalInstance.dismiss('cancel');
+            $modalInstance.dismiss('close');
         };
 
     });

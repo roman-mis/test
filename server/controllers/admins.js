@@ -11,7 +11,7 @@ module.exports = function(app){
 
 function getUserInfoViewModel(usr){
 
-     return {_id:usr._id,title:usr.title,firstName:usr.firstName,lastName:usr.lastName,emailAddress:usr.emailAddress
+     return {_id:usr._id,title:usr.title,firstName:usr.firstName,middleName:usr.middleName,lastName:usr.lastName,emailAddress:usr.emailAddress
     };
 }
 
@@ -19,6 +19,7 @@ function postAdmin(req,res){
 	var newUser={
         title:req.body.title,
         firstName:req.body.firstName,
+        middleName:req.body.middleName,
         lastName:req.body.lastName,
         emailAddress: req.body.emailAddress,
         userType: 'AM'
