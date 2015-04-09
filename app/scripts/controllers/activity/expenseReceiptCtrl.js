@@ -20,6 +20,8 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
         console.log(justName);
         $http.get('/api/documents/receipts/viewsignedurl/' + justName).success(function (res) {
             //logs(res, 'actual url');
+            var fr = new FileReader();
+            logs(fr, 'file');
             $scope.actualUrls.push({
                 name: justName,
                 img: res.url
