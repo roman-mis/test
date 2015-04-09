@@ -69,7 +69,7 @@ module.exports = function(){
     };
 
     controller.viewReceipt=function(req,res){
-       var objectName=req.query.fileName;
+        var objectName = req.params.receiptName;
          //   var objectType=req.query.mimeType;
             // var documentUpload=req.query.documentUpload||false;
             var folder=process.env.S3_RECEIPT_FOLDER;

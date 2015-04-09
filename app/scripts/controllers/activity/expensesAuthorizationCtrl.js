@@ -216,7 +216,8 @@ app.controller("expensesAuthorizationCtrl",
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
-                            value: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            amount: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            value: $scope.expensesArray[expenseIndex].expenses[i].value,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
@@ -725,7 +726,8 @@ app.controller("expensesAuthorizationCtrl",
             //}
         }
 
-        $scope.viewReceipt = function () {
+        $scope.viewReceipt = function (expense) {
+            //logs(expense.receiptUrls, 'URLs');
             var modalInstance = $modal.open({
                 templateUrl: 'views/activity/expenseReceipt.html',
                 controller: 'expenseReceiptCtrl',
@@ -733,12 +735,15 @@ app.controller("expensesAuthorizationCtrl",
                 resolve: {
                     rootScope: function () {
                         return $scope;
+                    },
+                    receiptUrls: function () {
+                        return expense.receiptUrls;
                     }
                 }
             });
 
             modalInstance.result.then(function () {
-                
+                logs(expense, 'new expense');
             }, function (msg) {
                 logs(msg, 'Dismissed');
             });

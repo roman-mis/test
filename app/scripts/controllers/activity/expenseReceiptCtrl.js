@@ -1,11 +1,33 @@
 ﻿'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, rootScope) {
+app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, rootScope, receiptUrls, s3Service, $q, HttpResource) {
     //$scope.generatingPreview = false;
+    var canceller = $q.defer();
+    var uploadCancelled = false;
+    $scope.uploadedImg = {};
+
+    $scope.validFile = false;
+    $scope.uploading = false;
+    var fileName, fileType;
+
+    $scope.receiptUrls = receiptUrls;
+    $scope.actualUrls = [];
+    $scope.receiptUrls.forEach(function (justName) {
+        console.log(justName);
+        $http.get('/api/documents/receipts/' + justName).success(function (res) {
+            logs(res, 'actual url');
+            $scope.actualUrls.push({
+                name: justName,
+                img: res
+            });
+        });
+    });
 
     var readFile = function (file) {
-        //logs(file, 'file');
+        logs(file, 'file');
+        fileName = file.name;
+        fileType = file.type;
         //$scope.generatingPreview = true;
         var icon = document.getElementById('iconCheck');
         icon.classList.add('fa', 'fa-spinner', 'fa-spin');
@@ -25,6 +47,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     },
     showUploadError = function () {
         alert('Incorrect image format. Please choose correct image.');
+        $scope.validFile = false;
     },
     loadImageData = function (file, filereader) {
         document.getElementById("uploadFile").innerHTML = file.name;
@@ -33,6 +56,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
         var icon = document.getElementById('iconCheck');
         icon.classList.remove('fa', 'fa-spinner', 'fa-spin');
         icon.classList.add('fa', 'fa-check');
+        $scope.validFile = true;
     };
 
     //$(window).load(function () {
@@ -44,16 +68,57 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
 
     $scope.generatePreview = function (file) {
         $scope.$apply();
+        $scope.file = file.files[0];
         if (file) readFile(file.files[0]);
     }
 
-    $(document).on("change", "uploadBtn", function () {
-        logs('changed');
-        $scope.uploadFile();
-    });
+
+    $scope.uploadFile = function () {
+        if ($scope.validFile) {
+            $scope.uploading = true;
+            logs('uploading ...');
+            canceller = $q.defer();
+            uploadCancelled = false;
+
+            HttpResource.model('documents/receipts').customGet('signedUrl', {
+                mimeType: fileType,
+                fileName: fileName
+            }, function (response) {
+                var signedRequest = response.data.signedRequest;
+                $http({
+                    method: 'PUT',
+                    url: signedRequest,
+                    data: $scope.file,
+                    headers: { 'Content-Type': fileType, 'x-amz-acl': 'public-read' },
+                    timeout: canceller.promise
+                }).success(function () {
+                    //get view url of file
+                    $scope.uploading = false;
+                    if (uploadCancelled) {
+                        $scope.uploadStatus = 'Uploaded cancelled';
+                    } else {
+                        $scope.uploadStatus = 'Uploaded successfully';
+                        $scope.uploadedImg.url = response.data.url;
+                        logs($scope.uploadedImg, 'the url');
+                    }
+                }).error(function () {
+                    $scope.uploadStatus = 'Upload failure';
+                });
+            });
+
+        } else {
+            alert('No valid file selected');
+        }
+    }
+
+    $scope.cancelUpload = function () {
+        canceller.resolve("upload cancelled");
+        uploadCancelled = true;
+        $scope.uploading = false;
+    }
 
     $scope.ok = function () {
-
+        $scope.receiptUrls.push(fileName);
         $modalInstance.close();
     };
 

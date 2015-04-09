@@ -10,6 +10,7 @@ module.exports = function(mongoose,autoIncrement) {
     title:              {type:String,required:false,trim:true},
     firstName:         {type:String,required:true,trim:true},
     lastName:          {type:String,required:true,trim:true},
+    middleName:         {type:String,required:true,trim:true},
     emailAddress:      {
         type:String,required:true,
         validate:[validate({
