@@ -115,11 +115,10 @@ module.exports = function (dbs) {
                                         if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
 
                                             var sys = systemDoc.expensesRate.id(i.subType);
-
+                                            t.amount = i.amount;
+                                            t.value = i.value;
                                             if (sys) {
 
-                                                t.amount = i.value;
-                                                t.value = 4.5;
                                                 t.expenseDetail = {};
                                                 t.expenseDetail.name = sys.name;
                                                 t.expenseDetail.id = sys._id;
@@ -146,8 +145,6 @@ module.exports = function (dbs) {
 
 
                                         } else {
-                                            t.amount = i.value;
-                                            t.value = 0.45;
                                             t.expenseDetail = {};
                                             t.expenseDetail.name = i.subType;
                                             t.expenseDetail.total = i.value;

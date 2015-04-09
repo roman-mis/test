@@ -223,7 +223,7 @@ app.controller("expensesAuthorizationCtrl",
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
                             status: newStatus
                         });
-                        //logs(req.body);
+                        logs(req.body);
                         break;
                     }
                 }

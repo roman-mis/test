@@ -17,20 +17,20 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     $scope.actualUrls = [];
     $scope.receiptUrls.forEach(function (justName) {
         console.log(justName);
-        setTimeout(function () {
-            window.open($http.get('/api/documents/receipt/' + justName), 'docviewFrame');
-        }, 100);
-        $scope.actualUrls.push({
-            name: justName,
-            img: justName
-        });
-        //$http.get('/api/documents/receipts/' + justName).success(function (res) {
-        //    logs(res, 'actual url');
-        //    $scope.actualUrls.push({
-        //        name: justName,
-        //        img: res
-        //    });
+        //setTimeout(function () {
+        //    window.open($http.get('/api/documents/receipt/' + justName), 'docviewFrame');
+        //}, 100);
+        //$scope.actualUrls.push({
+        //    name: justName,
+        //    img: justName
         //});
+        $http.get('/api/documents/receipts/' + justName).success(function (res) {
+            logs(res, 'actual url');
+            $scope.actualUrls.push({
+                name: justName,
+                img: res.url
+            });
+        });
     });
 
     var readFile = function (file) {

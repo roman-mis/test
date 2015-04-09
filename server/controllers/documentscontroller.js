@@ -76,8 +76,9 @@ module.exports = function(){
 
         awsService.getS3SignedUrl('getObject', objectName,null,folder)
         .then(function (returnData) {
-            console.log(returnData);
-            res.redirect(returnData.signedRequest);
+            //console.log(returnData);
+            //res.redirect(returnData.signedRequest);
+            res.json({url: returnData.signedRequest});
 
         },res.sendFailureResponse);
     };
