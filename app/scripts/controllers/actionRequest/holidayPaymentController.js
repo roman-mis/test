@@ -37,13 +37,30 @@ angular.module('origApp.controllers')
 
         }
     };
-    $scope.savePayroll = function(val) {
+    $scope.savePayroll = function(val,type) {
       if (val && $scope.hpObject.holidayPay.amount <= $scope.candidate.payrollValues.holidayPayRetained) {
-        HttpResource.model('actionrequests').create($scope.hpObject)
-            .patch($scope.hpObject.id).then(function() {
+
+        switch (type){
+
+           case 'save':
+            HttpResource.model('actionrequests').create($scope.hpObject)
+            .patch($scope.id).then(function() {
                 MsgService.success('Successfully saved.');
                $modalInstance.dismiss('cancel');
             });
+            break;
+
+            default :
+             HttpResource.model('actionrequests/' + $scope.id + '').create($scope.hpObject)
+                .patch(type).then(function() {
+                    MsgService.success('Successfully saved and approved.');
+                   $modalInstance.close();
+
+                });
+
+
+        };
+
         }else{
 
           $scope.submitted = true;
@@ -51,6 +68,7 @@ angular.module('origApp.controllers')
         }
 
     };
+
 
     $scope.closeModal = function() {
         $modalInstance.dismiss('cancel');
