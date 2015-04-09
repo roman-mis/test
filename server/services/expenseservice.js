@@ -112,11 +112,11 @@ module.exports = function (dbs) {
                                         t.subType = i.subType;
                                         t.receiptUrls = i.receiptUrls;
                                         bucketObject.total += i.value;
+                                        t.amount = i.amount;
+                                        t.value = i.value;
                                         if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
 
                                             var sys = systemDoc.expensesRate.id(i.subType);
-                                            t.amount = i.amount;
-                                            t.value = i.value;
                                             if (sys) {
 
                                                 t.expenseDetail = {};
