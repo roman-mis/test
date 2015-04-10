@@ -180,7 +180,7 @@ angular.module('origApp.controllers')
                     break;
                 case 'saveAndRefer':
                     param = 'refer';
-                    successMsg = 'Sick Pay has been Rffered.';
+                    successMsg = 'Sick Pay has been Reffered.';
                     break;
             }
 
