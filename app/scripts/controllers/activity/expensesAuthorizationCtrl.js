@@ -223,7 +223,7 @@ app.controller("expensesAuthorizationCtrl",
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
                             status: newStatus
                         });
-                        logs(req.body);
+                        //logs(req.body);
                         break;
                     }
                 }
@@ -743,7 +743,12 @@ app.controller("expensesAuthorizationCtrl",
             });
 
             modalInstance.result.then(function () {
-                logs(expense, 'new expense');
+                saveAnyway();
+            }, function (msg) {
+                saveAnyway();
+            });
+            function saveAnyway() {
+                //logs(expense, 'new expense');
                 var req = {};
                 req.body = [];
                 var subType = '';
@@ -768,6 +773,7 @@ app.controller("expensesAuthorizationCtrl",
                 } else {
                     subType = expense.expenseDetail.name;
                 }
+
                 //logs(expense.date);
                 req.body.push({
                     expenseType: expense.expenseType,
@@ -780,12 +786,11 @@ app.controller("expensesAuthorizationCtrl",
                     receiptUrls: expense.receiptUrls,
                     status: expense.status
                 });
+
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     logs(res, 'Edit Response');
                 });
-            }, function (msg) {
-                logs(msg, 'Dismissed');
-            });
+            }
         }
 
         function logs(record, label) {

@@ -81,8 +81,8 @@ module.exports = function(){
         awsService.getS3SignedUrl('getObject', objectName,null,folder)
         .then(function (returnData) {
             //console.log(returnData);
-            //res.redirect(returnData.signedRequest);
-            res.json({url: returnData.signedRequest});
+            res.redirect(returnData.signedRequest);
+            //res.json({url: returnData.signedRequest});
 
         },res.sendFailureResponse);
     };
@@ -106,8 +106,9 @@ module.exports = function(){
             var folder=getFolderPath(req);
 
         awsService.getS3SignedUrl('getObject', objectName,null,folder)
-        .then(function(returnData){
-            res.json(returnData.signedRequest);
+        .then(function (returnData) {
+            //console.log(returnData);
+            res.json({url: returnData.signedRequest});
 
         },res.sendFailureResponse);
     };
