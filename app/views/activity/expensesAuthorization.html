@@ -193,7 +193,7 @@
                                                                 <td width="9%">
                                                                     <div ng-hide="item.edit && cat != 'Transport'">{{item.value | currency:"&pound;"}}</div>
                                                                     <div ng-if="item.edit && cat != 'Transport'">
-                                                                        <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
+                                                                        <input style="width: 5em" type="number" placeholder="value" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
                                                                     </div>
                                                                 </td>
                                                                 <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0 | currency:"&pound;"}}</td>
@@ -206,15 +206,15 @@
                                                                                 <i class="fa fa-picture-o present"></i>
                                                                             </a>
                                                                             <ul ng-if="test3[$index]" class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                                <li>
+                                                                                <li ng-click="viewReceipt(item, expense)">
                                                                                     <a style="cursor:pointer">View</a>
                                                                                 </li>
-                                                                                <li>
+                                                                                <!--<li ng-click="viewReceipt(item, expense)">
                                                                                     <a style="cursor:pointer">Add</a>
-                                                                                </li>
-                                                                                <li>
+                                                                                </li>-->
+                                                                                <!--<li>
                                                                                     <a style="cursor:pointer">Delete</a>
-                                                                                </li>
+                                                                                </li>-->
                                                                                 <!--<li>
                                                                                     <a style="cursor:pointer">Print</a>
                                                                                 </li>-->
@@ -227,15 +227,15 @@
                                                                                 <i class="fa fa-picture-o absent"></i>
                                                                             </a>
                                                                             <ul ng-if="test3[$index]" class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                                <li>
+                                                                                <li ng-click="viewReceipt(item, expense)">
                                                                                     <a style="cursor:pointer">View</a>
                                                                                 </li>
-                                                                                <li>
+                                                                                <!--<li ng-click="viewReceipt(item, expense)">
                                                                                     <a style="cursor:pointer">Add</a>
-                                                                                </li>
-                                                                                <li>
+                                                                                </li>-->
+                                                                                <!--<li>
                                                                                     <a style="cursor:pointer">Delete</a>
-                                                                                </li>
+                                                                                </li>-->
                                                                                 <!--<li>
                                                                                     <a style="cursor:pointer">Print</a>
                                                                                 </li>-->

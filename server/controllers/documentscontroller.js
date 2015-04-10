@@ -13,6 +13,10 @@ function getFolderPath(req){
 
         folder=process.env.S3_ACTIONREQUEST_FOLDER;
     }
+    else if(req.params.folder && req.params.folder.toLowerCase()==='receipts'){
+
+        folder=process.env.S3_RECEIPT_FOLDER;
+    }
 
     return folder;
 }
@@ -69,14 +73,16 @@ module.exports = function(){
     };
 
     controller.viewReceipt=function(req,res){
-       var objectName=req.query.fileName;
+        var objectName = req.params.receiptName;
          //   var objectType=req.query.mimeType;
             // var documentUpload=req.query.documentUpload||false;
             var folder=process.env.S3_RECEIPT_FOLDER;
 
         awsService.getS3SignedUrl('getObject', objectName,null,folder)
-        .then(function(returnData){
+        .then(function (returnData) {
+            //console.log(returnData);
             res.redirect(returnData.signedRequest);
+            //res.json({url: returnData.signedRequest});
 
         },res.sendFailureResponse);
     };
@@ -90,6 +96,19 @@ module.exports = function(){
         awsService.deleteS3Object(objectName,folder)
         .then(function(){
             res.json({result:true});
+
+        },res.sendFailureResponse);
+    };
+
+     controller.viewDocSignedUrl=function(req,res){
+       var objectName=req.params.fileName;
+
+            var folder=getFolderPath(req);
+
+        awsService.getS3SignedUrl('getObject', objectName,null,folder)
+        .then(function (returnData) {
+            //console.log(returnData);
+            res.json({url: returnData.signedRequest});
 
         },res.sendFailureResponse);
     };

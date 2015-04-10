@@ -27,6 +27,7 @@ module.exports = function(db){
   function getUserViewModel(user){
     return {id:user._id,_id:user._id,title:user.title,
       firstName:user.firstName,lastName:user.lastName,
+      middleName:user.middleName,
       emailAddress:user.emailAddress,userType:user.userType,
       avatarUrl:(user.avatarFileName?'api/candiates/'+user.id+'/'+user.avatarFileName:'')
           };

@@ -26,7 +26,8 @@
     "angular-filter": "~0.5.3",
     "papaparse": "~4.1.0",
     "ng-file-upload": "~3.1.2",
-    "angular-ui-notification": "~0.0.5"
+    "angular-ui-notification": "~0.0.5",
+    "angu-fixed-header-table": "~1.2.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

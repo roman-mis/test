@@ -23,7 +23,7 @@ angular.module('origApp.controllers')
     }, function(err) {});
 
     $scope.sendPayroll = function(val) {
-        if (val) {
+        if (val && $scope.hpObject.holidayPay.amount <= $scope.candidate.payrollValues.holidayPayRetained) {
             HttpResource.model('actionrequests/' + $scope.candidateId + '/holidaypay').
             create($scope.hpObject).post().then(function(response) {
                 MsgService.success('Holiday fund requested has been sent to payroll.');
@@ -34,20 +34,44 @@ angular.module('origApp.controllers')
         } else {
 
             $scope.submitted = true;
+
         }
     };
-    $scope.savePayroll = function() {
+    $scope.savePayroll = function(val,type) {
+      if (val && $scope.hpObject.holidayPay.amount <= $scope.candidate.payrollValues.holidayPayRetained) {
 
-        HttpResource.model('actionrequests').create($scope.hpObject)
-            .patch($scope.hpObject.id).then(function() {
+        switch (type){
+
+           case 'save':
+            HttpResource.model('actionrequests').create($scope.hpObject)
+            .patch($scope.id).then(function() {
                 MsgService.success('Successfully saved.');
-                $scope.closeModal();
+               $modalInstance.dismiss('cancel');
             });
+            break;
+
+            default :
+             HttpResource.model('actionrequests/' + $scope.id + '').create($scope.hpObject)
+                .patch(type).then(function() {
+                    MsgService.success('Successfully saved and '+type+'ed.');
+                   $modalInstance.close();
+
+                });
+
+
+        };
+
+        }else{
+
+          $scope.submitted = true;
+
+        }
 
     };
 
+
     $scope.closeModal = function() {
-        $modalInstance.close('cancel');
+        $modalInstance.dismiss('cancel');
     };
 
 

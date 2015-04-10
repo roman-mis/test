@@ -116,7 +116,7 @@ angular.module('origApp.controllers')
                 $scope.sppObject.days = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
-                $scope.closeModal();
+                $modalInstance.close();
             }, function(error) {
                 MsgService.danger(error);
             });
@@ -132,13 +132,44 @@ angular.module('origApp.controllers')
 
     };
     $scope.closeModal = function() {
-        $modalInstance.close('close');
+       $modalInstance.dismiss('close');
     };
-    $scope.save = function() {
-        HttpResource.model('actionrequests').create($scope.sppObject)
-            .patch($scope.sppObject.id).then(function() {
-                MsgService.success('Successfully saved.');
-                $scope.closeModal();
-            });
-    };
+
+     $scope.save = function() {
+            HttpResource.model('actionrequests').create($scope.sppObject)
+                .patch($scope.sppObject.id).then(function() {
+                    MsgService.success('Successfully saved.');
+                    $modalInstance.close();
+                });
+        };
+        $scope.saveAndApprove = function() {
+
+            HttpResource.model('actionrequests/' + $scope.sppObject.id + '').create($scope.sppObject)
+                .patch('approve').then(function() {
+                    MsgService.success('Successfully saved and approved.');
+                   $modalInstance.close();
+
+                });
+
+        };
+        $scope.saveAndReject = function() {
+
+            HttpResource.model('actionrequests/' + $scope.sppObject.id + '').create($scope.sppObject)
+                .patch('reject').then(function() {
+                    MsgService.success('Successfully saved and rejected.');
+                   $modalInstance.close();
+
+                });
+
+        };
+        $scope.saveAndRefer = function() {
+
+            HttpResource.model('actionrequests/' + $scope.sppObject.id + '').create($scope.sppObject)
+                .patch('refer').then(function() {
+                    MsgService.success('Successfully saved and referred.');
+                    $modalInstance.close();
+
+                });
+
+        };
 });

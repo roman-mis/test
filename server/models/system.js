@@ -14,8 +14,8 @@ module.exports = function(mongoose) {
                 town: String,
                 country: String,
                 postcode: String,
-                telephone: Number,
-                fax: Number,
+                telephone: String,
+                fax: String,
                 email: String
             },
             accounts: {

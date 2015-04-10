@@ -96,6 +96,7 @@ angular.module('origApp.controllers')
                     $scope.sppObject = data.data.object;
                     $scope.temp = {};
                     $scope.temp.logoFileName = data.data.object.imageUrl;
+                    parentScope.showMe = true;
                     break;
                 case 'holidaypay':
                     controller = 'holidayPaymentController',
@@ -103,6 +104,7 @@ angular.module('origApp.controllers')
                     $scope.showMe = true;
                     $scope.hpObject = {};
                     $scope.hpObject = data.data.object;
+                    $scope.id=data.data.object.id;
 
             }
             var modalInstance = ModalService.open({

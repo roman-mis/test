@@ -32,7 +32,15 @@
     return moment(input).format(format);
   };
 })
-
+ .filter('formatDateOnly', function() {
+  return function(input, format) {
+    format = format || 'DD/MM/YYYY';
+    if (input === undefined) {
+      return input;
+    }
+    return moment(input).format(format);
+  };
+})
  .filter('validDate', function() {
   return function(items, reverse) {
     var filtered = [];

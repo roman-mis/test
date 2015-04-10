@@ -180,7 +180,7 @@ angular.module('origApp.controllers')
                     break;
                 case 'saveAndRefer':
                     param = 'refer';
-                    successMsg = 'Sick Pay has been Rffered.';
+                    successMsg = 'Sick Pay has been Reffered.';
                     break;
             }
 
@@ -194,7 +194,7 @@ angular.module('origApp.controllers')
                 HttpResource.model('actionrequests/' + $scope.ssp.id).create(data)
                     .patch(param).then(function() {
                         MsgService.success(successMsg);
-                        $scope.closeModal();
+                        $modalInstance.close();
                     }, function(err) {
                         MsgService.danger(err);
                     });
@@ -203,7 +203,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.closeModal = function() {
-            $modalInstance.close('close');
+            $modalInstance.dismiss('close');
         };
 
     });

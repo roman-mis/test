@@ -36,15 +36,52 @@ angular.module('origApp.controllers')
         });
     };
     $scope.closeModal = function() {
-        $modalInstance.close('cancel');
+        $modalInstance.dismiss('cancel');
     };
     $scope.submitStudentLoan = function() {
 
         HttpResource.model('actionrequests').create($scope)
             .patch($scope.id).then(function() {
                 MsgService.success('Successfully saved.');
-                $scope.closeModal();
+                $modalInstance.dismiss('cancel');
             });
 
     }
+    $scope.submitStudentLoan = function() {
+            HttpResource.model('actionrequests').create($scope)
+                .patch($scope.id).then(function() {
+                    MsgService.success('Successfully saved.');
+                    $modalInstance.close();
+                });
+        };
+        $scope.saveAndApprove = function() {
+
+            HttpResource.model('actionrequests/' + $scope.id + '').create($scope)
+                .patch('approve').then(function() {
+                    MsgService.success('Successfully saved and approved.');
+                   $modalInstance.close();
+
+                });
+
+        };
+        $scope.saveAndReject = function() {
+
+            HttpResource.model('actionrequests/' + $scope.id + '').create($scope)
+                .patch('reject').then(function() {
+                    MsgService.success('Successfully saved and rejected.');
+                   $modalInstance.close();
+
+                });
+
+        };
+        $scope.saveAndRefer = function() {
+
+            HttpResource.model('actionrequests/' + $scope.id + '').create($scope)
+                .patch('refer').then(function() {
+                    MsgService.success('Successfully saved and referred.');
+                    $modalInstance.close();
+
+                });
+
+        };
 });
