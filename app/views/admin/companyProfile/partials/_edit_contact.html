@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Tel</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" ng-model="companyProfile.contact.telephone" name="tel"/>
+                            <input type="text" class="form-control" ng-model="companyProfile.contact.telephone" name="tel" required ng-pattern = "/^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/"/>
                         </div>
                     </div>
 
@@ -103,9 +103,9 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Fax</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" ng-model="companyProfile.contact.fax" name="fax"/>
+                            <input type="text" class="form-control" ng-model="companyProfile.contact.fax" name="fax" ng-pattern = "/^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/"/>
                             <div ng-show="contactForm.fax.$invalid || contactForm.fax.$pristine">
-                                <div class="alert alert-danger" ng-show="contactForm.postcode.$error.number">Please enter valid fax.</div>
+                                <div class="alert alert-danger" ng-show="contactForm.postcode.$error.pattern" ng-pattern = "/^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/">Please enter valid fax.</div>
                             </div>
                         </div>
                     </div>

@@ -56,7 +56,41 @@ module.exports = function(mongoose) {
       perTimesheet:          {type:Number},
       timesheetGross:        {type:Number}
     },
-		branches:[{type:Schema.Types.ObjectId,ref:'Branch'}]
+		branches:[{type:Schema.Types.ObjectId,ref:'Branch'}],
+    marginFee:{
+      
+        margin:{
+              fixedFee:Number,
+              percentageOfTimesheets:{
+                minAmount:Number,
+                maxAmount:Number,
+                ranges:[
+                  {
+                    from:Number,
+                    to:Number,
+                    charged:Number
+                  }
+                
+                ]
+              },
+              totalHours:{
+                minAmount:Number,
+                maxAmount:Number,
+                ranges:[
+                  {
+                    from:Number,
+                    to:Number,
+                    charged:Number
+                  }
+                
+                ]
+              },
+              fixedOnTimesheets:Number
+
+
+            }
+      }
+    
 	},{});
 	// mongoose.model('AgencyBranch',branchSchema);
   	return mongoose.model('Agency',schema);

@@ -132,7 +132,8 @@ angular.module('origApp.controllers')
                   dataItem.expenses.push({
                     expenseType: 'Transport',
                     subType: item.type.description,
-                    value: item.cost * 1,
+                    value: item.value,
+                    amount: item.amount,
                     mileage: item.mileage
                   });
                 }
@@ -144,7 +145,8 @@ angular.module('origApp.controllers')
                   dataItem.expenses.push({
                     expenseType: 'Subsistence',
                     subType: item.type._id,
-                    value: item.cost * 1,
+                    value: item.value,
+                    amount: item.amount,
                     description: item.type.name
                   });
                 }
@@ -156,7 +158,8 @@ angular.module('origApp.controllers')
                   dataItem.expenses.push({
                     expenseType: 'Other',
                     subType: item.type._id,
-                    value: item.cost * 1,
+                    value: item.value,
+                    amount: item.amount,
                     description: item.type.name
                   });
                 }
@@ -186,6 +189,7 @@ angular.module('origApp.controllers')
               $scope.generateSendData();
             }
             var sendData = $scope.expenseData.sendData;
+            console.log($scope.expenseData.sendData);
             sendData.days.forEach(function(dataItem){
               dataItem.expenses = [];
               receiptData.forEach(function(item) {
@@ -198,6 +202,7 @@ angular.module('origApp.controllers')
               });
             });
             $scope.expenseData.sendData = sendData;
+            console.log(sendData);
             return sendData;
           };
 

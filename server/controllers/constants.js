@@ -252,5 +252,9 @@ module.exports = function () {
         res.json(dataList.SLRAgreements);
     };
 
-    return controller;
+    controller.mileageRatesDefault = function(req, res){
+        res.json(dataList.mileageRatesDefault);
+    };
+        
+  return controller;
 };

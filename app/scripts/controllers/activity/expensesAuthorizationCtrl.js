@@ -726,7 +726,7 @@ app.controller("expensesAuthorizationCtrl",
             //}
         }
 
-        $scope.viewReceipt = function (expense) {
+        $scope.viewReceipt = function (expense, claim) {
             //logs(expense.receiptUrls, 'URLs');
             var modalInstance = $modal.open({
                 templateUrl: 'views/activity/expenseReceipt.html',
@@ -743,10 +743,54 @@ app.controller("expensesAuthorizationCtrl",
             });
 
             modalInstance.result.then(function () {
-                logs(expense, 'new expense');
+                saveAnyway();
             }, function (msg) {
-                logs(msg, 'Dismissed');
+                saveAnyway();
             });
+            function saveAnyway() {
+                //logs(expense, 'new expense');
+                var req = {};
+                req.body = [];
+                var subType = '';
+                if (expense.expenseType == 'Subsistence') {
+                    for (var j = 0; j < $scope.mealTypes.length; j++) {
+                        var newSub = expense.expenseDetail.name;
+                        if (newSub == $scope.mealTypes[j].name) {
+                            subType = $scope.mealTypes[j]._id;
+                            expense.expenseDetail.id = subType;
+                            break;
+                        }
+                    }
+                } else if (expense.expenseType == 'Other') {
+                    for (var j = 0; j < $scope.otherTypes.length; j++) {
+                        var newSub = expense.expenseDetail.name;
+                        if (newSub == $scope.otherTypes[j].name) {
+                            subType = $scope.otherTypes[j]._id;
+                            expense.expenseDetail.id = subType;
+                            break;
+                        }
+                    }
+                } else {
+                    subType = expense.expenseDetail.name;
+                }
+
+                //logs(expense.date);
+                req.body.push({
+                    expenseType: expense.expenseType,
+                    subType: subType,
+                    date: expense.date,
+                    amount: expense.amount,
+                    value: expense.value,
+                    id: expense._id,
+                    claimId: claim.id,
+                    receiptUrls: expense.receiptUrls,
+                    status: expense.status
+                });
+
+                $http.put('/api/candidates/expenses/edit', req).success(function (res) {
+                    logs(res, 'Edit Response');
+                });
+            }
         }
 
         function logs(record, label) {

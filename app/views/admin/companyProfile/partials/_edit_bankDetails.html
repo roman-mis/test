@@ -104,12 +104,11 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Account Number <span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" name="accountNumber"
-                                   ng-model="companyProfile.bankDetails.accountNo" ng-maxlength=8
-                                   required/>
+                            <input type="text" class="form-control" name="accountNumber"
+                                   ng-model="companyProfile.bankDetails.accountNo" maxlength=8 ng-pattern = "/^[0-9]*$/" required/>
 
                             <div ng-show="bankDetailsForm.accountNumber.$invalid || bankDetailsForm.accountNumber.$pristine">
-                                <div ng-show="bankDetailsForm.accountNumber.$error.required || bankDetailsForm.accountNumber.$error.number "  class="alert alert-danger">
+                                <div ng-show="bankDetailsForm.accountNumber.$error.required || bankDetailsForm.accountNumber.$error.pattern "  class="alert alert-danger">
                                     Please enter valid Account Number.
                                 </div>
                                 <div ng-show="bankDetailsForm.accountNumber.$error.maxlength"  class="alert alert-danger">
@@ -124,10 +123,10 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Sort Code <span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="number" name="sort" class="form-control" ng-model="companyProfile.bankDetails.sortCode" ng-maxlength=6 />
+                            <input type="text" name="sort" class="form-control" ng-model="companyProfile.bankDetails.sortCode" maxlength=6 ng-pattern = "/^[0-9]*$/"/>
 
                             <div ng-show="bankDetailsForm.sort.$invalid || bankDetailsForm.sort.$pristine">
-                                <div ng-show="bankDetailsForm.sort.$error.required || bankDetailsForm.sort.$error.number "  class="alert alert-danger">
+                                <div ng-show="bankDetailsForm.sort.$error.required || bankDetailsForm.sort.$error.pattern "  class="alert alert-danger">
                                     Please enter valid Sort Code.
                                 </div>
                                 <div ng-show="bankDetailsForm.accountNumber.$error.maxlength"  class="alert alert-danger">

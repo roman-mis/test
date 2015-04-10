@@ -39,13 +39,14 @@
                     <!--First green row-->
                     <tr>
                         <th><i class="fa fa-level-down"></i></th>
-                        <th>Batch Number</th>
+                        <th class="text-center">ID</th>
                         <th>Agency Name</th>
                         <th>branch Name</th>
-                        <th>Creation Date</th>
-                        <th></th>
-                        <th>Total</th>
-                        <th>
+                        <th  class="text-center">Timesheets</th>
+                        <th  class="text-center">Gross</th>
+                        <th  class="text-center">VAT</th>
+                        <th  class="text-center">Total</th>
+                        <th  class="text-center">
                             <div class="dropdown text-left">
                                 <a style="cursor:pointer" data-toggle="dropdown">
                                     <i class="fa fa-bars"></i>
@@ -83,12 +84,13 @@
                                 </span>
                             </a>
                         </td>
-                        <td>{{timesheetBatch.batchNumber}}</td>
+                        <td class="text-center">{{timesheetBatch.batchNumber}}</td>
                         <td>{{timesheetBatch.agency.name}}</td>
-                        <td>{{timesheetBatch.branch.name}}</td>
-                        <td>{{timesheetBatch.startDate | date : "EEE dd/MM/yyyy"}}</td>
-                        <td>&nbsp;</td>
-                        <td>{{timesheetBatches.total | currency:"&pound;"}}</td>
+                        <td>{{timesheetBatch.branch.name || 'No Branch'}}</td>
+                        <td class="text-center">{{timesheetBatch.timesheets.length}}</td>
+                        <td class="text-center">{{timesheetBatch.gross | currency:"&pound;"}}</td>
+                        <td class="text-center">{{timesheetBatch.vat | currency:"&pound;"}}</td>
+                        <td class="text-center">{{timesheetBatch.total | currency:"&pound;"}}</td>
                         <td>
                             <input type="checkbox" ng-model="expense.majorChecked" />
                         </td>
@@ -103,13 +105,16 @@
                                     <thead>
                                         <!--First green row-->
                                         <tr>
-                                            <th><i class="fa fa-level-down"></i></th>
-                                            <th>Worker Name</th>
-                                            <th>Status</th>
-                                            <th>net</th>
-                                            <th>vat</th>
-                                            <th>Total</th>
-                                            <th>
+                                            <th class="text-center"><i class="fa fa-level-down"></i></th>
+                                            <th >Full Name</th>
+                                            <th >WE Date</th>
+                                            <th >Status</th>
+                                            <th class="text-center">Unite</th>
+                                            <th class="text-center">Avg. Rate</th>
+                                            <th class="text-center">Gross</th>
+                                            <th class="text-center">VAT</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">
                                                 <div class="dropdown text-left">
                                                     <a style="cursor:pointer" data-toggle="dropdown">
                                                         <i class="fa fa-bars"></i>
@@ -134,9 +139,9 @@
                                     </thead>
                                     <tbody>
                                         <!--category-->
-                                        <tr ng-repeat-start="timesheet in timesheetBatch.timesheets">
+                                        <tr  ng-repeat-start="timesheet in timesheetBatch.timesheets">
                                             <!--category basic info-->
-                                            <td style="width:20px"> 
+                                            <td class="text-center" style="width:20px"> 
                                             <div ng-click="test2[$index] = !test2[$index]">
                                                 <a data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer">
                                                 <span   style="font-size:12px" class="fa-stack fa-lg">
@@ -146,14 +151,17 @@
                                                 </a>
                                             </div>
                                             </td>
-                                            <td >
+                                            <td>
                                                 <b>{{timesheet.worker.firstName}} {{timesheet.worker.lastName}}</b>
                                             </td>
-                                            <td>{{timesheet.status}}</td>
                                             <td>{{timesheet.net}}</td>
-                                            <td>{{timesheet.vat}}</td>
-                                            <td>{{timesheet.total}}</td>
-                                            <td style="width:20px">
+                                            <td>{{timesheet.status}}</td>
+                                            <td class="text-center">{{timesheet.units}}</td>
+                                            <td class="text-center">{{timesheet.payRate}}</td>
+                                            <td class="text-center">{{timesheet.net}}</td>
+                                            <td class="text-center">{{timesheet.vat}}</td>
+                                            <td class="text-center">{{timesheet.total}}</td>
+                                            <td class="text-center" style="width:20px">
                                                 <div class="dropdown text-left">
                                                     <a style="cursor:pointer" data-toggle="dropdown">
                                                         <i class="fa fa-bars"></i>
@@ -189,10 +197,11 @@
                                                                 <!--<th width="10%">Category</th>-->
                                                                 <th class="text-center">Description</th>
                                                                 <th class="text-center">Element Type</th>
-                                                                <th class="text-center">Payment Rate</th>
                                                                 <th class="text-center">Units</th>
+                                                                <th class="text-center">Rate</th>
+                                                                <th class="text-center">Gross</th>
                                                                 <th class="text-center">VAT</th>
-                                                                <th class="text-center">Amount</th>
+                                                                <th class="text-center">Total</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -203,10 +212,11 @@
                                                             </td>
                                                             <td class="text-center">{{element.description}}</td>
                                                             <td class="text-center">{{element.elementType}}</td>
-                                                            <td class="text-center">{{element.payRate}}</td>
                                                             <td class="text-center">{{element.units}}</td>
-                                                            <td class="text-center">{{element.vat}}</td>
+                                                            <td class="text-center">{{element.payRate}}</td>
                                                             <td class="text-center">{{element.amount}}</td>
+                                                            <td class="text-center">{{element.vat}}</td>
+                                                            <td class="text-center">{{element.amount + element.vat}}</td>
                                                             <td class="text-center"></td>
                                                             </tr>
                                                         </tbody>
