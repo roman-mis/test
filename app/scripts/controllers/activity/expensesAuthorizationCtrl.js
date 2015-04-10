@@ -736,8 +736,11 @@ app.controller("expensesAuthorizationCtrl",
                     rootScope: function () {
                         return $scope;
                     },
-                    receiptUrls: function () {
-                        return expense.receiptUrls;
+                    expense: function () {
+                        return expense;
+                    },
+                    claim: function () {
+                        return claim;
                     }
                 }
             });
@@ -794,8 +797,8 @@ app.controller("expensesAuthorizationCtrl",
         }
 
         function logs(record, label) {
-            if (label) console.log(label + ':', record);
-            else console.log(record);
+            //if (label) console.log(label + ':', record);
+            //else console.log(record);
         }
 
     }]);

@@ -201,46 +201,14 @@
 
                                                                 <td width="6%" class="text-center">
                                                                     <div ng-if="item.status == 'submitted' || item.status == 'approved'">
-                                                                        <div class="dropdown">
-                                                                            <a style="cursor:pointer" ng-click="test3[$index] =!test3[$index]" data-toggle="dropdown">
-                                                                                <i class="fa fa-picture-o present"></i>
-                                                                            </a>
-                                                                            <ul ng-if="test3[$index]" class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                                <li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">View</a>
-                                                                                </li>
-                                                                                <!--<li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">Add</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Delete</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Print</a>
-                                                                                </li>-->
-                                                                            </ul>
-                                                                        </div>
+                                                                        <a style="cursor:pointer" ng-click="viewReceipt(item, expense)" data-toggle="dropdown">
+                                                                            <i class="fa fa-picture-o present"></i>
+                                                                        </a>
                                                                     </div>
                                                                     <div ng-if="item.status != 'submitted' && item.status != 'approved'">
-                                                                        <div class="dropdown">
-                                                                            <a style="cursor:pointer" ng-click="test3[$index] =!test3[$index]" data-toggle="dropdown">
-                                                                                <i class="fa fa-picture-o absent"></i>
-                                                                            </a>
-                                                                            <ul ng-if="test3[$index]" class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                                <li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">View</a>
-                                                                                </li>
-                                                                                <!--<li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">Add</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Delete</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Print</a>
-                                                                                </li>-->
-                                                                            </ul>
-                                                                        </div>
+                                                                        <a style="cursor:pointer" ng-click="viewReceipt(item, expense)">
+                                                                            <i class="fa fa-picture-o absent"></i>
+                                                                        </a>
                                                                     </div>
                                                                 </td>
                                                                 <td width="12%" class="text-left" style="text-transform: capitalize; text-align:left">
