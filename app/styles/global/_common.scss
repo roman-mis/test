@@ -24,10 +24,14 @@ body {
 a {
     @include basic-transition();
 }
-
+    
 ul {
     padding: 0;
     margin: 0;
+}
+
+li {
+    list-style-type: none;
 }
 
 table {
@@ -151,6 +155,7 @@ table {
             .entry-title {
                 border-bottom: 1px solid $gray;
                 color: $green;
+                margin-top: 10px; 
             }
             .icon-edit i {
                 position: relative;
@@ -357,3 +362,24 @@ table {
 .tv-item-main {
     padding-bottom: 0;
 }
+
+.tabs-payroll,
+    .agencies {
+        .btn {
+            text-align: left;
+            max-width: 200px;
+            float: right;
+            i {
+                float: right;
+                line-height: 1.2;
+            }
+        }
+    }
+    .tabs-payroll .nav-tabs.nav.row {
+        padding: 0;
+        margin-bottom: -1px;
+        >li.active {
+            background: #fff;
+            border-bottom: 1px solid transparent; 
+        }
+    }

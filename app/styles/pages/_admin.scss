@@ -1,0 +1,41 @@
+.admin-icon {
+    width: 76px;
+    height: 76px;
+    background-color: $gray-lighter;
+    border: 1px solid $gray-light;
+    text-align: center;
+    line-height: 76px;
+    margin: 0 auto;
+    img {
+        height: 51px;
+        width: 51px;
+    }
+}
+
+.admin-first-level-menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.admin-fl-menu-item {
+    width: 135px;
+    min-height: 150px;
+    p { 
+        transition: opacity $trans-duration;
+    }
+    .admin-fl-item-h {
+        text-align: center;
+        font-size: 16px;
+        color: $green-light;
+        @include basic-transition();
+    }
+    a:hover {
+        p {
+            opacity: .8;
+        }
+        .admin-fl-item-h {
+            color: $green;
+        }
+    }
+}
