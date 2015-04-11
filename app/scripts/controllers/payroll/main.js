@@ -53,7 +53,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     $scope.openCreateValidation = function(){
         console.log(220);
         ModalService.open({
-          templateUrl: 'views/payroll/.html',
+          templateUrl: 'views/payroll/createValidation.html',
           parentScope: $scope,
           controller: 'createValidationController',
           size: 'lg'
