@@ -4,7 +4,7 @@
 
 <div class="meta-box padding-10 container-fluid gutter-right">
     <div class="row" ng-if="pendingRejections.length != 0">
-        <div class="col-xs-12; text-right">
+        <div class="col-xs-12; text-right" style="padding-right:10px">
             <h3>
                 Pending Rejections: {{pendingRejections.length}} &nbsp;
                 <button type="button" class="btn btn-success"
@@ -200,12 +200,12 @@
                                                                 <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
 
                                                                 <td width="6%" class="text-center">
-                                                                    <div ng-if="item.status == 'submitted' || item.status == 'approved'">
+                                                                    <div ng-if="item.receiptUrls.length > 0">
                                                                         <a style="cursor:pointer" ng-click="viewReceipt(item, expense)" data-toggle="dropdown">
                                                                             <i class="fa fa-picture-o present"></i>
                                                                         </a>
                                                                     </div>
-                                                                    <div ng-if="item.status != 'submitted' && item.status != 'approved'">
+                                                                    <div ng-if="item.receiptUrls.length == 0">
                                                                         <a style="cursor:pointer" ng-click="viewReceipt(item, expense)">
                                                                             <i class="fa fa-picture-o absent"></i>
                                                                         </a>
