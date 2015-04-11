@@ -93,6 +93,7 @@ router.get('/agencyStatus', controller.getAgencyStatus);
 router.get('/candidateStatus', controller.getCandidateStatus);
 router.get('/expenseClaimStatus', controller.getExpenseClaimStatus);
 router.get('/expenseStatus', controller.getExpenseStatus);
+router.get('/timesheetStatus', controller.getTimesheetStatus);
 
 router.get('/profiles/:type/first', controller.getProfileFirst);
 router.get('/profiles/:type/permissions', controller.getProfilePermissions);
@@ -100,3 +101,4 @@ router.get('/userTypes', controller.getUserTypes);
 
 router.get('/relationships',controller.relationships);
 router.get('/slrAgreements', controller.slrAgreements);
+router.get('/mileageRatesDefault', controller.mileageRatesDefault);

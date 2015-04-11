@@ -42,14 +42,10 @@
             </li>
             <li><a href="" ng-click="openSpp()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>SPP</span></a>
             </li>
-<<<<<<< HEAD
-            <li><a href="" ng-click="openSl()"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>SL</span></a>
-            </li>
-=======
+
             <li><a href="" ng-click="openHolidayPayment()"><i class="fa fa-group green-brand"></i><span class="title"><i
                     class="fa fa-plus-square-o"></i>Holiday Payment</span></a>
             </li>
 
->>>>>>> 2afd0d9b956fa5cc69319a6285aad48a66178f6d
         </ul>
     </div>

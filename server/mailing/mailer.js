@@ -74,7 +74,7 @@ module.exports={
 				transporter.close();
 				console.log(err);
 				console.log(result);
-				if(result.rejected.length){
+				if(err){
 				console.log('##########################err');
 					reject(err,result);
 				}

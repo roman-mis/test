@@ -1,0 +1,128 @@
+﻿<div class="modal-content">
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <h2 style="color: #0b830b">
+                    Claim ID:&nbsp;
+                    {{claim.claimReference}}
+                </h2>
+            </div>
+            <div class="col-sm-9">
+                <h2 style="color: #0b830b">
+                    Full Name:&nbsp;
+                    {{claim.user.firstName}}&nbsp;{{claim.user.lastName}}
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h3 style="color: #086508">
+                    Category:&nbsp;
+                    {{expense.expenseType}}
+                </h3>
+            </div>
+            <div class="col-sm-5">
+                <h3 style="color: #086508">
+                    Expense type:&nbsp;
+                    {{expense.expenseDetail.name}}
+                </h3>
+            </div>
+            <div class="col-sm-3">
+                <h3 style="color: #086508">
+                    Total:&nbsp;
+                    {{expense.expenseDetail.total | currency:"&pound;"}}
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-header" ng-hide="actualUrls.length == 0">
+        <h4 class="modal-title">Expense Receipts</h4>
+    </div><!-- /modal-header -->
+
+    <div class="modal-body" ng-hide="actualUrls.length == 0">
+        <div class="row" ng-repeat="item in actualUrls">
+            <div class="col-xs-4 col-sm-4 form-group full-row" style="text-align:center">
+                <img ng-src="{{item.img}}" width="150" height="150" />
+            </div>
+            <div class="col-xs-8 col-sm-8 full-row">
+                <!--<h4 style="margin-top: 0;">Image details &nbsp;&nbsp;<i class="fa fa-check"></i></h4>-->
+                <div style="height:5px"></div>
+                <div class="row form-group">
+                    <div class="col-xs-3">Name</div>
+                    <div class="col-xs-9 img-details">{{item.name}}</div>
+                </div>
+                <!--<div class="row form-group">
+                    <div class="col-xs-3">Size</div>
+                    <div class="col-xs-9 img-details"></div>
+                </div>-->
+                <div class="row" style="margin-top: 38px;">
+                    <a ng-href="{{item.img}}" class="cursor:pointer" download><i class="fa fa-download"></i>&nbsp;Download</a>
+                </div>
+                <div class="row" style="margin-top: 38px;">
+                    <div class="col-xs-1 col-sm-2 ">
+                        <a ng-click="deleteReceipt(item)" class="cursor:pointer"><i class="fa fa-trash fa-2x" style="padding-top: 3px;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /modal-body -->
+
+    <div class="modal-header">
+        <h4 class="modal-title">Add New Receipt</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 form-group full-row" style="text-align:center">
+                <img ng-src="" id="logo" width="150" height="150" title="- preview -" alt="- preview -" style="text-align:center; width:150px; height:150px; line-height:150px" />
+            </div>
+            <div class="col-xs-8 col-sm-8 full-row">
+                <!--<div ng-show="generatingPreview">
+                    <i class="fa fa-spinner fa-pulse"></i>&nbsp;Generating preview
+                </div>-->
+                <h4 style="margin-top: 0;">Image details &nbsp;&nbsp;<i id="iconCheck"></i></h4>
+                <div class="row form-group">
+                    <div class="col-xs-3">Name</div>
+                    <div class="col-xs-9 img-details" id="uploadFile"></div>
+                </div>
+                <!--<div class="row form-group">
+                    <div class="col-xs-3">Size</div>
+                    <div class="col-xs-9 img-details" id="filesize"></div>
+                </div>-->
+                <div class="row" style="margin-top: 38px;">
+                    <div class="col-xs-5 col-sm-4">
+                        <div>
+                            <button class="btn btn-primary btn-block form-control" onclick="$('#uploadBtn').click();">Browse</button>
+                            <input id="uploadBtn" type="file" accept="image/*" onchange="angular.element(this).scope().generatePreview(this)" style="display: none;" />
+                        </div>
+                    </div>
+                    <div class="col-xs-5 col-sm-6 no-padding">
+                        <button ng-click="uploadFile()" ng-disabled="uploading" type="button" class="btn btn-primary form-control img-details">
+                            <div ng-show="!uploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+                            <div ng-show="uploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
+                        </button>
+                    </div>
+                    <!--<div class="col-xs-1 col-sm-2 ">
+                        <a class="cursor:pointer"><i class="fa fa-trash fa-2x" style="padding-top: 3px;"></i></a>
+                    </div>-->
+                </div>
+                <div class="row" ng-if="uploading">
+                    <div class="col-xs-5 col-sm-4"></div>
+                    <div class="col-xs-5 col-sm-6 no-padding">
+                        <button ng-click="cancelUpload()" type="button" class="btn btn-warning form-control img-details">
+                            <div> &nbsp; Cancel Upload</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /modal-body -->
+
+    <div class="modal-footer">
+        <a class="btn cursor:pointer" ng-click="cancel()">Close</a>
+        <!--<button class="btn btn-primary">Print</button>-->
+        <!--<button class="btn btn-success" ng-click="ok()">Save</button>-->
+    </div><!-- /modal footer -->
+</div><!-- /modal content -->

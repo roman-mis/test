@@ -4,10 +4,11 @@ angular.module('origApp.controllers')
         function ($scope, $modalInstance, parentScope, CompanyProfileService) {
 
             $scope.companyProfile = {};
-            var mapCompanyProfile = {};
+            //var mapCompanyProfile = {};
 
             if (undefined !== parentScope) {
-                $scope.companyProfile = parentScope.companyProfile;
+                //$scope.companyProfile = JSON.parse(JSON.stringify(parentScope.companyProfile));
+                $scope.companyProfile = angular.copy(parentScope.companyProfile);
                 $scope.dropDownLists =  parentScope.dropDownLists;
 
 
@@ -16,15 +17,15 @@ angular.module('origApp.controllers')
                  * mapCompanyProfile.defaults[item] with $scope.companyProfile.defaults[item].code
                  * before sending it to server
                  * */
-                angular.copy($scope.companyProfile, mapCompanyProfile);
+                // angular.copy($scope.companyProfile, mapCompanyProfile);
 
-                var objDefaults = Object.keys(mapCompanyProfile.defaults);
+                // var objDefaults = Object.keys(mapCompanyProfile.defaults);
 
-                objDefaults.forEach(function (item) {
-                    if ($scope.companyProfile.defaults[item].code) {
-                        $scope.companyProfile.defaults[item] = mapCompanyProfile.defaults[item].code;
-                    }
-                });
+                // objDefaults.forEach(function (item) {
+                //     if ($scope.companyProfile.defaults[item].code) {
+                //         $scope.companyProfile.defaults[item] = mapCompanyProfile.defaults[item].code;
+                //     }
+                // });
 
             }
 
@@ -63,7 +64,10 @@ angular.module('origApp.controllers')
                         $scope.isSaving = false;
 
                         if ('saved successfully' === response) {
-                            $modalInstance.close('saved');
+                            parentScope.companyProfile = $scope.companyProfile;
+                            console.log(parentScope.companyProfile, $scope.companyProfile);
+
+                            $modalInstance.close();
                         }
 
                     }, function (error) {

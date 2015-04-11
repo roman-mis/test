@@ -1,0 +1,70 @@
+<div class="modal-content">
+
+        <div class="modal-header">
+                    <h4 class="modal-title">Student Loan Request</h4>
+        </div><!-- /modal-header -->
+
+        <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
+                        <div class="col-xs-6 col-sm-4 form-group no-padding-left text-right">{{candidateInfo.firstName}} {{candidateInfo.lastName}}</div>
+                        <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+                        <div class="col-xs-6 col-sm-2 form-group no-padding-left text-right">{{candidateInfo.candidateRef}}</div>
+                    </div>
+                    <div class="line-horizontal"></div>
+                     <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="alert alert-success" role="alert">
+                                       {{constantsLists[0].description}}
+                                    </div>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <label class="switch_wrap" for="field">
+                                      {{studentLoad.haveLoan}}
+                                        <input id="field" type="checkbox" ng-checked="studentLoan.haveLoan" ng-click="studentLoan.haveLoan =!studentLoan.haveLoan">
+                                        <div class="switch">
+                                            <span class="bullet"></span>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="alert alert-success" role="alert">
+                                      {{constantsLists[1].description}}
+                                    </div>
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    <label class="switch_wrap" for="field1">
+                                        <input id="field1" type="checkbox" ng-checked="studentLoan.payDirectly" ng-click="studentLoan.payDirectly =!studentLoan.payDirectly" >
+                                        <div class="switch">
+                                            <span class="bullet"></span>
+                                        </div>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </div><!-- /modal-body -->
+       <div class="modal-footer">
+                    <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+                     <!-- Split button -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Action</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a ng-click="submitStudentLoan();">Save</a></li>
+                            <li><a ng-click="saveAndApprove();">Save and Approve</a></li>
+                            <li><a ng-click="saveAndReject();">Save and Reject</a></li>
+                            <li><a ng-click="saveAndRefer();">Save and Refer</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+      </div>

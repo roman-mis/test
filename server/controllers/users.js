@@ -154,7 +154,9 @@ module.exports = function(){
 
     controller.patchUser = function(req,res){
       var userDetails = {
+        title:req.body.title,
         firstName: req.body.firstName,
+        middleName:req.body.middleName,
         lastName: req.body.lastName
       };
       return userservice.patchUser(req.params.id, userDetails)

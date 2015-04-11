@@ -21,6 +21,16 @@ angular.module('origApp.controllers')
             return cost;
           };
 
+          $scope.getValue = function(type, mileage) {
+            var value = type.default_ppm;
+            if (type.code === '1' && mileage > 10000) { //ppm for Cars & Vans is [after 10,000 miles: 0.24ppm]
+              value = 0.24;
+            } else if (!$scope.isPpmDefined(type)) {
+              value = 1;
+            }
+            return value;
+          };
+
           $scope.isPpmDefined = function(type) {
             if (!type) {
               return true;
@@ -33,7 +43,9 @@ angular.module('origApp.controllers')
               date: data.date,
               type: data.type,
               cost: $scope.getCost(data.type, data.mileage),
-              mileage: data.mileage
+              mileage: data.mileage,
+              value: $scope.getValue(data.type, data.mileage),
+              amount: data.mileage
             });
             $scope.addData = angular.copy($scope.defaultAddData);
           }

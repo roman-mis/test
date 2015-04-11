@@ -9,8 +9,11 @@ angular.module('origApp.controllers')
           $scope.addData = angular.copy($scope.defaultAddData);
 
           function addItem(data) {
+            data.amount = 1;
+            data.value = data.cost;
             $scope.expenseData.others.push(data);
             $scope.addData = angular.copy($scope.defaultAddData);
+
           }
 
           $scope.add = function() {

@@ -108,6 +108,8 @@ module.exports=utils={
 		return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());
 	},
 	areDateEqual:function(date1,date2){
+		
+		
 		if(date1 === date2){
 			return true;
 		}
@@ -195,7 +197,20 @@ module.exports=utils={
 				});
 		return props;
 	},
-	updateSubModel:function(model,viewmodel,includeId){
+	updateSubModel:function(model,viewmodel){
+		console.log(model);
+		console.log(viewmodel);
+		var props=[];
+		model=model||{};
+		_.forEach(viewmodel,function(val,key){
+					if(val!==undefined && key!=='_id'){
+						model[key]=val;
+						props.push(key);
+					}
+				});
+		return props;
+	},
+	_updateSubModel:function(model,viewmodel,includeId){
 		
 		var props=[];
 		model=model||{};

@@ -8,6 +8,7 @@ angular.module('origApp.controllers')
             $scope.isActionRequestCollapsed = !$scope.isActionRequestCollapsed;
         };
 
+
         $scope.openDPAWin = function () {
             ModalService.open({
                 templateUrl: 'views/candidate/_dpa_questions.html',
@@ -88,18 +89,18 @@ angular.module('origApp.controllers')
                 templateUrl: 'views/candidate/AOE.html',
                 parentScope: $scope,
                 controller: 'AOEController',
-                size: 'lg'
+                size: 'md'
             });
         };
-        $scope.openSsp=function(){
-            console.log($scope.contactdetail);
+        $scope.openSsp = function () {
+
             ModalService.open({
 
-                templateUrl:'views/actionRequest/ssp.html',
-                parentScope:$scope,
-                controller:'sspController',
-                size:'lg'
-            })
+                templateUrl: 'views/actionRequest/ssp.html',
+                parentScope: $scope,
+                controller: 'sspModalController',
+                size: 'md'
+            });
         };
 
         $scope.openSpp=function(){
@@ -107,7 +108,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/spp.html',
                 parentScope:$scope,
                 controller:'sppController',
-                size:'lg'
+                size:'md'
             });
         };
 
@@ -116,7 +117,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/holidayPayment.html',
                 parentScope:$scope,
                 controller:'holidayPaymentController',
-                size:'lg'
+                size:'md'
             });
         };
 
@@ -125,7 +126,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/sl.html',
                 parentScope:$scope,
                 controller:'slController',
-                size:'lg'
+                size:'md'
             })
         };
 
@@ -136,7 +137,7 @@ angular.module('origApp.controllers')
                 templateUrl:'views/actionRequest/mp.html',
                 parentScope:$scope,
                 controller:'mpController',
-                size:'lg'
+                size:'md'
             })
         };
 
@@ -198,6 +199,7 @@ angular.module('origApp.controllers')
         };
         $scope.ok = function() {
             $modalInstance.close();
+
         };
     });
 

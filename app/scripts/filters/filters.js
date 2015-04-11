@@ -15,6 +15,14 @@
             }
           };
         })
+ .filter('capitalizeAll', function() {
+  return function(input) {
+            // input will be the string we pass in
+            if (input){
+              return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
+            }
+          };
+        })
  .filter('formatDate', function() {
   return function(input, format) {
     format = format || 'DD/MM/YYYY HH:mm:ss';
@@ -24,7 +32,15 @@
     return moment(input).format(format);
   };
 })
-
+ .filter('formatDateOnly', function() {
+  return function(input, format) {
+    format = format || 'DD/MM/YYYY';
+    if (input === undefined) {
+      return input;
+    }
+    return moment(input).format(format);
+  };
+})
  .filter('validDate', function() {
   return function(items, reverse) {
     var filtered = [];

@@ -2,8 +2,8 @@
 var app = angular.module('origApp.controllers');
 
 app.controller("expensesAuthorizationCtrl",
-    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal',
-    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal) {
+    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal', 'Notification',
+    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal, Notification) {
 
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/activity/home', text: 'Activity' },
@@ -166,19 +166,29 @@ app.controller("expensesAuthorizationCtrl",
                 req.body = [];
                 for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
                     if ($scope.expensesArray[expenseIndex].expenses[i]._id === itemId) {
-                        if ($scope.expensesArray[expenseIndex].expenses[i] != $scope.cloned[expenseIndex].expenses[i].status
+                        var newStatus = $scope.cloned[expenseIndex].expenses[i].status;
+                        if ($scope.expensesArray[expenseIndex].expenses[i].status != $scope.cloned[expenseIndex].expenses[i].status
                             && $scope.cloned[expenseIndex].expenses[i].status == 'rejected') {
+                            newStatus = $scope.expensesArray[expenseIndex].expenses[i].status;
                             if ($scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]) == -1) {
+                                var origStatus = $scope.expensesArray[expenseIndex].expenses[i].status;
                                 $scope.pendingRejections.push($scope.expensesArray[expenseIndex].expenses[i]);
                             }
+                            Notification.primary('Marked for Rejection');
                         }
-                        if ($scope.expensesArray[expenseIndex].expenses[i] != $scope.cloned[expenseIndex].expenses[i].status
+
+                        if ($scope.expensesArray[expenseIndex].expenses[i].status != $scope.cloned[expenseIndex].expenses[i].status
                             && $scope.expensesArray[expenseIndex].expenses[i].status == 'rejected'
                             && $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]) != -1) {
                             $scope.pendingRejections.splice(
                                 $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]), 1);
                         }
+
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
+                        if (origStatus) {
+                            $scope.expensesArray[expenseIndex].expenses[i].origStatus = origStatus;
+                        }
+
                         var subType = '';
                         if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
                             for (var j = 0; j < $scope.mealTypes.length; j++) {
@@ -206,17 +216,18 @@ app.controller("expensesAuthorizationCtrl",
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
                             subType: subType,
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
-                            value: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            amount: $scope.expensesArray[expenseIndex].expenses[i].amount,
+                            value: $scope.expensesArray[expenseIndex].expenses[i].value,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
-                            status: $scope.expensesArray[expenseIndex].expenses[i].status
+                            status: newStatus
                         });
                         //logs(req.body);
                         break;
                     }
                 }
-                //logs(req);
+                //logs(req, 'manual edit request');
                 $http.put('/api/candidates/expenses/edit', req).success(function (res) {
                     logs(res, 'Edit Response');
                     $scope.expensesArray[expenseIndex].total = 0;
@@ -511,29 +522,32 @@ app.controller("expensesAuthorizationCtrl",
                 req.objects.push(obj);
             });
             console.log(req);
-            $http.patch('/api/candidates/expenses/reject', req).success(function (res) {
-                if (res.result) {
-                    req.objects.forEach(function (claim) {
-                        claim.expenses.forEach(function (exp) {
-                            for (var i = 0; i < $scope.expensesArray.length; i++) {
-                                var found = false;
-                                for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                                    if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
-                                        $scope.expensesArray[i].expenses[j].status = 'rejected';
-                                        found = true;
-                                        break
-                                    }
-                                }
-                                if (found) break
+            Notification.primary('Marked for Rejection');
+            req.objects.forEach(function (claim) {
+                claim.expenses.forEach(function (exp) {
+                    for (var i = 0; i < $scope.expensesArray.length; i++) {
+                        var found = false;
+                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                            if ($scope.expensesArray[i].expenses[j]._id == exp.id) {
+                                $scope.expensesArray[i].expenses[j].origStatus = $scope.expensesArray[i].expenses[j].status;
+                                $scope.expensesArray[i].expenses[j].status = 'rejected';
+                                found = true;
+                                break
                             }
-                        });
-                    });
-                    angular.copy($scope.expensesArray, $scope.cloned);
-                }
+                        }
+                        if (found) break
+                    }
+                });
             });
+            angular.copy($scope.expensesArray, $scope.cloned);
+            //$http.patch('/api/candidates/expenses/reject', req).success(function (res) {
+            //    if (res.result) {
+
+            //    }
+            //});
         }
 
-        function reviewSummaryModal(size, items, claimInfo) {
+        function reviewSummaryModal(size, items, claimInfo, rootScope) {
             var modalInstance = $modal.open({
                 templateUrl: 'views/activity/reject_summary.html',
                 controller: 'rejectSummaryCtrl',
@@ -544,22 +558,19 @@ app.controller("expensesAuthorizationCtrl",
                     },
                     claimInfo: function () {
                         return claimInfo;
+                    },
+                    rootScope: function () {
+                        return rootScope;
                     }
                 }
             });
 
             modalInstance.result.then(function () {
-                $http.get('/api/candidates/expenses').success(function (expenses) {
-                    for (var i = 0; i < $scope.expensesArray.length; i++) {
-                        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
-                            $scope.expensesArray[i].expenses[j].status = expenses.object.claims[i].expenses[j].status;
-
-                        }
-                    }
-                    angular.copy($scope.expensesArray, $scope.cloned);
-                });
-            }, function () {
-                logs("Dismissed");
+                logs('Successfully Rejected');
+                $scope.pendingRejections = [];
+            }, function (msg) {
+                logs(msg, 'Dismissed');
+                //logs($scope.summary, 'summary');
             });
         }
 
@@ -582,12 +593,212 @@ app.controller("expensesAuthorizationCtrl",
                     if (found) break
                 }
             }
-            reviewSummaryModal('lg', $scope.pendingRejections, claimInfo);
+            reviewSummaryModal('lg', $scope.pendingRejections, claimInfo, $scope);
+        }
+
+        $scope.cancelRejections = function () {
+            var req = {};
+            req.body = [];
+            var indeces = [];
+            $scope.pendingRejections.forEach(function (item) {
+                for (var i = 0; i < $scope.expensesArray.length; i++) {
+                    var found = false;
+                    for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+                        if ($scope.expensesArray[i].expenses[j]._id == item._id) {
+                            $scope.expensesArray[i].expenses[j].status = $scope.expensesArray[i].expenses[j].origStatus;
+                            //var subType = '';
+                            //if ($scope.expensesArray[i].expenses[j].expenseType == 'Subsistence') {
+                            //    for (var k = 0; k < $scope.mealTypes.length; k++) {
+                            //        var newSub = $scope.expensesArray[i].expenses[j].expenseDetail.name;
+                            //        if (newSub == $scope.mealTypes[k].name) {
+                            //            subType = $scope.mealTypes[k]._id;
+                            //            $scope.expensesArray[i].expenses[j].expenseDetail.id = subType;
+                            //            break;
+                            //        }
+                            //    }
+                            //} else if ($scope.expensesArray[i].expenses[j].expenseType == 'Other') {
+                            //    for (var k = 0; k < $scope.otherTypes.length; k++) {
+                            //        var newSub = $scope.expensesArray[i].expenses[j].expenseDetail.name;
+                            //        if (newSub == $scope.otherTypes[k].name) {
+                            //            subType = $scope.otherTypes[k]._id;
+                            //            $scope.expensesArray[i].expenses[j].expenseDetail.id = subType;
+                            //            break;
+                            //        }
+                            //    }
+                            //} else {
+                            //    subType = $scope.expensesArray[i].expenses[j].expenseDetail.name;
+                            //}
+
+                            //req.body.push({
+                            //    expenseType: $scope.expensesArray[i].expenses[j].expenseType,
+                            //    subType: subType,
+                            //    date: $scope.expensesArray[i].expenses[j].date,
+                            //    value: $scope.expensesArray[i].expenses[j].amount,
+                            //    id: $scope.expensesArray[i].expenses[j]._id,
+                            //    claimId: $scope.expensesArray[i].id,
+                            //    receiptUrls: $scope.expensesArray[i].expenses[j].receiptUrls,
+                            //    status: 'submitted'
+                            //});
+                            //indeces.push({
+                            //    claimIndex: i,
+                            //    expenseIndex: j
+                            //});
+                            found = true;
+                            break
+                        }
+                    }
+                    if (found) break
+                }
+            });
+            //logs(req, 'request');
+            //$http.put('/api/candidates/expenses/edit', req).success(function (res) {
+            //    logs(res, 'Edit Response');
+            //    if (res.result) {
+            //        for (var i = 0; i < indeces.length; i++) {
+            //            $scope.expensesArray[indeces[i].claimIndex].expenses[indeces[i].expenseIndex].status = 'submitted';
+            //            $scope.cloned[indeces[i].claimIndex].expenses[indeces[i].expenseIndex].status = 'submitted';
+            //        }
+            //    }
+            //});
+            $scope.pendingRejections = [];
+        }
+
+        $scope.cancel = function (claimId, expenseId) {
+            for (var i = 0; i < $scope.pendingRejections.length; i++) {
+                if ($scope.pendingRejections[i]._id == expenseId) {
+                    $scope.pendingRejections[i].status = $scope.pendingRejections[i].origStatus;
+                    $scope.pendingRejections.splice(i, 1);
+                    break
+                }
+            }
+            //for (var i = 0; i < $scope.expensesArray.length; i++) {
+            //    if ($scope.expensesArray[i].id == claimId) {
+            //        for (var j = 0; j < $scope.expensesArray[i].expenses.length; j++) {
+            //            if ($scope.expensesArray[i].expenses[j]._id == expenseId) {
+            //                var req = {};
+            //                req.body = [];
+            //                var subType = '';
+            //                if ($scope.expensesArray[i].expenses[j].expenseType == 'Subsistence') {
+            //                    for (var k = 0; k < $scope.mealTypes.length; k++) {
+            //                        var newSub = $scope.expensesArray[i].expenses[j].expenseDetail.name;
+            //                        if (newSub == $scope.mealTypes[k].name) {
+            //                            subType = $scope.mealTypes[k]._id;
+            //                            $scope.expensesArray[i].expenses[j].expenseDetail.id = subType;
+            //                            break;
+            //                        }
+            //                    }
+            //                } else if ($scope.expensesArray[i].expenses[j].expenseType == 'Other') {
+            //                    for (var k = 0; k < $scope.otherTypes.length; k++) {
+            //                        var newSub = $scope.expensesArray[i].expenses[j].expenseDetail.name;
+            //                        if (newSub == $scope.otherTypes[k].name) {
+            //                            subType = $scope.otherTypes[k]._id;
+            //                            $scope.expensesArray[i].expenses[j].expenseDetail.id = subType;
+            //                            break;
+            //                        }
+            //                    }
+            //                } else {
+            //                    subType = $scope.expensesArray[i].expenses[j].expenseDetail.name;
+            //                }
+
+            //                req.body.push({
+            //                    expenseType: $scope.expensesArray[i].expenses[j].expenseType,
+            //                    subType: subType,
+            //                    date: $scope.expensesArray[i].expenses[j].date,
+            //                    value: $scope.expensesArray[i].expenses[j].amount,
+            //                    id: $scope.expensesArray[i].expenses[j]._id,
+            //                    claimId: $scope.expensesArray[i].id,
+            //                    receiptUrls: $scope.expensesArray[i].expenses[j].receiptUrls,
+            //                    status: 'submitted'
+            //                });
+            //                //logs(req, 'request');
+            //                $http.put('/api/candidates/expenses/edit', req).success(function (res) {
+            //                    logs(res, 'Edit Response');
+            //                    if (res.result) {
+            //                        $scope.expensesArray[i].expenses[j].status = 'submitted';
+            //                        $scope.cloned[i].expenses[j].status = 'submitted';
+            //                    }
+            //                });
+            //                break
+            //            }
+            //        }
+            //        break
+            //    }
+            //}
+        }
+
+        $scope.viewReceipt = function (expense, claim) {
+            //logs(expense.receiptUrls, 'URLs');
+            var modalInstance = $modal.open({
+                templateUrl: 'views/activity/expenseReceipt.html',
+                controller: 'expenseReceiptCtrl',
+                size: 'md',
+                resolve: {
+                    rootScope: function () {
+                        return $scope;
+                    },
+                    expense: function () {
+                        return expense;
+                    },
+                    claim: function () {
+                        return claim;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                saveAnyway();
+            }, function (msg) {
+                saveAnyway();
+            });
+            function saveAnyway() {
+                //logs(expense, 'new expense');
+                var req = {};
+                req.body = [];
+                var subType = '';
+                if (expense.expenseType == 'Subsistence') {
+                    for (var j = 0; j < $scope.mealTypes.length; j++) {
+                        var newSub = expense.expenseDetail.name;
+                        if (newSub == $scope.mealTypes[j].name) {
+                            subType = $scope.mealTypes[j]._id;
+                            expense.expenseDetail.id = subType;
+                            break;
+                        }
+                    }
+                } else if (expense.expenseType == 'Other') {
+                    for (var j = 0; j < $scope.otherTypes.length; j++) {
+                        var newSub = expense.expenseDetail.name;
+                        if (newSub == $scope.otherTypes[j].name) {
+                            subType = $scope.otherTypes[j]._id;
+                            expense.expenseDetail.id = subType;
+                            break;
+                        }
+                    }
+                } else {
+                    subType = expense.expenseDetail.name;
+                }
+
+                //logs(expense.date);
+                req.body.push({
+                    expenseType: expense.expenseType,
+                    subType: subType,
+                    date: expense.date,
+                    amount: expense.amount,
+                    value: expense.value,
+                    id: expense._id,
+                    claimId: claim.id,
+                    receiptUrls: expense.receiptUrls,
+                    status: expense.status
+                });
+
+                $http.put('/api/candidates/expenses/edit', req).success(function (res) {
+                    logs(res, 'Edit Response');
+                });
+            }
         }
 
         function logs(record, label) {
-            if (label) console.log(label + ':', record);
-            else console.log(record);
+            //if (label) console.log(label + ':', record);
+            //else console.log(record);
         }
 
     }]);

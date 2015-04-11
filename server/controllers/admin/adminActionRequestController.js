@@ -52,7 +52,6 @@ module.exports = function(dbs){
 			'type':enums.actionRequestTypes.SPP,
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
-			
 			spp:req.body.spp,
 			days:req.body.days,
 			imageUrl:req.body.imageUrl,
@@ -111,7 +110,7 @@ module.exports = function(dbs){
 		});
 	};
 
-	
+
 
     controller.checkSspQualification=function(req,res){
     	var request={
@@ -122,6 +121,7 @@ module.exports = function(dbs){
     	};
     	adminActionRequestService.getActionRequestPayments(req.params.userId,request,'ssp')
     		.then(function(response){
+                console.log(response);
     			res.json(response);
     		})
     		.then(null,function(err){
@@ -175,11 +175,17 @@ module.exports = function(dbs){
 
 
     controller.getActionRequestData = function(req, res){
-    	adminActionRequestService.getActionRequestData()
+    	adminActionRequestService.getActionRequestData(req._restOptions)
     		.then(function(response){
     			console.log(response);
-    			var actionrequests = getActionRequestDataVm(response);
-    		res.json({objects:actionrequests});
+
+	    		var actionrequests = getActionRequestDataVm(response.rows);
+	            var pagination = req._restOptions.pagination || {};
+	            var resp = { result: true, objects: actionrequests, meta: { limit: pagination.limit, offset: pagination.offset, totalCount: response.count } };
+	            //console.log('about to send the message to client');
+
+	            res.json(resp);
+
     		})
     		.then(null,function(err){
     			res.sendFailureResponse(err);
@@ -205,6 +211,7 @@ controller.getActionRequestDataById =function(req, res){
 
 
  function getActionRequestDataByIdVm(data){
+
  	var createdBy = data.createdBy || {};
  	return {
  		id: data._id,
@@ -212,7 +219,7 @@ controller.getActionRequestDataById =function(req, res){
  			id : data.worker._id,
  			name : data.worker.firstName + ' ' + data.worker.lastName,
  			candidateRef : utils.padLeft(data.worker.candidateNo || '0', 7, '0')
- 		}, 
+ 		},
  		dateRequested : data.worker.createdDate,
 		status : data.status,
 		type : data.type,
@@ -239,19 +246,20 @@ controller.getActionRequestDataById =function(req, res){
 
     function getActionRequestDataVm(data){
     	var actionRequest=[];
-    	   	
+
 			_.forEach(data, function(actionrequests){
 				var createdBy=actionrequests.createdBy||{};
 				var actionRequestData = {
 					id : actionrequests._id,
-					worker: {
+					worker: actionrequests.worker ? {
 						id : actionrequests.worker._id,
 						name : actionrequests.worker.firstName + ' ' + actionrequests.worker.lastName,
 						candidateNo : utils.padLeft(actionrequests.worker.candidateNo || '0', 7, '0')
-						},
-					dateRequested : actionrequests.worker.createdDate,
+						}:{},
+					dateRequested : actionrequests.worker?actionrequests.worker.createdDate:null,
 					status : actionrequests.status,
 					type : actionrequests.type,
+
 					periodActioned : '',
 					requestRef: utils.padLeft(actionrequests.requestReference || '0', 7, '0'),
 					createdBy : {
@@ -268,17 +276,17 @@ controller.getActionRequestDataById =function(req, res){
 					holidayPay : actionrequests.holidayPay,
 					studentLoan : actionrequests.studentLoan,
 					imageUrl : actionrequests.imageUrl,
-					days : actionrequests.days	 */	
+					days : actionrequests.days	 */
 				};
 				actionRequest.push(actionRequestData);
 			});
-    	
+
     	return actionRequest;
     }
-    
+
     controller.updateActionRequest = function(req, res){
-   
-    	
+
+
 		var details = {
 			dateInformed : req.body.dateInformed,
 			startDate : req.body.startDate,
@@ -294,13 +302,16 @@ controller.getActionRequestDataById =function(req, res){
 			days : req.body.days,
 			updatedDate : Date(),
 			updatedBy : req.user._id
-		}; 
-	
+		};
+		console.log('details');
+		console.log(details);
 		adminActionRequestService.updateActionRequest(req.params.id, details,req.params.status)
+
 			.then(function(response){
 				console.log('response received ');
 				console.log(response);
-				res.json(response);
+				var updatedActionRequestData = getActionRequestDataByIdVm(response.object);
+				res.json({object : updatedActionRequestData});
 			}).then(null,function(err){
     			res.sendFailureResponse(err);
     		})
@@ -308,6 +319,39 @@ controller.getActionRequestDataById =function(req, res){
 	};
 
 
+	function getUpdatedActionRequestDataVm(data){
+
+		return{
+		id: data.object._id,
+ 		worker : {
+ 			id : data.object.worker._id,
+ 			name : data.object.worker.firstName + ' ' + data.object.worker.lastName,
+ 			candidateRef : utils.padLeft(data.object.worker.candidateNo || '0', 7, '0')
+ 		},
+ 		dateRequested : data.object.worker.createdDate,
+		status : data.object.status,
+		type : data.object.type,
+		periodActioned : '',
+		requestRef: utils.padLeft(data.object.requestReference || '0', 7, '0'),
+		createdBy : {
+			id : data.object.createdBy._id,
+			name : (data.object.createdBy.firstName) + ' ' + (data.object.createdBy.lastName)
+		},
+		dateInformed : data.object.dateInformed,
+		intendedStartDate : data.object.intendedStartDate,
+		actualStartDate : data.object.actualStartDate,
+		startDate : data.object.startDate,
+		endDate : data.object.endDate,
+		smp : data.object.smp,
+		spp : data.object.spp,
+		holidayPay : data.object.holidayPay,
+		studentLoan : data.object.studentLoan,
+		imageUrl : data.object.imageUrl,
+		days : data.object.days,
+		updatedDate : data.object.updatedDate,
+		updatedBy : data.object.updatedBy
+		}
+	}
 
 
     return controller;

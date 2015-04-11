@@ -9,6 +9,7 @@ angular.module('origApp.controllers')
 
             
             HttpResource.model('candidates/' + $scope.candidateId+'/contactdetail').query({},function (res) {
+                // $scope.candidate=res.data.object;
                 console.log(res);
             });
 
@@ -39,7 +40,7 @@ angular.module('origApp.controllers')
             };
             $scope.calcAge = function (dateString) {
                 var birthday = +new Date(dateString);
-                return ~~((Date.now() - birthday) / (31557600000));
+                return ((Date.now() - birthday) / (31557600000));
             };
 
 
@@ -67,19 +68,26 @@ angular.module('origApp.controllers')
                     });
                 }
             });
-            $scope.save = function () {
+            $scope.saveCandidate = function () {
                 
                 HttpResource.model('users').create($scope.candidate)
-                .patch($scope.candidateId).then(function () {
-                    parentScope.candidate = angular.copy($scope.candidate);
-                    
-                });
-                HttpResource.model('candidates').create($scope.candidate)
-                .patch($scope.candidateId+'/contactdetail');
+                .patch($scope.candidateId).then(function (response) {
+                    if (!HttpResource.flushError(response)) {
+                        HttpResource.model('candidates').create($scope.candidate)
+                        .patch($scope.candidateId+'/contactdetail').then(function(response){
+                            if (!HttpResource.flushError(response)) {
+                                 parentScope.candidate = angular.copy($scope.candidate);
+                                 $modalInstance.dismiss('save');
+                            }
+                        });
 
-                $modalInstance.dismiss('save');
+                       
+                    }
+                });
+
+               
             };
-            $scope.cancel = function () {
+            $scope.cancelCandidate = function () {
                 $modalInstance.dismiss('cancel');
             };
         }]);

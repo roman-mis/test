@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidatePayrollProductController', function($scope, $stateParams, HttpResource, ConstantsResource, Notification) {
+        .controller('CandidatePayrollProductController', function($scope, $stateParams, HttpResource, ConstantsResource, ModalService) {
 
           //define private variables
           var productResource = HttpResource.model('candidates/' + $scope.candidateId + '/payrollproduct');
@@ -39,6 +39,14 @@ angular.module('origApp.controllers')
               return hashData[code].description || '';
             }
             return '';
+          };
+
+          $scope.openAddPayrollProductModal = function(){
+            ModalService.open({
+              templateUrl: 'views/candidate/_payroll_product_add_service.html',
+              parentScope: $scope,
+              controller: 'CandidatePayrollProductModalController'
+            });
           };
 
           //load products
@@ -130,4 +138,15 @@ angular.module('origApp.controllers')
 
           $scope.loadProducts();
 
-        });
+        })
+
+.controller('CandidatePayrollProductModalController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, MsgService) {
+  $scope.candidateId = angular.copy(parentScope.candidateId);
+
+    
+    
+    // Close Modal
+    $scope.cancelEdit = function() {
+      $modalInstance.dismiss('cancel');
+    };
+  });

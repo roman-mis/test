@@ -31,7 +31,7 @@ angular.module('origApp', [
   'angular.filter',
   'ui.sortable',
   'angularFileUpload',
-  'ui-notification'
+  'ui-notification','anguFixedHeaderTable'
   //,
  // 'gm.datepickerMultiSelect'
 ])
