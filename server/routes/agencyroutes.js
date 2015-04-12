@@ -16,6 +16,9 @@ module.exports = function(app){
 /* Agency */
 router.get('/',restMiddleware(db),controller.getAllAgency);
 router.get('/:id',controller.getAgency);
+router.get('/:id/marginFee',controller.getAgencyMarginFee);
+router.patch('/marginFee/:id',controller.updateAgencyMarginFee);
+
 router.post('/', controller.postAgency);
 router.patch('/:id', controller.patchAgency);
 
