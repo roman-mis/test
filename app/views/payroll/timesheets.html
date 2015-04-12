@@ -72,7 +72,7 @@
                 <!--First green row-->
                 <tbody>
                     <!--First table body-->
-                    <tr  ng-repeat-start="timesheetBatch in timesheetBatches">
+                    <tr  ng-repeat-start="(batchIndex,timesheetBatch) in timesheetBatches">
                         <!--big table basic row-->
                         <td>
                             <a data-toggle="collapse1" ng-click="test1[$index] = !test1[$index]" data-target="{{'#accordion'+$index}}" class="clickable" style="cursor:pointer">
@@ -91,8 +91,8 @@
                         <td class="text-center">{{timesheetBatch.gross | currency:"&pound;"}}</td>
                         <td class="text-center">{{timesheetBatch.vat | currency:"&pound;"}}</td>
                         <td class="text-center">{{timesheetBatch.total | currency:"&pound;"}}</td>
-                        <td>
-                            <input type="checkbox" ng-model="expense.majorChecked" />
+                        <td class="text-left">
+                            <input type="checkbox" ng-model="timesheetBatch.checked" ng-change="updateBatchCheked(batchIndex,timesheetBatch.checked)" />
                         </td>
                     </tr>
                     <!--big table basic row-->
@@ -139,7 +139,7 @@
                                     </thead>
                                     <tbody>
                                         <!--category-->
-                                        <tr  ng-repeat-start="timesheet in timesheetBatch.timesheets">
+                                        <tr  ng-repeat-start="(timesheetIndex, timesheet) in timesheetBatch.timesheets">
                                             <!--category basic info-->
                                             <td class="text-center" style="width:20px"> 
                                             <div ng-click="test2[$index] = !test2[$index]">
@@ -157,30 +157,12 @@
                                             <td>{{timesheet.net}}</td>
                                             <td>{{timesheet.status}}</td>
                                             <td class="text-center">{{timesheet.units}}</td>
-                                            <td class="text-center">{{timesheet.payRate}}</td>
+                                            <td class="text-center">{{timesheet.avgPayRate}}</td>
                                             <td class="text-center">{{timesheet.net}}</td>
                                             <td class="text-center">{{timesheet.vat}}</td>
                                             <td class="text-center">{{timesheet.total}}</td>
-                                            <td class="text-center" style="width:20px">
-                                                <div class="dropdown text-left">
-                                                    <a style="cursor:pointer" data-toggle="dropdown">
-                                                        <i class="fa fa-bars"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
-                                                        <li ng-click="">
-                                                            <a style="cursor:pointer; color:#000000">Change Status</a>
-                                                        </li>
-                                                        <li ng-click="">
-                                                            <a style="cursor: pointer; color: #000000">Approve</a>
-                                                        </li>
-                                                        <li ng-click="">
-                                                            <a style="cursor: pointer; color: #000000">Edit</a>
-                                                        </li>
-                                                        <li ng-click="">
-                                                            <a style="cursor: pointer; color: #000000">Delete</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                            <td class="text-left" style="width:20px">
+                                                <input type="checkbox" ng-model="timesheet.checked" ng-change="updateTimesheetsCheked(batchIndex,timesheetIndex,timesheet.checked)"/>
                                             </td>
                                         </tr>
                                         <!--category basic info-->
@@ -202,22 +184,93 @@
                                                                 <th class="text-center">Gross</th>
                                                                 <th class="text-center">VAT</th>
                                                                 <th class="text-center">Total</th>
-                                                                <th></th>
+                                                                <th class="text-center">
+                                                                    <div class="dropdown text-left">
+                                                                        <a style="cursor:pointer" data-toggle="dropdown">
+                                                                            <i class="fa fa-bars"></i>
+                                                                        </a>
+                                                                        <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
+                                                                            <li ng-click="">
+                                                                                <a style="cursor:pointer; color:#000000">Change Status</a>
+                                                                            </li>
+                                                                            <li ng-click="">
+                                                                                <a style="cursor: pointer; color: #000000">Approve</a>
+                                                                            </li>
+                                                                            <li ng-click="">
+                                                                                <a style="cursor: pointer; color: #000000">Edit</a>
+                                                                            </li>
+                                                                            <li ng-click="">
+                                                                                <a style="cursor: pointer; color: #000000">Delete</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody >
-                                                            <tr ng-repeat="element in timesheet.elements" ng-if="item.expenseType==cat">
-                                                            <td>
-                                                                <input type="checkbox" ng-model="item.checked" />
+                                                            <tr ng-repeat="(elementIndex,element) in timesheet.elements" ng-if="item.expenseType==cat">
+                                                            <td class="text-center">
+                                                                <input type="checkbox" ng-model="element.checked" ng-change="updateElementsCheked(batchIndex,timesheetIndex,elementIndex,timesheet.checked)"/>
                                                             </td>
-                                                            <td class="text-center">{{element.description}}</td>
-                                                            <td class="text-center">{{element.elementType}}</td>
-                                                            <td class="text-center">{{element.units}}</td>
-                                                            <td class="text-center">{{element.payRate}}</td>
+                                                            <td class="text-center">
+                                                                <div ng-hide="element.edit">
+                                                                    {{element.description}}
+                                                                </div>
+                                                                <div ng-hide="!element.edit" class="gropu-control">
+                                                                    <span type="text">
+                                                                        <input class="form-control" ng-model="element.editData.description" placeholder="{{element.description}}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div ng-hide="element.edit">
+                                                                    {{element.elementType}}    
+                                                                </div>
+                                                                <div ng-hide="!element.edit" class="gropu-control">
+                                                                    <span type="text">
+                                                                        <input class="form-control"ng-model="element.editData.elementType" placeholder="{{element.elementType}}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div ng-hide="element.edit">
+                                                                    {{element.units}}    
+                                                                </div>
+                                                                <div ng-hide="!element.edit" class="gropu-control">
+                                                                    <span type="text">
+                                                                        <input class="form-control"ng-model="element.editData.units" placeholder="{{element.units}}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div ng-hide="element.edit">
+                                                                    {{element.payRate}}    
+                                                                </div>
+                                                                <div ng-hide="!element.edit" class="gropu-control">
+                                                                    <span type="text">
+                                                                        <input class="form-control" ng-model="element.editData.payRate" placeholder="{{element.payRate}}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
                                                             <td class="text-center">{{element.amount}}</td>
-                                                            <td class="text-center">{{element.vat}}</td>
-                                                            <td class="text-center">{{element.amount + element.vat}}</td>
-                                                            <td class="text-center"></td>
+                                                            <td class="text-center">
+                                                                <div ng-hide="element.edit">
+                                                                    {{element.vat}}    
+                                                                </div>
+                                                                <div ng-hide="!element.edit" class="gropu-control">
+                                                                    <span type="text">
+                                                                        <input class="form-control" ng-model="element.editData.vat" placeholder="{{element.payRate}}"/>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">{{element.total}}</td>
+                                                            <td width="8%" class="text-left">
+                                                            <div>
+                                                                <a ng-if="element.edit" style="cursor:pointer" ng-click="element.edit=false; finishEditing(batchIndex,timesheetIndex,elementIndex, false)"><i class="fa fa-times"></i></a>
+                                                                <a ng-if="element.edit" style="cursor:pointer" ng-click="element.edit=false; finishEditing(batchIndex,timesheetIndex,elementIndex, true)"><i class="fa fa-check"></i></a>
+                                                                <a ng-hide="element.edit" style="cursor:pointer" ng-click="element.edit = true"><i class="fa fa-pencil-square-o"></i></a>
+                                                            </div>
+                                                            </td>
                                                             </tr>
                                                         </tbody>
                                                         <!--<tr>
