@@ -233,7 +233,7 @@ module.exports = function (dbs) {
             }
             message = '<h3>' + header + '</h3>' + body;
             var mailModel = { message: message };
-            var mailOption = { to: mailInfo.user.emailAddress };
+            var mailOption = { to: mailInfo.user.emailAddress, subject: 'Attention please, Expense Rejection' };
             console.log(mailModel);
             console.log(mailOption);
             return mailer.sendEmail(mailOption, mailModel, 'status_change').then(function () {

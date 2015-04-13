@@ -1,5 +1,42 @@
 ﻿<div class="modal-content">
 
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <h2 style="color: #0b830b">
+                    Claim ID:&nbsp;
+                    {{claim.claimReference}}
+                </h2>
+            </div>
+            <div class="col-sm-9">
+                <h2 style="color: #0b830b">
+                    Full Name:&nbsp;
+                    {{claim.user.firstName}}&nbsp;{{claim.user.lastName}}
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <h3 style="color: #086508">
+                    Category:&nbsp;
+                    {{expense.expenseType}}
+                </h3>
+            </div>
+            <div class="col-sm-5">
+                <h3 style="color: #086508">
+                    Type:&nbsp;
+                    {{expense.expenseDetail.name}}
+                </h3>
+            </div>
+            <div class="col-sm-3">
+                <h3 style="color: #086508">
+                    Total:&nbsp;
+                    {{expense.expenseDetail.total | currency:"&pound;"}}
+                </h3>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-header" ng-hide="actualUrls.length == 0">
         <h4 class="modal-title">Expense Receipts</h4>
     </div><!-- /modal-header -->
@@ -21,7 +58,7 @@
                     <div class="col-xs-9 img-details"></div>
                 </div>-->
                 <div class="row" style="margin-top: 38px;">
-                    <a ng-href="{{item.img}}" class="cursor:pointer" download><i class="fa fa-download"></i>&nbsp;download</a>
+                    <a ng-href="{{item.img}}" class="cursor:pointer" download><i class="fa fa-download"></i>&nbsp;Download</a>
                 </div>
                 <div class="row" style="margin-top: 38px;">
                     <div class="col-xs-1 col-sm-2 ">
@@ -39,8 +76,7 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-xs-4 col-sm-4 form-group full-row" style="text-align:center">
-                <img ng-src="http://placehold.it/150x150" id="logo" width="150" height="150" />
-                <div>- preview -</div>
+                <img ng-src="" id="logo" width="150" height="150" title="- preview -" alt="- preview -" style="text-align:center; width:150px; height:150px; line-height:150px" />
             </div>
             <div class="col-xs-8 col-sm-8 full-row">
                 <!--<div ng-show="generatingPreview">
@@ -51,10 +87,10 @@
                     <div class="col-xs-3">Name</div>
                     <div class="col-xs-9 img-details" id="uploadFile"></div>
                 </div>
-                <div class="row form-group">
+                <!--<div class="row form-group">
                     <div class="col-xs-3">Size</div>
                     <div class="col-xs-9 img-details" id="filesize"></div>
-                </div>
+                </div>-->
                 <div class="row" style="margin-top: 38px;">
                     <div class="col-xs-5 col-sm-4">
                         <div>

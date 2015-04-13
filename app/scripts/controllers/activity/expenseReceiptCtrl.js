@@ -1,9 +1,9 @@
 ﻿'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, rootScope, receiptUrls, s3Service, $q, HttpResource) {
+app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, rootScope, expense, claim, s3Service, $q, HttpResource) {
     //$scope.generatingPreview = false;
-    $scope.inintSrc = 'http://placehold.it/150x150';
+    $scope.initSrc = '';
     var canceller = $q.defer();
     var uploadCancelled = false;
     var signedRequest;
@@ -14,14 +14,15 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     $scope.uploading = false;
     var fileName, fileType;
 
-    $scope.receiptUrls = receiptUrls;
+    $scope.claim = claim;
+    $scope.expense = expense;
+    $scope.receiptUrls = expense.receiptUrls;
     $scope.actualUrls = [];
     $scope.receiptUrls.forEach(function (justName) {
-        console.log(justName);
         $http.get('/api/documents/receipts/viewsignedurl/' + justName).success(function (res) {
             //logs(res, 'actual url');
-            var fr = new FileReader();
-            logs(fr, 'file');
+            //var fr = new FileReader();
+            //logs(fr, 'file');
             $scope.actualUrls.push({
                 name: justName,
                 img: res.url
@@ -56,7 +57,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     },
     loadImageData = function (file, filereader) {
         document.getElementById("uploadFile").innerHTML = file.name;
-        document.getElementById("filesize").innerHTML = this.width + 'x' + this.height + ' px, ' + ~~(file.size / 1024) + ' KB';
+        //document.getElementById("filesize").innerHTML = this.width + 'x' + this.height + ' px, ' + ~~(file.size / 1024) + ' KB';
         document.getElementById('logo').src = this.src;
         var icon = document.getElementById('iconCheck');
         icon.classList.remove('fa', 'fa-spinner', 'fa-spin');
@@ -114,8 +115,8 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
                                 img: res.url
                             });
                             document.getElementById("uploadFile").innerHTML = '';
-                            document.getElementById("filesize").innerHTML = '';
-                            document.getElementById('logo').src = $scope.inintSrc;
+                            //document.getElementById("filesize").innerHTML = '';
+                            document.getElementById('logo').src = $scope.initSrc;
                             var icon = document.getElementById('iconCheck');
                             icon.classList.remove('fa', 'fa-spinner', 'fa-spin');
                             icon.classList.remove('fa', 'fa-check');
@@ -154,7 +155,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     };
 
     function logs(record, label) {
-        if (label) console.log(label + ':', record);
-        else console.log(record);
+        //if (label) console.log(label + ':', record);
+        //else console.log(record);
     }
 });
