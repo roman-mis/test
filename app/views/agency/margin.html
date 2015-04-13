@@ -26,7 +26,7 @@
 							<div class="form-group">
 								<label class="control-label col-xs-3" for="maxvalue">Max</label>
 								<div class="col-xs-9 form-group">
-									<input ng-model = "marginFee.margin.percentageOfTimesheets.maxAmount" type="text" class="form-control" id="maxvalue" placeholder="5.00">
+									<input ng-model = "marginFee.margin.percentageOfTimesheets.maxAmount" type="text" class="form-control" id="maxvalue">
 
 								</div>
 							</div>
@@ -35,7 +35,7 @@
 							<div class="form-group">
 								<label class="control-label col-xs-3" for="minvalue">Min</label>
 								<div class="col-xs-9 form-group">
-									<input ng-model = "marginFee.margin.percentageOfTimesheets.minAmount" type="text" class="form-control" id="minvalue" placeholder="25.00">
+									<input ng-model = "marginFee.margin.percentageOfTimesheets.minAmount" type="text" class="form-control" id="minvalue">
 								</div>
 
 							</div>
@@ -119,7 +119,7 @@
 							<div class="form-group">
 								<label class="control-label col-xs-3" for="maxvalue">Max</label>
 								<div class="col-xs-9 form-group">
-									<input ng-model = "marginFee.margin.totalHours.maxAmount" type="text" class="form-control" id="maxvalue" placeholder="&pound;5">
+									<input ng-model = "marginFee.margin.totalHours.maxAmount" type="text" class="form-control" id="maxvalue" placeholder="&pound;">
 								</div>
 							</div>
 						</div>		
@@ -127,7 +127,7 @@
 							<div class="form-group">
 								<label class="control-label col-xs-3" for="minvalue">Min</label>
 								<div class="col-xs-9 form-group">
-									<input ng-model = "marginFee.margin.totalHours.minAmount" type="text" class="form-control" id="minvalue" placeholder="&pound;25">
+									<input ng-model = "marginFee.margin.totalHours.minAmount" type="text" class="form-control" id="minvalue" placeholder="&pound;">
 								</div>		
 							</div>
 						</div>
@@ -186,8 +186,6 @@
 											<a href ng-click="totalHour.isEdited= false;revertHour($index);">
 												<i class="fa fa-close"></i>
 											</a>
-
-											{{marginFee.margin.totalHours.ranges[$index+1].to}}
 										</div>	
 									</td>
 								</tr>
