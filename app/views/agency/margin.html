@@ -41,7 +41,7 @@
 							</div>
 						</div>
 					</form>
-					<button ng-disabled="marginFee.margin.percentageOfTimesheets.minAmount>marginFee.margin.percentageOfTimesheets.maxAmount"ng-click="save()" class="btn btn-success pull-left">Save</button>
+					<button ng-disabled="Number(marginFee.margin.percentageOfTimesheets.minAmount)>Number(marginFee.margin.percentageOfTimesheets.maxAmount)"ng-click="save()" class="btn btn-success pull-left">Save</button>
 					<div class="col-xs-12">
 						<table class="table table-striped">
 							<thead>
@@ -132,7 +132,7 @@
 							</div>
 						</div>
 					</form>				
-					<button ng-disabled = "marginFee.margin.totalHours.minAmount>marginFee.margin.totalHours.maxAmount"ng-click="save()" class="btn btn-success pull-left">Save</button>
+					<button ng-disabled = "Number(marginFee.margin.totalHours.minAmount)>Number(marginFee.margin.totalHours.maxAmount)"ng-click="save()" class="btn btn-success pull-left">Save</button>
 					<div class="col-xs-12">
 						<table class="table table-striped">
 							<thead>
