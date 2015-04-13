@@ -106,7 +106,7 @@
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-warning" ng-click="cancelEdit()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-            <button class="btn btn-primary" ng-click="saveProduct()" ng-disabled="productForm.$invalid || isSaving">
+            <button class="btn btn-primary" ng-click="saveProduct(product)" ng-disabled="productForm.$invalid || isSaving">
                 <div ng-show="!isSaving && product._id"><i class="fa fa-save"></i> &nbsp; Save</div>
                 <div ng-show="!isSaving && !product._id"><i class="fa fa-plus"></i> &nbsp; Add</div>
                 <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>

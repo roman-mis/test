@@ -51,10 +51,10 @@ angular.module('origApp.controllers')
                     params._offset = ($scope.gridOptions.currentPage - 1) * $scope.gridOptions.limit;
                 } else {
                     params._offset = 0;
-                }            
+                }
                if ($scope.filterFirstName) {
                     params.firstName_contains= $scope.filterFirstName;
-                } 
+                }
                 $scope.gridOptions.data = cddAPI.query(params, function () {
 
                     if ($scope.gridOptions.data.meta) {
@@ -77,9 +77,9 @@ angular.module('origApp.controllers')
                 });
 
                 modalInstance.result.then(function (editedItems) {
-                    
+
                 }, function () {
-                    
+
                 });
             }
 
