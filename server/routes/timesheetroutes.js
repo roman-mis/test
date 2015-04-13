@@ -18,3 +18,4 @@ router.post('/', controller.postTimesheet);
 router.post('/uploadcsv', controller.uploadCsv);
 router.post('/bulk', controller.postBulkTimesheet);
 router.post('/:id', controller.patchTimesheet);
+router.post('/update/timesheets', controller.updateTimesheets);

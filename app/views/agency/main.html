@@ -35,6 +35,9 @@
                     <li ng-if="!(permissions.taps.Candidates.hide)" ng-class="{active: isTabActive('candidates')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/candidates">Candidates</a>
                     </li>
+                    <li ng-if="!(permissions.taps.Margin.hide)" ng-class="{active: isTabActive('margin')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/margin">Margin</a>
+                    </li>
                     <li ng-if="!(permissions.taps.Sales.hide)" ng-class="{active: isTabActive('sales')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/sales">Sales</a>
                     </li>

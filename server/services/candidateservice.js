@@ -8,7 +8,7 @@
 	// var Promise=require('promise');
 	var _=require('lodash');
 	// var Sequelize=require('sequelize');
-	var mailer=require('../mailing/mailer'); 
+	var mailer=require('../mailing/mailer');
 	var uuid = require('node-uuid');
 	var service={};
 	var utils=require('../utils/utils');
@@ -73,7 +73,8 @@
 
 		return Q.Promise(function(resolve,reject){
 			var q=db.User.find();
-
+     console.log('here wer are..........');
+     console.log(request);
 			q.where('userType').equals('WK');
 
 			queryutils.applySearch(q,db.User,request)

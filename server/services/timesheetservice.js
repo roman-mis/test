@@ -211,5 +211,48 @@ module.exports=function(db){
 			});
 		});
 	};
+
+	service.updateTimesheets = function(req){
+		console.log('&&&&&&&&&/&&&&&&&&&&&&');
+		return Q.Promise(function(resolve,reject){
+			var	index = -1;
+			if(req.length === 0){
+				reject('no data');
+			}
+			req.forEach(function(reqElement){
+				index++;
+				service.getTimesheet(reqElement._id).then(function(res){
+					res.net = 1000;
+					for(var key in reqElement){
+						console.log(key);
+						if(key === 'elements'){
+							for(var j = 0; j < res.elements.length; j++){
+								for(var k = 0; k < reqElement.elements.length; k++){
+									if(res.elements[j]._id + '' === reqElement.elements[k]._id + ''){
+										for(var key3 in reqElement.elements[k]){
+											res.elements[j][key3] = reqElement.elements[k][key3];
+										}
+									}
+								}
+							}
+						}else{
+							res[key] = reqElement[key];
+						}
+					}
+
+					Q.nfcall(res.save.bind(res)).then(function(){
+						if(index+1 === req.length){
+							resolve();
+						}
+
+					},function(err){
+						reject(err);	
+					});
+				},function(err){
+					reject(err);
+				});
+			});
+		});
+	};
 	return service;
 };

@@ -16,13 +16,18 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getTimesheetBatchesWithTimesheet = function(){
+	service.getTimesheetBatchesWithTimesheet = function(request){
+		console.log('*****************')
+		console.log(request)
 		return Q.Promise(function(resolve,reject){
 			var q1=db.TimesheetBatch.find().populate('agency','name').populate('branch');
 			var q2=db.Timesheet.find().populate('worker','firstName lastName emailAddress title');
 		  var newTimesheetBatches = [];
-			Q.nfcall(q1.exec.bind(q1)).then(function(timesheetbatches){
-
+		  queryutils.applySearch(q1,db.TimesheetBatch,request).then(function(timesheetbatches){
+			// Q.nfcall(q1.exec.bind(q1)).then(function(timesheetbatches){
+				var totalCount = timesheetbatches.count;
+				console.log(totalCount);
+				timesheetbatches = timesheetbatches.rows;
 				Q.nfcall(q2.exec.bind(q2)).then(function(timesheets){
 					
 					timesheetbatches.forEach(function(timesheetbatch){
@@ -43,8 +48,8 @@ module.exports=function(dbs){
 						});
 						newTimesheetBatches.push(newTimesheetbatch);
 					});
-					resolve(newTimesheetBatches);
 
+					resolve({timesheetBatches:newTimesheetBatches,totalCount:totalCount});
 				},function(){
 					reject();
 				});

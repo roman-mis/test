@@ -156,6 +156,21 @@ service.getAgency=function(id){
 	var q=db.Agency.findById(id).populate('defaultInvoicing.invoiceDesign').populate('defaultInvoicing.invoiceTo').populate('branches');
 	return Q.nfcall(q.exec.bind(q));
 };
+service.updateAgencyMarginFee=function(id,marginFee){
+	console.log('getAgency');
+	var q=db.Agency.findById(id);
+	return Q.promise(function (resolve,reject) {
+		Q.nfcall(q.exec.bind(q)).then(function (agency) {
+			agency.marginFee = marginFee;
+			Q.nfcall(agency.save.bind(agency))
+					.then(function(){
+						resolve();
+					},reject);
+		},function (error) {
+			reject(error);
+		});
+	});
+};
 
 // service.getAgencyByBranchId=function(id){
 // 	var q=db.Agency.findOne({'branches._id':id}).populate('branches.consultants.user');

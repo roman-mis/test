@@ -8,7 +8,7 @@ module.exports=function(db){
 		var subModelIndex=-1;
 		subModelIndex =inc.indexOf('.');
 		if(subModelIndex>=0){
-			modelName=inc.substr(0,subModelIndex);	
+			modelName=inc.substr(0,subModelIndex);
 		}
 		var myModel;
 		if(parentInc){
@@ -30,29 +30,29 @@ module.exports=function(db){
 				 	//console.log('has toLowerCase');
 				 	//console.log(ky);
 				 	if(ky.toLowerCase()===modelName.toLowerCase()){
-				 		return true;	
+				 		return true;
 				 	}
-					
+
 				 }
 
 				return false;
 			});
-					
+
 			// console.log(myModel);
 			if(myModel){
 				myModel={model:myModel};
 				//console.log('adding : '+modelName);
 				//console.log('found');
-				
+
 				if(parentInc){
 					parentInc.include=parentInc.include||[];
 
 					parentInc.include.push(myModel);
 				}
 				else{
-					allIncludes.push(myModel);	
+					allIncludes.push(myModel);
 				}
-				
+
 			}
 		}
 		else{
@@ -83,12 +83,11 @@ module.exports=function(db){
 
 			return false;
 		});
-		
+
 		return existingModel;
 	}
-	
+
 	return function(req,res,next){
-		console.log('testtest');
 		var opt={
 			include:[],
 			filterBy:{},
@@ -116,9 +115,9 @@ module.exports=function(db){
 
 				includeModel(allIncludes,db,inc);
 
-				
+
 			});
-			
+
 			opt.include=allIncludes;
 			// console.log('all includes');
 			// console.log(allIncludes);
@@ -126,10 +125,11 @@ module.exports=function(db){
 
 		if(!_.isUndefined(req.query._limit) || !_.isUndefined(req.query._offset)){
 			console.log('2');
-			var paginationOption={};	
+			var paginationOption={};
 			paginationOption.limit=req.query._limit?req.query._limit:20;
 			paginationOption.offset=req.query._offset?req.query._offset:0;
 			opt.pagination=paginationOption;
+			console.log(opt);
 		}
 
 		if(req.query._orderby){
@@ -144,16 +144,16 @@ module.exports=function(db){
 						// orderItem.push(orderName);
 						var order=(itm.substr(0,1)==='-'?'desc':'asc');
 						orderItem[orderName]=order;
-						
-						return orderItem;	
+
+						return orderItem;
 					}
 
 					return undefined;
-					
+
 				});
 
 			opt.orderBy=orderBys;
-	
+
 		}
 
 		var filters={};
@@ -162,29 +162,41 @@ module.exports=function(db){
 
 			// console.log('q = ');
 			if(q && v && q.substr(0,1)!=='_'){
+
 				var filter={};
 
 				var filterName=q;
 				var operator='exact';
 				//console.log('checking '+q.toLowerCase());
 				_.forEach(['exact','iexact','contains','icontains', 'between'],function(itm){
+					console.log(itm);
+					console.log('test');
 					//console.log('validating with  '+itm);
+					console.log(q.toLowerCase());
+					console.log(q.toLowerCase().indexOf('_'+itm));
 					if(q.toLowerCase().indexOf('_'+itm)>=0){
+
 						//console.log('looks like valid ');
+						console.log(filterName);
+						console.log('testing here...');
 						filterName=q.replace('_'+itm,'');
+						console.log(filterName);
 						operator =itm;
+						console.log(operator);
 						return false;
 					}
 				});
 
 				filter={term:v,operator:operator};
+				console.log(filter);
 
 				filters[filterName]=filter;
+				console.log(filters);
 			}
 		});
 		opt.filters=filters;
 		console.log(opt);
-		
+
 		// if(filters){
 		// 	var reqFilters={};
 		// 	_.forEach(filters,function(itm,idx){
@@ -195,7 +207,7 @@ module.exports=function(db){
 		// }
 
 		req._restOptions=opt;
-		
+
 		//res.json(opt);
 		next();
 	};
