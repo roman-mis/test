@@ -25,7 +25,7 @@
 						<div class="row">
 							<div ng-repeat="timesheet in agencyTimesheets" class="col-sm-12">
 								<div class="form-group">
-									<label class="col-xs-12 col-sm-3 control-label">Invoice 1</label>
+									<label class="col-xs-12 col-sm-3 control-label">Invoice {{$index}}</label>
 									<label class="col-xs-3 col-sm-3 control-label-textRight">&pound;{{timesheet.total}}</label>
 									<div class="col-xs-4 col-sm-3">
 										<input type="text" class="form-control" ng-readonly="!selectedTimesheets[$index]" placeholder="&pound;0" />

@@ -46,6 +46,8 @@ angular.module('origApp.controllers')
     };
 
     $scope.checkDateMp = function() {
+        $scope.mp.days=[];
+        $scope.errorMsg=null;
         var n = new Date($scope.mp.startDate).valueOf();
         var d = new Date($scope.mp.babyDueDate).valueOf();
 

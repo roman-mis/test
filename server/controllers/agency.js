@@ -109,6 +109,28 @@ module.exports = function(){
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
 	};
+	controller.getAgencyMarginFee=function(req,res){
+		console.log('agency.getAgency');
+		agencyservice.getAgency(req.params.id, true)
+			.then(function(agency){
+				//console.log('agency is ');
+				//console.log(agency);
+				var vm= agency.marginFee;
+				console.log('margin fee Model is ');console.log(vm);
+				res.json({result:true, object:vm});
+			},res.sendFailureResponse);
+	};
+	controller.updateAgencyMarginFee=function(req,res){
+		console.log(req.body);
+		agencyservice.updateAgencyMarginFee(req.params.id, req.body)
+			.then(function(){
+				//console.log('agency is ');
+				//console.log(agency);
+				
+				console.log('margin fee updated ');console.log();
+				res.json({result:true});
+			},res.sendFailureResponse);
+	};
 
 	controller.postAgency=function (req, res) {
 		saveAgency(req, res, 'post');

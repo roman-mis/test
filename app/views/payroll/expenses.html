@@ -234,7 +234,14 @@
                                                 <tr ng-repeat-start="cat in claim.categories">
                                                     <!--category basic info-->
                                                     <td style="width:20px">
-                                                        <a data-toggle="collapse" ng-click="test2[$index] = !test2[$index]" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer"><i class="fa fa-minus-square-o"></i></a>
+                                                        <div ng-click="test2[$index] = !test2[$index]">
+                                                          <a data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer">
+                                                              <span style="font-size:12px" class="fa-stack fa-lg">
+                                                                  <i ng-if="test2[$index]" class="fa fa-minus-square-o fa-stack-1x"></i>
+                                                                  <i ng-if="!test2[$index]" class="fa fa-plus-square-o fa-stack-1x"></i>
+                                                              </span>
+                                                          </a>
+                                                        </div>
                                                     </td>
                                                     <td col-span="9">
                                                         <b>{{cat}}</b>
@@ -245,7 +252,7 @@
                                                 <tr ng-repeat-end>
                                                     <!--category detailed info-->
                                                     <td colspan="12" class="td-collapsed">
-                                                        <div id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" class="collapse">
+                                                        <div ng-if="test2[$index]" id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" >
                                                             <table class="table table-striped expenses-auth">
                                                                 <thead>
                                                                     <tr>
