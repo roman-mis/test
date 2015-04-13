@@ -14,7 +14,7 @@ module.exports=function(){
 
 	service.getAllInvoices = function(request){
 		return Q.Promise(function(resolve,reject){
-			var q=db.Invoice.find().populate('agency').populate('branch');
+			var q=db.Invoice.find().populate('agency').populate('branch').populate('timesheetBatch');
 			queryutils.applySearch(q,db.Invoice,request)
 			.then(resolve,reject);
 		});

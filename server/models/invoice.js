@@ -12,9 +12,11 @@ module.exports = function(mongoose,autoIncrement) {
 		date: { type: Date, default: Date.now },
         invoiceNumber: Number,
         dueDate: Date,
+        status: String,
         lines: [
             {
                 worker: { type: Schema.Types.ObjectId, ref:'User' },
+                timesheet: { type: Schema.Types.ObjectId, ref:'Timesheet' },
                 lineType: String, // timesheet, margin
                 elements: [
                     {
