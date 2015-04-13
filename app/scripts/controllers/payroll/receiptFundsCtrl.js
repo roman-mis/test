@@ -26,6 +26,12 @@ angular.module('origApp.controllers')
     $scope.getAgencyTimesheets($scope.selectedAgencyId);
 	});
 
+
+	HttpResource.model('invoice').customGet('',{},function(invoices){
+  	console.log('invoices done !!');
+    console.log(invoices);
+	});
+
 	$scope.getAgencyTimesheets = function(id){
 		$scope.agencyTimesheets = [];
 		$scope.selectedTimesheets = [];

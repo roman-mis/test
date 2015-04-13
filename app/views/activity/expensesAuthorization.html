@@ -281,3 +281,26 @@
         </div>
     </div>
 </div>
+<div class="orig-grid-wrapper">
+  <div class="orig-grid-pagination-wrapper">
+    <div class="page-rows-count">
+      <label>Results per page</label><br>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="20">20</button>
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="40">40</button>
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="60">60</button>
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="80">80</button>
+      </div>
+    </div>
+    <pagination
+      total-items="options.totalItems" 
+      ng-model="options.currentPage"
+      ng-change="loadExpenses()"
+      items-per-page="options.limit" 
+      max-size="options.maxVisiblePages" 
+      class="pagination" 
+      boundary-links="true" 
+      rotate="false" 
+      num-pages="options.numPages"></pagination>
+  </div>
+</div>

@@ -12,7 +12,6 @@ module.exports = function (dbs) {
     service.getExpenses = function (request) {
         return Q.Promise(function (resolve, reject) {
             var q = db.Expense.find().populate('agency').populate('user').populate('createdBy');
-
             queryutils.applySearch(q, db.Expense, request)
               .then(resolve, reject);
         });
@@ -65,10 +64,8 @@ module.exports = function (dbs) {
                     queryutils.applySearch(expensesQuery, db.Expense, request)
                         .then(function (expense) {
                             var bucket = [];
-
-
                             expense.rows.forEach(function (t) {
-                                var pushIt = false;
+                                var pushIt = true;
 
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
@@ -84,7 +81,10 @@ module.exports = function (dbs) {
                                 bucketObject.total = 0;
                                 secondValue.some(function (l) {
 
-
+                                    if (approvedOnly && l.expenses.length === 0) {
+                                        pushIt = false;
+                                        return true;
+                                    }
                                     var daySpecific = {};
                                     daySpecific.startTime = l.startTime;
                                     daySpecific.endTime = l.endTime;
@@ -180,8 +180,8 @@ module.exports = function (dbs) {
                                 }
 
                             });
-
-
+                            
+                            // console.log(expense);
                             resolve({ claims: bucket, system: system, totalCount: expense.count });
                         });
                 });
