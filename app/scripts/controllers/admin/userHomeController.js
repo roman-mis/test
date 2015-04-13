@@ -1,19 +1,18 @@
 'use strict';
 angular.module('origApp.controllers')
   .controller('userHomeController', ['$scope','Notification', 'HttpResource','$stateParams','$rootScope', function($scope,Notification, HttpResource,$stateParams,$rootScope) {
-		
-		$scope.user = {_id:'',firstName:'',lastName:''};
-		
+  var user={};
+	$scope.user = {_id:'',firstName:'',lastName:''};
 
-	console.log('$stateParams');
-	console.log($stateParams);
+
 	HttpResource.model('constants/userTypes').customGet('',{},function(data){
 		$scope.types = data.data;
 	});
 
 	HttpResource.model('users/'+$stateParams.id).customGet('',{},function(data){
-		console.log(data);
+
 		$scope.user = data.data.object;
+
 		console.log('/admin/users/'+$scope.user._id+'/home')
 		$rootScope.breadcrumbs = [{link:'/', text:'Home'},
                               {link: '/admin/home', text: 'Admin'},
@@ -23,12 +22,18 @@ angular.module('origApp.controllers')
 	});
 
 	$scope.update = function(){
-		console.log($scope.user.firstName);
+
+		if($scope.user.locked===true){
+
+      Notification.error({message:'This user is locked!',delay:2000});
+      $scope.user=user;
+			return ;
+		}
 		if(!$scope.user.firstName || $scope.user.firstName === ''){
 			Notification.error({message:'First Name is required',delay:2000});
 			return ;
 		}
-		
+
 		if(!$scope.user.lastName || $scope.user.lastName === ''){
 			Notification.error({message:'Last Name is required',delay:2000});
 			return ;
