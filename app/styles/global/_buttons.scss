@@ -1,8 +1,10 @@
-button {
+button,
+button:active,
+button:focus,
+input.btn,
+input.btn:focus,
+input.btn:active {
     outline: none !important;
-    &:focus {
-        outline: none !important;
-    }
 }
 
 .btn {
@@ -78,7 +80,7 @@ button {
         }
     }
 }
- 
+
 .btn.input-btn {
     width: 40px;
     padding: 0 5px;

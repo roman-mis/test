@@ -24,7 +24,7 @@ body {
 a {
     @include basic-transition();
 }
-    
+
 ul {
     padding: 0;
     margin: 0;
@@ -148,14 +148,30 @@ table {
             background-color: #fff;
             color: $gray;
             border: 1px solid $gray-lighter;
-            margin-bottom: 15px;
+            margin-bottom: $grid-gutter-width-md;
             .meta-box-inner {
                 padding: $grid-gutter-width;
+                .msg-box { 
+                    padding: 0 $grid-gutter-width / 2 0 $grid-gutter-width;
+                    height: 32px;
+                    margin-bottom: 5px;
+                    @media(max-width: $screen-md-max) {
+                        padding: 0 $grid-gutter-width-md / 2 0 $grid-gutter-width-md;
+                    } 
+                    > * {
+                        line-height: 32px;
+                        display: inline-block;
+                        float: left;
+                    }
+                    .message {
+                        padding: 0 $grid-gutter-width / 2;
+                    }
+                }
             }
             .entry-title {
                 border-bottom: 1px solid $gray;
                 color: $green;
-                margin-top: 10px; 
+                margin-top: 10px;
             }
             .icon-edit i {
                 position: relative;
@@ -341,6 +357,7 @@ table {
 
 .table-view {
     padding: $grid-gutter-width-md;
+    padding-top: 20px;
     .tv-search-row {
         display: flex;
         flex-flow: row wrap;
@@ -348,6 +365,10 @@ table {
         width: 100%;
         padding: 0 3px;
         margin-bottom: 4px;
+        > div {
+            padding-left: 0;
+            padding-right: 0;
+        }
         .tv-search-container {
             display: flex;
             flex-flow: row nowrap;
@@ -362,24 +383,3 @@ table {
 .tv-item-main {
     padding-bottom: 0;
 }
-
-.tabs-payroll,
-    .agencies {
-        .btn {
-            text-align: left;
-            max-width: 200px;
-            float: right;
-            i {
-                float: right;
-                line-height: 1.2;
-            }
-        }
-    }
-    .tabs-payroll .nav-tabs.nav.row {
-        padding: 0;
-        margin-bottom: -1px;
-        >li.active {
-            background: #fff;
-            border-bottom: 1px solid transparent; 
-        }
-    }
