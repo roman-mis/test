@@ -56,7 +56,8 @@ angular.module('origApp.controllers')
         };
 
         $scope.checkDate = function() {
-
+            $scope.ssp.days=[];
+            $scope.sspMessage=null;
             if (!$scope.ssp) {
                 $scope.ssp = {};
             }
