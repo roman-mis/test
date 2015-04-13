@@ -200,6 +200,17 @@ module.exports = function(db){
 
 	};
 
+	controller.setClaimsRTP = function (req, res) {
+	    expenseservice.setClaimsRTP(req.body).then(function (d) {
+	        res.json(d);
+	    }, function (err) {
+
+	        res.sendFailureResponse(err);
+	    });
+
+
+	};
+
 
 	controller.getAllApprovedExpenses=function(req,res){
 				var approvedOnly = true;

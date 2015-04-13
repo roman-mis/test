@@ -32,7 +32,8 @@ router.get('/expenses/approvedOnly', restMiddleware(db),expensecontroller.getAll
 
 router.post('/expenses',expensecontroller.deleteExpense);
 
-router.post('/expenses/setClaimsSubmitted',expensecontroller.setClaimsSubmitted);
+router.post('/expenses/setClaimsSubmitted', expensecontroller.setClaimsSubmitted);
+router.post('/expenses/setClaimsRTP', expensecontroller.setClaimsRTP);
 
 router.patch('/expenses/reject',expensecontroller.rejectExpense);
 

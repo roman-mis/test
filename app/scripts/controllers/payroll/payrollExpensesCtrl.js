@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('origApp.controllers');
-app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
-    function ($scope, $http, $rootScope) {
+app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope', '$modal',
+    function ($scope, $http, $rootScope, $modal) {
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/payroll/home', text: 'Payroll' },
                                   { link: '/payroll/expenses', text: 'Expenses' }
@@ -169,6 +169,36 @@ app.controller('payrollExpensesCtrl', ['$scope', '$http', '$rootScope',
                     }
                 });
             }
+        }
+
+        $scope.viewReceipt = function (expense, claim) {
+            viewReceipt(expense, claim);
+        }
+
+        $scope.viewReceipt = function (expense, claim) {
+            //logs(expense.receiptUrls, 'URLs');
+            var modalInstance = $modal.open({
+                templateUrl: 'views/payroll/viewReceipt.html',
+                controller: 'viewReceiptCtrl',
+                size: 'md',
+                resolve: {
+                    rootScope: function () {
+                        return $scope;
+                    },
+                    expense: function () {
+                        return expense;
+                    },
+                    claim: function () {
+                        return claim;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+
+            }, function (msg) {
+
+            });
         }
 
         function logs(record, label) {
