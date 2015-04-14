@@ -500,6 +500,36 @@ module.exports = function (dbs) {
 
     };
 
+    service.setClaimsRTP = function (data) {
+        return Q.promise(function (resolve, reject) {
+            var readPromises = [];
+            var WritePromises = [];
+            for (var i = 0; i < data.length; i++) {
+                var q = db.Expense.findById(data[i]);
+                readPromises.push(Q.nfcall(q.exec.bind(q)));
+            }
+            Q.all(readPromises).then(function (expenses) {
+                console.log(expenses.length)
+                for (var i = 0; i < expenses.length; i++) {
+                    expenses[i].days.forEach(function (day) {
+                        day.expenses.forEach(function (dayExpense) {
+                            dayExpense.status = 'ready to payroll';
+                        });
+                    });
+                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+                }
+                return Q.all(WritePromises).then(function (res) {
+                    resolve({ result: true, opjects: res });
+                }, function (err) {
+                    reject(err);
+                });
+            }, function () {
+                reject('can not find this claim');
+            });
+        });
+
+    };
+
 
     function daysBetween(first, second) {
         // Copy date parts of the timestamps, discarding the time parts.
