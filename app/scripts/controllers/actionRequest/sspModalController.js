@@ -91,10 +91,16 @@ angular.module('origApp.controllers')
 
                 if (n < sickDayTo) {
                     $scope.sspMessage = 'Informed date is before the SSP start date.';
-                } else if (n > validTill) {
+                }
+                else if(sickDayFrom > sickDayTo){
+
+                   $scope.sspMessage = '"Sick date to" is before the "sick day from".';
+                }
+                 else if (n > validTill) {
                     $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
-                } else if ((sickDayTo - sickDayFrom) < 345600000) {
-                    $scope.sspMessage = 'Date of sick note from and Date of sick note to should be greater than or equal to 4 days.';
+                }
+                 else if ((sickDayTo - sickDayFrom) < 345600000) {
+                    $scope.sspMessage = '"Sick date from" and "Date of sick to" should be greater or equal to 4 days.';
                 } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
                     $scope.submitted = true;
                 } else {

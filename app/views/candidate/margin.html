@@ -8,7 +8,7 @@
 		</ul>
 
 		<!-- Tab panes -->
-        <div class="tab-content" ng-controller="AgencyMarginController">
+        <div class="tab-content">
 		  
 			<div role="tabpanel" class="tab-pane active" id="fixedFee">
 				<div class="row">
@@ -41,7 +41,7 @@
 							</div>
 						</div>
 					</form>
-					<button ng-disabled="Number(marginFee.margin.percentageOfTimesheets.minAmount)>Number(marginFee.margin.percentageOfTimesheets.maxAmount)"ng-click="save()" class="btn btn-success pull-left">Save</button>
+					<button ng-disabled="Number(marginFee.margin.percentageOfTimesheets.minAmount)>Number(marginFee.margin.percentageOfTimesheets.maxAmount)" ng-click="save()" class="btn btn-success pull-left">Save</button>
 					<div class="col-xs-12">
 						<table class="table table-striped">
 							<thead>
@@ -182,7 +182,7 @@
 											<a ng-hide="(Number(marginFee.margin.totalHours.ranges[$index-1].to)>=Number(totalHour.from))||(Number(totalHour.from)>=Number(totalHour.to))||(Number(totalHour.to)>=Number(marginFee.margin.totalHours.ranges[$index+1].to))"href ng-click="save();totalHour.isEdited = !totalHour.isEdited">
 												<i class="fa fa-check"></i>
 											</a>
-
+											
 											<a href ng-click="totalHour.isEdited= false;revertHour($index);">
 												<i class="fa fa-close"></i>
 											</a>

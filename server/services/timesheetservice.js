@@ -125,7 +125,6 @@ module.exports=function(db){
 	        			branch: timesheetDetails.branch
 					};
 					var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
-
 					var elements = [];
 					_.forEach(timesheetDetails.elements, function(_element){
 						var paymentRate = {};
@@ -167,21 +166,27 @@ module.exports=function(db){
 				        total: timesheetDetails.total,
 				        imageUrl: timesheetDetails.imageUrl
 					};
+
 					var timesheetModel = new db.Timesheet(timesheetDetail);
 					return Q.all([Q.nfcall(timesheetModel.save.bind(timesheetModel)), Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel))])
 						.then(function(){
 							resolve(timesheetModel);
 						},reject);
+
 				}else{
 					return service.getTimesheet(id)
 						.then(function(timesheet){
 							if(timesheet){
+
 								utils.updateSubModel(timesheet, timesheetDetails);
+
 								return Q.nfcall(timesheet.save.bind(timesheet))
 									.then(function(){
 										resolve(timesheet);
+									
 									},reject);
 							}else{
+
 								reject({result:false,name:'NOTFOUND',message:'Timesheet not found'});
 							}
 						}, reject);

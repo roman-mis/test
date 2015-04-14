@@ -21,7 +21,7 @@ service.getUser=function(id){
 
 service.updateUser = function(id,updates){
 	return Q.Promise(function(resolve,reject){
-		console.log(id);
+		console.log('mos was here',id);
 		return service.getUser(id).then(function(user){
 			if(user){
 				for(var key in updates){
@@ -132,7 +132,22 @@ service.getAllUsers=function(request){
 		.then(resolve,reject);
 	});
 };
-
+service.updateUserMarginFee=function(id,marginFee){
+	console.log('getUSer');
+	console.log(id,'and mos',marginFee);
+	var q=db.User.findById(id);
+	return Q.promise(function (resolve,reject) {
+		Q.nfcall(q.exec.bind(q)).then(function (user) {
+			user.worker.marginFee = marginFee;
+			Q.nfcall(user.save.bind(user))
+					.then(function(){
+						resolve();
+					},reject);
+		},function (error) {
+			reject(error);
+		});
+	});
+};
 service.checkDuplicateUser=function(emailAddress,existingInfo){
 	existingInfo=existingInfo||{};
 	return Q.Promise(function(resolve,reject){
