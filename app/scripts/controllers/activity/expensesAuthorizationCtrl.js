@@ -55,11 +55,11 @@ app.controller("expensesAuthorizationCtrl",
         $scope.transportTypes = ConstantsResource.get('transportationmeans');
         $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({});
         $http.get('/api/constants/expenseClaimStatus').success(function (res) {
-            $scope.expenseClaimStatus = res;
-        });
-        $http.get('/api/constants/expenseStatus').success(function (res) {
             $scope.expenseStatus = res;
         });
+        //$http.get('/api/constants/expenseStatus').success(function (res) {
+        //    $scope.expenseStatus = res;
+        //});
         $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
         $http.get('/api/constants/fuels').success(function (res) {

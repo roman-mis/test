@@ -2,15 +2,10 @@
 
 angular.module('origApp.controllers')
 	.controller('AgencyMarginController', function ($scope, HttpResource) {
-			$scope.$watch('selectedAgency._id',function () {
-			if($scope.selectedAgency._id){
-				$scope.agency = angular.copy($scope.selectedAgency);
-				HttpResource.model('agencies/'+$scope.agency._id+'/marginFee').query({},function (res) {
-					$scope.marginFee = res.data.object;
-				});
-			}
-
-	});
+			
+		HttpResource.model('agencies/'+$scope.selectedAgencyId+'/marginFee').query({},function (res) {
+			$scope.marginFee = res.data.object;
+		});
 		// If revertChanges is set to true, then it reverts changes from cache. Otherwise updates cache.
 		// var updateObject = function (object, revertChanges) {
 		// 		var service = object._service,
@@ -85,9 +80,10 @@ angular.module('origApp.controllers')
 		// 		}
 		// 	}
 		// ];
-		
+		$scope.Number = Number;
 		$scope.save = function () {
-			HttpResource.model('agencies/marginFee').create($scope.marginFee).patch($scope.agency._id).then(function (res) {
+		
+			HttpResource.model('agencies/marginFee').create($scope.marginFee).patch($scope.selectedAgencyId).then(function (res) {
 					console.log(res);
 				});
 		};

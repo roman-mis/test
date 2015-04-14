@@ -1,7 +1,7 @@
 ﻿'use strict';
 var app = angular.module('origApp.controllers');
-app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope',
-    function ($scope, $http, $rootScope) {
+app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope', '$modal',
+    function ($scope, $http, $rootScope, $modal) {
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/payroll/home', text: 'Payroll' },
                                   { link: '/payroll/approveExpenses', text: 'Approve Expenses' }
@@ -12,7 +12,7 @@ app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope',
         });
 
         $scope.loadAllData = function () {
-            $http.get('/api/candidates/expenses').success(function (expenses) {
+            $http.get('/api/candidates/expenses/approvedOnly').success(function (expenses) {
                 logs(expenses, 'Claims and system');
                 $scope.allData = expenses.object.claims;
                 logs($scope.allData, 'All Claims');
@@ -131,10 +131,10 @@ app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope',
             });
         }
 
-        $scope.setSubmitted = function (claimId) {
+        $scope.setRTP = function (claimId) {
             var req = [claimId];
             logs(req, 'set submitted to claim');
-            $http.post('/api/candidates/expenses/setClaimsSubmitted', req).success(function (res) {
+            $http.post('/api/candidates/expenses/setClaimsRTP', req).success(function (res) {
                 logs(res, 'response');
                 if (res.result) {
                     $scope.allData.forEach(function (claim, i) {
@@ -146,7 +146,7 @@ app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope',
             });
         }
 
-        $scope.batchSetSubmitted = function () {
+        $scope.batchSetRTP = function () {
             var req = [];
             $scope.allData.forEach(function (claim) {
                 if (claim.claimCheck) {
@@ -156,7 +156,7 @@ app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope',
             if (req.length == 0) window.alert('No claims selected');
             else {
                 logs(req, 'batch set submitted to claims');
-                $http.post('/api/candidates/expenses/setClaimsSubmitted', req).success(function (res) {
+                $http.post('/api/candidates/expenses/setClaimsRTP', req).success(function (res) {
                     logs(res, 'response');
                     if (res.result) {
                         req.forEach(function (id) {
@@ -169,6 +169,36 @@ app.controller('payrollApproveExpensesCtrl', ['$scope', '$http', '$rootScope',
                     }
                 });
             }
+        }
+
+        $scope.viewReceipt = function (expense, claim) {
+            viewReceipt(expense, claim);
+        }
+
+        $scope.viewReceipt = function (expense, claim) {
+            //logs(expense.receiptUrls, 'URLs');
+            var modalInstance = $modal.open({
+                templateUrl: 'views/payroll/viewReceipt.html',
+                controller: 'viewReceiptCtrl',
+                size: 'md',
+                resolve: {
+                    rootScope: function () {
+                        return $scope;
+                    },
+                    expense: function () {
+                        return expense;
+                    },
+                    claim: function () {
+                        return claim;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+
+            }, function (msg) {
+
+            });
         }
 
         function logs(record, label) {

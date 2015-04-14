@@ -28,7 +28,7 @@ module.exports = function(mongoose,autoIncrement) {
                 text: String, // WE43 9KK
                 description: String,
                 receiptUrls: [ String ],
-                status:{type:String,default:'submitted'} // submitted, rejected, approved, readyToPayroll, deleted
+                status:{type:String,default:'submitted'}
             }]
         }]
     });
