@@ -7,6 +7,16 @@ angular.module('origApp.controllers')
                                   { link: '/payroll/approveTimesheets', text: 'Approve Timesheets' }
 	    ];
 
+	    $scope.capitalizeFirst = function(s){
+			if(!s){
+    		return;
+    	}
+    	var arr = s.split('');
+			arr[0] = arr[0].toUpperCase();
+    	s = arr.join('');
+    	return s;
+		};
+		
 	    $scope.payfrequencies = ConstantsResource.get('payfrequencies');
 	    HttpResource.model('timesheetbatches/with/timesheets').customGet('', {}, function (timesheetBatches) {
 	      console.log(timesheetBatches, 'Done!, timesheet batches');
@@ -95,8 +105,18 @@ angular.module('origApp.controllers')
 			for(var i = 0; i < $scope.timesheetBatches[batchIndex].timesheets.length; i++){
 				if($scope.timesheetBatches[batchIndex].timesheets[i].checked === true){
 					req.reqBody.push(changeStatus(batchIndex, i, status));
+					if(status !== 'receipted'){
+						$scope.timesheetBatches[batchIndex].timesheets.splice(i,1);
+						if($scope.timesheetBatches[batchIndex].timesheets.length === 0){
+								$scope.timesheetBatches.splice(batchIndex,1);
+			      }else{
+							generateBatchesData(batchIndex);
+			    	}
+					}
 				}
 			}
+
+
 			if(req.reqBody.length>0){
 				updateServerData(req);
 			}else{
