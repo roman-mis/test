@@ -146,12 +146,8 @@ angular.module('origApp.controllers')
 			Number($scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].vat);
 		}
 
-		$scope.finishEditing =function(batchIndex, timesheetIndex, elementIndex, state, payRate, vat, units){
+		$scope.finishEditing =function(batchIndex, timesheetIndex, elementIndex, state, payRate, units){
 			if(state){
-				if(!vat){
-	        Notification.error({message: 'Vat must be Number', delay: 2000});
-				}
-
 				if(!payRate){
 	        Notification.error({message: 'pay Rate must be Number', delay: 2000});
 				}
@@ -161,7 +157,7 @@ angular.module('origApp.controllers')
 				}
 			}
 			if(state === true){
-				if(vat && units && payRate){
+				if(units && payRate){
 					for(var key in $scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].editData){
 						// console.log(key);
 						$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex][key] = 
@@ -205,11 +201,19 @@ angular.module('origApp.controllers')
 
 		function updateServerData(req){
 			HttpResource.model('timesheets/update/timesheets').create(req).post().then(function (response) {
-				Notification.success({message: 'Done !!', delay: 2000});
+				Notification.success({message: 'Status Changed', delay: 2000});
 	   		console.log(response); 	
 			});
 		}
-
+		$scope.capitalizeFirst = function(s){
+			if(!s){
+    		return;
+    	}
+    	var arr = s.split('');
+			arr[0] = arr[0].toUpperCase();
+    	s = arr.join('');
+    	return s;
+		};
 		function changeStatus(batchIndex, timesheetIndex, status){
 			var body = {};
 			body._id = $scope.timesheetBatches[batchIndex].timesheets[timesheetIndex]._id;
