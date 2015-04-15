@@ -86,6 +86,18 @@ module.exports = function(){
 
         },res.sendFailureResponse);
     };
+    controller.viewActionRequestDocument=function(req,res){
+
+       var objectName=req.params.fileName;
+       var folder=process.env.S3_ACTIONREQUEST_FOLDER;
+        awsService.getS3SignedUrl('getObject', objectName,null,folder)
+        .then(function (returnData) {
+            console.log(returnData);
+           res.redirect(returnData.signedRequest);
+
+
+        },res.sendFailureResponse);
+    };
 
     controller.deleteReceipt=function(req,res){
        var objectName = req.params.fileName;
@@ -128,7 +140,10 @@ module.exports = function(){
         .then(function(returnData){
             res.redirect(returnData.signedRequest);
 
-        },res.sendFailureResponse);
+        },function(err){
+
+            console.log(err);
+        });
     };
 
     controller.deleteDoc=function(req,res){
