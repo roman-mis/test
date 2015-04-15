@@ -56,7 +56,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.checkDate = function() {
-            $scope.ssp.days=[];
+
             $scope.sspMessage=null;
             if (!$scope.ssp) {
                 $scope.ssp = {};
@@ -88,6 +88,7 @@ angular.module('origApp.controllers')
 
             } else {
                 $scope.validDate = false;
+                $scope.ssp.days=[];
 
                 if (n < sickDayTo) {
                     $scope.sspMessage = 'Informed date is before the SSP start date.';
@@ -103,9 +104,8 @@ angular.module('origApp.controllers')
                     $scope.sspMessage = '"Sick date from" and "Date of sick to" should be greater or equal to 4 days.';
                 } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
                     $scope.submitted = true;
-                } else {
-
                 }
+                return;
             }
         };
 
@@ -166,6 +166,7 @@ angular.module('origApp.controllers')
         };
 
         $scope.save = function(actionName) {
+            $scope.checkDate();
             var data = {
                 dateInformed: $scope.ssp.dateInformed,
                 startDate: $scope.ssp.startDate,

@@ -27,13 +27,13 @@
                         <ui-select-choices repeat="item.code as item in holidayPayRules">{{item.description}}</ui-select-choices>
                     </ui-select>
                 </div>
-                <div class="col-sm-4 form-group">Margin</div>
+                <!-- <div class="col-sm-4 form-group">Margin</div>
                 <div class="col-sm-8 form-group">
                     <ui-select ng-model="product.margin" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
                         <ui-select-match>{{$select.selected.description}}</ui-select-match>
                         <ui-select-choices repeat="item.code as item in margins">{{item.description}}</ui-select-choices>
                     </ui-select>
-                </div>
+                </div> -->
                 <div class="col-sm-4 form-group">Derogation Contract</div>
                 <div class="col-sm-8 form-group">
                     <ui-select ng-model="product.derogationContract" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
@@ -43,13 +43,13 @@
                 </div>
             </div>
             <div class="col-xs-12 nonepadding">
-                <div class="col-sm-4 form-group">Margin Fixed</div>
+                <!-- <div class="col-sm-4 form-group">Margin Fixed</div>
                 <div class="col-sm-8 form-group">
                     <div class="input-group">
                         <div class="input-group-addon">&#163;</div>
                         <input class="form-control" type="text" ng-model="product.marginFixed" ng-disabled="!product.margin" ng-required="candidate.status == 'Live'">
                     </div>
-                </div>
+                </div> -->
                 <div class="col-sm-4 form-group">Derogation Spread</div>
                 <div class="col-sm-8 form-group">
                     <input class="form-control" type="text" placeholder="" ng-model="product.derogationSpread">
