@@ -92,21 +92,31 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
 	// $scope.close = function(){
 	// 	$modalInstance.close();
 	// };
-
+  HttpResource.model('timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').query({},function(response) {
+      // if(!response.data.result){
+        // $scope.response = response.data.logs;
+        console.log(response);
+      });
+  $http.get('api/timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').then(function (res) {
+    // body...
+    console.log(res);
+  });
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
 			payFrequency:$scope.pay.frequency};
 			console.log($scope.pay.frequency);
 		for(var i = 0; i < $scope.p.worker.length; i++){
 			if($scope.p.worker[i]){
-				runParollWorkers.workers.push({_id: $scope.candidates[i]._id});
+				runParollWorkers.workers.push({_id: $scope.candidates[i]._id,margin:100});
 			}
 		}
 		console.log(runParollWorkers);
+
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
 	    // if(!response.data.result){
 	    	$scope.response = response.data.logs;
-	    	console.log($scope.response);
+        console.log(response);
+	    	console.log(runParollWorkers);
 				// $scope.firstStep = false;
 				// $scope.secondStep = true;
 	    // }else{
