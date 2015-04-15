@@ -8,7 +8,8 @@ var checkCandidate=[
   './spec/candidate/search_current_candidate.js',
 //  './spec/candidate/check_admin_tabs.js',
 //  './spec/candidate/home_tab.js',
-  './spec/candidate/payroll_tab.js',
+ // './spec/candidate/payroll_tax_tab.js',
+  './spec/candidate/payroll_product_tab.js',
 ]
 
 exports.config = {
