@@ -18,7 +18,7 @@ angular.module('origApp.controllers')
       parentScope: $scope,
       controller: 'CandidatePayslipModalController'
     });
-  };        
+  };
 })
 
 .controller('CandidatePayrollTaxModalController', function($scope, $modalInstance, parentScope, HttpResource, ConstantsResource, MsgService) {
