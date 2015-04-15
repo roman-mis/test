@@ -15,6 +15,15 @@ angular.module('origApp.controllers')
         limit:20
     };
 
+
+    HttpResource.model('systems/paymentrates').query({}, function (data) {
+
+        $scope.paymentRates = data.data.objects;
+        console.log($scope.paymentRates);
+
+
+    });
+
 		$scope.updateTimesheetsCheked  = function(batchIndex, timesheetIndex, state){
 			$scope.timesheetBatches[batchIndex].checked = false;
 		};

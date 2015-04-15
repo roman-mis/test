@@ -11,7 +11,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Select Agency</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control" ng-change="getAgencyTimesheets(selectedAgencyId)" ng-model="selectedAgencyId" ng-options="agency.id as agency.name for agency in agencies">
+                                        <select class="form-control" ng-change="getAgencyInvoices(selectedAgencyId)" ng-model="selectedAgencyId" ng-options="agency.id as agency.name for agency in agencies">
                                             
                                         </select>
                                     </div>
@@ -23,18 +23,18 @@
                     <div class="line-horizontal"></div>
 					<form class="form-horizontal ">
 						<div class="row">
-							<div ng-repeat="timesheet in agencyTimesheets" class="col-sm-12">
+							<div ng-repeat="invoice in agencyInvoices" class="col-sm-12">
 								<div class="form-group">
 									<label class="col-xs-12 col-sm-3 control-label">Invoice {{$index}}</label>
-									<label class="col-xs-3 col-sm-3 control-label-textRight">&pound;{{timesheet.total}}</label>
+									<label class="col-xs-3 col-sm-3 control-label-textRight">&pound;{{invoice.total}}</label>
 									<div class="col-xs-4 col-sm-3">
-										<input type="text" class="form-control" ng-readonly="!selectedTimesheets[$index]" placeholder="&pound;0" />
+										<input type="text" class="form-control" ng-model="acceptedValue[$index]" ng-readonly="!selectedInvoices[$index]" placeholder="&pound;0" />
 									</div>
 									<div class="col-xs-3 col-sm-2 control-label-textRight">
                                          Received
                                     </div>
                                     <div class="col-xs-2 col-sm-1 control-label">
-                                        <input type="checkbox" ng-model="selectedTimesheets[$index]"/>
+                                        <input type="checkbox" ng-model="selectedInvoices[$index]"/>
                                     </div>
 								</div>
 							</div>
@@ -45,7 +45,7 @@
 				    
                 <div class="modal-footer">
                     <a href ng-click="cancel()" class="btn"> Cancel</a>
-                    <button class="btn btn-primary" ng-click="markAsReceived()">Mark as Received</button> 
+                    <button class="btn btn-primary" ng-disabled="disableButton()" ng-click="markAsReceived()">Mark as Received</button> 
                 </div><!-- /modal footer -->
                         
 		 	</div><!-- /modal content -->
