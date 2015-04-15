@@ -141,7 +141,7 @@ module.exports = function(mongoose,autoIncrement) {
           
             margin:{
                   fixedFee:Number,
-                  marginType: String,
+                  marginType:String,
                   percentageOfTimesheets:{
                     minAmount:Number,
                     maxAmount:Number,
