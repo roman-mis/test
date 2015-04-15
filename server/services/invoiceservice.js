@@ -200,9 +200,10 @@ module.exports=function(){
 										lines: lines,
 										companyDefaults: invoice.companyDefaults,
 										net: net,
-								        vatRate: amount,
-								        vat: net * amount/100,
-								        total: (net+vat).toFixed(2)
+						        vatRate: amount,
+						        vat: net * amount/100,
+						        total: (net+vat).toFixed(2),
+						        status: 'created'
 									};
 									console.log('*****************************************');
 									console.log(invoiceInfo);
@@ -256,6 +257,38 @@ module.exports=function(){
 		}
 
 		return Q.nfcall(q.exec.bind(q));
+	};
+
+
+	service.receiveInvoices = function(req){
+
+		console.log('&&&&&&&&&/&&&&&&&&&&&&');
+		console.log(req);
+		return Q.Promise(function(resolve,reject){
+			if(req.length === 0){
+				resolve();
+			}
+			var promisArray = [];
+			var	index = -1;
+			req.forEach(function(reqElement){
+				index++;
+				var q=db.Invoice.findById(reqElement.id);
+				Q.nfcall(q.exec.bind(q)).then(function(invoice){
+					invoice.status = 'receipted';
+					promisArray.push(Q.nfcall(invoice.save.bind(invoice)));
+					if(promisArray.length === req.length){
+						Q.all(promisArray).then(function(){
+							resolve({result:true});
+						},function(err){
+							reject(err);
+						});	
+					}
+				},function(err){
+					reject(err);
+				});
+			});
+			
+		});
 	};
 
 	return service;

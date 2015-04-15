@@ -222,7 +222,7 @@ module.exports=function(db){
 		return Q.Promise(function(resolve,reject){
 			var	index = -1;
 			if(req.length === 0){
-				reject('no data');
+				resolve();
 			}
 			req.forEach(function(reqElement){
 				index++;

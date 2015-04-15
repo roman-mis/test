@@ -46,6 +46,7 @@ angular.module('origApp.controllers')
     //save tax information
     $scope.saveTax = function() {
       $scope.isTaxSaving = true;
+      console.log($scope.tax);
       candidateResource.create($scope.tax).patch('payrolltax')
       .then(function(response) {
         $scope.isTaxSaving = false;

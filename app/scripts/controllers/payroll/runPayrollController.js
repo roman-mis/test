@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll',
+app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource','$http','payroll',
 	function($rootScope,$scope,HttpResource,$http,payroll){
 		$scope.pay = {frequency:''};
 		$scope.agency = {id:''};
@@ -10,10 +10,11 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 		$scope.selection = {type: false};
 		$scope.agencyList = [];
 		$scope.PayFrequency = [];
+		$scope.option = {};
 		// $scope.firstStep = true;
 		// $scope.secondStep = false;
 
-		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$')
+		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$');
 
 
 $rootScope.breadcrumbs = [{link:'/', text:'Home'},
@@ -30,10 +31,10 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
       }
     });
 
-		$scope.payroll = payroll.details;
+		$scope.payroll = payroll;
 		console.log($scope.payroll);
 
-		    function initWorkerSelection(limit){
+		function initWorkerSelection(limit){
     	$scope.p.worker=[];
     	for(var i = 0; i < limit; i++){
     		$scope.p.worker[i] = false;	
@@ -46,13 +47,17 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
     	}
     	var params={worker:{
     		payrollTax:{
-    			payFrequency:'1'
+    			payFrequency:$scope.pay.frequency
     		},
     		payrollProduct:{
     			agency:$scope.agency.id
     		}
     	}};
     	console.log(params);
+    	// $scope.pay.frequency = 2;
+    	console.log($scope.pay.frequency);
+    	console.log($scope.agency.id);
+
     	$http.get('/api/candidates?worker.payrollTax.payFrequency='+$scope.pay.frequency+'&worker.payrollProduct.agency='+$scope.agency.id)
     	.success(function(data) {
 		  	 console.log(data); 
