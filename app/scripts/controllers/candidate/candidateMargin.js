@@ -9,7 +9,9 @@ HttpResource.model('users/'+$scope.candidateId+'/marginFee').query({},function (
           console.log(res);
         });
     
-      
+      $scope.marginOptions = [
+        'Use Candidate', 'Use Agency'
+      ];
     // If revertChanges is set to true, then it reverts changes from cache. Otherwise updates cache.
     // var updateObject = function (object, revertChanges) {
     //    var service = object._service,

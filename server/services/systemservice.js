@@ -106,7 +106,7 @@ module.exports=function(dbs){
 	service.getSystem=function(){
 		return Q.Promise(function(resolve,reject){
 			var q=db.System.findOne();
-			return Q.nfcall(q.exec.bind(q))
+			Q.nfcall(q.exec.bind(q))
 				.then(function(system){
 					if(system){
 						resolve(system);
@@ -117,7 +117,9 @@ module.exports=function(dbs){
 								resolve(_system);
 							});
 					}
-				},reject);
+				},function(){
+					reject();
+				});
 
 		});
 	};
@@ -125,7 +127,7 @@ module.exports=function(dbs){
 	service.getVat = function(vatCharged){
 		return Q.Promise(function(resolve){
 			if(vatCharged){
-				return service.getSystem()
+				service.getSystem()
 				.then(function(system){
 					if(system.statutoryTables.vat){
 						var currentDate = new Date();console.log(currentDate);
@@ -140,7 +142,9 @@ module.exports=function(dbs){
 					}else{
 						resolve(0);
 					}
-				}, resolve(0));
+				}, function(){
+					resolve(0);
+				});
 			}else{
 				resolve(0);
 			}
