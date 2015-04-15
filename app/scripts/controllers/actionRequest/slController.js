@@ -25,7 +25,7 @@ angular.module('origApp.controllers')
     }, function(err) {});
     $scope.submitAction = function(values) {
         $scope.slObject={};
-        $scope.slObject.studentLoan=$scope.studentLoan;
+        $scope.slObject.studentLoan=values;
         HttpResource.model('actionrequests/' + $scope.candidateId + '/studentloan').create($scope.slObject).post().then(function(response) {
 
             MsgService.success('Successfully submitted.');
@@ -39,22 +39,13 @@ angular.module('origApp.controllers')
         $modalInstance.dismiss('cancel');
     };
     $scope.submitStudentLoan = function() {
-
-        HttpResource.model('actionrequests').create($scope)
-            .patch($scope.id).then(function() {
-                MsgService.success('Successfully saved.');
-                $modalInstance.dismiss('cancel');
-            });
-
-    }
-    $scope.submitStudentLoan = function() {
             HttpResource.model('actionrequests').create($scope)
                 .patch($scope.id).then(function() {
                     MsgService.success('Successfully saved.');
-                    $modalInstance.close();
+                    $modalInstance.dismiss('cancel');
                 });
-        };
-        $scope.saveAndApprove = function() {
+    };
+    $scope.saveAndApprove = function() {
 
             HttpResource.model('actionrequests/' + $scope.id + '').create($scope)
                 .patch('approve').then(function() {
@@ -63,8 +54,8 @@ angular.module('origApp.controllers')
 
                 });
 
-        };
-        $scope.saveAndReject = function() {
+    };
+    $scope.saveAndReject = function() {
 
             HttpResource.model('actionrequests/' + $scope.id + '').create($scope)
                 .patch('reject').then(function() {
@@ -73,8 +64,8 @@ angular.module('origApp.controllers')
 
                 });
 
-        };
-        $scope.saveAndRefer = function() {
+    };
+    $scope.saveAndRefer = function() {
 
             HttpResource.model('actionrequests/' + $scope.id + '').create($scope)
                 .patch('refer').then(function() {
@@ -83,5 +74,5 @@ angular.module('origApp.controllers')
 
                 });
 
-        };
+    };
 });

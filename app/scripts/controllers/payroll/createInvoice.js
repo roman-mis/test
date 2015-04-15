@@ -33,9 +33,19 @@ HttpResource.model('agencies/with/timesheetBatches').customGet('',{},function(ag
 	});
 
 		$scope.selectAgency = function(id){
+			$scope.timesheetBatches = [];
 			for(var i = 0; i < $scope.agencies.length; i++){
 				if($scope.agencies[i]._id === id){
-					$scope.timesheetBatches = $scope.agencies[i].timesheetBatches;
+					for(var j = 0; j < $scope.agencies[i].timesheetBatches.length; j++){
+						// console.log($scope.agencies[i].timesheetBatches[j].status);
+						for(var k =0; k < $scope.agencies[i].timesheetBatches[j].status.length; k++){
+							console.log($scope.agencies[i].timesheetBatches[j].status[k])
+							if($scope.agencies[i].timesheetBatches[j].status[k] == 'preValidation'){
+								console.log('%%%%%%%%%%%%%%%%%%%%')
+								$scope.timesheetBatches.push($scope.agencies[i].timesheetBatches[j]);
+							}	
+						}
+					}
 					$scope.branches = $scope.agencies[i].branches;
 					HttpResource.model('agencies/' + id + '/payroll')
 					.query({},function (payrollResponse) {

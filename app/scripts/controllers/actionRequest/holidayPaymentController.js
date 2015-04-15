@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
 
 
-.controller('holidayPaymentController', function($scope, parentScope, HttpResource, MsgService, $modalInstance) {
+.controller('holidayPaymentController', function($scope, parentScope, HttpResource, MsgService, $modalInstance,$filter) {
 
     $scope.candidateId = parentScope.candidateId;
     if (!$scope.hpObject) {
