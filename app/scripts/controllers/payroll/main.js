@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('origApp.controllers');
-app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService','payroll',
-	function($state,$rootScope,$scope,HttpResource,ModalService,payroll){	
+app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService', 'payroll', 'parseCSV',
+	function($state,$rootScope,$scope,HttpResource,ModalService,payroll,parseCSV){	
 
     $rootScope.breadcrumbs = [{link:'/', text:'Home'},
                           {link: '/payroll/home', text: 'Payroll'}
@@ -30,6 +30,21 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
             $scope.periodTypeValues = data.data;
         }
     });
+
+
+    $scope.onFileSelect = function($files) {
+      console.log('$$$$$$$$$$$$$$$$$$')
+      parseCSV.get($files[0]).then(function (data) {
+        // if($state.current.name != "csv")
+        // $state.go("csv");
+        // $scope.state.name = 'csv';
+        // $scope.saveButton = 'enabled';
+        console.log(data);
+        // $scope.data.content = dataHolder.updateData(data, 'clear data');
+        // $scope.tree = [];
+      });
+    };
+
 
 	
     // $scope.openRunPayroll = function(){

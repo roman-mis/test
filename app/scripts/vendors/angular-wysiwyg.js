@@ -94,37 +94,57 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                 scope.html = false;
                 var ar = '';
                 var final = '';
+                var html = '';
+                    
                 function convert(){
                     var html = textarea.html();
                     console.log(html);
                     console.log(scope.html)
                     if(scope.html === true){
-                        // ar = html.split('<');
-                        // console.log(ar);
-                        // html = ar.join('&lt;'); 
-                        // console.log(html);
-                        console.log(html)
-                        html.replace('<', '&lt;');
-                        html.replace('>','&gt;');
-
+                        console.log('*********************************')
+                        // html = html.replace('<','&lt;');
+                        // html = html.replace('>','&gt;');
+                        ar = html.split('<');
+                        console.log(ar);
+                        html = ar.join('&lt;'); 
+                        console.log(html);
                     }else{
-                        html.replace('&lt;','<');
-                        html.replace('&gt;','>');
-
+                        // html = html.replace('&lt;','<');
+                        // html = html.replace('&gt;','>');
+                        ar = html.split('&lt;');
+                        console.log(ar);
+                        html = ar.join('<'); 
+                        console.log(html);
+                        ar = html.split('&gt;');
+                        console.log(ar);
+                        html = ar.join('>'); 
+                        console.log(html);
                     }
-                    textarea.html(html);
-                    // textarea.html();
-                    // console.log(textarea);
-                    // console.log(textarea.html());
+
+                    if (html == '<br>') {
+                        html = '';
+                    }
+                    textarea.html(html)
+                    ngModelController.$setViewValue(textarea.html());
+                }
+                var first = true;
+                textarea.on('input keyup paste', function(event) {
+                    // convert();
                     if (html == '<br>') {
                         html = '';
                     }
                     ngModelController.$setViewValue(textarea.html());
-                }
-                textarea.on('input keyup paste mouseup', function(event) {
-                    convert();
                 });
 
+                textarea.on('mouseup', function(event) {
+                    console.log('#######################')
+                    // convert();
+
+                    if (html == '<br>') {
+                        html = '';
+                    }
+                    ngModelController.$setViewValue(textarea.html());
+                });
 
                 scope.isLink = false;
 
@@ -132,7 +152,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                 scope.selection="";
                 function itemIs(tag) {
 
-                    scope.selection = window.getSelection().getRangeAt(0);      
+                    // scope.selection = window.getSelection().getRangeAt(0);      
                     // console.log(scope.selection)
                     if (scope.selection) {
                         if (scope.selection.startContainer.parentNode.tagName === tag.toUpperCase() || scope.selection.endContainer.parentNode.tagName === tag.toUpperCase()) {
@@ -260,6 +280,12 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                     scope.html = !scope.html;
                     convert();
                 }
+
+                scope.testFn = function(){
+                    console.log('^^^^^^^^^^^^^^^^^^^^^');
+                    // convert();
+                }
+
                 scope.format('enableobjectresizing', true);
                 scope.format('styleWithCSS', true);
 
@@ -291,7 +317,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
         }
 
         var getMenuTextArea = function() {
-            return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}" name="{{textareaName}}" required="{{textareaRequired}}" placeholder="{{textareaPlaceholder}}" ng-model="value"></div><div contentEditable="true" >{{value}}</div>';
+            return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}" name="{{textareaName}}" required="{{textareaRequired}}" placeholder="{{textareaPlaceholder}}" ng-model="value"></div>{{value}}';
             // return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}"  >{{value}}</div>';
             // return ''
         }
@@ -299,6 +325,8 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
         var getMenuGroup = function() {
             return '<div class="btn-group btn-group-sm wysiwyg-btn-group-margin">'
         }
+
+
 
         var getMenuItem = function(item) {
             item = item.toLowerCase().replace(' ', '-');
@@ -391,7 +419,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
             else
                 menu = defaultMenu;
 
-            var menuHtml = '<div class="wysiwyg-menu">';
+            var menuHtml = '<div class="wysiwyg-menu" ng-click="testFn()">';
             menuHtml += getMenuStyles();
 
             for (var i = 0; i < menu.length; i++) {

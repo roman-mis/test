@@ -53,7 +53,9 @@ module.exports=function(dbs){
     service.runPayroll=function(payrollRequest) {
         var logs=[];    
         log('Starting a payroll run!',logs);
-        
+        console.log('*********************');
+        console.log(payrollRequest);
+        console.log('*********************');
         var today = new Date();
         
         return Q.Promise(function(resolve,reject){
@@ -355,7 +357,7 @@ module.exports=function(dbs){
 
                                                                            //region Margin
 
-                                                                           var margin = 20;
+                                                                           var margin = worker.margin;
 
                                                                            log('Margin: ' + margin, logs);
 
