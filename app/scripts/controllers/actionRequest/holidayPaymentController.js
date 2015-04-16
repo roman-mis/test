@@ -22,6 +22,17 @@ angular.module('origApp.controllers')
         $scope.candidate.payrollValues.holidayPayRetained = data.data.object.payrollValues.holidayPayRetained || '';
     }, function(err) {});
 
+    $scope.$watch('hpObject.holidayPay.amount',function(n,o){
+
+        if(n){
+
+            $scope.hpObject.holidayPay.amount=Math.ceil(n * 100)/100;
+        }
+
+
+
+    });
+
     $scope.sendPayroll = function(val) {
         if (val && $scope.hpObject.holidayPay.amount <= $scope.candidate.payrollValues.holidayPayRetained) {
             HttpResource.model('actionrequests/' + $scope.candidateId + '/holidaypay').
