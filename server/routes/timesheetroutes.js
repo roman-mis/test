@@ -14,6 +14,7 @@ module.exports = function(app){
 router.get('/', restMiddleware(db), controller.getTimesheets);
 router.get('/with/agency', controller.getTimesheetsWithAgency);
 router.get('/:id', controller.getTimesheet);
+router.get('/candidatetimesheets/:id', controller.getTimesheetsByCandidateId);
 router.post('/', controller.postTimesheet);
 router.post('/uploadcsv', controller.uploadCsv);
 router.post('/bulk', controller.postBulkTimesheet);

@@ -26,6 +26,11 @@ module.exports=function(db){
 		return Q.nfcall(q.exec.bind(q));
 	};
 
+	service.getTimesheetsByCandidateId = function(id){
+		var q=db.Timesheet.find({'worker':id});
+		return Q.nfcall(q.exec.bind(q));
+	};
+
 	service.getTimesheet = function(id, populate){
 		var q=db.Timesheet.findById(id);
 		if(populate){
