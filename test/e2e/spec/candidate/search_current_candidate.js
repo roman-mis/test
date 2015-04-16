@@ -8,7 +8,7 @@ describe('Navigate to candidates url', function () {
     var items = element.all(by.repeater('row in options.data'));
     var initCount = items.count();
 
-    var searchInput = element(by.model('filterFirstName'));
+    var searchInput = element(by.model('searchText'));
     searchInput.sendKeys(loginData.userName);
 
     expect(items.count()).toBeGreaterThan(0);

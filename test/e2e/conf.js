@@ -9,14 +9,14 @@ var checkCandidate=[
 //  './spec/candidate/check_admin_tabs.js',
 //  './spec/candidate/home_tab.js',
  // './spec/candidate/payroll_tax_tab.js',
- // './spec/candidate/payroll_product_tab.js',
+  './spec/candidate/payroll_product_tab.js',
 ];
 var candidateSidebar=[
 //  './spec/candidate/sidebar/dpa.js',
 //  './spec/candidate/sidebar/onboarding.js',
 //  './spec/candidate/sidebar/add_call_log.js',
   //'./spec/candidate/sidebar/activity.js',
-  './spec/candidate/sidebar/agencies.js',
+  //'./spec/candidate/sidebar/agencies.js',
 ]
 
 exports.config = {
@@ -33,7 +33,7 @@ exports.config = {
     'browserName': 'chrome'
   }],*/
   suites: {
-    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/search_current_candidate.js'/*,'./spec/candidates.js','./spec/sidebar.js'*/],
+    main:['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js'/*,'./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'*/],
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
     remote: adminLogin.concat(checkCandidate).concat(candidateSidebar),
     dummy: adminLogin.concat(checkCandidate)
