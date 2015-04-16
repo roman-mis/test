@@ -92,8 +92,8 @@ service.getUserByParam=function(parameters){
 		var promisArray = [];
 		console.log(ids);
 		ids.forEach(function(id){
-			q = db.User.find({_id:id});
-			console.log('88888888888888888')
+			q = db.User.findOne({_id:id});
+			console.log('77777777777777777777')
 			promisArray.push(Q.nfcall(q.exec.bind(q)));
 		});
 		return Q.all(promisArray);

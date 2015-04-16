@@ -158,10 +158,15 @@ module.exports = function(){
 
 
   controller.getMarginsByCandidateIds = function(req, res){
-    return userservice.getTimesheetsByCandidateId(JSON.parse(req.params.ids).value)
+    return userservice.getMarginsByCandidateIds(JSON.parse(req.params.ids).value)
         .then(function(users){
+          console.log('^^^^^^^^^^^^1')
+
           var margins = [];
           users.forEach(function(user){
+            console.log('^^^^^^^^^^^^')
+            console.log(user)
+            console.log('&&&&&&&&&&&&')
             margins.push(user.worker.marginFee)
           });
           var resp={result:true,objects:margins};

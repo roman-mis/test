@@ -19,8 +19,8 @@ router.get('/',restMiddleware(db),controller.getAllUsers);
 
 router.get('/:id',controller.getUser);
 router.get('/:id/marginFee',controller.getUserMarginFee);
+router.get('/marginFees/:ids',controller.getMarginsByCandidateIds);
 router.patch('/marginFee/:id',controller.updateUserMarginFee);
-router.patetch('/marginFees/:ids',controller.getMarginsByCandidateIds);
 
 router.get('/activation/:emailAddress',controller.getActivation);
 

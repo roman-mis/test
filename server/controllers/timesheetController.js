@@ -26,6 +26,7 @@ module.exports = function(dbs){
 	};
 
 	controller.getTimesheetsByCandidateId = function(req, res){
+		console.log(JSON.parse(req.params.ids).value);
 		return timesheetservice.getTimesheetsByCandidateId(JSON.parse(req.params.ids).value)
 	    	.then(function(timesheets){
 	      		var resp={result:true,objects:timesheets};
@@ -35,7 +36,7 @@ module.exports = function(dbs){
 		    	res.sendFailureResponse(err);
 	   		});
 	};
-	
+
 	controller.getTimesheet = function(req, res){
 		return timesheetservice.getTimesheet(req.params.id, true)
 	    	.then(function(result){
