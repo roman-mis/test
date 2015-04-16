@@ -102,15 +102,22 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
 	// $scope.close = function(){
 	// 	$modalInstance.close();
 	// };
-  HttpResource.model('timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').query({},function(response) {
-      // if(!response.data.result){
-        // $scope.response = response.data.logs;
-        console.log(response);
-      });
-  $http.get('api/timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').then(function (res) {
+  // HttpResource.model('timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').query({},function(response) {
+  //     // if(!response.data.result){
+  //       // $scope.response = response.data.logs;
+  //       console.log(response);
+  //     });
+  var ids = JSON.stringify({value:['552f6f0dde02282412f5d5c5','54cf9e69f383e9be63a0d663','54cf9e69f383e9be63a0d663']})
+  HttpResource.model('timesheets/candidatetimesheets/'+ids).customGet('',{},function (res){
     // body...
     console.log(res);
   });
+
+  HttpResource.model('users/marginFees/'+ids).customGet('',{},function (res){
+    // body...
+    console.log(res);
+  });
+  // $http.get('api/timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').then(
 	$scope.runPayroll = function(){
 
       $scope.margins = function () {

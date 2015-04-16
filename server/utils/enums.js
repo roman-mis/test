@@ -54,5 +54,9 @@ module.exports={
 		'SPP':'spp',
 		'HolidayPay':'holidaypay',
 		'SLR':'studentloan'
+	},
+	candiateStatus:{
+
+		'Submitted':'Submitted',
 	}
 };

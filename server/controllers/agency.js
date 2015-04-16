@@ -126,7 +126,7 @@ module.exports = function(){
 			.then(function(){
 				//console.log('agency is ');
 				//console.log(agency);
-				
+
 				console.log('margin fee updated ');console.log();
 				res.json({result:true});
 			},res.sendFailureResponse);
@@ -749,7 +749,7 @@ module.exports = function(){
 		console.log('---------------------')
 		console.log('---------------------')
 		console.log('**')
-		
+
 		return newAgency;
 	}
 

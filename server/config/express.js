@@ -40,7 +40,7 @@ module.exports = function(app){
   app.use('/scripts', gzippo.staticGzip(__dirname + '/../../dist/scripts'));
   app.use('/images', gzippo.staticGzip(__dirname + '/../../dist/images'));
   app.use('/styles', gzippo.staticGzip(__dirname + '/../../dist/styles'));
-  app.use('/views', gzippo.staticGzip(__dirname + '/../../dist/views'));
+  app.use('/views', gzippo.staticGzip(__dirname + '/../../dist/views',{clientMaxAge:300000,maxAge:300000}));
   app.use('/fonts', gzippo.staticGzip(__dirname + '/../../dist/fonts'));
   app.use('/test/e2e/screenshots', gzippo.staticGzip(__dirname + '/../../test/e2e/screenshots'));
   app.all('/*', function(req, res) {
