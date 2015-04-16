@@ -144,7 +144,28 @@ module.exports = function(){
           },res.sendFailureResponse);
     };
 
-
+    controller.getUserMarginFee=function(req,res){
+    console.log('agency.getAgency');
+    userservice.getUser(req.params.id)
+      .then(function(user){
+        //console.log('agency is ');
+        //console.log(agency);
+        var vm= user.worker.marginFee;
+        console.log('margin fee Model is ');console.log(vm);
+        res.json({result:true, object:vm});
+      },res.sendFailureResponse);
+  };
+  controller.updateUserMarginFee=function(req,res){
+    console.log(req.body);
+    userservice.updateUserMarginFee(req.params.id, req.body)
+      .then(function(){
+        //console.log('agency is ');
+        //console.log(agency);
+        
+        console.log('margin fee updated ');console.log();
+        res.json({result:true});
+      },res.sendFailureResponse);
+  };
     function getUserViewModel(user){
       return {
         _id:user._id,title:user.title,firstName:user.firstName,lastName:user.lastName,

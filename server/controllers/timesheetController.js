@@ -25,6 +25,17 @@ module.exports = function(dbs){
 	   		});
 	};
 
+	controller.getTimesheetsByCandidateId = function(req, res){
+		return timesheetservice.getTimesheetsByCandidateId(req.params.id)
+	    	.then(function(timesheets){
+	      		var resp={result:true,objects:timesheets};
+				
+				res.json(resp);
+    		},function(err){
+		    	res.sendFailureResponse(err);
+	   		});
+	};
+
 	controller.getTimesheet = function(req, res){
 		return timesheetservice.getTimesheet(req.params.id, true)
 	    	.then(function(result){
@@ -126,6 +137,18 @@ module.exports = function(dbs){
 			});
 	};
 
+	controller.updateTimesheets = function(req, res){
+		console.log('******************************%%%%%%%%%%%%%%%%%%5***********************')
+		console.log(req.body.reqBody);
+		console.log('**')
+		timesheetservice.updateTimesheets(req.body.reqBody)
+			.then(function(){
+				res.json({result:true});
+			},function(err){
+			 	res.sendFailureResponse(err);
+			});
+	};
+
 	controller.getTimesheetsWithAgency = function(req,res){
 		return timesheetservice.getTimesheetsWithAgency()
 	    	.then(function(result){
@@ -142,6 +165,7 @@ module.exports = function(dbs){
 	    		});
 	      		res.json({result:true, object:timesheets});
     		},function(err){
+    			console.log(123)
 		    	res.sendFailureResponse(err);
 	   		});
 	};

@@ -8,7 +8,7 @@ module.exports = function(mongoose,autoIncrement) {
 
 	var schema= new BaseSchema({
         type: String, // ssp, smp, spp, holidaypay, studentloan
-        status: String, // Submitted, Approved
+        status: String, 
 		    worker: { type:Schema.Types.ObjectId, ref:'User' },
         dateInformed: Date,
         intendedStartDate: Date,

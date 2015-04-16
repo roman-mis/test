@@ -2,7 +2,7 @@
 angular.module('origApp.controllers')
 
 
-.controller('holidayPaymentController', function($scope, parentScope, HttpResource, MsgService, $modalInstance) {
+.controller('holidayPaymentController', function($scope, parentScope, HttpResource, MsgService, $modalInstance,$filter) {
 
     $scope.candidateId = parentScope.candidateId;
     if (!$scope.hpObject) {
@@ -53,7 +53,7 @@ angular.module('origApp.controllers')
             default :
              HttpResource.model('actionrequests/' + $scope.id + '').create($scope.hpObject)
                 .patch(type).then(function() {
-                    MsgService.success('Successfully saved and approved.');
+                    MsgService.success('Successfully saved and '+type+'ed.');
                    $modalInstance.close();
 
                 });

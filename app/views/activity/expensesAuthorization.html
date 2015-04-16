@@ -4,7 +4,7 @@
 
 <div class="meta-box padding-10 container-fluid gutter-right">
     <div class="row" ng-if="pendingRejections.length != 0">
-        <div class="col-xs-12; text-right">
+        <div class="col-xs-12; text-right" style="padding-right:10px">
             <h3>
                 Pending Rejections: {{pendingRejections.length}} &nbsp;
                 <button type="button" class="btn btn-success"
@@ -200,47 +200,15 @@
                                                                 <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
 
                                                                 <td width="6%" class="text-center">
-                                                                    <div ng-if="item.status == 'submitted' || item.status == 'approved'">
-                                                                        <div class="dropdown">
-                                                                            <a style="cursor:pointer" ng-click="test3[$index] =!test3[$index]" data-toggle="dropdown">
-                                                                                <i class="fa fa-picture-o present"></i>
-                                                                            </a>
-                                                                            <ul ng-if="test3[$index]" class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                                <li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">View</a>
-                                                                                </li>
-                                                                                <!--<li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">Add</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Delete</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Print</a>
-                                                                                </li>-->
-                                                                            </ul>
-                                                                        </div>
+                                                                    <div ng-if="item.receiptUrls.length > 0">
+                                                                        <a style="cursor:pointer" ng-click="viewReceipt(item, expense)" data-toggle="dropdown">
+                                                                            <i class="fa fa-picture-o present"></i>
+                                                                        </a>
                                                                     </div>
-                                                                    <div ng-if="item.status != 'submitted' && item.status != 'approved'">
-                                                                        <div class="dropdown">
-                                                                            <a style="cursor:pointer" ng-click="test3[$index] =!test3[$index]" data-toggle="dropdown">
-                                                                                <i class="fa fa-picture-o absent"></i>
-                                                                            </a>
-                                                                            <ul ng-if="test3[$index]" class="dropdown-menu dropdown-menu-leftBottomBubble tInner-dropdown text-left" role="menu">
-                                                                                <li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">View</a>
-                                                                                </li>
-                                                                                <!--<li ng-click="viewReceipt(item, expense)">
-                                                                                    <a style="cursor:pointer">Add</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Delete</a>
-                                                                                </li>-->
-                                                                                <!--<li>
-                                                                                    <a style="cursor:pointer">Print</a>
-                                                                                </li>-->
-                                                                            </ul>
-                                                                        </div>
+                                                                    <div ng-if="item.receiptUrls.length == 0">
+                                                                        <a style="cursor:pointer" ng-click="viewReceipt(item, expense)">
+                                                                            <i class="fa fa-picture-o absent"></i>
+                                                                        </a>
                                                                     </div>
                                                                 </td>
                                                                 <td width="12%" class="text-left" style="text-transform: capitalize; text-align:left">
@@ -280,4 +248,27 @@
             <!--Big table-->
         </div>
     </div>
+</div>
+<div class="orig-grid-wrapper">
+  <div class="orig-grid-pagination-wrapper">
+    <div class="page-rows-count">
+      <label>Results per page</label><br>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="20">20</button>
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="40">40</button>
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="60">60</button>
+        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="80">80</button>
+      </div>
+    </div>
+    <pagination
+      total-items="options.totalItems" 
+      ng-model="options.currentPage"
+      ng-change="loadExpenses()"
+      items-per-page="options.limit" 
+      max-size="options.maxVisiblePages" 
+      class="pagination" 
+      boundary-links="true" 
+      rotate="false" 
+      num-pages="options.numPages"></pagination>
+  </div>
 </div>

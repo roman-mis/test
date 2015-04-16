@@ -91,38 +91,13 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                     element.find('button[title]').tooltip({
                         container: 'body'
                     })
-                scope.html = false;
-                var ar = '';
-                var final = '';
-                function convert(){
+
+                textarea.on('input keyup paste mouseup', function(event) {
                     var html = textarea.html();
-                    console.log(html);
-                    console.log(scope.html)
-                    if(scope.html === true){
-                        // ar = html.split('<');
-                        // console.log(ar);
-                        // html = ar.join('&lt;'); 
-                        // console.log(html);
-                        console.log(html)
-                        html.replace('<', '&lt;');
-                        html.replace('>','&gt;');
-
-                    }else{
-                        html.replace('&lt;','<');
-                        html.replace('&gt;','>');
-
-                    }
-                    textarea.html(html);
-                    // textarea.html();
-                    // console.log(textarea);
-                    // console.log(textarea.html());
                     if (html == '<br>') {
                         html = '';
                     }
-                    ngModelController.$setViewValue(textarea.html());
-                }
-                textarea.on('input keyup paste mouseup', function(event) {
-                    convert();
+                    ngModelController.$setViewValue(html);
                 });
 
 
@@ -133,7 +108,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                 function itemIs(tag) {
 
                     scope.selection = window.getSelection().getRangeAt(0);      
-                    // console.log(scope.selection)
+                    console.log(scope.selection)
                     if (scope.selection) {
                         if (scope.selection.startContainer.parentNode.tagName === tag.toUpperCase() || scope.selection.endContainer.parentNode.tagName === tag.toUpperCase()) {
                             return true;
@@ -242,8 +217,6 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                 }
 
                 scope.setFontSize = function() {
-                    console.log('***********6')
-
                     scope.format('fontsize', scope.fontSize.value)
                 }
 
@@ -255,11 +228,6 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                     scope.format('hiliteColor', scope.hiliteColor)
                 }
 
-                scope.convertToHtml = function(){
-                    console.log('%%%%%');
-                    scope.html = !scope.html;
-                    convert();
-                }
                 scope.format('enableobjectresizing', true);
                 scope.format('styleWithCSS', true);
 
@@ -278,8 +246,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
             ['ordered-list', 'unordered-list', 'outdent', 'indent'],
             ['left-justify', 'center-justify', 'right-justify'],
             ['code', 'quote', 'paragragh'],
-            ['link', 'image'],
-            ['html']
+            ['link', 'image']
         ];
 
         var getMenuStyles = function() {
@@ -291,9 +258,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
         }
 
         var getMenuTextArea = function() {
-            return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}" name="{{textareaName}}" required="{{textareaRequired}}" placeholder="{{textareaPlaceholder}}" ng-model="value"></div><div contentEditable="true" >{{value}}</div>';
-            // return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}"  >{{value}}</div>';
-            // return ''
+            return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}" name="{{textareaName}}" required="{{textareaRequired}}" placeholder="{{textareaPlaceholder}}" ng-model="value"></div>';
         }
 
         var getMenuGroup = function() {
@@ -372,9 +337,6 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                     break;
                 case 'image':
                     return '<button title="Image" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="insertImage()"><i class="fa fa-picture-o"></i> </button>';
-                    break;
-                case 'html':
-                    return '<button title="html" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="convertToHtml()"><i class="fa fa-picture-o"></i> </button>';
                     break;
                 default:
                     console.log('Angular.wysiwyg: Unknown menu item.')

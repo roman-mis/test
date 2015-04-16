@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance) {
+    .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance,ModalService) {
 
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
@@ -57,6 +57,7 @@ angular.module('origApp.controllers')
 
         $scope.checkDate = function() {
 
+            $scope.sspMessage=null;
             if (!$scope.ssp) {
                 $scope.ssp = {};
             }
@@ -72,33 +73,47 @@ angular.module('origApp.controllers')
 
                 $scope.validDate = true;
                 $scope.sspMessage = null;
-                HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {
-                    'dateInformed': $scope.ssp.dateInformed,
-                    'startDate': $scope.ssp.startDate,
-                    'endDate': $scope.ssp.endDate,
-                    'maxPeriods': 29
-                }, function(data) {
 
-                    $scope.ssp.days = data.data.objects;
+                if(arguments.length){
+                    HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {
+                        'dateInformed': $scope.ssp.dateInformed,
+                        'startDate': $scope.ssp.startDate,
+                        'endDate': $scope.ssp.endDate,
+                        'maxPeriods': 29
+                    }, function(data) {
 
-                }, function(err) {
-                });
+                        $scope.ssp.days = data.data.objects;
+
+                    }, function(err) {
+                    });
+                }
+                return true;
 
 
             } else {
                 $scope.validDate = false;
+                if(arguments.length){
 
-                if (n < sickDayTo) {
-                    $scope.sspMessage = 'Informed date is less than ssp start date';
-                } else if (n > validTill) {
-                    $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
-                } else if ((sickDayTo - sickDayFrom) < 345600000) {
-                    $scope.sspMessage = 'Date of sick note from and Date of sick note to should be greater than or equal to 4 days.';
-                } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
-                    $scope.submitted = true;
-                } else {
+                 $scope.ssp.days=[];
 
                 }
+
+                if (n < sickDayTo) {
+                    $scope.sspMessage = 'Informed date is before the SSP start date.';
+                }
+                else if(sickDayFrom > sickDayTo){
+
+                   $scope.sspMessage = '"Sick date to" is before the "sick day from".';
+                }
+                 else if (n > validTill) {
+                    $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
+                }
+                 else if ((sickDayTo - sickDayFrom) < 345600000) {
+                    $scope.sspMessage = '"Sick date from" and "Date of sick to" should be greater or equal to 4 days.';
+                } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
+                    $scope.submitted = true;
+                }
+                return false;
             }
         };
 
@@ -140,6 +155,7 @@ angular.module('origApp.controllers')
             }, function(response) {
                 //  console.log(response);
                 $scope.signedUrl = response.data.signedRequest;
+                console.log($scope.signedUrl);
                 $http({
                     method: 'PUT',
                     url: $scope.signedUrl,
@@ -157,9 +173,34 @@ angular.module('origApp.controllers')
 
             });
         };
+        $scope.viewDocument=function(name){
+
+           ModalService.open({
+                templateUrl: 'views/candidate/document_view.html',
+                parentScope: $scope,
+                controller: function($scope, $modalInstance) {
+
+                  $scope.fileURL = 'documents/actionrequest/'+name+'';
+                   HttpResource.model($scope.fileURL).customGet('', {}, function(data) {
+                    console.log(data);
+
+                    }, function(err) {});
+
+
+                  $scope.close = function() {
+                    $modalInstance.dismiss('cancel');
+                  };
+                },
+                size: 'lg'
+              });
+
+        };
 
         $scope.save = function(actionName) {
-            var data = {
+            var validate=$scope.checkDate();
+            if(validate===true){
+
+                var data = {
                 dateInformed: $scope.ssp.dateInformed,
                 startDate: $scope.ssp.startDate,
                 endDate: $scope.ssp.endDate,
@@ -199,6 +240,10 @@ angular.module('origApp.controllers')
                         MsgService.danger(err);
                     });
             }
+
+
+            }
+
 
         };
 

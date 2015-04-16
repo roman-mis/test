@@ -26,6 +26,16 @@ module.exports = function(){
 			saveInvoice(req, res, 'post');
 		};
 
+		controller.receiveInvoices=function (req, res) {
+			invoiceservice.receiveInvoices(req.body.reqBody)
+			.then(function(result){
+				console.log('***********controller**********')
+				res.json(result);
+			},function(err){
+				res.sendFailureResponse(err);
+			});
+		};
+
 		controller.patchInvoice=function (req, res) {
 			saveInvoice(req, res, 'patch');
 		};
@@ -71,6 +81,7 @@ module.exports = function(){
 				vatRate: invoice.vatRate,
 				vat: invoice.vat,
 				total: invoice.total,
+				status:invoice.status
 			};
 		}
 
