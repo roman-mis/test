@@ -32,7 +32,7 @@ angular.module('origApp.controllers')
                   { field: 'name', display: 'Name', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.title}}. {{row.firstName}} {{row.lastName}}</div>' },
                   { field: 'contactNumber', display: 'Contact number', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.contactNumber}}</div>' },
                   { field: 'address1', display: 'Address', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.address1}}</div>' },
-                  { field: 'emailAddress', display: 'Email', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().viewDetails(row)"><a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a></div>' },
+                  { field: 'emailAddress', display: 'E-MAIL', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().viewDetails(row)"><a href="mailto:{{row.emailAddress}}">{{row.emailAddress}}</a></div>' },
                   { field: 'phone', display: 'Phone', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().viewDetails(row)">&nbsp;&nbsp; {{row.phone}}</div>' }
                 ],
                 data: []
