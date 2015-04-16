@@ -26,7 +26,7 @@ module.exports = function(dbs){
 	};
 
 	controller.getTimesheetsByCandidateId = function(req, res){
-		return timesheetservice.getTimesheetsByCandidateId(req.params.id)
+		return timesheetservice.getTimesheetsByCandidateId(JSON.parse(req.params.ids).value)
 	    	.then(function(timesheets){
 	      		var resp={result:true,objects:timesheets};
 				

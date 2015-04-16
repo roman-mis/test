@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('origApp.controllers');
-app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService', 'payroll', 'parseCSV',
-	function($state,$rootScope,$scope,HttpResource,ModalService,payroll,parseCSV){	
+app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpResource', 'ModalService', 'payroll','$q', '$modal',
+	function($state,$rootScope,$scope,HttpResource,ModalService,payroll,$q,$modal){	
 
     $rootScope.breadcrumbs = [{link:'/', text:'Home'},
                           {link: '/payroll/home', text: 'Payroll'}
@@ -32,17 +32,30 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     });
 
 
+    function getFile(file){
+      var d = $q.defer();
+    Papa.parse(file, {
+      complete: function(results) {
+        console.log("Finished:", results.data);
+        d.resolve(results);
+      }
+    });
+    return  d.promise;
+  }
+
     $scope.onFileSelect = function($files) {
+      console.log($files[0]);
+      getFile($files[0]);
       console.log('$$$$$$$$$$$$$$$$$$')
-      parseCSV.get($files[0]).then(function (data) {
+      // parseCSV.get($files[0]).then(function (data) {
         // if($state.current.name != "csv")
         // $state.go("csv");
         // $scope.state.name = 'csv';
         // $scope.saveButton = 'enabled';
-        console.log(data);
+        // console.log(data);
         // $scope.data.content = dataHolder.updateData(data, 'clear data');
         // $scope.tree = [];
-      });
+      // });
     };
 
 
