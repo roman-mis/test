@@ -95,6 +95,28 @@ angular.module('origApp.controllers')
             //}
           };
 
+          $scope.okManual = function () {
+              //if ($scope.isAllDatesEntered($scope.expenseData.transports)) {
+              var carvanItems = $scope.expenseData.transports.filter(function (item) {
+                  return item.type.code === $scope.mainData.carvanTransportType;
+              });
+              if (carvanItems.length === 0) {
+
+              } else {
+                  //check if ever created expenses
+                  $scope.isVehicleChecking = true;
+                  var object = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/vehicleinformation').get($scope.mainData.carvanTransportType, function () {
+                      $scope.isVehicleChecking = false;
+                      if (object && object.vehicleInformaiton && object.vehicleInformaiton.vehicleCode) {
+
+                      } else {
+                          $scope.showVehicleForm();
+                      }
+                  });
+              }
+              //}
+          };
+
 
           $scope.showVehicleForm = function() {
             $scope.whichShow = 'vehicle';
@@ -104,6 +126,21 @@ angular.module('origApp.controllers')
             $scope.expenseData.vehicleInfo = angular.copy($scope.vehicle);
             $scope.expenseData.vehicleInfo.vehicleCode = $scope.mainData.carvanTransportType;
             $scope.gotoNext();
+            /*$scope.isVehicleSaving = true;
+             HttpResource.model('candidates/' + $scope.mainData.candidateId)
+             .create($scope.vehicle)
+             .patch('vehicleinformation')
+             .then(function(response) {
+             $scope.isVehicleSaving = false;
+             if (!HttpResource.flushError(response)) {
+             $scope.gotoNext();
+             }
+             });*/
+          };
+
+          $scope.saveVehicleFormManual = function() {
+            $scope.expenseData.vehicleInfo = angular.copy($scope.vehicle);
+            $scope.expenseData.vehicleInfo.vehicleCode = $scope.mainData.carvanTransportType;
             /*$scope.isVehicleSaving = true;
              HttpResource.model('candidates/' + $scope.mainData.candidateId)
              .create($scope.vehicle)
