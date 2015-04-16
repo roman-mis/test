@@ -24,11 +24,25 @@
                     Amount
                 </div>
                 <div class="col-xs-4 col-sm-3 form-group">
-                    <input type="text" class="form-control" name="amount" ng-model="hpObject.holidayPay.amount" required />
+                    <div class="row">
+                    <div class="col-xs-10">
+                    <input  min="0"  type="number"  class="form-control" name="amount" ng-model="hpObject.holidayPay.amount" required />
+                    </div>
+                    <div class="col-xs-2 pull-left">
+                        <i class="fa fa-eur"></i>
+                    </div>
+                </div>
+
+
                    <div ng-if="holiday.amount.$invalid && submitted">
                     <p ng-if="holiday.amount.$error.required" class="alert alert-danger">
                         Please enter amount.
                     </p>
+                    <p ng-if="holiday.amount.$error.min" class="alert alert-danger">
+                      Please enter amount greater than 0 .
+                    </p>
+
+
                    </div>
                    <div ng-if="submitted && hpObject.holidayPay.amount > candidate.payrollValues.holidayPayRetained">
                        <p  class="alert alert-danger">
@@ -49,10 +63,10 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a   ng-click="savePayroll(holiday.$valid,'save');">Save</a></li>
-                        <li><a   ng-click="savePayroll(holiday.$valid,'approve');">Save and Approve</a></li>
-                        <li><a   ng-click="savePayroll(holiday.$valid,'reject');" >Save and Reject</a></li>
-                        <li><a    ng-click="savePayroll(holiday.$valid,'refer');">Save and Refer</a></li>
+                        <li><a href=""  ng-click="savePayroll(holiday.$valid,'save');">Save</a></li>
+                        <li><a href=""  ng-click="savePayroll(holiday.$valid,'approve');">Save and Approve</a></li>
+                        <li><a href=""  ng-click="savePayroll(holiday.$valid,'reject');" >Save and Reject</a></li>
+                        <li><a href=""  ng-click="savePayroll(holiday.$valid,'refer');">Save and Refer</a></li>
                     </ul>
                 </div>
 

@@ -54,7 +54,7 @@
         	<td>{{item.createdDate | date:'yyyy-MM-dd'}}</td>
         	<td class="text-center"><a style="margin:4px;cursor:pointer" ui-sref="app.admin.user.home({id:item._id})"><i class="fa fa-eye"></i></a>
         	<a class="clickable" style="margin:4px;cursor:pointer" ng-click="lockUnlock($index)"><i ng-show="item.locked" class="fa fa-lock"></i><i ng-show="! item.locked" class="fa fa-unlock-alt"></i></a>
-        	<a style="margin:4px;cursor:pointer" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></a>
+        	<a style="margin:4px;cursor:pointer" href="#" tooltip-placement="bottom" tooltip="Password reset" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></a>
         	</td>
       </tr>
 

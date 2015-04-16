@@ -16,3 +16,4 @@ router.get('/', restMiddleware(db), controller.getAllInvoices);
 router.get('/:id', controller.getInvoice);
 router.post('/', controller.postInvoice);
 router.patch('/:id', controller.patchInvoice);
+router.post('/receiveInvoices', controller.receiveInvoices);

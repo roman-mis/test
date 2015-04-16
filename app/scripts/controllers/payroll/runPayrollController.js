@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', 'ModalService','$http','payroll',
+app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource','$http','payroll',
 	function($rootScope,$scope,HttpResource,$http,payroll){
 		$scope.pay = {frequency:''};
 		$scope.agency = {id:''};
@@ -10,10 +10,11 @@ app.controller('runPayrollController',['$rootScope', '$scope', 'HttpResource', '
 		$scope.selection = {type: false};
 		$scope.agencyList = [];
 		$scope.PayFrequency = [];
+		$scope.option = {};
 		// $scope.firstStep = true;
 		// $scope.secondStep = false;
 
-		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$')
+		console.log('$$$$$$$$$$$$$$$$$$$$$$$$$');
 
 
 $rootScope.breadcrumbs = [{link:'/', text:'Home'},
@@ -30,10 +31,10 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
       }
     });
 
-		$scope.payroll = payroll.details;
+		$scope.payroll = payroll;
 		console.log($scope.payroll);
 
-		    function initWorkerSelection(limit){
+		function initWorkerSelection(limit){
     	$scope.p.worker=[];
     	for(var i = 0; i < limit; i++){
     		$scope.p.worker[i] = false;	
@@ -46,13 +47,17 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
     	}
     	var params={worker:{
     		payrollTax:{
-    			payFrequency:'1'
+    			payFrequency:$scope.pay.frequency
     		},
     		payrollProduct:{
     			agency:$scope.agency.id
     		}
     	}};
     	console.log(params);
+    	// $scope.pay.frequency = 2;
+    	console.log($scope.pay.frequency);
+    	console.log($scope.agency.id);
+
     	$http.get('/api/candidates?worker.payrollTax.payFrequency='+$scope.pay.frequency+'&worker.payrollProduct.agency='+$scope.agency.id)
     	.success(function(data) {
 		  	 console.log(data); 
@@ -87,21 +92,38 @@ $rootScope.breadcrumbs = [{link:'/', text:'Home'},
 	// $scope.close = function(){
 	// 	$modalInstance.close();
 	// };
+  // HttpResource.model('timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').query({},function(response) {
+  //     // if(!response.data.result){
+  //       // $scope.response = response.data.logs;
+  //       console.log(response);
+  //     });
+  var ids = JSON.stringify({value:['552f6f0dde02282412f5d5c5','54cf9e69f383e9be63a0d663','54cf9e69f383e9be63a0d663']})
+  HttpResource.model('timesheets/candidatetimesheets/'+ids).customGet('',{},function (res){
+    // body...
+    console.log(res);
+  });
 
+  HttpResource.model('users/marginFees/'+ids).customGet('',{},function (res){
+    // body...
+    console.log(res);
+  });
+  // $http.get('api/timesheets/candidatetimesheets/54cf9e69f383e9be63a0d663').then(
 	$scope.runPayroll = function(){
 		var runParollWorkers = {workers : [],
 			payFrequency:$scope.pay.frequency};
 			console.log($scope.pay.frequency);
 		for(var i = 0; i < $scope.p.worker.length; i++){
 			if($scope.p.worker[i]){
-				runParollWorkers.workers.push({_id: $scope.candidates[i]._id});
+				runParollWorkers.workers.push({_id: $scope.candidates[i]._id,margin:100});
 			}
 		}
 		console.log(runParollWorkers);
+
 		HttpResource.model('payroll/run').create(runParollWorkers).post().then(function(response) {
 	    // if(!response.data.result){
 	    	$scope.response = response.data.logs;
-	    	console.log($scope.response);
+        console.log(response);
+	    	console.log(runParollWorkers);
 				// $scope.firstStep = false;
 				// $scope.secondStep = true;
 	    // }else{

@@ -26,6 +26,18 @@ module.exports=function(db){
 		return Q.nfcall(q.exec.bind(q));
 	};
 
+	service.getTimesheetsByCandidateId = function(ids){
+		var q;
+		var promisArray = [];
+		console.log(ids);
+		ids.forEach(function(id){
+			q = db.Timesheet.find({'worker':id});
+			console.log('88888888888888888')
+			promisArray.push(Q.nfcall(q.exec.bind(q)));
+		});
+		return Q.all(promisArray);
+	};
+
 	service.getTimesheet = function(id, populate){
 		var q=db.Timesheet.findById(id);
 		if(populate){
@@ -222,7 +234,7 @@ module.exports=function(db){
 		return Q.Promise(function(resolve,reject){
 			var	index = -1;
 			if(req.length === 0){
-				reject('no data');
+				resolve();
 			}
 			req.forEach(function(reqElement){
 				index++;

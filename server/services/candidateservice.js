@@ -73,8 +73,14 @@
 
 		return Q.Promise(function(resolve,reject){
 			var q=db.User.find();
-     console.log('here wer are..........');
-     console.log(request);
+			var searchTextFilter=request.filters['searchText'];
+			if(searchTextFilter){
+				// var =request.filters[idx];
+				var searchTerm=new RegExp(searchTextFilter.term,'i');
+				q.or([{'firstName':searchTerm},{'lastName':searchTerm},{emailAddress:searchTerm}]);
+
+				delete request.filters['searchText'];
+			}
 			q.where('userType').equals('WK');
 
 			queryutils.applySearch(q,db.User,request)
