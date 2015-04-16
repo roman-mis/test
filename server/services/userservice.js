@@ -13,7 +13,7 @@ var enums=require('../utils/enums');
 
 var service={};
 service.getUser=function(id){
-	
+
 		var q=db.User.findById(id);
 		return Q.nfcall(q.exec.bind(q));
 
@@ -36,15 +36,15 @@ service.updateUser = function(id,updates){
 			}else{
 				reject({result:false,message:'User does not exist'});
 			}
-		},reject);	
+		},reject);
 	});
-}; 
+};
 
 service.sendPasswardReset	 = function(id,req){
-	
+
 
 	return Q.Promise(function(resolve,reject){
-		
+
 		return service.getUser(id).then(function(user){
 				if(user){
 				// 	user.resetPassword.activationCode=activationCode;
@@ -61,8 +61,8 @@ service.sendPasswardReset	 = function(id,req){
 						  var mailOption={to:req.query.emailAddress};
 						  console.log('&&&&&&&&&&&&&&&&&&&')
 							return mailer.sendEmail(mailOption,mailModel,'user_change_password').then(function(){
-									resolve({result:true,message:'mail sent'}); 
-								},reject);	
+									resolve({result:true,message:'mail sent'});
+								},reject);
 						},reject);
 					},reject);
 				}else{
@@ -70,7 +70,7 @@ service.sendPasswardReset	 = function(id,req){
 					reject({result:false,name:'NOTFOUND',message:'User profile not found'});
 				}
 			},reject);
-		
+
 	});
 };
 
@@ -80,7 +80,7 @@ service.removeUser=function(userId){
 };
 
 service.getUserByParam=function(parameters){
-	
+
 		var q=db.User.findOne(parameters);
 		return Q.nfcall(q.exec.bind(q));
 
@@ -101,9 +101,9 @@ service.lockunlock=function(id,flag,lockedBy){
 			else{
 				reject(err);
 			}
-		});	
+		});
 	});
-	
+
 };
 service.isCodeValid=function(emailAddress,verificationCode){
 	return Q.Promise(function(resolve,reject){
@@ -113,7 +113,7 @@ service.isCodeValid=function(emailAddress,verificationCode){
 	        console.log('code found for : '+emailAddress + ' and verification code = '+verificationCode);
 	        //console.log(user);
 	        resolve(code);
-	        
+
 	      }
 	      else{
 	        reject(err);
@@ -158,19 +158,19 @@ service.checkDuplicateUser=function(emailAddress,existingInfo){
 				 	console.log('existingUser._id  '+existingUser._id);
 					 console.log('existingInfo._id  '+existingInfo._id);
 					if(!existingUser._id.equals(existingInfo._id)){
-						var response = { 
+						var response = {
 							result:false,
 							name: 'DuplicateRecordExists',
 							message: 'Email address '+emailAddress+' already taken'
 						};
 
-						reject(response);	
+						reject(response);
 					}
 					else{
 						console.log('user id equal');
 						resolve();
 					}
-				
+
 			}
 			else if(err){
 				reject(err);
@@ -190,7 +190,7 @@ function sendMail(opt,userModel){
 	var mailModel={title:userModel.title,firstName:userModel.firstName,lastName:userModel.lastName,
 				activationLink:newActivationLink};
 	var mailOption=_.assign(opt||{},{to:userModel.emailAddress});
-	
+
 		return mailer.sendEmail(mailOption,mailModel,'user_registration_activation');
 }
 
@@ -201,7 +201,7 @@ service.createUser=function(opt, user){
 	db.User.findOne({emailAddress: user.emailAddress},function(err, existingUser){
 		if(existingUser){
 			console.log('create user duplicate records');
-			var response ={ 
+			var response ={
 				name: 'DuplicateRecordExists',
 				message: 'Email address '+user.emailAddress+' already taken'
 			};
@@ -230,31 +230,31 @@ service.createUser=function(opt, user){
 	// 	db.User.findOne({emailAddress: user.emailAddress},function(err,existingUser){
 	// 	if(existingUser) {
 	// 		var response=
-	// 		{ 
+	// 		{
 	// 			name: 'DuplicateRecordExists',
 	// 			message: 'Email address '+user.emailAddress+' already taken'
 	// 		};
-			
+
 	// 		deff.reject(response);
-			
+
 	// 	}
 	// 	else {
 
-			
+
 	// 		var userModel;
 
 	// 		userModel=new db.User(user);
 
 	// 		userModel.worker=null;
-			
+
 	// 		console.log('going for validations');
-			
+
 	// 		Q.allSettled([Q.nfcall(userModel.validate.bind(userModel))])
 	// 		.spread(function(userPromise){
 	// 			console.log('------------my validate result.......');
 	// 				// console.log(arguments);
 	// 				var response=
-	// 				{ 
+	// 				{
 	// 					name: 'ModelValidationError',
 	// 					message: 'Validation error',
 	// 					errors:[]
@@ -263,7 +263,7 @@ service.createUser=function(opt, user){
 	// 				var hasError=false;
 	// 				if(userPromise.state==='rejected'){
 	// 					hasError=true;
-	// 					errObj=userPromise.reason.errors;		
+	// 					errObj=userPromise.reason.errors;
 	// 				}
 
 	// 				if(hasError){
@@ -272,7 +272,7 @@ service.createUser=function(opt, user){
 	// 						return itm;
 	// 					});
 	// 					//console.log(response.errors);
-	// 					reject(response);	
+	// 					reject(response);
 	// 					return;
 	// 				}
 
@@ -280,15 +280,15 @@ service.createUser=function(opt, user){
 
 	// 				var guid=uuid.v1();
 	// 				console.log('Activation Code is : '+guid);
-					
+
 	// 				userModel.activationCode=guid;
 
-					
+
 	// 				console.log('saving started....');
-					
+
 	// 				Q.nfcall(userModel.save.bind(userModel))
 	// 					.then(function(){
-	// 						return sendMail(opt,userModel);		
+	// 						return sendMail(opt,userModel);
 	// 					})
 	// 					.then(function(){
 	// 						resolve({result:true,object:userModel});
@@ -324,7 +324,7 @@ service.isActivationCodeValid=function(emailAddress,verificationCode){
               else{
                 deff.reject();
               }
-	        
+
 	      }
 	      else{
 	        deff.reject(err);
@@ -337,17 +337,17 @@ service.isActivationCodeValid=function(emailAddress,verificationCode){
 
 service.activateUser=function(user,newPassword){
 	var deff=Q.defer();
-	
+
 	user.isActive=true;
 	Q.fcall(function(){
-		
+
 		if(newPassword){
 			return utils.secureString(newPassword).
 					then(function(securePassword){
 						console.log('password hashed : '+securePassword);
-						user.password=securePassword;	
+						user.password=securePassword;
 					});
-			
+
 		}
 		else{
 			return true;
@@ -355,7 +355,7 @@ service.activateUser=function(user,newPassword){
 	})
 	.then(function(){
 		user.activatedDate=new Date();
-		
+
 		console.log('running save');
 		user.save(function(err){
 			if(err){
@@ -366,12 +366,12 @@ service.activateUser=function(user,newPassword){
 				deff.resolve(user);
 			}
 		});
-		
-		
-	
+
+
+
 	});
-		
-	
+
+
 	return deff.promise;
 };
 
@@ -390,13 +390,13 @@ service.sendChangePasswordEmail=function(id,generateBy){
 				else{
 					reject({result:false,name:'NOTFOUND',message:'User profile not found'});
 				}
-			},reject);	
+			},reject);
 	});
 };
 service.generateCodeAndSendEmail=function(user,codeType,generateBy){
 	console.log('generateCodeAndSendEmail');
 	return Q.Promise(function(resolve,reject){
-		
+
 		return service.generateCode(user,codeType,generateBy)
 			.then(function(code){
 				console.log('sending code email');
@@ -410,13 +410,13 @@ service.generateCodeAndSendEmail=function(user,codeType,generateBy){
 				console.log(er);
 			})
 			;
-				
+
 	});
 };
 
 service.generateCode=function(user,codeType,generateBy){
 	return Q.Promise(function(resolve,reject){
-			
+
 			var guid=uuid.v1();
 			console.log('generating code');
 			var newCode=new db.Code({code:guid,emailAddress:user.emailAddress,user:user._id,codeType:codeType,updatedBy:generateBy});
@@ -480,13 +480,13 @@ function verifyCode(emailAddress,verificationCode,codeType){
 					reject({result:false,name:'NOTFOUND',message:'User profile not found'});
 				}
 			},reject);
-		
+
 	});
-		
+
 }
 
 service.verifyCode=function(emailAddress,verificationCode,codeType){
-	
+
 	return Q.Promise(function(resolve,reject){
 		verifyCode(emailAddress,verificationCode,codeType)
 			.then(function(response){
@@ -496,9 +496,9 @@ service.verifyCode=function(emailAddress,verificationCode,codeType){
 				else{
 					resolve(response);
 				}
-			
+
 			},reject);
-		
+
 	});
 
 };
@@ -525,7 +525,7 @@ service.changePassword=function(emailAddress,verificationCode,newPassword){
 										then(function(securePassword){
 											console.log('password hashed : '+securePassword);
 											user.password=securePassword;
-											console.log(user); 
+											console.log(user);
 											console.log('************************************************************');
 											return Q.nfcall(user.save.bind(user))
 												.then(function(){
@@ -537,15 +537,15 @@ service.changePassword=function(emailAddress,verificationCode,newPassword){
 							}
 							else{
 								reject();
-							}							
-							
+							}
+
 						},reject);
 				}
 				else{
 					reject(response);
 				}
 			},reject);
-		
+
 	});
 
 };
@@ -558,7 +558,7 @@ service.getCode=function(userId,code,codeType){
 	console.log(codeType)
 	var q=db.Code.findOne({user:userId,code:code,codeType:codeType});
 	return Q.nfcall(q.exec.bind(q));
- 
+
 };
 
 service.useCode=function(code){
