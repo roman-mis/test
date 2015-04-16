@@ -18,6 +18,8 @@ module.exports = function(app){
 router.get('/',restMiddleware(db),controller.getAllUsers);
 
 router.get('/:id',controller.getUser);
+router.get('/:id/marginFee',controller.getUserMarginFee);
+router.patch('/marginFee/:id',controller.updateUserMarginFee);
 
 router.get('/activation/:emailAddress',controller.getActivation);
 

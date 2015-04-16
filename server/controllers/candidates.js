@@ -8,6 +8,7 @@ module.exports = function (dbs) {
     var awsservice = require('../services/awsservice');
     var _ = require('lodash');
     var controller = {};
+    var enums= require('../utils/enums');
 
     controller.postExpense = function () {
 
@@ -426,7 +427,7 @@ module.exports = function (dbs) {
             agencyName: request.body.agencyName,
             jobTitle: request.body.jobTitle,
             startDate: request.body.startDate,
-            status: request.body.status,
+            status: enums.candiateStatus.Submitted,
             bankDetail: bankDetail,
 
             taxDetail: taxDetail

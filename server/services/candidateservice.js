@@ -8,7 +8,7 @@
 	// var Promise=require('promise');
 	var _=require('lodash');
 	// var Sequelize=require('sequelize');
-	var mailer=require('../mailing/mailer'); 
+	var mailer=require('../mailing/mailer');
 	var uuid = require('node-uuid');
 	var service={};
 	var utils=require('../utils/utils');
@@ -73,7 +73,14 @@
 
 		return Q.Promise(function(resolve,reject){
 			var q=db.User.find();
+			var searchTextFilter=request.filters['searchText'];
+			if(searchTextFilter){
+				// var =request.filters[idx];
+				var searchTerm=new RegExp(searchTextFilter.term,'i');
+				q.or([{'firstName':searchTerm},{'lastName':searchTerm},{emailAddress:searchTerm}]);
 
+				delete request.filters['searchText'];
+			}
 			q.where('userType').equals('WK');
 
 			queryutils.applySearch(q,db.User,request)

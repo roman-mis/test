@@ -234,7 +234,14 @@
                                                 <tr ng-repeat-start="cat in claim.categories">
                                                     <!--category basic info-->
                                                     <td style="width:20px">
-                                                        <a data-toggle="collapse" ng-click="test2[$index] = !test2[$index]" data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer"><i class="fa fa-minus-square-o"></i></a>
+                                                        <div ng-click="test2[$index] = !test2[$index]">
+                                                          <a data-target="{{'#accordion'+ $parent.$index + 'inner'+ $index}}" class="clickable" style="cursor:pointer">
+                                                              <span style="font-size:12px" class="fa-stack fa-lg">
+                                                                  <i ng-if="test2[$index]" class="fa fa-minus-square-o fa-stack-1x"></i>
+                                                                  <i ng-if="!test2[$index]" class="fa fa-plus-square-o fa-stack-1x"></i>
+                                                              </span>
+                                                          </a>
+                                                        </div>
                                                     </td>
                                                     <td col-span="9">
                                                         <b>{{cat}}</b>
@@ -245,7 +252,7 @@
                                                 <tr ng-repeat-end>
                                                     <!--category detailed info-->
                                                     <td colspan="12" class="td-collapsed">
-                                                        <div id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" class="collapse">
+                                                        <div ng-if="test2[$index]" id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" >
                                                             <table class="table table-striped expenses-auth">
                                                                 <thead>
                                                                     <tr>
@@ -259,7 +266,8 @@
                                                                         <th width="9%" class="text-right">Value</th>
                                                                         <th width="9%" class="text-right">VAT</th>
                                                                         <th width="9%" class="text-right">Total</th>
-                                                                        <th width="11%" class="text-right">Status</th>
+                                                                        <th width="9%" class="text-center">Receipt</th>
+                                                                        <th width="11%" class="text-left">Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody ng-if="test2[$index]">
@@ -282,9 +290,20 @@
                                                                         </td>
                                                                         <td width="10%">{{item.expenseDetail.vat | currency:"&pound;"}}</td>
                                                                         <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
+                                                                        <td width="6%" class="text-center">
+                                                                            <div ng-if="item.receiptUrls.length > 0">
+                                                                                <a style="cursor:pointer" ng-click="viewReceipt(item, claim)">
+                                                                                    <i class="fa fa-picture-o present"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div ng-if="item.receiptUrls.length == 0">
+                                                                                <a style="cursor:pointer">
+                                                                                    <i class="fa fa-picture-o absent"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
 
-
-                                                                        <td width="12%" style="text-transform: capitalize">
+                                                                        <td width="12%" style="text-transform: capitalize; text-align:left" class="text-left">
                                                                             <div>{{item.status}}</div>
                                                                         </td>
                                                                     </tr>
