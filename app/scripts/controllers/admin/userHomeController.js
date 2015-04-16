@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-  .controller('userHomeController', ['$scope','Notification', 'HttpResource','$stateParams','$rootScope', function($scope,Notification, HttpResource,$stateParams,$rootScope) {
+  .controller('userHomeController', ['$scope','Notification', 'HttpResource','$stateParams','$rootScope','MsgService', function($scope,Notification, HttpResource,$stateParams,$rootScope,MsgService) {
   var user={};
 	$scope.user = {_id:'',firstName:'',lastName:''};
 
@@ -50,8 +50,7 @@ angular.module('origApp.controllers')
 
 		$scope.user.id = $scope.user._id;
 		HttpResource.model('users/update/'+$scope.user._id).create($scope.user).post().then(function(data){
-			console.log(data);
-			// $scope.types = data.data;
+			MsgService.success('Successfully updated..')
 		});
 
 	};

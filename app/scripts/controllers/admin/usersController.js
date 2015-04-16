@@ -1,78 +1,100 @@
 'use strict';
 
 angular.module('origApp.controllers')
-  .controller('usersController', ['$timeout','$scope', 'HttpResource', '$rootScope', function($timeout,$scope, HttpResource, $rootScope) {
+    .controller('usersController', ['$timeout', '$scope', 'HttpResource', '$rootScope', function($timeout, $scope, HttpResource, $rootScope) {
 
-    $rootScope.breadcrumbs = [{link:'/', text:'Home'},
-                              {link: '/admin/home', text: 'Admin'},
-                              {link: '/admin/users', text: 'Users'}
-                              ];
+        $rootScope.breadcrumbs = [{
+            link: '/',
+            text: 'Home'
+        }, {
+            link: '/admin/home',
+            text: 'Admin'
+        }, {
+            link: '/admin/users',
+            text: 'Users'
+        }];
 
-    $scope.options = {};
+        $scope.options = {};
 
 
-    var usersAPI = HttpResource.model('users');
+        var usersAPI = HttpResource.model('users');
 
-    $scope.loadAllUsers = function() {
-      var params = {};
- //     console.log('$scope.gridOptions.limit ==> ' + $scope.gridOptions.limit);
-      if ($scope.options.limit) {
-        params._limit = $scope.options.limit;
-      }
-      if ($scope.options.currentPage) {
-        params._offset = ($scope.options.currentPage - 1) * $scope.options.limit;
-      } else {
-        params._offset = 0;
-      }
+        $scope.loadAllUsers = function() {
+            var params = {};
+            //     console.log('$scope.gridOptions.limit ==> ' + $scope.gridOptions.limit);
+            if ($scope.options.limit) {
+                params._limit = $scope.options.limit;
+            }
+            if ($scope.options.currentPage) {
+                params._offset = ($scope.options.currentPage - 1) * $scope.options.limit;
+            } else {
+                params._offset = 0;
+            }
 
-      if ($scope.options.filterName) {
-        params.firstName_contains = $scope.options.filterName;
-      }
+            if ($scope.options.filterName) {
+                params.firstName_contains = $scope.options.filterName;
+            }
 
-      if ($scope.options.filterEmail) {
-        params.emailAddress_contains = $scope.options.filterEmail;
-      }
-      console.log(params)
-      $scope.allData = usersAPI.query(params, function(data) {
-        console.log($scope.allData);
-        console.log(data);
-        if (data.data.meta) {
-          $scope.options.totalItems = data.data.meta.totalCount;
-        }
-      });
-    };
-    $scope.loadAllUsers();
+            if ($scope.options.filterEmail) {
+                params.emailAddress_contains = $scope.options.filterEmail;
+            }
+            console.log(params)
+            $scope.allData = usersAPI.query(params, function(data) {
 
-    $scope.update = function(){
-      console.log('work!');
-    };
+                if (data.data.meta) {
+                    $scope.options.totalItems = data.data.meta.totalCount;
+                }
+                if ($scope.options.filterName) {
 
-    var searchTimerPromise = null;
-    $scope.filter = function () {
-        $timeout.cancel(searchTimerPromise);
-        searchTimerPromise = $timeout(function () {
+                    $rootScope.filterName = $scope.options.filterName;
+                }
+                if ($scope.options.filterEmail) {
+
+                    $rootScope.filterEmail = $scope.options.filterEmail;
+                }
+            });
+        };
+
+        if ($rootScope.filterName || $rootScope.filterEmail) {
+
+            $scope.options.filterName = $rootScope.filterName;
+            $scope.options.filterEmail = $rootScope.filterEmail;
             $scope.loadAllUsers();
-        }, 500);
-    };
+        } else {
 
-    $scope.sendPasswardReset = function(index){
-      var params = {};
-      params.firstName = $scope.allData[index].firstName;
-      params.lastName = $scope.allData[index].lastName;
-      params.emailAddress = $scope.allData[index].emailAddress;
-      console.log(params)
-      HttpResource.model('users/send/passwardReset/'+$scope.allData[index]._id).query(params, function(data) {
-          console.log(data)
-      });
-    };
+            $scope.loadAllUsers();
 
-    $scope.lockUnlock = function(index){
-      HttpResource.model('users/'+$scope.allData[index]._id+'/lockunlock/'+!$scope.allData[index].locked).create({}).post().then(function(data) {
-        console.log(data);
-        if(data.data.result){
         }
-      });
-      $scope.allData[index].locked=!$scope.allData[index].locked;
-    };
 
-}]);
+        $scope.update = function() {
+            console.log('work!');
+        };
+
+        var searchTimerPromise = null;
+        $scope.filter = function() {
+            $timeout.cancel(searchTimerPromise);
+            searchTimerPromise = $timeout(function() {
+                $scope.loadAllUsers();
+            }, 500);
+        };
+
+        $scope.sendPasswardReset = function(index) {
+            var params = {};
+            params.firstName = $scope.allData[index].firstName;
+            params.lastName = $scope.allData[index].lastName;
+            params.emailAddress = $scope.allData[index].emailAddress;
+            console.log(params)
+            HttpResource.model('users/send/passwardReset/' + $scope.allData[index]._id).query(params, function(data) {
+                console.log(data)
+            });
+        };
+
+        $scope.lockUnlock = function(index) {
+            HttpResource.model('users/' + $scope.allData[index]._id + '/lockunlock/' + !$scope.allData[index].locked).create({}).post().then(function(data) {
+                console.log(data);
+                if (data.data.result) {}
+            });
+            $scope.allData[index].locked = !$scope.allData[index].locked;
+        };
+
+    }]);
