@@ -155,6 +155,28 @@ module.exports = function(){
         res.json({result:true, object:vm});
       },res.sendFailureResponse);
   };
+
+
+  controller.getMarginsByCandidateIds = function(req, res){
+    return userservice.getMarginsByCandidateIds(JSON.parse(req.params.ids))
+        .then(function(users){
+          console.log('^^^^^^^^^^^^1')
+
+          var margins = [];
+          users.forEach(function(user){
+            console.log('^^^^^^^^^^^^')
+            console.log(user)
+            console.log('&&&&&&&&&&&&')
+            margins.push(user.worker.marginFee)
+          });
+          var resp={result:true,objects:margins};
+          res.json(resp);        
+        },function(err){
+          res.sendFailureResponse(err);
+        });
+  };
+
+
   controller.updateUserMarginFee=function(req,res){
     console.log(req.body);
     userservice.updateUserMarginFee(req.params.id, req.body)
