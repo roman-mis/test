@@ -5,11 +5,11 @@ var awsservice=require('./awsservice');
 
 var adminLogin=['./spec/login/admin_data.js','./spec/login.js'];
 var checkCandidate=[
- // './spec/candidate/search_current_candidate.js',
+  './spec/candidate/search_current_candidate.js',
 //  './spec/candidate/check_admin_tabs.js',
 //  './spec/candidate/home_tab.js',
  // './spec/candidate/payroll_tax_tab.js',
- // './spec/candidate/payroll_product_tab.js',
+  './spec/candidate/payroll_product_tab.js',
   './spec/candidate/agencies_tab.js',
 ];
 var candidateSidebar=[
