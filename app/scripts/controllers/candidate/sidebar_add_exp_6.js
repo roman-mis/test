@@ -1,10 +1,13 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp6Controller', function($scope, HttpResource, ConstantsResource) {
+        .controller('CandidateSidebarAddExp6Controller', function ($scope, HttpResource, ConstantsResource, MsgService, ValidationHelper) {
           $scope.expenseData.transports = $scope.expenseData.transports || [];
           $scope.transportTypes = ConstantsResource.get('transportationmeans');
           $scope.fuelTypes = ConstantsResource.get('fuels');
           $scope.engineSizes = [];
+          var vehicleInfoEntered = false;
+          $scope.expenseData.postCodes = $scope.expenseData.postCodes || [];
+          var codeHolder = [];
 
           $scope.vehicle = $scope.expenseData.vehicleInfo || {};
           $scope.defaultAddData = {};
@@ -49,6 +52,25 @@ angular.module('origApp.controllers')
             });
             $scope.addData = angular.copy($scope.defaultAddData);
           }
+          function addItemManual(data) {
+              $scope.expenseData.transports.push({
+                  date: data.date,
+                  type: data.type,
+                  cost: $scope.getCost(data.type, data.mileage),
+                  mileage: data.mileage,
+                  value: $scope.getValue(data.type, data.mileage),
+                  amount: data.mileage
+              });
+              $scope.expenseData.postCodes.push({
+                  date: data.date,
+                  codes: data.codes
+              });
+              $scope.addData.codes.forEach(function (code) {
+                  codeHolder.push(code);
+              });
+              console.log(codeHolder);
+              $scope.addData = angular.copy($scope.defaultAddData);
+          }
 
           $scope.add = function() {
             if ($scope.addData.date === 'all') {
@@ -58,8 +80,45 @@ angular.module('origApp.controllers')
             }
           };
 
+          $scope.addManual = function () {
+              var codes = $scope.addData.code.split(/,/g).map(function (item) {
+                  return $.trim(item);
+              });
+              codes = $.unique(codes.filter(function (item) {
+                  return item !== '';
+              }));
+              if (codes.length === 0) {
+                  MsgService.danger('There are no valid postcodes that have been entered.');
+                  return;
+              }
+              var invalidCodes = [];
+              codes.forEach(function (val) {
+                  if (!ValidationHelper.isValidPostCode(val)) {
+                      invalidCodes.push(val);
+                  }
+              });
+              if (invalidCodes.length > 0) {
+                  MsgService.danger('Invalid postcode: ' + invalidCodes.join(', '));
+                  return;
+              }
+
+              $scope.addData.codes = codes;
+
+              if ($scope.addData.date === 'all') {
+                  $scope.addAllDatesData($scope.addData, addItemManual);
+              } else {
+                  addItemManual($scope.addData);
+              }
+          };
+
           $scope.remove = function(index) {
             $scope.expenseData.transports.splice(index, 1);
+          };
+
+          $scope.removeManual = function (index) {
+              $scope.expenseData.transports.splice(index, 1);
+              $scope.expenseData.postCodes.splice(index, 1);
+              codeHolder.splice(index, 1);
           };
 
           $scope.onChangeFuelType = function() {
@@ -95,6 +154,28 @@ angular.module('origApp.controllers')
             //}
           };
 
+          $scope.okManual = function () {
+              //if ($scope.isAllDatesEntered($scope.expenseData.transports)) {
+              var carvanItems = $scope.expenseData.transports.filter(function (item) {
+                  return item.type.code === $scope.mainData.carvanTransportType;
+              });
+              if (carvanItems.length === 0) {
+
+              } else {
+                  //check if ever created expenses
+                  $scope.isVehicleChecking = true;
+                  var object = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/vehicleinformation').get($scope.mainData.carvanTransportType, function () {
+                      $scope.isVehicleChecking = false;
+                      if ((object && object.vehicleInformaiton && object.vehicleInformaiton.vehicleCode) || vehicleInfoEntered) {
+
+                      } else {
+                          $scope.showVehicleForm();
+                      }
+                  });
+              }
+              //}
+          };
+
 
           $scope.showVehicleForm = function() {
             $scope.whichShow = 'vehicle';
@@ -104,6 +185,23 @@ angular.module('origApp.controllers')
             $scope.expenseData.vehicleInfo = angular.copy($scope.vehicle);
             $scope.expenseData.vehicleInfo.vehicleCode = $scope.mainData.carvanTransportType;
             $scope.gotoNext();
+            /*$scope.isVehicleSaving = true;
+             HttpResource.model('candidates/' + $scope.mainData.candidateId)
+             .create($scope.vehicle)
+             .patch('vehicleinformation')
+             .then(function(response) {
+             $scope.isVehicleSaving = false;
+             if (!HttpResource.flushError(response)) {
+             $scope.gotoNext();
+             }
+             });*/
+          };
+
+          $scope.saveVehicleFormManual = function() {
+            $scope.expenseData.vehicleInfo = angular.copy($scope.vehicle);
+            $scope.expenseData.vehicleInfo.vehicleCode = $scope.mainData.carvanTransportType;
+            $scope.whichShow = 'main';
+            vehicleInfoEntered = true;
             /*$scope.isVehicleSaving = true;
              HttpResource.model('candidates/' + $scope.mainData.candidateId)
              .create($scope.vehicle)
