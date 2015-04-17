@@ -22,7 +22,7 @@ app.controller("expensesAuthorizationCtrl",
                 params._offset = ($scope.options.currentPage - 1) * $scope.options.limit;
             } else {
                 params._offset = 0;
-            }            
+            }
            // if ($scope.filterFirstName) {
            //      params.firstName_contains= $scope.filterFirstName;
            //  }

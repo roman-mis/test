@@ -43,19 +43,26 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     return  d.promise;
   }
 
+    var expenses = [];
     $scope.onFileSelect = function($files) {
       console.log($files[0]);
-      getFile($files[0]);
+      getFile($files[0]).then(function(data){
+        $files = [];
+        expenses = data;
+        $modal.open({
+          templateUrl: 'views/payroll/uploadExpenses.html',
+          controller: 'uploadExpensesCtrl',
+          size: 'lg',
+          resolve: {
+              expenses: function () {
+                  return expenses.data;
+              }
+              
+          }
+        });
+      });
       console.log('$$$$$$$$$$$$$$$$$$')
-      // parseCSV.get($files[0]).then(function (data) {
-        // if($state.current.name != "csv")
-        // $state.go("csv");
-        // $scope.state.name = 'csv';
-        // $scope.saveButton = 'enabled';
-        // console.log(data);
-        // $scope.data.content = dataHolder.updateData(data, 'clear data');
-        // $scope.tree = [];
-      // });
+      
     };
 
 

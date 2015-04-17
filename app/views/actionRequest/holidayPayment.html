@@ -43,10 +43,19 @@
                     </p>
 
 
+
                    </div>
                    <div ng-if="submitted && hpObject.holidayPay.amount > candidate.payrollValues.holidayPayRetained">
                        <p  class="alert alert-danger">
                          Holiday fund requested should be less than or equal to holiday fund available.
+                       </p>
+                   </div>
+
+                    <div ng-if="submitted && candidate.payrollValues.holidayPayRetained===0">
+
+
+                       <p  class="alert alert-danger">
+                         You cannot request holiday fund.
                        </p>
                    </div>
                 </div>

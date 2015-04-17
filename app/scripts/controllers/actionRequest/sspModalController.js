@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance,ModalService) {
+    .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance,ModalService,$modal) {
 
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
@@ -139,6 +139,7 @@ angular.module('origApp.controllers')
 
         });
 
+
         $scope.upload = function() {
             if (!$scope.fileupload) {
                 MsgService.danger('Please select a file first.');
@@ -166,35 +167,38 @@ angular.module('origApp.controllers')
                     }
                 }).success(function(l) {
 
-                    $scope.ssp.imageUrl = $scope.temp.logoFileName;
+                    $scope.ssp.imageUrl = fileName;
                     $scope.isLogoUploading = false;
                 });
 
 
             });
         };
-        $scope.viewDocument=function(name){
 
-           ModalService.open({
-                templateUrl: 'views/candidate/document_view.html',
-                parentScope: $scope,
-                controller: function($scope, $modalInstance) {
+        $scope.viewFile = function(fileName) {
+           $http.get('/api/documents/actionrequest/viewsignedurl/' + fileName).success(function (res) {
 
-                  $scope.fileURL = 'documents/actionrequest/'+name+'';
-                   HttpResource.model($scope.fileURL).customGet('', {}, function(data) {
-                    console.log(data);
+              $modal.open({
+                templateUrl: 'views/actionRequest/viewFile.html',
+                controller: 'actionRequestViewFile',
+                size: 'md',
+                resolve: {
 
-                    }, function(err) {});
+                    url: function () {
+                        return res;
+                    },
+                    fileName:function(){
 
+                        return fileName;
+                    }
+                   }
+                });
 
-                  $scope.close = function() {
-                    $modalInstance.dismiss('cancel');
-                  };
-                },
-                size: 'lg'
-              });
+            }).error(function(){
 
-        };
+                 MsgService.danger('Something went wrong.');
+            });
+          };
 
         $scope.save = function(actionName) {
             var validate=$scope.checkDate();

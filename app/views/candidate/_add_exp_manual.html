@@ -1,0 +1,596 @@
+﻿<div class="candidate-modal modal-lg" ng-controller="CandidateSidebarAddExpManualController">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Expenses</h3>
+    </div>
+    <!-- /modal-header -->
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-6">
+                <form class="form-horizontal">
+                    <div class="form-group row">
+                        <label class="col-sm-4 control-label">Agency</label>
+                        <div class="col-sm-8 no-padding-left">
+                            <div ng-controller="CandidateSidebarAddExp2Controller">
+                                <ui-select ng-change="agencySelected()" ng-model="expenseData.agency" theme="select2" search-enabled="true">
+                                    <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="item in agencies | unique:'id' | filter: $select.search">{{item.name}}</ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-6">
+                <form class="form-horizontal">
+                    <div class="form-group" ng-hide="picking_date">
+                        <button class="btn btn-primary" ng-click="picking_date = true">Pick Claim Dates</button>
+                    </div>
+                    <div class="form-group row" ng-show="picking_date" ng-controller="CandidateSidebarAddExp3Controller">
+                        <div class="col-md-4">
+                            <label class="control-label">Claim Dates</label>
+                            <button class="btn btn-success" ng-click="datePicked(); okManual()">Done</button>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group date" id="datepicker">
+                                <!--<input type="text" class="form-control" /> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>-->
+                                <datepicker ng-model="expenseData.claimDate"
+                                            format-day="d"
+                                            starting-day="weekEndingDay"
+                                            max-date="minDate"
+                                            show-weeks="false"
+                                            id="claim_datepicker"
+                                            class="inline-datepicker-center"></datepicker>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-header"></div>
+        <div id="days" ng-controller="CandidateSidebarAddExp4Controller">
+            <form class="form-inline row">
+                <div class="form-group col-sm-4 col-xs-5">
+                    <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
+                        <option value="" disabled style="display:none">- Select -</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-xs-7">
+                    <select class="selectTime form-control" ng-model="addData.startHours">
+                        <option value="00">00</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                    </select>
+                    <select class="selectTime form-control" ng-model="addData.startMins">
+                        <option value="00">00</option>
+                        <option value="05">05</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                        <option value="50">50</option>
+                        <option value="55">55</option>
+                    </select>
+                    <span>- to -</span>
+                    <select class="selectTime form-control" ng-model="addData.endHours">
+                        <option value="00">00</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                    </select>
+                    <select class="selectTime form-control" ng-model="addData.endMins">
+                        <option value="00">00</option>
+                        <option value="05">05</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                        <option value="50">50</option>
+                        <option value="55">55</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2">
+                    <button id="addDateButton" type="button" class="btn btn-default form-control" ng-click="add()" ng-disabled="!addData.date || alreadyAdded"><i class="fa fa-plus"></i> Add</button>
+                    <button id="timesDoneButton" type="button" class="btn btn-success form-control" ng-click="availableTimesAdded(); okManual()" ng-disabled="expenseData.times.length == 0">Done</button>
+                </div>
+                <div class="form-group col-sm-12" ng-show="alreadyAdded" style="color: red;">
+                    The date you selected has already been added.
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped ">
+                        <thead>
+                            <tr>
+                                <th ng-click="sortDir = !sortDir">
+                                    Date
+                                    <span class="pull-right">
+                                        <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                                        <i class="fa fa-caret-up" ng-show="sortDir === false"></i>
+                                        <i class="fa fa-caret-down" ng-show="sortDir === true"></i>
+                                    </span>
+                                </th>
+                                <th>Start</th>
+                                <th>End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in expenseData.times| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+                                <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
+                                <td>{{item.startTime}}</td>
+                                <td>{{item.endTime}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="categories" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" id="myTab">
+                <li role="presentation" class="active">
+                    <a href="#mileage" aria-controls="mileage" role="tab" data-toggle="tab">Mileage</a>
+
+                </li>
+                <li role="presentation">
+                    <a href="#subsistence" aria-controls="subsistence" role="tab" data-toggle="tab">Subsistence</a>
+
+                </li>
+                <li role="presentation">
+                    <a href="#other" aria-controls="other" role="tab" data-toggle="tab">Other</a>
+
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="mileage">
+                    <div class="candidate-modal" ng-controller="CandidateSidebarAddExp6Controller">
+                        <div ng-show="whichShow == 'main'">
+                            <div class="modal-header modal-headerExpenses">
+                                <h4 class="modal-title" id="myModalLabel">Expenses #4 | Transport</h4>
+                                <small>Document transport expenses.</small>
+                            </div><!-- /modal-header -->
+
+                            <div class="modal-body">
+                                <form class="form row">
+                                    <div class="form-group col-sm-3">
+                                        <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange">
+                                            <option value="">- Select -</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <select class="form-control" ng-model="addData.type" ng-options="type.description for type in transportTypes track by type.code">
+                                            <option value="" disabled style="display:none">-Transport Type-</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-2 postcodeInput" style="display: inline-flex;">
+                                        <input id="postCodeInput" type="text" class="form-control" name="postcode" placeholder="Postcode" ng-model="addData.code" />
+                                        <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
+                                    </div>
+                                    <div class="form-group col-sm-3 postcodeInput" style="display: inline-flex;">
+                                        <input type="text" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)" />
+                                        <div class="input-group" ng-show="addData.type && !isPpmDefined(addData.type)">
+                                            <div class="input-group-addon">&#163;</div>
+                                            <input class="form-control" type="number" ng-model="addData.mileage">
+                                        </div>
+                                        <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <button type="button" class="btn btn-default form-control" id="addMilagePostcode"
+                                                ng-disabled="!addData.date || !addData.type || !addData.mileage || !addData.code" ng-click="addManual()">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped" id="tableHeader">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Date
+                                                        <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                                                            <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                                                            <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                                                            <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                                                        </a>
+                                                    </th>
+                                                    <th>Transport Type</th>
+                                                    <th>Cost</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <div class="tableWrapper">
+                                            <table class="table table-striped" id="tableBody">
+                                                <tbody>
+                                                    <tr ng-repeat="item in expenseData.transports| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+                                                        <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
+                                                        <td>{{item.type.description}}</td>
+                                                        <td>{{codeHolder[index]}}</td>
+                                                        <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="removeManual($index)"><i class="fa fa-times"></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 pull-right">
+                                        <p class="">Total: <span>&#163;{{expenseData.transports| rowsSum:'cost' | formatNumber}}</span></p>
+                                    </div>
+                                </div>
+                            </div><!-- /modal-body -->
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" ng-click="okManual()"
+                                        ng-disabled="isVehicleChecking">
+                                    Done
+                                </button>
+                            </div><!-- /modal footer -->
+                        </div>
+                        <div ng-show="whichShow=='vehicle'">
+                            <div class="modal-header modal-headerExpenses">
+                                <h4 class="modal-title" id="myModalLabel">Vehicle Information</h4>
+                                <small>This is your first expenses claim for  'car &#38; van', so we need some more information about your vehicle. Please fill in the brief one-time from below. </small>
+                            </div><!-- /modal-header -->
+
+                            <div class="modal-body">
+                                <form class="form-horizontal" name="vehicleForm" id="vehicleForm">
+                                    <div class="form-group">
+                                        <label class="col-sm-3" for="fuel-type">Fuel type</label>
+                                        <div class="col-sm-3 fuelType">
+                                            <select class="form-control" id="fuel-type" ng-model="vehicle.fuelType" required
+                                                    ng-change="onChangeFuelType()"
+                                                    ng-options="type.code as type.description for type in fuelTypes"></select>
+                                        </div>
+
+                                        <label class="col-sm-3" for="engine-size">Engine size</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" id="engine-size" ng-model="vehicle.engineSize" required
+                                                    ng-options="type.code as type.description for type in engineSizes"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3" for="make-model">Make &#38; model </label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="make-model" class="form-control" ng-model="vehicle.make" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3" for="registration-number">Registration No.</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="registration-number" ng-model="vehicle.registration">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3" for="company-car">Company car?</label>
+                                        <div class="col-sm-9">
+                                            <label>
+                                                <input type="checkbox" id="company-car" ng-model="vehicle.companyCar"> Leave unchecked for private vehicle.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!-- /modal-body -->
+                            <div class="modal-footer">
+                                <p class="pull-left">
+                                    <a href="javascript:void(0)" class="btn" ng-click="cancelVehicleForm()"><i class="fa fa-chevron-left"></i></a>
+                                    Back to previous step to change vehicle type.
+                                </p>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="saveVehicleFormManual()"
+                                        ng-disabled="isVehicleSaving || vehicleForm.$invalid">
+                                    {{isVehicleSaving?'Saving...':'Save'}}
+                                </button>
+                            </div><!-- /modal footer -->
+                        </div>
+                    </div>
+                    <!--<div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-6 col-md-7 control-label">Company Car?</label>
+                                    <div class="col-xs-8 col-sm-6 col-md-5 no-padding-left">
+                                        <select class="form-control">
+                                            <option>ComboBox</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-6 control-label">Vehicle Type</label>
+                                    <div class="col-xs-8 col-sm-6 no-padding-left">
+                                        <select class="form-control">
+                                            <option>ComboBox</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-6  control-label">Fuel Type</label>
+                                    <div class="col-xs-8 col-sm-6 no-padding-left">
+                                        <select class="form-control">
+                                            <option>ComboBox</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-6 control-label">Engine Size</label>
+                                    <div class="col-xs-8 col-sm-6 no-padding-left">
+                                        <select class="form-control">
+                                            <option>ComboBox</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-md-6 control-label">Make & Model</label>
+                                    <div class="col-xs-8 col-md-6 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-md-6 control-label">Registration No</label>
+                                    <div class="col-xs-8 col-md-6 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-md-7 control-label">Miles claimed so For</label>
+                                    <div class="col-xs-8 col-md-5 no-padding-left">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-12">
+
+                            <div class="tableWrapper tableWrapperHeight140">
+                                <table class="table table-striped" id="tableBody">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Start Postcode</th>
+                                            <th>End Postcode</th>
+                                            <th>Miles</th>
+                                            <th>Rate</th>
+                                            <th>Total</th>
+                                            <th>Receipt</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10/11/2014</td>
+                                            <td>CW12 3RX</td>
+                                            <td>M41 0XX</td>
+                                            <td>100</td>
+                                            <td>&pound;9.50</td>
+                                            <td>&pound;45.00</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-xs">UPLOAD</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="subsistence">
+                    <div class="modal-body" ng-controller="CandidateSidebarAddExp7Controller">
+                        <form class="form">
+                            <div class="row">
+                                <div class="form-group col-sm-4 col-xs-5">
+                                    <select class="form-control" ng-model="addData.date"
+                                            ng-options="day.object as day.label for day in expenseData.daysInRange">
+                                        <option value="">- Select -</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-4">
+                                    <select class="form-control" ng-model="addData.type"
+                                            ng-options="type.name for type in mealTypes track by type._id" ng-change="onTypeChanged()">
+                                        <option value="">-Meal Type-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-3">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">&#163;</div>
+                                        <input class="form-control" type="number" ng-model="addData.cost">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <button type="button" class="btn btn-default form-control" id="addSubsistenceButton"
+                                            ng-disabled="!addData.date || !addData.type || !addData.cost" ng-click="add()">
+                                        <i class="fa fa-plus"></i> Add
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="addData.type.description==='Other'">
+                                <div class="col-sm-3 col-sm-offset-4 col-xs-4 col-xs-offset-5">
+                                    <input type="text" class="form-control" placeholder="Description" ng-model="addData.description" />
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-striped" id="tableHeader">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                                                    <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                                                    <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                                                    <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                                                </a>
+                                            </th>
+                                            <th>Meal Type</th>
+                                            <th>Cost</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="tableWrapper">
+                                    <table class="table table-striped" id="tableBody">
+                                        <tbody>
+                                            <tr ng-repeat="item in expenseData.subsistences | orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+                                                <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
+                                                <td>{{item.type.description}}</td>
+                                                <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 pull-right">
+                                <p class="">Total: <span>&#163;{{expenseData.subsistences | rowsSum:'cost' | formatNumber}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="other">
+                    <div class="modal-body" ng-controller="CandidateSidebarAddExp8Controller">
+                        <form class="form">
+                            <div class="row">
+                                <div class="form-group col-sm-4 col-xs-5">
+                                    <select class="form-control" ng-model="addData.date"
+                                            ng-options="day.object as day.label for day in expenseData.daysInRange">
+                                        <option value="">- Select -</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-4">
+                                    <select class="form-control" ng-model="addData.type"
+                                            ng-options="type.name for type in types track by type._id">
+                                        <option value="">- Select -</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3 col-xs-3">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">&#163;</div>
+                                        <input class="form-control" type="number" ng-model="addData.cost">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <button type="button" class="btn btn-default form-control" id="addOtherButton"
+                                            ng-disabled="!addData.date || !addData.type || !addData.cost" ng-click="add()">
+                                        <i class="fa fa-plus"></i> Add
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="addData.type.description==='Other'">
+                                <div class="col-sm-3 col-sm-offset-4 col-xs-4 col-xs-offset-5">
+                                    <input type="text" class="form-control" placeholder="" ng-model="addData.description" />
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-striped" id="tableHeader">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                                                    <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                                                    <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                                                    <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                                                </a>
+                                            </th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Cost</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="tableWrapper">
+                                    <table class="table table-striped" id="tableBody">
+                                        <tbody>
+                                            <tr ng-repeat="item in expenseData.others| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+                                                <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
+                                                <td>{{item.type.description}}</td>
+                                                <td style="min-width: 100px;">{{item.description}}</td>
+                                                <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 pull-right">
+                                <p class="">Total: <span>&#163;{{expenseData.others| rowsSum:'cost' | formatNumber}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

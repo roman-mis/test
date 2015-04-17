@@ -49,5 +49,15 @@ angular.module('origApp.controllers')
             $scope.gotoNext();
           };
 
+          $scope.okManual = function () {
+              //reset daysInRange
+              var newDaysInRange = [$scope.expenseData.daysInRange[0]];
+              $scope.expenseData.times.forEach(function (item) {
+                  newDaysInRange.push({ object: item.date, label: moment(item.date).format('ddd DD/MM/YYYY') });
+              });
+              $scope.expenseData.daysInRange = newDaysInRange;
+
+          };
+
         });
 

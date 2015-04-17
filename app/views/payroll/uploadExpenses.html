@@ -1,25 +1,8 @@
-﻿<!--
+<!--
   <div orig-grid="gridOptions" external-scope="$scope"></div>
 </div>-->
 
 <div class="meta-box padding-10 container-fluid gutter-right">
-    <div class="row" ng-if="pendingRejections.length != 0">
-        <div class="col-xs-12; text-right" style="padding-right:10px">
-            <h3>
-                Pending Rejections: {{pendingRejections.length}} &nbsp;
-                <button type="button" class="btn btn-success"
-                        ng-disabled="pendingRejections.length == 0"
-                        ng-click="reviewSummary()">
-                    Review Summary
-                </button>
-                <button type="button" class="btn btn-warning"
-                        ng-disabled="pendingRejections.length == 0"
-                        ng-click="cancelRejections()">
-                    Cancel Rejections
-                </button>
-            </h3>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-striped expenses-auth">
@@ -35,31 +18,7 @@
                         <th>Status</th>
                         <th>Total</th>
                         <th>
-                            <div class="dropdown text-left">
-                                <a style="cursor:pointer" data-toggle="dropdown">
-                                    <i class="fa fa-bars"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
-                                    <li ng-click="approveMajorSelected()">
-                                        <a style="cursor:pointer; color:#000000">Approve</a>
-                                    </li>
-                                    <li ng-click="rejectMajorSelected()">
-                                        <a style="cursor: pointer; color: #000000">Reject</a>
-                                    </li>
-                                    <li ng-click="majorSelectAll()">
-                                        <a style="cursor: pointer; color: #000000">Select All</a>
-                                    </li>
-                                    <li ng-click="majorInverseSelection()">
-                                        <a style="cursor: pointer; color: #000000">Inverse Selection</a>
-                                    </li>
-                                    <!--<li>
-                                        <a style="cursor: pointer; color: #000000">Edit</a>
-                                    </li>-->
-                                    <li ng-click="majorDeleteSelected()">
-                                        <a style="cursor: pointer; color: #000000">Delete</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            
                         </th>
                     </tr>
                 </thead>
@@ -114,28 +73,7 @@
                                                 <b>{{cat}}</b>
                                             </td>
                                             <td style="width:20px">
-                                                <div class="dropdown text-left">
-                                                    <a style="cursor:pointer" data-toggle="dropdown">
-                                                        <i class="fa fa-bars"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-leftBottomBubble" role="menu">
-                                                        <li ng-click="approveSelected($parent.$index, cat)">
-                                                            <a style="cursor: pointer; text-decoration: none">Approve Item</a>
-                                                        </li>
-                                                        <li ng-click="rejectSelected($parent.$index, cat)">
-                                                            <a style="cursor: pointer; text-decoration: none">Reject Item</a>
-                                                        </li>
-                                                        <li ng-click="selectAll($parent.$index, cat)">
-                                                            <a style="cursor: pointer; text-decoration: none">Select All</a>
-                                                        </li>
-                                                        <li ng-click="inverseSelection($parent.$index, cat)">
-                                                            <a style="cursor: pointer; text-decoration: none">Inverse Selection</a>
-                                                        </li>
-                                                        <li ng-click="deleteSelected($parent.$index, cat)">
-                                                            <a style="cursor: pointer; text-decoration: none">Delete</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                
                                             </td>
                                         </tr>
                                         <!--category basic info-->
@@ -248,27 +186,4 @@
             <!--Big table-->
         </div>
     </div>
-</div>
-<div class="orig-grid-wrapper">
-  <div class="orig-grid-pagination-wrapper">
-    <div class="page-rows-count">
-      <label>Results per page</label><br>
-      <div class="btn-group">
-        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="20">20</button>
-        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="40">40</button>
-        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="60">60</button>
-        <button class="btn btn-default" ng-model="options.limit" ng-change="loadExpenses()" btn-radio="80">80</button>
-      </div>
-    </div>
-    <pagination
-      total-items="options.totalItems"
-      ng-model="options.currentPage"
-      ng-change="loadExpenses()"
-      items-per-page="options.limit"
-      max-size="options.maxVisiblePages"
-      class="pagination"
-      boundary-links="true"
-      rotate="false"
-      num-pages="options.numPages"></pagination>
-  </div>
 </div>
