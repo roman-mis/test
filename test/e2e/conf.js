@@ -5,6 +5,11 @@ var awsservice=require('./awsservice');
 
 var adminCredentials=['./spec/login/admin_data.js'];
 
+var regNewUser=[
+  './spec/reg/reg.js',
+  './spec/reg/check-inbox.js',
+  './spec/reg/activate.js'
+];
 var login=['./spec/login/login.js']
 var logout=['./spec/login/logout.js'];
 
@@ -23,11 +28,7 @@ var candidateSidebar=[
   //'./spec/candidate/sidebar/activity.js',
 //  './spec/candidate/sidebar/agencies.js',
 ];
-var regNewUser=[
-  './spec/reg/reg.js',
-  './spec/reg/check-inbox.js',
-  './spec/reg/activate.js'
-];
+
 
 
 exports.config = {
@@ -44,9 +45,9 @@ exports.config = {
     'browserName': 'chrome'
   }],*/
   suites: {
-    main:[/*,'./spec/agency_prefill.js','./spec/search_current_candidate.js','./spec/candidates.js','./spec/sidebar.js'*/],
+    main: regNewUser.concat(login).concat(logout),
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    remote: regNewUser.concat(login).concat(logout).concat(adminCredentials).concat(login).concat(logout),
+    remote: regNewUser.concat(login).concat(logout),
     dummy: []
   },
 
