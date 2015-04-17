@@ -92,39 +92,55 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                         container: 'body'
                     })
                 scope.html = false;
+                var firstTime = true;
                 var ar = '';
                 var final = '';
+                var html = '';
+                    
                 function convert(){
                     var html = textarea.html();
                     console.log(html);
                     console.log(scope.html)
                     if(scope.html === true){
-                        // ar = html.split('<');
-                        // console.log(ar);
-                        // html = ar.join('&lt;'); 
-                        // console.log(html);
-                        console.log(html)
-                        html.replace('<', '&lt;');
-                        html.replace('>','&gt;');
-
+                        console.log('*********************************')
+                        // html = html.replace('<','&lt;');
+                        // html = html.replace('>','&gt;');
+                        ar = html.split('<');
+                        console.log(ar);
+                        html = ar.join('&lt;'); 
+                        console.log(html);
                     }else{
-                        html.replace('&lt;','<');
-                        html.replace('&gt;','>');
-
+                        // html = html.replace('&lt;','<');
+                        // html = html.replace('&gt;','>');
+                        ar = html.split('&lt;');
+                        console.log(ar);
+                        html = ar.join('<'); 
+                        console.log(html);
+                        ar = html.split('&gt;');
+                        console.log(ar);
+                        html = ar.join('>'); 
+                        console.log(html);
                     }
-                    textarea.html(html);
-                    // textarea.html();
-                    // console.log(textarea);
-                    // console.log(textarea.html());
+
                     if (html == '<br>') {
                         html = '';
                     }
+                    textarea.html(html)
                     ngModelController.$setViewValue(textarea.html());
                 }
-                textarea.on('input keyup paste mouseup', function(event) {
-                    convert();
-                });
+                var first = true;
 
+                textarea.on('input keyup paste mouseup', function(event) {
+                    console.log('!@#$%^&*&^%$%^&&^%$#')
+                        console.log('000000000000000000     ')
+                    html = textarea.html();
+
+                    if (html === '<br>') {
+                        html = '';
+                    }
+
+                    ngModelController.$setViewValue(html);
+                });
 
                 scope.isLink = false;
 
@@ -132,7 +148,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                 scope.selection="";
                 function itemIs(tag) {
 
-                    scope.selection = window.getSelection().getRangeAt(0);      
+                    // scope.selection = window.getSelection().getRangeAt(0);      
                     // console.log(scope.selection)
                     if (scope.selection) {
                         if (scope.selection.startContainer.parentNode.tagName === tag.toUpperCase() || scope.selection.endContainer.parentNode.tagName === tag.toUpperCase()) {
@@ -210,15 +226,24 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                 // model -> view
                 ngModelController.$render = function() {
                     textarea.html(ngModelController.$viewValue);
+                        console.log('11111111111111111     ')
+
                 };
 
                 scope.format = function(cmd, arg) {
                     document.execCommand(cmd, false, arg);
+                    if(firstTime === true){
+                        firstTime = false;
+                        // convert();
+                        console.log('000000000000000000     ')
+                    }
 
                 }
 
                 scope.cmdState = function(cmd, id) {
                     return document.queryCommandState(cmd);
+                        console.log('3333333333333     ')
+
                 }
 
                 scope.cmdValue = function(cmd) {
@@ -260,6 +285,12 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
                     scope.html = !scope.html;
                     convert();
                 }
+
+                scope.testFn = function(){
+                    console.log('^^^^^^^^^^^^^^^^^^^^^');
+                    // convert();
+                }
+
                 scope.format('enableobjectresizing', true);
                 scope.format('styleWithCSS', true);
 
@@ -291,7 +322,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
         }
 
         var getMenuTextArea = function() {
-            return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}" name="{{textareaName}}" required="{{textareaRequired}}" placeholder="{{textareaPlaceholder}}" ng-model="value"></div><div contentEditable="true" >{{value}}</div>';
+            return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}" name="{{textareaName}}" required="{{textareaRequired}}" placeholder="{{textareaPlaceholder}}" ng-model="value"></div>{{value}}';
             // return '<div id="{{textareaId}}" ng-attr-style="resize:vertical;height:{{textareaHeight || \'80px\'}}; overflow:auto" contentEditable="true" class="{{textareaClass}} wysiwyg-textarea" rows="{{textareaRows}}"  >{{value}}</div>';
             // return ''
         }
@@ -300,81 +331,83 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
             return '<div class="btn-group btn-group-sm wysiwyg-btn-group-margin">'
         }
 
+
+
         var getMenuItem = function(item) {
             item = item.toLowerCase().replace(' ', '-');
             switch (item) {
                 case 'bold':
-                    return '<button title="Bold" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'bold\')" ng-class="{ active: isBold}"><i class="fa fa-bold"></i></button>';
+                    return '<button ng-disabled="html" title="Bold" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'bold\')" ng-class="{ active: isBold}"><i class="fa fa-bold"></i></button>';
                     break;
                 case 'italic':
-                    return '<button title="Italic" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'italic\')" ng-class="{ active: isItalic}"><i class="fa fa-italic"></i></button>';
+                    return '<button ng-disabled="html" title="Italic" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'italic\')" ng-class="{ active: isItalic}"><i class="fa fa-italic"></i></button>';
                     break;
                 case 'underline':
-                    return '<button title="Underline" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'underline\')" ng-class="{ active: isUnderlined}"><i class="fa fa-underline"></i></button>';
+                    return '<button ng-disabled="html" title="Underline" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'underline\')" ng-class="{ active: isUnderlined}"><i class="fa fa-underline"></i></button>';
                     break;
                 case 'strikethrough':
-                    return '<button title="Strikethrough" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'strikethrough\')" ng-class="{ active: isStrikethrough}"><i class="fa fa-strikethrough"></i></button>';
+                    return '<button ng-disabled="html" title="Strikethrough" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'strikethrough\')" ng-class="{ active: isStrikethrough}"><i class="fa fa-strikethrough"></i></button>';
                     break;
                 case 'subscript':
-                    return '<button title="Subscript" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'subscript\')" ng-class="{ active: isSubscript}"><i class="fa fa-subscript"></i></button>';
+                    return '<button ng-disabled="html" title="Subscript" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'subscript\')" ng-class="{ active: isSubscript}"><i class="fa fa-subscript"></i></button>';
                     break;
                 case 'superscript':
-                    return '<button title="Superscript" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'superscript\')" ng-class="{ active: isSuperscript}"><i class="fa fa-superscript"></i></button>';
+                    return '<button ng-disabled="html" title="Superscript" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'superscript\')" ng-class="{ active: isSuperscript}"><i class="fa fa-superscript"></i></button>';
                     break;
                 case 'font':
-                    return '<select tabindex="-1"  unselectable="on" class="form-control wysiwyg-select" ng-model="font" ng-options="f for f in fonts" ng-change="setFont()"></select>';
+                    return '<select ng-disabled="html" tabindex="-1"  unselectable="on" class="form-control wysiwyg-select" ng-model="font" ng-options="f for f in fonts" ng-change="setFont()"></select>';
                     break;
                 case 'font-size':
-                    return '<select unselectable="on" tabindex="-1" class="form-control wysiwyg-select" ng-model="fontSize" ng-options="f.size for f in fontSizes" ng-change="setFontSize()"></select>';
+                    return '<select ng-disabled="html" unselectable="on" tabindex="-1" class="form-control wysiwyg-select" ng-model="fontSize" ng-options="f.size for f in fontSizes" ng-change="setFontSize()"></select>';
                     break;
                 case 'font-color':
-                    return '<button title="Font Color" tabindex="-1" colorpicker="rgba" type="button" colorpicker-position="top" class="btn btn-default ng-valid ng-dirty wysiwyg-colorpicker wysiwyg-fontcolor" ng-model="fontColor" ng-change="setFontColor()">A</button>';
+                    return '<button ng-disabled="html" title="Font Color" tabindex="-1" colorpicker="rgba" type="button" colorpicker-position="top" class="btn btn-default ng-valid ng-dirty wysiwyg-colorpicker wysiwyg-fontcolor" ng-model="fontColor" ng-change="setFontColor()">A</button>';
                     break;
                 case 'hilite-color':
-                    return '<button title="Hilite Color" tabindex="-1" colorpicker="rgba" type="button" colorpicker-position="top" class="btn btn-default ng-valid ng-dirty wysiwyg-colorpicker wysiwyg-hiliteColor" ng-model="hiliteColor" ng-change="setHiliteColor()">H</button>';
+                    return '<button ng-disabled="html" title="Hilite Color" tabindex="-1" colorpicker="rgba" type="button" colorpicker-position="top" class="btn btn-default ng-valid ng-dirty wysiwyg-colorpicker wysiwyg-hiliteColor" ng-model="hiliteColor" ng-change="setHiliteColor()">H</button>';
                     break;
                 case 'remove-format':
-                    return '<button title="Remove Formatting" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'removeFormat\')" ><i class="fa fa-eraser"></i></button>';
+                    return '<button ng-disabled="html" title="Remove Formatting" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'removeFormat\')" ><i class="fa fa-eraser"></i></button>';
                     break;
                 case 'ordered-list':
-                    return '<button title="Ordered List" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'insertorderedlist\')" ng-class="{ active: isOrderedList}"><i class="fa fa-list-ol"></i></button>';
+                    return '<button ng-disabled="html" title="Ordered List" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'insertorderedlist\')" ng-class="{ active: isOrderedList}"><i class="fa fa-list-ol"></i></button>';
                     break;
                 case 'unordered-list':
-                    return '<button title="Unordered List" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'insertunorderedlist\')" ng-class="{ active: isUnorderedList}"><i class="fa fa-list-ul"></i></button>';
+                    return '<button ng-disabled="html" title="Unordered List" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'insertunorderedlist\')" ng-class="{ active: isUnorderedList}"><i class="fa fa-list-ul"></i></button>';
                     break;
                 case 'outdent':
-                    return '<button title="Outdent" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'outdent\')"><i class="fa fa-outdent"></i></button>';
+                    return '<button ng-disabled="html" title="Outdent" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'outdent\')"><i class="fa fa-outdent"></i></button>';
                     break;
                 case 'indent':
-                    return '<button title="Indent" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'indent\')"><i class="fa fa-indent"></i></button>';
+                    return '<button ng-disabled="html" title="Indent" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'indent\')"><i class="fa fa-indent"></i></button>';
                     break;
                 case 'left-justify':
-                    return '<button title="Left Justify" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'justifyleft\')" ng-class="{ active: isLeftJustified}"><i class="fa fa-align-left"></i></button>';
+                    return '<button ng-disabled="html" title="Left Justify" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'justifyleft\')" ng-class="{ active: isLeftJustified}"><i class="fa fa-align-left"></i></button>';
                     break;
                 case 'center-justify':
-                    return '<button title="Center Justify" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'justifycenter\')" ng-class="{ active: isCenterJustified}"><i class="fa fa-align-center"></i></button>';
+                    return '<button ng-disabled="html" title="Center Justify" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'justifycenter\')" ng-class="{ active: isCenterJustified}"><i class="fa fa-align-center"></i></button>';
                     break;
                 case 'right-justify':
-                    return '<button title="Right Justify" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'justifyright\')" ng-class="{ active: isRightJustified}"><i class="fa fa-align-right"></i></button>';
+                    return '<button ng-disabled="html" title="Right Justify" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'justifyright\')" ng-class="{ active: isRightJustified}"><i class="fa fa-align-right"></i></button>';
                     break;
                 case 'code':
-                    return '<button title="Code" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'formatblock\', \'pre\')"  ng-class="{ active: isPre}"><i class="fa fa-code"></i></button>';
+                    return '<button ng-disabled="html" title="Code" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'formatblock\', \'pre\')"  ng-class="{ active: isPre}"><i class="fa fa-code"></i></button>';
                     break;
                 case 'quote':
-                    return '<button title="Quote" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'formatblock\', \'blockquote\')"  ng-class="{ active: isBlockquote}"><i class="fa fa-quote-right"></i></button>';
+                    return '<button ng-disabled="html" title="Quote" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'formatblock\', \'blockquote\')"  ng-class="{ active: isBlockquote}"><i class="fa fa-quote-right"></i></button>';
                     break;
                 case 'paragragh':
-                    return '<button title="Paragragh" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'insertParagraph\')"  ng-class="{ active: isParagraph}">P</button>';
+                    return '<button ng-disabled="html" title="Paragragh" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'insertParagraph\')"  ng-class="{ active: isParagraph}">P</button>';
                     break;
                 case 'link':
-                    return '<button ng-show="!isLink" tabindex="-1" title="Link" type="button" unselectable="on" class="btn btn-default" ng-click="createLink()"><i class="fa fa-link" ></i> </button>' +
+                    return '<button ng-disabled="html" ng-show="!isLink" tabindex="-1" title="Link" type="button" unselectable="on" class="btn btn-default" ng-click="createLink()"><i class="fa fa-link" ></i> </button>' +
                         '<button ng-show="isLink" tabindex="-1" title="Unlink" type="button" unselectable="on" class="btn btn-default" ng-click="format(\'unlink\')"><i class="fa fa-unlink"></i> </button>';
                     break;
                 case 'image':
-                    return '<button title="Image" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="insertImage()"><i class="fa fa-picture-o"></i> </button>';
+                    return '<button ng-disabled="html" title="Image" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="insertImage()"><i class="fa fa-picture-o"></i> </button>';
                     break;
                 case 'html':
-                    return '<button title="html" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-click="convertToHtml()"><i class="fa fa-picture-o"></i> </button>';
+                    return '<button title="html" tabindex="-1" type="button" unselectable="on" class="btn btn-default" ng-class="{ active: html}" ng-click="convertToHtml()"><i class="fa fa-file-code-o"></i> </button>';
                     break;
                 default:
                     console.log('Angular.wysiwyg: Unknown menu item.')
@@ -391,7 +424,7 @@ angular.module('wysiwyg.module', ['colorpicker.module'])
             else
                 menu = defaultMenu;
 
-            var menuHtml = '<div class="wysiwyg-menu">';
+            var menuHtml = '<div class="wysiwyg-menu" ng-click="testFn()">';
             menuHtml += getMenuStyles();
 
             for (var i = 0; i < menu.length; i++) {

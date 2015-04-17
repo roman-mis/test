@@ -26,7 +26,7 @@
                 <div class="col-xs-4 col-sm-3 form-group">
                     <div class="row">
                     <div class="col-xs-10">
-                    <input round-number min="0"  type="number"  class="form-control" name="amount" ng-model="hpObject.holidayPay.amount" required />
+                    <input  min="0"  type="number"  class="form-control" name="amount" ng-model="hpObject.holidayPay.amount" required />
                     </div>
                     <div class="col-xs-2 pull-left">
                         <i class="fa fa-eur"></i>
@@ -47,6 +47,12 @@
                    <div ng-if="submitted && hpObject.holidayPay.amount > candidate.payrollValues.holidayPayRetained">
                        <p  class="alert alert-danger">
                          Holiday fund requested should be less than or equal to holiday fund available.
+                       </p>
+                   </div>
+                    <div ng-if="submitted && candidate.payrollValues.holidayPayRetained===0">
+
+                       <p  class="alert alert-danger">
+                         You cannot request holiday fund.
                        </p>
                    </div>
                 </div>

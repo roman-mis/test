@@ -86,6 +86,19 @@ service.getUserByParam=function(parameters){
 
 };
 
+
+	service.getMarginsByCandidateIds = function(ids){
+		var q;
+		var promisArray = [];
+		console.log(ids);
+		ids.forEach(function(id){
+			q = db.User.findOne({_id:id});
+			console.log('77777777777777777777')
+			promisArray.push(Q.nfcall(q.exec.bind(q)));
+		});
+		return Q.all(promisArray);
+	};
+
 service.lockunlock=function(id,flag,lockedBy){
 	flag=flag||false;
 	return Q.Promise(function(resolve,reject){
