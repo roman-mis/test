@@ -26,6 +26,7 @@ module.exports=function(){
 							 q.where(filterName).equals(filter.term);
 						}
 						else if(filter.operator==='contains' ){
+
 							q.where(filterName).equals(new RegExp(filter.term,'i'));
 						}
 						else if(filter.operator==='ne' ){
