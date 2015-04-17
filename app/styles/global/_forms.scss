@@ -10,7 +10,7 @@ select.form-control {
     border: 1px solid $gray-light;
     background-color: $white;
     outline: none;
-    transition: all .15s;
+    transition: all $trans-duration;
     @include basic-transition();
     &::placeholder {
         color: $gray;
@@ -53,10 +53,16 @@ textarea {
     }
 }
 
-.input-group .input-group-addon {
-    border: 1px solid $gray-light;
-    border-radius: 0px;
-    border-right: 0px;
+.input-group {
+    width: 100%;
+    .input-group-addon {
+        border: 1px solid $gray-light;
+        border-radius: 0;
+        border-right: 0;
+        width: $input-height-base;
+        padding: 0;
+        text-align: center;
+    }
 }
 
 .form-control:focus {

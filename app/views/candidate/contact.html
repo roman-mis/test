@@ -50,205 +50,209 @@
 </div>
 
 <script type="text/ng-template" id="views/candidate/_primary_contact_edit.html">
-    <div class="modal-header">
-        <h3 class="modal-title">Edit Primary Contact Information</h3>
-    </div>
-    <div class="modal-body">
-        <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-            
-            <div class="form-group">
-            <label class="col-sm-4 control-label">Phone<span ng-show = "candidate.status=='Live'||!data.mobile">*</span></label>
-              <div class="col-sm-8">
-                <input name = "phone"type="text" class="form-control" ng-model="data.phone" ng-required = "candidate.status == 'Live'||!data.mobile" ng-pattern="ukPhone">
-                <div class="alert alert-danger" ng-if="primaryContactForm.phone.$error.required" role="alert" >
-                  Please enter your phone or mobile number.
+    <div class="modal-window">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit Primary Contact Information</h3>
+        </div>
+        <div class="modal-body">
+            <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
+                
+                <div class="form-group">
+                <label class="col-sm-4 control-label">Phone<span ng-show = "candidate.status=='Live'||!data.mobile">*</span></label>
+                  <div class="col-sm-8">
+                    <input name = "phone"type="text" class="form-control" ng-model="data.phone" ng-required = "candidate.status == 'Live'||!data.mobile" ng-pattern="ukPhone">
+                    <div class="alert alert-danger" ng-if="primaryContactForm.phone.$error.required" role="alert" >
+                      Please enter your phone or mobile number.
+                    </div>
+                    <div class="alert alert-danger" ng-if="primaryContactForm.phone.$error.pattern" role="alert" >
+                      Please enter a valid phone number.
+                    </div>
+                  </div>
                 </div>
-                <div class="alert alert-danger" ng-if="primaryContactForm.phone.$error.pattern" role="alert" >
-                  Please enter a valid phone number.
+        
+                <div class="form-group">
+                <label class="col-sm-4 control-label">Mobile<span ng-show = "candidate.status=='Live'||!data.phone">*</span></label>
+                  <div class="col-sm-8">
+                    <input name = "mobile"type="text" class="form-control" ng-model="data.mobile" ng-required = "candidate.status == 'Live'||!data.phone" ng-pattern="ukMobile">
+                    <div class="alert alert-danger" ng-if="primaryContactForm.mobile.$error.required" role="alert" >
+                      Please enter your phone or mobile number.
+                    </div>
+                    <div class="alert alert-danger" ng-if="primaryContactForm.mobile.$error.pattern" role="alert" >
+                      Please enter a valid mobile number.
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-            <label class="col-sm-4 control-label">Mobile<span ng-show = "candidate.status=='Live'||!data.phone">*</span></label>
-              <div class="col-sm-8">
-                <input name = "mobile"type="text" class="form-control" ng-model="data.mobile" ng-required = "candidate.status == 'Live'||!data.phone" ng-pattern="ukMobile">
-                <div class="alert alert-danger" ng-if="primaryContactForm.mobile.$error.required" role="alert" >
-                  Please enter your phone or mobile number.
+        
+                <div class="form-group">
+                <label class="col-sm-4 control-label">Email Address<span ng-show = "candidate.status='Live'">*</span></label>
+                  <div class="col-sm-8">
+                    <input name = "email"type="text" class="form-control" ng-model="data.emailAddress" ng-required = "candidate.status == 'Live'" ng-pattern="emailPattern">
+                    <div class="alert alert-danger" ng-if="primaryContactForm.email.$error.required" role="alert" >
+                      Please enter your email address.
+                    </div>
+                    <div class="alert alert-danger" ng-if="primaryContactForm.email.$error.pattern" role="alert" >
+                      Please enter a valid email address.
+                    </div>
+                  </div>
                 </div>
-                <div class="alert alert-danger" ng-if="primaryContactForm.mobile.$error.pattern" role="alert" >
-                  Please enter a valid mobile number.
+        
+                <div class="form-group">
+                <label class="col-sm-4 control-label">Alt.Email</label>
+                  <div class="col-sm-8">
+                    <input name = "altEmail"type="text" class="form-control" ng-model="data.altEmail" ng-pattern="emailPattern">
+                    <div class="alert alert-danger" ng-if="primaryContactForm.altEmail.$error.pattern" role="alert" >
+                      Please enter a valid email address.
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-            <label class="col-sm-4 control-label">Email Address<span ng-show = "candidate.status='Live'">*</span></label>
-              <div class="col-sm-8">
-                <input name = "email"type="text" class="form-control" ng-model="data.emailAddress" ng-required = "candidate.status == 'Live'" ng-pattern="emailPattern">
-                <div class="alert alert-danger" ng-if="primaryContactForm.email.$error.required" role="alert" >
-                  Please enter your email address.
+        
+                <div class="form-group">
+                <label class="col-sm-4 control-label">Facebook</label>
+                  <div class="col-sm-8">
+                    <input name = "facebook"type="text" class="form-control" ng-model="data.facebook">
+                  </div>
                 </div>
-                <div class="alert alert-danger" ng-if="primaryContactForm.email.$error.pattern" role="alert" >
-                  Please enter a valid email address.
+        
+                <div class="form-group">
+                <label class="col-sm-4 control-label">LinkedIn<span ng-show = "candidate.status='Live'&&!data.mobile">*</span></label>
+                  <div class="col-sm-8">
+                    <input name = "linkedin"type="text" class="form-control" ng-model="data.linkedin">
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-            <label class="col-sm-4 control-label">Alt.Email</label>
-              <div class="col-sm-8">
-                <input name = "altEmail"type="text" class="form-control" ng-model="data.altEmail" ng-pattern="emailPattern">
-                <div class="alert alert-danger" ng-if="primaryContactForm.altEmail.$error.pattern" role="alert" >
-                  Please enter a valid email address.
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-            <label class="col-sm-4 control-label">Facebook</label>
-              <div class="col-sm-8">
-                <input name = "facebook"type="text" class="form-control" ng-model="data.facebook">
-              </div>
-            </div>
-
-            <div class="form-group">
-            <label class="col-sm-4 control-label">LinkedIn<span ng-show = "candidate.status='Live'&&!data.mobile">*</span></label>
-              <div class="col-sm-8">
-                <input name = "linkedin"type="text" class="form-control" ng-model="data.linkedin">
-              </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-        </button>
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
+                <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+                <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+            </button>            
+        </div>
     </div>
 </script>
 
-
-
-
-
 <script type="text/ng-template" id="views/candidate/_primary_address_edit.html">
-  <div class="modal-header">
-    <h3 class="modal-title">Edit Primary Address</h3>
-  </div>
-  <div class="modal-body">
-    <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Address 1 <span ng-show = "candidate.status='Live'">*</span></label>
-        <div class="col-sm-8">
-          <input name = "address1"type="text" class="form-control" ng-model="data.address1" ng-required = "candidate.status == 'Live'">
-          <div class="alert alert-danger" ng-if="primaryContactForm.address1.$error.required" role="alert">
-            Please enter your address.
+  <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Primary Address</h3>
+      </div>
+      <div class="modal-body">
+        <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Address 1 <span ng-show = "candidate.status='Live'">*</span></label>
+            <div class="col-sm-8">
+              <input name = "address1"type="text" class="form-control" ng-model="data.address1" ng-required = "candidate.status == 'Live'">
+              <div class="alert alert-danger" ng-if="primaryContactForm.address1.$error.required" role="alert">
+                Please enter your address.
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Address 2</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="data.address2">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Address 3</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="data.address3">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Town<span ng-show = "candidate.status='Live'">*</span></label>
-        <div class="col-sm-8">
-          <input name="town" type="text" class="form-control" ng-model="data.town" ng-required = "candidate.status == 'Live'">
-          <div class="alert alert-danger" ng-if="primaryContactForm.town.$error.required" role="alert">
-            Please enter your town.
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Address 2</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" ng-model="data.address2">
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Country</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="data.country">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Post Code<span ng-show = "candidate.status='Live'">*</span></label>
-        <div class="col-sm-8">
-          <input name = "postCode" type="text" class="form-control" ng-model="data.postCode" ng-required = "candidate.status == 'Live'" orig-postcode>
-          <div class="alert alert-danger" ng-if="primaryContactForm.postCode.$error.required" role="alert">
-            Please enter your post code.
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Address 3</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" ng-model="data.address3">
+            </div>
           </div>
-          <div class="alert alert-danger" ng-if="primaryContactForm.postCode.$error.postcode" role="alert">
-            Please enter a valid post code.
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Town<span ng-show = "candidate.status='Live'">*</span></label>
+            <div class="col-sm-8">
+              <input name="town" type="text" class="form-control" ng-model="data.town" ng-required = "candidate.status == 'Live'">
+              <div class="alert alert-danger" ng-if="primaryContactForm.town.$error.required" role="alert">
+                Please enter your town.
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Country</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" ng-model="data.country">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Post Code<span ng-show = "candidate.status='Live'">*</span></label>
+            <div class="col-sm-8">
+              <input name = "postCode" type="text" class="form-control" ng-model="data.postCode" ng-required = "candidate.status == 'Live'" orig-postcode>
+              <div class="alert alert-danger" ng-if="primaryContactForm.postCode.$error.required" role="alert">
+                Please enter your post code.
+              </div>
+              <div class="alert alert-danger" ng-if="primaryContactForm.postCode.$error.postcode" role="alert">
+                Please enter a valid post code.
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-    </button>
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+      <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
+          <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+          <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+        </button>
+        
+      </div>
   </div>
 </script>
 
 <script type="text/ng-template" id="views/candidate/_bank_details_edit.html">
-  <div class="modal-header">
-    <h3 class="modal-title">Edit Bank Details</h3>
-  </div>
-  <div class="modal-body">
-    <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Name on Account</label>
-        <div class="col-sm-8">
-          <input name="accName" type="text" class="form-control" ng-model="data.accountName" ng-required="candidate.status == 'Live'">
-          <div class="alert alert-danger" ng-if="primaryContactForm.accName.$error.required"> Please enter your account name.</div>
-        </div>
+  <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Bank Details</h3>
       </div>
-
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Bank Name</label>
-        <div class="col-sm-8">
-          <input name="bankName" type="text" class="form-control" ng-model="data.bankName" ng-required="candidate.status == 'Live'">
-          <div class="alert alert-danger" ng-if="primaryContactForm.bankName.$error.required"> Please enter your bank name.</div>
-        </div>
+      <div class="modal-body">
+        <form name="primaryContactForm" class="form-horizontal" role="form" novalidate>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Name on Account</label>
+            <div class="col-sm-8">
+              <input name="accName" type="text" class="form-control" ng-model="data.accountName" ng-required="candidate.status == 'Live'">
+              <div class="alert alert-danger" ng-if="primaryContactForm.accName.$error.required"> Please enter your account name.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Bank Name</label>
+            <div class="col-sm-8">
+              <input name="bankName" type="text" class="form-control" ng-model="data.bankName" ng-required="candidate.status == 'Live'">
+              <div class="alert alert-danger" ng-if="primaryContactForm.bankName.$error.required"> Please enter your bank name.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Account No.</label>
+            <div class="col-sm-8">
+              <input name="accNo" type="text" class="form-control" ng-model="data.accountNo" ng-required="candidate.status == 'Live'" maxlength="8" ng-pattern = "/^[0-9]+$/">
+              <div class="alert alert-danger" ng-if="primaryContactForm.accNo.$error.required"> Please enter your account number.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Sort Code</label>
+            <div class="col-sm-8">
+              <input name="sortCode" type="text" class="form-control" ng-model="data.sortCode" ng-required="candidate.status == 'Live'" maxlength="6" ng-pattern="/^[0-9]+$/">
+              <div class="alert alert-danger" ng-if="primaryContactForm.sortCode.$error.required"> Please enter your sort code.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Bank Roll No.</label>
+            <div class="col-sm-8">
+              <input name="bankRollNo" type="text" class="form-control" ng-model="data.bankRollNo" maxlength="18" ng-pattern="/^[0-9]+$/">
+            </div>
+          </div>
+        </form>
       </div>
-
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Account No.</label>
-        <div class="col-sm-8">
-          <input name="accNo" type="text" class="form-control" ng-model="data.accountNo" ng-required="candidate.status == 'Live'" maxlength="8" ng-pattern = "/^[0-9]+$/">
-          <div class="alert alert-danger" ng-if="primaryContactForm.accNo.$error.required"> Please enter your account number.</div>
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
+          <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+          <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+        </button>
+        
       </div>
-
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Sort Code</label>
-        <div class="col-sm-8">
-          <input name="sortCode" type="text" class="form-control" ng-model="data.sortCode" ng-required="candidate.status == 'Live'" maxlength="6" ng-pattern="/^[0-9]+$/">
-          <div class="alert alert-danger" ng-if="primaryContactForm.sortCode.$error.required"> Please enter your sort code.</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="col-sm-4 control-label">Bank Roll No.</label>
-        <div class="col-sm-8">
-          <input name="bankRollNo" type="text" class="form-control" ng-model="data.bankRollNo" maxlength="18" ng-pattern="/^[0-9]+$/">
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || primaryContactForm.$invalid">
-      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-    </button>
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
   </div>
 </script>

@@ -1,133 +1,133 @@
-<div class="candidate-modal">
-  <div class="modal-header">
-    <h3 class="modal-title">
+<div class="modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title">
       <span ng-show="activityType=='task'">Creating a task wizard</span>
       <span ng-show="activityType=='callLog'">Welcome to adding a call log</span>
     </h3>
-  </div>
-  <div class="modal-body">
-    <form name="createTaskForm" class="form-horizontal" role="form" novalidate>
-      <div class="row">
-        <div class="col-sm-6">
-          <div ng-if="!permissions.rightToolBar.callLog.functionality.candidateName.hide" class="form-group">
-            <label class="col-xs-6 col-md-5">Candidate Name</label>
-            <div class="col-xs-6 col-md-7">
-              <input type="text" class="form-control" readonly value="{{candidate.firstName}} {{candidate.lastName}}">
-            </div>
-          </div>
+    </div>
+    <div class="modal-body">
+        <form name="createTaskForm" class="form-horizontal" role="form" novalidate>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div ng-if="!permissions.rightToolBar.callLog.functionality.candidateName.hide" class="form-group">
+                        <label class="col-xs-6 col-md-5">Candidate Name</label>
+                        <div class="col-xs-6 col-md-7">
+                            <input type="text" class="form-control" readonly value="{{candidate.firstName}} {{candidate.lastName}}">
+                        </div>
+                    </div>
 
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.status.hide">
-            <label class="col-xs-6 col-md-5">Status</label>
-            <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.status" theme="select2" search-enabled="false" >
-                <ui-select-match placeholder="Select a status">{{$select.selected.description}}</ui-select-match>
-                <ui-select-choices repeat="item.code as item in statuses">{{item.description}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
+                    <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.status.hide">
+                        <label class="col-xs-6 col-md-5">Status</label>
+                        <div class="col-xs-6 col-md-7">
+                            <ui-select ng-model="data.status" theme="select2" search-enabled="false">
+                                <ui-select-match placeholder="Select a status">{{$select.selected.description}}</ui-select-match>
+                                <ui-select-choices repeat="item.code as item in statuses">{{item.description}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
 
-          <div ng-if="!permissions.rightToolBar.callLog.functionality.taskType.hide" class="form-group">
-            <label class="col-xs-6 col-md-5">Task Type</label>
-            <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.taskType" theme="select2" search-enabled="false">
-                <ui-select-match placeholder="Select a task type">{{$select.selected.description}}</ui-select-match>
-                <ui-select-choices repeat="item.code as item in taskTypes">{{item.description}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-        </div>
+                    <div ng-if="!permissions.rightToolBar.callLog.functionality.taskType.hide" class="form-group">
+                        <label class="col-xs-6 col-md-5">Task Type</label>
+                        <div class="col-xs-6 col-md-7">
+                            <ui-select ng-model="data.taskType" theme="select2" search-enabled="false">
+                                <ui-select-match placeholder="Select a task type">{{$select.selected.description}}</ui-select-match>
+                                <ui-select-choices repeat="item.code as item in taskTypes">{{item.description}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="col-sm-6">
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.selectPriority.hide">
-            <label class="col-xs-6 col-md-5">Select Priority</label>
-            <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.priority" theme="select2" search-enabled="false">
-                <ui-select-match placeholder="Select a priority">{{$select.selected.description}}</ui-select-match>
-                <ui-select-choices repeat="item.code as item in priorities">{{item.description}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.selectPriority.hide">
+                        <label class="col-xs-6 col-md-5">Select Priority</label>
+                        <div class="col-xs-6 col-md-7">
+                            <ui-select ng-model="data.priority" theme="select2" search-enabled="false">
+                                <ui-select-match placeholder="Select a priority">{{$select.selected.description}}</ui-select-match>
+                                <ui-select-choices repeat="item.code as item in priorities">{{item.description}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
 
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.owner.hide">
-            <label class="col-xs-6 col-md-5">Owner</label>
-            <div class="col-xs-6 col-md-7">
-              <input type="text" class="form-control" readonly value="{{currentUser.firstName}} {{currentUser.lastName}}">
-            </div>
-          </div>
+                    <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.owner.hide">
+                        <label class="col-xs-6 col-md-5">Owner</label>
+                        <div class="col-xs-6 col-md-7">
+                            <input type="text" class="form-control" readonly value="{{currentUser.firstName}} {{currentUser.lastName}}">
+                        </div>
+                    </div>
 
-          
-          <div ng-if="!permissions.rightToolBar.callLog.functionality.selectAgency.hide" class="form-group">
-            <label class="col-xs-6 col-md-5">Select Agency *</label>
-            <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
-                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
 
-              </ui-select>
-            </div>
-          </div>
+                    <div ng-if="!permissions.rightToolBar.callLog.functionality.selectAgency.hide" class="form-group">
+                        <label class="col-xs-6 col-md-5">Select Agency *</label>
+                        <div class="col-xs-6 col-md-7">
+                            <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
+                                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
 
-          
-        </div> 
-      </div>
-      <div class="row" >
-        <div class="col-sm-6" ng-if="!permissions.rightToolBar.callLog.functionality.title.hide">
-          <div class="form-group ">
-            <div class="col-xs-12">
-              <input type="text" class="form-control" placeholder="Title" ng-readonly="permissions.rightToolBar.callLog.functionality.title.readOnly" ng-model="data.templateTitle" >
-            </div> 
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.selectTemplate.hide">
-            <div class="col-xs-12">
-              <ui-select ng-model="data.template" theme="select2" search-enabled="true" on-select="onTemplateChange($item)">
-                <ui-select-match placeholder="Select a template">{{$select.selected.title}}</ui-select-match>
-                <ui-select-choices repeat="item._id as item in templates | filter: $select.search">{{item.title}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-        </div>
-      </div>
+                            </ui-select>
+                        </div>
+                    </div>
 
-      <div class="form-group">
-        <div class="col-xs-12" ng-if="!permissions.rightToolBar.callLog.functionality.textFeld.hide">
-          <textarea class="form-control" rows="5" ng-model="data.templateHtml"></textarea>
-        </div>
-      </div>
-      <div class="row">		
-        <div class="col-sm-6">	
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.followUpNeeded.hide">
-            <label class="col-xs-6 col-md-5">Follow Up Needed *</label>
-            <div class="col-xs-6 col-md-7 datepicker-top">
-              <input type="text" name="followupDate" ng-model="data.followUpTaskDate" orig-datepicker required/>
-            </div>
-          </div>
-        </div> 
-        <div class="col-sm-6">		
-          <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.assignTo.hide">
-            <label class="col-xs-6 col-md-5">Assign to</label>
-            <div class="col-xs-6 col-md-7">
-              <ui-select ng-model="data.assignee" theme="select2" search-enabled="true">
-                <ui-select-match placeholder="Select user">{{$select.selected.firstName}} {{$select.selected.lastName}}</ui-select-match>
-                <ui-select-choices repeat="item._id as item in users | filter: $select.search">{{item.firstName}} {{item.lastName}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-        </div> 
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer" >
-    <label ng-if="!permissions.rightToolBar.callLog.functionality.NotifyMeWhenTaskComplete.hide">
-      <input  type="checkbox" ng-model="data.notifyMe" ng-true-value="1" ng-false-value="0"> Notify me when task is complete
 
-    </label>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-    <button class="btn btn-primary" ng-click="save()" ng-disabled="createTaskForm.$invalid || isSaving">
-      <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Create</div>
-      <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Creating...</div>
-    </button>
-  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6" ng-if="!permissions.rightToolBar.callLog.functionality.title.hide">
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <input type="text" class="form-control" placeholder="Title" ng-readonly="permissions.rightToolBar.callLog.functionality.title.readOnly" ng-model="data.templateTitle">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.selectTemplate.hide">
+                        <div class="col-xs-12">
+                            <ui-select ng-model="data.template" theme="select2" search-enabled="true" on-select="onTemplateChange($item)">
+                                <ui-select-match placeholder="Select a template">{{$select.selected.title}}</ui-select-match>
+                                <ui-select-choices repeat="item._id as item in templates | filter: $select.search">{{item.title}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-12" ng-if="!permissions.rightToolBar.callLog.functionality.textFeld.hide">
+                    <textarea class="form-control" rows="5" ng-model="data.templateHtml"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.followUpNeeded.hide">
+                        <label class="col-xs-6 col-md-5">Follow Up Needed *</label>
+                        <div class="col-xs-6 col-md-7 datepicker-top">
+                            <input type="text" name="followupDate" ng-model="data.followUpTaskDate" orig-datepicker required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-if="!permissions.rightToolBar.callLog.functionality.assignTo.hide">
+                        <label class="col-xs-6 col-md-5">Assign to</label>
+                        <div class="col-xs-6 col-md-7">
+                            <ui-select ng-model="data.assignee" theme="select2" search-enabled="true">
+                                <ui-select-match placeholder="Select user">{{$select.selected.firstName}} {{$select.selected.lastName}}</ui-select-match>
+                                <ui-select-choices repeat="item._id as item in users | filter: $select.search">{{item.firstName}} {{item.lastName}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <label ng-if="!permissions.rightToolBar.callLog.functionality.NotifyMeWhenTaskComplete.hide">
+            <input type="checkbox" ng-model="data.notifyMe" ng-true-value="1" ng-false-value="0"> Notify me when task is complete
+
+        </label>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="createTaskForm.$invalid || isSaving">
+            <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Create</div>
+            <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Creating...</div>
+        </button>
+    </div>
 </div>

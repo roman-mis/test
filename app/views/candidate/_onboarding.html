@@ -1,10 +1,10 @@
-<div class="candidate-modal candidate-modal-onboarding">
+<div class="modal-window">
     <div class="modal-header">
         <h3 class="modal-title">Welcome to the new customer onboarding wizard</h3>
     </div>
     <div class="modal-body">
         <form name="onboardingForm" class="form-horizontal" role="form" novalidate>
-            <fieldset>
+            <fieldset class="no-margin-top">
                 <legend>Select Agency</legend>
                 <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
                     <ui-select-match>{{$select.selected.name}}</ui-select-match>

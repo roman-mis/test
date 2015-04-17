@@ -1,7 +1,6 @@
-.candidate-meta,
-.candidate-meta-sm {
+.candidate-chapter {
     .alpha {
-        margin: 15px 0; 
+        margin: 15px 0;
     }
     .candidate-name {
         font-size: 28px;
@@ -21,58 +20,37 @@
     }
 }
 
-.candidate-meta {
-    padding: 0 22px
+.history {
+    margin: $grid-gutter-width-md 0;
 }
 
-
-    .top-search-row {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        .candidate-search {
-            width: 205px;
-            margin-left: 1px;
-            margin-bottom: 7px;
-        }
-        .candidate-search-btn {
-            margin-bottom: 7px;
-            .btn {
-                width: 70px;
-                padding: 6px;
-                margin-left: 10px;
-            }
-        }
-    }
-
-    .payroll .history {
-        padding-top: 40px;
-    }
-    .tabs-payroll,
-    .agencies {
-        .btn {
-            text-align: left;
-            max-width: 200px;
+.tabs-payroll,
+.agencies {
+    .btn {
+        text-align: left;
+        max-width: 200px;
+        float: right;
+        i {
             float: right;
-            i {
-                float: right;
-                line-height: 1.2;
-            }
+            line-height: 1.2;
         }
     }
-    .tabs-payroll .nav-tabs.nav.row {
-        padding: 0;
-        margin-bottom: -1px;
-        >li.active {
-            background: #fff;
-            border-bottom: 1px solid transparent; 
-        }
+}
+
+.tabs-payroll .nav-tabs.nav.row {
+    padding: 0;
+    margin-bottom: -1px;
+    >li.active {
+        background: #fff;
+        border-bottom: 1px solid transparent;
     }
-    .history {
-        .meta-box-content {
-            margin-top: 20px;
-        }
+}
+
+.history {
+    .meta-box-content {
+        margin-top: 20px;
     }
+}
 
 .messages {
     padding-top: $grid-gutter-width;

@@ -6,7 +6,7 @@
     max-width: 90%;
     text-align: center;
     margin-bottom: 0;
-    transition: top 0.5s ease-out, opacity .2s ease-out;
+    transition: top .5s ease-out, opacity $trans-duration ease-out;
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     visibility: hidden;
     .fa {
@@ -24,14 +24,21 @@
     }
 }
 
-.candidate-modal {
+@media (min-width: 768px) {
+    .form-horizontal .control-label {
+        padding-top: 0 !important;
+        text-align: left !important;
+    }
+}
+
+.modal-window {
+    .modal-title {
+        font-weight: bold;
+        text-transform: capitalize;
+    }
     .modal-body {
         p {
             margin: 0;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
         }
         li {
             margin: 9px;
@@ -40,30 +47,38 @@
             padding: 0 0 0 12px;
         }
     }
-    label {
-        font-weight: normal;
-        font-size: 1em;
-    }
     legend {
         margin-bottom: 0;
-        font-size: 18px;
+        font-size: 16px;
         width: auto;
         padding-left: 5px;
         padding-right: 5px;
     }
+    label {
+        line-height: $input-height;
+        margin-bottom: 0;
+        font-weight: normal;
+    }
     .form-group {
         margin-left: 0;
         margin-right: 0;
-        label {
-            line-height: 28px;
-            margin-bottom: 0;
+        & > label, & > div {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
     fieldset {
+        border: 1px solid silver;
+        margin: 0 2px;
+        margin-top: $grid-gutter-width-md;
+        padding: .35em .625em .75em;
         .form-group {
             padding-left: 0;
             padding-right: 0;
         }
+    }
+    hr {
+        margin-top: 8px;
     }
     .checkbox-item {
         position: relative;
@@ -89,15 +104,16 @@
     .modal-note {
         font-size: 15px;
     }
-    .div-center {
+    /*    .div-center {
         margin: 50px auto;
-    }
-    .button-container-center {
+    }*/
+    /*    .button-container-center {
         margin: 33px auto;
         .btn-136 {
             width: 136px;
         }
-    }
+    }*/
+    
     .div-center-dates {
         width: 290px;
         margin: 10px auto;
@@ -119,7 +135,6 @@
             div {
                 display: table-cell;
                 vertical-align: middle;
-                /* padding: 15px;   */
             }
             .alert {
                 width: 99%;
@@ -131,9 +146,6 @@
                 }
             }
         }
-    }
-    .no-padding {
-        padding: 0;
     }
     /* ngTagsInput */
     
@@ -196,171 +208,9 @@
         outline: none!important;
     }
 }
-/*Add Timesheet*/
-
-/*.add-tsh hr {
-    margin-top: 8px;
-}
 
 .modal-content .add-tsh {
     width: 970px;
-}
-
-.modal::-webkit-scrollbar {
-    display: none;
-}
-
-select.form-control,
-input.form-control {
-    padding: 0 2px;
-}
-
-.form-group {
-    margin-bottom: 6px;
-}
-
-.no-padding-right {
-    padding-right: 0;
-}
-
-.no-padding {
-    padding: 0;
-}
-
-.margin-8 {
-    margin-right: 8px;
-}
-
-.labelDisabledInput {
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-
-.cisIconCheck {
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.modal-headerExpenses {
-    padding: 20px 15px;
-}
-
-.fieldsetTimesheet {
-    border: 1px solid silver;
-    margin: 0 2px;
-    padding: .35em .625em .75em;
-}
-
-.fieldsetTimesheet legend {
-    margin-bottom: 0;
-    font-size: 16px;
-    width: auto;
-    padding-left: 5px;
-    padding-right: 5px;
-    border: 0;
-    white-space: normal;
-    line-height: inherit;
-    color: #333;
-    display: block;
-}
-
-.timesheet_modal-footer {
-    padding: 20px 0;
-    text-align: left;
-}
-
-.rowFooter {
-    position: relative;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.btnFooter {
-    bottom: 0;
-    position: absolute;
-    right: 0;
-    padding-left: 0;
-    margin-right: 15px;
-}
-
-.btnSmall {
-    padding: 6px 2px;
-}
-
-.fileUpload {
-    position: relative;
-    overflow: hidden;
-}
-
-.fileUpload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-
-#uploadFile {
-    border: none;
-    box-shadow: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background-color: #fff;
-}
-
-.col-uploadFile {
-    bottom: 0;
-    position: absolute;
-    padding-bottom: 10px;
-}
-
-#tableHeader {
-    display: none;
-}
-
-#tableHeader,
-#tableBody {
-    margin-bottom: 0px;
-}
-
-.tableWrapper {
-    width: 100%;
-    max-height: 320px;
-    overflow-y: auto;
-    display: block;
-    margin-bottom: 15px;
-}
-
-@media screen and (max-width: 598px) {
-    .tableWrapper {
-        display: table;
-    }
-    #tableHeader,
-    #tableBody {
-        table-layout: fixed;
-        word-wrap: break-word;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .btnFooter {
-        position: relative;
-    }
-    .btnSmall {
-        padding: 6px 12px;
-    }
-}*/
-
-.modal-content .add-tsh {
-    width: 970px;
-}
-
-.modal-window hr {
-    margin-top: 8px;
 }
 
 .modal::-webkit-scrollbar {
@@ -375,38 +225,7 @@ input.form-control {
 }
 
 .form-group {
-    margin-bottom: 6px;
-}
-
-.no-padding-right {
-    padding-right: 0;
-}
-
-.no-padding {
-    padding: 0;
-}
-
-.margin-8 {
-    margin-right: 8px;
-}
-
-.modal-window fieldset {
-        border: 1px solid silver;
-    margin: 0 2px;
-    padding: .35em .625em .75em;
-}
-
-.modal-window legend {
-    margin-bottom: 0;
-    font-size: 16px;
-    width: auto;
-    padding-left: 5px;
-    padding-right: 5px;
-    border: 0;
-    white-space: normal;
-    line-height: inherit;
-    color: #333;
-    display: block;
+    margin-bottom: 5px;
 }
 
 .rowFooter {

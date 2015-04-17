@@ -1,92 +1,94 @@
-<div class="modal-header">
-    <h3 class="modal-title">Payroll Tax Settings</h3>
-</div>
-
-<form name="taxForm" class="" novalidate>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-5 form-group">Starter Declaration</div>
-            <div class="col-sm-7 form-group">
-                <ui-select ng-model="tax.declaration" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                    <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                    <ui-select-choices repeat="item.code as item in starterDeclarations">{{item.description}}</ui-select-choices>
-                </ui-select>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">P45 Gross for Tax</div>
+<div class="modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title">Payroll Tax Settings</h3>
+    </div>
+    
+    <form name="taxForm" class="" novalidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-5 form-group">Starter Declaration</div>
                 <div class="col-sm-7 form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">&#163;</div>
-                        <input class="form-control" type="text" ng-model="tax.p45GrossTax">
+                    <ui-select ng-model="tax.declaration" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                        <ui-select-choices repeat="item.code as item in starterDeclarations">{{item.description}}</ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">P45 Gross for Tax</div>
+                    <div class="col-sm-7 form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">&#163;</div>
+                            <input class="form-control" type="text" ng-model="tax.p45GrossTax">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">P45 Tax Deducted</div>
-                <div class="col-sm-7 form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">&#163;</div>
-                        <input class="form-control" type="text" ng-model="tax.p45TaxDeducted">
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">P45 Tax Deducted</div>
+                    <div class="col-sm-7 form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">&#163;</div>
+                            <input class="form-control" type="text" ng-model="tax.p45TaxDeducted">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">Start Date</div>
-                <div class="col-sm-7 form-group">
-                    <div orig-datepicker placeholder="* Select Date" ng-model="tax.startDate" ng-required="candidate.status == 'Live'"></div>
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">Start Date</div>
+                    <div class="col-sm-7 form-group">
+                        <div orig-datepicker placeholder="* Select Date" ng-model="tax.startDate" ng-required="candidate.status == 'Live'"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">Pay Frequency</div>
-                <div class="col-sm-7 form-group">
-                    <ui-select ng-model="tax.payFrequency" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in payFrequencies">{{item.description}}</ui-select-choices>
-                    </ui-select>
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">Pay Frequency</div>
+                    <div class="col-sm-7 form-group">
+                        <ui-select ng-model="tax.payFrequency" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in payFrequencies">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">Employee's NI Paid</div>
-                <div class="col-sm-7 form-group">
-                    <ui-select ng-model="tax.employeesNIpaid" theme="select2" search-enabled="false">
-                        <ui-select-match>{{$select.selected.value}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in employeesNIpaidOptions">{{item.value}}</ui-select-choices>
-                    </ui-select>
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">Employee's NI Paid</div>
+                    <div class="col-sm-7 form-group">
+                        <ui-select ng-model="tax.employeesNIpaid" theme="select2" search-enabled="false">
+                            <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in employeesNIpaidOptions">{{item.value}}</ui-select-choices>
+                        </ui-select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">NI Number</div>
-                <div class="col-sm-7 form-group">
-                    <input orig-ni class="form-control" type="text" placeholder="" ng-model="tax.niNumber" ng-required="candidate.status == 'Live'">
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">NI Number</div>
+                    <div class="col-sm-7 form-group">
+                        <input orig-ni class="form-control" type="text" placeholder="" ng-model="tax.niNumber" ng-required="candidate.status == 'Live'">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">Tax Code</div>
-                <div class="col-sm-7 form-group">
-                    <input class="form-control" type="text" placeholder="" ng-model="tax.taxCode" ng-required="candidate.status == 'Live'">
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">Tax Code</div>
+                    <div class="col-sm-7 form-group">
+                        <input class="form-control" type="text" placeholder="" ng-model="tax.taxCode" ng-required="candidate.status == 'Live'">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5 form-group">Tax Basis</div>
-                <div class="col-sm-7 form-group">
-                    <ui-select ng-model="tax.taxBasis" name="title" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in taxBasises">{{item.description}}</ui-select-choices>
-                    </ui-select>
+                <div class="form-group">
+                    <div class="col-sm-5 form-group">Tax Basis</div>
+                    <div class="col-sm-7 form-group">
+                        <ui-select ng-model="tax.taxBasis" name="title" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in taxBasises">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
-
-<div class="modal-footer">
-    <div class="row">
-        <div class="col-xs-12">
-            <button class="btn btn-warning"><i class="fa fa-times-circle-o"></i> &nbsp; Cancel</button>
-            <button class="btn btn-primary" ng-click="saveTax()" ng-disabled="taxForm.$invalid || isTaxSaving">
-                <div ng-show="!isTaxSaving"><i class="fa fa-save"></i> &nbsp; Save</div>
-                <div ng-show="isTaxSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>
-            </button>
+    </form>
+    
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-warning"><i class="fa fa-times-circle-o"></i> &nbsp; Cancel</button>
+                <button class="btn btn-primary" ng-click="saveTax()" ng-disabled="taxForm.$invalid || isTaxSaving">
+                    <div ng-show="!isTaxSaving"><i class="fa fa-save"></i> &nbsp; Save</div>
+                    <div ng-show="isTaxSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>
+                </button>
+            </div>
         </div>
     </div>
 </div>

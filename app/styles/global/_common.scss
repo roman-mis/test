@@ -25,6 +25,13 @@ a {
     @include basic-transition();
 }
 
+a,
+i {
+    &:focus {
+        outline: none;
+    }
+}
+
 ul {
     padding: 0;
     margin: 0;
@@ -38,21 +45,43 @@ table {
     outline: 0;
 }
 
+input[type="radio"],
+input[type="checkbox"] {
+    margin: 0 0 2px;
+    vertical-align: middle;
+}
+
+.no-padding {
+    padding: 0;
+}
+
 .nonepadding {
     padding-left: 0;
     padding-right: 0;
 }
 
+.no-padding-right {
+    padding-right: 0;
+}
+
+.margin-8 {
+    margin-right: 8px;
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
 .sky-brand {
-    background-color: $sky!important;
+    background-color: $sky !important;
 }
 
 .warning-brand {
-    background-color: $brand-warning-light!important;
+    background-color: $brand-warning-light !important;
 }
 
 .green-brand {
-    background-color: $green!important;
+    background-color: $green !important;
 }
 
 .alert {
@@ -226,6 +255,9 @@ table {
                 margin-right: 0;
             }
         }
+        .meta-box-inner {
+            padding: $grid-gutter-width-md;
+        }
         .navbar-header {
             border: 1px solid $green;
             color: $gray-lightest;
@@ -281,6 +313,7 @@ table {
                         }
                         &:focus {
                             background: transparent;
+                            outline: none;
                         }
                     }
                     &.active {
@@ -319,10 +352,7 @@ table {
                 width: calc(100% + 8px);
                 margin: 0 -4px;
                 .nav-tabs {
-                    padding: $grid-gutter-width;
-                    border-bottom: 1px solid $green;
-                    margin-right: -10px;
-                    margin-left: -10px;
+                    padding-top: $grid-gutter-width-md;
                     li {
                         padding: 0 15px;
                         text-align: center;
@@ -339,7 +369,8 @@ table {
                         }
                         &.active {
                             border-color: $green;
-                            background: $green;
+                            border-bottom-color: #fff;
+                            background: #fff;
                             a {
                                 background: transparent;
                                 color: $gray-darker;
@@ -350,6 +381,7 @@ table {
                 .tab-content {
                     width: 100%;
                     border-color: transparent;
+                    padding-bottom: 0;
                 }
             }
         }
@@ -390,6 +422,9 @@ table {
             justify-content: flex-start;
             .tv-search {
                 width: $control-width;
+                > .form-control {
+                    border-right: 0;
+                }                
             }
         }
     }
