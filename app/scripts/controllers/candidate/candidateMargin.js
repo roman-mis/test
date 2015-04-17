@@ -8,8 +8,12 @@ HttpResource.model('users/'+$scope.candidateId+'/marginFee').query({},function (
           $scope.marginFee = res.data.object;
           console.log(res);
         });
-      $scope.marginOptions = [
-        {type:'Use Candidate'}, {type:'Use Agency'}
+      $scope.marginRules = [
+        {type:'candidate',desc:'Use Candidate'}, {type:'agency',desc:'Use Agency'}
+      ];
+      $scope.marginTypes = [
+        {type:'fixedFee',desc:'Fixed Fee'},{type:'percentageOfTimesheets',desc:'% Of Timesheets'},
+        {type:'totalHours',desc:'Total Hours'},{type:'fixedOnTimesheets',desc:'Fixed on Timesheets'}
       ];
     // If revertChanges is set to true, then it reverts changes from cache. Otherwise updates cache.
     // var updateObject = function (object, revertChanges) {

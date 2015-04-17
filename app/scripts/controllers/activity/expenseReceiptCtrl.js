@@ -2,7 +2,7 @@
 var app = angular.module('origApp.controllers');
 
 app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, rootScope, expense, claim, s3Service, $q, HttpResource) {
-    //$scope.generatingPreview = false;
+
     $scope.initSrc = '';
     var canceller = $q.defer();
     var uploadCancelled = false;
@@ -73,8 +73,10 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     //});
 
     $scope.generatePreview = function (file) {
+
         $scope.$apply();
         $scope.file = file.files[0];
+        console.log($scope.file);
         if (file) readFile(file.files[0]);
     }
 
@@ -145,7 +147,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
         $scope.receiptUrls.splice(index, 1);
     }
 
-    $scope.ok = function () {            
+    $scope.ok = function () {
         $modalInstance.close();
     };
 

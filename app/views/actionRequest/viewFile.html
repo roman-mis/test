@@ -1,0 +1,24 @@
+
+<div class="modal-body">
+        <div class="row" >
+            <div class="col-xs-12" style="text-align:center">
+                <img ng-src="{{imageUrl}}" width="250" height="250" />
+            </div>
+        </div>
+        <div class="row text-center">
+
+                <div style="height:5px"></div>
+                    <div class="col-xs-6">Name</div>
+                    <div class="col-xs-6 img-details">{{fileName}}</div>
+
+                <div class="row" style="margin-top: 38px;">
+                    <a ng-href="{{imageUrl}}" class="cursor:pointer" download><i class="fa fa-download"></i>&nbsp;Download</a>
+                </div>
+
+        </div>
+    </div>
+      <div class="modal-footer">
+        <a class="btn cursor:pointer" ng-click="cancel()">Close</a>
+        <!--<button class="btn btn-primary">Print</button>-->
+        <!--<button class="btn btn-success" ng-click="ok()">Save</button>-->
+    </div><!-- /modal footer -->

@@ -22,6 +22,8 @@ module.exports = function(){
 	};
 
 	controller.getAlladminTemplates=function (req,res){
+
+
 		adminTemplatesService.getAllAdminTemplates(req._restOptions)
 	  	.then(function(result){
 	  		console.log('we are getting result from here');
@@ -32,7 +34,7 @@ module.exports = function(){
 	    	console.log(resp);
 		    res.json(resp);
 	  	},res.sendFailureResponse);
-	};
+	 };
 
 
 	controller.getAdminTemplate = function(req,res){
