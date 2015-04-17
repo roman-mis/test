@@ -158,7 +158,7 @@ module.exports = function(){
 
 
   controller.getMarginsByCandidateIds = function(req, res){
-    return userservice.getMarginsByCandidateIds(JSON.parse(req.params.ids).value)
+    return userservice.getMarginsByCandidateIds(JSON.parse(req.params.ids))
         .then(function(users){
           console.log('^^^^^^^^^^^^1')
 
