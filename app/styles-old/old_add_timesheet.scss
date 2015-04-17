@@ -1,46 +1,57 @@
 .add-tsh hr {
-    margin-top: 8px;    
+    margin-top: 8px;
 }
 
 .modal-content .add-tsh {
-	width: 970px;	
+    width: 970px;
 }
-.modal::-webkit-scrollbar { 
-    display: none; 
+
+.modal::-webkit-scrollbar {
+    display: none;
 }
+
 select.form-control,
 input.form-control {
     padding: 0 2px;
 }
+
 .form-group {
     margin-bottom: 6px;
 }
+
 .no-padding-right {
     padding-right: 0;
 }
+
 .no-padding {
     padding: 0;
 }
+
 .margin-8 {
     margin-right: 8px;
 }
-.labelDisabledInput {   
+
+.labelDisabledInput {
     padding-top: 6px;
     padding-bottom: 6px;
 }
+
 .cisIconCheck {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+
 .modal-headerExpenses {
     padding: 20px 15px;
 }
+
 .fieldsetTimesheet {
     border: 1px solid silver;
     margin: 0 2px;
     padding: .35em .625em .75em;
     height: 202px;
 }
+
 .fieldsetTimesheet legend {
     margin-bottom: 0;
     font-size: 16px;
@@ -53,15 +64,18 @@ input.form-control {
     color: #333;
     display: block;
 }
+
 .timesheet_modal-footer {
     padding: 20px 0;
     text-align: left;
 }
+
 .rowFooter {
     position: relative;
     padding-left: 15px;
     padding-right: 15px;
 }
+
 .btnFooter {
     bottom: 0;
     position: absolute;
@@ -69,25 +83,28 @@ input.form-control {
     padding-left: 0;
     margin-right: 15px;
 }
+
 .btnSmall {
     padding: 6px 2px;
 }
 
 .fileUpload {
-	position: relative;
-	overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
+
 .fileUpload input.upload {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 0;
-	padding: 0;
-	font-size: 20px;
-	cursor: pointer;
-	opacity: 0;
-	filter: alpha(opacity=0);
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
+
 #uploadFile {
     border: none;
     box-shadow: none;
@@ -95,6 +112,7 @@ input.form-control {
     white-space: nowrap;
     background-color: #fff;
 }
+
 .col-uploadFile {
     bottom: 0;
     position: absolute;
@@ -105,12 +123,13 @@ input.form-control {
     display: none;
 }
 
-#tableHeader, 
-#tableBody{
+#tableHeader,
+#tableBody {
     margin-bottom: 0px;
 }
+
 .tableWrapper {
-    width: 100%; 
+    width: 100%;
     max-height: 320px;
     overflow-y: auto;
     display: block;
@@ -121,7 +140,8 @@ input.form-control {
     .tableWrapper {
         display: table;
     }
-    #tableHeader, #tableBody {
+    #tableHeader,
+    #tableBody {
         table-layout: fixed;
         word-wrap: break-word;
     }
@@ -131,7 +151,7 @@ input.form-control {
     .btnFooter {
         position: relative;
     }
-   .btnSmall {
+    .btnSmall {
         padding: 6px 12px;
     }
 }

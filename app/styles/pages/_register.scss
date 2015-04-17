@@ -19,7 +19,10 @@
     }
 }
 
-.register-container {
+.container.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     box-sizing: border-box;
     min-height: 380px;
     max-width: 640px;
@@ -28,6 +31,9 @@
     border: solid 1px $gray-lighter;
     background-color: #fff;
     color: $gray;
+    &::after, &::before {
+        display: none;
+    }
     @media (max-width: $grid-break) {
         padding: 28px 28px;
     }
@@ -158,8 +164,7 @@
                 .form-group {
                     flex-flow: row nowrap;
                     .fileupload {
-                        .form-control,
-                        .input-group-addon {
+                        .form-control, .input-group-addon {
                             background-color: $gray-lightest;
                         }
                         .input-group-addon {
@@ -285,7 +290,7 @@
     .notice {
         color: $green;
         font-size: 13px;
-        line-height: 15px; 
+        line-height: 15px;
         margin-top: 15px;
     }
     /*Step 2*/

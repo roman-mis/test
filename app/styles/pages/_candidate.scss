@@ -1,0 +1,120 @@
+.candidate-meta,
+.candidate-meta-sm {
+    .alpha {
+        margin: 15px 0; 
+    }
+    .candidate-name {
+        font-size: 28px;
+        color: $green;
+        text-transform: capitalize;
+        margin: 0;
+        padding: 0;
+    }
+    .candidate-ref {
+        color: $gray;
+    }
+    .pie-chat {
+        height: 120px;
+        background: url('../images/mark-chat.png') transparent center center no-repeat;
+        background-size: contain;
+        margin: 20px 0;
+    }
+}
+
+.candidate-meta {
+    padding: 0 22px
+}
+
+
+    .top-search-row {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        .candidate-search {
+            width: 205px;
+            margin-left: 1px;
+            margin-bottom: 7px;
+        }
+        .candidate-search-btn {
+            margin-bottom: 7px;
+            .btn {
+                width: 70px;
+                padding: 6px;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .payroll .history {
+        padding-top: 40px;
+    }
+    .tabs-payroll,
+    .agencies {
+        .btn {
+            text-align: left;
+            max-width: 200px;
+            float: right;
+            i {
+                float: right;
+                line-height: 1.2;
+            }
+        }
+    }
+    .tabs-payroll .nav-tabs.nav.row {
+        padding: 0;
+        margin-bottom: -1px;
+        >li.active {
+            background: #fff;
+            border-bottom: 1px solid transparent; 
+        }
+    }
+    .history {
+        .meta-box-content {
+            margin-top: 20px;
+        }
+    }
+
+.messages {
+    padding-top: $grid-gutter-width;
+    .message-item {
+        height: 22px;
+        > div:first-child {
+            color: $green;
+        }
+    }
+}
+
+.expenses-wizard {
+    padding: $grid-gutter-width 0px;
+    margin: 0px auto;
+    list-style: none;
+    text-align: center;
+    width: 240px;
+    li {
+        float: left;
+        height: 35px;
+        margin-bottom: 5px;
+    }
+    a {
+        text-decoration: none;
+        display: block;
+        padding: 6px 0px;
+        color: $gray-lightest;
+        * {
+            text-align: center;
+            text-transform: uppercase;
+            display: block;
+            height: 36px;
+            line-height: 36px;
+            margin-bottom: 5px;
+            float: left;
+        }
+        i {
+            width: 40px;
+        }
+        span.title {
+            width: 200px;
+            background-color: $gray;
+        }
+    }
+}

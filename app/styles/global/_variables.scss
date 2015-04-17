@@ -1,5 +1,3 @@
-/*Custom Bootstrap*/
-
 /*Grid*/
 $screen-lg: 1280px;
 $screen-md: 1024px;
@@ -14,8 +12,6 @@ $screen-md-max: ($screen-lg - 1);
 $grid-gutter-width: 18px;
 $grid-gutter-width-md: 12px;
 
-$control-width: 200px;
-
 /*Colors*/
 $gray-darker: #555;
 $gray: #616161; 
@@ -28,7 +24,6 @@ $green: #059347;
 $green-light: #79c44a;
 
 $sky: #9ad3ef;
-
 $brand-danger: #c62725;
 $brand-warning: #b2781b;
 $brand-warning-light: #ed8d29;
@@ -49,26 +44,18 @@ $btn-warning-bg: #ed8c28;
 $btn-warning-color: #fff;
 $btn-warning-border: $brand-warning;
 
-//$body-border-color: $gray-light;
-//$body-background-color: $gray-lightest;
-
-$background-color: $gray-lightest;
-//$header-background-color: #808285;
-//$body-border-color: #d4d4d4;
-//$body-background-color: #ffffff;
-
 /* Fonts */
 $main-font: 'Questrial', 'Helvetica Neue', Helvetica, arial, sans-serif;
 $secondary-font: 'Helvetica Neue', Helvetica, arial, sans-serif;
 $line-height-base: 1;
-
-/*Paths*/
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
 /*Other*/
 $input-height-base: 32px;
 $input-height: 28px;
 $padding-base-horizontal: 10px;
+$control-width: 200px;
+$alert-padding: 10px 15px;
 
 $link-color: $green-light;
 $link-hover-color: $green;

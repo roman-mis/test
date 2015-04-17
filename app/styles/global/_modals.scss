@@ -90,8 +90,6 @@
         font-size: 15px;
     }
     .div-center {
-        /*width: 186px;*/
-        
         margin: 50px auto;
     }
     .button-container-center {
@@ -197,4 +195,229 @@
         box-shadow: none!important;
         outline: none!important;
     }
+}
+/*Add Timesheet*/
+
+/*.add-tsh hr {
+    margin-top: 8px;
+}
+
+.modal-content .add-tsh {
+    width: 970px;
+}
+
+.modal::-webkit-scrollbar {
+    display: none;
+}
+
+select.form-control,
+input.form-control {
+    padding: 0 2px;
+}
+
+.form-group {
+    margin-bottom: 6px;
+}
+
+.no-padding-right {
+    padding-right: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.margin-8 {
+    margin-right: 8px;
+}
+
+.labelDisabledInput {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.cisIconCheck {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.modal-headerExpenses {
+    padding: 20px 15px;
+}
+
+.fieldsetTimesheet {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: .35em .625em .75em;
+}
+
+.fieldsetTimesheet legend {
+    margin-bottom: 0;
+    font-size: 16px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 0;
+    white-space: normal;
+    line-height: inherit;
+    color: #333;
+    display: block;
+}
+
+.timesheet_modal-footer {
+    padding: 20px 0;
+    text-align: left;
+}
+
+.rowFooter {
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btnFooter {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    padding-left: 0;
+    margin-right: 15px;
+}
+
+.btnSmall {
+    padding: 6px 2px;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#uploadFile {
+    border: none;
+    box-shadow: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #fff;
+}
+
+.col-uploadFile {
+    bottom: 0;
+    position: absolute;
+    padding-bottom: 10px;
+}
+
+#tableHeader {
+    display: none;
+}
+
+#tableHeader,
+#tableBody {
+    margin-bottom: 0px;
+}
+
+.tableWrapper {
+    width: 100%;
+    max-height: 320px;
+    overflow-y: auto;
+    display: block;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 598px) {
+    .tableWrapper {
+        display: table;
+    }
+    #tableHeader,
+    #tableBody {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .btnFooter {
+        position: relative;
+    }
+    .btnSmall {
+        padding: 6px 12px;
+    }
+}*/
+
+.modal-content .add-tsh {
+    width: 970px;
+}
+
+.modal-window hr {
+    margin-top: 8px;
+}
+
+.modal::-webkit-scrollbar {
+    display: none;
+}
+
+select.form-control,
+input.form-control {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+}
+
+.form-group {
+    margin-bottom: 6px;
+}
+
+.no-padding-right {
+    padding-right: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.margin-8 {
+    margin-right: 8px;
+}
+
+.modal-window fieldset {
+        border: 1px solid silver;
+    margin: 0 2px;
+    padding: .35em .625em .75em;
+}
+
+.modal-window legend {
+    margin-bottom: 0;
+    font-size: 16px;
+    width: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 0;
+    white-space: normal;
+    line-height: inherit;
+    color: #333;
+    display: block;
+}
+
+.rowFooter {
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn-footer {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    margin-bottom: 0;
 }

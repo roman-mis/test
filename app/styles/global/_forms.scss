@@ -26,6 +26,10 @@ select.form-control {
     }
 }
 
+textarea {
+    resize: vertical;
+}
+
 .form-control {
     height: $input-height;
 }

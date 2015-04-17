@@ -9,7 +9,7 @@ angular.module('origApp.controllers')
 
           $scope.ableLoadMore = false;
           $scope.searchName = '';
-
+    
 
           //trigger filtering after 500ms from the last typing
           var searchTimerPromise = null;
@@ -34,7 +34,7 @@ angular.module('origApp.controllers')
           $scope.gridOptions = {
             limit: 20,
             totalItems: 0,
-            isPagination: false,
+            isPagination: true,
             onLimitChanged: function() {
               $scope.loadAgencies();
             },

@@ -1,7 +1,8 @@
-<div class="modal-content add-tsh">
+<div class="modal-content add-tsh modal-window">
     <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Add Timesheet</h4>
-    </div><!-- /modal-header -->
+        <h3 class="modal-title" id="myModalLabel">Add Timesheet</h3>
+    </div>
+    <!-- /modal-header -->
     <div class="modal-body">
         <div class="row">
             <div class="col-xs-6 col-sm-3 form-group">
@@ -33,20 +34,14 @@
                 <!--Bootstrap datepicker-->
                 <div class="form-group">
                     <div class="input-group date" id="datepicker">
-                        <div ng-show="clicked == true"
-                             style="position: absolute;left: 60px;top: 50px; z-index: 1000;
+                        <div ng-show="clicked == true" style="position: absolute;left: 60px;top: 50px; z-index: 1000;
 								background-color:white;	outline: 1px solid grey">
-                            <datepicker ng-model="claimDate"
-                                        format-day="d"
-                                        starting-day="weekEndingDay"
-                                        max-date="minDate"
-                                        show-weeks="false"
-                                        id="claim_datepicker">
+                            <datepicker ng-model="claimDate" format-day="d" starting-day="weekEndingDay" max-date="minDate" show-weeks="false" id="claim_datepicker">
                             </datepicker>
-                            <button class="btn btn-primary" ng-click="okay();clicked =false">
-                                ok
-                            </button>
-                            <button class="btn btn-primary" ng-click="clicked =false">cancel</button>
+                            <div class="col-xs-12 text-right">
+                                <button class="btn btn-primary" ng-click="clicked =false">Cancel</button>
+                                <button class="btn btn-primary" ng-click="okay();clicked =false">OK</button>
+                            </div>
                         </div>
                         <input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder" ng-click="clicked = true" readonly style="cursor:text">
                         <span class="input-group-btn">
@@ -74,12 +69,10 @@
                         </div>
                         <div class="col-xs-2 form-group no-padding margin-8 text-center">
                             <span>Pay Rate</span>
-                            <input min="0" ng-model="elements.payRate"
-                                   type="number"
-                                   class="form-control" />
+                            <input min="0" ng-model="elements.payRate" type="number" class="form-control" />
                         </div>
                         <div class="col-xs-2 form-group no-padding margin-8 text-center">
-                            <span>Charge Rate</span>
+                            <span>Charge&nbsp;Rate</span>
                             <input ng-model='elements.chargeRate' type="text" class="form-control" disabled />
                         </div>
                         <div class="col-xs-2 form-group no-padding margin-8 text-center">
@@ -94,7 +87,6 @@
                 </div>
             </div>
 
-
             <div class="col-md-2 col-sm-12 col-xs-12 form-group">
                 <br />
                 <button ng-disabled="!elements.payRate || !elements.unit" ng-click="populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
@@ -105,13 +97,7 @@
                 <input ng-model="userDescription" type="text" class="form-control" placeholder="Enter description" />
             </div>
         </div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-striped">
@@ -144,12 +130,13 @@
                 </div>-->
             </div>
         </div>
-    </div><!-- /modal-body -->
+    </div>
+    <!-- /modal-body -->
 
     <div class="modal-footer">
         <div class="row rowFooter">
             <div class="col-xs-6 col-sm-4 no-padding-right">
-                <fieldset class="fieldsetTimesheet">
+                <fieldset>
                     <legend>Upload Timesheet</legend>
                     <div class="row">
                         <div class="col-sm-12 form-group">
@@ -203,10 +190,12 @@
                 </div>
             </div>
 
-            <div class=" col-xs-12 col-sm-4 text-right btnFooter form-group">
-                <a ng-click="cancel()" type="button" class="btn btnSmall" data-dismiss="modal">Cancel</a>
+            <div class="col-xs-12 col-sm-4 btn-footer form-group">
+                <button ng-click="cancel()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button ng-disabled="addClicked == false || weekEndingDate == null" ng-click="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
             </div>
         </div>
-    </div><!-- /modal footer -->
-</div><!-- /modal content -->
+    </div>
+    <!-- /modal footer -->
+</div>
+<!-- /modal content -->
