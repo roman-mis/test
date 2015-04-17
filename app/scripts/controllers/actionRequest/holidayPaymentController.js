@@ -49,7 +49,7 @@ angular.module('origApp.controllers')
         }
     };
     $scope.savePayroll = function(val,type) {
-      if (val && $scope.hpObject.holidayPay.amount <= $scope.candidate.payrollValues.holidayPayRetained) {
+      if (val && $scope.hpObject.holidayPay.amount <= $scope.candidate.payrollValues.holidayPayRetained && $scope.candidate.payrollValues.holidayPayRetained > 0) {
 
         switch (type){
 
