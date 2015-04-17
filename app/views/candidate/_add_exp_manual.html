@@ -201,17 +201,21 @@
 
                             <div class="modal-body">
                                 <form class="form row">
-                                    <div class="form-group col-sm-4 col-xs-5">
+                                    <div class="form-group col-sm-3">
                                         <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange">
                                             <option value="">- Select -</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-sm-3 col-xs-4">
+                                    <div class="form-group col-sm-2">
                                         <select class="form-control" ng-model="addData.type" ng-options="type.description for type in transportTypes track by type.code">
                                             <option value="" disabled style="display:none">-Transport Type-</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-sm-3 col-xs-3 postcodeInput" style="display: inline-flex;">
+                                    <div class="form-group col-sm-2 postcodeInput" style="display: inline-flex;">
+                                        <input id="postCodeInput" type="text" class="form-control" name="postcode" placeholder="Postcode" ng-model="addData.code" />
+                                        <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
+                                    </div>
+                                    <div class="form-group col-sm-3 postcodeInput" style="display: inline-flex;">
                                         <input type="text" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)" />
                                         <div class="input-group" ng-show="addData.type && !isPpmDefined(addData.type)">
                                             <div class="input-group-addon">&#163;</div>
@@ -220,8 +224,8 @@
                                         <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
                                     </div>
                                     <div class="form-group col-sm-2">
-                                        <button type="button" class="btn btn-default form-control"
-                                                ng-disabled="!addData.date || !addData.type || !addData.mileage" ng-click="add()">
+                                        <button type="button" class="btn btn-default form-control" id="addMilagePostcode"
+                                                ng-disabled="!addData.date || !addData.type || !addData.mileage || !addData.code" ng-click="addManual()">
                                             <i class="fa fa-plus"></i> Add
                                         </button>
                                     </div>
@@ -250,7 +254,8 @@
                                                     <tr ng-repeat="item in expenseData.transports| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
                                                         <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
                                                         <td>{{item.type.description}}</td>
-                                                        <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+                                                        <td>{{codeHolder[index]}}</td>
+                                                        <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="removeManual($index)"><i class="fa fa-times"></i></a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -263,7 +268,6 @@
                             </div><!-- /modal-body -->
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
                                 <button type="button" class="btn btn-success" ng-click="okManual()"
                                         ng-disabled="isVehicleChecking">
                                     Done
@@ -322,7 +326,7 @@
                                 <button type="button" class="btn btn-primary"
                                         ng-click="saveVehicleFormManual()"
                                         ng-disabled="isVehicleSaving || vehicleForm.$invalid">
-                                    {{isVehicleSaving?'Saving...':'Next'}}
+                                    {{isVehicleSaving?'Saving...':'Save'}}
                                 </button>
                             </div><!-- /modal footer -->
                         </div>

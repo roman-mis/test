@@ -68,6 +68,7 @@ angular.module('origApp.controllers')
                 $('#categories :input').removeAttr('disabled');
                 $('#addSubsistenceButton').attr('disabled', true);
                 $('#addOtherButton').attr('disabled', true);
+                $('#addMilagePostcode').attr('disabled', true);
             } else {
                 stepThreeAvailable = false;
                 $('#categories :input').attr('disabled', true);
