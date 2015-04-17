@@ -1,3 +1,19 @@
+	<div class="row">
+		
+
+	<div class="col-xs-6">
+	<div class="col-xs-6">
+		
+				<label style="color:#539347">Margin Type</label>
+            <ui-select ng-model = "marginFee.margin.marginType" theme="select2" search-enabled="false" ng-change = "save()">
+                <ui-select-match>{{$select.selected.desc}}</ui-select-match>
+                <ui-select-choices repeat = "item.type as item in marginTypes">{{item.desc}}</ui-select-choices>
+            </ui-select>
+			</div>
+		</div>
+	</div>
+		
+	</div>
 	<section class="tabs-payroll">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs row" role="tablist">
@@ -8,7 +24,7 @@
 		</ul>
 
 		<!-- Tab panes -->
-        <div class="tab-content" ng-controller="AgencyMarginController">
+        <div class="tab-content">
 		  
 			<div role="tabpanel" class="tab-pane active" id="fixedFee">
 				<div class="row">

@@ -26,8 +26,8 @@ module.exports = function(dbs){
 	};
 
 	controller.getTimesheetsByCandidateId = function(req, res){
-		console.log(JSON.parse(req.params.ids).value);
-		return timesheetservice.getTimesheetsByCandidateId(JSON.parse(req.params.ids).value)
+		console.log(JSON.parse(req.params.ids));
+		return timesheetservice.getTimesheetsByCandidateId(JSON.parse(req.params.ids))
 	    	.then(function(timesheets){
 	      		var resp={result:true,objects:timesheets};
 				
