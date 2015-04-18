@@ -8,9 +8,9 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource','$modal','expenses
 		console.log(expenses);
 		var expenseElement = {};
 		for (var i = 0; i < expenses.length; i++){
-			expenseElement.agency = expenses[i][0];
-			expenseElement.lastName = expenses[i][1];
-			expenseElement.firstName = expenses[i][2];
+			expenseElement.agencyآName = expenses[i][0];
+			expenseElement.UserLastName = expenses[i][1];
+			expenseElement.userFirstName = expenses[i][2];
 			expenseElement.claimDate = expenses[i][3];
 			expenseElement.breakFast = expenses[i][4];
 			expenseElement.meal1 = expenses[i][5];
