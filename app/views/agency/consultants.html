@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-xs-4 col-sm-3">
-        <button type="button" class="btn btn-success form-control" ng-click="openAgencyBranchModal(null)"><i class="fa fa-plus"></i> Add New Branch</button>
+        <button type="button" class="btn btn-success" ng-click="openAgencyBranchModal(null)"><i class="fa fa-plus"></i> Add New Branch</button>
     </div>
 </div>
 <!-- Accordion content -->
-<div class="agencies_wrapper">
+<div style="margin-top: 12px">
     <accordion close-others="oneAtATime">
         <accordion-group is-open="status.open" ng-class="{'active' : status.open}" ng-repeat="branch in branches">
             <accordion-heading>
@@ -47,16 +47,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="padding-top: 100px;">
-                <div class="col-sm-4">
-                    <button type="button" class="btn btn-success form-control" ng-click="openAgencyConsultantModal(branch, null)"><i class="fa fa-plus"></i> Add New Consultant</button>
-                </div>
-                <div class="col-sm-4">
-                    <button type="button" class="btn btn-success form-control" ng-click="openAgencyBranchModal(branch)"><i class="fa fa-edit"></i> Edit Branch</button>
-                </div>
-                <div class="col-sm-4">
-                    <button type="button" class="btn btn-danger form-control" ng-click="deleteAgencyBranch(branch)" ng-disabled="isDeletingBranch"><i class="fa fa-close"></i> Delete Branch</button>
-                </div>
+            <div class="row">
+                    <button type="button" class="btn btn-success" ng-click="openAgencyConsultantModal(branch, null)"><i class="fa fa-plus"></i> Add New Consultant</button>
+                    <button type="button" class="btn btn-success" ng-click="openAgencyBranchModal(branch)"><i class="fa fa-edit"></i> Edit Branch</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteAgencyBranch(branch)" ng-disabled="isDeletingBranch"><i class="fa fa-close"></i> Delete Branch</button>
             </div>
         </accordion-group>
     </accordion>

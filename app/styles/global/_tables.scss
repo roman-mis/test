@@ -50,12 +50,28 @@
 }
 
 .orig-grid-pagination-wrapper {
-    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: $grid-gutter-width-md;
     font-size: 14px;
-    .page-rows-count {
-        float: left;
-    }
+    padding: 0 3px;
     .pagination {
-        float: right;
+        margin: 0;
+    }
+    .btn:hover {
+        box-shadow: none;
+    }
+}
+
+.table-responsive {
+    @media screen and (max-width: $screen-sm-max) {
+        width: 100%;
+        margin-bottom: ($line-height-computed * 0.75);
+        overflow-y: hidden;
+        overflow-x: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 0;
+        -webkit-overflow-scrolling: touch;
     }
 }

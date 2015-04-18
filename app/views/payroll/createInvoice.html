@@ -1,184 +1,173 @@
+<div class="modal-window">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Create Invoice</h4>
+    </div>
+    <!-- modal-header -->
 
-			<div class="modal-content">
-				<div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Create Invoice</h4>
-				</div><!-- modal-header -->
-				
-				<div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-xs-6 control-label">Select agency</label>
-                                    <div class="col-xs-6 no-padding-left">
-                                        <select ng-model = "displayedAgency" ng-change="selectAgency(displayedAgency)"
-                                                ng-options="agency._id as agency.name for agency in agencies" 
-                                                class="form-control">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="col-xs-6 control-label">Select branch</label>
-                                    <div class="col-xs-6 no-padding-left">
-                                        <select ng-model = "displayedBranch"
-                                                ng-options="item._id as item.name for item in branches"
-                                                class="form-control">
-                                            
-                                        </select>
-                                    </div>
-                                 </div>
-                            </div>
-                        </div>
-                    </form>
-                    <br/>
-                    <div class="row"> 
-                        <div class="col-sm-12">
-                            <h4>Select timesheet batch to invoice:</h4>
-                            <div class="tableWrapper tableWrapperHeight140">
-                                 <table  class="table table-striped">
-                                 <thead>
-                                     <tr>
-                                         <th>
-                                             Number
-                                         </th>
-                                         <th>
-                                             Created
-                                         </th>
-                                         <th>
-                                             Last Edited
-                                         </th>
-                                     </tr>
-                                 </thead>
-                                     <tbody>
-                                         <tr  ng-repeat="batch in timesheetBatches" style="cursor:pointer;" 
-                                                 ng-mouseleave = "hover = false"ng-mouseover = "hover = true" 
-                                                 ng-class="{'info':$index == selected || hover}" 
-                                                 ng-click="sendBatch(batch._id,$index)"
-                                                 ng-model ="bachId">
-                                             <td  >
-                                                 {{batch.batchNumber}}
-                                             </td>
-                                             <td  >
-                                                 {{batch.createdDate | date:'yyyy-MM-dd'}}
-                                             </td>
-                                             <td >
-                                                 {{batch.updatedDate | date:'yyyy-MM-dd'}}
-                                             </td>
-                                         </tr>
-                                     </tbody>
-                                </table>
-                            </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Select agency</label>
+                        <div class="col-xs-6 no-padding-left">
+                            <select ng-model="displayedAgency" ng-change="selectAgency(displayedAgency)" ng-options="agency._id as agency.name for agency in agencies" class="form-control">
+                            </select>
                         </div>
                     </div>
-                        
-                    <form class="form-horizontal">
-                        <div class="row">
-                            
-                            <div class="col-sm-12">
-                                <h4>Company Defaults</h4>
-                            </div>
-                            
-                            <div class="col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label class="col-xs-6 control-label">Holiday pay included</label>
-                                    <div class="col-xs-6">
-                                        <select ng-model = "defaultInvoicing.holidayPayIncluded"  class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
-                                            
-                                        </select>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label class="col-xs-6 control-label">Employers NI included</label>
-                                    <div class="col-xs-6">
-                                        <select ng-model = "defaultInvoicing.employersNiIncluded" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
-                                            
-                                        </select>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label class="col-xs-6 control-label">VAT charged</label>
-                                    <div class="col-xs-6">
-                                        <select ng-model = "defaultInvoicing.invoiceVatCharged" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
-                                            
-                                        </select>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label class="col-xs-6 control-label">Invoice design</label>
-                                    <div class="col-xs-6">
-                                        <select ng-model = "defaultInvoicing.invoiceDesign._id" 
-                                                ng-options = "item._id as item.name for item in invoiceDesigns" 
-                                                class="form-control">
-                                        </select>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label class="col-xs-6 control-label">Margin amount</label>
-                                    <div class="col-xs-6">
-                                        
-                                        <input ng-model = "defaultPayroll.marginAmount" type="number" min="0" 
-                                               class="form-control" placeholder = "{{defaultPayroll.marginAmount}}">
-                                    </div>
-                                 </div>
-                            </div>
-                            
-                            <div class="col-sm-12 col-md-6">
-                                <div class="form-group form-group-email">
-                                    <label class="col-xs-6 control-label">Invoice email primary</label>
-                                    <div class="col-xs-6 control-label">{{defaultInvoicing.invoiceEmailPrimary}}</div>
-                                </div>
-                                <div class="form-group form-group-email">
-                                    <label class="col-xs-6 control-label">Invoice email secondary</label>
-                                    <div class="col-xs-6 control-label">{{defaultInvoicing.invoiceEmailSecondary}}</div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-6 control-label">Payment terms</label>
-                                    <div class="col-xs-6">
-                                        <select ng-model="defaultInvoicing.paymentTerms.code" 
-                                                ng-options="item.code as item.description for item in paymentTerms" 
-                                                class="form-control">
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-6 control-label">Margin charged to agency</label>
-                                    <div class="col-xs-6">
-                                        <select ng-model="defaultPayroll.marginChargedToAgency" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-6 control-label">Holiday amount</label>
-                                    <div class="col-xs-6">
-                                        <input ng-model = "defaultPayroll.holidayAmount" type="number" min="0" 
-                                               class="form-control" placeholder="{{defaultPayroll.holidayAmount}}"/>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Select branch</label>
+                        <div class="col-xs-6 no-padding-left">
+                            <select ng-model="displayedBranch" ng-options="item._id as item.name for item in branches" class="form-control">
+
+                            </select>
                         </div>
-                    </form>
-				</div><!-- modal-body -->
-				    
-                    <div class="modal-footer">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <a href ng-click="cancel()" type="button" class="btn pull-left">Cancel</a>
-                            </div>
-                             <div class="col-xs-6 no-padding-left">
-                                 <div>
-                                     Checked and confirmed the above details?
-                                     <input ng-model = "checkbox" type="checkbox" style="margin-left:5px;"/>
-                                 </div>
-                             </div>
-                             <div class="col-xs-4 no-padding-left">
-                                 <a href ng-disabled="checkbox == false || !batchId" ng-click="proceed();"   type="button" class="btn">Proceed and Generate&#160;
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br/>
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Select timesheet batch to invoice:</h4>
+                <div class="tableWrapper tableWrapperHeight140">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Number
+                                </th>
+                                <th>
+                                    Created
+                                </th>
+                                <th>
+                                    Last Edited
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="batch in timesheetBatches" style="cursor:pointer;" ng-mouseleave="hover = false" ng-mouseover="hover = true" ng-class="{'info':$index == selected || hover}" ng-click="sendBatch(batch._id,$index)" ng-model="bachId">
+                                <td>
+                                    {{batch.batchNumber}}
+                                </td>
+                                <td>
+                                    {{batch.createdDate | date:'yyyy-MM-dd'}}
+                                </td>
+                                <td>
+                                    {{batch.updatedDate | date:'yyyy-MM-dd'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <form class="form-horizontal">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <h4>Company Defaults</h4>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Holiday pay included</label>
+                        <div class="col-xs-6">
+                            <select ng-model="defaultInvoicing.holidayPayIncluded" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Employers NI included</label>
+                        <div class="col-xs-6">
+                            <select ng-model="defaultInvoicing.employersNiIncluded" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">VAT charged</label>
+                        <div class="col-xs-6">
+                            <select ng-model="defaultInvoicing.invoiceVatCharged" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Invoice design</label>
+                        <div class="col-xs-6">
+                            <select ng-model="defaultInvoicing.invoiceDesign._id" ng-options="item._id as item.name for item in invoiceDesigns" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Margin amount</label>
+                        <div class="col-xs-6">
+
+                            <input ng-model="defaultPayroll.marginAmount" type="number" min="0" class="form-control" placeholder="{{defaultPayroll.marginAmount}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group form-group-email">
+                        <label class="col-xs-6 control-label">Invoice email primary</label>
+                        <div class="col-xs-6 control-label">{{defaultInvoicing.invoiceEmailPrimary}}</div>
+                    </div>
+                    <div class="form-group form-group-email">
+                        <label class="col-xs-6 control-label">Invoice email secondary</label>
+                        <div class="col-xs-6 control-label">{{defaultInvoicing.invoiceEmailSecondary}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Payment terms</label>
+                        <div class="col-xs-6">
+                            <select ng-model="defaultInvoicing.paymentTerms.code" ng-options="item.code as item.description for item in paymentTerms" class="form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Margin charged to agency</label>
+                        <div class="col-xs-6">
+                            <select ng-model="defaultPayroll.marginChargedToAgency" class="form-control" ng-options="selectOption.code as selectOption.value for selectOption in selectOptions">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-6 control-label">Holiday amount</label>
+                        <div class="col-xs-6">
+                            <input ng-model="defaultPayroll.holidayAmount" type="number" min="0" class="form-control" placeholder="{{defaultPayroll.holidayAmount}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- modal-body -->
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-2">
+                <a href ng-click="cancel()" type="button" class="btn btn-default pull-left">Cancel</a>
+            </div>
+            <div class="col-xs-6 no-padding-left">
+                <div>
+                    Checked and confirmed the above details?
+                    <input ng-model="checkbox" type="checkbox" style="margin-left:5px;" />
+                </div>
+            </div>
+            <div class="col-xs-4 no-padding-left">
+                <a href ng-disabled="checkbox == false || !batchId" ng-click="proceed();" type="button" class="btn btn-default">Proceed and Generate&#160;
                                     <i class="fa fa-chevron-right"></i>
                                  </a>
-                            </div>
-                        </div>
-                  </div><!-- modal footer -->
-		 	</div><!-- modal content -->
+            </div>
+        </div>
+    </div>
+    <!-- modal footer -->
+</div>
+<!-- modal content -->

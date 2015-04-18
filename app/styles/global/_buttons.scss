@@ -17,10 +17,9 @@ input.btn:active {
 .btn-success {
     background: $green-light;
     border-color: $green-light;
-    height: $input-height-base;
     &:hover {
-        background: $green-light;
-        border-color: $green-light;
+        background: $green;
+        border-color: $green;
     }
 }
 

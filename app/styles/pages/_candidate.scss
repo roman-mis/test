@@ -23,8 +23,7 @@
 .history {
     margin: $grid-gutter-width-md 0;
 }
-
-.tabs-payroll,
+/*.tabs-payroll,
 .agencies {
     .btn {
         text-align: left;
@@ -35,8 +34,8 @@
             line-height: 1.2;
         }
     }
-}
-
+}*/
+/*
 .tabs-payroll .nav-tabs.nav.row {
     padding: 0;
     margin-bottom: -1px;
@@ -45,14 +44,14 @@
         border-bottom: 1px solid transparent;
     }
 }
+*/
 
 .history {
     .meta-box-content {
         margin-top: 20px;
     }
 }
-
-.messages {
+/*.messages {
     padding-top: $grid-gutter-width;
     .message-item {
         height: 22px;
@@ -60,9 +59,8 @@
             color: $green;
         }
     }
-}
-
-.expenses-wizard {
+}*/
+/*.expenses-wizard {
     padding: $grid-gutter-width 0px;
     margin: 0px auto;
     list-style: none;
@@ -95,4 +93,4 @@
             background-color: $gray;
         }
     }
-}
+}*/
