@@ -116,9 +116,11 @@ module.exports = function(){
        var objectName=req.params.fileName;
 
             var folder=getFolderPath(req);
+            console.log(folder);
 
         awsService.getS3SignedUrl('getObject', objectName,null,folder)
         .then(function (returnData) {
+            console.log(returnData);
             //console.log(returnData);
             res.json({url: returnData.signedRequest});
 

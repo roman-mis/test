@@ -35,7 +35,7 @@ angular.module('origApp').config(function($stateProvider) {
     .state('app.agency.margin',{
       url:'/margin',
       templateUrl:'views/agency/margin.html',
-      controller:''
+      controller:'AgencyMarginController'
     })
     .state('app.agency.sales', {
       url: '/sales',

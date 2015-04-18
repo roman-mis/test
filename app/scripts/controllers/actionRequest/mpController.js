@@ -98,6 +98,30 @@ angular.module('origApp.controllers')
     $scope.remove = function(i) {
         $scope.mp.days.splice(i, 1);
     };
+    $scope.viewFile = function(fileName) {
+           $http.get('/api/documents/actionrequest/viewsignedurl/' + fileName).success(function (res) {
+
+              $modal.open({
+                templateUrl: 'views/actionRequest/viewFile.html',
+                controller: 'actionRequestViewFile',
+                size: 'md',
+                resolve: {
+
+                    url: function () {
+                        return res;
+                    },
+                    fileName:function(){
+
+                        return fileName;
+                    }
+                   }
+                });
+
+            }).error(function(){
+
+                 MsgService.danger('Something went wrong.');
+            });
+          };
 
     $scope.uploadFile = function() {
         if (!$('#upload_file').val()) {
@@ -122,7 +146,7 @@ angular.module('origApp.controllers')
                     'x-amz-acl': 'public-read'
                 }
             }).success(function() {
-                $scope.mp.imageUrl = $scope.temp.logoFileName;
+                $scope.mp.imageUrl = fileName;
                 $scope.isLogoUploading = false;
             });
         });

@@ -1,8 +1,8 @@
 ﻿'use strict';
 var app = angular.module('origApp.controllers');
 
-app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, rootScope, expense, claim, s3Service, $q, HttpResource) {
-
+app.controller('expenseReceiptManualCtrl', function ($scope, $modalInstance, $http, rootScope, index, s3Service, $q, HttpResource) {
+    //$scope.generatingPreview = false;
     $scope.initSrc = '';
     var canceller = $q.defer();
     var uploadCancelled = false;
@@ -14,9 +14,7 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     $scope.uploading = false;
     var fileName, fileType;
 
-    $scope.claim = claim;
-    $scope.expense = expense;
-    $scope.receiptUrls = expense.receiptUrls;
+    $scope.receiptUrls = rootScope.receiptUrlArray[index];
     $scope.actualUrls = [];
     $scope.receiptUrls.forEach(function (justName) {
         $http.get('/api/documents/receipts/viewsignedurl/' + justName).success(function (res) {
@@ -73,10 +71,8 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     //});
 
     $scope.generatePreview = function (file) {
-
         $scope.$apply();
         $scope.file = file.files[0];
-        console.log($scope.file);
         if (file) readFile(file.files[0]);
     }
 
@@ -109,19 +105,23 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
                         $scope.uploadStatus = 'Uploaded successfully';
                         //$scope.uploadedImg.url = response.data.url;
                         //logs($scope.uploadedImg, 'the url');
-                        $scope.receiptUrls.push(fileName);
+                        rootScope.receiptUrlArray[index].push(fileName);
                         $http.get('/api/documents/receipts/viewsignedurl/' + fileName).success(function (res) {
                             //logs(res, 'actual url');
                             $scope.actualUrls.push({
                                 name: fileName,
                                 img: res.url
                             });
-                            document.getElementById("uploadFile").innerHTML = '';
-                            //document.getElementById("filesize").innerHTML = '';
-                            document.getElementById('logo').src = $scope.initSrc;
-                            var icon = document.getElementById('iconCheck');
-                            icon.classList.remove('fa', 'fa-spinner', 'fa-spin');
-                            icon.classList.remove('fa', 'fa-check');
+                            try {
+                                document.getElementById("uploadFile").innerHTML = '';
+                                //document.getElementById("filesize").innerHTML = '';
+                                document.getElementById('logo').src = $scope.initSrc;
+                                var icon = document.getElementById('iconCheck');
+                                icon.classList.remove('fa', 'fa-spinner', 'fa-spin');
+                                icon.classList.remove('fa', 'fa-check');
+                            } catch (e) {
+
+                            }
                             $scope.validFile = false;
                         });
                     }
@@ -144,10 +144,10 @@ app.controller('expenseReceiptCtrl', function ($scope, $modalInstance, $http, ro
     $scope.deleteReceipt = function (receipt) {
         var index = $scope.actualUrls.indexOf(receipt);
         $scope.actualUrls.splice(index, 1);
-        $scope.receiptUrls.splice(index, 1);
+        rootScope.receiptUrlArray[index].splice(index, 1);
     }
 
-    $scope.ok = function () {
+    $scope.ok = function () {            
         $modalInstance.close();
     };
 
