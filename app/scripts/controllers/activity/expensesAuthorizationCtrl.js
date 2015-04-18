@@ -9,14 +9,57 @@ app.controller("expensesAuthorizationCtrl",
                                   { link: '/activity/home', text: 'Activity' },
                                   { link: '/activity/expensesAuthorization', text: 'Expenses Authorisation' }
         ];
+        $scope.options = {
+            currentPage:1,
+            limit:20
+        };
+        $scope.loadExpenses = function () {
+            var params = {};
+            if ($scope.options.limit) {
+                params._limit = $scope.options.limit;
+            }
+            if ($scope.options.currentPage) {
+                params._offset = ($scope.options.currentPage - 1) * $scope.options.limit;
+            } else {
+                params._offset = 0;
+            }
+           // if ($scope.filterFirstName) {
+           //      params.firstName_contains= $scope.filterFirstName;
+           //  }
+        HttpResource.model('candidates/expenses').query(params, function (expenses) {
+            logs('getting expenses done !!');
+            console.log(expenses.data.object);
+            $scope.system = expenses.data.object.system[0];
+            logs($scope.system, 'system doc');
+            $scope.expensesArray = expenses.data.object.claims;
+            $scope.options.totalItems = expenses.data.object.totalCount;
+            console.log($scope.options);
+            $scope.system.statutoryTables.vat.forEach(function (time) {
+                var validFrom = new Date(time.validFrom);
+                var validTo = new Date(time.validTo);
+                var current = new Date();
+                if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+                    $scope.globalVat = time.amount / 100;
+                    logs($scope.globalVat, 'global vat');
+                }
+            });
+            init();
+        });
+
+
+
+        };
+
+        $scope.loadExpenses();
+
         $scope.transportTypes = ConstantsResource.get('transportationmeans');
         $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({});
         $http.get('/api/constants/expenseClaimStatus').success(function (res) {
-            $scope.expenseClaimStatus = res;
-        });
-        $http.get('/api/constants/expenseStatus').success(function (res) {
             $scope.expenseStatus = res;
         });
+        //$http.get('/api/constants/expenseStatus').success(function (res) {
+        //    $scope.expenseStatus = res;
+        //});
         $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
 
         $http.get('/api/constants/fuels').success(function (res) {
@@ -28,25 +71,6 @@ app.controller("expensesAuthorizationCtrl",
         //});
 
         $scope.pendingRejections = [];
-
-        $http.get('/api/candidates/expenses').success(function (expenses) {
-            logs('getting expenses done !!');
-            $scope.system = expenses.object.system[0];
-            logs($scope.system, 'system doc');
-            $scope.expensesArray = expenses.object.claims;
-
-            $scope.system.statutoryTables.vat.forEach(function (time) {
-                var validFrom = new Date(time.validFrom);
-                var validTo = new Date(time.validTo);
-                var current = new Date();
-                if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
-                    $scope.globalVat = time.amount / 100;
-                    logs($scope.globalVat, 'global vat');
-                }
-            });
-
-            init();
-        });
 
         function getVehicleInfo(userId, code) {
             $http.get('/api/candidates/' + userId + '/vehicleinformation/' + code).success(function (res) {
@@ -802,3 +826,4 @@ app.controller("expensesAuthorizationCtrl",
         }
 
     }]);
+

@@ -76,6 +76,9 @@
     <!-- endbower -->
     <script src="scripts/vendors/angular-wysiwyg.js"></script>
     <script src="scripts/vendors/jspdf.debug.js"></script>
+    <script src="scripts/vendors/angular-file-upload.min.js"></script>
+    <script src="scripts/vendors/angular-file-upload-shim.min.js"></script>
+    <script src="scripts/vendors/ng-csv.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
@@ -137,6 +140,7 @@
     <script src="scripts/directives/fileread.js"></script>
     <script src="scripts/directives/grid.js"></script>
     <script type="text/javascript" src="scripts/directives/ageValidation.js"></script>
+    <script type="text/javascript" src="scripts/directives/roundNumber.js"></script>
     <!-- <script src="scripts/directives/autoComplete.js"></script> -->
     <!-- <script src="scripts/directives/ngKeydown.js"></script> -->
     <!-- filters -->
@@ -170,6 +174,7 @@
     <script src="scripts/controllers/candidate/sidebar_create_task.js"></script>
     <script src="scripts/controllers/candidate/sidebar_create_document.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp.js"></script>
+    <script src="scripts/controllers/candidate/sidebar_add_exp_manual.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_1.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_2.js"></script>
     <script src="scripts/controllers/candidate/sidebar_add_exp_3.js"></script>
@@ -192,6 +197,8 @@
     <script src="scripts/controllers/candidate/AOEController.js"></script>
     <script src="scripts/controllers/candidate/addNewCandidateModalCtrl.js"></script>
     <script src="scripts/controllers/candidate/editCandidateDetails.js"></script>
+    <script src="scripts/controllers/candidate/candidateMargin.js"></script>
+
     <script src="scripts/controllers/admin/CubeCtrl.js"></script>
     <script src="scripts/controllers/admin/company_profile/companyProfileController.js"></script>
     <script src="scripts/controllers/admin/company_profile/companyProfileModalController.js"></script>
@@ -219,7 +226,6 @@
     <script src="scripts/controllers/payroll/main.js"></script>
     <script src="scripts/controllers/payroll/runPayrollController.js"></script>
     <script src="scripts/controllers/payroll/createInvoice.js"></script>
-    <script src="scripts/controllers/payroll/createInvoice2.js"></script>
     <script src="scripts/controllers/payroll/invoiceOverview.js"></script>
     <script src="scripts/controllers/payroll/importTimesheets.js"></script>
     <script src="scripts/controllers/payroll/createValidationController.js"></script>
@@ -231,6 +237,9 @@
     <script src="scripts/controllers/activity/expensesAuthorizationCtrl.js"></script>
     <script src="scripts/controllers/activity/rejectSummaryCtrl.js"></script>
     <script src="scripts/controllers/activity/expenseReceiptCtrl.js"></script>
+    <script src="scripts/controllers/payroll/viewReceipt.js"></script>
+    <script src="scripts/controllers/candidate/expenseReceiptManualCtrl.js"></script>
+    <script src="scripts/controllers/payroll/uploadExpenses.js"></script>
 
     <script src="scripts/controllers/agency/main.js"></script>
     <script src="scripts/controllers/agency/sidebar.js"></script>
@@ -241,6 +250,7 @@
     <script src="scripts/controllers/agency/payroll.js"></script>
     <script src="scripts/controllers/agency/sales.js"></script>
     <script src="scripts/controllers/agency/AgencyLogoUploadController.js"></script>
+    <script src="scripts/controllers/agency/AgencyMarginController.js"></script>
     <script src="scripts/controllers/payroll/payrollController.js"></script>
     <script src="scripts/controllers/payroll/payrollPayrollCtrl.js"></script>
     <script src="scripts/controllers/payroll/payrollPayrollEditCtrl.js"></script>
@@ -252,8 +262,8 @@
     <script type="text/javascript" src="scripts/controllers/actionRequest/smpController.js"></script>
     <script type="text/javascript" src="scripts/controllers/actionRequest/actionRequestController.js"></script>
     <script type="text/javascript" src="scripts/controllers/actionRequest/sspModalController.js"></script>
+    <script type="text/javascript" src="scripts/controllers/actionRequest/actionRequestViewFile.js"></script>
      <!-- endbuild -->
-      <script type="text/javascript" src="scripts/controllers/candidate/payroll_tax.js"></script>
 
 </body>
 </html>

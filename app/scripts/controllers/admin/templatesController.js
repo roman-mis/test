@@ -92,7 +92,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
         params._offset = 0;
       }
       if ($scope.filterName) {
-        params.name_contains = $scope.filterName;
+        params.searchedText = $scope.filterName;
       }
 
       $scope.gridOptions.allData = acAPI.query(params, function() {

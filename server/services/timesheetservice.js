@@ -26,6 +26,18 @@ module.exports=function(db){
 		return Q.nfcall(q.exec.bind(q));
 	};
 
+	service.getTimesheetsByCandidateId = function(ids){
+		var q;
+		var promisArray = [];
+		console.log(ids);
+		ids.forEach(function(id){
+			q = db.Timesheet.find({'worker':id});
+			console.log('88888888888888888')
+			promisArray.push(Q.nfcall(q.exec.bind(q)));
+		});
+		return Q.all(promisArray);
+	};
+
 	service.getTimesheet = function(id, populate){
 		var q=db.Timesheet.findById(id);
 		if(populate){
@@ -125,7 +137,6 @@ module.exports=function(db){
 	        			branch: timesheetDetails.branch
 					};
 					var timesheetBatchModel = new db.TimesheetBatch(timesheetBatchDetail);
-
 					var elements = [];
 					_.forEach(timesheetDetails.elements, function(_element){
 						var paymentRate = {};
@@ -167,21 +178,27 @@ module.exports=function(db){
 				        total: timesheetDetails.total,
 				        imageUrl: timesheetDetails.imageUrl
 					};
+
 					var timesheetModel = new db.Timesheet(timesheetDetail);
 					return Q.all([Q.nfcall(timesheetModel.save.bind(timesheetModel)), Q.nfcall(timesheetBatchModel.save.bind(timesheetBatchModel))])
 						.then(function(){
 							resolve(timesheetModel);
 						},reject);
+
 				}else{
 					return service.getTimesheet(id)
 						.then(function(timesheet){
 							if(timesheet){
+
 								utils.updateSubModel(timesheet, timesheetDetails);
+
 								return Q.nfcall(timesheet.save.bind(timesheet))
 									.then(function(){
 										resolve(timesheet);
+									
 									},reject);
 							}else{
+
 								reject({result:false,name:'NOTFOUND',message:'Timesheet not found'});
 							}
 						}, reject);
@@ -208,6 +225,49 @@ module.exports=function(db){
 				resolve(res);
 			},function(err){
 				reject(err);
+			});
+		});
+	};
+
+	service.updateTimesheets = function(req){
+		console.log('&&&&&&&&&/&&&&&&&&&&&&');
+		return Q.Promise(function(resolve,reject){
+			var	index = -1;
+			if(req.length === 0){
+				resolve();
+			}
+			req.forEach(function(reqElement){
+				index++;
+				service.getTimesheet(reqElement._id).then(function(res){
+					res.net = 1000;
+					for(var key in reqElement){
+						console.log(key);
+						if(key === 'elements'){
+							for(var j = 0; j < res.elements.length; j++){
+								for(var k = 0; k < reqElement.elements.length; k++){
+									if(res.elements[j]._id + '' === reqElement.elements[k]._id + ''){
+										for(var key3 in reqElement.elements[k]){
+											res.elements[j][key3] = reqElement.elements[k][key3];
+										}
+									}
+								}
+							}
+						}else{
+							res[key] = reqElement[key];
+						}
+					}
+
+					Q.nfcall(res.save.bind(res)).then(function(){
+						if(index+1 === req.length){
+							resolve();
+						}
+
+					},function(err){
+						reject(err);	
+					});
+				},function(err){
+					reject(err);
+				});
 			});
 		});
 	};

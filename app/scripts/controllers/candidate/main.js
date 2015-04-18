@@ -66,8 +66,8 @@ angular.module('origApp.controllers')
           $scope.isTabActive = function(stateKey) {
             return $state.includes('app.candidate.' + stateKey);
           };
-          
-          
+
+
           $scope.tab = {isMenuCollapsed: true, caption: 'Home'};
           jQuery(document).on('click', '.candidate-tabs a', function(){
             var that = this;

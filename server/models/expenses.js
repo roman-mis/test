@@ -16,6 +16,7 @@ module.exports = function(mongoose,autoIncrement) {
             endTime: String,
             hoursWorked: Number,
             postcodes: [ String ],
+            source: String, //"wizard", "manual", "import"
             expenses: [{
                 expenseType: String, // subsistence, travel, other, voucher
                 subType: String, // breakfast, meal1, carvan, motorbike, stationery
@@ -28,7 +29,7 @@ module.exports = function(mongoose,autoIncrement) {
                 text: String, // WE43 9KK
                 description: String,
                 receiptUrls: [ String ],
-                status:{type:String,default:'submitted'} // submitted, rejected, approved, readyToPayroll, deleted
+                status:{type:String,default:'submitted'}
             }]
         }]
     });

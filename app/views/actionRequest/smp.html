@@ -121,6 +121,8 @@
         <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-4 label-control">Name:</div>
         <div ng-if="temp.logoFileName" class="label-control file-details" id="uploadFile">{{temp.logoFileName | limitTo:17}}...</div>
 
+        <a style="cursor:pointer" class="pull-right" ng-click="viewFile(smpObject.imageUrl)" ><i class="fa fa-picture-o present"></i></a>
+
       </div>
     </div>
     <div class="col-xs-12">

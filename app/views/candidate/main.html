@@ -25,6 +25,9 @@
                     <li ng-if="!(permissions.taps.Payroll.hide)" ng-class="{active: isTabActive('payroll')}">
                         <a ui-sref="app.candidate.payroll({candidateId: candidateId })">Payroll</a>
                     </li>
+                    <li ng-if="!(permissions.taps.Margin.hide)" ng-class="{active: isTabActive('margin')}">
+                        <a ui-sref="app.candidate.margin({candidateId: candidateId})">Margin</a>
+                    </li>
                     <li ng-if="!(permissions.taps.Payslips.hide)" ng-class="{active: isTabActive('payslips')}">
                         <a ui-sref="app.candidate.payslips({candidateId: candidateId })">Payslips</a>
                     </li>

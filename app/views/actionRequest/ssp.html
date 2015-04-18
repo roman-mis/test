@@ -57,7 +57,7 @@
         </div>
         <div class="row " ng-if='!showMe'>
             <div class="col-xs-12 form-group" >
-                <button class="btn btn-primary form-control" type="button" ng-click="checkDate()">Check if
+                <button class="btn btn-primary form-control" type="button" ng-click="checkDate('first')">Check if
                     qualifies</button>
             </div>
         </div>
@@ -72,7 +72,7 @@
 
         <div class="line-horizontal"></div>
         <div class="row">
-            <div class="col-xs-12" ng-if="ssp.days && !showMe">
+            <div class="col-xs-12" ng-if="ssp.days.length > 0 && !showMe">
                 <p class="alert alert-success">&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
             </div>
             <div class="col-xs-12">
@@ -119,7 +119,7 @@
                         <div class="col-xs-12 col-sm-6 form-group">
                             <div class="fileUpload btn btn-primary form-control">
                                 <span onclick="$('#upload').click();">Browse</span>
-                                <input file-model="fileupload" type="file"
+                                <input  file-model="fileupload" type="file"
                                        name="sickNote"  id="upload" style="display: none;"  />
                             </div>
                         </div>
@@ -137,6 +137,7 @@
                                 <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
                                 <div id="uploadFile" class="col-xs-8 col-sm-9 label-control file-details">
                                     <span ng-if="temp.logoFileName">{{temp.logoFileName | limitTo:17}}...</span>
+                                    <a style="cursor:pointer" ng-click="viewFile(ssp.imageUrl)" ng-if="showMe && temp.logoFileName"><i class="fa fa-picture-o present"></i></a>
                                 </div>
                             </div>
                         </div>

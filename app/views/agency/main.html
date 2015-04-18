@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-xs-10"></div>
                 <div class="col-xs-5 col-sm-3">
-                    <label style="color:green">Agency Status</label>
+                    <label style="color:green" ng-init="selectedAgency.status=selectedAgency.status?selectedAgency.status:'Submitted'">Agency Status</label>
                     <select class="form-control" ng-model="selectedAgency.status"
                             ng-options="item.value as item.value for item in status"
                             ng-change="updateStatus()"></select>
@@ -34,6 +34,9 @@
                     </li>
                     <li ng-if="!(permissions.taps.Candidates.hide)" ng-class="{active: isTabActive('candidates')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/candidates">Candidates</a>
+                    </li>
+                    <li ng-if="!(permissions.taps.Margin.hide)" ng-class="{active: isTabActive('margin')}">
+                        <a ng-href="/agencies/{{selectedAgencyId}}/margin">Margin</a>
                     </li>
                     <li ng-if="!(permissions.taps.Sales.hide)" ng-class="{active: isTabActive('sales')}">
                         <a ng-href="/agencies/{{selectedAgencyId}}/sales">Sales</a>
@@ -56,4 +59,4 @@
     <div class="sidemenu right-sidebar">
         <div ng-include="'views/agency/_rightmenu.html'"></div>
     </div>
-</div>	
+</div>

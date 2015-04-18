@@ -141,6 +141,8 @@ module.exports = function(mongoose,autoIncrement) {
           
             margin:{
                   fixedFee:Number,
+                  marginType:String,
+                  marginRule:{type:String,default:'agency'},
                   percentageOfTimesheets:{
                     minAmount:Number,
                     maxAmount:Number,

@@ -34,7 +34,7 @@ angular.module('origApp.controllers')
           $scope.gridOptions = {
             limit: 20,
             totalItems: 0,
-            isPagination: false,
+            isPagination: true,
             onLimitChanged: function() {
               $scope.loadAgencies();
             },
@@ -75,9 +75,12 @@ angular.module('origApp.controllers')
             if ($scope.searchName) {
               params.name_contains = $scope.searchName;
             }
-
-            params._offset = $scope.gridOptions.data.length;
-            
+            if ($scope.gridOptions.currentPage) {
+                params._offset = ($scope.gridOptions.currentPage - 1) * $scope.gridOptions.limit;
+            } else {
+                params._offset = 0;
+            }
+            console.log(params);
             $scope.isLoading = true;
             var items = acAPI.query(params, function() {
               $scope.isLoading = false;

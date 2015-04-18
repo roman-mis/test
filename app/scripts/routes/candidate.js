@@ -27,6 +27,11 @@ angular.module('origApp').config(function($stateProvider) {
       templateUrl: 'views/candidate/payroll.html',
       controller: 'CandidatePayrollController'
     })
+    .state('app.candidate.margin', {
+      url: '/margin',
+      templateUrl: 'views/candidate/margin.html',
+      controller: 'candidateMarginController'
+    })
     .state('app.candidate.payslips', {
       url: '/payslips',
       templateUrl: 'views/candidate/payslip.html',

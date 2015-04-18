@@ -109,6 +109,28 @@ module.exports = function(){
 				res.json({result:true, object:vm});
 			},res.sendFailureResponse);
 	};
+	controller.getAgencyMarginFee=function(req,res){
+		console.log('agency.getAgency');
+		agencyservice.getAgency(req.params.id, true)
+			.then(function(agency){
+				//console.log('agency is ');
+				//console.log(agency);
+				var vm= agency.marginFee;
+				console.log('margin fee Model is ');console.log(vm);
+				res.json({result:true, object:vm});
+			},res.sendFailureResponse);
+	};
+	controller.updateAgencyMarginFee=function(req,res){
+		console.log(req.body);
+		agencyservice.updateAgencyMarginFee(req.params.id, req.body)
+			.then(function(){
+				//console.log('agency is ');
+				//console.log(agency);
+
+				console.log('margin fee updated ');console.log();
+				res.json({result:true});
+			},res.sendFailureResponse);
+	};
 
 	controller.postAgency=function (req, res) {
 		saveAgency(req, res, 'post');
@@ -623,18 +645,44 @@ module.exports = function(){
 	  	.then(function(agencies){
 		    timesheetBatchservice.getAllTimesheetBatches(req._restOptions)
 		    .then(function(timesheetBatches){
-			    var ao = [];
-			  	agencies.rows.forEach(function(a){
-			  		var agency=getAgencyVm(a);
-			  				agency = addTimesheetBatches(agency,timesheetBatches);
-			  				// console.log(agency);
-			  				if(agency.timesheetBatches.length > 0){
-				  				ao.push(agency);
-			  				}
-					});
-			    var pagination=req._restOptions.pagination||{};
-		    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:agencies.count}};
-			    res.json(resp);
+		    	var promisArray = [];
+		    	var index = -1;
+		    	var newTimesheetBatches={rows:[]};
+		    	timesheetBatches.rows.forEach(function(timesheetBatch){
+		    		timesheetservice.getTimesheetsByBatchId(timesheetBatch._id).then(function(timesheets){
+		    			var newTimesheetBatch = {
+		    				_id: timesheetBatch._id,
+		    				agency: timesheetBatch.agency,
+		    				batchNumber: timesheetBatch.batchNumber,
+		    				status:[]
+		    			};
+		    			newTimesheetBatches.rows.push(newTimesheetBatch);
+		    			index++;
+		    			console.log('^^^^^^^^^^^^^^^^^^^'+index);
+		    			timesheets.forEach(function(timesheet){
+		    				newTimesheetBatch.status.push(timesheet.status);
+		    			});
+		    			if(index+1 === timesheetBatches.rows.length){
+				    		console.log('###############@@@@@@@@@@@@@@@@@@@@@*******************')
+						    var ao = [];
+						  	agencies.rows.forEach(function(a){
+						  		var agency=getAgencyVm(a);
+						  				agency = addTimesheetBatches(agency,newTimesheetBatches);
+						  				if(agency.timesheetBatches.length > 0){
+							  				ao.push(agency);
+						  				}
+								});
+						    var pagination=req._restOptions.pagination||{};
+					    	var resp={result:true,objects:ao, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:agencies.count}};
+						    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&')
+						    res.json(resp);
+		    			}
+		    		});
+		    	});
+					if(timesheetBatches.rows.length === 0){
+					  var resp={result:true,objects:[]};
+						res.json(resp);
+					}
 		  	},function(){
 
 		  	});
@@ -643,6 +691,7 @@ module.exports = function(){
 	};
 
 	function addTimesheetBatches(agency,timesheetBatches){
+		// console.log('!!!!!!!!!!!!!!!!!!!!!!!!')
 		agency.timesheetBatches = [];
 
 		// console.log(agency);
@@ -700,7 +749,7 @@ module.exports = function(){
 		console.log('---------------------')
 		console.log('---------------------')
 		console.log('**')
-		
+
 		return newAgency;
 	}
 

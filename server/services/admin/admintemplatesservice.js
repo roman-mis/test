@@ -22,14 +22,21 @@ service.saveTemplate = function(templateContent){
 
 
 service.getAllAdminTemplates=function(request){
-	console.log('request');
-	console.log(request);
+
 	return Q.Promise(function(resolve,reject){
 		var q=db.Template.find();
+		var searchedTextFilter=request.filters['searchedText'];
+			if(searchedTextFilter){
+
+				var searchTerm=new RegExp(searchedTextFilter.term,'i');
+				q.or([{'name':searchTerm},{'title':searchTerm},{'templateBody':searchTerm},{'templateType':searchTerm},{'subType':searchTerm}]);
+
+				delete request.filters['searchedText'];
+			}
 		queryutils.applySearch(q,db.Template,request)
 		.then(resolve,reject);
 	});
-	
+
 };
 
 
@@ -59,7 +66,7 @@ service.deleteAdminTemplate=function(adminTemplateId){
 					console.log('i am in the delete');
 					if(adminTemplate){
 						// Get Index
-						
+
 						return Q.nfcall(adminTemplate.remove.bind(adminTemplate))
 							.then(function(){
 								resolve({result:true});
@@ -67,7 +74,7 @@ service.deleteAdminTemplate=function(adminTemplateId){
 					}else{
 						reject({result:false,name:'NOTFOUND',message:'admin template not found'});
 					}
-				
+
 			},reject);
 	});
 };
@@ -103,7 +110,7 @@ service.updateAdminTemplate=function(adminTemplateId,templateContent){
 						console.log({result:false});
 						reject({result:false,name:'NOTFOUND',message:'admin template not found'});
 					}
-				
+
 			},reject);
 	});
 };

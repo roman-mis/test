@@ -15,10 +15,22 @@ module.exports = function(dbs){
 			  		var timesheet = getTimesheetVm(_timesheet);
 			  		timesheetVms.push(timesheet);
 				});
-	      		
+
 			    var pagination=req._restOptions.pagination||{};
 		    	var resp={result:true,objects:timesheetVms, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:timesheets.count}};
-				
+
+				res.json(resp);
+    		},function(err){
+		    	res.sendFailureResponse(err);
+	   		});
+	};
+
+	controller.getTimesheetsByCandidateId = function(req, res){
+		console.log(JSON.parse(req.params.ids));
+		return timesheetservice.getTimesheetsByCandidateId(JSON.parse(req.params.ids))
+	    	.then(function(timesheets){
+	      		var resp={result:true,objects:timesheets};
+
 				res.json(resp);
     		},function(err){
 		    	res.sendFailureResponse(err);
@@ -88,13 +100,13 @@ module.exports = function(dbs){
 			});
 	};
 
-	controller.postTimesheet = function (req, res) {	
-		var timesheet = req.body;		
+	controller.postTimesheet = function (req, res) {
+		var timesheet = req.body;
 		timesheet.createdBy = req.user.id;
 		timesheet.createdDate = new Date();
 		timesheet.updatedBy = req.user.id;
 		timesheet.updatedDate = new Date();
-		
+
 		timesheetservice.saveTimesheet(null, timesheet)
 			.then(function(response){
 				buildTimesheetVm(response, true)
@@ -126,6 +138,18 @@ module.exports = function(dbs){
 			});
 	};
 
+	controller.updateTimesheets = function(req, res){
+		console.log('******************************%%%%%%%%%%%%%%%%%%5***********************')
+		console.log(req.body.reqBody);
+		console.log('**')
+		timesheetservice.updateTimesheets(req.body.reqBody)
+			.then(function(){
+				res.json({result:true});
+			},function(err){
+			 	res.sendFailureResponse(err);
+			});
+	};
+
 	controller.getTimesheetsWithAgency = function(req,res){
 		return timesheetservice.getTimesheetsWithAgency()
 	    	.then(function(result){
@@ -142,6 +166,7 @@ module.exports = function(dbs){
 	    		});
 	      		res.json({result:true, object:timesheets});
     		},function(err){
+    			console.log(123)
 		    	res.sendFailureResponse(err);
 	   		});
 	};

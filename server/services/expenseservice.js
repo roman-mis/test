@@ -12,7 +12,6 @@ module.exports = function (dbs) {
     service.getExpenses = function (request) {
         return Q.Promise(function (resolve, reject) {
             var q = db.Expense.find().populate('agency').populate('user').populate('createdBy');
-
             queryutils.applySearch(q, db.Expense, request)
               .then(resolve, reject);
         });
@@ -65,10 +64,8 @@ module.exports = function (dbs) {
                     queryutils.applySearch(expensesQuery, db.Expense, request)
                         .then(function (expense) {
                             var bucket = [];
-
-
                             expense.rows.forEach(function (t) {
-                                var pushIt = false;
+                                var pushIt = true;
 
                                 var bucketObject = {};
                                 bucketObject.expenses = [];
@@ -84,7 +81,10 @@ module.exports = function (dbs) {
                                 bucketObject.total = 0;
                                 secondValue.some(function (l) {
 
-
+                                    if (approvedOnly && l.expenses.length === 0) {
+                                        pushIt = false;
+                                        return true;
+                                    }
                                     var daySpecific = {};
                                     daySpecific.startTime = l.startTime;
                                     daySpecific.endTime = l.endTime;
@@ -180,8 +180,8 @@ module.exports = function (dbs) {
                                 }
 
                             });
-
-
+                            
+                            // console.log(expense);
                             resolve({ claims: bucket, system: system, totalCount: expense.count });
                         });
                 });
@@ -233,7 +233,7 @@ module.exports = function (dbs) {
             }
             message = '<h3>' + header + '</h3>' + body;
             var mailModel = { message: message };
-            var mailOption = { to: mailInfo.user.emailAddress };
+            var mailOption = { to: mailInfo.user.emailAddress, subject: 'Attention please, Expense Rejection' };
             console.log(mailModel);
             console.log(mailOption);
             return mailer.sendEmail(mailOption, mailModel, 'status_change').then(function () {
@@ -484,6 +484,36 @@ module.exports = function (dbs) {
                     expenses[i].days.forEach(function (day) {
                         day.expenses.forEach(function (dayExpense) {
                             dayExpense.status = 'submitted';
+                        });
+                    });
+                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+                }
+                return Q.all(WritePromises).then(function (res) {
+                    resolve({ result: true, opjects: res });
+                }, function (err) {
+                    reject(err);
+                });
+            }, function () {
+                reject('can not find this claim');
+            });
+        });
+
+    };
+
+    service.setClaimsRTP = function (data) {
+        return Q.promise(function (resolve, reject) {
+            var readPromises = [];
+            var WritePromises = [];
+            for (var i = 0; i < data.length; i++) {
+                var q = db.Expense.findById(data[i]);
+                readPromises.push(Q.nfcall(q.exec.bind(q)));
+            }
+            Q.all(readPromises).then(function (expenses) {
+                console.log(expenses.length)
+                for (var i = 0; i < expenses.length; i++) {
+                    expenses[i].days.forEach(function (day) {
+                        day.expenses.forEach(function (dayExpense) {
+                            dayExpense.status = 'ready to payroll';
                         });
                     });
                     WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
