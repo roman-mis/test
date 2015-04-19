@@ -44,7 +44,7 @@ angular.module('origApp.controllers')
 
           $scope.searchType = '';
           $scope.whichShow = 'main';
-
+          console.log($scope.listData)
           $scope.filterByType = function(type) {
             if ($scope.searchType === type) {
               $scope.searchType = '';
@@ -120,7 +120,7 @@ angular.module('origApp.controllers')
           };
 
           /**
-           * 
+           *
            * @param {type} receiptData {receiptUrls: [''], expenses: []}
            */
           $scope.showConfirmMatch = function(receiptUrls, expenses) {
@@ -145,7 +145,7 @@ angular.module('origApp.controllers')
               item.checked = false;
             });
           };
-          
+
           var _selectedExpenses;
           $scope.showPreviousUploaded = function() {
             _selectedExpenses = $scope.listData.filter(function(item) {
@@ -172,11 +172,11 @@ angular.module('origApp.controllers')
               });
             });
           };
-          
+
           $scope.clickPrevUpload = function(obj){
             $scope.selectedPrevUpload = obj;
           };
-          
+
           $scope.selectPrevUpload = function(){
             $scope.showConfirmMatch(angular.copy($scope.selectedPrevUpload.receiptUrls || []), _selectedExpenses);
             $scope.selectedPrevUpload = null;
@@ -191,7 +191,7 @@ angular.module('origApp.controllers')
             $scope.expenseData.receiptListData = $scope.listData;
             $scope.gotoNext();
           };
-  
+
           $scope.closeConfirmed = function() {
             $scope.whichShow = 'main';
           };

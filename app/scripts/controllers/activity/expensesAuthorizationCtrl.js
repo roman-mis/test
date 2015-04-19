@@ -121,7 +121,7 @@ app.controller("expensesAuthorizationCtrl",
                         var piece = {
                             fuelCode: fuelType,
                             engineCode: engineSize
-                        }
+                        };
                         $scope.fuels.forEach(function (item) {
                             if (fuelType == item.code) {
                                 piece.fuelType = item.description;
@@ -423,13 +423,13 @@ app.controller("expensesAuthorizationCtrl",
             }
             if (ids.length == 0) window.alert('No claims selected, or selected claims are empty');
             else reject(expToReject, claimInfo);
-        }
+        };
 
         $scope.majorSelectAll = function () {
             for (var i = 0; i < $scope.expensesArray.length; i++) {
                 $scope.expensesArray[i].majorChecked = true;
             }
-        }
+        };
 
         $scope.majorInverseSelection = function () {
             for (var i = 0; i < $scope.expensesArray.length; i++) {
@@ -439,7 +439,7 @@ app.controller("expensesAuthorizationCtrl",
                     $scope.expensesArray[i].majorChecked = true;
                 }
             }
-        }
+        };
 
         $scope.majorDeleteSelected = function () {
             var req = {};
