@@ -117,7 +117,7 @@
 										</div>	
 									
 										<div ng-show="timesheet.isEdited" style="padding-top: 14px;">
-											<a ng-hide="(Number(marginFee.margin.percentageOfTimesheets.ranges[$index-1].to)>=Number(timesheet.from))||(Number(timesheet.from>=timesheet.to))||(Number(timesheet.to)>=Number(marginFee.margin.timesheets.ranges[$index+1].to))"href ng-click="save();timesheet.isEdited = !timesheet.isEdited">
+											<a ng-hide="(Number(marginFee.margin.percentageOfTimesheets.ranges[$index-1].to)>=Number(timesheet.from))||(Number(timesheet.from)>=Number(timesheet.to))||(Number(timesheet.to)>=Number(marginFee.margin.timesheets.ranges[$index+1].to))||!timesheet.charged"href ng-click="save();timesheet.isEdited = !timesheet.isEdited">
 												<i class="fa fa-check"></i>
 											</a>
 											<a href ng-click="timesheet.isEdited = false;revertTimesheet($index)">
@@ -205,7 +205,7 @@
 										</div>	
 									
 										<div ng-show="totalHour.isEdited" style="padding-top: 7px;">
-											<a ng-hide="(Number(marginFee.margin.totalHours.ranges[$index-1].to)>=Number(totalHour.from))||(Number(totalHour.from)>=Number(totalHour.to))||(Number(totalHour.to)>=Number(marginFee.margin.totalHours.ranges[$index+1].to))"href ng-click="save();totalHour.isEdited = !totalHour.isEdited">
+											<a ng-hide="(Number(marginFee.margin.totalHours.ranges[$index-1].to)>=Number(totalHour.from))||(Number(totalHour.from)>=Number(totalHour.to))||(Number(totalHour.to)>=Number(marginFee.margin.totalHours.ranges[$index+1].to))||!totalHour.charged"href ng-click="save();totalHour.isEdited = !totalHour.isEdited">
 												<i class="fa fa-check"></i>
 											</a>
 											
