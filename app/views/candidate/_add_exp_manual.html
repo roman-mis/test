@@ -195,7 +195,7 @@
                     <div class="candidate-modal" ng-controller="CandidateSidebarAddExp6Controller">
                         <div ng-show="whichShow == 'main'">
                             <div class="modal-header modal-headerExpenses">
-                                <h4 class="modal-title" id="myModalLabel">Expenses #4 | Transport</h4>
+                                <h4 class="modal-title" id="myModalLabel">Add Expenses | Transport</h4>
                                 <small>Document transport expenses.</small>
                             </div><!-- /modal-header -->
 
@@ -212,7 +212,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-2 postcodeInput" style="display: inline-flex;">
-                                        <input id="postCodeInput" type="text" class="form-control" name="postcode" placeholder="Postcode" ng-model="addData.code" />
+                                        <input type="text" class="form-control" name="postcode" placeholder="Postcode(s) separated by comma" ng-model="addData.code" />
                                         <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
                                     </div>
                                     <div class="form-group col-sm-3 postcodeInput" style="display: inline-flex;">
@@ -254,7 +254,26 @@
                                                     <tr ng-repeat="item in expenseData.transports| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
                                                         <td>{{item.date==='all'?'All dates in selection':(item.date|formatDate:'ddd DD/MM/YYYY')}}</td>
                                                         <td>{{item.type.description}}</td>
-                                                        <td>{{codeHolder[index]}}</td>
+                                                        <td>
+                                                            <span ng-repeat="code in codeHolder[$index]">
+                                                                {{code}}
+                                                                <span ng-if="$index < codeHolder[$parent.$index].length - 1">
+                                                                    ,&nbsp;
+                                                                </span>
+                                                            </span>
+                                                        </td>
+                                                        <td width="6%" class="text-center">
+                                                            <div ng-if="receiptUrlArray[$index].length > 0">
+                                                                <a style="cursor:pointer" ng-click="viewReceipt($index)">
+                                                                    <i class="fa fa-picture-o present"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div ng-if="receiptUrlArray[$index].length == 0">
+                                                                <a style="cursor:pointer" ng-click="viewReceipt($index)">
+                                                                    <i class="fa fa-picture-o absent"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
                                                         <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="removeManual($index)"><i class="fa fa-times"></i></a></td>
                                                     </tr>
                                                 </tbody>
@@ -265,14 +284,14 @@
                                         <p class="">Total: <span>&#163;{{expenseData.transports| rowsSum:'cost' | formatNumber}}</span></p>
                                     </div>
                                 </div>
+                                <div>
+                                    <button type="button" class="btn btn-success" ng-click="okManual()"
+                                            ng-disabled="isVehicleChecking">
+                                        Done
+                                    </button>
+                                </div>
                             </div><!-- /modal-body -->
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" ng-click="okManual()"
-                                        ng-disabled="isVehicleChecking">
-                                    Done
-                                </button>
-                            </div><!-- /modal footer -->
                         </div>
                         <div ng-show="whichShow=='vehicle'">
                             <div class="modal-header modal-headerExpenses">
@@ -317,18 +336,17 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div><!-- /modal-body -->
-                            <div class="modal-footer">
                                 <p class="pull-left">
                                     <a href="javascript:void(0)" class="btn" ng-click="cancelVehicleForm()"><i class="fa fa-chevron-left"></i></a>
                                     Back to previous step to change vehicle type.
                                 </p>
                                 <button type="button" class="btn btn-primary"
+                                        id="vehicleSaveButton"
                                         ng-click="saveVehicleFormManual()"
                                         ng-disabled="isVehicleSaving || vehicleForm.$invalid">
                                     {{isVehicleSaving?'Saving...':'Save'}}
                                 </button>
-                            </div><!-- /modal footer -->
+                            </div><!-- /modal-body -->
                         </div>
                     </div>
                     <!--<div class="row">
@@ -447,6 +465,10 @@
                     </div>-->
                 </div>
                 <div role="tabpanel" class="tab-pane" id="subsistence">
+                    <div class="modal-header modal-headerExpenses">
+                        <h4 class="modal-title" id="myModalLabel">Add Expenses | Subsistence</h4>
+                        <small>Document subsistence expenses.</small>
+                    </div>
                     <div class="modal-body" ng-controller="CandidateSidebarAddExp7Controller">
                         <form class="form">
                             <div class="row">
@@ -518,6 +540,10 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="other">
+                    <div class="modal-header modal-headerExpenses">
+                        <h4 class="modal-title" id="myModalLabel">Add Expenses | Other</h4>
+                        <small>Document other expenses.</small>
+                    </div>
                     <div class="modal-body" ng-controller="CandidateSidebarAddExp8Controller">
                         <form class="form">
                             <div class="row">
@@ -593,4 +619,21 @@
             </div>
         </div>
     </div>
+    <div class="modal-footer" ng-controller="CandidateSidebarAddExp10Controller" id="footer">
+        <div class="col-xs-12">
+            <p class="pull-right">Grand Total: &#160;&#160;<span>&#163;{{summaries| rowsSum:'total' | formatNumber}}</span></p>
+            <div class="col-xs-12">
+                <p>Please confirm the above claims are wholly necesarry and exclusively incurred in the performance of your duties.</p>
+                <label>
+                    <input type="checkbox" ng-model="isAgreedOnTerms" /> I agree to the above statement and the relevant <a style="cursor:pointer">T&#38;C's</a>
+                </label>
+            </div>
+        </div>
+        <a class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="okManual()" ng-disabled="expenseData.summaries.length == 0 || !isAgreedOnTerms || isSaving">
+            <div ng-show="!isSaving">Submit Expenses</div>
+            <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> Saving...</div>
+        </button>
+    </div><!-- /modal footer -->
 </div>
