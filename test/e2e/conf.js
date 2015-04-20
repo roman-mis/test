@@ -28,6 +28,9 @@ var candidateSidebar=[
   //'./spec/candidate/sidebar/activity.js',
 //  './spec/candidate/sidebar/agencies.js',
 ];
+var prefill=[
+  './spec/admin/payment_rate.js',
+];
 
 
 
@@ -47,7 +50,7 @@ exports.config = {
   suites: {
     main: regNewUser.concat(login).concat(logout),
   //  main: ['./spec/reg.js','./spec/check-inbox.js','./spec/activate.js','./spec/login.js','./spec/agency_prefill.js','./spec/candidates.js'],
-    remote: regNewUser.concat(login).concat(logout),
+    remote: adminCredentials.concat(login).concat(prefill),
     dummy: []
   },
 
