@@ -43,7 +43,6 @@ describe('Going to check for sufficient payment rate count (at least 3)', functi
         console.log('nothing to add');
       }
       element.all(by.repeater('payrate in paymentRates')).count().then(function(n) {
-        console.log('checking if element where added');
         expect(n >= count).toBeTruthy();
       });
     });

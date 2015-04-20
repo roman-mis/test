@@ -29,7 +29,8 @@ var candidateSidebar=[
 //  './spec/candidate/sidebar/agencies.js',
 ];
 var prefill=[
-  './spec/admin/payment_rate.js',
+//  './spec/admin/payment_rate.js',
+  './spec/admin/expense_rate.js',
 ];
 
 
