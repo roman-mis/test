@@ -27,7 +27,7 @@ module.exports = function (authorizer,options) {
             return url.pathname.substr(ext.length * -1) === ext;
           });
         }
-       
+
 
         if(!skip && opts.path){
           // console.log('checking skip '+skip);

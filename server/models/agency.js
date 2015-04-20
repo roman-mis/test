@@ -61,6 +61,7 @@ module.exports = function(mongoose) {
       
         margin:{
               fixedFee:Number,
+              marginType:String,
               percentageOfTimesheets:{
                 minAmount:Number,
                 maxAmount:Number,

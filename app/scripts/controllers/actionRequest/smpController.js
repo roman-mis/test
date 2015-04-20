@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('origApp.controllers')
-    .controller('smpController', function($scope, parentScope, HttpResource, $http, ModalService, MsgService, $modalInstance) {
+    .controller('smpController', function($scope, parentScope, HttpResource, $http, ModalService, MsgService, $modalInstance,$modal) {
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
 
@@ -35,15 +35,20 @@ angular.module('origApp.controllers')
         });
         $scope.uploadFile = function() {
 
-
-
             if (!$('#upload_file').val()) {
                 MsgService.danger('Please select a file first.');
                 return;
             }
             var file = $scope.fileupload;
             var fileName = new Date().getTime().toString() + '_' + file.name;
-            var mimeType = file.type || 'text/plain';
+            var mimeType = file.type;
+            var fileType=mimeType.substr(0,mimeType.indexOf('/'));
+
+            if(mimeType !='application/pdf' && fileType !='image'){
+
+               MsgService.danger('You can only upload image and pdf file.');
+               return;
+            }
             $scope.isLogoUploading = true;
             HttpResource.model('documents/actionrequest').customGet('signedUrl', {
                 mimeType: mimeType,
@@ -60,13 +65,37 @@ angular.module('origApp.controllers')
                     }
                 }).success(function() {
 
-                    $scope.smpObject.imageUrl = $scope.temp.logoFileName;
+                    $scope.smpObject.imageUrl = fileName;
                     $scope.isLogoUploading = false;
                 });
 
 
             });
         };
+        $scope.viewFile = function(fileName) {
+           $http.get('/api/documents/actionrequest/viewsignedurl/' + fileName).success(function (res) {
+
+              $modal.open({
+                templateUrl: 'views/actionRequest/viewFile.html',
+                controller: 'actionRequestViewFile',
+                size: 'md',
+                resolve: {
+
+                    url: function () {
+                        return res;
+                    },
+                    fileName:function(){
+
+                        return fileName;
+                    }
+                   }
+                });
+
+            }).error(function(){
+
+                 MsgService.danger('Something went wrong.');
+            });
+          };
         $scope.save = function() {
             HttpResource.model('actionrequests').create($scope.smpObject)
                 .patch($scope.smpObject.id).then(function() {

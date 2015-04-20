@@ -52,6 +52,8 @@ app.controller('addNewController',['$rootScope', '$interval','$scope', '$statePa
 		$scope.templatesDropdowns = HttpResource.model('constants')
 			.customGet('/adminTemplatesData/'+$scope.data.details.templateType,{},
 				function(){
+					console.log('###########################')
+					
 					console.log($scope.templatesDropdowns);
 					$scope.selectSybType(adminTemplate.details.subType);
 

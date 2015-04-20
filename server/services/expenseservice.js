@@ -180,7 +180,7 @@ module.exports = function (dbs) {
                                 }
 
                             });
-                            
+
                             // console.log(expense);
                             resolve({ claims: bucket, system: system, totalCount: expense.count });
                         });
@@ -225,11 +225,11 @@ module.exports = function (dbs) {
             body   = '';
             for(var j = 0; j < mailInfo.expense.length; j++){
                 console.log(mailInfo.expense[j]);
-                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+ 
-                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+ 
+                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+
+                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+
                               '<div style="margin-right:15px;width:100px;display: inline-block;"><b>Total</b>: ' +  mailInfo.expense[j].total + '</div>'+
-                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' + 
-                              '<hr>';  
+                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' +
+                              '<hr>';
             }
             message = '<h3>' + header + '</h3>' + body;
             var mailModel = { message: message };

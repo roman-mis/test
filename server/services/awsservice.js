@@ -32,7 +32,7 @@ module.exports=service={
 	getS3SignedUrl:function(methodName,s3ObjectName,s3ObjectType,folder,opt){
 		opt=opt||{};
 		var deff=Q.defer();
-		
+
 		console.log(awsConfig);
 
 	    aws.config.update({
@@ -43,7 +43,7 @@ module.exports=service={
 	    var s3 = new aws.S3();
 
 	    var s3Params ={};
-	    
+
 	    if(folder && folder!=='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
 	    }
@@ -80,7 +80,7 @@ module.exports=service={
 	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 	            };
 	            deff.resolve(returnData);
-	            
+
 	        }
 	    });
 
@@ -89,7 +89,7 @@ module.exports=service={
 	copyS3Object:function(s3ObjectSource,s3ObjectName,folder,opt){
 		opt=_.assign(opt||{},defaultS3Params);
 		var deff=Q.defer();
-		
+
 		//copying
 		console.log('copying.....');
 
@@ -99,7 +99,7 @@ module.exports=service={
 	    });
 
 	    var s3 = new aws.S3();
-	    
+
 	    if(folder && folder!=='' && folder.slice(-1)!=='/'){
 	    	folder=folder+'/';
 	    }
@@ -126,7 +126,7 @@ module.exports=service={
 	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 	            };
 	            deff.resolve(returnData);
-	            
+
 	        }
 	    });
 
@@ -135,7 +135,7 @@ module.exports=service={
 	moveS3Object:function(s3ObjectSource,s3ObjectName,folder,opt){
 		opt=_.assign(opt||{},defaultS3Params);
 		var deff=Q.defer();
-		
+
 		//copying
 		console.log('copying.....');
 
@@ -172,19 +172,19 @@ module.exports=service={
 			    // },defaultS3PlainParams);
 
 	        	service.deleteS3Object(s3ObjectSource).then(function(data){
-	        		
+
 		        		var returnData = {
 			                data: data,
 			                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 			            };
 			            deff.resolve(returnData);
-			        
+
 	        	},function(err){
 
 			        	console.log('delete error ...');
 			            console.log(err);
 			            deff.reject(err);
-			        
+
 	        	});
 
 	        }
@@ -210,7 +210,7 @@ module.exports=service={
 	    else{
 	    	folder=folder||'';
 	    }
-	   
+
     	var deleteParam=_.assign({
 	    	Key: (folder||'')+s3ObjectSource
 	    },defaultS3PlainParams);
@@ -221,7 +221,7 @@ module.exports=service={
     			console.log(err);
     			deff.reject(err);
     		} else {
-    		
+
         		var returnData = {
 	                data: data
 	            };
@@ -263,7 +263,7 @@ module.exports=service={
 	                url: 'https://'+awsConfig.S3_BUCKET+'.s3.amazonaws.com/'+s3Params.Key
 	            };
 	            deff.resolve(returnData);
-	            
+
 	        }
 	    });
 
@@ -274,7 +274,7 @@ module.exports=service={
 			var s3Params =_.assign({
 		        Key: (folder||'')+s3ObjectName
 		    },defaultS3PlainParams);
-			
+
 			aws.config.update({
 		        accessKeyId: awsConfig.AWS_ACCESS_KEY,
 		        secretAccessKey: awsConfig.AWS_SECRET_KEY
@@ -292,9 +292,9 @@ module.exports=service={
 		    console.log(response);
 		    // response.on('error',reject)
 		    // .on('httpDone',function(err){
-		    // 	resolve(response.createReadStream());	
+		    // 	resolve(response.createReadStream());
 		    // });
-			
+
 				// .on('httpData',function(chunk){
 
 				// })
@@ -304,4 +304,4 @@ module.exports=service={
 
 		});
 	}
-};    
+};

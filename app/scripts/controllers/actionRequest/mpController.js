@@ -98,6 +98,30 @@ angular.module('origApp.controllers')
     $scope.remove = function(i) {
         $scope.mp.days.splice(i, 1);
     };
+    $scope.viewFile = function(fileName) {
+           $http.get('/api/documents/actionrequest/viewsignedurl/' + fileName).success(function (res) {
+
+              $modal.open({
+                templateUrl: 'views/actionRequest/viewFile.html',
+                controller: 'actionRequestViewFile',
+                size: 'md',
+                resolve: {
+
+                    url: function () {
+                        return res;
+                    },
+                    fileName:function(){
+
+                        return fileName;
+                    }
+                   }
+                });
+
+            }).error(function(){
+
+                 MsgService.danger('Something went wrong.');
+            });
+          };
 
     $scope.uploadFile = function() {
         if (!$('#upload_file').val()) {
@@ -106,7 +130,14 @@ angular.module('origApp.controllers')
         }
         var file = $scope.fileupload;
         var fileName = new Date().getTime().toString() + '_' + file.name;
-        var mimeType = file.type || 'text/plain';
+        var mimeType = file.type;
+        var fileType=mimeType.substr(0,mimeType.indexOf('/'));
+
+        if(mimeType !='application/pdf' && fileType !='image'){
+
+           MsgService.danger('You can only upload image and pdf file.');
+           return;
+        }
         $scope.isLogoUploading = true;
         HttpResource.model('documents/actionrequest').customGet('signedUrl', {
             mimeType: mimeType,
@@ -122,7 +153,7 @@ angular.module('origApp.controllers')
                     'x-amz-acl': 'public-read'
                 }
             }).success(function() {
-                $scope.mp.imageUrl = $scope.temp.logoFileName;
+                $scope.mp.imageUrl = fileName;
                 $scope.isLogoUploading = false;
             });
         });

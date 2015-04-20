@@ -167,7 +167,7 @@ module.exports = function(){
             console.log('^^^^^^^^^^^^')
             console.log(user)
             console.log('&&&&&&&&&&&&')
-            margins.push(user.worker.marginFee)
+            margins.push({id:user._id,margin:user.worker.marginFee});
           });
           var resp={result:true,objects:margins};
           res.json(resp);        
