@@ -89,7 +89,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Account Name <span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" name="accountName" ng-model="companyProfile.bankDetails.accountName" required />
+                            <input type="number" class="form-control" name="accountName" ng-model="companyProfile.bankDetails.accountName" required />
 
                             <div ng-show="bankDetailsForm.accountName.$invalid || bankDetailsForm.accountName.$pristine">
                                 <div ng-show="bankDetailsForm.accountName.$error.required"  class="alert alert-danger">
@@ -123,7 +123,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Sort Code <span>*</span></label>
                         <div class="col-xs-6">
-                            <input type="text" name="sort" class="form-control" ng-model="companyProfile.bankDetails.sortCode" maxlength=6 ng-pattern = "/^[0-9]*$/"/>
+                            <input type="number" name="sort" class="form-control" ng-model="companyProfile.bankDetails.sortCode" maxlength=6 ng-pattern = "/^[0-9]*$/"/>
 
                             <div ng-show="bankDetailsForm.sort.$invalid || bankDetailsForm.sort.$pristine">
                                 <div ng-show="bankDetailsForm.sort.$error.required || bankDetailsForm.sort.$error.pattern "  class="alert alert-danger">
