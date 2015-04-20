@@ -1,6 +1,6 @@
 ﻿'use strict';
 angular.module('origApp.controllers')
-    .controller('CandidateSidebarAddExpManualController', function ($scope) {
+    .controller('CandidateSidebarAddExpManualController', function ($scope, $modal) {
         var agencySelected = false;
         var datePicked = false;
         var timesCreated = false;
@@ -20,6 +20,7 @@ angular.module('origApp.controllers')
 
             $('#categories :input').attr('disabled', true);
             $('#days :input').attr('disabled', true);
+            document.getElementById("footer").style.visibility = "hidden";
 
             var $tableBody = $('#tableBody'),
                 $tableHeader = $('#tableHeader'),
@@ -69,9 +70,12 @@ angular.module('origApp.controllers')
                 $('#addSubsistenceButton').attr('disabled', true);
                 $('#addOtherButton').attr('disabled', true);
                 $('#addMilagePostcode').attr('disabled', true);
+                $('#vehicleSaveButton').attr('disabled', true);
+                document.getElementById("footer").style.visibility = "visible";
             } else {
                 stepThreeAvailable = false;
                 $('#categories :input').attr('disabled', true);
+                document.getElementById("footer").style.visibility = "hidden";
             }
         }
 

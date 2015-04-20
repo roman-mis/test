@@ -5,6 +5,9 @@ module.exports=function(dbs){
 		Q=require('q'),
 		queryutils=require('../utils/queryutils')(db),
         systemService=require('./systemservice')(db),
+        userService =require('./userservice'),
+        agencyService =require('./agencyservice'),
+        timesheetService =require('./timesheetservice')(db),
 		utils=require('../utils/utils');
 
 	var service={};
@@ -50,7 +53,133 @@ module.exports=function(dbs){
 		return Q.nfcall(q.exec.bind(q));
 	};
     
-    service.runPayroll=function(payrollRequest) {
+  function searchIntervals(values,target) {
+    var chargedAmount =0;
+    console.log(values);
+    for (var i = 0; i < values.ranges.length; i++) {
+      if(target>=values.ranges[i].from&&target<= values.ranges[i].to){
+        chargedAmount = values.ranges[i].charged;
+          if(values.minAmount > 0){
+        if(chargedAmount<values.minAmount){
+          chargedAmount = values.minAmount;
+        }
+        }
+        if(values.maxAmount>0){
+          if(chargedAmount>values.maxAmount){
+            chargedAmount = values.maxAmount;
+            console.log(chargedAmount);
+          }
+        }
+      }
+    }
+    return chargedAmount;
+  }
+
+  service.runPayroll =function(payrollRequest){
+    //*****expected data**** //
+    //  payrollRequest = {
+    //    agencyId:id,
+    //    workers:[]
+    // }
+    //**************************//
+    return Q.Promise(function(resolve,reject){
+      Q.all([service.runPayrollMargin(payrollRequest)]).then(function(res){
+        for (var i = 0; i < payrollRequest.workers.length; i++) {
+          payrollRequest.workers[i].margin = res[0].marginValue[i];
+        }
+        console.log(res);
+        service.runPayrollFinal(payrollRequest).then(function(finalRes){
+
+          resolve(finalRes);
+        },function(err){
+          reject(err);
+        });
+      },function(err){
+        reject(err);
+      });      
+    });
+  };
+
+
+  service.runPayrollMargin =function(payrollRequest){    
+    //*****expected data**** //
+    //  payrollRequest = {
+    //    agencyId:id,
+    //    workers:[]
+    // }
+    //**************************//
+    return Q.Promise(function(resolve,reject){
+      Q.all([userService.getMarginsByCandidateIds(payrollRequest.workers),
+      agencyService.getAgency(payrollRequest.agencyId),
+      timesheetService.getTimesheetsByCandidateId(payrollRequest.workers)])
+      .then(function(res){
+        var candidatesMargin = [];
+        for(var m = 0; m < res[0].length; m++){
+          candidatesMargin.push(res[0][m].worker.marginFee.margin);
+        }
+        var agencyMargin = res[1].marginFee;
+        var allCandidatesTimesheets = res[2];
+        var marginObject = {};
+        var marginValue = [];
+        var approvedTimesheets = {};
+        var timesheetsUpdats = [];
+        //loop for candidates
+        for(var i = 0; i < candidatesMargin.length; i++){
+          approvedTimesheets = {
+            totalHours:0,
+            totals:0,
+            count:0,
+          };
+          //get approved timesheets
+          // loop fortimesheets
+          for (var j = 0; j < allCandidatesTimesheets[i].length; j++) {
+            if(allCandidatesTimesheets[i][j].status === 'approved'){
+              timesheetsUpdats.push({_id:allCandidatesTimesheets[i][j]._id,status:'payrolled'});
+              approvedTimesheets.count ++;
+              approvedTimesheets.totals += allCandidatesTimesheets[i][j].total;
+              //loop  for elements in timesheets
+              for (var k = 0; k < allCandidatesTimesheets[i][j].elements.length; k++) {
+                approvedTimesheets.totalHours += allCandidatesTimesheets[i][j].elements[k].units;
+              }
+            }
+          }
+
+          //**define the margin object will be from the candidate or the agency**//
+          if(candidatesMargin[i].marginRule === 'candidate'){
+            marginObject = candidatesMargin[i];
+          }else{
+            marginObject = agencyMargin;
+          }
+          //****////****////****////****////****////****////****////****////****////****//
+
+          //**get the margin value**//
+          if(marginObject.marginType === 'fixedFee'){
+            marginValue[i] = marginObject.fixedFee;
+          }else if(marginObject.marginType ==='percentageOfTimesheets'){
+            marginValue[i] = searchIntervals(marginObject.percentageOfTimesheets,approvedTimesheets.totals);
+          }else if (marginObject.marginType ==='totalHours'){
+            marginValue[i] = searchIntervals(marginObject.totalHours,approvedTimesheets.totals);
+          }else if(marginObject.marginType === 'fixedOnTimesheets'){
+            marginValue[i] = approvedTimesheets.count * marginObject.fixedOnTimesheets;
+          }
+          //****////****////****////****////****////****////****////****////****////****//
+        }
+        console.log('%%%%%%%%%%%1');
+        timesheetService.updateTimesheets(timesheetsUpdats).then(function(){
+          console.log('%%%%%%%%%%%2');
+          resolve({marginValue:marginValue});
+        },function(err){
+          console.log('%%%%%%%%%%%3');
+          console.log(err);
+        });
+      },function(err){
+        reject(err);
+      });
+    });
+  };
+
+
+    service.runPayrollFinal=function(payrollRequest) {
         var logs=[];    
         log('Starting a payroll run!',logs);
         console.log('*********************');

@@ -138,7 +138,8 @@ angular.module('origApp.controllers')
                                 subType: item.type.description,
                                 value: item.value,
                                 amount: item.amount,
-                                mileage: item.mileage
+                                mileage: item.mileage,
+                                receiptUrls: item.receiptUrls ? item.receiptUrls : []
                             });
                         }
                     });
