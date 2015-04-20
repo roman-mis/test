@@ -5,7 +5,7 @@ angular.module('origApp.controllers')
         var datePicked = false;
         var timesCreated = false;
         var stepTwoAvailable = false;
-        var stepThreeAvailable = false;
+        $scope.stepThreeAvailable = false;
 
         var container = document.getElementById('container_modal');
         var close = container.parentElement.parentElement;
@@ -18,9 +18,9 @@ angular.module('origApp.controllers')
                 $(this).tab('show');
             });
 
-            $('#categories :input').attr('disabled', true);
+            //$('#categories :input').attr('disabled', true);
             $('#days :input').attr('disabled', true);
-            document.getElementById("footer").style.visibility = "hidden";
+            //document.getElementById("footer").style.visibility = "hidden";
 
             var $tableBody = $('#tableBody'),
                 $tableHeader = $('#tableHeader'),
@@ -65,17 +65,17 @@ angular.module('origApp.controllers')
 
         function checkStepThreeAvailability() {
             if (timesCreated) {
-                stepThreeAvailable = true;
-                $('#categories :input').removeAttr('disabled');
-                $('#addSubsistenceButton').attr('disabled', true);
-                $('#addOtherButton').attr('disabled', true);
-                $('#addMilagePostcode').attr('disabled', true);
-                $('#vehicleSaveButton').attr('disabled', true);
-                document.getElementById("footer").style.visibility = "visible";
+                $scope.stepThreeAvailable = true;
+                //$('#categories :input').removeAttr('disabled');
+                //$('#addSubsistenceButton').attr('disabled', true);
+                //$('#addOtherButton').attr('disabled', true);
+                //$('#addMilagePostcode').attr('disabled', true);
+                //$('#vehicleSaveButton').attr('disabled', true);
+                //document.getElementById("footer").style.visibility = "visible";
             } else {
-                stepThreeAvailable = false;
-                $('#categories :input').attr('disabled', true);
-                document.getElementById("footer").style.visibility = "hidden";
+                $scope.stepThreeAvailable = false;
+                //$('#categories :input').attr('disabled', true);
+                //document.getElementById("footer").style.visibility = "hidden";
             }
         }
 
