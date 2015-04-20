@@ -206,14 +206,10 @@
     }
 }
 
-.modal-content .add-tsh {
-    width: 970px;
-}
-
 .modal::-webkit-scrollbar {
     display: none;
 }
-
+ 
 select.form-control,
 input.form-control {
     padding-top: 0;
@@ -236,4 +232,25 @@ input.form-control {
     bottom: 5px;
     right: 0;
     margin-bottom: 0;
+}
+
+.add-tsh-datepicker {
+    position: absolute;
+    left: 111px;
+    top: 28px; 
+    z-index: 1000;								
+    background-color: #fff;	
+    outline: 1px solid $gray-light; 
+}
+
+.add-exp-btn-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding-top: $grid-gutter-width-md + $grid-gutter-width-md;
+    > .btn {
+        margin-bottom: $grid-gutter-width-md / 2;
+    }
 }

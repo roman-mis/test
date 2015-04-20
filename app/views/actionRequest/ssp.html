@@ -61,7 +61,7 @@
             </div>
             <div class="row " ng-if='!showMe'>
                 <div class="col-xs-12 form-group">
-                    <button class="btn btn-primary form-control" type="button" ng-click="checkDate()">Check if qualifies
+                    <button class="btn btn-primary" type="button" ng-click="checkDate()">Check if qualifies
                     </button>
                 </div>
             </div>
@@ -118,13 +118,13 @@
                         <legend>Upload Sick Note</legend>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 form-group">
-                                <div class="fileUpload btn btn-primary form-control">
+                                <div class="fileUpload btn btn-primary">
                                     <span onclick="$('#upload').click();">Browse</span>
                                     <input file-model="fileupload" type="file" name="sickNote" id="upload" style="display: none;" />
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 form-group">
-                                <button type="button" class="btn btn-primary form-control" ng-disabled="isLogoUploading" ng-click="upload()">
+                                <button type="button" class="btn btn-primary" ng-disabled="isLogoUploading" ng-click="upload()">
                                     <span ng-show="!isLogoUploading">Upload</span>
                                     <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
                                 </button>

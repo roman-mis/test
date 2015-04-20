@@ -92,7 +92,7 @@
                     <legend>Upload certificate</legend>
                     <div class="row">
                         <div class="col-xs-12 form-group">
-                            <div class="fileUpload btn btn-primary form-control">
+                            <div class="fileUpload btn btn-primary">
                                 <span onclick="$('#upload_file').click();">Browse</span>
                                 <input file-model="fileupload" type="file" id="upload_file" name="companyLogo" style="display: none;" />
                             </div>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 form-group">
-                            <button type="button" class="btn btn-primary form-control img-details" ng-disabled="isLogoUploading" ng-click="uploadFile()">
+                            <button type="button" class="btn btn-primary img-details" ng-disabled="isLogoUploading" ng-click="uploadFile()">
                                 <span ng-show="!isLogoUploading">Upload</span>
                                 <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
                             </button>

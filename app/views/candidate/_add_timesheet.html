@@ -1,4 +1,4 @@
-<div class="modal-content add-tsh modal-window">
+<div class="modal-content modal-window">
     <div class="modal-header">
         <h3 class="modal-title" id="myModalLabel">Add Timesheet</h3>
     </div>
@@ -6,13 +6,13 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-xs-6 col-sm-3 form-group">
-                Contractor Name
+                Contractor Name:
             </div>
             <div class="col-xs-6 col-sm-4 form-group">
                 {{candidate.firstName}} {{candidate.lastName}}
             </div>
             <div class="col-xs-6 col-sm-3 form-group">
-                Contractor ID
+                Contractor ID:
             </div>
             <div class="col-xs-6 col-sm-2 form-group">
                 {{candidate.candidateRef}}
@@ -22,8 +22,8 @@
         <div class="row">
             <div class="col-xs-12 col-sm-7">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-5 form-group" style="line-height: 28px">
-                        Select Agency
+                    <div class="col-xs-12 col-sm-5 form-group">
+                        <label>Select Agency</label>
                     </div>
                     <div class="col-xs-12 col-sm-7 form-group">
                         <select class="form-control" ng-model="saveAgency" ng-options="agency.agency.name for agency in agencies"></select>
@@ -34,11 +34,10 @@
                 <!--Bootstrap datepicker-->
                 <div class="form-group">
                     <div class="input-group date" id="datepicker">
-                        <div ng-show="clicked == true" style="position: absolute;left: 60px;top: 50px; z-index: 1000;
-								background-color:white;	outline: 1px solid grey">
+                        <div ng-show="clicked == true" class="add-tsh-datepicker">
                             <datepicker ng-model="claimDate" format-day="d" starting-day="weekEndingDay" max-date="minDate" show-weeks="false" id="claim_datepicker">
                             </datepicker>
-                            <div class="col-xs-12 text-right">
+                            <div class="col-xs-12 text-right" style="margin: 6px 0">
                                 <button class="btn btn-primary" ng-click="clicked =false">Cancel</button>
                                 <button class="btn btn-primary" ng-click="okay();clicked =false">OK</button>
                             </div>
@@ -63,34 +62,34 @@
             <div class="col-md-7 col-sm-12">
                 <div class="row">
                     <div class="col-sm-12 no-padding-right">
-                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                        <div class="col-xs-2 form-group margin-8 text-center">
                             <span>Unit</span>
                             <input ng-model="elements.unit" type="number" class="form-control" />
                         </div>
-                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                        <div class="col-xs-2 form-group margin-8 text-center">
                             <span>Pay Rate</span>
                             <input min="0" ng-model="elements.payRate" type="number" class="form-control" />
                         </div>
-                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                        <div class="col-xs-2 form-group margin-8 text-center">
                             <span>Charge&nbsp;Rate</span>
                             <input ng-model='elements.chargeRate' type="text" class="form-control" disabled />
                         </div>
-                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                        <div class="col-xs-2 form-group margin-8 text-center">
                             <span>Amount</span>
                             <input ng-model="elements.amount" type="number" class="form-control" disabled />
                         </div>
-                        <div class="col-xs-2 form-group no-padding margin-8 text-center">
+                        <div class="col-xs-2 form-group margin-8 text-center">
                             <span>VAT</span>
                             <input ng-model='elements.vat' type="text" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                           <br>
+                            <button ng-disabled="!elements.payRate || !elements.unit" ng-click="populateTable()" type="button" class="btn btn-primary  btnSmall" style="width: 100%">Add</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-2 col-sm-12 col-xs-12 form-group">
-                <br />
-                <button ng-disabled="!elements.payRate || !elements.unit" ng-click="populateTable()" type="button" class="btn btn-primary form-control btnSmall">Add</button>
-            </div>
         </div>
         <div class="row hidden-sm hidden-xs">
             <div class="col-md-5 form-group">
@@ -135,13 +134,13 @@
 
     <div class="modal-footer">
         <div class="row rowFooter">
-            <div class="col-xs-6 col-sm-4 no-padding-right">
+            <div class="col-xs-6 col-sm-4 row nonepadding">
                 <fieldset class="no-margin-top">
                     <legend>Upload Timesheet</legend>
-                    <div class="row">
+                    <div>
                         <div class="col-sm-12 form-group">
                             <!-- <div class="fileUpload btn btn-primary form-control"> -->
-                            <button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
+                            <button class="btn btn-primary btn-block" onclick="$('#upload_file').click();">Browse</button>
                             <input accept="image/*, application/pdf" type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;" />
                         </div>
 
@@ -169,20 +168,20 @@
             </div>
             <div class="col-xs-6 col-sm-4">
                 <div class="row">
-                    <div class="col-xs-5 labelDisabledInput">
-                        <span>NET</span>
+                    <div class="col-xs-5 form-group labelDisabledInput">
+                        <label>NET</label>
                     </div>
                     <div class="col-xs-7 form-group">
                         <input ng-model="net" type="text" class="form-control" disabled />
                     </div>
-                    <div class="col-xs-5 labelDisabledInput">
-                        <span>VAT</span>
+                    <div class="col-xs-5 form-group labelDisabledInput">
+                        <label>VAT</label>
                     </div>
                     <div class="col-xs-7  form-group">
                         <input ng-model="totalVat" type="text" class="form-control" disabled />
                     </div>
-                    <div class="col-xs-5 labelDisabledInput">
-                        <span>Total</span>
+                    <div class="col-xs-5 form-group labelDisabledInput">
+                        <label>Total</label>
                     </div>
                     <div class="col-xs-7 form-group">
                         <input ng-model="total" type="text" class="form-control" disabled />
