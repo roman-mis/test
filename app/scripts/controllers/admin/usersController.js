@@ -32,7 +32,7 @@ angular.module('origApp.controllers')
             }
 
             if ($scope.options.filterName) {
-                params.firstName_contains = $scope.options.filterName;
+                params.searchText = $scope.options.filterName;
             }
 
             if ($scope.options.filterEmail) {
