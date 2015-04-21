@@ -1,5 +1,3 @@
-var helper = require('../../ui-helper.js');
-
 describe('Checking Call Log', function () {
 
   it('should allow to create task', function () {

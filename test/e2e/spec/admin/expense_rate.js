@@ -1,5 +1,3 @@
-var helper = require('./../ui-helper.js');
-
 var count=5;
 
 describe('Going to check for sufficient expense rate count (at least 3)', function() {

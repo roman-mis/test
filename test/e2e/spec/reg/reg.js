@@ -1,5 +1,3 @@
-var helper = require('./../ui-helper.js');
-
 describe('Using login details', function() {
   it('setting up random login details', function () {
     var randomNumber=new Date().getTime().toString().substr(-9,6);

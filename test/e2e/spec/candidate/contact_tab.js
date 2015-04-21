@@ -1,4 +1,3 @@
-var helper = require('../ui-helper.js');
 var links = $$('.candidate-tabs li a');
 
 describe('Checking candidates contact tab', function () {

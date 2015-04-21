@@ -1,5 +1,3 @@
-var helper = require('./../ui-helper.js');
-
 var number = helper.getDefaultNumber();
 var count=3;
 

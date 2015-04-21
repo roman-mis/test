@@ -1,5 +1,3 @@
-var helper = require('./../ui-helper.js');
-
 var count=3;
 
 describe('Going to check for sufficient payment rate count (at least 3)', function() {
