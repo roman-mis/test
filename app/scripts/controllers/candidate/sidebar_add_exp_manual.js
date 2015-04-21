@@ -2,7 +2,6 @@
 angular.module('origApp.controllers')
     .controller('CandidateSidebarAddExpManualController', function ($scope, $modal) {
         var agencySelected = false;
-        var datePicked = false;
         var timesCreated = false;
         var stepTwoAvailable = false;
         $scope.stepThreeAvailable = false;
@@ -41,16 +40,8 @@ angular.module('origApp.controllers')
             checkStepTwoAvailability();
         }
 
-        $scope.datePicked = function () {
-            datePicked = true;
-            $scope.picking_date = false;
-            timesCreated = false;
-            checkStepTwoAvailability();
-            checkStepThreeAvailability();
-        }
-
         function checkStepTwoAvailability() {
-            if (agencySelected && datePicked) {
+            if (agencySelected) {
                 stepTwoAvailable = true;
                 $('#days :input').removeAttr('disabled');
                 $('#addDateButton').attr('disabled', true);

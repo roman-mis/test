@@ -22,18 +22,15 @@
             </div>
             <div class="col-xs-6">
                 <form class="form-horizontal">
-                    <div class="form-group" ng-hide="picking_date">
-                        <button class="btn btn-default" ng-click="picking_date = true">Pick Claim Dates</button>
-                    </div>
-                    <div class="form-group row" ng-show="picking_date" ng-controller="CandidateSidebarAddExp3Controller">
-                        <div class="col-md-4">
-                            <label class="control-label">Claim Dates</label>
-                            <button class="btn btn-success" ng-click="datePicked(); okManual()"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="input-group date" id="datepicker">
-                                <!--<input type="text" class="form-control" /> <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>-->
+                    <div class="form-group row" ng-controller="CandidateSidebarAddExp3Controller">
+                        <div class="col-sm-3 control-label"><p>Claim Dates</p></div>
+                        <div class="btn-group col-sm-9" dropdown is-open="status.isopen">
+                            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                                {{expenseData.claimDate | formatDate:'ddd DD/MM/YYYY'}} <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
                                 <datepicker ng-model="expenseData.claimDate"
+                                            ng-click="okManual()"
                                             format-day="d"
                                             starting-day="weekEndingDay"
                                             max-date="minDate"
@@ -46,15 +43,23 @@
                 </form>
             </div>
         </div>
-        <div class="modal-header"></div>
+    </div>
+    <div class="modal-footer"></div>
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Days, Hours & Minutes</h4>
+        <small>Document start and end times.</small>
+    </div>
+    <div class="modal-body">
         <div id="days" ng-controller="CandidateSidebarAddExp4Controller">
             <form class="form-inline row">
-                <div class="form-group col-xs-4">
-                    <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
-                        <option value="" disabled style="display:none">- Select -</option>
-                    </select>
+                <div class=" col-sm-4 col-xs-5">
+                    <div class="form-group">
+                        <select class="form-control" ng-model="addData.date" ng-options="day.object as day.label for day in expenseData.daysInRange" ng-change="onDateChanged()">
+                            <option value="" disabled style="display:none">- Select -</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group col-xs-6">
+                <div class="form-group col-sm-6 col-xs-7">
                     <select class="selectTime form-control" ng-model="addData.startHours">
                         <option value="00">00</option>
                         <option value="01">01</option>
@@ -137,7 +142,7 @@
                         <option value="55">55</option>
                     </select>
                 </div>
-                <div class="form-group col-xs-2">
+                <div class="form-group col-sm-2">
                     <button id="addDateButton" type="button" class="btn btn-default form-control" ng-click="add()" ng-disabled="!addData.date || alreadyAdded"><i class="fa fa-plus"></i> Add</button>
                     <button id="timesDoneButton" type="button" class="btn btn-success form-control" ng-click="availableTimesAdded(); okManual()" ng-disabled="expenseData.times.length == 0"><i class="fa fa-floppy-o"></i></button>
                 </div>
@@ -284,12 +289,12 @@
                                         <p class="">Total: <span>&#163;{{expenseData.transports| rowsSum:'cost' | formatNumber}}</span></p>
                                     </div>
                                 </div>
-                                <div>
+                                <!--<div>
                                     <button type="button" class="btn btn-default" ng-click="okManual()"
                                             ng-disabled="isVehicleChecking">
                                         Check
                                     </button>
-                                </div>
+                                </div>-->
                             </div><!-- /modal-body -->
 
                         </div>
