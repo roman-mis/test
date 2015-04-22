@@ -1,3 +1,19 @@
+.orig-alert-message {
+    position: fixed;
+    left: 50%;
+    top: 0;
+    z-index: 9999;
+    max-width: 90%;
+    text-align: center;
+    margin-bottom: 0;
+    transition: top .5s ease-out, opacity $trans-duration ease-out;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    visibility: hidden;
+    .fa {
+        margin-right: 4px;
+    }
+}
+
 .modal-open {
     overflow: hidden;
 }
@@ -8,46 +24,58 @@
     }
 }
 
-.candidate-modal {
+@media (min-width: 768px) {
+    .form-horizontal .control-label {
+        padding-top: 0 !important;
+        text-align: left !important;
+    }
+}
+
+.modal-window {
+    .modal-title {
+        font-weight: bold;
+        text-transform: capitalize;
+    }
     .modal-body {
         p {
-            margin: 0px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0px;
-        }
-        li {
-            margin: 9px;
+            margin: 0;
         }
         input[type=number] {
-            padding: 0px 0px 0px 12px;
+            padding: 0 0 0 12px;
         }
     }
-    label {
-        font-weight: normal;
-        font-size: 1em;
-    }
     legend {
-        margin-bottom: 0px;
-        font-size: 18px;
+        margin-bottom: 0;
+        font-size: 16px;
         width: auto;
         padding-left: 5px;
         padding-right: 5px;
     }
+    label {
+        line-height: $input-height;
+        margin-bottom: 0;
+        font-weight: normal;
+    }
     .form-group {
-        margin-left: 0px;
-        margin-right: 0px;
-        label {
-            line-height: 28px;
-            margin-bottom: 0px;
+        margin-left: 0;
+        margin-right: 0;
+        & > label, & > div {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
     fieldset {
+        border: 1px solid silver;
+        margin: 0 2px;
+        margin-top: $grid-gutter-width-md;
+        padding: .35em .625em .75em;
         .form-group {
-            padding-left: 0px;
-            padding-right: 0px;
+            padding-left: 0;
+            padding-right: 0;
         }
+    }
+    hr {
+        margin-top: 8px;
     }
     .checkbox-item {
         position: relative;
@@ -56,7 +84,7 @@
         }
     }
     .links {
-        margin: 10px 0px 0px 10px;
+        margin: 10px 0 0 10px;
         a {
             display: block;
             margin-bottom: 5px;
@@ -73,17 +101,16 @@
     .modal-note {
         font-size: 15px;
     }
-    .div-center {
-        /*width: 186px;*/
-        
+    /*    .div-center {
         margin: 50px auto;
-    }
-    .button-container-center {
+    }*/
+    /*    .button-container-center {
         margin: 33px auto;
         .btn-136 {
             width: 136px;
         }
-    }
+    }*/
+    
     .div-center-dates {
         width: 290px;
         margin: 10px auto;
@@ -95,17 +122,16 @@
     .table-scroll {
         max-height: 250px;
         overflow-y: scroll;
-        margin-right: 0px;
+        margin-right: 0;
     }
     .list-alert-checkbox {
         list-style: none;
         padding: 0;
         li {
-            margin: 10px 0px;
+            margin: 10px 0;
             div {
                 display: table-cell;
                 vertical-align: middle;
-                /* padding: 15px;   */
             }
             .alert {
                 width: 99%;
@@ -117,9 +143,6 @@
                 }
             }
         }
-    }
-    .no-padding {
-        padding: 0;
     }
     /* ngTagsInput */
     
@@ -138,8 +161,8 @@
             }
         }
         .host {
-            margin-top: 0px;
-            margin-bottom: 0px;
+            margin-top: 0;
+            margin-bottom: 0;
         }
     }
     .fileUpload {
@@ -177,8 +200,57 @@
     thead button,
     td button {
         border: none!important;
-        border-radius: 0px!important;
+        border-radius: 0!important;
         box-shadow: none!important;
         outline: none!important;
+    }
+}
+
+.modal::-webkit-scrollbar {
+    display: none;
+}
+ 
+select.form-control,
+input.form-control {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.rowFooter {
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.btn-footer {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    margin-bottom: 0;
+}
+
+.add-tsh-datepicker {
+    position: absolute;
+    left: 111px;
+    top: 28px; 
+    z-index: 1000;								
+    background-color: #fff;	
+    outline: 1px solid $gray-light; 
+}
+
+.add-exp-btn-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding-top: $grid-gutter-width-md + $grid-gutter-width-md;
+    > .btn {
+        margin-bottom: $grid-gutter-width-md / 2;
     }
 }

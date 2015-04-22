@@ -1,27 +1,27 @@
 <div class="">
-
+	
 	<div class="orig-grid-wrapper">
 
 	<!-- <div class="col-xs-12"> -->
-
-		<div class="form-group">
+		
+		<div class="form-group">	
 			<div class="col-xs-3">
 				<span type="text">
-          <input placeholder="Search by name or email" class="form-control" ng-change="filter()" ng-model="options.filterName" />
-        </span>
+          <input placeholder="Name" class="form-control" ng-change="filter()" ng-model="options.filterName" />
+        </span>	
 			</div>
 		</div>
-
-		<!--<div class="form-group">
+			
+		<div class="form-group">
 			<div class="col-xs-3">
 				<span type="text">
           <input placeholder="E-mail" class="form-control" ng-change="filter()" ng-model="options.filterEmail" />
         </span>
 			</div>
-		</div>-->
+		</div>
 
 		<!-- <div class="col-xs-2"> -->
-			<!--<button class="col-xs-1 btn btn-success">Go</button>-->
+			<button class="col-xs-1 btn btn-success">Go</button>
 		<!-- </div> -->
 
 	<!-- </div> -->
@@ -54,7 +54,7 @@
         	<td>{{item.createdDate | date:'yyyy-MM-dd'}}</td>
         	<td class="text-center"><a style="margin:4px;cursor:pointer" ui-sref="app.admin.user.home({id:item._id})"><i class="fa fa-eye"></i></a>
         	<a class="clickable" style="margin:4px;cursor:pointer" ng-click="lockUnlock($index)"><i ng-show="item.locked" class="fa fa-lock"></i><i ng-show="! item.locked" class="fa fa-unlock-alt"></i></a>
-        	<a style="margin:4px;cursor:pointer" href="#" tooltip-placement="bottom" tooltip="Password reset" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></a>
+        	<a style="margin:4px;cursor:pointer" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></a>
         	</td>
       </tr>
 

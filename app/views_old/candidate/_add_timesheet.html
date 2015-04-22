@@ -1,0 +1,200 @@
+<div class="modal-content modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title" id="myModalLabel">Add Timesheet</h3>
+    </div>
+    <!-- /modal-header -->
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 form-group">
+                Contractor Name:
+            </div>
+            <div class="col-xs-6 col-sm-4 form-group">
+                {{candidate.firstName}} {{candidate.lastName}}
+            </div>
+            <div class="col-xs-6 col-sm-3 form-group">
+                Contractor ID:
+            </div>
+            <div class="col-xs-6 col-sm-2 form-group">
+                {{candidate.candidateRef}}
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-7">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 form-group">
+                        <label>Select Agency</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-7 form-group">
+                        <select class="form-control" ng-model="saveAgency" ng-options="agency.agency.name for agency in agencies"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5">
+                <!--Bootstrap datepicker-->
+                <div class="form-group">
+                    <div class="input-group date" id="datepicker">
+                        <div ng-show="clicked == true" class="add-tsh-datepicker">
+                            <datepicker ng-model="claimDate" format-day="d" starting-day="weekEndingDay" max-date="minDate" show-weeks="false" id="claim_datepicker">
+                            </datepicker>
+                            <div class="col-xs-12 text-right" style="margin: 6px 0">
+                                <button class="btn btn-primary" ng-click="clicked =false">Cancel</button>
+                                <button class="btn btn-primary" ng-click="okay();clicked =false">OK</button>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder" ng-click="clicked = true" readonly style="cursor:text">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="clicked = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-3 col-sm-12 form-group">
+                <span>Rate</span>
+                <select ng-model="saveRate" class="col-sm-12 form-control" ng-options="rate._id as rate.name for rate in paymentRates"></select>
+            </div>
+            <div class="col-sm-12 form-group hidden-md hidden-lg">
+                <input type="text" class="form-control" placeholder="Enter description" />
+            </div>
+            <div class="col-md-7 col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 no-padding-right">
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                            <span>Unit</span>
+                            <input ng-model="elements.unit" type="number" class="form-control" />
+                        </div>
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                            <span>Pay Rate</span>
+                            <input min="0" ng-model="elements.payRate" type="number" class="form-control" />
+                        </div>
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                            <span>Charge&nbsp;Rate</span>
+                            <input ng-model='elements.chargeRate' type="text" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                            <span>Amount</span>
+                            <input ng-model="elements.amount" type="number" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                            <span>VAT</span>
+                            <input ng-model='elements.vat' type="text" class="form-control" disabled />
+                        </div>
+                        <div class="col-xs-2 form-group margin-8 text-center">
+                           <br>
+                            <button ng-disabled="!elements.payRate || !elements.unit" ng-click="populateTable()" type="button" class="btn btn-primary  btnSmall" style="width: 100%">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row hidden-sm hidden-xs">
+            <div class="col-md-5 form-group">
+                <input ng-model="userDescription" type="text" class="form-control" placeholder="Enter description" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+                    <thead id="tableHeader">
+                        <tr>
+                            <th>Rate</th>
+                            <th>Description</th>
+                            <th>Unit</th>
+                            <th>Pay Rate</th>
+                            <th>Charge Rate</th>
+                            <th>Amount</th>
+                            <th>VAT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr ng-repeat="element in finalElements">
+                            <td>{{element.elementName}}</td>
+                            <td>{{element.description}}</td>
+                            <td>{{element.units}}</td>
+                            <td>{{element.payRate}}</td>
+                            <td style="width: 15%;">n/a</td>
+                            <td>{{element.amount}}</td>
+                            <td>{{element.vat}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <!--<div class="tableWrapper">
+                    <table class="table table-striped" ></table>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <!-- /modal-body -->
+
+    <div class="modal-footer">
+        <div class="row rowFooter">
+            <div class="col-xs-6 col-sm-4 row nonepadding">
+                <fieldset class="no-margin-top">
+                    <legend>Upload Timesheet</legend>
+                    <div>
+                        <div class="col-sm-12 form-group">
+                            <!-- <div class="fileUpload btn btn-primary form-control"> -->
+                            <button class="btn btn-primary btn-block" onclick="$('#upload_file').click();">Browse</button>
+                            <input accept="image/*, application/pdf" type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;" />
+                        </div>
+
+
+                        <div class="col-sm-12 form-group">
+                            <button class="btn btn-primary btn-block" ng-disabled="isUploading || inSelectFile == false" ng-click="uploadFile()">
+                                <div ng-show="!isUploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+                                <div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
+
+                            </button>
+                        </div>
+                        <div class="col-sm-12 form-group" ng-show="isUploading">
+                            <button class="btn btn-primary btn-block" ng-disabled="!isUploading" ng-click="cancelUpload()">
+                                <div> &nbsp; Cancel Upload</div>
+                            </button>
+                        </div>
+                        <div class="col-sm-12 text-left" style="word-wrap:break-word">
+                            {{files.files[0].name}}
+                        </div>
+                        <div class="col-sm-12 text-left">
+                            {{uploadStatus}}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div class="row">
+                    <div class="col-xs-5 form-group labelDisabledInput">
+                        <label>NET</label>
+                    </div>
+                    <div class="col-xs-7 form-group">
+                        <input ng-model="net" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="col-xs-5 form-group labelDisabledInput">
+                        <label>VAT</label>
+                    </div>
+                    <div class="col-xs-7  form-group">
+                        <input ng-model="totalVat" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="col-xs-5 form-group labelDisabledInput">
+                        <label>Total</label>
+                    </div>
+                    <div class="col-xs-7 form-group">
+                        <input ng-model="total" type="text" class="form-control" disabled />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 btn-footer form-group">
+                <button ng-click="cancel()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button ng-disabled="addClicked == false || weekEndingDate == null" ng-click="ok()" type="button" class="btn btn-primary">Add Timesheet</button>
+            </div>
+        </div>
+    </div>
+    <!-- /modal footer -->
+</div>
+<!-- /modal content -->

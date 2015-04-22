@@ -1,0 +1,89 @@
+<div class="">
+
+	<div class="orig-grid-wrapper">
+
+	<!-- <div class="col-xs-12"> -->
+
+		<div class="form-group">
+			<div class="col-xs-3">
+				<span type="text">
+          <input placeholder="Search by name or email" class="form-control" ng-change="filter()" ng-model="options.filterName" />
+        </span>
+			</div>
+		</div>
+
+		<!--<div class="form-group">
+			<div class="col-xs-3">
+				<span type="text">
+          <input placeholder="E-mail" class="form-control" ng-change="filter()" ng-model="options.filterEmail" />
+        </span>
+			</div>
+		</div>-->
+
+		<!-- <div class="col-xs-2"> -->
+			<!--<button class="col-xs-1 btn btn-success">Go</button>-->
+		<!-- </div> -->
+
+	<!-- </div> -->
+  <div class="orig-grid-wrapper">
+  <table class="table table-striped">
+    <thead>
+      <tr >
+	        <th class="text-center">
+					<div>Name</div>
+				</th>
+				<th class="text-center">
+					<div>E-mail</div>
+				</th>
+				<th class="text-center">
+					<div>Last logged in</div>
+				</th>
+				<th class="text-center">
+					<div>Created</div>
+				</th>
+				<th class="text-center">
+					<div>Actions</div>
+				</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in allData" >
+        	<td>{{item.firstName}} {{item.lastName}}</td>
+        	<td>{{item.emailAddress}}</td>
+        	<td>{{item.lastLogin | date:'yyyy-MM-dd'}}</td>
+        	<td>{{item.createdDate | date:'yyyy-MM-dd'}}</td>
+        	<td class="text-center"><a style="margin:4px;cursor:pointer" ui-sref="app.admin.user.home({id:item._id})"><i class="fa fa-eye"></i></a>
+        	<a class="clickable" style="margin:4px;cursor:pointer" ng-click="lockUnlock($index)"><i ng-show="item.locked" class="fa fa-lock"></i><i ng-show="! item.locked" class="fa fa-unlock-alt"></i></a>
+        	<a style="margin:4px;cursor:pointer" href="#" tooltip-placement="bottom" tooltip="Password reset" ng-click="sendPasswardReset($index)"><i class="fa fa-arrow-right"></i></a>
+        	</td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+  <div class="orig-grid-pagination-wrapper">
+    <div class="page-rows-count">
+      <label>Results per page</label><br>
+      <div class="btn-group">
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="20">20</button>
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="40">40</button>
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="60">60</button>
+        <button class="btn btn-default" ng-change="loadAllUsers()" ng-model="options.limit" btn-radio="80">80</button>
+      </div>
+    </div>
+    <pagination
+      total-items="options.totalItems"
+      ng-model="options.currentPage"
+      items-per-page="options.limit"
+      max-size="options.maxVisiblePages"
+      class="pagination"
+      boundary-links="true"
+      rotate="false"
+      num-pages="options.numPages"
+      ng-change="loadAllUsers()"></pagination>
+  </div>
+</div>
+
+
+
+</div>
