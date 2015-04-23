@@ -18,6 +18,7 @@ angular.module('origApp.controllers')
             $('#datepickerTo').datepicker({
                 orientation: "top auto"
             });
+            $("#uploadFile").css({ 'word-wrap': "break-word" });
         });
 
         var readFile = function (file) {
@@ -38,8 +39,9 @@ angular.module('origApp.controllers')
         },
         loadImageData = function (file, filereader) {
             document.getElementById("uploadFile").innerHTML = file.name;
+            $("#uploadFile").css({ 'word-wrap': "break-word" });
             document.getElementById("fileSize").innerHTML = humanFileSize(file.size);
-            logs(humanFileSize(file.size), 'the mighty file');
+            logs(humanFileSize(file.size), 'the mighty file ' + file.name);
             var icon = document.getElementById('iconCheck');
             icon.classList.remove('fa', 'fa-spinner', 'fa-spin');
             icon.classList.add('fa', 'fa-check');
