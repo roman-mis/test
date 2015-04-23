@@ -37,6 +37,7 @@ angular.module('origApp.services')
               return false;
             }
             if(response.data && response.data.message){
+
               MsgService.alert(response.data.message, 'danger');
             }else{
               console.log(response);

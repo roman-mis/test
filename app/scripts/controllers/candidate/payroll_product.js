@@ -22,7 +22,7 @@ angular.module('origApp.controllers')
           $scope.candidateId = $stateParams.candidateId;
           $scope.$scope = $scope;
           $scope.product = {};
-          
+
           //define grid structure
           $scope.gridOptions = {
             isPagination: false,
@@ -37,7 +37,7 @@ angular.module('origApp.controllers')
             ],
             data: []
           };
-          
+
 
           $scope.getConstantDescription = function(constantKey, code) {
             var hashData = constantKey === 'agencies' ? $scope.agenciesHash : ConstantsResource.getHashData(constantKey);
@@ -65,7 +65,7 @@ angular.module('origApp.controllers')
             $scope.gridOptions.data = productResource.query(params, function() {});
           };
 
-          
+
 
           //delete product
           $scope.deleteProduct = function(product) {
@@ -86,13 +86,13 @@ angular.module('origApp.controllers')
           $scope.editProduct = function(product) {
             $scope.mode='edit';
             $scope.editId = product._id;
-            
+
             ModalService.open({
               templateUrl: 'views/candidate/_payroll_product_add_service.html',
               parentScope: $scope,
               controller: 'CandidatePayrollProductModalController'
             });
-          };   
+          };
 
           $scope.cancelEdit = function(){
             $scope.product = {};
@@ -116,13 +116,14 @@ angular.module('origApp.controllers')
         $scope.product = $scope.gridOptions.data[i];
         break;
       }
-    } 
+    }
   }else{
     $scope.product = {};
   }
 
   var productResource = HttpResource.model('candidates/' + $scope.candidateId + '/payrollproduct');
   $scope.agencies = angular.copy(parentScope.agencies);
+
 
   $scope.margins = angular.copy(parentScope.margins);
   $scope.holidayPayRules = angular.copy(parentScope.holidayPayRules);
@@ -134,8 +135,9 @@ angular.module('origApp.controllers')
     //save product information
     $scope.saveProduct = function() {
       var successCallback = function(response) {
+
         $scope.isSaving = false;
-        
+
         if (!HttpResource.flushError(response)) {
           //$scope.loadProducts();
           MsgService.success('Payroll Product Successfully Added.');
@@ -166,8 +168,8 @@ angular.module('origApp.controllers')
               break;
             }
           }
-        } 
-        if(notExistedAgency === true){  
+        }
+        if(notExistedAgency === true){
           $scope.isSaving = true;
           $scope.product = productResource.create($scope.product);
           $scope.product.post().then(successCallback);

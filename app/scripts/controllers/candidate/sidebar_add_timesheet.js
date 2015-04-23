@@ -290,9 +290,9 @@ angular.module('origApp.controllers')
     };
 
     $scope.cancel = function () {
-        if (!window.confirm('Are you sure you want to cancel?')) {
-            return;
-        }
+//        if (!window.confirm('Are you sure you want to cancel?')) {
+//            return;
+//        }
         $modalInstance.dismiss('cancel');
     };
 

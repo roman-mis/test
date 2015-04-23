@@ -1,0 +1,21 @@
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExp11Controller">
+  <div class="modal-header modal-headerExpenses">
+    <h4 class="modal-title" id="myModalLabel">Thank You</h4>
+    <small>Your expenses claim is being processed.</small>
+  </div><!-- /modal-header -->
+
+  <div class="modal-body">
+    <form class="form-inline">
+      <div class="form-group">
+        <label>Your unique claim reference number is </label>
+        <input type="text" class="form-control" ng-model="expenseData.claimReference">
+      </div>
+    </form>
+    <div class="alert alert-info complete-exp" role="alert">
+      If submitted after midday on Tuesday expenses will be included in the following week's salary.
+    </div>
+  </div><!-- /modal-body -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+  </div><!-- /modal footer -->
+</div>

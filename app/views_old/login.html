@@ -1,0 +1,19 @@
+<form name="myForm" ng-submit="submit()">
+    <div class="row">
+        <div class="large-6 large-centered columns">
+            {{message}}
+            <label>Username
+                <input ng-model="user.username" type="text" name="user" required placeholder="Username" />
+            </label>
+            <label>Password
+                <input ng-model="user.password" type="password" name="pass" required placeholder="Password" />
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-6 large-centered columns">
+            <input class="button" type="submit" value="Login" />
+            <input class="button signup" type="button" ng-click="signup()" value="Sign Up" />
+        </div>
+    </div>
+</form>

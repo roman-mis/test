@@ -1,4 +1,4 @@
-<div class="candidate-meta meta-box container-fluid">
+<div class="meta-box container-fluid">
     <div class='meta-box-inner row'>
         <div class="col-sm-8 col-md-9">
             <!--<div class="msg-box alert-danger hidden-sm hidden-xs">
@@ -11,28 +11,27 @@
                 <span class='message'>Email Address Required</span>
                 <span class='pointer fa fa-times-circle-o pull-right'></span>
             </div>-->
-
             <div class='alpha'>
                 <p class='candidate-name'>{{candidate.firstName}} {{candidate.lastName}}</p>
                 <p class='candidate-ref'>Ref: {{candidate.candidateRef}}</p>
             </div>
 
         </div>
-        <div class="col-sm-4 col-md-3">
-            <label style="color:#539347" ng-init="candidate.status=candidate.status?candidate.status:'Submitted'">Candidate Status</label>
-            <ui-select ng-model = "candidate.status" theme="select2" search-enabled="false" ng-change = "editCandidateStatus()">
+        <div class="col-sm-4 col-md-3" style="margin: 1em 0;">
+            <label>Candidate Status</label>
+            <ui-select ng-model="candidate.status" theme="select2" search-enabled="false" ng-change="editCandidateStatus()">
                 <ui-select-match>{{$select.selected.value}}</ui-select-match>
-                <ui-select-choices repeat = "item.value as item in candidateStatus">{{item.value}}</ui-select-choices>
+                <ui-select-choices repeat="item.value as item in candidateStatus">{{item.value}}</ui-select-choices>
             </ui-select>
         </div>
-<!--        <div class='pie-chat col-lg-3 hidden-md hidden-sm hidden-xs'></div>
+        <!--        <div class='pie-chat col-lg-3 hidden-md hidden-sm hidden-xs'></div>
         <div class="col-md-12 hidden-lg">
             <div class='alpha col-md-12 hidden-lg'>
                 <div class="pull-left">
                     <p class='candidate-name'>{{candidate.firstName}} {{candidate.lastName}}</p>
-                    <p class='candidate-ref'>Ref: {{candidate.candidateRef}}</p>
+                    <p class='candidate-ref'>Ref: {{candidate.candidateRef}}</p>    
                 </div>
-
+                
                 <div class='beta pull-right'>
                     <span>80%</span>
                     <span>onboard</span>
