@@ -81,8 +81,19 @@
                 class="fa fa-plus-square-o"></i>SL</span></a>
             </li>
 
+            <li collapse="isActionRequestCollapsed" style="height: 0;">
+                <a href=""
+                   ng-click="openP45()">
+                    <i class="fa fa-credit-card  btn-success"></i><span class="title">
+                        <i class="fa fa-plus-square-o"></i>P45
+                    </span>
+                </a>
+            </li>
+
+            <!--<li ng-if="!permissions.rightToolBar.agencies.hide"><a href="" ng-click="openCreateTaskWin({activityType: 'task'})"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AGENCIES</span></a>-->
             <li ng-if="!permissions.rightToolBar.agencies.hide"><a class="orig-button" href="" ng-click="openCreateTaskWin({activityType: 'task'})"><i class="fa fa-group green-brand"></i><span class="title"><i class="fa fa-plus-square-o"></i>AGENCIES</span></a>
             </li>
+
         </ul>
     </div>
 </div>
