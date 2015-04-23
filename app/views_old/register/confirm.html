@@ -1,0 +1,73 @@
+<div class="row form-header">
+    <div class="form-title">
+        Congratulations
+    </div>
+</div>
+<div class="row form-body">
+    <div class="col-xs-6 left-side">
+        <div class="from-title">
+            Registration completed
+        </div>
+        I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.
+        <br/>
+        <br/> But also this area could be used for notifications, validations and potentially the non UK national extra bit!
+    </div>
+    <div class="col-xs-6 right-side">
+        <form role="form" name="registerform" class="form-confirm" orig-validate-form>
+            <div class="form-group">
+                <span class="checkbox">
+                    <input type="checkbox" id="contact1" ng-model="$parent.confirm.ContactDetail1" required/>
+                    <label for="contact1">&nbsp;</label>
+                </span>
+                <span class="nonepadding">
+                    Contract Details
+                </span>
+            </div>
+            <div class="form-group">
+                <span class="checkbox">
+                    <input id="contact2" type="checkbox" ng-model="$parent.confirm.ContactDetail2" required/>
+                    <label for="contact2">&nbsp;</label>
+                </span>
+                <span class="nonepadding">
+                    Contract Details 2
+                </span>
+            </div>
+            <div class="form-group">
+                <span class="checkbox">
+                    <input id="bank" type="checkbox" ng-model="$parent.confirm.BankDetail" required/>
+                    <label for="bank">&nbsp;</label>
+                </span>
+                <span class="nonepadding">
+                    Bank Details
+                </span>
+            </div>
+            <div class="form-group">
+                <span class="checkbox">
+                    <input id="tax" type="checkbox" ng-model="$parent.confirm.TaxDetail" required/>
+                    <label for="tax">&nbsp;</label>
+                </span><span class="nonepadding">
+                    Tax Details
+                </span>
+            </div>
+            <span class="notice">
+            <br/>&nbsp;
+            <br/>
+            Once you click the submit button you will have
+            registered with {companyName} you will be
+            contacted soon to answer any questions we may
+            have.
+            </span>
+            <br/>
+            <br/>
+            <div class="form-group">
+                <span class="checkbox">
+                    <input id="accpetterms" type="checkbox" ng-model="$parent.confirm.AcceptTerms" required/>
+                    <label for="accpetterms">&nbsp;</label>
+                </span>
+                <span class="nonepadding">
+                    I accept the Originem T’s and C’s <span class="accepterms-lastchar">?</span>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

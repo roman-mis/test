@@ -1,0 +1,225 @@
+<div role="tabpanel" class="tab-pane" id="approvedMileageRates">
+            <div class="row">
+                <div class="col-xs-12">
+
+                     <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Restriction</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-mouseover="hover(0)" ng-mouseleave="leave(0)">
+                                <td>Petrol</td>
+                                <td>Up to 1400 cc</td>
+                                <td  class="col-xs-5">
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[0]"  ng-dblclick="showEditFn(0)">
+                                            &nbsp;{{mileageRates[mileageRatesNames[0]]}}
+                                            <span ng-show="viewIcon[0]" ng-click="showEditFn(0)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[0]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,0)"  >
+                                            </div>
+                                            <span ng-show="viewIcon[0]" ng-click="save(0)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[0]" ng-click="hide(0)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(1)" ng-mouseleave="leave(1)">
+                                <td>Petrol</td>
+                                <td>Between 1401 cc and 2000 cc</td>
+                                <td  class="col-xs-5">    
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[1]"  ng-dblclick="showEditFn(1)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[1]]}}
+                                            <span ng-show="viewIcon[1]" ng-click="showEditFn(1)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[1]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,1)"  >
+                                            </div>
+                                            <span ng-show="viewIcon[1]" ng-click="save(1)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[1]" ng-click="hide(1)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(2)" ng-mouseleave="leave(2)">
+                                <td>Petrol</td>
+                                <td>2001 cc and above</td>
+                                <td >    
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[2]"  ng-dblclick="showEditFn(2)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[2]]}}
+                                            <span ng-show="viewIcon[2]" ng-click="showEditFn(2)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[2]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,2)"  >
+                                            </div>
+
+                                            <span ng-show="viewIcon[2]" ng-click="save(2)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[2]" ng-click="hide(2)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(3)" ng-mouseleave="leave(3)">
+                                <td>Diesel</td>
+                                <td>Up to 1600 cc</td>
+                                <td >    
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[3]"  ng-dblclick="showEditFn(3)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[3]]}}
+                                            <span ng-show="viewIcon[3]" ng-click="showEditFn(3)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[3]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,3)"  >
+                                            </div>
+
+                                            <span ng-show="viewIcon[3]" ng-click="save(3)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[3]" ng-click="hide(3)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(4)" ng-mouseleave="leave(4)">
+                                <td>Diesel</td>
+                                <td>Between 1601 cc and 2000 cc</td>
+                                <td >    
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[4]"  ng-dblclick="showEditFn(4)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[4]]}}
+                                            <span ng-show="viewIcon[4]" ng-click="showEditFn(4)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[4]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,4)"  >
+                                            </div>
+
+                                            <span ng-show="viewIcon[4]" ng-click="save(4)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[4]" ng-click="hide(4)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(5)" ng-mouseleave="leave(5)">
+                                <td>LPG</td>
+                                <td>Upto 1400 cc</td>
+                                <td >    
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[5]"  ng-dblclick="showEditFn(5)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[5]]}}
+                                            <span ng-show="viewIcon[5]" ng-click="showEditFn(5)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[5]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,5)"  >
+                                            </div>
+
+                                            <span ng-show="viewIcon[5]" ng-click="save(5)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[5]" ng-click="hide(5)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(6)" ng-mouseleave="leave(6)">
+                                <td>LPG</td>
+                                <td>Between 1401 cc and 2000 cc</td>
+                                <td >    
+                                    <div >
+                                        <div>
+                                        <div style="width:100%" ng-hide="showEdit[6]"  ng-dblclick="showEditFn(6)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[6]]}}
+                                            <span ng-show="viewIcon[6]" ng-click="showEditFn(6)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[6]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,6)"  >
+                                            </div>
+
+                                            <span ng-show="viewIcon[6]" ng-click="save(6)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[6]" ng-click="hide(6)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-mouseover="hover(7)" ng-mouseleave="leave(7)">
+                                <td>LPG</td>
+                                <td>Above 2001 cc</td>
+                                <td >    
+                                    <div>
+                                        <div style="width:100%" ng-hide="showEdit[7]"  ng-dblclick="showEditFn(7)">
+                                            &nbsp;{{ mileageRates[mileageRatesNames[7]]}}
+                                            <span ng-show="viewIcon[7]" ng-click="showEditFn(7)" style="position:absolute; right:20px; cursor:pointer">
+                                                <i style="color:green;" class="fa fa-pencil"></i>
+                                            </span>
+                                        </div>
+                                        <div style="width:100%" ng-show="showEdit[7]">
+                                            <div style="width:80%;display:inline-block"  type="number">
+                                                <input  class="form-control" ng-model="tempValue" ng-keydown="getEvent($event,7)"  >
+                                            </div>
+
+                                            <span ng-show="viewIcon[7]" ng-click="save(7)" style="cursor:pointer">
+                                                <i style="color:green;" class="fa fa-check"></i>
+                                            </span>
+                                            <span ng-show="viewIcon[7]" ng-click="hide(7)" style="cursor:pointer">
+                                                <i style="color:red;" class="fa fa-times"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>

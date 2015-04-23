@@ -1,22 +1,12 @@
-// google font
 @import url('http://fonts.googleapis.com/css?family=Questrial');
+
+$fa-var-check: '';
 
 @import "global/variables";
 
-@import "libs/angular-ui-select/select2";
-
-$fa-var-check: "";
-$icon-font-path: "../fonts/"; //all fonts are deployed in fonts folder when building the system that is deployed to the server. should not reference to the bower_components folder
-
-// bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 @import "awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.scss";
-// endbower
 
-// purecss grids and responsiveness bundle
-@import "_pure";
-
-
+@import "libs/index";
 @import "global/index";
 @import "pages/index";
-@import "add_timesheet";

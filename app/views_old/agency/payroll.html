@@ -1,0 +1,54 @@
+<div class="col-xs-12">
+    <p class="entry-title">Default Invoicing <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgencyDefaultInvoicing()"><i class="fa fa-edit"></i></a>
+    </p>
+</div>
+<div class="col-xs-12">
+    <div class="row entry-content">
+        <div class="col-sm-5 nonepadding">
+            <div class="col-sm-12 form-group">Holiday Pay included <span class="meta">{{payrollData.defaultInvoicing.holidayPayIncluded?'Yes':'No'}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Employers NI included <span class="meta">{{payrollData.defaultInvoicing.employersNiIncluded?'Yes':'No'}}</span>
+            </div>
+            <div class="col-sm-12 form-group">VAT charged <span class="meta">{{payrollData.defaultInvoicing.invoiceVatCharged?'Yes':'No'}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Invoice Method <span class="meta">{{payrollData.defaultInvoicing.invoiceMethod.description}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Invoice Design <span class="meta">{{payrollData.defaultInvoicing.invoiceDesign.name}}</span>
+            </div>
+        </div>
+        <div class="col-sm-7 nonepadding">
+            <div class="col-sm-12 form-group">Invoice Email Primary
+                <a ng-href="mailto:{{payrollData.defaultInvoicing.invoiceEmailPrimary}}"><span class="meta-o">{{payrollData.defaultInvoicing.invoiceEmailPrimary}}</span></a>
+            </div>
+            <div class="col-sm-12 form-group">Invoice Email Secondary
+                <a ng-href="{{payrollData.defaultInvoicing.invoiceEmailSecondary}}"><span class="meta-o">{{payrollData.defaultInvoicing.invoiceEmailSecondary}}</span></a>
+            </div>
+            <div class="col-sm-12 form-group">Payment Terms <span class="meta">{{payrollData.defaultInvoicing.paymentTerms.description}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Invoice to <span class="meta">{{payrollData.defaultInvoicing.invoiceTo.name}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12">
+    <p class="entry-title">Default Payroll <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgencyDefaultPayroll()"><i class="fa fa-edit"></i></a>
+    </p>
+</div>
+<div class="col-sm-12">
+    <div class="row entry-content">
+        <div class="col-sm-5 nonepadding">
+            <div class="col-sm-12 form-group">Product Type <span class="meta">{{payrollData.defaultPayroll.productType.description}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Margin Charged to agency <span class="meta">{{payrollData.defaultPayroll.marginChargedToAgency?'Yes':'No'}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Margin Type <span class="meta">{{payrollData.defaultPayroll.marginType.description}}</span>
+            </div>
+        </div>
+        <div class="col-sm-7 nonepadding">
+            <div class="col-sm-12 form-group">Margin Amount <span class="meta">&#163;{{payrollData.defaultPayroll.marginAmount || '0'}}</span>
+            </div>
+            <div class="col-sm-12 form-group">Holiday Amount <span class="meta">{{payrollData.defaultPayroll.holidayAmount || '0'}}&percnt;</span>
+            </div>
+        </div>
+    </div>
+</div>

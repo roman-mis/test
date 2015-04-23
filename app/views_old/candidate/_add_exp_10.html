@@ -1,0 +1,57 @@
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExp10Controller">
+  <div class="modal-header modal-headerExpenses">
+    <h4 class="modal-title" id="myModalLabel">Expenses #8 | Review &amp; Confirm</h4>
+    <small>Please check and confirm the following claim details.</small>
+  </div><!-- /modal-header -->
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date
+                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                  <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                  <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                  <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                </a>
+              </th>
+              <th>Travel</th>
+              <th>Subsistence</th>
+              <th>Other</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in summaries| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+              <td>{{item.date| formatDate:'ddd DD/MM/YYYY'}}</td>
+              <td>&#163;{{item.transport | formatNumber}}</td>
+              <td>&#163;{{item.subsistence | formatNumber}}</td>
+              <td>&#163;{{item.other | formatNumber}}</td>
+              <td>&#163;{{item.total | formatNumber}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-xs-12">
+        <p class="pull-right">Grand Total: &#160;&#160;<span>&#163;{{summaries| rowsSum:'total' | formatNumber}}</span></p>
+        <div class="col-xs-12">
+          <p>Please confirm the above claims are wholly necesarry and exclusively incurred in the performance of your duties.</p>
+          <label>
+            <input type="checkbox" ng-model="isAgreedOnTerms"/> I agree to the above statement and the relevant <a href="#">T&#38;C's</a>
+          </label>
+        </div>
+      </div>
+    </div> 
+  </div><!-- /modal-body -->
+
+  <div class="modal-footer">
+    <a class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="expenseData.summaries.length == 0 || !isAgreedOnTerms || isSaving">
+      <div ng-show="!isSaving">Next</div>
+      <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> Saving...</div>
+    </button>
+  </div><!-- /modal footer -->
+</div>
