@@ -1,0 +1,280 @@
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=number],
+input[type=password],
+textarea,
+textarea.form-control,
+select.form-control {
+    border-radius: 0;
+    border: 1px solid $gray-light;
+    background-color: $white;
+    outline: none;
+    transition: all $trans-duration;
+    @include basic-transition();
+    &::placeholder {
+        color: $gray;
+        outline: none;
+    }
+    &:hover {
+        background-color: #fff;
+    }
+    &:focus {
+        background-color: #fff;
+        border-color: $gray-light;
+        @include box-green-shadow();
+    }
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-control {
+    height: $input-height;
+    line-height: $input-height;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.input-group-btn > button.btn.btn-default {
+    line-height: normal;
+    border-radius: 0;
+    background-color: $white;
+    border: 1px solid $gray-light;
+    height: $input-height;
+    width: $input-height-base;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    .fa {
+        width: 100%;
+    }
+}
+
+.input-group {
+    width: 100%;
+    .input-group-addon {
+        border: 1px solid $gray-light;
+        border-radius: 0;
+        border-right: 0;
+        width: $input-height-base;
+        padding: 0;
+        text-align: center;
+    }
+}
+
+.form-control:focus {
+    box-shadow: 0;
+}
+
+/*Date Picker*/
+
+.orig-datepicker {
+    input {
+        border-right: none;
+    }
+    &:hover input {
+        background-color: #fff;
+    }
+    .input-group-btn {
+        z-index: 10;
+        button {
+            height: $input-height;
+            border-left: 1px solid $gray-light;
+        }
+    }
+    &:hover .input-group-btn {
+        button {
+            background-color: #fff;
+            border-color: $gray-light;
+            margin-left: 0;
+            @include box-green-shadow();
+        }
+    }
+}
+/*IU-Select (Bootstrap Theme)*/
+
+.ui-select-bootstrap button {
+    height: $input-height - 1px;
+    border-radius: 0;
+    background: $gray-lightest;
+}
+
+.ui-select-bootstrap button .caret {
+    &::after {
+        content: " ";
+        width: $input-height - 1px;
+        height: $input-height - 1px;
+        border-left: solid 1px #ccc;
+        position: absolute;
+        top: -22px;
+        left: -20px;
+    }
+}
+/*Checkbox*/
+
+.checkbox {
+    margin-top: 0;
+}
+
+.checkbox input[type=checkbox]:checked + label:after {
+    padding-top: 3px;
+}
+
+.checkbox input[type=checkbox]:checked + label:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e013";
+}
+
+.checkbox label:after {
+    padding-left: 3px;
+    padding-top: 2px;
+    font-size: 7px;
+}
+/*Show Errors*/
+
+.form-group .alert {
+    margin-top: 6px;
+}
+
+input.ng-dirty.ng-invalid,
+div.ng-dirty.ng-invalid>button,
+div.ng-dirty.ng-invalid.select2,
+div.ng-dirty.ng-invalid.input-group {
+    border-color: red;
+}
+/*S3FileUploader*/
+
+.fileupoad-area {
+    position: relative;
+    .fileupload {
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        opacity: 1;
+    }
+    .fileinput {
+        opacity: 0;
+        z-index: 5;
+    }
+}
+/*Angular-UI-Select*/
+
+div.select2.select2-container {
+    width: 100%;
+    height: $input-height;
+    border: 1px solid $gray-light;
+    a, .select2-arrow {
+        background-color: $white;
+    }
+    &:hover {
+        @include box-green-shadow();
+        a, .select2-arrow {
+            background-color: #fff;
+        }
+    }
+    a {
+        height: $input-height - 2px;
+        border-radius: 0;
+        border-width: 0;
+        background-image: none;
+        line-height: $input-height - 2px;
+        padding: 0 $padding-base-horizontal;
+        .ng-binding {
+            height: $input-height - 2px;
+            line-height: $input-height - 2px;
+        }
+        .select2-arrow {
+            width: $input-height-base;
+            border-radius: 0;
+            background: none;
+            border-left: 1px solid $gray-light;
+            b {
+                background: none;
+                display: inline-block;
+                font: normal normal normal 14px/1 FontAwesome;
+                font-size: inherit;
+                text-align: center;
+                text-rendering: auto;
+                cursor: pointer;
+                &::before {
+                    content: "\f0dd";
+                    position: absolute;
+                    top: 3px;
+                    left: 0;
+                    right: 0;
+                }
+            }
+        }
+    }
+    .select2-drop-active {
+        border: 1px solid $gray-light;
+        border-radius: 0;
+    }
+    .select2-search {
+        margin-top: 5px;
+    }
+}
+
+div.select2.select2-container.select2-dropdown-open {
+    a .select2-arrow {
+        b::before {
+            content: "\f0de";
+            line-height: $input-height - 2px;
+            top: 3px;
+        }
+    }
+}
+
+div.select2.select2-container {
+    .ng-invalid-required[search-enabled="false"] {
+        .select2-chosen.ng-binding {
+            display: block !important;
+            white-space: normal;
+        }
+        .select2-chosen > span {
+            line-height: $input-height - 2px;
+        }
+    }
+}
+
+.select2-choice > .select2-chosen {
+    line-height: $input-height - 2px;
+    height: $input-height - 2px;
+    white-space: normal;
+}
+
+/*Dropdown calendar*/
+
+.orig-datepicker {
+    > ul.dropdown-menu {
+        padding: 3px;
+        > li:first-child {
+            thead tr:first-child button {
+                border: none;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+            tbody td > button {
+                border: none;
+                transition-duration: .1s;
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+            tbody td > button.active {
+                background-color: $green;
+                span {
+                    color: #fff;
+                }
+            }
+        }
+        > li:nth-child(2) {
+            display: none;
+        }
+    }
+}

@@ -44,8 +44,8 @@
                                             <i class="fa fa-bars"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
-                                            <li ng-click="batchSetRTP()">
-                                                <a style="cursor:pointer; color:#000000">Ready to Payroll</a>
+                                            <li ng-click="batchSetSubmitted()">
+                                                <a style="cursor:pointer; color:#000000">Revoke Status</a>
                                             </li>
                                             <li ng-click="selectAll()">
                                                 <a style="cursor: pointer; color: #000000">Select All</a>
@@ -87,8 +87,8 @@
                                             <i class="fa fa-bars"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-leftBottomBubble tOuter-dropdown" role="menu">
-                                            <li ng-click="setRTP(claim.id)">
-                                                <a style="cursor:pointer; color:#000000">Ready to Payroll</a>
+                                            <li ng-click="setSubmitted(claim.id)">
+                                                <a style="cursor:pointer; color:#000000">Revoke Status</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -135,8 +135,7 @@
                                                                         <th width="9%" class="text-right">Value</th>
                                                                         <th width="9%" class="text-right">VAT</th>
                                                                         <th width="9%" class="text-right">Total</th>
-                                                                        <th width="9%" class="text-center">Receipt</th>
-                                                                        <th width="11%" class="text-left">Status</th>
+                                                                        <th width="11%" class="text-right">Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody ng-if="test2[$index]">
@@ -159,20 +158,9 @@
                                                                         </td>
                                                                         <td width="10%">{{item.expenseDetail.vat | currency:"&pound;"}}</td>
                                                                         <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
-                                                                        <td width="6%" class="text-center">
-                                                                            <div ng-if="item.receiptUrls.length > 0">
-                                                                                <a style="cursor:pointer" ng-click="viewReceipt(item, claim)">
-                                                                                    <i class="fa fa-picture-o present"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div ng-if="item.receiptUrls.length == 0">
-                                                                                <a style="cursor:pointer">
-                                                                                    <i class="fa fa-picture-o absent"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                        </td>
 
-                                                                        <td width="12%" style="text-transform: capitalize; text-align:left" class="text-left">
+
+                                                                        <td width="12%" style="text-transform: capitalize">
                                                                             <div>{{item.status}}</div>
                                                                         </td>
                                                                     </tr>

@@ -147,7 +147,14 @@ angular.module('origApp.controllers')
             }
             var file = $scope.fileupload;
             var fileName = new Date().getTime().toString() + '_' + file.name;
-            var mimeType = file.type || 'text/plain';
+            var mimeType = file.type;
+            var fileType=mimeType.substr(0,mimeType.indexOf('/'));
+
+            if(mimeType !='application/pdf' && fileType !='image'){
+
+                MsgService.danger('You can only upload image and pdf file.');
+                return;
+            }
 
             $scope.isLogoUploading = true;
             HttpResource.model('documents/actionrequest').customGet('signedUrl', {

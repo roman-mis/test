@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-    .controller('CandidateSidebarController', function($scope, ModalService) {
+    .controller('CandidateSidebarController', function($scope, $rootScope, ModalService) {
 
         $scope.isActionRequestCollapsed = true;
 
@@ -127,6 +127,15 @@ angular.module('origApp.controllers')
                 parentScope:$scope,
                 controller:'slController',
                 size:'md'
+            })
+        };
+
+        $scope.openP45 = function () {
+            ModalService.open({
+                templateUrl: 'views/actionRequest/p45.html',
+                parentScope: $scope,
+                controller: 'p45Ctrl',
+                size: 'md'
             })
         };
 

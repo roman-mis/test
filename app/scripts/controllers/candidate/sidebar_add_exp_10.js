@@ -32,6 +32,7 @@ angular.module('origApp.controllers')
 
                             // if (!HttpResource.flushError(response)) {
                             $scope.expenseData.claimReference = response.data.claimReference;
+                            $scope.gotoLast();
                             // }
                         });
             };

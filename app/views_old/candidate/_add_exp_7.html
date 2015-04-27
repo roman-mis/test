@@ -1,0 +1,79 @@
+<div class="candidate-modal" ng-controller="CandidateSidebarAddExp7Controller">
+  <div class="modal-header modal-headerExpenses">
+    <h4 class="modal-title" id="myModalLabel">Expenses #5 | Subsistence</h4>
+    <small>Document subsistence expenses.</small>
+  </div><!-- /modal-header -->
+
+  <div class="modal-body">
+    <form class="form">
+      <div class="row">
+        <div class="form-group col-sm-4 col-xs-5">
+          <select class="form-control" ng-model="addData.date" 
+                  ng-options="day.object as day.label for day in expenseData.daysInRange">
+            <option value="">- Select -</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-3 col-xs-4">
+          <select class="form-control" ng-model="addData.type" 
+                  ng-options="type.name for type in mealTypes track by type._id" ng-change="onTypeChanged()">
+            <option value="">-Meal Type-</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-3 col-xs-3">
+          <div class="input-group">
+            <div class="input-group-addon">&#163;</div>
+            <input class="form-control" type="number" ng-model="addData.cost">
+          </div>
+        </div>
+        <div class="form-group col-sm-2">
+          <button type="button" class="btn btn-default form-control"
+                  ng-disabled="!addData.date || !addData.type || !addData.cost" ng-click="add()"><i class="fa fa-plus"></i> Add</button>
+        </div>
+      </div>
+      <div class="row" ng-show="addData.type.description==='Other'">
+        <div class="col-sm-3 col-sm-offset-4 col-xs-4 col-xs-offset-5">
+          <input type="text" class="form-control" placeholder="Description" ng-model="addData.description"/>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-striped" id="tableHeader">
+          <thead>
+            <tr>
+              <th>Date 
+                <a href="" class="pull-right" ng-click="sortDir = !sortDir">
+                  <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
+                  <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
+                  <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
+                </a>
+              </th>
+              <th>Meal Type</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="tableWrapper">
+          <table class="table table-striped" id="tableBody">
+            <tbody>
+              <tr ng-repeat="item in expenseData.subsistences | orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
+                <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
+                <td>{{item.type.description}}</td>
+                <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-xs-4 pull-right">
+        <p class="">Total: <span>&#163;{{expenseData.subsistences | rowsSum:'cost' | formatNumber}}</span></p>
+      </div>
+    </div> 
+  </div><!-- /modal-body -->
+
+  <div class="modal-footer">
+    <a class="btn pull-left" ng-click="gotoPrevious()"><i class="fa fa-chevron-left"></i></a>
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="">Next</button>
+  </div><!-- /modal footer -->
+</div>

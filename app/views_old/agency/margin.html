@@ -1,0 +1,230 @@
+	<div class="row">
+		
+
+	<div class="col-xs-6">
+	<div class="col-xs-6">
+		
+				<label style="color:#539347">Margin Type</label>
+            <ui-select ng-model = "marginFee.margin.marginType" theme="select2" search-enabled="false" ng-change = "save()">
+                <ui-select-match>{{$select.selected.desc}}</ui-select-match>
+                <ui-select-choices repeat = "item.type as item in marginTypes">{{item.desc}}</ui-select-choices>
+            </ui-select>
+			</div>
+		</div>
+	</div>
+		
+	</div>
+	<section class="tabs-payroll">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs row" role="tablist">
+			<li role="presentation" class="active"><a data-target="#fixedFee" aria-controls="fixedFee" role="tab" data-toggle="tab">Fixed Fee</a></li>
+			<li role="presentation"><a data-target="#percentOfTimesheets" aria-controls="percentOfTimesheets" role="tab" data-toggle="tab">% of Timesheets</a></li>
+			<li role="presentation"><a data-target="#totalHours" aria-controls="totalHours" role="tab" data-toggle="tab">Total Hours</a></li>
+			<li role="presentation"><a data-target="#fixedOnTimesheets" aria-controls="fixedOnTimesheets" role="tab" data-toggle="tab">Fixed on Timesheets</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+        <div class="tab-content">
+		  
+			<div role="tabpanel" class="tab-pane active" id="fixedFee">
+				<div class="row">
+					<div class="col-xs-6 col-sm-4 form-group">
+					  <input ng-model="marginFee.margin.fixedFee"type="text" class="form-control" placeholder="Enter amount">
+					</div>
+					<button ng-click="save()" class="btn btn-success pull-left">Save</button>
+				</div>
+			</div><!-- End Fixed Fee tab -->
+			
+			<div role="tabpanel" class="tab-pane" id="percentOfTimesheets">
+				<div class="row">
+					<form class="form-horizontal">
+						<div class="col-xs-12 col-sm-4">
+							<div class="form-group">
+								<label class="control-label col-xs-3" for="maxvalue">Max</label>
+								<div class="col-xs-9 form-group">
+									<input ng-model = "marginFee.margin.percentageOfTimesheets.maxAmount" type="text" class="form-control" id="maxvalue">
+
+								</div>
+							</div>
+						</div>		
+						<div class="col-xs-12 col-sm-4">	
+							<div class="form-group">
+								<label class="control-label col-xs-3" for="minvalue">Min</label>
+								<div class="col-xs-9 form-group">
+									<input ng-model = "marginFee.margin.percentageOfTimesheets.minAmount" type="text" class="form-control" id="minvalue">
+								</div>
+
+							</div>
+						</div>
+					</form>
+					<button ng-disabled="Number(marginFee.margin.percentageOfTimesheets.minAmount)>Number(marginFee.margin.percentageOfTimesheets.maxAmount)"ng-click="save()" class="btn btn-success pull-left">Save</button>
+					<div class="col-xs-12">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>From</th>
+									<th>To</th>
+									<th>%</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="timesheet in marginFee.margin.percentageOfTimesheets.ranges">
+									<td>
+										<div ng-hide="timesheet.isEdited">{{timesheet.from}}</div>
+										<div ng-show="timesheet.isEdited" class="row">
+											<div class="col-xs-12">
+												<input class="form-control" type="text" ng-model="timesheet.from" />
+											</div>
+										</div>
+									</td>
+									<td>
+										<div ng-hide="timesheet.isEdited">{{timesheet.to}}</div>
+										<div ng-show="timesheet.isEdited" class="row">
+											<div class="col-xs-12">
+												<input class="form-control" type="text" ng-model="timesheet.to" />
+											</div>
+										</div>
+									</td>
+									<td>
+										<div ng-hide="timesheet.isEdited">{{timesheet.charged}}%</div>
+										<div ng-show="timesheet.isEdited">
+											<div class="row">
+												<div class="col-xs-9 ">
+													<input class="form-control" type="text" ng-model="timesheet.charged" />
+												</div>
+												<div class="col-xs-3" style="padding-top: 7px;">%</div>
+											</div>
+										</div>
+										
+									</td>
+									<td width="60px" class="text-center">  
+										<div ng-hide="timesheet.isEdited">
+											<a href ng-click="timesheet.isEdited = !timesheet.isEdited;editTimesheets($index)">
+												<i class="fa  fa-pencil-square-o"></i>
+											</a>
+											<a href ng-click="timesheetsDeleteRow($index)"><i class="fa fa-trash"></i></a>
+										</div>	
+									
+										<div ng-show="timesheet.isEdited" style="padding-top: 14px;">
+											<a ng-hide="(Number(marginFee.margin.percentageOfTimesheets.ranges[$index-1].to)>=Number(timesheet.from))||(Number(timesheet.from)>=Number(timesheet.to))||(Number(timesheet.to)>=Number(marginFee.margin.timesheets.ranges[$index+1].to))||!timesheet.charged"href ng-click="save();timesheet.isEdited = !timesheet.isEdited">
+												<i class="fa fa-check"></i>
+											</a>
+											<a href ng-click="timesheet.isEdited = false;revertTimesheet($index)">
+												<i class="fa fa-close"></i>
+											</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-xs-12 form-group">
+						<button type="button" class="btn btn-success pull-right" ng-click="timesheetsAddRow()" style="margin-right: 3px;">
+							<i class="fa fa-plus" style="float: left;"></i> &nbsp; Add New
+						</button>
+						
+					</div>
+				</div>	
+			</div><!-- End % of Timesheets tab -->
+			
+			<div role="tabpanel" class="tab-pane" id="totalHours">
+				<div class="row">
+					<form class="form-horizontal">
+						<div class="col-xs-12 col-sm-4">
+							<div class="form-group">
+								<label class="control-label col-xs-3" for="maxvalue">Max</label>
+								<div class="col-xs-9 form-group">
+									<input ng-model = "marginFee.margin.totalHours.maxAmount" type="text" class="form-control" id="maxvalue" placeholder="&pound;">
+								</div>
+							</div>
+						</div>		
+						<div class="col-xs-12 col-sm-4">	
+							<div class="form-group">
+								<label class="control-label col-xs-3" for="minvalue">Min</label>
+								<div class="col-xs-9 form-group">
+									<input ng-model = "marginFee.margin.totalHours.minAmount" type="text" class="form-control" id="minvalue" placeholder="&pound;">
+								</div>		
+							</div>
+						</div>
+					</form>				
+					<button ng-disabled = "Number(marginFee.margin.totalHours.minAmount)>Number(marginFee.margin.totalHours.maxAmount)"ng-click="save()" class="btn btn-success pull-left">Save</button>
+					<div class="col-xs-12">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>From</th>
+									<th>To</th>
+									<th>Amount</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="totalHour in marginFee.margin.totalHours.ranges">
+									<td>
+										<div ng-hide="totalHour.isEdited">{{totalHour.from}}</div>
+										<div ng-show="totalHour.isEdited">
+											<div class="col-xs-12">
+												<input type="text" class="form-control" ng-model="totalHour.from">
+											</div>
+										</div>
+									</td>
+									<td>
+										<div ng-hide="totalHour.isEdited">{{totalHour.to}}</div>
+										<div ng-show="totalHour.isEdited">
+											<div class="col-xs-12">
+												<input type="text" class="form-control" ng-model="totalHour.to">
+											</div>
+										</div>
+									</td>
+									<td>
+										<div ng-hide="totalHour.isEdited">&pound;{{totalHour.charged}}</div>
+										<div ng-show="totalHour.isEdited">
+											<div class="col-xs-3 col-sm-2" style="padding-top: 7px;">&pound;</div>
+											<div class="col-xs-9 col-sm-10">
+												<input type="text" class="form-control" ng-model="totalHour.charged">
+											</div>
+										</div>
+									</td>
+									<td width="60px" class="text-center">  
+										<div ng-hide="totalHour.isEdited">
+											<a href ng-click="totalHour.isEdited = !totalHour.isEdited;editHours($index)">
+												<i class="fa  fa-pencil-square-o"></i>
+											</a>
+											<a href ng-click="hoursDeleteRow($index)"><i class="fa fa-trash"></i></a>
+										</div>	
+									
+										<div ng-show="totalHour.isEdited" style="padding-top: 7px;">
+											<a ng-hide="(Number(marginFee.margin.totalHours.ranges[$index-1].to)>=Number(totalHour.from))||(Number(totalHour.from)>=Number(totalHour.to))||(Number(totalHour.to)>=Number(marginFee.margin.totalHours.ranges[$index+1].to))||!totalhour.charged"href ng-click="save();totalHour.isEdited = !totalHour.isEdited">
+												<i class="fa fa-check"></i>
+											</a>
+
+											<a href ng-click="totalHour.isEdited= false;revertHour($index);">
+												<i class="fa fa-close"></i>
+											</a>
+										</div>	
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-success pull-right" ng-click="hoursAddRow()" style="margin-right: 3px;">
+							<i class="fa fa-plus" style="float: left;"></i> &nbsp; Add New
+						</button>
+					</div>
+				</div>	
+			</div> <!-- End Total Hours tab -->
+			
+			<div role="tabpanel" class="tab-pane" id="fixedOnTimesheets">
+				<div class="row">
+					<div class="col-xs-6 col-sm-4 form-group">
+						<input ng-model = "marginFee.margin.fixedOnTimesheets" type="text" class="form-control" placeholder="Enter amount">
+					</div>
+					<button ng-click="save()" class="btn btn-success pull-left">Save</button>
+				</div>
+			</div> <!-- End Fixed on timesheets tab -->
+			
+        </div>
+	</section>
+ 

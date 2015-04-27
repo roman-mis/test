@@ -1,12 +1,11 @@
 <div>
-
 <div class="form-group col-xs-12">
 	<div class="col-xs-2 ">
 		<label class="control-label">First Name*</label>
 	</div>
 	<div class="col-xs-4">
 		<span type="text" >
-			<input class="form-control" ng-model="user.firstName" ng-disabled="user.locked" required/>
+			<input class="form-control" ng-model="user.firstName" required/>
 		</span>
 	</div>
 </div>
@@ -17,7 +16,7 @@
 	</div>
 	<div class="col-xs-4">
 		<span type="text" >
-			<input class="form-control" ng-model="user.lastName" ng-disabled="user.locked" required/>
+			<input class="form-control" ng-model="user.lastName" required/>
 		</span>
 	</div>
 </div>
@@ -28,7 +27,7 @@
 	</div>
 	<div class="col-xs-4">
 		<span type="text" >
-			<input class="form-control" ng-model="user.emailAddress" ng-disabled="user.locked" required/>
+			<input class="form-control" ng-model="user.emailAddress" required/>
 		</span>
 	</div>
 </div>
@@ -39,18 +38,15 @@
 	</div>
 	<div class="col-xs-4">
 		<span type="text" >
-			<select class="form-control" ng-options="type.code as type.name for type in types" ng-disabled="user.locked" ng-model="user.userType" required >
-
+			<select class="form-control" ng-options="type.code as type.name for type in types" ng-model="user.userType" required >
+				
 			</select>
 		</span>
 	</div>
 </div>
 <div class="col-xs-6">
-<div class="pull-left col-xs-offset-8">
-	<a class="btn btn-default" ng-href="/admin/users" >Ok</a>
-</div>
 <div class="pull-right">
-	<button class="btn btn-success" ng-click="update()" ng-disabled="user.locked"><i class="fa fa-refresh"></i>&nbsp; Update</button>
+	<button class="btn btn-success" ng-click="update()"><i class="fa fa-refresh"></i>&nbsp; Update</button>
 </div>
 </div>
 </div>
