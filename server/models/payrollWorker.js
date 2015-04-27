@@ -50,8 +50,8 @@ module.exports = function(mongoose) {
         },
         netPay: Number,
         salary: {
-            totalForNmw: Number,
-            commissions: Number,
+            totalForNmw: Number, 
+            commissions: Number, //bonus
             payBetweenAssignments: Number
         },
         rti: {
@@ -62,12 +62,14 @@ module.exports = function(mongoose) {
             niCategory: String,
             
         },
-        payments: [
+        payments: [ // Other payments
             {
                 amount: Number,
                 date: Date
             }
         ]
+
+        //other deduction
     });
     
     return mongoose.model('PayrollWorker',schema);

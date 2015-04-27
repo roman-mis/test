@@ -130,6 +130,8 @@ module.exports = function(db){
 			createdBy: req.user.id,
 			startedDate: new Date(),
 			submittedDate: new Date(),
+
+			source: request.source,
 			days: expense.days
 		};
 

@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-12 form-group">
                 <span>Rate</span>
-                <select ng-model="saveRate" class="col-sm-12 form-control" ng-options="rate._id as rate.name for rate in paymentRates"></select>
+                <select ng-model="saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates"></select>
             </div>
             <div class="col-sm-12 form-group hidden-md hidden-lg">
                 <input type="text" class="form-control" placeholder="Enter description" />

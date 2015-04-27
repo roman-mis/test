@@ -8,6 +8,7 @@ module.exports = function (dbs) {
       service = {};
     var enums = require('../utils/enums');
     var mailer = require('../mailing/mailer');
+    var dataList = require('../data/data_list.json');
 
     service.getExpenses = function (request) {
         return Q.Promise(function (resolve, reject) {
@@ -32,20 +33,99 @@ module.exports = function (dbs) {
 
 
     service.saveExpenses = function (expenseDetails) {
-        console.log(expenseDetails); console.log(expenseDetails.days);
-        console.log('here wer are');
-        var deff = Q.defer();
-        var expenseModel;
-        expenseModel = new db.Expense(expenseDetails);
-        expenseModel.save(function (err) {
-            if (err) {
-                deff.reject(err);
-            } else {
-                console.log('save success');
-                deff.resolve(expenseModel);
-            }
+        console.log(expenseDetails);
+        return Q.promise(function (resolve,reject){
+            var q = db.System.find().select('statutoryTables.vat expensesRate mileageRates');
+            var q1 = db.User.find({_id:expenseDetails.user}).select('worker.vehicleInformation');
+            Q.all([Q.nfcall(q.exec.bind(q)), Q.nfcall(q1.exec.bind(q1))]).then(function(res){
+                var fuels = dataList.Fuels;
+                var userVehicleInformation = res[1][0].worker.vehicleInformation[0];
+                var expensesRate = res[0][0].expensesRate;
+                var mileageRates = res[0][0].mileageRates;
+                var allVatRates = res[0][0].statutoryTables.vat;
+                var valuesForTransport = [0.45, 0.25, 0.2];
+                var now= Date.now();
+                var vatRate = 0;
+                console.log(now);
+                // get vatRate
+                for (var i = 0; i < allVatRates.length; i++) {
+                    if(now >= Date.parse(allVatRates[i].validFrom) && now <= Date.parse(allVatRates[i].validTo)  ){
+                        vatRate = allVatRates[i].amount/100;
+                        break;
+                    }
+                }
+
+                for (i = 0; i < expenseDetails.days.length; i++) {
+                    for (var j = 0; j < expenseDetails.days[i].expenses.length; j++) {
+                        if(expenseDetails.days[i].expenses[j].expenseType === 'Subsistence' || expenseDetails.days[i].expenses[j].expenseType === 'Other'){
+                            for (var k = 0; k < expensesRate.length; k++) {
+                                if(expensesRate[k]._id+'' === expenseDetails.days[i].expenses[j].subType+''){
+                                    // expenseDetails.days[i].expenses[j].vatApplicable = expensesRate[k].taxApplicable;
+                                    expenseDetails.days[i].expenses[j].vat = 0;
+                                    if(expensesRate[k].taxApplicable === true){
+                                        expenseDetails.days[i].expenses[j].vat = vatRate*expenseDetails.days[i].expenses[j].value;
+                                    }
+                                }
+                            }
+                        }else{
+                            // transport 
+                            if (expenseDetails.days[i].expenses[j].expenseType === 'Transport') {
+                                expenseDetails.days[i].expenses[j].value = 0;
+                                expenseDetails.days[i].expenses[j].vat = 0;
+                                if (expenseDetails.days[i].expenses[j].subType === 'Car / Van') {
+                                    expenseDetails.days[i].expenses[j].value = valuesForTransport[0];
+                                    var fuelType = userVehicleInformation.fuelType;
+                                    var engineSize = userVehicleInformation.engineSize;
+                                    var piece = {
+                                        fuelCode: fuelType,
+                                        engineCode: engineSize
+                                    };
+                                    fuels.forEach(function (item) {
+                                        if (fuelType === item.code) {
+                                            piece.fuelType = item.description;
+                                            item.engineSizes.forEach(function (minor) {
+                                                if (engineSize === minor.code) {
+                                                    piece.engineSize = minor.description;
+                                                }
+                                            });
+                                        }
+                                    });
+                                    if (piece.fuelCode === '1' && piece.engineCode === '1') {
+                                        expenseDetails.days[i].expenses[j].vat =
+                                            mileageRates.petrolUpTo1400 * vatRate;
+                                    } else if (piece.fuelCode === '2' && piece.engineCode === '1') {
+                                        expenseDetails.days[i].expenses[j].expenseDetail.vat =
+                                            mileageRates.dieselUpTo1600 * vatRate;
+                                    } else if (piece.fuelCode === '3' && piece.engineCode === '1') {
+                                        expenseDetails.days[i].expenses[j].vat =
+                                        mileageRates.lpgUpTo1400 * vatRate;
+                                    }
+                                } else if (expenseDetails.days[i].expenses[j].subType === 'Motorbike') {
+                                    expenseDetails.days[i].expenses[j].value = valuesForTransport[1];
+                                } else if (expenseDetails.days[i].expenses[j].subType === 'Bicycle') {
+                                    expenseDetails.days[i].expenses[j].value = valuesForTransport[2];
+                                }
+                            }
+                        }
+                        expenseDetails.days[i].expenses[j].total = 
+                        expenseDetails.days[i].expenses[j].amount * 
+                        (expenseDetails.days[i].expenses[j].value + expenseDetails.days[i].expenses[j].vat);
+                    }
+                }
+                var expenseModel;
+                expenseModel = new db.Expense(expenseDetails);
+                Q.nfcall(expenseModel.save.bind(expenseModel))
+                .then(function(){
+                    resolve(expenseModel);
+                },function(err){
+                    reject(err);
+                });
+            },function(err){
+                reject(err);
+            });
+
         });
-        return deff.promise;
+        
     };
 
     service.getAllExpenses = function (request, approvedOnly) {
@@ -467,6 +547,18 @@ module.exports = function (dbs) {
     };
 
 
+    service.getExpensesByCandidatesIds = function(ids){
+        //expected [id1,id2,...]
+        var q;
+        var promisArray = [];
+        console.log(ids);
+        ids.forEach(function(id){
+            q = db.Expense.find({'user':id});
+            console.log('88888888888888888');
+            promisArray.push(Q.nfcall(q.exec.bind(q)));
+        });
+        return Q.all(promisArray);
+    };
 
     service.setClaimsSubmitted = function (data) {
         console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&****************************');

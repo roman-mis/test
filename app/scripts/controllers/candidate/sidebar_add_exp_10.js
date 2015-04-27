@@ -4,16 +4,15 @@ angular.module('origApp.controllers')
             $scope.types = ConstantsResource.get('otherexpensetypes');
             $scope.ok = function () {
                 $scope.isSaving = true;
+                $scope.sendData.source = 'wizard';                                 
                 HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses')
                         .create($scope.sendData)
                         .post()
                         .then(function (response) {
+                            console.log(response);
                             $scope.isSaving = false;
-
-                            // if (!HttpResource.flushError(response)) {
                             $scope.expenseData.claimReference = response.data.claimReference;
                             $scope.gotoNext();
-                            // }
                         });
             };
 
@@ -23,13 +22,13 @@ angular.module('origApp.controllers')
                     expense: $scope.generateSendData(),
                     vehicleInformation: $scope.expenseData.vehicleInfo
                 };
-                $scope.isSaving = true;
+                // $scope.isSaving = true;
                 console.log($scope.sendData);
                 HttpResource.model('candidates/' + $scope.mainData.candidateId + '/expenses')
                         .create($scope.sendData)
                         .post()
                         .then(function (response) {
-                            $scope.isSaving = false;
+                            // $scope.isSaving = false;
 
                             // if (!HttpResource.flushError(response)) {
                             $scope.expenseData.claimReference = response.data.claimReference;
