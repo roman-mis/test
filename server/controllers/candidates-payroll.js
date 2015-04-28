@@ -70,6 +70,13 @@ module.exports = function(db){
       });
     };
 
+    controller.getCandidatesPayrollProducts=function (req,res){
+      candidatepayrollservice.getCandidatesPayrollProducts(req.params.candidateId, req.params.productId)
+      .then(function(payrollProduct){
+        res.json(payrollProduct);
+      });
+    };
+
     function getPayrollProduct(candidateId, productId){
       var deff=Q.defer();
       candidatepayrollservice.getPayrollProductDetails(candidateId)
@@ -95,6 +102,19 @@ module.exports = function(db){
         .then(function(payrollProducts){
           if(payrollProducts){
             res.json({result:true, objects: payrollProducts});
+          }
+          else{
+            res.json({result:false, message:'Payroll Product Information not found'});
+          }
+        },res.sendFailureResponse);
+    };
+
+    controller.getCandidatesPayrollProducts=function (req,res){
+      candidatepayrollservice.getCandidatesPayrollProducts(JSON.parse(req.params.candidateIds))
+        .then(function(payrollProducts){
+          if(payrollProducts){
+            console.log('ooooooooooooooooooooooooooooooooo');
+            res.json({result:true, objects: JSON.parse(req.params.candidateIds)});
           }
           else{
             res.json({result:false, message:'Payroll Product Information not found'});

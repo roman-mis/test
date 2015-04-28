@@ -89,6 +89,19 @@ module.exports=function(dbs){
 		});
 	};
 
+	service.getCandidatesPayrollProducts = function(candidateRefNo){
+		return Q.promise (function (resolve,reject){
+			var q = db.User.find({candidateNo:12}).select('_id');
+			Q.nfcall(q.exec.bind(q)).then(function(data){
+				console.log(data);
+				resolve(0);
+			},function(err){
+				console.log(err);
+				resolve(0);
+			});
+		});
+	};
+
 	service.updatePayrollTaxDetails=function(userId, payrollTaxDetails){
 		var deff=Q.defer();
 		candidatecommonservice.getUser(userId)

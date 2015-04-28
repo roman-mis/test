@@ -7,6 +7,11 @@ module.exports = function(mongoose) {
     var schema = new BaseSchema({
         worker: { type: Schema.Types.ObjectId, ref:'User' },
         payroll: { type: Schema.Types.ObjectId, ref:'Payroll' },
+        // agencies: [
+        //     {
+        //         agency:{ type: Schema.Types.ObjectId, ref:'Payroll' }
+        //     }
+        // ],
         nmw: Number,
         hoursWorked: Number,
         marginTotal: Number,
@@ -50,8 +55,8 @@ module.exports = function(mongoose) {
         },
         netPay: Number,
         salary: {
-            totalForNmw: Number,
-            commissions: Number,
+            totalForNmw: Number, 
+            commissions: Number, //bonus
             payBetweenAssignments: Number
         },
         rti: {
@@ -62,12 +67,14 @@ module.exports = function(mongoose) {
             niCategory: String,
             
         },
-        payments: [
+        payments: [ // Other payments
             {
                 amount: Number,
                 date: Date
             }
         ]
+
+        //other deduction
     });
     
     return mongoose.model('PayrollWorker',schema);

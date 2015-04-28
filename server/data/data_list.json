@@ -1126,6 +1126,9 @@
                     "breadCrump": {
                         "hide": true
                     },
+                    "candidateStatus": {
+                        "editable": false
+                    },
                     "taps": {
                         "Home": {
                             "hide": false
@@ -1140,7 +1143,13 @@
                             "hide": false
                         },
                         "Agencies": {
-                            "hide": false
+                            "hide": false,
+                            "addExpesesHistory":{
+                                "hide":true
+                            },
+                            "exceptionHistoryControls":{
+                                "hide":true
+                            }
                         },
                         "Compliance": {
                             "hide": true

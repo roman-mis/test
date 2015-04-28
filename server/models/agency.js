@@ -3,7 +3,7 @@
 var Schema=require('mongoose').Schema;
 var BaseSchema=require(__dirname+'/baseschema');
 
-module.exports = function(mongoose) {
+module.exports = function(mongoose,autoIncrement) {
   	
 	var schema = new BaseSchema({
 		name: 				       {type:String},
@@ -92,7 +92,10 @@ module.exports = function(mongoose) {
             }
       }
     
-	},{});
+	},{
+
+  });
+    schema.plugin(autoIncrement.plugin,{model:'User',field:'agencyNo',startAt:1,incrementBy:1});
 	// mongoose.model('AgencyBranch',branchSchema);
   	return mongoose.model('Agency',schema);
 };
