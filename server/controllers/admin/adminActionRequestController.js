@@ -63,6 +63,21 @@ module.exports = function(dbs){
 
 	};
 
+	controller.postP45 = function (req, res) {
+	    var detail = {
+	        'type': enums.actionRequestTypes.P45,
+	        'status': enums.statuses.Submitted,
+	        worker: req.params.userId,
+	        p45: req.body.p45,
+	        imageUrl: req.body.imageUrl,
+	        createdBy: req.user.id
+
+	    };
+
+	    postActionRequest(req, res, detail, enums.actionRequestTypes.P45);
+
+	};
+
 	controller.postHolidayPay=function(req,res){
 		var detail={
 			'type':enums.actionRequestTypes.HolidayPay,
@@ -99,7 +114,7 @@ module.exports = function(dbs){
 		console.log(detail);
 		return Q.Promise(function(resolve,reject){
 			adminActionRequestService.saveActionRequest(req.params.userId,detail)
-			.then(function(response){
+			.then(function (response) {
 				res.json({result:response.result,object:response.object.actionRequestModel});
 				resolve(response);
 			})
@@ -196,9 +211,9 @@ module.exports = function(dbs){
 
 controller.getActionRequestDataById =function(req, res){
 	adminActionRequestService.getActionRequestDataById(req.params.id)
-    		.then(function(response){
+    		.then(function (response) {
     		if(response){
-    			var actionrequests = getActionRequestDataByIdVm(response);
+    		    var actionrequests = getActionRequestDataByIdVm(response);
     			res.json({result:true,object: actionrequests});
     		}else{
     			res.json({result:false, message : 'actionRequestData not found.'});
@@ -235,7 +250,8 @@ controller.getActionRequestDataById =function(req, res){
 		startDate : data.startDate,
 		endDate : data.endDate,
 		smp : data.smp,
-		spp : data.spp,
+		spp: data.spp,
+        p45: data.p45,
 		holidayPay : data.holidayPay,
 		studentLoan : data.studentLoan,
 		imageUrl : data.imageUrl,
@@ -295,7 +311,8 @@ controller.getActionRequestDataById =function(req, res){
 			actualStartDate  : req.body.actualStartDate,
 			// requestRef : req.body.requestRef,
 			smp :req.body.smp,
-			spp : req.body.spp,
+			spp: req.body.spp,
+            p45: req.body.p45,
 			holidayPay : req.body.holidayPay,
 			studentLoan : req.body.studentLoan,
 			imageUrl : req.body.imageUrl,

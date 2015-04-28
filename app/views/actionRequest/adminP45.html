@@ -96,7 +96,7 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-xs-6 col-sm-3 form-group">Candidate Name</div>
-                <div class="col-xs-6 col-sm-3 form-group no-padding-left">{{candidate.firstName}}&nbsp;{{candidate.lastName}}</div>
+                <div class="col-xs-6 col-sm-3 form-group no-padding-left">{{candidate.name}}</div>
                 <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
                 <div class="col-xs-6 col-sm-3 form-group no-padding-left">{{candidate.candidateRef | number}}</div>
             </div>
@@ -104,13 +104,13 @@
                 <div class="col-xs-6 col-sm-3 control-label">Date Requested</div>
                 <div class="col-xs-6 col-sm-3 form-group no-padding-left">
                     <div class="input-group date" id="datepickerFrom">
-                        <div class="input-group" required ng-model="dateRequested" placeholder="Date requested" orig-datepicker />
+                        <div class="input-group" required ng-model="p45Object.p45.dateRequested" placeholder="Date requested" orig-datepicker />
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-3 control-label">Leaving Date</div>
                 <div class="col-xs-6 col-sm-3 form-group no-padding-left">
                     <div class="input-group date" id="datepickerTo">
-                        <div class="input-group" required ng-model="leavingDate" placeholder="Leaving date" orig-datepicker />
+                        <div class="input-group" required ng-model="p45Object.p45.leavingDate" placeholder="Leaving date" orig-datepicker />
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                         <h4 style="margin-top: 0;">File details &nbsp;&nbsp;<i id="iconCheck"></i></h4>
                         <div class="row form-group">
                             <div class="col-xs-3">Name</div>
-                            <div class="col-xs-9" id="uploadFileCustom" style="word-wrap:break-word"></div>
+                            <div class="col-xs-9" id="uploadFileCustom" style="word-wrap:break-word">{{p45Object.imageUrl}}</div>
                         </div>
                         <div class="row form-group">
                             <div class="col-xs-3">Size</div>
@@ -159,7 +159,19 @@
 
                 <div class="col-xs-6 col-sm-5 text-right btnFooter form-group">
                     <a href="" type="button" class="btn" data-dismiss="modal" ng-click="cancel()">Cancel</a>
-                    <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="form.$invalid">Save</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Action</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a ng-click="save()">Save</a></li>
+                            <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
+                            <li><a ng-click="saveAndReject()">Save and Reject</a></li>
+                            <li><a ng-click="saveAndRefer()">Save and Refer</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div><!-- /modal footer -->
