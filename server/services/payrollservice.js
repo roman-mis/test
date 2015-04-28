@@ -569,7 +569,7 @@ module.exports=function(dbs){
                                                           }
 
                                                       }).then(function(){
-                                                          log('saving payrollworkerYTD');
+                                                          // log('saving payrollworkerYTD');
                                                           timesheetPromises = timesheetPromises.then(function () {
                                                               var employersNiOnNmw = 0;
 

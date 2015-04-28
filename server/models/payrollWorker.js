@@ -7,6 +7,11 @@ module.exports = function(mongoose) {
     var schema = new BaseSchema({
         worker: { type: Schema.Types.ObjectId, ref:'User' },
         payroll: { type: Schema.Types.ObjectId, ref:'Payroll' },
+        // agencies: [
+        //     {
+        //         agency:{ type: Schema.Types.ObjectId, ref:'Payroll' }
+        //     }
+        // ],
         nmw: Number,
         hoursWorked: Number,
         marginTotal: Number,

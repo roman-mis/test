@@ -30,8 +30,11 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
       return name;
     };
 
+
+      
+ 
     // get items ...
-    $scope.days    = [];
+    // $scope.days    = [];
     var day     = {};
     var dateArr = {};
     var expense = [];
@@ -39,9 +42,10 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
     var subTypes = ['Breakfast', 'One Meal Rate', 'Two Meal Rate', 'Training Courses', 'Stationery', 'Other'];
     console.log(expenses);
 
-
+    var claim = [];
     function createDays(){
       for (var i = 1; i < expenses.length; i++){
+        claim[i] = {days: []};
         if(!expenses[i][3] && !expenses[i][0]){
           continue;
         }
@@ -49,8 +53,8 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
       expense = [];
       console.log(i);
       dateArr = expenses[i][3].split('/');
-      day.date = Date(dateArr[2], dateArr[1], dateArr[0]);
-      day.source = 'import';
+      console.log(dateArr);
+      day.date = new Date(dateArr[2], dateArr[1]-1, dateArr[0]);
       for(var j = 4; j < 10; j++){
         expense.push({
           expenseType: expenseTypes[j-4],
@@ -62,8 +66,21 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
         });
       }
       day.expenses = angular.copy(expense);
-      $scope.days.push(angular.copy(day));  
+      claim[i].days.push(angular.copy(day));  
+      claim[i].source = 'import';
     }
+
+
+    var nums = JSON.stringify([1,2,3]);
+      var payrollProducts = HttpResource.model('candidates/payrollproduct/'+nums).query({},function(res){
+        console.log(res);
+        // $scope.agencies = [];
+        // angular.forEach(payrollProducts, function(pp) {
+        //   if($scope.agencies.indexOf(pp.agency)===-1) {
+        //     $scope.agencies.push(pp.agency); 
+        //   }
+        // });
+      });
   }
 
 
@@ -75,7 +92,7 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
     first = true;
     if(second === true){
       createDays();
-      console.log($scope.days);
+      console.log(claim);
     }
   });
 
@@ -85,7 +102,7 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
     second = true;
     if(first === true){
       createDays();
-      console.log($scope.days);
+      console.log(claim);
     }
   });
 
