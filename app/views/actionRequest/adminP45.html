@@ -1,0 +1,179 @@
+﻿<style>
+    .modal::-webkit-scrollbar {
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: 8px;
+    }
+
+    .control-label {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: left;
+        font-weight: normal;
+    }
+
+    .no-padding-left {
+        padding-left: 0;
+    }
+
+    .line-horizontal {
+        border-bottom: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .fieldsetRequestP45 {
+        border: 1px solid silver;
+        margin: 0 2px;
+        padding: .35em .625em .75em;
+    }
+
+        .fieldsetRequestP45 legend {
+            margin-bottom: 0;
+            font-size: 16px;
+            width: auto;
+            padding-left: 5px;
+            padding-right: 5px;
+            border: 0;
+            white-space: normal;
+            line-height: inherit;
+            color: #333;
+            display: block;
+        }
+
+    .modal-footer-textLeft {
+        padding: 20px 0;
+        text-align: left;
+    }
+
+    .rowFooter {
+        position: relative;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .btnFooter {
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        padding-left: 0;
+        margin-right: 15px;
+    }
+
+    .fileUpload {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .fileUpload input.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+    #uploadFile {
+        border: none;
+        box-shadow: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background-color: #fff;
+    }
+</style>
+<div class="modal-content">
+    <form novalidate name="form">
+        <div class="modal-header">
+            <h4 class="modal-title">Request P45</h4>
+        </div><!-- /modal-header -->
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-3 form-group">Candidate Name</div>
+                <div class="col-xs-6 col-sm-3 form-group no-padding-left">{{candidate.name}}</div>
+                <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+                <div class="col-xs-6 col-sm-3 form-group no-padding-left">{{candidate.candidateRef | number}}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-3 control-label">Date Requested</div>
+                <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                    <div class="input-group date" id="datepickerFrom">
+                        <div class="input-group" required ng-model="p45Object.p45.dateRequested" placeholder="Date requested" orig-datepicker />
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-3 control-label">Leaving Date</div>
+                <div class="col-xs-6 col-sm-3 form-group no-padding-left">
+                    <div class="input-group date" id="datepickerTo">
+                        <div class="input-group" required ng-model="p45Object.p45.leavingDate" placeholder="Leaving date" orig-datepicker />
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /modal-body -->
+
+        <div class="modal-footer modal-footer-textLeft">
+            <div class="row rowFooter">
+                <div class="col-xs-6 col-sm-7">
+                    <fieldset class="fieldsetRequestP45">
+                        <legend>Files</legend>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 form-group">
+                                <div>
+                                    <button class="btn btn-primary btn-block form-control" onclick="$('#uploadBtn').click();">Browse</button>
+                                    <input id="uploadBtn" type="file" accept="image/*" onchange="angular.element(this).scope().generatePreview(this)" style="display: none;" />
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 form-group">
+                                <button ng-click="uploadFile()" ng-disabled="uploading" type="button" class="btn btn-primary form-control img-details">
+                                    <div ng-show="!uploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+                                    <div ng-show="uploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="uploading">
+                            <div class="col-xs-12 col-sm-6"></div>
+                            <div class="col-xs-12 col-sm-6">
+                                <button ng-click="cancelUpload()" type="button" class="btn btn-warning form-control">
+                                    <div>Cancel Upload</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <h4 style="margin-top: 0;">File details &nbsp;&nbsp;<i id="iconCheck"></i></h4>
+                        <div class="row form-group">
+                            <div class="col-xs-3">Name</div>
+                            <div class="col-xs-9" id="uploadFileCustom" style="word-wrap:break-word">{{p45Object.imageUrl}}</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-3">Size</div>
+                            <div class="col-xs-9" id="fileSize"></div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="col-xs-6 col-sm-5 text-right btnFooter form-group">
+                    <a href="" type="button" class="btn" data-dismiss="modal" ng-click="cancel()">Cancel</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Action</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a ng-click="save()">Save</a></li>
+                            <li><a ng-click="saveAndApprove()">Save and Approve</a></li>
+                            <li><a ng-click="saveAndReject()">Save and Reject</a></li>
+                            <li><a ng-click="saveAndRefer()">Save and Refer</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /modal footer -->
+    </form>
+</div><!-- /modal content -->

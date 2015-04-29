@@ -1,0 +1,79 @@
+﻿<!--no reason-->
+<div class="modal-header">
+    <h3 class="modal-title">Rejections Summary</h3>
+</div>
+<form novalidate name="form">
+    <div class="modal-body">
+        <table class="table table-striped">
+            <thead ng-repeat-start="claim in objects">
+                <tr>
+                    <th colspan="5">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h3 style="color: #0b830b">
+                                    Claim ID:&nbsp;
+                                    {{claim.claimRef}}
+                                </h3>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3 style="color: #0b830b">
+                                    Full Name:&nbsp;
+                                    {{claim.userName}}
+                                </h3>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-repeat-end>
+                <tr ng-repeat-start="cat in claim.categories">
+                    <th colspan="5" style="color: #933c03">{{$index + 1}}.&nbsp;{{cat}}</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Type</th>
+                    <th>Total</th>
+                    <th>Reason</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat-start="expense in claim.expenses" ng-if="expense.type == cat">
+                    <td></td>
+                    <td>{{expense.subType}}</td>
+                    <td>{{expense.total | currency:"&pound;"}}</td>
+                    <td>
+                        <select class="form-control" ng-model="expense.reason" required>
+                            <option value="" disabled selected style="display: none;">-Select-</option>
+                            <option value="No receipt">No receipt</option>
+                            <option value="Receipt not valid">Receipt not valid</option>
+                            <option value="Not wholly necessary">Not wholly necessary</option>
+                            <option value="Other">Other (please elaborate)</option>
+                        </select>
+                    </td>
+                    <td>
+                        <a style="cursor:pointer" ng-click="expense.cancel()">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-repeat-end ng-if="expense.reason == 'Other' && expense.type == cat">
+                    <td colspan="5">
+                        <div class="form-group col-xs-8 col-xs-offset-2">
+                            <span type="text">
+                                <input required class="form-control" placeholder="Please elaborate"
+                                       ng-model="expense.other" />
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat-end></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">Save</button>
+        <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()">
+            Reject & Send Notifications
+        </button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

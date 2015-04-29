@@ -6,7 +6,7 @@ module.exports=function(dbs){
 	// var candidateService=require('../candidateservice')(db);
 	var candidateCommonService=require('../candidatecommonservice')(db);
 	var timesheetService=require('../timesheetservice')(db);
-	var payrollService=require('../payrollservice')(db);
+	// var payrollService=require('../payrollservice')(db);
 	var systemService=require('../systemservice')(db);
 	var enums=require('../../utils/enums');
 	var _=require('lodash');
@@ -387,6 +387,20 @@ module.exports=function(dbs){
 		var q=db.ActionRequest.findById(id).populate('worker').populate('createdBy');
 	return Q.nfcall(q.exec.bind(q));
 	};
+
+
+    service.getActionRequestByCandidatesIds = function(ids){
+        //expected [id1,id2,...]
+        var q;
+        var promisArray = [];
+        console.log(ids);
+        ids.forEach(function(id){
+          q = db.ActionRequest.find({'worker':id});
+          console.log('88888888888888888');
+          promisArray.push(Q.nfcall(q.exec.bind(q)));
+        });
+        return Q.all(promisArray);
+    };
 
 	return service;
 };

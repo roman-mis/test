@@ -167,7 +167,7 @@
                                         </tr>
                                         <!--category basic info-->
                                         <tr ng-repeat-end>
-                                            <!--category detailed info-->
+                                            <!--category detailed info-->   
                                             <td colspan="12" class="td-collapsed">
                                                 <div ng-if="test2[$index]" style="border: 3px solid #888888;" id="{{'accordion'+ $parent.$index + 'inner'+ $index}}" class="">
                                                     <table  class="table table-striped expenses-auth">
@@ -198,7 +198,7 @@
                                                                 <div ng-hide="element.edit">
                                                                     {{element.description}}
                                                                 </div>
-                                                                <div ng-hide="!element.edit" class="gropu-control">
+                                                                <div ng-if="element.edit" class="group-control">
                                                                     <span type="text">
                                                                         <input class="form-control" ng-model="element.editData.description" placeholder="{{element.description}}"/>
                                                                     </span>
@@ -206,19 +206,21 @@
                                                             </td>
                                                             <td class="text-center">
                                                                 <div ng-hide="element.edit">
-                                                                    {{element.elementType}}    
+                                                                    {{element.elementName}}    
                                                                 </div>
-                                                                <div ng-hide="!element.edit" class="gropu-control">
-                                                                    <span type="text">
-                                                                        <input class="form-control"ng-model="element.editData.elementType" placeholder="{{element.elementType}}"/>
-                                                                    </span>
+                                                                <div ng-show="element.edit" class="group-control" >
+                                                                    <div class="col-xs-12">
+                                                                        <select class="form-control" ng-model="element.editData.elementType" 
+                                                                         ng-options="rate._id as rate.name for rate in paymentRates"></select>
+                                                                    </div>
+                                                                        <!-- <input class="form-control"ng-model="element.editData.elementType" placeholder="{{element.elementType}}"/> -->
                                                                 </div>
                                                             </td>
                                                             <td class="text-center">
                                                                 <div ng-hide="element.edit">
                                                                     {{element.units}}    
                                                                 </div>
-                                                                <form name="unitsForm" ng-hide="!element.edit" class="gropu-control">
+                                                                <form name="unitsForm" ng-if="element.edit" class="group-control">
                                                                     <span type="text">
                                                                         <input name="units" class="form-control" ng-pattern="/^[0-9]/" ng-model="element.editData.units" placeholder="{{element.units}}"/>
                                                                     </span>
@@ -228,7 +230,7 @@
                                                                 <div ng-hide="element.edit">
                                                                     {{element.payRate | currency:"&pound;"}}    
                                                                 </div>
-                                                                <form name="payRateForm" ng-hide="!element.edit" class="gropu-control">
+                                                                <form name="payRateForm" ng-if="element.edit" class="group-control">
                                                                     <span type="text">
                                                                         <input name="payRate" class="form-control" ng-pattern="/^[0-9]/" ng-model="element.editData.payRate" placeholder="{{element.payRate}}"/>
                                                                     </span>
@@ -244,9 +246,9 @@
                                                             <td class="text-center">{{element.total | currency:"&pound;"}}</td>
                                                             <td width="8%" class="text-left">
                                                             <div>
-                                                                <a ng-if="element.edit" style="cursor:pointer" ng-click="element.edit=false; finishEditing(batchIndex,timesheetIndex,elementIndex, false)"><i class="fa fa-times"></i></a>
+                                                                <a ng-if="element.edit" style="cursor:pointer" ng-click="element.edit=false;finishEditing(batchIndex,timesheetIndex,elementIndex, false)"><i class="fa fa-times"></i></a>
                                                                 <a ng-if="element.edit" style="cursor:pointer" ng-click="element.edit = finishEditing(batchIndex,timesheetIndex,elementIndex, true,payRateForm.payRate.$valid,unitsForm.units.$valid)"><i class="fa fa-check"></i></a>
-                                                                <a ng-hide="element.edit" style="cursor:pointer" ng-click="element.edit = true"><i class="fa fa-pencil-square-o"></i></a>
+                                                                <a ng-hide="element.edit" style="cursor:pointer" ng-click="element.edit = true; element.editData.elementType = element.elementType"><i class="fa fa-pencil-square-o"></i></a>
                                                             </div>
                                                             </td>
                                                             </tr>

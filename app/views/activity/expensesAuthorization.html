@@ -183,21 +183,21 @@
                                                                     </div>
                                                                 </td>
 
-                                                                <td width="10%">
+                                                                <td width="10%" class="text-right">
                                                                     <div ng-hide="item.edit">{{item.amount | currency:""}}</div>
                                                                     <div ng-if="item.edit">
                                                                         <input style="width: 5em" type="number" placeholder="amount" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount" />
                                                                     </div>
                                                                 </td>
 
-                                                                <td width="9%">
+                                                                <td width="9%" class="text-right">
                                                                     <div ng-hide="item.edit && cat != 'Transport'">{{item.value | currency:"&pound;"}}</div>
                                                                     <div ng-if="item.edit && cat != 'Transport'">
                                                                         <input style="width: 5em" type="number" placeholder="value" ng-model="cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].value" />
                                                                     </div>
                                                                 </td>
-                                                                <td width="10%">{{item.expenseDetail.vat? item.expenseDetail.vat:0 | currency:"&pound;"}}</td>
-                                                                <td width="10%">{{item.expenseDetail.total | currency:"&pound;"}}</td>
+                                                                <td width="10%" class="text-right">{{item.expenseDetail.vat? item.expenseDetail.vat:0 | currency:"&pound;"}}</td>
+                                                                <td width="10%" class="text-right">{{item.expenseDetail.total | currency:"&pound;"}}</td>
 
                                                                 <td width="6%" class="text-center">
                                                                     <div ng-if="item.receiptUrls.length > 0">
@@ -207,7 +207,7 @@
                                                                     </div>
                                                                     <div ng-if="item.receiptUrls.length == 0">
                                                                         <a style="cursor:pointer" ng-click="viewReceipt(item, expense)">
-                                                                            <i class="fa fa-picture-o absent"></i>
+                                                                            <i style="color:red" class="fa fa-picture-o absent"></i>
                                                                         </a>
                                                                     </div>
                                                                 </td>

@@ -1,17 +1,13 @@
-<div class="container-fluid payroll-home gutter-right">
+<div class="container-fluid payroll-home">
     <div class="span12">
         <div class="panel panel-default top-spacer">
             <div class="panel-heading">Payroll Overview<select class="form-control" ng-change="getPayroll(periodType)" ng-model="periodType" ng-options="option.code as option.description for option in periodTypeValues"></select></div>
             <div class="panel-body  panel-custom ">
-
                 <div class="row col-xs-12">
                     <div class="col-xs-offset-10 col-xs-2">
-
                     </div>
-
                 </div>
                 <div class="payroll-overview row col-xs-12">
-
                     <ul>
                         <li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
                             <h5>Schedules Uploaded</h5><a ng-click="viewCompanies('Schedules Uploaded')" style="cursor:pointer">{{payroll.stats.schedulesUploaded}}</a>
@@ -35,11 +31,9 @@
                         </li>
                         <li class="dropdown"><i class="fa fa-file-excel-o fa-3x icon-center"></i>
                             <h5>Number of Payrolls Unpaid</h5><a ng-click="viewCompanies('Number of Payrolls Unpaid')" style="cursor:pointer">{{payroll.stats.payrollsUnpaid}}</a>
-
                         </li>
                     </ul>
                 </div>
-
                 <div class="payroll-overview">
                     <div style="margin-top: 150px; padding: 0" class="view-all">
                         <button type="button" class="btn btn-primary" ng-click="viewAction()">View All</button>
@@ -48,6 +42,7 @@
             </div>
         </div>
     </div>
+    
     <div class="span12">
         <div class="panel panel-default">
             <div class="panel-heading">Pre-Payroll</div>
@@ -69,7 +64,7 @@
                         <a href ng-click="importTimesheets()">Import&nbsp;Timesheets</a>
                     </li>
                     <li ng-file-select="onFileSelect($files)">
-                        <a href>Import&nbsp;Expenses</a>
+                        <a href >Import&nbsp;Expenses</a>
                     </li>
                     <li>
                         <a ng-href="#">Import&nbsp;Margin</a>
@@ -78,6 +73,7 @@
             </div>
         </div>
     </div>
+    
     <div class="span12 bottom-spacer">
         <div class="panel panel-default">
             <div class="panel-heading">Payroll</div>
@@ -119,9 +115,9 @@
                 </ul>
             </div>
         </div>
+        
         <div class="span12 payroll-buttons">
             <div class="payroll-btn-wrapper">
-
                 <button type="button" class="btn btn-primary"  ui-sref="app.payroll.actionRequest">Action&nbsp;Requests</button>
                 <button ui-sref="app.payroll.timesheets" type="button" class="btn btn-primary">Timesheets</button>
                 <button type="button" class="btn btn-primary">Invoices</button>
@@ -136,4 +132,3 @@
         </div>
     </div>
 </div>
-<!-- /container -->

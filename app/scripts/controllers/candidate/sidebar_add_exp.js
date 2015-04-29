@@ -14,6 +14,10 @@ angular.module('origApp.controllers')
                 $scope.mainData.step++;
             };
 
+            $scope.gotoLast = function () {
+                $scope.mainData.step = 11;
+            }
+
             $scope.gotoPrevious = function () {
                 $scope.mainData.step--;
             };
@@ -152,7 +156,8 @@ angular.module('origApp.controllers')
                                 subType: item.type._id,
                                 value: item.value,
                                 amount: item.amount,
-                                description: item.type.name
+                                description: item.type.name,
+                                receiptUrls: item.receiptUrls ? item.receiptUrls : []
                             });
                         }
                     });
@@ -165,7 +170,8 @@ angular.module('origApp.controllers')
                                 subType: item.type._id,
                                 value: item.value,
                                 amount: item.amount,
-                                description: item.type.name
+                                description: item.type.name,
+                                receiptUrls: item.receiptUrls ? item.receiptUrls : []
                             });
                         }
                     });

@@ -1,0 +1,30 @@
+<div class='candidate-main meta-box container-fluid'>
+    <div ng-init="selectObj={};selectObj.selectedTabId=active;selectObj.isCollapsed=true"></div>
+    <div class="row visible-sm visible-xs">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" ng-click="selectObj.isCollapsed = !selectObj.isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand visible-sm visible-xs">{{captionName}}</span>
+        </div>
+    </div> 
+    <section class='tabs-wrapper row'>        
+        <ul class="nav nav-tabs collapse navbar-collapse" collapse="selectObj.isCollapsed">
+            <li ng-class="{active:selectObj.selectedTabId==tab.id}" ng-repeat="tab in tabs">
+                <a href="" ng-click="selectObj.selectedTabId=tab.id;selectObj.isCollapsed=true">{{tab.name}}</a>
+            </li>
+        </ul>
+        <div class="edit-panel hidden-sm hidden-xs">
+            <a href="#"><i class="fa fa-arrows"></i></a>
+            <a href="#"><i class="fa fa-chevron-down"></i></a>
+        </div>
+        <div class='tab-content col-xs-12' ng-show="selectObj.selectedTabId==tab.id" ng-repeat="tab in tabs">
+            <ng-include src="tab.page" ng-if="!tab.controller"></ng-include>
+            <ng-include src="tab.page" ng-controller="tab.controller" ng-if="tab.controller && !tab.controllerAs"></ng-include>
+            <ng-include src="tab.page" ng-controller="tab.controller as tab.controllerAs" ng-if="tab.controller && tab.controllerAs"></ng-include>
+        </div>
+    </section>
+</div>

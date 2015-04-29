@@ -1,0 +1,80 @@
+<div class='candidate-main meta-box container-fluid row'>
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.home" ng-class="{
+                'active'
+                : status.home}">
+            <accordion-heading>
+                Home<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.home, 'glyphicon-chevron-up': !status.home}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-home.html'"></div>
+        </accordion-group>
+
+        <accordion-group is-open="status.contact" ng-class="{
+                'active'
+                : status.contact}">
+            <accordion-heading>
+                Contact<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.open, 'glyphicon-chevron-up': !status.contact}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-contact.html'"></div>
+        </accordion-group>
+
+        <accordion-group is-open="status.payroll" ng-class="{
+                'active'
+                : status.payroll}">
+            <accordion-heading>
+                Payroll<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.payroll, 'glyphicon-chevron-up': !status.payroll}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-payroll.html'"></div>
+        </accordion-group>
+
+        <accordion-group is-open="status.payslips" ng-class="{
+                'active'
+                : status.payslips}">
+            <accordion-heading>
+                Payslips<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.payslips, 'glyphicon-chevron-up': !status.payslips}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-payslips.html'"></div>
+        </accordion-group>
+
+        <accordion-group is-open="status.agencies" ng-class="{
+                'active'
+                : status.agencies}">
+            <accordion-heading>
+                Agencies<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.agencies, 'glyphicon-chevron-up': !status.agencies}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-agencies.html'"></div>
+        </accordion-group>
+
+        <accordion-group is-open="status.compliance" ng-class="{
+                'active'
+                : status.compliance}">
+            <accordion-heading>
+                Compliance<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.compliance, 'glyphicon-chevron-up': !status.compliance}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-compliance.html'"></div>
+        </accordion-group>
+
+        <accordion-group is-open="status.history" ng-class="{
+                'active'
+                : status.history}">
+            <accordion-heading>
+                History<i class="pull-right glyphicon" ng-class="{
+                        'glyphicon-chevron-down'
+                        : status.history, 'glyphicon-chevron-up': !status.history}"></i>
+            </accordion-heading>
+            <div ng-include="'mockup/candidate-tab-history.html'"></div>
+        </accordion-group>
+    </accordion>
+</div>

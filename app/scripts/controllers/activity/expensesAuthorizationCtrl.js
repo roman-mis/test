@@ -5,13 +5,15 @@ app.controller("expensesAuthorizationCtrl",
     ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal', 'Notification',
     function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal, Notification) {
 
+        var valuesForTransport = [0.45, 0.25, 0.2];
+
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/activity/home', text: 'Activity' },
                                   { link: '/activity/expensesAuthorization', text: 'Expenses Authorisation' }
         ];
         $scope.options = {
-            currentPage:1,
-            limit:20
+            currentPage: 1,
+            limit: 20
         };
         $scope.loadExpenses = function () {
             var params = {};
@@ -23,28 +25,28 @@ app.controller("expensesAuthorizationCtrl",
             } else {
                 params._offset = 0;
             }
-           // if ($scope.filterFirstName) {
-           //      params.firstName_contains= $scope.filterFirstName;
-           //  }
-        HttpResource.model('candidates/expenses').query(params, function (expenses) {
-            logs('getting expenses done !!');
-            console.log(expenses.data.object);
-            $scope.system = expenses.data.object.system[0];
-            logs($scope.system, 'system doc');
-            $scope.expensesArray = expenses.data.object.claims;
-            $scope.options.totalItems = expenses.data.object.totalCount;
-            console.log($scope.options);
-            $scope.system.statutoryTables.vat.forEach(function (time) {
-                var validFrom = new Date(time.validFrom);
-                var validTo = new Date(time.validTo);
-                var current = new Date();
-                if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
-                    $scope.globalVat = time.amount / 100;
-                    logs($scope.globalVat, 'global vat');
-                }
+            // if ($scope.filterFirstName) {
+            //      params.firstName_contains= $scope.filterFirstName;
+            //  }
+            HttpResource.model('candidates/expenses').query(params, function (expenses) {
+                logs('getting expenses done !!');
+                console.log(expenses.data.object);
+                $scope.system = expenses.data.object.system[0];
+                logs($scope.system, 'system doc');
+                $scope.expensesArray = expenses.data.object.claims;
+                $scope.options.totalItems = expenses.data.object.totalCount;
+                console.log($scope.options);
+                $scope.system.statutoryTables.vat.forEach(function (time) {
+                    var validFrom = new Date(time.validFrom);
+                    var validTo = new Date(time.validTo);
+                    var current = new Date();
+                    if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+                        $scope.globalVat = time.amount / 100;
+                        logs($scope.globalVat, 'global vat');
+                    }
+                });
+                init();
             });
-            init();
-        });
 
 
 
@@ -208,33 +210,86 @@ app.controller("expensesAuthorizationCtrl",
                                 $scope.pendingRejections.indexOf($scope.expensesArray[expenseIndex].expenses[i]), 1);
                         }
 
+                        var subType = '';
+                        if ($scope.cloned[expenseIndex].expenses[i].expenseType == 'Subsistence') {
+                            for (var j = 0; j < $scope.mealTypes.length; j++) {
+                                var newSub = $scope.cloned[expenseIndex].expenses[i].expenseDetail.name;
+                                if (newSub == $scope.mealTypes[j].name) {
+                                    subType = $scope.mealTypes[j]._id;
+                                    $scope.cloned[expenseIndex].expenses[i].expenseDetail.id = subType;
+                                    break;
+                                }
+                            }
+                        } else if ($scope.cloned[expenseIndex].expenses[i].expenseType == 'Other') {
+                            for (var j = 0; j < $scope.otherTypes.length; j++) {
+                                var newSub = $scope.cloned[expenseIndex].expenses[i].expenseDetail.name;
+                                if (newSub == $scope.otherTypes[j].name) {
+                                    subType = $scope.otherTypes[j]._id;
+                                    $scope.cloned[expenseIndex].expenses[i].expenseDetail.id = subType;
+                                    break;
+                                }
+                            }
+                        } else {
+                            subType = $scope.cloned[expenseIndex].expenses[i].expenseDetail.name;
+                        }
+
+                        $scope.cloned[expenseIndex].expenses[i].expenseDetail.vat = 0; // resetting for all types
+                        // recalculating vat for Subsistence and Other
+                        $scope.system.expensesRate.forEach(function (doc) {
+                            if ($scope.cloned[expenseIndex].expenses[i].expenseDetail.id == doc._id) {
+                                if (doc.taxApplicable) {
+                                    //logs('doing right');
+                                    $scope.cloned[expenseIndex].expenses[i].expenseDetail.vat =
+                                        $scope.cloned[expenseIndex].expenses[i].value * $scope.globalVat;
+                                }
+                            }
+                        });
+
+                        // recalculating vat and value for trasport
+                        if ($scope.cloned[expenseIndex].expenses[i].expenseType == 'Transport') {
+                            $scope.cloned[expenseIndex].expenses[i].value = 0;
+                            if ($scope.cloned[expenseIndex].expenses[i].expenseDetail.name == 'Car / Van') {
+                                $scope.cloned[expenseIndex].expenses[i].value = valuesForTransport[0];
+                                var fuelType = $scope.cloned[expenseIndex].user.worker.vehicleInformation[0].fuelType;
+                                var engineSize = $scope.cloned[expenseIndex].user.worker.vehicleInformation[0].engineSize;
+                                var piece = {
+                                    fuelCode: fuelType,
+                                    engineCode: engineSize
+                                };
+                                $scope.fuels.forEach(function (item) {
+                                    if (fuelType == item.code) {
+                                        piece.fuelType = item.description;
+                                        item.engineSizes.forEach(function (minor) {
+                                            if (engineSize == minor.code) {
+                                                piece.engineSize = minor.description;
+                                            }
+                                        });
+                                    }
+                                });
+                                if (piece.fuelCode == '1' && piece.engineCode == '1') {
+                                    $scope.cloned[expenseIndex].expenses[i].expenseDetail.vat =
+                                        $scope.system.mileageRates.petrolUpTo1400 * $scope.globalVat;
+                                } else if (piece.fuelCode == '2' && piece.engineCode == '1') {
+                                    $scope.cloned[expenseIndex].expenses[i].expenseDetail.vat =
+                                        $scope.system.mileageRates.dieselUpTo1600 * $scope.globalVat;
+                                } else if (piece.fuelCode == '3' && piece.engineCode == '1') {
+                                    $scope.cloned[expenseIndex].expenses[i].expenseDetail.vat =
+                                        $scope.system.mileageRates.lpgUpTo1400 * $scope.globalVat;
+                                }
+                            } else if ($scope.cloned[expenseIndex].expenses[i].expenseDetail.name == 'Motorbike') {
+                                $scope.cloned[expenseIndex].expenses[i].value = valuesForTransport[1];
+                            } else if ($scope.cloned[expenseIndex].expenses[i].expenseDetail.name == 'Bicycle') {
+                                $scope.cloned[expenseIndex].expenses[i].value = valuesForTransport[2];
+                            }
+                        }
+
+                        //logs($scope.cloned[expenseIndex].expenses[i].expenseDetail.vat, 'cloned');
+                        //logs($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat, 'original');
                         angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
                         if (origStatus) {
                             $scope.expensesArray[expenseIndex].expenses[i].origStatus = origStatus;
                         }
 
-                        var subType = '';
-                        if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Subsistence') {
-                            for (var j = 0; j < $scope.mealTypes.length; j++) {
-                                var newSub = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
-                                if (newSub == $scope.mealTypes[j].name) {
-                                    subType = $scope.mealTypes[j]._id;
-                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id = subType;
-                                    break;
-                                }
-                            }
-                        } else if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Other') {
-                            for (var j = 0; j < $scope.otherTypes.length; j++) {
-                                var newSub = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
-                                if (newSub == $scope.otherTypes[j].name) {
-                                    subType = $scope.otherTypes[j]._id;
-                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id = subType;
-                                    break;
-                                }
-                            }
-                        } else {
-                            subType = $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name;
-                        }
                         //logs($scope.expensesArray[expenseIndex].expenses[i].date);
                         req.body.push({
                             expenseType: $scope.expensesArray[expenseIndex].expenses[i].expenseType,
@@ -242,6 +297,8 @@ app.controller("expensesAuthorizationCtrl",
                             date: $scope.expensesArray[expenseIndex].expenses[i].date,
                             amount: $scope.expensesArray[expenseIndex].expenses[i].amount,
                             value: $scope.expensesArray[expenseIndex].expenses[i].value,
+                            vat: $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat,
+                            total: $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total,
                             id: $scope.expensesArray[expenseIndex].expenses[i]._id,
                             claimId: $scope.expensesArray[expenseIndex].id,
                             receiptUrls: $scope.expensesArray[expenseIndex].expenses[i].receiptUrls,
@@ -256,17 +313,63 @@ app.controller("expensesAuthorizationCtrl",
                     logs(res, 'Edit Response');
                     $scope.expensesArray[expenseIndex].total = 0;
                     for (var i = 0; i < $scope.expensesArray[expenseIndex].expenses.length; i++) {
-                        // recalculating vat for Subsistence and Other
-                        $scope.system.expensesRate.forEach(function (doc) {
-                            if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id == doc._id) {
-                                if (doc.taxApplicable) {
-                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat =
-                                        $scope.expensesArray[expenseIndex].expenses[i].value * $scope.globalVat;
-                                } else {
-                                    $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = 0;
-                                }
-                            }
-                        });
+                        //$scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat = 0; // resetting for all types
+                        //// recalculating vat for Subsistence and Other
+                        //$scope.system.expensesRate.forEach(function (doc) {
+                        //    if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.id == doc._id) {
+                        //        if (doc.taxApplicable) {
+                        //            $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat =
+                        //                $scope.expensesArray[expenseIndex].expenses[i].value * $scope.globalVat;
+                        //        }
+                        //    }
+                        //});
+
+                        // recalculating vat for Transport
+                        //if ($scope.expensesArray[expenseIndex].expenses[i].expenseType == 'Transport') {
+                        //    //logs('is transport');
+                        //    $scope.expensesArray[expenseIndex].expenses[i].value = 0;
+                        //    $scope.cloned[expenseIndex].expenses[i].value = 0;
+                        //    if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name == 'Car / Van') {
+                        //        //logs('is carvan');
+                        //        $scope.expensesArray[expenseIndex].expenses[i].value = valuesForTransport[0];
+                        //        $scope.cloned[expenseIndex].expenses[i].value = valuesForTransport[0];
+                        //        var fuelType = $scope.expensesArray[expenseIndex].user.worker.vehicleInformation[0].fuelType;
+                        //        var engineSize = $scope.expensesArray[expenseIndex].user.worker.vehicleInformation[0].engineSize;
+                        //        var piece = {
+                        //            fuelCode: fuelType,
+                        //            engineCode: engineSize
+                        //        };
+                        //        $scope.fuels.forEach(function (item) {
+                        //            if (fuelType == item.code) {
+                        //                piece.fuelType = item.description;
+                        //                item.engineSizes.forEach(function (minor) {
+                        //                    if (engineSize == minor.code) {
+                        //                        piece.engineSize = minor.description;
+                        //                    }
+                        //                });
+                        //            }
+                        //        });
+                        //        //logs(piece, 'Piece');
+                        //        if (piece.fuelCode == '1' && piece.engineCode == '1') {
+                        //            $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat =
+                        //                $scope.system.mileageRates.petrolUpTo1400 * $scope.globalVat;
+                        //        } else if (piece.fuelCode == '2' && piece.engineCode == '1') {
+                        //            $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat =
+                        //                $scope.system.mileageRates.dieselUpTo1600 * $scope.globalVat;
+                        //        } else if (piece.fuelCode == '3' && piece.engineCode == '1') {
+                        //            $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat =
+                        //                $scope.system.mileageRates.lpgUpTo1400 * $scope.globalVat;
+                        //        }
+                        //    } else if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name == 'Motorbike') {
+                        //        //logs('is is motorbike');
+                        //        $scope.expensesArray[expenseIndex].expenses[i].value = valuesForTransport[1];
+                        //        $scope.cloned[expenseIndex].expenses[i].value = valuesForTransport[1];
+                        //    } else if ($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.name == 'Bicycle') {
+                        //        //logs('is bicycle');
+                        //        $scope.expensesArray[expenseIndex].expenses[i].value = valuesForTransport[2];
+                        //        $scope.cloned[expenseIndex].expenses[i].value = valuesForTransport[2];
+                        //    }
+                        //}
 
                         // recalculating total based on vat, amount and value
                         $scope.expensesArray[expenseIndex].expenses[i].expenseDetail.total = 0;
@@ -808,6 +911,8 @@ app.controller("expensesAuthorizationCtrl",
                     date: expense.date,
                     amount: expense.amount,
                     value: expense.value,
+                    vat: expense.expenseDetail.vat,
+                    total: expense.expenseDetail.total,
                     id: expense._id,
                     claimId: claim.id,
                     receiptUrls: expense.receiptUrls,

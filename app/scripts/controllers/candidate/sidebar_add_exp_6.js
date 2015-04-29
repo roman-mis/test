@@ -9,6 +9,7 @@ angular.module('origApp.controllers')
             $scope.expenseData.postCodes = $scope.expenseData.postCodes || [];
             $scope.codeHolder = [];
             $scope.receiptUrlArray = [];
+            $scope.okay = true;
 
             $scope.vehicle = $scope.expenseData.vehicleInfo || {};
             $scope.defaultAddData = {};
@@ -54,6 +55,11 @@ angular.module('origApp.controllers')
                 $scope.addData = angular.copy($scope.defaultAddData);
             }
             function addItemManual(data) {
+                check(data);
+                if (!$scope.okay) {
+                    console.log('not cool');
+                    return;
+                }
                 $scope.expenseData.transports.push({
                     date: data.date,
                     type: data.type,
@@ -177,6 +183,41 @@ angular.module('origApp.controllers')
                 //}
             };
 
+            function check(data) {
+                if (data.type.code !== $scope.mainData.carvanTransportType) {
+                    $scope.okay = true;
+                } else {
+                    //check if ever created expenses
+                    $scope.okay = false;
+                    $scope.isVehicleChecking = true;
+                    var object = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/vehicleinformation').get($scope.mainData.carvanTransportType, function () {
+                        $scope.isVehicleChecking = false;
+                        if ((object && object.vehicleInformaiton && object.vehicleInformaiton.vehicleCode) || vehicleInfoEntered) {
+                            $scope.okay = true;
+                            $scope.expenseData.transports.push({
+                                date: data.date,
+                                type: data.type,
+                                cost: $scope.getCost(data.type, data.mileage),
+                                mileage: data.mileage,
+                                value: $scope.getValue(data.type, data.mileage),
+                                amount: data.mileage
+                            });
+                            $scope.receiptUrlArray.push([]);
+                            $scope.expenseData.postCodes.push({
+                                date: data.date,
+                                codes: data.codes
+                            });
+
+                            $scope.codeHolder.push(data.codes);
+                            $scope.addData = angular.copy($scope.defaultAddData);
+                        } else {
+                            $scope.tempData = data;
+                            $scope.showVehicleForm();
+                        }
+                    });
+                }
+            }
+
 
             $scope.showVehicleForm = function () {
                 $scope.whichShow = 'vehicle';
@@ -203,11 +244,14 @@ angular.module('origApp.controllers')
                 $scope.expenseData.vehicleInfo.vehicleCode = $scope.mainData.carvanTransportType;
                 $scope.whichShow = 'main';
                 vehicleInfoEntered = true;
+                $scope.okay = true;
+                addItemManual($scope.tempData);
             };
 
             $scope.cancelVehicleForm = function () {
                 $scope.vehicle = $scope.expenseData.vehicleInfo || {};
                 $scope.whichShow = 'main';
+                $scope.okay = false;
             };
 
             $scope.$watch('expenseData.transports.length', function () {

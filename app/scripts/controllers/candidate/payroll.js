@@ -20,6 +20,8 @@ angular.module('origApp.controllers')
           $scope.paymentMethods = ConstantsResource.get('paymentmethods');
 
           $scope.setTabActive = function(newValue) {
+            console.log(newValue);
+
             this.activeTab = newValue;
           };
 

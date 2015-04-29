@@ -20,6 +20,8 @@ angular.module('origApp.directives')
 
   // add
   function add(arr, item) {
+      x = 10
+
     arr = angular.isArray(arr) ? arr : [];
     for (var i = 0; i < arr.length; i++) {
       if (angular.equals(arr[i], item)) {

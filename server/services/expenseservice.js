@@ -3,17 +3,18 @@
 module.exports = function (dbs) {
 
     var db = dbs,
-      Q = require('q'),
-      queryutils = require('../utils/queryutils')(db),
-      service = {};
+    Q = require('q'),
+    queryutils = require('../utils/queryutils')(db),
+    service = {};
     var enums = require('../utils/enums');
     var mailer = require('../mailing/mailer');
+    var dataList = require('../data/data_list.json');
 
     service.getExpenses = function (request) {
         return Q.Promise(function (resolve, reject) {
             var q = db.Expense.find().populate('agency').populate('user').populate('createdBy');
             queryutils.applySearch(q, db.Expense, request)
-              .then(resolve, reject);
+            .then(resolve, reject);
         });
     };
 
@@ -32,123 +33,180 @@ module.exports = function (dbs) {
 
 
     service.saveExpenses = function (expenseDetails) {
-        console.log(expenseDetails); console.log(expenseDetails.days);
-        console.log('here wer are');
-        var deff = Q.defer();
-        var expenseModel;
-        expenseModel = new db.Expense(expenseDetails);
-        expenseModel.save(function (err) {
-            if (err) {
-                deff.reject(err);
-            } else {
-                console.log('save success');
-                deff.resolve(expenseModel);
-            }
-        });
-        return deff.promise;
-    };
-
-    service.getAllExpenses = function (request, approvedOnly) {
-
-        request.orderBy = [{
-            'submittedDate': -1
-        }];
-        return Q.Promise(function (resolve, reject) {
+        console.log(expenseDetails);
+        return Q.promise(function (resolve,reject){
             var q = db.System.find().select('statutoryTables.vat expensesRate mileageRates');
-            return Q.nfcall(q.exec.bind(q)).then(function (system) {
-                system.forEach(function (systemDoc) {
+            var q1 = db.User.find({_id:expenseDetails.user}).select('worker.vehicleInformation');
+            Q.all([Q.nfcall(q.exec.bind(q)), Q.nfcall(q1.exec.bind(q1))]).then(function(res){
+                var fuels = dataList.Fuels;
+                var userVehicleInformation = res[1][0].worker.vehicleInformation[0];
+                var expensesRate = res[0][0].expensesRate;
+                var mileageRates = res[0][0].mileageRates;
+                var allVatRates = res[0][0].statutoryTables.vat;
+                var valuesForTransport = [0.45, 0.25, 0.2];
+                var now= Date.now();
+                var vatRate = 0;
+                console.log(now);
+                // get vatRate
+                for (var i = 0; i < allVatRates.length; i++) {
+                    if(now >= Date.parse(allVatRates[i].validFrom) && now <= Date.parse(allVatRates[i].validTo)  ){
+                        vatRate = allVatRates[i].amount/100;
+                        break;
+                    }
+                }
 
-                    var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName worker.vehicleInformation');
-
-
-                    queryutils.applySearch(expensesQuery, db.Expense, request)
-                        .then(function (expense) {
-                            var bucket = [];
-                            expense.rows.forEach(function (t) {
-                                var pushIt = true;
-
-                                var bucketObject = {};
-                                bucketObject.expenses = [];
-
-                                bucketObject.claimReference = t.claimReference;
-                                bucketObject.claimDate = t.createdDate;
-                                bucketObject.expenses = [];
-                                bucketObject.user = t.user;
-                                bucketObject.id = t._id;
-
-                                var secondValue = t.days;
-
-                                bucketObject.total = 0;
-                                secondValue.some(function (l) {
-
-                                    if (approvedOnly && l.expenses.length === 0) {
-                                        pushIt = false;
-                                        return true;
+                for (i = 0; i < expenseDetails.days.length; i++) {
+                    for (var j = 0; j < expenseDetails.days[i].expenses.length; j++) {
+                        if(expenseDetails.days[i].expenses[j].expenseType === 'Subsistence' || expenseDetails.days[i].expenses[j].expenseType === 'Other'){
+                            for (var k = 0; k < expensesRate.length; k++) {
+                                if(expensesRate[k]._id+'' === expenseDetails.days[i].expenses[j].subType+''){
+                                    // expenseDetails.days[i].expenses[j].vatApplicable = expensesRate[k].taxApplicable;
+                                    expenseDetails.days[i].expenses[j].vat = 0;
+                                    if(expensesRate[k].taxApplicable === true){
+                                        expenseDetails.days[i].expenses[j].vat = vatRate*expenseDetails.days[i].expenses[j].value;
                                     }
-                                    var daySpecific = {};
-                                    daySpecific.startTime = l.startTime;
-                                    daySpecific.endTime = l.endTime;
-                                    daySpecific.date = l.date;
-                                    daySpecific.postcodes = l.postcodes;
-                                    daySpecific.dayId = l._id;
-                                    l.expenses.some(function (i) {
-                                        pushIt = true;
-                                        if (approvedOnly && i.status !== 'approved') {
-                                            pushIt = false;
-                                            return true;
-                                        }
-                                        var t = {};
-                                        t.date = l.date;
-                                        t.startTime = daySpecific.startTime;
-                                        t.endTime = daySpecific.endTime;
-                                        t.postcodes = daySpecific.postcodes;
-                                        t.dayId = daySpecific.dayId;
-                                        t.expenseType = i.expenseType;
-                                        t._id = i._id;
-                                        t.amount = i.value;
-                                        t.status = i.status;
-                                        t.text = i.text;
-                                        t.description = i.description;
-                                        t.subType = i.subType;
-                                        t.receiptUrls = i.receiptUrls;
-                                        bucketObject.total += i.value;
-                                        t.amount = i.amount;
-                                        t.value = i.value;
-                                        if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
-
-                                            var sys = systemDoc.expensesRate.id(i.subType);
-                                            if (sys) {
-
-                                                t.expenseDetail = {};
-                                                t.expenseDetail.name = sys.name;
-                                                t.expenseDetail.id = sys._id;
-
-                                                if (sys.taxApplicable) {
-
-                                                    systemDoc.statutoryTables.vat.forEach(function (time) {
-                                                        var validFrom = new Date(time.validFrom);
-                                                        var validTo = new Date(time.validTo);
-                                                        var current = new Date();
-                                                        if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
-
-                                                            t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
-                                                            t.expenseDetail.vat = time.amount / 100 * 4.5 + '';
-
-                                                        }
-
-
-                                                    });
+                                }
+                            }
+                        }else{
+                            // transport 
+                            if (expenseDetails.days[i].expenses[j].expenseType === 'Transport') {
+                                expenseDetails.days[i].expenses[j].value = 0;
+                                expenseDetails.days[i].expenses[j].vat = 0;
+                                if (expenseDetails.days[i].expenses[j].subType === 'Car / Van') {
+                                    expenseDetails.days[i].expenses[j].value = valuesForTransport[0];
+                                    var fuelType = userVehicleInformation.fuelType;
+                                    var engineSize = userVehicleInformation.engineSize;
+                                    var piece = {
+                                        fuelCode: fuelType,
+                                        engineCode: engineSize
+                                    };
+                                    fuels.forEach(function (item) {
+                                        if (fuelType === item.code) {
+                                            piece.fuelType = item.description;
+                                            item.engineSizes.forEach(function (minor) {
+                                                if (engineSize === minor.code) {
+                                                    piece.engineSize = minor.description;
                                                 }
+                                            });
+                                        }
+                                    });
+                                    if (piece.fuelCode === '1' && piece.engineCode === '1') {
+                                        expenseDetails.days[i].expenses[j].vat =
+                                        mileageRates.petrolUpTo1400 * vatRate;
+                                    } else if (piece.fuelCode === '2' && piece.engineCode === '1') {
+                                        expenseDetails.days[i].expenses[j].expenseDetail.vat =
+                                        mileageRates.dieselUpTo1600 * vatRate;
+                                    } else if (piece.fuelCode === '3' && piece.engineCode === '1') {
+                                        expenseDetails.days[i].expenses[j].vat =
+                                        mileageRates.lpgUpTo1400 * vatRate;
+                                    }
+                                } else if (expenseDetails.days[i].expenses[j].subType === 'Motorbike') {
+                                    expenseDetails.days[i].expenses[j].value = valuesForTransport[1];
+                                } else if (expenseDetails.days[i].expenses[j].subType === 'Bicycle') {
+                                    expenseDetails.days[i].expenses[j].value = valuesForTransport[2];
+                                }
+                            }
+                        }
+                        expenseDetails.days[i].expenses[j].total = 
+                        expenseDetails.days[i].expenses[j].amount * 
+                        (expenseDetails.days[i].expenses[j].value + expenseDetails.days[i].expenses[j].vat);
+                    }
+                }
+                var expenseModel;
+                expenseModel = new db.Expense(expenseDetails);
+                Q.nfcall(expenseModel.save.bind(expenseModel))
+                .then(function(){
+                    resolve(expenseModel);
+                },function(err){
+                    reject(err);
+                });
+            },function(err){
+                reject(err);
+            });
+
+});
+
+};
+
+service.getAllExpenses = function (request, approvedOnly) {
+
+    request.orderBy = [{
+        'submittedDate': -1
+    }];
+    
+    return Q.Promise(function (resolve, reject) {
+        var q = db.System.find().select('statutoryTables.vat expensesRate mileageRates');
+        return Q.nfcall(q.exec.bind(q)).then(function (system) {
+            system.forEach(function (systemDoc) {
+
+                var expensesQuery = db.Expense.find().populate('user', 'title firstName lastName worker.vehicleInformation');
 
 
-                                            }
+                function query() {
+                    var promisArray = [];
+                    queryutils.applySearch(expensesQuery, db.Expense, request)
+                .then(function (expense) {
+                    var bucket = [];
+                    expense.rows.forEach(function (t) {
+                        var pushItForApproveOnly = true;
+                        var pushItForNotEmpty = false;
 
+                        var bucketObject = {};
+                        bucketObject.expenses = [];
 
-                                        } else {
-                                            t.expenseDetail = {};
-                                            t.expenseDetail.name = i.subType;
-                                            t.expenseDetail.total = i.value;
-                                            t.expenseDetail.vat = 0 + '';
+                        bucketObject.claimReference = t.claimReference;
+                        bucketObject.claimDate = t.createdDate;
+                        bucketObject.expenses = [];
+                        bucketObject.user = t.user;
+                        bucketObject.id = t._id;
+
+                        var secondValue = t.days;
+
+                        bucketObject.total = 0;
+                        secondValue.some(function (l) {
+                            // if (l.expenses.length === 0) {
+                            //     pushIt = false;
+                            //     return true;
+                            // }
+                            var daySpecific = {};
+                            daySpecific.startTime = l.startTime;
+                            daySpecific.endTime = l.endTime;
+                            daySpecific.date = l.date;
+                            daySpecific.postcodes = l.postcodes;
+                            daySpecific.dayId = l._id;
+                            l.expenses.some(function (i) {
+                                pushItForNotEmpty = true;
+                                if (approvedOnly && i.status !== 'approved') {
+                                    pushItForApproveOnly = false;
+                                    return true;
+                                }
+                                var t = {};
+                                t.date = l.date;
+                                t.startTime = daySpecific.startTime;
+                                t.endTime = daySpecific.endTime;
+                                t.postcodes = daySpecific.postcodes;
+                                t.dayId = daySpecific.dayId;
+                                t.expenseType = i.expenseType;
+                                t._id = i._id;
+                                t.status = i.status;
+                                t.text = i.text;
+                                t.description = i.description;
+                                t.subType = i.subType;
+                                t.receiptUrls = i.receiptUrls;
+                                bucketObject.total += i.value;
+                                t.amount = i.amount;
+                                t.value = i.value;
+                                if (i.expenseType === 'Other' || i.expenseType === 'Subsistence') {
+
+                                    var sys = systemDoc.expensesRate.id(i.subType);
+                                    if (sys) {
+
+                                        t.expenseDetail = {};
+                                        t.expenseDetail.name = sys.name;
+                                        t.expenseDetail.id = sys._id;
+
+                                        if (sys.taxApplicable) {
+
                                             systemDoc.statutoryTables.vat.forEach(function (time) {
                                                 var validFrom = new Date(time.validFrom);
                                                 var validTo = new Date(time.validTo);
@@ -158,95 +216,133 @@ module.exports = function (dbs) {
                                                     t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
                                                     t.expenseDetail.vat = time.amount / 100 * 4.5 + '';
 
-
                                                 }
 
 
                                             });
                                         }
 
-                                        bucketObject.expenses.push(t);
-                                        if (!pushIt) {
-                                            return true;
+
+                                    }
+
+
+                                } else {
+                                    t.expenseDetail = {};
+                                    t.expenseDetail.name = i.subType;
+                                    t.expenseDetail.total = i.value;
+                                    t.expenseDetail.vat = 0 + '';
+                                    systemDoc.statutoryTables.vat.forEach(function (time) {
+                                        var validFrom = new Date(time.validFrom);
+                                        var validTo = new Date(time.validTo);
+                                        var current = new Date();
+                                        if (current.valueOf() >= validFrom.valueOf() && current.valueOf() <= validTo.valueOf()) {
+
+                                            t.expenseDetail.total = i.value + (time.amount / 100 * i.value);
+                                            t.expenseDetail.vat = time.amount / 100 * 4.5 + '';
+
+
                                         }
+
+
                                     });
-
-
-                                });
-
-                                // console.log(bucketObject)
-                                if (pushIt) {
-                                    bucket.push(bucketObject);
                                 }
 
+                                bucketObject.expenses.push(t);
+                                if (pushItForApproveOnly === false) {
+                                    return true;
+                                }
                             });
 
-                            // console.log(expense);
-                            resolve({ claims: bucket, system: system, totalCount: expense.count });
+
                         });
+
+                        // console.log(bucketObject)
+                        if (pushItForApproveOnly === true && pushItForNotEmpty === true) {
+                            bucket.push(bucketObject);
+                        }
+
+                        if (pushItForNotEmpty === false) {
+                            promisArray.push(Q.nfcall(t.remove.bind(t)));
+                        }
+
+                    });
+
+                    // console.log(expense);
+                    if (promisArray.length > 0) {
+                        Q.all(promisArray).then(function () {
+                            return query();
+                        }, function (err) {
+                            reject(err);
+                        });
+                    } else {
+                        resolve({ claims: bucket, system: system, totalCount: expense.count });
+                    }
                 });
+                }
+                query();
+});
 
-            }, reject);
+}, reject);
 
-        });
-    };
+});
+};
 
-    service.fetchExpenses = function (val) {
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
-        console.log(val);
+service.fetchExpenses = function (val) {
+    console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+    console.log(val);
 
-        var q = db.Expense.find().where('days.expenses._id').in(val).populate('user', 'title firstName lastName emailAddress');
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
+    var q = db.Expense.find().where('days.expenses._id').in(val).populate('user', 'title firstName lastName emailAddress');
+    console.log('^^^^^^^^^^^^^^^^^^^^^^^1');
 
-        return Q.nfcall(q.exec.bind(q));
+    return Q.nfcall(q.exec.bind(q));
 
-    };
-    service.fetchExpensesForEdit = function (val) {
-        var b = [];
-        var q;
-        val.forEach(function (l) {
+};
+service.fetchExpensesForEdit = function (val) {
+    var b = [];
+    var q;
+    val.forEach(function (l) {
 
-            b.push(l.id);
-        });
-        q = db.Expense.find().where('days.expenses._id').in(b);
-        return Q.nfcall(q.exec.bind(q));
-    };
+        b.push(l.id);
+    });
+    q = db.Expense.find().where('days.expenses._id').in(b);
+    return Q.nfcall(q.exec.bind(q));
+};
 
 
-    service.sendMail = function (mailInfo) {
+service.sendMail = function (mailInfo) {
 
-        return Q.Promise(function (resolve, reject) {
-            var message = '';
-            var header = '';
-            var body = '';
-            header = '<span style="color:green;margin-right:30px">Claim ID: ' + mailInfo.claimReference + '</span>' +
-                     '<span style="color:green;"> Full Name: '  +mailInfo.user.title + '. ' + mailInfo.user.firstName + ' ' + mailInfo.user.lastName + '</span>';
+    return Q.Promise(function (resolve, reject) {
+        var message = '';
+        var header = '';
+        var body = '';
+        header = '<span style="color:green;margin-right:30px">Claim ID: ' + mailInfo.claimReference + '</span>' +
+        '<span style="color:green;"> Full Name: '  +mailInfo.user.title + '. ' + mailInfo.user.firstName + ' ' + mailInfo.user.lastName + '</span>';
 
-            body   = '';
-            for(var j = 0; j < mailInfo.expense.length; j++){
-                console.log(mailInfo.expense[j]);
-                body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+
-                              '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+
-                              '<div style="margin-right:15px;width:100px;display: inline-block;"><b>Total</b>: ' +  mailInfo.expense[j].total + '</div>'+
-                              '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' +
-                              '<hr>';
-            }
-            message = '<h3>' + header + '</h3>' + body;
-            var mailModel = { message: message };
-            var mailOption = { to: mailInfo.user.emailAddress, subject: 'Attention please, Expense Rejection' };
-            console.log(mailModel);
-            console.log(mailOption);
-            return mailer.sendEmail(mailOption, mailModel, 'status_change').then(function () {
-                resolve({ result: true, message: 'mail sent' });
-            }, reject);
-        });
-    };
+        body   = '';
+        for(var j = 0; j < mailInfo.expense.length; j++){
+            console.log(mailInfo.expense[j]);
+            body = body + '<div style="margin-right:15px;width:200px;display: inline-block;"><b>Type</b>: ' +  mailInfo.expense[j].type + '</div>'+
+            '<div style="margin-right:15px;width:300px;display: inline-block;"><b>Subtype</b>: ' +  mailInfo.expense[j].subType + '</div>'+
+            '<div style="margin-right:15px;width:100px;display: inline-block;"><b>Total</b>: ' +  mailInfo.expense[j].total + '</div>'+
+            '<div style=" color:red;display: inline-block;"><b>Rejected</b></div> ' + mailInfo.reason[j] + '</div>' +
+            '<hr>';
+        }
+        message = '<h3>' + header + '</h3>' + body;
+        var mailModel = { message: message };
+        var mailOption = { to: mailInfo.user.emailAddress, subject: 'Attention please, Expense Rejection' };
+        console.log(mailModel);
+        console.log(mailOption);
+        return mailer.sendEmail(mailOption, mailModel, 'status_change').then(function () {
+            resolve({ result: true, message: 'mail sent' });
+        }, reject);
+    });
+};
 
-    service.changeStatus = function (status, claims) {
-        return Q.promise(function (resolve, reject) {
-            console.log('**************//*****************');
-            console.log(claims.objects);
-            console.log('**************//*****************');
+service.changeStatus = function (status, claims) {
+    return Q.promise(function (resolve, reject) {
+        console.log('**************//*****************');
+        console.log(claims.objects);
+        console.log('**************//*****************');
             // console.log(claims)
             var claimCounter = 0;
             var mailInfo = [];
@@ -303,57 +399,57 @@ module.exports = function (dbs) {
                     reject(err);
                 });
 
-            });
-        });
-    };
-    service.deleteExpense = function (ids) {
-        return Q.promise(function (resolve, reject) {
+});
+});
+};
+service.deleteExpense = function (ids) {
+    return Q.promise(function (resolve, reject) {
 
-            service.fetchExpenses(ids).then(function (model) {
+        service.fetchExpenses(ids).then(function (model) {
 
 
-                for (var i = 0; i < model.length; i++) {
+            for (var i = 0; i < model.length; i++) {
 
-                    model[i].days.forEach(function (l) {
+                model[i].days.forEach(function (l) {
 
-                        ids.forEach(function (id) {
+                    ids.forEach(function (id) {
 
-                            var v = l.expenses.id(id);
-                            if (v) {
+                        var v = l.expenses.id(id);
+                        if (v) {
 
-                                v.remove();
+                            v.remove();
 
-                            }
+                        }
 
-                        });
                     });
-
-                }
-
-                var bucket = [];
-                model.forEach(function (mo) {
-
-                    bucket.push(Q.nfcall(mo.save.bind(mo)));
-
                 });
 
-                return Q.all(bucket).then(function () {
-                    resolve({ result: true });
+            }
 
-                }, reject);
+            var bucket = [];
+            model.forEach(function (mo) {
+
+                bucket.push(Q.nfcall(mo.save.bind(mo)));
+
+            });
+
+            return Q.all(bucket).then(function () {
+                resolve({ result: true });
 
             }, reject);
 
-        });
+        }, reject);
 
-    };
+    });
+
+};
 
 
 
-    service.editExpenses = function (data) {
-        console.log('**');
-        console.log(data);
-        console.log('**');
+service.editExpenses = function (data) {
+    console.log('**');
+    console.log(data);
+    console.log('**');
         //get unique claims
         var claims = [];
         data.forEach(function(dataElement){
@@ -433,40 +529,52 @@ module.exports = function (dbs) {
                                     }
                                     console.log('dayFinished');
                                 });
-                                if (breakFrmDaysLoop) {
-                                    console.log('breakFrmDaysLoop');
-                                    return true;
-                                }
-                            });
-                            console.log('I ===> '+ i);
-                        }
-                    }
-                    console.log('push the promise');
-                    Q.nfcall(expense.save.bind(expense)).then(function(res){
-                        allResponses.push(res);
-                        console.log('claimsCounter ===> '+ claimsCounter);
-                        if(claimsCounter === claims.length){
-                            console.log('******/resolving/********');
-                            console.log('******/resolving/********');
-                            resolve({ result: true });
-                        }
-                    },function(err){
-                    console.log('err2');
-                    console.log(err);
-                        reject(err);
-                    });
-                },function(err){
-                    console.log('err1');
-                    console.log(err);
-                    reject(err);
-                });
+if (breakFrmDaysLoop) {
+    console.log('breakFrmDaysLoop');
+    return true;
+}
+});
+console.log('I ===> '+ i);
+}
+}
+console.log('push the promise');
+Q.nfcall(expense.save.bind(expense)).then(function(res){
+    allResponses.push(res);
+    console.log('claimsCounter ===> '+ claimsCounter);
+    if(claimsCounter === claims.length){
+        console.log('******/resolving/********');
+        console.log('******/resolving/********');
+        resolve({ result: true });
+    }
+},function(err){
+    console.log('err2');
+    console.log(err);
+    reject(err);
+});
+},function(err){
+    console.log('err1');
+    console.log(err);
+    reject(err);
+});
 
 
-            });
+});
+});
+};
+
+
+service.getExpensesByCandidatesIds = function(ids){
+        //expected [id1,id2,...]
+        var q;
+        var promisArray = [];
+        console.log(ids);
+        ids.forEach(function(id){
+            q = db.Expense.find({'user':id});
+            console.log('88888888888888888');
+            promisArray.push(Q.nfcall(q.exec.bind(q)));
         });
+        return Q.all(promisArray);
     };
-
-
 
     service.setClaimsSubmitted = function (data) {
         console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&****************************');
@@ -498,40 +606,40 @@ module.exports = function (dbs) {
             });
         });
 
-    };
+};
 
-    service.setClaimsRTP = function (data) {
-        return Q.promise(function (resolve, reject) {
-            var readPromises = [];
-            var WritePromises = [];
-            for (var i = 0; i < data.length; i++) {
-                var q = db.Expense.findById(data[i]);
-                readPromises.push(Q.nfcall(q.exec.bind(q)));
-            }
-            Q.all(readPromises).then(function (expenses) {
-                console.log(expenses.length)
-                for (var i = 0; i < expenses.length; i++) {
-                    expenses[i].days.forEach(function (day) {
-                        day.expenses.forEach(function (dayExpense) {
-                            dayExpense.status = 'ready to payroll';
-                        });
+service.setClaimsRTP = function (data) {
+    return Q.promise(function (resolve, reject) {
+        var readPromises = [];
+        var WritePromises = [];
+        for (var i = 0; i < data.length; i++) {
+            var q = db.Expense.findById(data[i]);
+            readPromises.push(Q.nfcall(q.exec.bind(q)));
+        }
+        Q.all(readPromises).then(function (expenses) {
+            console.log(expenses.length)
+            for (var i = 0; i < expenses.length; i++) {
+                expenses[i].days.forEach(function (day) {
+                    day.expenses.forEach(function (dayExpense) {
+                        dayExpense.status = 'ready to payroll';
                     });
-                    WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
-                }
-                return Q.all(WritePromises).then(function (res) {
-                    resolve({ result: true, opjects: res });
-                }, function (err) {
-                    reject(err);
                 });
-            }, function () {
-                reject('can not find this claim');
+                WritePromises.push(Q.nfcall(expenses[i].save.bind(expenses[i])));
+            }
+            return Q.all(WritePromises).then(function (res) {
+                resolve({ result: true, opjects: res });
+            }, function (err) {
+                reject(err);
             });
+        }, function () {
+            reject('can not find this claim');
         });
+    });
 
-    };
+};
 
 
-    function daysBetween(first, second) {
+function daysBetween(first, second) {
         // Copy date parts of the timestamps, discarding the time parts.
         var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
         var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());

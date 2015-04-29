@@ -1,0 +1,155 @@
+<div class="modal-window">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-xs-8">
+                <h3 class="modal-title" style="padding: 6px 0;">Edit Details</h3>
+            </div>
+        </div>
+    </div>
+    <form name="form" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" ng-submit="save(form.$valid)" role="form" novalidate>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Title*</label>
+                <div class="col-sm-8">
+                    <ui-select ng-model="candidate.title" name="title" theme="select2" ng-disabled="disabled" search-enabled="false" required>
+                        <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                        <ui-select-choices repeat="item.value as item in titles | filter: $select.search">
+                            {{item.value}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">First Name*</label>
+
+                <div class="col-sm-8">
+                    <input type="text" name="firstName" class="form-control" ng-model="candidate.firstName" ng-pattern="lettersOnly" required>
+                    <div ng-if="form.firstName.$invalid && (form.firstName.$dirty)">
+                        <div class="alert alert-danger" ng-show="form.firstName.$error.required" role="alert">
+                            Please enter your name.
+                        </div>
+                        <div class="alert alert-danger" ng-show="form.firstName.$error.pattern" role="alert">
+                            Please enter letters only.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-sm-4 control-label">Middle Name</label>
+                <div class="col-sm-8">
+                    <input name="midName" type="text" class="form-control" ng-model="candidate.middleName" ng-pattern="lettersOnly">
+                </div>
+                <div class="alert alert-danger" ng-if="form.midName.$error.pattern" role="alert">
+                    Please enter text only.
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Last Name*</label>
+                <div class="col-sm-8">
+                    <input type="text" name="lastName" class="form-control" ng-model="candidate.lastName" required ng-pattern="lettersOnly">
+                    <div class="alert alert-danger" ng-if="form.lastName.$error.pattern" role="alert">
+                        Please enter text only.
+                    </div>
+                    <div class="alert alert-danger" ng-if="form.lastName.$error.required" role="alert">
+                        Please enter your last name.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Gender*</label>
+                <div class="col-sm-8">
+                    <ui-select ng-model="candidate.gender" name="gender" theme="select2" search-enabled="false" required>
+                        <ui-select-match>{{$select.selected.value}}</ui-select-match>
+                        <ui-select-choices repeat="item.key as item in genders | filter: $select.search">
+                            <span ng-bind-html="item.value"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-sm-4 control-label">Date of Birth<span ng-show="candidate.status=='Live'">*</span>
+                </label>
+                <div class="col-sm-8">
+                    <input name="age" type="text" id="age" orig-datepicker ng-required="candidate.status =='Live'" ng-model="candidate.birthDate">
+                    <div class="alert alert-danger" ng-show="form.age.$error.age" role="alert">
+                        Must be older than 16.
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <!--<div class="form-group">
+                <label class="col-sm-4 control-label">E-mail Address<span ng-show="candidate.status == 'Live'">*</span></label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control ng-pristine ng-valid" ng-required ="candidate.status == 'Live'" ng-model="candidate.email" ng-pattern = "emailPattern">
+                </div>
+            </div>
+    
+    
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Mobile no.</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-valid" ng-model="candidate.mobile" ng-pattern = "ukMobile" ng-required = "candidate.status =='Live' &&!candidate.phone">
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-4 control-label">Phone no.</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-valid" ng-model="candidate.phone" ng-pattern = "ukPhone" ng-required = "candidate.status =='Live' &&!candidate.mobile">
+                </div>
+            </div>-->
+            <div class="form-group ">
+                <label class="col-sm-4 control-label">Nationality<span ng-show="candidate.status=='Live'">*</span>
+                </label>
+                <div class="col-sm-8">
+                    <!-- <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.phone" style=""> -->
+                    <!-- <select ng-model = "candidate.nationality" class="form-control"ng-options="nationality.code as nationality.description for nationality in nationalities">
+    
+                    </select> -->
+                    <ui-select ng-model="candidate.nationality" name="nationality" theme="select2" ng-disabled="disabled" search-enabled="true" ng-required="candidate.status == 'Live'">
+                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                        <ui-select-choices repeat="item.code as item in nationalities | filter: $select.search">
+                            {{item.description}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+            <!--{{item}}-->
+            <!--<div class="form-group">
+                <label class="col-sm-4 control-label">Address</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="candidate.address" style="">
+                </div>
+            </div>-->
+
+        </div>
+
+<<<<<<< HEAD
+    </div>
+
+    <div class="modal-footer">
+          <button class="btn btn-primary" ng-disabled="form.$invalid" disabled="disabled" ng-click="saveCandidate()">
+        <span><i class="fa fa-save"></i> &nbsp; Save </span>
+    </button>
+        <button class="btn btn-warning" ng-click="cancelCandidate()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+    </div>
+</form>
+=======
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+            <button class="btn btn-primary" ng-disabled="form.$invalid" disabled="disabled" ng-click="save()">
+                <span><i class="fa fa-save"></i> &nbsp; Save </span>
+            </button>
+        </div>
+    </form>
+</div>
+>>>>>>> clear-css

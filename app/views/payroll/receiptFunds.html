@@ -1,52 +1,55 @@
-			<div class="modal-content">
-			
-				<div class="modal-header">
-                    <h4 class="modal-title">Receipt Funds</h4>
-				</div><!-- /modal-header -->
-				
-				<div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Select Agency</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" ng-change="getAgencyInvoices(selectedAgencyId)" ng-model="selectedAgencyId" ng-options="agency.id as agency.name for agency in agencies">
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+<div class="modal-window">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Receipt Funds</h4>
+    </div>
+    <!-- /modal-header -->
+
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Select Agency</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-change="getAgencyTimesheets(selectedAgencyId)" ng-model="selectedAgencyId" ng-options="agency.id as agency.name for agency in agencies">
+
+                            </select>
                         </div>
-                    </form>           
-                    <h4>Invoices</h4>
-                    <div class="line-horizontal"></div>
-					<form class="form-horizontal ">
-						<div class="row">
-							<div ng-repeat="invoice in agencyInvoices" class="col-sm-12">
-								<div class="form-group">
-									<label class="col-xs-12 col-sm-3 control-label">Invoice {{$index}}</label>
-									<label class="col-xs-3 col-sm-3 control-label-textRight">&pound;{{invoice.total}}</label>
-									<div class="col-xs-4 col-sm-3">
-										<input type="text" class="form-control" ng-model="acceptedValue[$index]" ng-readonly="!selectedInvoices[$index]" placeholder="&pound;0" />
-									</div>
-									<div class="col-xs-3 col-sm-2 control-label-textRight">
-                                         Received
-                                    </div>
-                                    <div class="col-xs-2 col-sm-1 control-label">
-                                        <input type="checkbox" ng-model="selectedInvoices[$index]"/>
-                                    </div>
-								</div>
-							</div>
-							
-						</div>
-					</form> 
-				</div><!-- /modal-body -->
-				    
-                <div class="modal-footer">
-                    <a href ng-click="cancel()" class="btn"> Cancel</a>
-                    <button class="btn btn-primary" ng-disabled="disableButton()" ng-click="markAsReceived()">Mark as Received</button> 
-                </div><!-- /modal footer -->
-                        
-		 	</div><!-- /modal content -->
-	
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h4>Invoices</h4>
+        <div class="line-horizontal"></div>
+        <form class="form-horizontal ">
+            <div class="row">
+                <div ng-repeat="timesheet in agencyTimesheets" class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 control-label">Invoice 1</label>
+                        <label class="col-xs-3 col-sm-3 control-label-textRight">&pound;{{timesheet.total}}</label>
+                        <div class="col-xs-4 col-sm-3">
+                            <input type="text" class="form-control" ng-readonly="!selectedTimesheets[$index]" placeholder="&pound;0" />
+                        </div>
+                        <div class="col-xs-3 col-sm-2 control-label-textRight">
+                            Received
+                        </div>
+                        <div class="col-xs-2 col-sm-1 control-label">
+                            <input type="checkbox" ng-model="selectedTimesheets[$index]" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <!-- /modal-body -->
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="markAsReceived()">Mark as Received</button>
+        <a href ng-click="cancel()" class="btn btn-default"> Cancel</a>
+    </div>
+    <!-- /modal footer -->
+
+</div>
+<!-- /modal content -->

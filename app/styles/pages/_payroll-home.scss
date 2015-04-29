@@ -1,0 +1,94 @@
+.payroll-home {
+    padding: 0;
+    .panel-heading {
+        color: #fff;
+        background-color: $green-light;
+        border-bottom: 1px solid $green;
+        border-radius: 0;
+        position: relative;
+        > .form-control {
+            position: absolute;
+            right: 15px;
+            top: calc(50% - 14px);
+            width: 110px;
+        }
+    }
+    .panel-default {
+        border: 1px solid $green;
+        border-radius: 0;
+    }
+    a {
+        white-space: nowrap;
+    }
+    button {
+        width: 110px;
+        padding: 6px 0;
+        margin: 0 0 3px;
+        background-color: $green-light;
+        border: none;
+    }
+}
+
+.payroll-overview {
+    > ul {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        > .dropdown {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 5px;
+            width: 136px;
+            height: 105px;
+            h5 { 
+                margin: 12px 0;
+                width: 100%;
+            }
+            a {
+                width: 100%;
+                align-self: flex-end;
+            }
+        }
+    }
+    .view-all {
+        display: block;
+        text-align: center;
+        padding: 5px 0;
+    }
+}
+
+.pre-payroll,
+.payroll-actions {
+    ul {
+        padding: 0;
+        margin: 0;
+    }
+    li {
+        float: left;
+        width: 126px;
+        padding: 0;
+        margin: 0;
+        padding-left: 10px;
+        margin-bottom: 7px;
+        margin-left: 13px;
+    }
+}
+
+.payroll-buttons {
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    .payroll-btn-wrapper {
+        margin: 0 1px;
+    }
+}
+
+.bottom-spacer {
+    margin-bottom: 26px;
+}
