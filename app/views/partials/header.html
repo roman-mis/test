@@ -19,7 +19,7 @@
                         <button type="button" dropdown-toggle><i class="fa fa-bars"></i></button>
                         <ul class="dropdown-menu">
                             <li ng-if="!(permissions.permissions.fields.topToolBar.advancedSearch.hide)"><a href><i class="fa fa-search-plus"></i> &nbsp;Advanced search</a></li>
-                            <li ng-if="!(permissions.topToolBar.myProfile.hide)"><a href><i class="fa fa-user"></i> &nbsp;My profile</a></li>
+                            <li ng-if="!(permissions.topToolBar.myProfile.hide)"><a ng-click = "myProfile()" href><i class="fa fa-user"></i> &nbsp;My profile</a></li>
                             <li class="divider"></li>
                             <li><a href ng-click="logout()"><i class="fa fa-sign-out"></i> &nbsp;Logout</a></li>
                         </ul>
