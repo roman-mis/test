@@ -110,16 +110,15 @@ module.exports = function(db){
     };
 
     controller.getCandidatesPayrollProducts=function (req,res){
+      console.log('1111111111111111111111');
       candidatepayrollservice.getCandidatesPayrollProducts(JSON.parse(req.params.candidateIds))
         .then(function(payrollProducts){
-          if(payrollProducts){
             console.log('ooooooooooooooooooooooooooooooooo');
-            res.json({result:true, objects: JSON.parse(req.params.candidateIds)});
-          }
-          else{
-            res.json({result:false, message:'Payroll Product Information not found'});
-          }
-        },res.sendFailureResponse);
+            res.json({result:true, objects: payrollProducts});
+        },function(err){
+          console.log(err);
+          res.sendFailureResponse(err);
+        });
     };
 
     controller.postPayrollProduct=function (req,res){

@@ -46,43 +46,61 @@ app.controller('uploadExpensesCtrl',['$scope', 'HttpResource', '$modal', 'expens
     function createDays(){
       for (var i = 1; i < expenses.length; i++){
         claim[i] = {days: []};
-        if(!expenses[i][3] && !expenses[i][0]){
+        if(!expenses[i][2] && !expenses[i][0]){
           continue;
         }
       day = {};
       expense = [];
       console.log(i);
-      dateArr = expenses[i][3].split('/');
+      dateArr = expenses[i][2].split('/');
       console.log(dateArr);
       day.date = new Date(dateArr[2], dateArr[1]-1, dateArr[0]);
-      for(var j = 4; j < 10; j++){
+      for(var j = 3; j < 9; j++){
         expense.push({
-          expenseType: expenseTypes[j-4],
-          subType: getId(subTypes[j-4]),
+          expenseType: expenseTypes[j-3],
+          subType: getId(subTypes[j-3]),
           amount: 1,
           value: isNaN(Number(expenses[i][j]))? 0 : Number(expenses[i][j]),
-          vat:0,
-          total: 0,
         });
       }
       day.expenses = angular.copy(expense);
-      claim[i].days.push(angular.copy(day));  
+      claim[i].days.push(angular.copy(day));
       claim[i].source = 'import';
+      claim[i].agency = '54cf9f23f383e9be63a0d666';
+      claim[i].user = '54cf9e69f383e9be63a0d663';
+      claim[i].startedDate = getMonday(claim[i].days[0].date);
+      console.log(claim[i].days[0].date);
     }
 
-
-    var nums = JSON.stringify([1,2,3]);
+    var nums = JSON.stringify([10,11,12,13,14]);
       var payrollProducts = HttpResource.model('candidates/payrollproduct/'+nums).query({},function(res){
+        console.log('$$$$$$$$$$$$$$$$$');
         console.log(res);
-        // $scope.agencies = [];
-        // angular.forEach(payrollProducts, function(pp) {
-        //   if($scope.agencies.indexOf(pp.agency)===-1) {
-        //     $scope.agencies.push(pp.agency); 
-        //   }
-        // });
-      });
+        payrollProducts = res.data.objects;
+
+        console.log(claim[1]);
+        HttpResource.model('candidates/' + '54cf9e69f383e9be63a0d663' + '/expenses')
+        .create(claim[1])
+        .post()
+        .then(function (response) {
+            // $scope.isSaving = false;
+            console.log(response)
+            // if (!HttpResource.flushError(response)) {
+            $scope.expenseData.claimReference = response.data.claimReference;
+            $scope.gotoLast();
+            // }
+        });
+    });
+
+    
   }
 
+  function getMonday(d) {
+      d = new Date(d);
+      var day = d.getDay(),
+          diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+  }
 
   var first = false;
   var second = false;
