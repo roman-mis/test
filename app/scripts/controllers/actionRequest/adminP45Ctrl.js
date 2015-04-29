@@ -1,7 +1,8 @@
 ﻿'use strict';
 angular.module('origApp.controllers')
-    .controller('p45Ctrl', function ($scope, parentScope, $http, $modalInstance, s3Service, $q, MsgService, HttpResource) {
+    .controller('adminP45Ctrl', function ($scope, parentScope, $http, $modalInstance, s3Service, $q, MsgService, HttpResource) {
 
+        //logs($scope.p45Object);
         $scope.candidate = parentScope.candidate;
         var canceller = $q.defer();
         var uploadCancelled = false;
@@ -10,16 +11,6 @@ angular.module('origApp.controllers')
         $scope.validFile = false;
         $scope.uploading = false;
         var fileName, fileType, uploadedFileName;
-        var uploadedFile = '';
-
-        //$(document).ready(function () {
-        //    $('#datepickerFrom').datepicker({
-        //        orientation: "top auto"
-        //    });
-        //    $('#datepickerTo').datepicker({
-        //        orientation: "top auto"
-        //    });
-        //});
 
         var readFile = function (file) {
             logs(file, 'file');
@@ -80,11 +71,12 @@ angular.module('origApp.controllers')
                             $scope.uploadStatus = 'Uploaded cancelled';
                             MsgService.warn('Upload cancelled');
                         } else {
-                            uploadedFile = uploadedFileName;
+                            document.getElementById("uploadFileCustom").innerHTML = uploadedFileName;
+                            $scope.p45Object.imageUrl = uploadedFileName;
                             uploadSuccess = true;
                             $scope.uploadStatus = 'Uploaded successfully';
                             MsgService.success('Upload Successful');
-                            //$http.get('/api/documents/receipts/viewsignedurl/' + uploadedFileName).success(function (res) {
+                            //$http.get('/api/documents/actionrequest/viewsignedurl/' + uploadedFileName).success(function (res) {
                             //    logs(res, 'response');
                             //});
                         }
@@ -116,21 +108,44 @@ angular.module('origApp.controllers')
             $scope.uploading = false;
         }
 
-        $scope.ok = function () {
-            var req = {};
-            req.p45 = {};
-            req.p45.dateRequested = $scope.dateRequested;
-            req.p45.leavingDate = $scope.leavingDate;
-            req.imageUrl = uploadedFile;
-            HttpResource.model('actionrequests/' + $scope.candidate._id + '/p45').create(req).post().then(function () {
-                MsgService.success('Successfully submitted.');
-                $modalInstance.close();
-            }, function (error) {
-                logs(error, 'submitting error');
-                MsgService.danger(error);
-            });
+        $scope.save = function () {
+            HttpResource.model('actionrequests').create($scope.p45Object)
+                .patch($scope.p45Object.id).then(function () {
+                    MsgService.success('Successfully saved.');
+                    $modalInstance.close();
+                });
         };
 
+        $scope.saveAndApprove = function () {
+
+            HttpResource.model('actionrequests/' + $scope.p45Object.id + '').create($scope.p45Object)
+                .patch('approve').then(function () {
+                    MsgService.success('Successfully saved and approved.');
+                    $modalInstance.close();
+
+                });
+
+        };
+        $scope.saveAndReject = function () {
+
+            HttpResource.model('actionrequests/' + $scope.p45Object.id + '').create($scope.p45Object)
+                .patch('reject').then(function () {
+                    MsgService.success('Successfully saved and rejected.');
+                    $modalInstance.close();
+
+                });
+
+        };
+        $scope.saveAndRefer = function () {
+
+            HttpResource.model('actionrequests/' + $scope.p45Object.id + '').create($scope.p45Object)
+                .patch('refer').then(function () {
+                    MsgService.success('Successfully saved and referred.');
+                    $modalInstance.close();
+
+                });
+
+        };
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancelled');

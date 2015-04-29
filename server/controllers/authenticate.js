@@ -15,7 +15,6 @@ module.exports = function(db){
     .then(function(user){
       var vm=getUserViewModel(user);
       var token = jwt.sign(vm, process.env.JWT_SECRET, {expiresInMinutes:60*200});
-
         res.json({result:true,token:token,object:vm});
     },
     function(err){
@@ -23,13 +22,24 @@ module.exports = function(db){
     });
 
   };
+  controller.changePassword = function (req, res) {
+    candidateservice.changePassword(req.body.id,req.body.password,req.body.newPassword,req.body.confirmPassword)
+    .then(function () {
+      console.log('done');
+      
+      res.json({result:true});
+    },function (msg) {
+      res.json({result: false, msg:msg});
+    });
+  };
 
   function getUserViewModel(user){
     return {id:user._id,_id:user._id,title:user.title,
       firstName:user.firstName,lastName:user.lastName,
       middleName:user.middleName,
       emailAddress:user.emailAddress,userType:user.userType,
-      avatarUrl:(user.avatarFileName?'api/candiates/'+user.id+'/'+user.avatarFileName:'')
+      avatarUrl:(user.avatarFileName?'api/candiates/'+user.id+'/'+user.avatarFileName:''),
+      avatarFileName:user.avatarFileName
           };
   }
 

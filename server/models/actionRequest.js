@@ -33,6 +33,10 @@ module.exports = function(mongoose,autoIncrement) {
             haveLoan: Boolean,
             payDirectly: Boolean
         },
+        p45: {
+            dateRequested: Date,
+            leavingDate: Date
+        },
         imageUrl: String,
         days: [
             {
