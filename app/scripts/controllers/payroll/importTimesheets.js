@@ -135,14 +135,10 @@ angular.module('origApp.controllers')
 	  				worker: $scope.timesheets[i].worker,
 	  				agency: $scope.saveAgency.id,
 	  				status: 'submitted',
-	  				payFrequency: 'weekly',
 	  				weekEndingDate: $scope.timesheets[i].periodEndDate,
 	  				net: $scope.timesheets[i].net,
 	  				vat: $scope.timesheets[i].vat,
-	  				totalPreDeductions:0,
-	  				deductions:0,
 	  				total: $scope.timesheets[i].total,
-	  				imageUrl: 'test_url',
 	  				elements: elements
 	  			};
 	  		}

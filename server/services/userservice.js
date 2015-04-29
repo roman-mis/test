@@ -25,14 +25,17 @@ service.updateUser = function(id,updates){
 		return service.getUser(id).then(function(user){
 			if(user){
 				for(var key in updates){
-					user[key] = updates[key];
+					user[key] = updates[key] || user[key];
 				}
 				console.log('********************************************')
 				console.log('********************************************')
 				console.log(user);
 				return Q.nfcall(user.save.bind(user)).then(function(){
 					resolve({result:true,object:user});
-					},reject);
+					},function (err) {
+						// body...
+						reject(err);
+					});
 			}else{
 				reject({result:false,message:'User does not exist'});
 			}
