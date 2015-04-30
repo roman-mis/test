@@ -1,7 +1,7 @@
 'use strict';
 angular.module('origApp.controllers')
-.controller('myProfileController', ['$scope', '$modalInstance', 'parentScope', 'HttpResource','$upload', '$http', 'MsgService',
-	function($scope, $modalInstance, parentScope, HttpResource, $upload, $http, MsgService){
+.controller('myProfileController', ['$scope', '$modalInstance', 'parentScope', 'HttpResource','$upload', '$http', 'MsgService','ModalService', '$rootScope',
+	function($scope, $modalInstance, parentScope, HttpResource, $upload, $http, MsgService, ModalService, $rootScope){
 		$scope.profile = {};
 		//getting my copy of user cuz session copy overrides everything when page refreshes
 		HttpResource.model('users/'+parentScope.currentUser._id).query({},function (res) {
@@ -31,7 +31,9 @@ angular.module('origApp.controllers')
 		$scope.onFileSelect = function (files) {
 			$scope.files = files;
 			console.log(files[0]);
-			$scope.user.avatarFileName=new Date().getTime().toString() + '_' + $scope.files[0].name;
+			if($scope.files){
+				$scope.user.avatarFileName=new Date().getTime().toString() + '_' + $scope.files[0].name;
+			}
 		};
 		$scope.editEmail = function (edit,keep) {
 			if(edit === true){
@@ -53,12 +55,13 @@ angular.module('origApp.controllers')
 						return;
 					}
 					console.log(res);
+					$scope.wrongPassword = undefined;
 					$modalInstance.close();
 					MsgService.success('Profile updated successfully.');
 				});
 			}
-			HttpResource.model('users/update/'+$scope.user._id).create({emailAddress:$scope.user.emailAddress, avatarFileName:$scope.user.avatarFileName})
-			.post();
+			HttpResource.model('users/update/'+$scope.user._id)
+			.create({emailAddress:$scope.user.emailAddress, avatarFileName:$scope.user.avatarFileName}).post();
 			if($scope.files) {
 				$scope.uploading = true;
 				var fileName = $scope.user.avatarFileName;
@@ -74,16 +77,23 @@ angular.module('origApp.controllers')
 						url: signedRequest,
 						data: $scope.files[0],
 						headers: {'Content-Type': mimeType, 'x-amz-acl': 'public-read'}
-					}).success(function(res) {
+					}).success(function() {
+						
+						$scope.files = undefined;
+						
 		                $scope.uploading = false;
+
 		                HttpResource.model('documents/'+parentScope.currentUser._id+'/avatar').customGet('viewsignedurl', {
 		                	fileName: $scope.user.avatarFileName
 		                },function(res){
 		                	console.log(res);
 		                	$scope.avatar = res.data.signedRequest;
 		                });
-		                $modalInstance.close();
-		                MsgService.success('Profile updated successfully.');
+		                if(!$scope.wrongPassword){
+		                	$scope.files = null;
+		                	$modalInstance.close();
+		                	MsgService.success('Profile updated successfully.');
+		                }
 		            });
 				});
 			}
@@ -94,5 +104,14 @@ angular.module('origApp.controllers')
 		};
 		$scope.cancel = function () {
 			$modalInstance.close();
+		};
+		console.log($rootScope)
+		$scope.vehicle = function () {
+			ModalService.open({
+				parentScope: $scope,
+				controller: 'vehicleCtrl',
+				templateUrl: '/views/partials/vehicle.html',
+				size:'md'
+			});
 		};
 }]);
