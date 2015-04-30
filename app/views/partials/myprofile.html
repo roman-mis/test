@@ -33,7 +33,7 @@
 							{{user.emailAddress}}
 						</div>
 						<div ng-show = "edit">
-							<input class = "form-control"type="text" ng-model = "backupEmail" />
+							<input name = "email" ng-pattern = "/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" class = "form-control"type="text" ng-model = "backupEmail" />
 						</div>
 					</div>
 					<div class="col-xs-2">
@@ -41,9 +41,10 @@
 							<a href ng-click = "edit = true; editEmail(edit,false)"><i class="fa fa-pencil-square-o"></i></a>
 						</span>
 						<span ng-show="edit" class = "control-label">
+						<span ng-hide = "form.email.$error.pattern">
 							<a href ng-click = "edit = false; keep = true; editEmail(edit,keep)"><i class="fa fa-check"></i></a>
-							<a href ng-click = "edit = false"><i class="fa fa-times"></i></a>						</span>
-
+							</span>
+							<a href ng-click = "edit = false"><i class="fa fa-times"></i></a>			</span>
 						</div>
 					</div>
 				</div>
@@ -99,7 +100,7 @@
 							<label class="control-label">Vehicle Spec</label>
 						</div>
 						<div class="col-xs-9">
-							<div class="control-label"><a href>Link to Vehicle</a></div>
+							<div class="control-label"><a href ng-click = "vehicle()">Vehicle Information</a></div>
 						</div>
 					</div>
 				</div>
@@ -119,7 +120,7 @@
 
 		<div class="modal-footer">
 			<button  type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-			<button ng-disabled = "uploading ||edit||disableForm" ng-click = "save()" type="button" class="btn btn-primary"><div ng-show="!uploading"><i class="fa fa-save"></i> &nbsp; Save & Close</div>
+			<button ng-disabled = "uploading ||edit||disableForm||(profile.newPassword&&!profile.confirmPassword)||(profile.confirmPassword&&!profile.newPassword)" ng-click = "save()" type="button" class="btn btn-primary"><div ng-show="!uploading"><i class="fa fa-save"></i> &nbsp; Save & Close</div>
       <div ng-show="uploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div></button>
 
 		</div>
