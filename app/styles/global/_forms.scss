@@ -37,6 +37,10 @@ textarea {
 
 .form-group {
     margin-bottom: 5px;
+    min-height: $input-height;
+    > div {
+        line-height: $input-height;
+    }
 }
 
 .input-group-btn > button.btn.btn-default {
