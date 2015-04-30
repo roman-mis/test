@@ -54,7 +54,7 @@ module.exports = function (dbs) {
                         break;
                     }
                 }
-
+                console.log('%%%%%%%%%%%%%%%%%%%%%1')
                 for (i = 0; i < expenseDetails.days.length; i++) {
                     for (var j = 0; j < expenseDetails.days[i].expenses.length; j++) {
                         if(expenseDetails.days[i].expenses[j].expenseType === 'Subsistence' || expenseDetails.days[i].expenses[j].expenseType === 'Other'){
@@ -112,6 +112,8 @@ module.exports = function (dbs) {
                         (expenseDetails.days[i].expenses[j].value + expenseDetails.days[i].expenses[j].vat);
                     }
                 }
+                console.log('%%%%%%%%%%%%%%%%%%%%%2')
+
                 var expenseModel;
                 expenseModel = new db.Expense(expenseDetails);
                 Q.nfcall(expenseModel.save.bind(expenseModel))

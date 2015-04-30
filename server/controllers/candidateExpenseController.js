@@ -118,6 +118,47 @@ module.exports = function(db){
 		.then(null, res.sendFailureResponse);
 	};
 
+	controller.postManyExpenses=function (req, res) {
+		var newExpense;
+		var request ;
+		var promisArray = [];
+		console.log(req.body)
+		for (var i = 0; i < req.body.expense.length; i++) {
+			request = req.body;
+			// console.log('requesting');
+			// console.log(req.body);
+			var expense = req.body.expense[i];
+			console.log(i);
+			console.log(req.body.ids[i]);
+			newExpense = {
+				agency: expense.agency,
+				user: req.body.ids[i],
+				createdBy: req.user.id,
+				startedDate: new Date(),
+				submittedDate: new Date(),
+				source: request.source,
+				days: expense.days
+			};
+			console.log(newExpense);
+			promisArray.push(expenseservice.saveExpenses(newExpense));
+		}
+
+		//expense total
+		// var total = 0;
+		// expense.days.forEach(function(day){
+		// 	day.expenses.forEach(function(ex) {
+		// 		total = total + ex.value*ex.amount;
+		// 	});
+		// });
+console.log('promisArray *****',promisArray.length)
+		Q.all(promisArray)
+		.then(function(response){
+			res.json(response);
+		},function(err){
+		 	res.sendFailureResponse(err);
+		});
+	};
+
 	controller.postExpense=function (req, res) {
 		var request = req.body;
 		console.log('requesting');
