@@ -10,13 +10,23 @@ module.exports=function(dbs){
 		candidatecommonservice=require(__dirname+'/candidatecommonservice')(db);
 	var service={};
 
-	service.getPayrollProductDetails = function(id){
-		var query=db.User.findById(id)
+	service.getPayrollProductDetails = function(selector,isCandidateNo){
+		var query;
+		if(isCandidateNo){
+			query=db.User.findOne({candidateNo:selector})
 			.populate('worker.payrollProduct.agency')
 			.populate('worker.payrollProduct.branch')
 			.populate('worker.payrollProduct.consultant')
 			.populate('worker.payrollProduct.marginException.createdBy');
-
+		}else{
+			query=db.User.findById(selector)
+			.populate('worker.payrollProduct.agency')
+			.populate('worker.payrollProduct.branch')
+			.populate('worker.payrollProduct.consultant')
+			.populate('worker.payrollProduct.marginException.createdBy');
+	
+		}
+		
 		return Q.Promise(function(resolve,reject){
 		    return Q.nfcall(query.exec.bind(query))
 		    .then(function(user){
@@ -89,15 +99,38 @@ module.exports=function(dbs){
 		});
 	};
 
-	service.getCandidatesPayrollProducts = function(candidateRefNo){
+	service.getCandidatesPayrollProducts = function(candidateRefNos){
+		var promiseArray = [];
+		// candidateRefNos = [10,11,12,13];
+		// candidateRefNos = JSON.parse(candidateRefNos);
+		var q;
 		return Q.promise (function (resolve,reject){
-			var q = db.User.find({candidateNo:12}).select('_id');
-			Q.nfcall(q.exec.bind(q)).then(function(data){
-				console.log(data);
-				resolve(0);
+			for (var i = 0; i < candidateRefNos.length; i++) {
+				q = db.User.findOne({candidateNo:candidateRefNos[i]}).select('_id');
+				promiseArray.push(Q.nfcall(q.exec.bind(q)));
+			}
+			Q.all(promiseArray).then(function(ids){
+				promiseArray = [];
+				for (var i = 0; i < ids.length; i++) {
+					promiseArray.push(service.getPayrollProductDetails(ids[i]._id));
+				}
+				Q.all(promiseArray).then(function(res){
+					var payrollProducts = [];
+					for (var i = 0; i < res.length; i++) {
+							payrollProducts.push({
+								payrollProduct:res[i],
+								UserId:ids[i]._id
+							});
+					}
+					// console.log(res);
+					resolve(payrollProducts);
+				},function(err){
+					console.log(err);
+					reject(err);
+				});
 			},function(err){
 				console.log(err);
-				resolve(0);
+				reject(err);
 			});
 		});
 	};

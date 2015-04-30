@@ -3,12 +3,9 @@
         <div class="table-view padding-10 meta-box container-fluid">
             <div class="tv-search-row">
                 <div class="tv-search-container">
-                    <div class="tv-search">
-                        <input class="form-control" type="text" placeholder="Search" />
-                    </div>
-                    <div class="tv-search-btn">
-                        <button class="btn btn-success input-btn">Go</button>
-                    </div>
+                    
+                        <input class="form-control" type="text" ng-keyup="onDelaySearch()" placeholder="Search" ng-model="searchName"/>
+                    
                 </div>
                 <div class="col-sm-3 col-lg-2 nonepadding text-right">
                     <button ng-click="addNewAgency()" class="btn btn-success">
