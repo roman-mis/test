@@ -2,15 +2,20 @@
 var app = angular.module('origApp.controllers');
 
 app.controller("expensesAuthorizationCtrl",
-    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal', 'Notification',
-    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal, Notification) {
-
-        var valuesForTransport = [0.45, 0.25, 0.2];
+    ['$scope', '$http', '$rootScope', 'HttpResource', 'ConstantsResource', '$modal', 'Notification', '$q',
+    function ($scope, $http, $rootScope, HttpResource, ConstantsResource, $modal, Notification, $q) {
 
         $rootScope.breadcrumbs = [{ link: '/', text: 'Home' },
                                   { link: '/activity/home', text: 'Activity' },
                                   { link: '/activity/expensesAuthorization', text: 'Expenses Authorisation' }
         ];
+        $scope.valuesForTransport = [];
+        var deferred = [];
+        var promiseArray = [];
+        for (var i = 0; i <= 5; i++) {
+            deferred.push($q.defer());
+            promiseArray.push(deferred[i].promise);
+        }
         $scope.options = {
             currentPage: 1,
             limit: 20
@@ -30,7 +35,7 @@ app.controller("expensesAuthorizationCtrl",
             //  }
             HttpResource.model('candidates/expenses').query(params, function (expenses) {
                 logs('getting expenses done !!');
-                console.log(expenses.data.object);
+                logs(expenses.data.object, 'everything');
                 $scope.system = expenses.data.object.system[0];
                 logs($scope.system, 'system doc');
                 $scope.expensesArray = expenses.data.object.claims;
@@ -52,21 +57,54 @@ app.controller("expensesAuthorizationCtrl",
 
         };
 
-        $scope.loadExpenses();
+        $q.all([promiseArray[0], promiseArray[1], promiseArray[2], promiseArray[3], promiseArray[4]]).then(function () {
+            logs('it works');
+            $scope.loadExpenses();
+        });
 
-        $scope.transportTypes = ConstantsResource.get('transportationmeans');
-        $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({});
+        $http.get('api/constants/transportationmeans').success(function (res) {
+            logs(res, 'transports');
+            $scope.valuesForTransport[0] = res[0].default_ppm;
+            $scope.valuesForTransport[1] = res[1].default_ppm;
+            $scope.valuesForTransport[2] = res[2].default_ppm;
+            deferred[0].resolve();
+        });
+        $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({}, function () {
+            deferred[1].resolve();
+        });
+
+        //promiseArray[0].then(function () {
+        //    logs('************0************');
+        //});
+        //promiseArray[1].then(function () {
+        //    logs('************1************');
+        //});
+        //promiseArray[2].then(function () {
+        //    logs('************2************');
+        //});
+        //promiseArray[3].then(function () {
+        //    logs('************3************');
+        //});
+        //promiseArray[4].then(function () {
+        //    logs('************4************');
+        //});
+
+
         $http.get('/api/constants/expenseClaimStatus').success(function (res) {
             $scope.expenseStatus = res;
+            deferred[2].resolve();
         });
         //$http.get('/api/constants/expenseStatus').success(function (res) {
         //    $scope.expenseStatus = res;
         //});
-        $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({});
+        $scope.otherTypes = HttpResource.model('systems/expensesrates/expensesratetype/other').query({}, function () {
+            deferred[3].resolve();
+        });
 
         $http.get('/api/constants/fuels').success(function (res) {
             logs(res, 'fuels');
             $scope.fuels = res;
+            deferred[4].resolve();
         });
         //$http.get('/api/constants/enginesizes').success(function (res) {
         //    logs(res, 'engine sizes')
@@ -74,11 +112,11 @@ app.controller("expensesAuthorizationCtrl",
 
         $scope.pendingRejections = [];
 
-        function getVehicleInfo(userId, code) {
-            $http.get('/api/candidates/' + userId + '/vehicleinformation/' + code).success(function (res) {
-                logs(res, 'vehicle info')
-            });
-        }
+        //function getVehicleInfo(userId, code) {
+        //    $http.get('/api/candidates/' + userId + '/vehicleinformation/' + code).success(function (res) {
+        //        logs(res, 'vehicle info')
+        //    });
+        //}
 
         function init() {
             for (var i = 0; i < $scope.expensesArray.length; i++) {
