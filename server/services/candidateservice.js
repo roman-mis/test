@@ -447,17 +447,15 @@
 					correctPassword = false;
 				}
 				if(user && user.isActive && correctPassword){
-					console.log('AFTER IF USER && USERISACTIVE');
 					utils.compareSecureString(user.password,password)
 					.then(function(result){
 						console.log('after comparing passwords',password);
 						if(result){
-							console.log('resulttttt',result,newPassword);
+							
 						utils.secureString(newPassword).
 							then(function(securePassword){
 								console.log('password hashed : '+securePassword);
-								//user.password=securePassword;
-								console.log('wtffffffffffffffffff');
+								
 							
 							db.User.update({'_id':user._id},{$set:{'password':securePassword}},function(err){
 						        console.log(err);
@@ -467,7 +465,7 @@
 						}
 						else{
 							// deff.reject(user);
-							deff.reject({name:'InvalidLogin',message:'User not found',detail:'fuck u'});
+							deff.reject({name:'InvalidLogin',message:'User not found',detail:'wrong password'});
 
 						}
 					});
