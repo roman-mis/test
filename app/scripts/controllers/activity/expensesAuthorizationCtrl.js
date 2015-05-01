@@ -9,7 +9,7 @@ app.controller("expensesAuthorizationCtrl",
                                   { link: '/activity/home', text: 'Activity' },
                                   { link: '/activity/expensesAuthorization', text: 'Expenses Authorisation' }
         ];
-        $scope.valuesForTransport = [];
+        var valuesForTransport = [];
         var deferred = [];
         var promiseArray = [];
         for (var i = 0; i <= 5; i++) {
@@ -64,9 +64,10 @@ app.controller("expensesAuthorizationCtrl",
 
         $http.get('api/constants/transportationmeans').success(function (res) {
             logs(res, 'transports');
-            $scope.valuesForTransport[0] = res[0].default_ppm;
-            $scope.valuesForTransport[1] = res[1].default_ppm;
-            $scope.valuesForTransport[2] = res[2].default_ppm;
+            valuesForTransport[0] = res[0].default_ppm;
+            valuesForTransport[1] = res[1].default_ppm;
+            valuesForTransport[2] = res[2].default_ppm;
+            $scope.transportTypes = res;
             deferred[0].resolve();
         });
         $scope.mealTypes = HttpResource.model('systems/expensesrates/expensesratetype/subsistence').query({}, function () {
