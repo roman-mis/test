@@ -73,13 +73,18 @@ module.exports = function (dbs) {
                                 expenseDetails.days[i].expenses[j].value = 0;
                                 expenseDetails.days[i].expenses[j].vat = 0;
                                 if (expenseDetails.days[i].expenses[j].subType === 'Car / Van') {
+                                    console.log('########1')
                                     expenseDetails.days[i].expenses[j].value = valuesForTransport[0];
+                                    console.log('########2')
+                                    console.log(userVehicleInformation)
+                                    console.log('########3')
                                     var fuelType = userVehicleInformation.fuelType;
                                     var engineSize = userVehicleInformation.engineSize;
                                     var piece = {
                                         fuelCode: fuelType,
                                         engineCode: engineSize
                                     };
+                                    console.log('########4')
                                     fuels.forEach(function (item) {
                                         if (fuelType === item.code) {
                                             piece.fuelType = item.description;
@@ -90,21 +95,37 @@ module.exports = function (dbs) {
                                             });
                                         }
                                     });
+                                    console.log('########5')
                                     if (piece.fuelCode === '1' && piece.engineCode === '1') {
+                                        console.log('########61')
                                         expenseDetails.days[i].expenses[j].vat =
                                         mileageRates.petrolUpTo1400 * vatRate;
                                     } else if (piece.fuelCode === '2' && piece.engineCode === '1') {
-                                        expenseDetails.days[i].expenses[j].expenseDetail.vat =
-                                        mileageRates.dieselUpTo1600 * vatRate;
+                                        console.log('########62')
+                                        console.log(mileageRates.dieselUpTo1600)
+                                        console.log(vatRate)
+                                        console.log('*********-1')
+                                        console.log(expenseDetails)
+                                        console.log('*********0')
+                                        console.log(expenseDetails.days[i])
+                                        console.log('*********1')
+                                        console.log(expenseDetails.days[i].expenses[j])
+                                        console.log('*********2')
+                                        expenseDetails.days[i].expenses[j].vat =
+                                        mileageRates.dieselUpTo1600  * vatRate;
                                     } else if (piece.fuelCode === '3' && piece.engineCode === '1') {
+                                        console.log('########63')
                                         expenseDetails.days[i].expenses[j].vat =
                                         mileageRates.lpgUpTo1400 * vatRate;
                                     }
                                 } else if (expenseDetails.days[i].expenses[j].subType === 'Motorbike') {
+                                        console.log('########64')
                                     expenseDetails.days[i].expenses[j].value = valuesForTransport[1];
                                 } else if (expenseDetails.days[i].expenses[j].subType === 'Bicycle') {
+                                        console.log('########65')
                                     expenseDetails.days[i].expenses[j].value = valuesForTransport[2];
                                 }
+                                console.log('########6')
                             }
                         }
                         expenseDetails.days[i].expenses[j].total = 

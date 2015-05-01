@@ -217,6 +217,7 @@ module.exports=function(dbs){
               holidayPay[i] += res[0][i][j].holidayPay.amount;
             }else{
               for(var k =0; k < res[0][i][j].days.length; k++){
+                
                 statutoryAmount[i] += res[0][i][j].days[k].amount;
                 statutoryAmountPaid[i] += res[0][i][j].days[k].amountPaid;
               }
@@ -623,6 +624,7 @@ module.exports=function(dbs){
                                                                   log('Capacity for expenses: ' + capacityForExpenses, logs);
 
                                                                   var totalExpenses = 0;
+                                                                  _worker.worker.currentExpensesToUse = worker.expenses;
                                                                   log('Total expenses available to use: ' + _worker.worker.currentExpensesToUse, logs);
 
                                                                   if (_worker.worker.currentExpensesToUse > capacityForExpenses) {
