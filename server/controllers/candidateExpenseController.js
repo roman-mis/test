@@ -184,30 +184,36 @@ console.log('promisArray *****',promisArray.length)
 			});
 		});
 
-		expenseservice.saveExpenses(newExpense).then(function(response){
-			getExpenseVm(response, true)
-	        .then(function(_expense){
-				candidateservice.updateWorkerCurrentExpensesToUse(req.params.id, total)
-				.then(function() {
-					if(request.vehicleInformation){
-						// Adding Vehicle Information
-						var vehicleInformation = req.body.vehicleInformation;
-						candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
-							.then(function(){
-							  res.json(_expense);
-							},function(err){console.log(err);
-							 res.sendFailureResponse(err);
-						});
-					}else{
-						res.json(_expense);
-					}
-				}, function(err){
-					res.sendFailureResponse(err);
-				});
-	        },res.sendFailureResponse);
-		},function(err){
-		 	res.sendFailureResponse(err);
-		});
+
+		function saveNewClaim(){
+			expenseservice.saveExpenses(newExpense).then(function(response){
+				getExpenseVm(response, true)
+		    .then(function(_expense){
+					candidateservice.updateWorkerCurrentExpensesToUse(req.params.id, total)
+					.then(function() {
+							res.json(_expense);
+					}, function(err){
+						res.sendFailureResponse(err);
+					});
+		        },res.sendFailureResponse);
+				},function(err){
+				 	res.sendFailureResponse(err);
+			});
+		}
+
+		
+		if(request.vehicleInformation){
+			var vehicleInformation = req.body.vehicleInformation;
+			candidateservice.updateVehicleInformation(req.params.id, vehicleInformation)
+				.then(function(){
+					saveNewClaim();
+				},function(err){console.log(err);
+				 res.sendFailureResponse(err);
+			});
+		}else{
+			saveNewClaim();
+		}
+
 	};
 
 
