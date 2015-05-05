@@ -44,6 +44,10 @@
             padding: 0 0 0 12px;
         }
     }
+	.modal-footer > .row {
+		display: flex;
+		align-items: flex-end;
+	}
     legend {
         margin-bottom: 0;
         font-size: 16px;
@@ -68,7 +72,8 @@
         border: 1px solid silver;
         margin: 0 2px;
         margin-top: $grid-gutter-width-md;
-        padding: .35em .625em .75em;
+        //padding: .35em .625em .75em;
+        padding: .35em .625em 0;
         .form-group {
             padding-left: 0;
             padding-right: 0;

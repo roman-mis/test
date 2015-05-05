@@ -93,7 +93,9 @@ a {
 }
 
 .alert {
-	margin-bottom: 0;
+	margin: 6px 0 0 0;
+	line-height: $line-height-base;
+	padding: 5px 10px; 
 }
 
 .page-container {

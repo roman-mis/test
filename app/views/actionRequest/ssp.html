@@ -1,176 +1,172 @@
-<form  name="sick" novalidate ng-submit="submitInformation(sick.$valid)">
-
-    <div class="modal-header">
-        <h4 class="modal-title">Request Statutory Sick Pay</h4>
-    </div>
-
-
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-xs-6 col-sm-3 form-group control-label">Candidate Name</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label">{{candidateInfo.firstName}}  {{candidateInfo.lastName}}</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label">Candidate ID</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label" ng-if="!ssp.worker" >{{candidateInfo.candidateRef}}</div>
-            <div class="col-xs-6 col-sm-3 form-group control-label"
-                 ng-if="ssp.worker">
-                {{ssp.worker.candidateRef}}</div>
-        </div>
-        <div class="line-horizontal"></div>
-        <div class="row">
-            <div class="col-xs-6 col-sm-4 form-group control-label">Date Informed</div>
-            <div class="col-xs-6 col-sm-4 form-group no-padding-left">
-                <div id="datepickerDate" class="input-group date">
-                    <input type="text" ng-model="ssp.dateInformed" name="inform"
-                           orig-datepicker  required/>
-
-                        <span ng-if="sick.inform.$invalid && submitted">
-                        <p class="alert alert-danger" ng-show="sick.inform.$error.required">Please
-                            enter
-                            informed
-                            date.</p>
-                        </span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-3 form-group control-label">Date of Sick Note</div>
-            <div style="text-align: right;" class="col-xs-6 col-sm-2 form-group control-label">From</div>
-            <div class="col-xs-6 col-sm-3 form-group no-padding-left">
-                <div id="datepickerFrom" class="input-group date">
-                    <input type="text" name="start" ng-model="ssp.startDate" orig-datepicker required />
-                         <span ng-if="sick.start.$invalid && submitted">
-                             <p ng-show="sick.start.$error.required" class="alert alert-danger">Please enter date of sick
-                                 note.</p>
-                         </span>
-                </div>
-            </div>
-            <div style="text-align: right;" class="col-xs-6 col-sm-1 form-group control-label">To</div>
-            <div class="col-xs-6 col-sm-3 form-group no-padding-left">
-                <div id="datepickerTo" class="input-group date">
-                    <input type="text" name="end" ng-model="ssp.endDate" orig-datepicker required  />
-                            <span ng-if="sick.end.$invalid && submitted">
-                                <p ng-show="sick.end.$error.required" class="alert alert-danger">Please enter date of sick
-                                    end.</p>
-                            </span>
-                </div>
-            </div>
-        </div>
-        <div class="row " ng-if='!showMe'>
-            <div class="col-xs-12 form-group" >
-                <button class="btn btn-primary form-control" type="button" ng-click="checkDate('first')">Check if
-                    qualifies</button>
-            </div>
-        </div>
-
-        <div class="row " ng-if="!validDate && sspMessage">
-            <div class="col-xs-12 form-group" ng-if="!validDate">
-                <p class="alert alert-danger" >{{sspMessage}}</p>
-
-            </div>
-        </div>
-
-
-        <div class="line-horizontal"></div>
-        <div class="row">
-            <div class="col-xs-12" ng-if="ssp.days.length > 0 && !showMe">
-                <p class="alert alert-success">&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
-            </div>
-            <div class="col-xs-12">
-                <div class="wrapTable-scroll" style="max-height: 250px;overflow-y: scroll;">
-                    <table class="table table-striped">
-                        <tbody>
-                        <tr ng-repeat="s in ssp.days" >
-                            <td ng-if="s.monthNumber >0">
-
-                                Month {{s.monthNumber}}
-                            </td>
-                            <td ng-if="s.monthNumber <=0 || !s.monthNumber">
-                                Week {{s.weekNumber}}
-                            </td>
-
-                            <td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
-
-
-                                <input type="number"  ng-model="s.amount" ng-if='!indexCount'>
-                                &nbsp; <a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;'
-                                        ng-show='!indexCount'><i class="fa fa-check"></i></a>
-                                &nbsp; <a   href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'><i class="fa fa-remove"></i></a>
-                            </td>
-                            <td class="text-right">
-                                <a  href="javascript:void(0)" ng-click="indexCount=false;"  class="edit-price"><i
-                                        class="fa fa-edit"></i></a>&nbsp;
-                                <a  href="javascript:void(0)" ng-click='remove($index);' ><i
-                                        class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-footer-left" class="modal-footer">
-        <div class="row rowFooter">
-            <div class="col-xs-7 col-sm-6">
-                <fieldset class="fieldsetRequestP45">
-                    <legend class="text-center">Upload Sick Note</legend>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 form-group">
-                            <div class="fileUpload btn btn-primary form-control">
-                                <span onclick="$('#upload').click();">Browse</span>
-                                <input  file-model="fileupload" type="file"
-                                       name="sickNote"  id="upload" style="display: none;"  />
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 form-group">
-                            <button type="button" class="btn btn-primary form-control"
-                                    ng-disabled="isLogoUploading" ng-click="upload()">
-                                <span ng-show="!isLogoUploading" >Upload</span>
-                                <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
-                                <div id="uploadFile" class="col-xs-8 col-sm-9 label-control file-details">
-                                    <span ng-if="temp.logoFileName">{{temp.logoFileName | limitTo:17}}...</span>
-                                    <a style="cursor:pointer" ng-click="viewFile(ssp.imageUrl)" ng-if="showMe && temp.logoFileName"><i class="fa fa-picture-o present"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control">Size:</div>
-                                <div id="filesize" class="col-xs-8 col-sm-9 label-control file-details">
-                                   <span ng-if="temp.logoSize">{{temp.logoSize | number:2}} KB</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-
-            <div class="col-xs-6 col-sm-6 text-right btnFooter form-group">
-                <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
-                <div class="btn-group" ng-if="showMe">
-                    <button type="button" class="btn btn-primary">Action</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a   href="javascript:void(0)" ng-click="save('save')">Save</a></li>
-                        <li><a   href="javascript:void(0)" ng-click="save('saveAndApprove')">Save and Approve</a></li>
-                        <li><a   href="javascript:void(0)" ng-click="save('saveAndReject');">Save and Reject</a></li>
-                        <li><a   href="javascript:void(0)" ng-click="save('saveAndRefer');">Save and Refer</a></li>
-                    </ul>
-                </div>
-                <input type="submit" name="submit" class="btn btn-primary" ng-if="!showMe" value="Submit">
-            </div>
-        </div>
-    </div>
-
-</form>
+<div class="modal-window">
+	<form name="sick" novalidate ng-submit="submitInformation(sick.$valid)">
+		<div class="modal-header">
+			<h3 class="modal-title">Request Statutory Sick Pay</h3>
+		</div>
+	
+		<div class="modal-body">
+			<div class="row form-group">
+				<div class="col-xs-6 col-sm-3 control-label">Candidate Name</div>
+				<div class="col-xs-6 col-sm-3 control-label">{{candidateInfo.firstName}} {{candidateInfo.lastName}}</div>
+				<div class="col-xs-6 col-sm-3 control-label">Candidate ID</div>
+				<div class="col-xs-6 col-sm-3 control-label" ng-if="!ssp.worker">{{candidateInfo.candidateRef}}</div>
+				<div class="col-xs-6 col-sm-3 control-label" ng-if="ssp.worker">
+					{{ssp.worker.candidateRef}}</div>
+			</div>
+			<div class="line-horizontal"></div>
+			<div class="row form-group">
+				<div class="col-xs-6 col-sm-4 control-label">Date Informed</div>
+				<div class="col-xs-6 col-sm-4 no-padding-left">
+					<div id="datepickerDate" class="input-group date">
+						<input type="text" ng-model="ssp.dateInformed" name="inform" orig-datepicker required/>
+	
+						<span ng-if="sick.inform.$invalid && submitted">
+	                        <p class="alert alert-danger" ng-show="sick.inform.$error.required">Please
+	                            enter
+	                            informed
+	                            date.</p>
+	                        </span>
+					</div>
+				</div>
+			</div>
+			<div class="row form-group">
+				<div class="col-xs-12 col-sm-3 control-label">Date of Sick Note</div>
+				<div style="text-align: right;" class="col-xs-6 col-sm-2 control-label">From: &nbsp; </div>
+				<div class="col-xs-6 col-sm-3 no-padding-left">
+					<div id="datepickerFrom" class="input-group date">
+						<input type="text" name="start" ng-model="ssp.startDate" orig-datepicker required />
+						<span ng-if="sick.start.$invalid && submitted">
+	                             <p ng-show="sick.start.$error.required" class="alert alert-danger">Please enter date of sick
+	                                 note.</p>
+	                         </span>
+					</div>
+				</div>
+				<div style="text-align: right;" class="col-xs-6 col-sm-1 form-group control-label">To: &nbsp; </div>
+				<div class="col-xs-6 col-sm-3 form-group no-padding-left">
+					<div id="datepickerTo" class="input-group date">
+						<input type="text" name="end" ng-model="ssp.endDate" orig-datepicker required />
+						<span ng-if="sick.end.$invalid && submitted">
+	                                <p ng-show="sick.end.$error.required" class="alert alert-danger">Please enter date of sick
+	                                    end.</p>
+	                            </span>
+					</div>
+				</div>
+			</div>
+			<div class="row " ng-if='!showMe'>
+				<div class="col-xs-12 form-group">
+					<button class="btn btn-primary" type="button" ng-click="checkDate('first')">Check if qualifies
+					</button>
+				</div>
+			</div>
+	
+			<div class="row " ng-if="!validDate && sspMessage">
+				<div class="col-xs-12 form-group" ng-if="!validDate">
+					<p class="alert alert-danger">{{sspMessage}}</p>
+	
+				</div>
+			</div>
+	
+			<div class="line-horizontal"></div>
+			<div class="row">
+				<div class="col-xs-12" ng-if="ssp.days.length > 0 && !showMe">
+					<p class="alert alert-success">&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
+				</div>
+				<div class="col-xs-12">
+					<div class="wrapTable-scroll" style="max-height: 250px;overflow-y: scroll;">
+						<table class="table table-striped">
+							<tbody>
+								<tr ng-repeat="s in ssp.days">
+									<td ng-if="s.monthNumber >0">
+	
+										Month {{s.monthNumber}}
+									</td>
+									<td ng-if="s.monthNumber <=0 || !s.monthNumber">
+										Week {{s.weekNumber}}
+									</td>
+	
+									<td ng-init="indexCount=$index;indexCount=true;indexOr=$index;indexOr=s.amount"><span ng-if='indexCount'>{{s.amount | number : 2}}</span>
+	
+	
+										<input type="number" ng-model="s.amount" ng-if='!indexCount'> &nbsp; <a href="javascript:void(0)" ng-click='indexCount=true;indexOr=s.amount;' ng-show='!indexCount'><i class="fa fa-check"></i></a> &nbsp; <a href="javascript:void(0)" ng-click='cancel($index,indexOr);indexCount=true;' ng-show='!indexCount'><i class="fa fa-remove"></i></a>
+									</td>
+									<td class="text-right">
+										<a href="javascript:void(0)" ng-click="indexCount=false;" class="edit-price"><i
+	                                        class="fa fa-edit"></i></a>&nbsp;
+										<a href="javascript:void(0)" ng-click='remove($index);'><i
+	                                        class="fa fa-trash"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div id="modal-footer-left" class="modal-footer">
+			<div class="row">
+				<div class="col-xs-7 col-sm-6">
+					<fieldset>
+						<legend class="text-center">Upload Sick Note</legend>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 text-center">
+								<div class="fileUpload btn btn-primary">
+									<span onclick="$('#upload').click();">Browse</span>
+									<input file-model="fileupload" type="file" name="sickNote" id="upload" style="display: none;" />
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 text-center">
+								<button type="button" class="btn btn-primary" ng-disabled="isLogoUploading" ng-click="upload()">
+									<span ng-show="!isLogoUploading">Upload</span>
+									<span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<div ng-if="temp.logoFileName" class="col-xs-4 col-sm-3 label-control">Name:</div>
+									<div id="uploadFile" class="col-xs-8 col-sm-9 label-control file-details">
+										<span ng-if="temp.logoFileName">{{temp.logoFileName | limitTo:17}}...</span>
+										<a style="cursor:pointer" ng-click="viewFile(ssp.imageUrl)" ng-if="showMe && temp.logoFileName"><i class="fa fa-picture-o present"></i></a>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12">
+								<div class="form-group">
+									<div ng-if="temp.logoSize" class="col-xs-4 col-sm-3 label-control">Size:</div>
+									<div id="filesize" class="col-xs-8 col-sm-9 label-control file-details">
+										<span ng-if="temp.logoSize">{{temp.logoSize | number:2}} KB</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+	
+				<div class="col-xs-6 col-sm-6 text-right btnFooter form-group">
+					<a ng-click="closeModal()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
+					<div class="btn-group" ng-if="showMe">
+						<button type="button" class="btn btn-primary">Action</button>
+						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li><a href="javascript:void(0)" ng-click="save('save')">Save</a>
+							</li>
+							<li><a href="javascript:void(0)" ng-click="save('saveAndApprove')">Save and Approve</a>
+							</li>
+							<li><a href="javascript:void(0)" ng-click="save('saveAndReject');">Save and Reject</a>
+							</li>
+							<li><a href="javascript:void(0)" ng-click="save('saveAndRefer');">Save and Refer</a>
+							</li>
+						</ul>
+					</div>
+					<input type="submit" name="submit" class="btn btn-primary" ng-if="!showMe" value="Submit">
+				</div>
+			</div>
+		</div>
+	
+	</form>
+</div>
