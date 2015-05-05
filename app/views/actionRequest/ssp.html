@@ -52,14 +52,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="row " ng-if='!showMe'>
+			<div class="row" ng-if='!showMe'>
 				<div class="col-xs-12 form-group">
-					<button class="btn btn-primary" type="button" ng-click="checkDate('first')">Check if qualifies
+					<button class="btn btn-primary pull-right" type="button" ng-click="checkDate('first')">Check if qualifies
 					</button>
 				</div>
+				<div class="col-xs-12 form-group"></div>
 			</div>
 	
-			<div class="row " ng-if="!validDate && sspMessage">
+			<div class="row" ng-if="!validDate && sspMessage">
 				<div class="col-xs-12 form-group" ng-if="!validDate">
 					<p class="alert alert-danger">{{sspMessage}}</p>
 	
