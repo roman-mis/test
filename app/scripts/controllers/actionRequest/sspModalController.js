@@ -2,13 +2,16 @@
 angular.module('origApp.controllers')
     .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance,ModalService,$modal) {
 
+        console.log('****************');
+        console.log(parentScope.candidate);
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
         $scope.showMe = parentScope.showMe;
+        
         if (!$scope.ssp) {
-
             $scope.ssp = {};
-        };
+        }
+
         $scope.validDate = true;
 
         function getCandidateContactDetails() {
@@ -62,19 +65,23 @@ angular.module('origApp.controllers')
                 $scope.ssp = {};
             }
             var n = new Date($scope.ssp.dateInformed).valueOf();
-
             var sickDayFrom = new Date($scope.ssp.startDate).valueOf();
             var sickDayTo = new Date($scope.ssp.endDate).valueOf();
+            
+            console.log('n',n);
+            console.log('sickDayFrom', sickDayFrom);
+            console.log('sickDayTo', sickDayTo);
 
             var validTill = sickDayTo + 604800000;
 
 
             if (n >= sickDayTo && n <= validTill && (sickDayTo - sickDayFrom >= 345600000)) {
-
                 $scope.validDate = true;
                 $scope.sspMessage = null;
 
-                if(arguments.length){
+                // console.log(arguments);
+                // if(arguments.length){
+                console.log('**************')
                     HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {
                         'dateInformed': $scope.ssp.dateInformed,
                         'startDate': $scope.ssp.startDate,
@@ -86,7 +93,7 @@ angular.module('origApp.controllers')
 
                     }, function(err) {
                     });
-                }
+                // }
                 return true;
 
 

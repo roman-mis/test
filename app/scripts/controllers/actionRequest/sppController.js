@@ -33,11 +33,13 @@ angular.module('origApp.controllers')
 
     $scope.checkDateMp = function() {
 
-        if ($scope.sppObject.spp.babyDueDate) {
+        if ($scope.sppObject.startDate) {
             $scope.validDate = true;
             $scope.errorMsg = null;
+            console.log($scope.sppObject);
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.sppObject, function(data) {
                 $scope.sppObject.days = data.data.objects;
+                console.log($scope.sppObject.days)
 
 
             }, function(err) {});

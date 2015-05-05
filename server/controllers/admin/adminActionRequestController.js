@@ -168,7 +168,9 @@ module.exports = function(dbs){
 
 
     controller.checkSppQualification=function(req,res){
-
+    	console.log('**********//////*-*************')
+    	console.log('req.query')
+    	console.log(req.query)
     	var request={
     		intendedStartDate:req.query.intendedStartDate,
     		startDate:req.query.startDate,

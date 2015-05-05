@@ -22,15 +22,15 @@ angular.module('origApp.controllers')
             $scope.loadActionRequestList();
         },
         columns: [
-            { field: 'contractorId', display: 'Contractor ID', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.candidateNo}}</div>' },
-            { field: 'contractorName', display: 'Contractor Name', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.name | capitalizeAll}}</div>' },
-            { field: 'dateRequested', display: 'Date Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.dateRequested | date:"MM/dd/yyyy"}}</div>' },
-            { field: 'type', display: 'Type', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.type | capitalizeAll}}</div>' },
-            { field: 'periodActioned', display: 'Period Actioned', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.periodActioned}}</div>' },
-            { field: 'userRequested', display: 'User Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.createdBy.name  | capitalizeAll}}</div>' },
-            { field: 'requestRef.', display: 'Request Ref.', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.requestRef}}</div>' },
-            { field: 'status', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.status | capitalize}}</div>' },
-            { field: '', display: '', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> <a href=""><i class="fa fa-folder-open-o"></i></a></div>' }
+            { field: 'contractorId', display: 'Contractor ID', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.candidateNo}}&nbsp;</div>' },
+            { field: 'contractorName', display: 'Contractor Name', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.worker.name | capitalizeAll}}&nbsp;</div>' },
+            { field: 'dateRequested', display: 'Date Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.dateRequested | date:"MM/dd/yyyy"}}&nbsp;</div>' },
+            { field: 'type', display: 'Type', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.type | capitalizeAll}}&nbsp;</div>' },
+            { field: 'periodActioned', display: 'Period Actioned', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> {{row.periodActioned}}&nbsp;</div>' },
+            { field: 'userRequested', display: 'User Requested', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.createdBy.name  | capitalizeAll}}&nbsp;</div>' },
+            { field: 'requestRef.', display: 'Request Ref.', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.requestRef}}&nbsp;</div>' },
+            { field: 'status', display: 'Status', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)">{{row.status | capitalize}}&nbsp;</div>' },
+            { field: '', display: '', cellTemplate: '<div style="width:100%;" ng-click="getExternalScope().callModal(row.id, row.type)"> <a href=""><i class="fa fa-folder-open-o"></i></a>&nbsp;</div>' }
         ],
         data: []
     };
