@@ -145,7 +145,9 @@ module.exports=function(dbs){
 		console.log('max periods.... '+maxPeriods);
 
 		// var dateInformed=request.dateInformed;
-
+		console.log('request.startDate$$$$$$$$$$^^^^^^^^^&&&&&&&&&&');
+		console.log('request.startDate');
+		console.log(request);
 		var startDate=moment(request.startDate);
 		console.log('startDate:  '+request.startDate);
 		var endDate=request.endDate?moment(request.endDate):null;
@@ -165,6 +167,8 @@ module.exports=function(dbs){
 			// console.log('totalNumberOfDays: '+totalNumberOfDays);
 
 			var requestStartDays=startDate.clone().add(waitingDays,'days');
+			//make sure it start from after sunday
+			requestStartDays = (requestStartDays.day()===0)?requestStartDays.add(1,'days'):requestStartDays;
 			console.log('requestStartDays: '+requestStartDays.toISOString());
 			// var weekIndex=-1;
 			var nextStartDate=requestStartDays.clone();
@@ -173,7 +177,8 @@ module.exports=function(dbs){
 			var totalWeeks=i;
 			var maxPeriodLastDate=null;
 			if(maxPeriods>0){
-				maxPeriodLastDate=nextStartDate.clone().add(maxPeriods,'weeks');
+				//subtract a day to end at the last day of the previous week
+				maxPeriodLastDate=nextStartDate.clone().add(maxPeriods,'weeks').add(-1,'days');
 			}
 
 			while(true){
@@ -199,14 +204,33 @@ module.exports=function(dbs){
 				else{
 					thisPeriodLastDate=nextStartDate.clone().day(5);
 				}
-
-				var thisPeriodEndDate=endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():
+				var breakPointFalg = false;
+				var breakPointDate = moment(nextStartDate.year() + ' 04 06', 'YYYY MM DD');
+				console.log('breakPointDate');
+				console.log(breakPointDate);
+				console.log(nextStartDate);
+				if(endDate){
+					endDate.hour(0);
+				}
+				thisPeriodLastDate.hour(0)
+				maxPeriodLastDate.hour(0)
+				var thisPeriodEndDate = endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():
 						maxPeriodLastDate && thisPeriodLastDate.diff(maxPeriodLastDate,'days')>0?maxPeriodLastDate.clone() 
 						:thisPeriodLastDate.clone();
+
+				if(thisPeriodEndDate.diff(breakPointDate,'days') >= 0 && nextStartDate.diff(breakPointDate,'days') < 0){
+					thisPeriodEndDate = breakPointDate.clone().add(-1,'days');
+					breakPointFalg = true;
+				}
+
+				thisPeriodEndDate.hour(0)
+				nextStartDate.hour(0)
 				var noOfDays=thisPeriodEndDate.diff(nextStartDate,'days')+1;
 				console.log('noOfDays '+noOfDays);
 				weeks[i]={'days':[],amount:0,periodStartDate:null,weekNumber:-1,monthNumber:-1};
 				weeks[i].noOfDays=noOfDays;
+				weeks[i].startDate=nextStartDate;
+				weeks[i].endDate=thisPeriodEndDate;
 
 				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(0).toDate());
 				if(payFrequency===enums.payFrequency.Monthly){
@@ -216,7 +240,10 @@ module.exports=function(dbs){
 				else{
 					nextStartDate=nextStartDate.clone().add(7,'days').day(1);
 				}
-
+				 if(breakPointFalg === true){
+				 	nextStartDate = moment(nextStartDate.year() + ' 04 06', 'YYYY MM DD');
+				 }
+ 
 				
 				i++;
 
@@ -231,6 +258,8 @@ module.exports=function(dbs){
 
 				week.amount=perDayPay * week.noOfDays;
 			});
+		console.log('-------------@@@@@@@@@@@@@@@@@@--------------------');
+		console.log(weeks);
 
 			resolve({result:true,objects:weeks,options:{perDayPay:perDayPay}});
 		});
@@ -240,47 +269,65 @@ module.exports=function(dbs){
 	function applyPeriodNumbers(user,records,options){
 		var perDayPay=options.perDayPay;
 		var payFrequency=user.worker.payrollTax.payFrequency;
+		console.log('-------------$$$$$$$$$$$$--------------------');
 
-		var q=db.TaxTable.find().or([{'startDate':{$gte:records[0].periodStartDate}},{'startDate':{$lte:records[records.length-1].periodStartDate}}]);
+		console.log({'startDate':{$gte:records[0].periodStartDate}},{'startDate':{$lte:records[records.length-1].periodStartDate}});
+		var q=db.TaxTable.find();//.or([{'startDate':{$gte:records[0].periodStartDate}},{'startDate':{$lte:records[records.length-1].periodStartDate}}]);
 		console.log('query formed');
 		return Q.Promise(function(resolve,reject){
 			return q.exec(function(err,taxTables){
 				console.log('taxTables');
 				console.log(taxTables);
+				var weekOfset = moment('2015-4-6').week()-1;
 				_.forEach(records,function(week,idx){
-					var taxTable=_.first(_.filter(taxTables,function(tbl){
-						//console.log('comparing dates : ');
-						//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
-						var taxTableStartDate;
-						if(payFrequency===enums.payFrequency.Monthly){
-							taxTableStartDate=moment(tbl.startDate).startOf('month').toDate();
+					// var taxTable=_.first(_.filter(taxTables,function(tbl){
+					// 	//console.log('comparing dates : ');
+					// 	//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
+					// 	var taxTableStartDate;
+					// 	if(payFrequency===enums.payFrequency.Monthly){
+					// 		taxTableStartDate=moment(tbl.startDate).startOf('month').toDate();
 							
-						}
-						else{
-							taxTableStartDate=moment(tbl.startDate).day(0).toDate();
-						}
+					// 	}
+					// 	else{
+					// 		taxTableStartDate=moment(tbl.startDate).day(0).toDate();
+					// 	}
 						
-						console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableStartDate);
-						var ret= utils.areDateEqual(week.periodStartDate,taxTableStartDate);
-						console.log(ret);
-						return ret;
-					}));
+					// 	// console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableStartDate);
+					// 	var ret= utils.areDateEqual(week.periodStartDate,taxTableStartDate);
+					// 	// console.log(ret);
+					// 	return ret;
+					// }));
 
-					if(taxTable){
-						// console.log('taxTable found ');
-						// console.log(taxTable);
-						if(payFrequency===enums.payFrequency.Monthly){
-							week.monthNumber=taxTable.monthNumber;
+					// if(taxTable){
+					// 	// console.log('taxTable found ');
+					// 	// console.log(taxTable);
+					// 	if(payFrequency===enums.payFrequency.Monthly){
+					// 		week.monthNumber=taxTable.monthNumber;
 							
-						}
-						else{
-							week.weekNumber=taxTable.weekNumber;
-						}
+					// 	}
+					// 	else{
+					// 		week.weekNumber=taxTable.weekNumber;
+					// 	}
 						
 						
+					// }else{
+					// 	console.log(week.periodStartDate);
+					// }
+
+					// // week.amount=perDayPay * week.days.length;
+
+
+
+					week.weekNumber=moment(week.periodStartDate).week()-weekOfset;
+					week.weekNumber = (week.weekNumber>0)?week.weekNumber:week.weekNumber+52;
+
+					console.log('*******')
+					console.log(moment(week.endDate.year() + ' 04 06','YYYY MM DD'));
+					console.log(week.endDate)
+					console.log(week.endDate.diff(moment(week.endDate.year() + ' 04 06','YYYY MM DD'),'days'))
+					if(week.endDate.diff(moment(week.endDate.year() + ' 04 06','YYYY MM DD'),'days') === -1){
+						week.weekNumber = 53;						
 					}
-
-					// week.amount=perDayPay * week.days.length;
 				});
 
 				resolve(records);

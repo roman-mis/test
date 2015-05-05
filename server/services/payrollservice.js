@@ -217,7 +217,10 @@ module.exports=function(dbs){
               holidayPay[i] += res[0][i][j].holidayPay.amount;
             }else{
               for(var k =0; k < res[0][i][j].days.length; k++){
-                
+                console.log('**********', res[0][i][j].type);
+                console.log(res[0][i][j].days[k]);
+                console.log('******************');
+                console.log('################');
                 statutoryAmount[i] += res[0][i][j].days[k].amount;
                 statutoryAmountPaid[i] += res[0][i][j].days[k].amountPaid;
               }

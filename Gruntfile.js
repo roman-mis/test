@@ -6,7 +6,6 @@
 // 'test/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
-
 var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
 // var _=require('lodash');
 module.exports = function (grunt) {
