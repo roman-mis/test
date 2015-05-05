@@ -49,7 +49,8 @@ input[placeholder] {
 }
 
 a {
-	&:hover {
+	&:hover,
+	&:active {
 		text-decoration: none;
 	}
 	&:focus {
