@@ -74,6 +74,10 @@ textarea {
     box-shadow: 0;
 }
 
+.control-label {
+	line-height: $input-height;
+}
+
 /*Date Picker*/
 
 .orig-datepicker {
