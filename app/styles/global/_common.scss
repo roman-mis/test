@@ -49,9 +49,7 @@ input[placeholder] {
 }
 
 a {
-	&:hover,
-	&:active,
-	&:focus {
+	&:hover, &:active, &:focus {
 		text-decoration: none;
 	}
 	&:focus {
@@ -406,8 +404,10 @@ a {
 .table-view {
 	width: 100%;
 	padding: 20px $grid-gutter-width-md 0 $grid-gutter-width-md;
-	@media (max-width: $screen-xs-max) {
-		/*padding-top: 0;*/
+	.table-view-main-content > & {
+		@media (max-width: $screen-xs-max) {
+			padding-top: 0;
+		}
 	}
 	.tv-search-row {
 		display: flex;
