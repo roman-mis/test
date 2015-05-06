@@ -70,10 +70,8 @@
 	}
 	fieldset {
 		border: 1px solid silver;
-		margin: 0 2px;
-		margin-top: $grid-gutter-width-md;
-		//padding: .35em .625em .75em;
-		padding: .35em .625em 0;
+		margin: 5px 2px;
+		padding: .35em;
 		.form-group {
 			padding-left: 0;
 			padding-right: 0;
@@ -110,7 +108,7 @@
 		margin: 6px 0 0 0;
 		line-height: $line-height-base;
 		padding: 5px 10px;
-	}	
+	}
 	.div-center-dates {
 		width: 290px;
 		margin: 10px auto;
@@ -179,7 +177,7 @@
 			opacity: 0;
 			filter: alpha(opacity=0);
 		}
-	}
+	}	
 	.inputUploadFile {
 		padding: 8px 12px;
 		font-size: 14px;

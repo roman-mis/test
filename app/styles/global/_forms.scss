@@ -35,6 +35,13 @@ textarea {
     line-height: $input-height;
 }
 
+.control-label {
+	margin-bottom: 0;
+	text-align: left;
+	font-weight: normal;
+	line-height: $input-height;
+}
+
 .form-group {
     margin-bottom: 5px;
     min-height: $input-height;
