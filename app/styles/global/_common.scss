@@ -458,3 +458,10 @@ a {
 		cursor: pointer;
 	}
 }
+
+.dropdown-menu {
+	top: calc(100% - 3px);
+	left: auto; 
+	right: calc(100% - 12px);
+	border-radius: 4px 0 4px 4px;
+}
