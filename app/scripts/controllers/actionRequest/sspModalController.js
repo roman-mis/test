@@ -116,7 +116,7 @@ angular.module('origApp.controllers')
                     $scope.sspMessage = 'He/she hasnot informed within 7 days from Date of sick note to.';
                 }
                  else if ((sickDayTo - sickDayFrom) < 345600000) {
-                    $scope.sspMessage = '"Sick date from" and "Date of sick to" should be greater or equal to 4 days.';
+                    $scope.sspMessage = 'The period of sick pay must be at least four days long to qualify for SSP.';
                 } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
                     $scope.submitted = true;
                 }
