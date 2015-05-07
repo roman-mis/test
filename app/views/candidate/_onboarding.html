@@ -1,6 +1,6 @@
 <div class="modal-window">
     <div class="modal-header">
-        <h3 class="modal-title">Welcome to the new customer onboarding wizard</h3>
+        <h3 class="modal-title">Customer Onboarding Wizard</h3>
     </div>
     <div class="modal-body">
         <form name="onboardingForm" class="form-horizontal" role="form" novalidate>
@@ -44,7 +44,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <legend>Product type Selected</legend>
+                <legend>Select Product Type</legend>
                 <ui-select ng-model="data.serviceUsed" theme="select2" search-enabled="false">
                     <ui-select-match>{{$select.selected.description}}</ui-select-match>
                     <ui-select-choices repeat="item.code as item in serviceUsed">{{item.description}}</ui-select-choices>
