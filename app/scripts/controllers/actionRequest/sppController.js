@@ -116,8 +116,11 @@ angular.module('origApp.controllers')
 
         });
     };
+    $scope.test = function(){
+        console.log('fuck u')
+    }
     $scope.submitInformation = function(val) {
-
+        console.log('%%%%%%%%%%%%%%%%%')
         if (val === true && $scope.validDate === true && $scope.sppObject.periods.length > 0) {
             $scope.submitted = false;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.sppObject).post().then(function(response) {

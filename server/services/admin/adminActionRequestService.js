@@ -17,11 +17,18 @@ module.exports=function(dbs){
 	var moment=require('moment');
 
 	service.saveActionRequest=function(userId,details){
+						console.log('******####11')
 		return Q.Promise(function(resolve,reject){
+						console.log('******####12')
 			return candidateCommonService.getUser(userId)
 					.then(function(user){
+						console.log('******####1')
+
 						if(user){
+						console.log('******####2')
+
 							var actionRequestModel=new db.ActionRequest(details);
+							console.log('******####2')
 							return Q.nfcall(actionRequestModel.save.bind(actionRequestModel))
 								.then(function(){
 									resolve({result:true,object:{'actionRequestModel':actionRequestModel,'user':user}});

@@ -110,15 +110,20 @@ module.exports = function(dbs){
 	};
 
 	function postActionRequest(req,res,detail,actionRequestType){
+			console.log('6666');
 		console.log('detail');
 		console.log(detail);
+		
 		return Q.Promise(function(resolve,reject){
+			console.log('6666');
 			adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function (response) {
+				console.log('******1')
 				res.json({result:response.result,object:response.object.actionRequestModel});
 				resolve(response);
 			})
 			.fail(function(err){
+				console.log('******1')
 				res.sendFailureResponse(err);
 				reject(err);
 			});
