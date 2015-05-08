@@ -42,10 +42,9 @@ module.exports = function(mongoose,autoIncrement) {
             {
                 weekNumber: Number,
                 monthNumber: Number,
-                amountPaid: Number,
                 amount: Number,
                 year:Number,
-                paid: Boolean
+                beenPaid: Boolean
             }
         ]
 

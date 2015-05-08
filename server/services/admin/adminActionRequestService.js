@@ -117,7 +117,7 @@ module.exports=function(dbs){
 						console.log(currentRate);*/
 						console.log('user pay frequency is ');
 						console.log(user.worker.payrollTax.payFrequency);
-						return calculatePayPeriods(user,request,options)
+						return calculatePayPeriods(user,request,options,payType)
 						.then(function(records){
 							console.log('week calculations done');
 							resolve({result:true,objects:records});
@@ -126,7 +126,7 @@ module.exports=function(dbs){
 		});
 	};
 
-	function calculatePayPeriods(user,request,options){
+	function calculatePayPeriods(user,request,options,payType){
 
 		var maxPeriods=request.maxPeriods||0;
 		console.log('max periods.... '+maxPeriods);
@@ -147,11 +147,20 @@ module.exports=function(dbs){
 		var periodicPay=options.periodicPay//options.periodicPay=88.45;
 		var perDayPay=periodicPay/7;
 		var q=db.TaxTable.find({periodType: (payFrequency === 'monthly')? 'monthly': 'weekly'}).and([{'endDate':{$gte:startDate.toDate()}},{'startDate':{$lte:endDate.toDate()}}]);
+		var q1 = db.System.findOne().select('statutoryTables.sspRate statutoryTables.smpRate statutoryTables.sppRate')
 		return Q.Promise(function(resolve,reject){
-			q.exec(function(err,taxTables){
-				if(err){
-					reject(err);
-				}
+			// q.exec(function(err,taxTables){
+			Q.all([Q.nfcall(q.exec.bind(q)),Q.nfcall(q1.exec.bind(q1))]).then(function(res){
+				var taxTables = res[0];
+				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
+				console.log('res[1]')
+				console.log(res[1].statutoryTables.sspRate)
+				console.log(res[1].statutoryTables.smpRate)
+				console.log(res[1].statutoryTables.sppRate)
+				var rates = res[1].statutoryTables[payType+'Rate'];
 				console.log(taxTables);
 				var weeks = [];
 				_.forEach(taxTables,function(taxTable){
@@ -168,10 +177,6 @@ module.exports=function(dbs){
 
 					var startPoint = Math.max(Date.parse(taxTable.startDate), Date.parse(startDate.toDate()));
 					var endPoint = Math.min(Date.parse(taxTable.endDate), Date.parse(endDate.toDate()))	;
-					// console.log('startPoint');
-					// console.log(moment(startPoint).toDate());
-					// console.log('endPoint');
-					// console.log(moment(endPoint).toDate());
 					var index = 0;
 					for(var day = moment(startPoint).clone(); moment(endPoint).startOf('day').diff(day.clone().startOf('day'),'days')>=0; day.add(1,'days')){
 						// continue when sunday or saturday
@@ -180,6 +185,20 @@ module.exports=function(dbs){
 							continue;
 						}
 						index++;
+						perDayPay = 0;
+						console.log('rates');
+						console.log(rates);
+						for(var g = 0; g < rates.length; g++){
+							console.log(Date.parse(rates[g].validFrom) - Date.now()<=0)
+							console.log(Date.parse(rates[g].validFrom))
+							console.log(Date.now())
+							console.log(Date.parse(rates[g].validTo) - Date.now()>=0)
+
+
+							if(Date.parse(rates[g].validFrom) - Date.now()<=0 && Date.parse(rates[g].validTo) - Date.now()>=0){
+								perDayPay = rates[g].amount / 7;
+							}
+						}
 						week.amount += perDayPay;
 					}
 					console.log(index);
@@ -187,6 +206,8 @@ module.exports=function(dbs){
 				});
 				weeks.sort(function(a, b){return Math.max(a.weekNumber,a.monthNumber)-Math.max(b.weekNumber,b.monthNumber);});
 				resolve(weeks);
+			},function(err){
+				reject(err); 
 			});
 		});
 	}
