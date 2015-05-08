@@ -9,9 +9,11 @@ module.exports = function(mongoose) {
 	var schema= new BaseSchema({
         periodType: String, // weekly, twoWeekly, fourWeekly, monthly
         weekNumber: Number,
+        year: Number,
         monthNumber: Number,
         description: String,
-        startDate: Date        
+        startDate: Date,        
+        endDate: Date        
 	});
 
 
