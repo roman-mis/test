@@ -11,6 +11,7 @@ module.exports=function(dbs){
         timesheetService =require('./timesheetservice')(db),
         utils=require('../utils/utils');
     var actionRequestService =require('./admin/adminActionRequestService')(db);
+    var moment=require('moment');
 
 	var service={};
 
@@ -193,9 +194,11 @@ module.exports=function(dbs){
     //*****expected data**** //
     //  payrollRequest = {
     //    agencyId:id,
+    //    payFrequency:weeekly,
     //    workers:[]
     // }
     //**************************//
+    console.log(payrollRequest)
     return Q.Promise(function(resolve,reject){
       if(payrollRequest.workers.length === 0){
         resolve(0);
@@ -204,26 +207,56 @@ module.exports=function(dbs){
       var statutoryAmount = [];
       var statutoryAmountPaid = [];
       console.log('**start');
-      Q.all([actionRequestService.getActionRequestByCandidatesIds(payrollRequest.workers)])
+      var endLimit;
+      var comparingVar;
+      if(payrollRequest.payFrequency === 'weekly'){
+        endLimit = moment(Date.now()).startOf('day').toDate();
+        comparingVar = 'weekNumber';
+      }else if(payrollRequest.payFrequency === 'twoweekly'){
+        endLimit = moment(Date.now()).add(-1,'weeks').startOf('day').toDate();
+        comparingVar = 'weekNumber';
+      }else if(payrollRequest.payFrequency === 'fourweekly'){
+        endLimit = moment(Date.now()).add(-3,'weeks').startOf('day').toDate();
+        comparingVar = 'weekNumber';
+      }else if(payrollRequest.payFrequency === 'monthly'){
+        endLimit = moment(Date.now()).startOf('day').toDate();
+        comparingVar = 'monthNumber';
+      }
+      var q=db.TaxTable.find({periodType:(payrollRequest.payFrequency === 'monthly')?'monthly':'weekly'}).and([{'startDate':{$lte:moment(Date.now()).endOf('day')}},{'endDate':{$gte:endLimit}}]);
+      Q.all([actionRequestService.getActionRequestByCandidatesIds(payrollRequest.workers),Q.nfcall(q.exec.bind(q))])
       .then(function(res){
         // var promisArray = [];
         for (var i = 0; i < res[0].length; i++) {
           holidayPay[i] = 0;
           statutoryAmount[i] = 0;
           statutoryAmountPaid[i] = 0;
-
+            console.log(res[1])
+            var taxTables = res[1];
+            console.log('%%%%%%%%%%%%%%%888888888888888888%%%%%%%%%%%%%%%%%');
           for (var j = 0; j < res[0][i].length; j++) {
+            console.log(res[0][i][j]);
+            console.log('**');
             if(res[0][i][j].type === 'holidaypay' && res[0][i][j].status === 'approved'){
               holidayPay[i] += res[0][i][j].holidayPay.amount;
-            }else{
-              for(var k =0; k < res[0][i][j].days.length; k++){
-                console.log('**********', res[0][i][j].type);
-                console.log(res[0][i][j].days[k]);
-                console.log('******************');
-                console.log('################');
-                statutoryAmount[i] += res[0][i][j].days[k].amount;
-                statutoryAmountPaid[i] += res[0][i][j].days[k].amountPaid;
+            }else if((res[0][i][j].type === 'ssp' || res[0][i][j].type === 'spp' || res[0][i][j].type === 'smp') && res[0][i][j].status === 'approved'){
+                console.log('**********', '$$$$$$$$$$$$$$$$$$$55');
+              for(var k =0; k < res[0][i][j].periods.length; k++){
+                // console.log('**********', '$$$$$$$$$$$$$$$$$$$');
+                // console.log(res[0][i][j].periods[k]);
+                // console.log('******************');
+                // console.log('################');
+                console.log('@@@@@@@@@@@@@'+  taxTables.length)
+                for(var m = 0; m < taxTables.length; m++){
+                  console.log(res[0][i][j].periods[k][comparingVar]);
+                  console.log(taxTables[m][comparingVar]);
+                  if(res[0][i][j].periods[k][comparingVar] === taxTables[m][comparingVar]){
+                    statutoryAmount[i] += res[0][i][j].periods[k].amount;
+                    statutoryAmountPaid[i] += res[0][i][j].periods[k].amountPaid;
+                  }
+                }
               }
+              console.log('statutoryAmount['+i+']');
+              console.log(statutoryAmount[i]);
             }
           }
         }

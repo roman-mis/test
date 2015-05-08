@@ -21,13 +21,13 @@ angular.module('origApp.controllers')
     $scope.sppObject.maxPeriods = 2;
     $scope.remove = function(i) {
 
-        $scope.sppObject.days.splice(i, 1);
+        $scope.sppObject.periods.splice(i, 1);
 
     };
 
     $scope.cancel = function(i, v) {
 
-        $scope.sppObject.days[i].amount = v;
+        $scope.sppObject.periods[i].amount = v;
     };
     $scope.cancelAmountFromSppModa
 
@@ -38,8 +38,8 @@ angular.module('origApp.controllers')
             $scope.errorMsg = null;
             console.log($scope.sppObject);
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').customGet('verify', $scope.sppObject, function(data) {
-                $scope.sppObject.days = data.data.objects;
-                console.log($scope.sppObject.days)
+                $scope.sppObject.periods = data.data.objects;
+                console.log($scope.sppObject.periods)
 
 
             }, function(err) {});
@@ -118,12 +118,12 @@ angular.module('origApp.controllers')
     };
     $scope.submitInformation = function(val) {
 
-        if (val === true && $scope.validDate === true && $scope.sppObject.days.length > 0) {
+        if (val === true && $scope.validDate === true && $scope.sppObject.periods.length > 0) {
             $scope.submitted = false;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/spp').create($scope.sppObject).post().then(function(response) {
 
                 $scope.sppObject.spp = {};
-                $scope.sppObject.days = {};
+                $scope.sppObject.periods = {};
                 $scope.temp = {};
                 MsgService.success('Successfully submitted.');
                 $modalInstance.close();
@@ -133,7 +133,7 @@ angular.module('origApp.controllers')
         } else {
 
             $scope.submitted = true;
-            if ($scope.sppObject && $scope.sppObject.days && $scope.sppObject.days.length === 0) {
+            if ($scope.sppObject && $scope.sppObject.periods && $scope.sppObject.periods.length === 0) {
 
                 $scope.validDate = false;
                 $scope.errorMsg = 'No data.';

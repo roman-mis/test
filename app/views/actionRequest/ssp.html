@@ -72,14 +72,14 @@
 
         <div class="line-horizontal"></div>
         <div class="row">
-            <div class="col-xs-12" ng-if="ssp.days.length > 0 && !showMe">
+            <div class="col-xs-12" ng-if="ssp.periods.length > 0 && !showMe">
                 <p class="alert alert-success">&nbsp; <i class="fa fa-check"></i>&nbsp;&nbsp; You qualify for SSP. You are eligible for the following: </p>
             </div>
             <div class="col-xs-12">
                 <div class="wrapTable-scroll" style="max-height: 250px;overflow-y: scroll;">
                     <table class="table table-striped">
                         <tbody>
-                        <tr ng-repeat="s in ssp.days" >
+                        <tr ng-repeat="s in ssp.periods" >
                             <td ng-if="s.monthNumber >0">
 
                                 Month {{s.monthNumber}}

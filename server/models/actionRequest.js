@@ -38,20 +38,14 @@ module.exports = function(mongoose,autoIncrement) {
             leavingDate: Date
         },
         imageUrl: String,
-        days: [
+        periods: [
             {
                 weekNumber: Number,
                 monthNumber: Number,
                 amountPaid: Number,
                 amount: Number,
-                worker: Boolean,
-                startDate: Date,
-                endDate: Date,
                 year:Number,
-                paid: Boolean,
-                excluded: Boolean,
-                sick: Boolean,
-                notes: String
+                paid: Boolean
             }
         ]
 

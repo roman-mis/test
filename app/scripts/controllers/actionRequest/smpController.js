@@ -7,11 +7,11 @@ angular.module('origApp.controllers')
 
         $scope.cancel = function(i, v) {
 
-            $scope.smpObject.days[i].amount = v;
+            $scope.smpObject.periods[i].amount = v;
         };
         $scope.remove = function(i) {
 
-            $scope.smpObject.days.splice(i, 1);
+            $scope.smpObject.periods.splice(i, 1);
 
         };
 

@@ -42,11 +42,11 @@ angular.module('origApp.controllers')
         $modalInstance.close('cancel');
     };
     $scope.cancel = function(i, v) {
-        $scope.mp.days[i].amount = v;
+        $scope.mp.periods[i].amount = v;
     };
 
     $scope.checkDateMp = function() {
-        $scope.mp.days=[];
+        $scope.mp.periods=[];
         $scope.errorMsg=null;
         var n = new Date($scope.mp.startDate).valueOf();
         var d = new Date($scope.mp.babyDueDate).valueOf();
@@ -56,7 +56,7 @@ angular.module('origApp.controllers')
             $scope.validDate = true;
             $scope.errorMsg = null;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').customGet('verify', $scope.mp, function(data) {
-                $scope.mp.days = data.data.objects;
+                $scope.mp.periods = data.data.objects;
             }, function() {});
         } else {
             $scope.validDate = false;
@@ -74,7 +74,7 @@ angular.module('origApp.controllers')
     };
 
     $scope.submitInformation = function(val) {
-        if (val === true && $scope.validDate === true && $scope.mp.days.length > 0) {
+        if (val === true && $scope.validDate === true && $scope.mp.periods.length > 0) {
             $scope.mp.smp = {};
             $scope.mp.smp.babyDueDate = $scope.mp.babyDueDate;
             HttpResource.model('actionrequests/' + $scope.candidateId + '/smp').create($scope.mp).post().then(function() {
@@ -89,14 +89,14 @@ angular.module('origApp.controllers')
 
         } else {
             $scope.submitted = true;
-            if ($scope.mp && $scope.mp.days && $scope.mp.days.length === 0) {
+            if ($scope.mp && $scope.mp.periods && $scope.mp.periods.length === 0) {
                 $scope.validDate = false;
                 $scope.errorMsg = 'No data.';
             }
         }
     };
     $scope.remove = function(i) {
-        $scope.mp.days.splice(i, 1);
+        $scope.mp.periods.splice(i, 1);
     };
     $scope.viewFile = function(fileName) {
            $http.get('/api/documents/actionrequest/viewsignedurl/' + fileName).success(function (res) {
