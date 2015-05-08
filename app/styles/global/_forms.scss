@@ -35,6 +35,13 @@ textarea {
     line-height: $input-height;
 }
 
+.control-label {
+	margin-bottom: 0;
+	text-align: left;
+	font-weight: normal;
+	line-height: $input-height;
+}
+
 .form-group {
     margin-bottom: 5px;
     min-height: $input-height;
@@ -72,6 +79,10 @@ textarea {
 
 .form-control:focus {
     box-shadow: 0;
+}
+
+.control-label {
+	line-height: $input-height;
 }
 
 /*Date Picker*/
@@ -139,10 +150,6 @@ textarea {
     font-size: 7px;
 }
 /*Show Errors*/
-
-.form-group .alert {
-    margin-top: 6px;
-}
 
 input.ng-dirty.ng-invalid,
 div.ng-dirty.ng-invalid>button,

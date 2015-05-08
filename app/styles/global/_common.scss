@@ -49,7 +49,7 @@ input[placeholder] {
 }
 
 a {
-	&:hover {
+	&:hover, &:active, &:focus {
 		text-decoration: none;
 	}
 	&:focus {
@@ -70,6 +70,10 @@ a {
 	padding-right: 0;
 }
 
+.no-padding-left {
+	padding-left: 0;
+}
+
 .margin-8 {
 	margin-right: 8px;
 }
@@ -88,10 +92,6 @@ a {
 
 .green-brand {
 	background-color: $green !important;
-}
-
-.alert {
-	margin-bottom: 0;
 }
 
 .page-container {
@@ -408,8 +408,10 @@ a {
 .table-view {
 	width: 100%;
 	padding: 20px $grid-gutter-width-md 0 $grid-gutter-width-md;
-	@media (max-width: $screen-xs-max) {
-		/*padding-top: 0;*/
+	.table-view-main-content > & {
+		@media (max-width: $screen-xs-max) {
+			padding-top: 0;
+		}
 	}
 	.tv-search-row {
 		display: flex;
@@ -455,4 +457,11 @@ a {
 	.panel-title a {
 		cursor: pointer;
 	}
+}
+
+.dropdown-menu {
+	top: calc(100% - 3px);
+	left: auto; 
+	right: calc(100% - 12px);
+	border-radius: 4px 0 4px 4px;
 }

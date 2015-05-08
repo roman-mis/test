@@ -1,134 +1,85 @@
-<style>
-    .control-label {
-        padding-top: 7px;
-        margin-bottom: 0;
-        text-align: left;
-        font-weight: normal;
-    }
-    
-    .no-padding-left {
-        padding-left: 0;
-    }
-    
-    .fieldsetRequestP45 {
-        border: 1px solid silver;
-        margin: 0 2px;
-        padding: .35em .625em .75em;
-    }
-    
-    .fieldsetRequestP45 legend {
-        margin-bottom: 0;
-        font-size: 16px;
-        width: auto;
-        padding-left: 5px;
-        padding-right: 5px;
-        border: 0;
-        white-space: normal;
-        line-height: inherit;
-        color: #333;
-        display: block;
-    }
-    
-    .fileUpload {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .fileUpload input.upload {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0;
-        filter: alpha(opacity=0);
-    }
-    
-    #uploadFile {
-        border: none;
-        box-shadow: none;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        background-color: #fff;
-    }
-</style>
 <div class="modal-window">
-    <div class="modal-header">
-        <h3 class="modal-title">Request P45</h3>
-    </div>
+	<div class="modal-header">
+		<h3 class="modal-title">Request P45</h3>
+	</div>
 
-    <div class="modal-body clearfix">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <div class="row form-group">
-                    <div class="col-xs-6">Candidate Name</div>
-                    <div class="col-xs-6">{{candidate.firstName}}&nbsp;{{candidate.lastName}}</div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-xs-6">Candidate ID</div>
-                    <div class="col-xs-6">{{candidate.candidateRef | number}}</div>
-                </div>
-            
-                <div class="row form-group">
-                    <label class="col-xs-6">Date Requested</label>
-                    <div class="col-xs-6">
-                        <div class="input-group date" id="datepickerFrom">
-                            <div class="input-group" required ng-model="dateRequested" placeholder="Date requested" orig-datepicker />
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label class="col-xs-6">Leaving Date</label>
-                    <div class="col-xs-6">
-                        <div class="input-group date" id="datepickerTo">
-                            <div class="input-group" required ng-model="leavingDate" placeholder="Leaving date" orig-datepicker />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-xs-12 col-sm-6">
-                <fieldset class="fieldsetRequestP45" style="margin-top: 0; padding-bottom: 0">
-                    <legend>Files</legend>
-                    <div class="row">
-                        <div class="col-xs-6" style="margin-top: 5px">
-                            <button class="btn btn-primary btn-block" onclick="$('#uploadBtn').click();">Browse</button>
-                            <input id="uploadBtn" type="file" accept="image/*" onchange="angular.element(this).scope().generatePreview(this)" style="display: none;" />
-                        </div>
-                        <div class="col-xs-6" style="margin-top: 5px">
-                            <button ng-click="uploadFile()" ng-disabled="uploading" type="button" class="btn btn-primary btn-block img-details">
-                                <div ng-show="!uploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
-                                <div ng-show="uploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" ng-if="uploading">
-                        <div class="col-xs-12 col-sm-6"></div>
-                        <div class="col-xs-12 col-sm-6">
-                            <button ng-click="cancelUpload()" type="button" class="btn btn-warning">
-                                <div>Cancel Upload</div>
-                            </button>
-                        </div>
-                    </div>
-            
-                    <h4>File details: &nbsp;&nbsp;<i id="iconCheck"></i></h4>
-                    <div class="row" style="line-height: 28px">
-                        <div class="col-xs-3">Name</div>
-                        <div class="col-xs-9" id="uploadFileCustom" style="word-wrap:break-word"></div>
-                    </div>
-                    <div class="row" style="line-height: 28px">
-                        <div class="col-xs-3">Size</div>
-                        <div class="col-xs-9" id="fileSize"></div>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
-    </div>
+	<div class="modal-body clearfix">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="row form-group">
+					<div class="col-xs-6 col-sm-3">Candidate Name</div>
+					<div class="col-xs-6 col-sm-3">{{candidate.firstName}}&nbsp;{{candidate.lastName}}</div>
+					<div class="col-xs-6 col-sm-3">Candidate ID</div>
+					<div class="col-xs-6 col-sm-3">{{candidate.candidateRef | number}}</div>
+				</div>
 
-    <div class="modal-footer">
-        <a href="" type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Cancel</a>
-        <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="form.$invalid">Save</button>
-    </div>
+				<div class="row form-group">
+					<label class="col-xs-6">Date Requested</label>
+					<div class="col-xs-6">
+						<div class="input-group date" id="datepickerFrom">
+							<div class="input-group" required ng-model="dateRequested" placeholder="Date requested" orig-datepicker />
+						</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-xs-6">Leaving Date</label>
+					<div class="col-xs-6">
+						<div class="input-group date" id="datepickerTo">
+							<div class="input-group" required ng-model="leavingDate" placeholder="Leaving date" orig-datepicker />
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<fieldset>
+					<legend class="text-center">Files</legend>
+					<div class="row">
+						<div class="col-xs-6" style="margin-top: 5px">
+							<button class="btn btn-primary btn-block" onclick="$('#uploadBtn').click();">Browse</button>
+							<input id="uploadBtn" type="file" accept="image/*" onchange="angular.element(this).scope().generatePreview(this)" style="display: none;" />
+						</div>
+						<div class="col-xs-6" style="margin-top: 5px">
+							<button ng-click="uploadFile()" ng-disabled="uploading" type="button" class="btn btn-primary btn-block img-details">
+								<div ng-show="!uploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+								<div ng-show="uploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
+							</button>
+						</div>
+					</div>
+					<div class="row" ng-if="uploading">
+						<div class="col-xs-12 col-sm-6"></div>
+						<div class="col-xs-12 col-sm-6">
+							<button ng-click="cancelUpload()" type="button" class="btn btn-warning">
+								<div>Cancel Upload</div>
+							</button>
+						</div>
+					</div>
+
+					<div class="row form-group text-left">
+						<h4>
+							File details: &nbsp;&nbsp;<i id="iconCheck"></i>
+						</h4>
+					</div>
+					<div class="row control-label">
+						<div class="col-xs-3">Name</div>
+						<div class="col-xs-9" id="uploadFileCustom" style="word-wrap:break-word"></div>
+					</div>
+					<div class="row control-label">
+						<div class="col-xs-3">Size</div>
+						<div class="col-xs-9" id="fileSize"></div>
+					</div>
+				</fieldset>
+			</div>
+			
+			<div class="col-xs-6 text-right btnFooter form-group">
+				<a href="" type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Cancel</a>
+				<button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="form.$invalid">Save</button>
+			</div>
+		</div>
+	</div>
 </div>
