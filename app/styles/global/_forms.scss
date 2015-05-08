@@ -32,7 +32,7 @@ textarea {
 
 .form-control {
     height: $input-height;
-    line-height: $input-height;
+    //line-height: $input-height;
 }
 
 .control-label {
@@ -44,9 +44,9 @@ textarea {
 
 .form-group {
     margin-bottom: 5px;
-    min-height: $input-height;
+    //min-height: $input-height;
     > div {
-        line-height: $input-height;
+        //line-height: $input-height;
     }
 }
 
