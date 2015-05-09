@@ -43,6 +43,11 @@
 		input[type=number] {
 			padding: 0 0 0 12px;
 		}
+		.line-horizontal {
+			border-bottom: 1px solid #ccc;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 	}
 	.modal-footer > .row {
 		display: flex;
@@ -72,10 +77,11 @@
 		border: 1px solid silver;
 		margin: 5px 2px;
 		padding: .35em;
-		.form-group {
+		text-align: left;
+		/*.form-group {
 			padding-left: 0;
 			padding-right: 0;
-		}
+		}*/
 	}
 	hr {
 		margin-top: 8px;

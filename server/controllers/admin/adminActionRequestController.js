@@ -16,12 +16,12 @@ module.exports = function(dbs){
 			dateInformed:req.body.dateInformed,
 			startDate:req.body.startDate,
 			endDate:req.body.endDate,
-			days:req.body.days,
+			periods:req.body.periods,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
 		};
 
-		// _.forEach(detail.days,function(detailDay){
+		// _.forEach(detail.periods,function(detailDay){
 		// 	// detailDay.sick=true;
 		// });
 
@@ -37,7 +37,7 @@ module.exports = function(dbs){
 			startDate:req.body.startDate,
 			intendedStartDate:req.body.intendedStartDate,
 			smp:req.body.smp,
-			days:req.body.days,
+			periods:req.body.periods,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
 
@@ -53,7 +53,7 @@ module.exports = function(dbs){
 			'status':enums.statuses.Submitted,
 			worker:req.params.userId,
 			spp:req.body.spp,
-			days:req.body.days,
+			periods:req.body.periods,
 			imageUrl:req.body.imageUrl,
 			createdBy:req.user.id
 
@@ -110,15 +110,20 @@ module.exports = function(dbs){
 	};
 
 	function postActionRequest(req,res,detail,actionRequestType){
+			console.log('6666');
 		console.log('detail');
 		console.log(detail);
+		
 		return Q.Promise(function(resolve,reject){
+			console.log('6666');
 			adminActionRequestService.saveActionRequest(req.params.userId,detail)
 			.then(function (response) {
+				console.log('******1')
 				res.json({result:response.result,object:response.object.actionRequestModel});
 				resolve(response);
 			})
 			.fail(function(err){
+				console.log('******1')
 				res.sendFailureResponse(err);
 				reject(err);
 			});
@@ -194,7 +199,7 @@ module.exports = function(dbs){
     controller.getActionRequestData = function(req, res){
     	adminActionRequestService.getActionRequestData(req._restOptions)
     		.then(function(response){
-    			console.log(response);
+    			// console.log(response);
 
 	    		var actionrequests = getActionRequestDataVm(response.rows);
 	            var pagination = req._restOptions.pagination || {};
@@ -257,7 +262,7 @@ controller.getActionRequestDataById =function(req, res){
 		holidayPay : data.holidayPay,
 		studentLoan : data.studentLoan,
 		imageUrl : data.imageUrl,
-		days : data.days
+		periods : data.periods
  	 }
  	}
 
@@ -294,7 +299,7 @@ controller.getActionRequestDataById =function(req, res){
 					holidayPay : actionrequests.holidayPay,
 					studentLoan : actionrequests.studentLoan,
 					imageUrl : actionrequests.imageUrl,
-					days : actionrequests.days	 */
+					periods : actionrequests.periods	 */
 				};
 				actionRequest.push(actionRequestData);
 			});
@@ -318,7 +323,7 @@ controller.getActionRequestDataById =function(req, res){
 			holidayPay : req.body.holidayPay,
 			studentLoan : req.body.studentLoan,
 			imageUrl : req.body.imageUrl,
-			days : req.body.days,
+			periods : req.body.periods,
 			updatedDate : Date(),
 			updatedBy : req.user._id
 		};
@@ -366,7 +371,7 @@ controller.getActionRequestDataById =function(req, res){
 		holidayPay : data.object.holidayPay,
 		studentLoan : data.object.studentLoan,
 		imageUrl : data.object.imageUrl,
-		days : data.object.days,
+		periods : data.object.periods,
 		updatedDate : data.object.updatedDate,
 		updatedBy : data.object.updatedBy
 		}
