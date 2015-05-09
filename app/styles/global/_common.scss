@@ -103,8 +103,9 @@ a {
 	height: 100%;
 	.left-sidebar, .right-sidebar {
 		height: 100%;
-		max-width: 212px;
 		width: 100%;
+		max-width: $control-width + $grid-gutter-width-md;
+		flex-shrink: 0;
 	}
 	.main-menu {
 		width: 100%;
@@ -408,11 +409,6 @@ a {
 .table-view {
 	width: 100%;
 	padding: 20px $grid-gutter-width-md 0 $grid-gutter-width-md;
-	.table-view-main-content > & {
-		@media (max-width: $screen-xs-max) {
-			padding-top: 0;
-		}
-	}
 	.tv-search-row {
 		display: flex;
 		flex-flow: row wrap;
@@ -441,6 +437,12 @@ a {
 	}
 }
 
+.tv-item-main {
+	@media (max-width: $screen-xs-max) {
+		padding-top: 0;
+	}
+}
+
 .panel-group {
 	margin-bottom: 0;
 	.panel {
@@ -461,7 +463,7 @@ a {
 
 .dropdown-menu {
 	top: calc(100% - 3px);
-	left: auto; 
+	left: auto;
 	right: calc(100% - 12px);
 	border-radius: 4px 0 4px 4px;
 }

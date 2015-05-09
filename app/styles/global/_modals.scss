@@ -248,3 +248,12 @@ input.form-control {
 		margin-bottom: $grid-gutter-width-md / 2;
 	}
 }
+
+.datepicker-inside > div {
+	padding: 0;
+	border: 0;	
+}
+
+.btn-dropdown {
+	right: 0;
+}
