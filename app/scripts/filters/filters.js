@@ -44,20 +44,23 @@
  .filter('validDate', function() {
   return function(items, reverse) {
     var filtered = [];
-    var today = new Date();
+    var d = new Date();
+    var today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
     angular.forEach(items, function(item) {
-      var dateFrom = new Date(item.validFrom);
-      var dateTo = new Date(item.validTo);
-      if(!reverse){
-        if(dateFrom.getTime() <= today.getTime() && dateTo.getTime() >= today.getTime()) {
+      if( Date.parse(item.validTo) >= Date.parse(today)) {
+        if(!reverse){
           filtered.push(item);
         }
-      } else {
-        if(dateTo.getTime() < today.getTime()) {
+      }else{
+        if(reverse){
           filtered.push(item);
         }
       }
     });
+    filtered.sort(function(a,b){
+      return Date.parse(a.validFrom) - Date.parse(b.validFrom);
+    });
+
     return filtered;
   };
 })

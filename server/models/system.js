@@ -177,7 +177,7 @@ module.exports = function(mongoose) {
             sspRate:[
                 {
                     amount: Number,
-                    maxWeeks:Number,
+                    // maxWeeks:Number,
                     validFrom: Date,
                     validTo: Date
                 }
@@ -185,7 +185,7 @@ module.exports = function(mongoose) {
             smpRate:[
                 {
                     amount: Number,
-                    maxWeeks:Number,
+                    // maxWeeks:Number,
                     validFrom: Date,
                     validTo: Date
                 }
@@ -193,7 +193,7 @@ module.exports = function(mongoose) {
             sppRate:[
                 {
                     amount: Number,
-                    maxWeeks:Number,
+                    // maxWeeks:Number,
                     validFrom: Date,
                     validTo: Date
                 }

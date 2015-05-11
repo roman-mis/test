@@ -127,23 +127,10 @@ module.exports=function(dbs){
 	};
 
 	function calculatePayPeriods(user,request,options,payType){
-
 		var maxPeriods=request.maxPeriods||0;
-		console.log('max periods.... '+maxPeriods);
 		var payFrequency = user.worker.payrollTax.payFrequency;
-		console.log(payFrequency);
-		// var dateInformed=request.dateInformed;
-		console.log('request.startDate$$$$$$$$$$^^^^^^^^^&&&&&&&&&&');
-		console.log('request.startDate');
-		console.log(request);
-		var startDate=moment(request.startDate);
-		console.log('startDate');
-		console.log(startDate);
-		
+		var startDate=moment(request.startDate);	
 		var endDate = request.endDate?moment(request.endDate):startDate.clone().add(Number(request.maxPeriods),'weeks').add(-1,'days');
-		// console.log(startDate.clone().add(Number(request.maxPeriods),'weeks').add(-1,'days'));
-		console.log('endDate');
-		console.log(endDate);
 		var periodicPay=options.periodicPay//options.periodicPay=88.45;
 		var perDayPay=periodicPay/7;
 		var q=db.TaxTable.find({periodType: (payFrequency === 'monthly')? 'monthly': 'weekly'}).and([{'endDate':{$gte:startDate.toDate()}},{'startDate':{$lte:endDate.toDate()}}]);
@@ -152,16 +139,7 @@ module.exports=function(dbs){
 			// q.exec(function(err,taxTables){
 			Q.all([Q.nfcall(q.exec.bind(q)),Q.nfcall(q1.exec.bind(q1))]).then(function(res){
 				var taxTables = res[0];
-				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-				console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-				console.log('res[1]')
-				console.log(res[1].statutoryTables.sspRate)
-				console.log(res[1].statutoryTables.smpRate)
-				console.log(res[1].statutoryTables.sppRate)
 				var rates = res[1].statutoryTables[payType+'Rate'];
-				console.log(taxTables);
 				var weeks = [];
 				_.forEach(taxTables,function(taxTable){
 					//outside the range
@@ -186,15 +164,7 @@ module.exports=function(dbs){
 						}
 						index++;
 						perDayPay = 0;
-						console.log('rates');
-						console.log(rates);
 						for(var g = 0; g < rates.length; g++){
-							console.log(Date.parse(rates[g].validFrom) - Date.now()<=0)
-							console.log(Date.parse(rates[g].validFrom))
-							console.log(Date.now())
-							console.log(Date.parse(rates[g].validTo) - Date.now()>=0)
-
-
 							if(Date.parse(rates[g].validFrom) - Date.now()<=0 && Date.parse(rates[g].validTo) - Date.now()>=0){
 								perDayPay = rates[g].amount / 7;
 							}

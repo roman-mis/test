@@ -5,6 +5,7 @@
     </div>
 
     <div class="modal-body">
+    
         <div class="row">
             <div class="col-xs-12">
                 <!-- Nav tabs -->
@@ -13,42 +14,47 @@
                     <li role="presentation"><a data-target="#historic" aria-controls="historic" role="tab" data-toggle="tab">Historic</a></li>
                 </ul>
                 <!-- Tab panels -->
+                                    <div class="spinner"></div>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="currentAndFuture">
                         <div class="row form-group">
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" placeholder="Rate"/>
-                            </div>
-                            <div class="col-xs-4 no-padding-left">
-                                <div class="input-group date" id="datepickerFrom">
-                                    <input type="text" class="form-control" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <form name="newElementForm" >
+                                <div class="col-xs-3">
+                                    <input type="number" ng-model="newElement.amount" class="form-control" placeholder="Rate" required/>
                                 </div>
-                            </div>
-                            <div class="col-xs-4 no-padding-left">
-                                <div class="input-group date" id="datepickerTo">
-                                    <input type="text" class="form-control" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <div class="col-xs-4 no-padding-left">
+                                    <div class="input-group date" id="datepickerFrom">
+                                        <input type="text" name="due" ng-model="newElement.validFrom" orig-datepicker required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-1 no-padding-left">
-                                <button class="btn btn-primary form-control"><i class="fa fa-plus"></i></button>
-                            </div>
+                                <div class="col-xs-4 no-padding-left">
+                                    <div class="input-group date" id="datepickerTo">
+                        
+                                        <input type="text" name="due" ng-model="newElement.validTo" orig-datepicker required/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 no-padding-left">
+                                    <button ng-disabled="newElementForm.$invalid" class="btn btn-primary form-control" ng-click="parentScope.addNew(newElement)"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </form>
                         </div>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Rate</th>
-                                    <th>Valid From</th>
-                                    <th>Valid To</th>
+                                    <th>Amount</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center" width="20px">.</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="elem in data | validDate ">
-                                    <td>{{elem.amount}}%</td>
+                                <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate ">
+                                    <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
+                                    <td><a href ng-click="parentScope.deleteOne(elem._id)"><i class="fa fa-trash-o"></i></a></td>
                                 </tr>
+
                             </tbody>
                         </table>
 
@@ -57,7 +63,7 @@
                             <button ng-click="ok()" class="btn btn-primary" style="margin-left:12px;"><i class="fa fa-save"></i> &nbsp; Save</button>
                         </div>
                     </div>
-
+                    
                     <div role="tabpanel" class="tab-pane" id="historic">
                         <table class="table table-striped">
                             <thead>
@@ -68,11 +74,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="elem in data | validDate: 'reverse' ">
+                           
+                                <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate: 'reverse' ">
                                     <td>{{elem.amount}}%</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>

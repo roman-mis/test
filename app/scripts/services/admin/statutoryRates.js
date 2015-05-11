@@ -26,29 +26,31 @@ angular.module('origApp.services')
     return d.promise;
   }
 
-  function _saveStatutoryRates(data, docId){
+  function _addToStatutoryRates(data, statutoryRateType){
     var d = $q.defer();
-    statutoryRates = data;
-    if (docId){
-      HttpResource.model('systems/statutoryRates/' + docId)
-      .create(statutoryRates).post().then(function(result){
-        console.log(result);
+    // statutoryRates = data;
+    if (statutoryRateType){
+      HttpResource.model('systems/statutoryRates/add/' + statutoryRateType)
+      .create(data).post().then(function(result){
+        d.resolve(result);
       });
     }
-    else {
-      acAPI.create(statutoryRates).post().then(function(response) {
-        if (!HttpResource.flushError(response)) {
-          console.log('saved successfully');
-        }
-      });
-    }
-    d.resolve('saved successfully');
+    return d.promise;
+  }
+
+  function _deleteFromStatutoryRates(id, statutoryRateType){
+    var d = $q.defer();
+    HttpResource.model('systems/statutoryRates/' + statutoryRateType)
+    .delete(id).then(function(result){
+      d.resolve(result);
+    });
     return d.promise;
   }
 
   return {
     getStatutoryRates: _getStatutoryRates,
-    saveStatutoryRates: _saveStatutoryRates
+    addToStatutoryRates: _addToStatutoryRates,
+    deleteFromStatutoryRates: _deleteFromStatutoryRates
   };
 
 });

@@ -309,7 +309,7 @@ module.exports=function(dbs){
           }
         }
         Q.all(promisArray).then(function(){
-          console.log('##############')
+          console.log('##############');
           resolve({tatalExpenses:tatalExpenses});
         },function(err){
           reject(err);

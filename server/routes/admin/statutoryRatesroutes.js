@@ -15,6 +15,6 @@ module.exports = function(app){
 router.get('/', controller.getAllAdminStatutoryRates);
 // router.get('/:id', controller.getAdminStatutoryRates);
 // router.put('/:id', controller.editAdminStatutoryRates);
-router.post('/:id',controller.editAdminStatutoryRates);
-router.post('/', controller.saveAdminStatutoryRates);
-router.delete('/:id', controller.deleteAdminStatutoryRates);
+router.post('/edit/:type/:id',controller.editAdminStatutoryRates);
+router.post('/add/:type', controller.addToAdminStatutoryRates);
+router.delete('/:type/:id', controller.deleteFromAdminStatutoryRates);
