@@ -1,7 +1,7 @@
 	<div class="modal-window">
 	
         <div class="modal-header">
-            <h4 class="modal-title">Request Statutory Paternity Pay</h4>
+            <h3 class="modal-title">Request Statutory Paternity Pay</h3>
         </div><!-- /modal-header -->
 		
         <div class="modal-body">
@@ -115,16 +115,16 @@
             <div class="row">
                 <div class="col-xs-7 col-sm-6">
                     <fieldset>
-                        <legend>Upload sick note</legend>
+                        <legend class="text-center">Upload sick note</legend>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 form-group">
-                                <div class="fileUpload btn btn-primary form-control">
+                            <div class="col-xs-12 col-sm-6 text-center">
+                                <div class="fileUpload btn btn-primary">
                                     <span onclick="$('#upload_company_logo').click();">Browse</span>
                                     <input file-model="fileupload" type="file" id="upload_company_logo" class="upload" />
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-6 form-group">
-                                <button type="button" class="btn btn-primary form-control"
+                            <div class="col-xs-12 col-sm-6 text-center">
+                                <button type="button" class="btn btn-primary"
                                     ng-disabled="isLogoUploading" ng-click="uploadCompanyLogo()">
                                     <span ng-show="!isLogoUploading" >Upload</span>
                                     <span ng-show="isLogoUploading" class="ng-hide">Uploading...</span>
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="col-xs-5 col-sm-6 text-right form-group">
-                    <a ng-click="closeModal()" type="button" class="btn" data-dismiss="modal">Cancel</a>
+                    <a ng-click="closeModal()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
 					<!-- Split button -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary">Action</button>
