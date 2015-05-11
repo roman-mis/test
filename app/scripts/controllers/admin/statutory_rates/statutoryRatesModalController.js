@@ -9,11 +9,15 @@ angular.module('origApp.controllers')
 		// $scope.deleteOne = parentScope.deleteOne;
 		// $scope.loading = parentScope.loading;
 		$scope.parentScope = parentScope;
+
 		$scope.ok = function() {
+			console.log($scope.parentScope)
+			$scope.parentScope.save();
 			$modalInstance.close('ok passed to parent');
 		};
 
 		$scope.cancel = function() {
+			parentScope.cancel();
 			$modalInstance.dismiss('canceled passed to parent');
 		};
 

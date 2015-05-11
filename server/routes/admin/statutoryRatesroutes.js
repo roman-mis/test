@@ -17,4 +17,5 @@ router.get('/', controller.getAllAdminStatutoryRates);
 // router.put('/:id', controller.editAdminStatutoryRates);
 router.post('/edit/:type/:id',controller.editAdminStatutoryRates);
 router.post('/add/:type', controller.addToAdminStatutoryRates);
+router.post('/Save/:type', controller.saveAdminStatutoryRates);
 router.delete('/:type/:id', controller.deleteFromAdminStatutoryRates);

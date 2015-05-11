@@ -44,7 +44,6 @@
                                     <th>Amount</th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th class="text-center" width="20px">.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,7 +51,7 @@
                                     <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
-                                    <td><a href ng-click="parentScope.deleteOne(elem._id)"><i class="fa fa-trash-o"></i></a></td>
+                                    
                                 </tr>
 
                             </tbody>

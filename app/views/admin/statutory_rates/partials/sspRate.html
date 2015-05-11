@@ -44,7 +44,7 @@
                                     <th>Amount</th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th class="text-center" width="20px">.</th>
+                                    <th class="text-center">.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,7 +52,16 @@
                                     <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
-                                    <td><a href ng-click="parentScope.deleteOne(elem._id)"><i class="fa fa-trash-o"></i></a></td>
+                                    <td class="text-center">
+                                        <div ng-show="!elem.notSaved">
+                                            <a ><i class="fa fa-check-circle"></i></a> |
+                                            <a style="color:gray"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                        <div ng-show="elem.notSaved">
+                                            <a href ng-click="parentScope.saveElement(elem.validFrom)"><i class="fa fa-floppy-o"></i></a> |
+                                            <a href ng-click="parentScope.deleteOne(elem.validFrom)"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
 
                             </tbody>
@@ -60,7 +69,7 @@
 
                         <div class="text-right">
                             <button ng-click="cancel()" class="btn btn-default">Cancel</button>
-                            <button ng-click="ok()" class="btn btn-primary" style="margin-left:12px;"><i class="fa fa-save"></i> &nbsp; Save</button>
+                            <button ng-click="ok()" ng-disabled="parentScope.disableSave()"class="btn btn-primary" style="margin-left:12px;"><i class="fa fa-save"></i> &nbsp; Save</button>
                         </div>
                     </div>
                     

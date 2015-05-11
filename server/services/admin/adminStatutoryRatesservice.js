@@ -28,6 +28,26 @@ service.addToAdminStatutoryRates = function(type,opject){
 	});
 };
 
+
+service.saveAdminStatutoryRates = function(type,object){
+	console.log(type);
+	console.log(object);
+	return Q.Promise(function(resolve,reject){
+		var q = db.System.findOne();
+		Q.nfcall(q.exec.bind(q))
+		.then(function(result){
+			console.log('$$$$$$$$$$$$$$$save');
+			result.statutoryTables[type] = object.data;
+			result.save(function(err,res){
+				if(err){
+					reject(err);
+				}
+				resolve(res.statutoryTables);
+			});
+		},reject);
+	});
+};
+
 service.editAdminStatutoryRates = function(id, statutoryRates){
 	return Q.Promise(function(resolve,reject){
 		service.getAdminStatutoryRates(id)
@@ -49,13 +69,9 @@ service.deleteFromAdminStatutoryRates = function(type, id){
 		.then(function(result){
 			console.log('$$$$$$$$$$$$$$$');
 			_.forEach(result.statutoryTables[type],function(elem,index){
-				console.log(index)
-				console.log()
-				console.log(elem._id)
-				console.log(id)
 				if(elem._id + '' === id + ''){
 					console.log(true)
-					result.statutoryTables[type].splice(index,1);
+					result.statutoryTables[type][index].status = 'delete';
 					return false;
 				}
 			});

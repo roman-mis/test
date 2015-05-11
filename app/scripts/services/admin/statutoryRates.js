@@ -38,6 +38,18 @@ angular.module('origApp.services')
     return d.promise;
   }
 
+  function _saveStatutoryRates(data, statutoryRateType){
+    var d = $q.defer();
+    // statutoryRates = data;
+    if (statutoryRateType){
+      HttpResource.model('systems/statutoryRates/save/' + statutoryRateType)
+      .create({data:data}).post().then(function(result){
+        d.resolve(result);
+      });
+    }
+    return d.promise;
+  }
+
   function _deleteFromStatutoryRates(id, statutoryRateType){
     var d = $q.defer();
     HttpResource.model('systems/statutoryRates/' + statutoryRateType)
@@ -50,7 +62,8 @@ angular.module('origApp.services')
   return {
     getStatutoryRates: _getStatutoryRates,
     addToStatutoryRates: _addToStatutoryRates,
-    deleteFromStatutoryRates: _deleteFromStatutoryRates
+    deleteFromStatutoryRates: _deleteFromStatutoryRates,
+    saveStatutoryRates: _saveStatutoryRates
   };
 
 });

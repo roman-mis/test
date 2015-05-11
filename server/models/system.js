@@ -99,27 +99,31 @@ module.exports = function(mongoose) {
             vat:[{
                 amount: Number,
                 validFrom: Date,
-                validTo: Date
+                validTo: Date,
+                status: { type: String, default: 'active' } 
             }],
             nmw: [{
                 ageLower: Number,
                 ageUpper: Number,
                 amount: Number,
                 validFrom: Date,
-                validTo: Date
+                validTo: Date,
+                status: { type: String, default: 'active' }
             }],
             employersNiThreshold: [
                 {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             employersNiRate: [
                 {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             employeesNiRate: [
@@ -128,7 +132,8 @@ module.exports = function(mongoose) {
                     upperThreshold: Number,
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             employeesHighEarnerNiRate: [
@@ -136,42 +141,48 @@ module.exports = function(mongoose) {
                     lowerThreshold: Number,
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             incomeTaxHigherRateThreshold: [
                  {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             incomeTaxAdditionalRateThreshold: [
                  {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             incomeTaxBasicRate: [
                  {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             incomeTaxHigherRate: [
                  {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             incomeTaxAdditionalRate: [
                 {
                     amount: Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             sspRate:[
@@ -179,7 +190,8 @@ module.exports = function(mongoose) {
                     amount: Number,
                     // maxWeeks:Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             smpRate:[
@@ -187,7 +199,8 @@ module.exports = function(mongoose) {
                     amount: Number,
                     // maxWeeks:Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             sppRate:[
@@ -195,7 +208,8 @@ module.exports = function(mongoose) {
                     amount: Number,
                     // maxWeeks:Number,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ],
             workPatterns: [
@@ -208,7 +222,8 @@ module.exports = function(mongoose) {
                     saturday: Boolean,
                     sunday: Boolean,
                     validFrom: Date,
-                    validTo: Date
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
                 }
             ]
         },
@@ -217,7 +232,8 @@ module.exports = function(mongoose) {
                 name:{ type : String, required: true },
                 rateType: String,
                 hours: Number,
-                importAliases: [ String ]
+                importAliases: [ String ],
+                status: { type: String, default: 'active' }
             }
         ],
         expensesRate: [
@@ -229,7 +245,8 @@ module.exports = function(mongoose) {
                 vat: Boolean,
                 dispensation: Boolean,
                 receipted: Boolean,
-                isEnabled: Boolean
+                isEnabled: Boolean,
+                status: { type: String, default: 'active' }
             }
         ]
     });

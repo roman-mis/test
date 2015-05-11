@@ -47,6 +47,9 @@
     var d = new Date();
     var today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
     angular.forEach(items, function(item) {
+      if(item.status && item.status === 'delete'){
+        return;
+      }
       if( Date.parse(item.validTo) >= Date.parse(today)) {
         if(!reverse){
           filtered.push(item);
@@ -61,6 +64,16 @@
       return Date.parse(a.validFrom) - Date.parse(b.validFrom);
     });
 
+    return filtered;
+  };
+})
+
+ .filter('showEmptyRow', function() {
+  return function(items) {
+    var filtered = items;
+    if (items.length === 0){
+      filtered = [{amount:0}];
+    }
     return filtered;
   };
 })

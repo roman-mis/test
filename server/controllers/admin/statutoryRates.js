@@ -27,6 +27,21 @@ module.exports = function(){
 			});
 	};
 
+
+	controller.saveAdminStatutoryRates = function(req, res){
+		console.log('req.body', req.body);
+		console.log('req.params', req.params);
+		var type = req.params.type;
+		adminStatutoryRatesService.saveAdminStatutoryRates(type, req.body).then(
+			function(data){
+				res.json({result:true, object:data});
+			},
+			function(err){
+				console.log(err + 'err');
+				res.sendFailureResponse(err);
+			});
+	};
+
 	controller.editAdminStatutoryRates = function(req,res){
 		adminStatutoryRatesService.editAdminStatutoryRates(req.params.id,req.body)
 			.then(function(response){
