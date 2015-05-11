@@ -189,14 +189,14 @@
                             </tr>
                         </span>
                         
-                        <span >
+                        <span ng-show="statutoryRates.sspRate">
                             <tr ng-hide="statutoryRates.sspRate.length > 0">
                                 <td colspan="2">SSP Rate</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('sspRate')"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
-                            <tr ng-repeat="elem in statutoryRates.sspRate ">
+                            <tr ng-repeat="elem in statutoryRates.sspRate | validDate ">
                                 <td>SSP Rate</td>
                                 <td>{{elem.amount}}</td>
                                 <td class="text-center">
