@@ -220,7 +220,7 @@
                                                                 <div ng-hide="element.edit">
                                                                     {{element.units}}    
                                                                 </div>
-                                                                <form name="unitsForm" ng-if="element.edit" class="group-control">
+                                                                <form name="unitsForm" ng-show="element.edit" class="group-control">
                                                                     <span type="text">
                                                                         <input name="units" class="form-control" ng-pattern="/^[0-9]/" ng-model="element.editData.units" placeholder="{{element.units}}"/>
                                                                     </span>
@@ -230,11 +230,13 @@
                                                                 <div ng-hide="element.edit">
                                                                     {{element.payRate | currency:"&pound;"}}    
                                                                 </div>
-                                                                <form name="payRateForm" ng-if="element.edit" class="group-control">
+                                                                <form name="payRateForm" ng-show="element.edit" class="group-control">
                                                                     <span type="text">
                                                                         <input name="payRate" class="form-control" ng-pattern="/^[0-9]/" ng-model="element.editData.payRate" placeholder="{{element.payRate}}"/>
+                                                                        
                                                                     </span>
                                                                 </form>
+
                                                             </td>
                                                             <td class="text-center">{{element.amount | currency:"&pound;"}}</td>
                                                             <td class="text-center">

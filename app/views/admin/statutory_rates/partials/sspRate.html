@@ -41,6 +41,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th width="3px" class="text-center" >.</th>
                                     <th>Amount</th>
                                     <th>From</th>
                                     <th>To</th>
@@ -49,16 +50,18 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate ">
+                                    <td width="3px">
+                                        <a ng-show="!elem.notSaved"><i class="fa fa-floppy-o"></i></a>
+                                        <a ng-show="elem.notSaved"><i class="fa fa-plus-square"></i></a>
+                                    </td>
                                     <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
                                     <td class="text-center">
-                                        <div ng-show="!elem.notSaved">
-                                            <a ><i class="fa fa-check-circle"></i></a> |
+                                        <div ng-show="elem.isCurrent">
                                             <a style="color:gray"><i class="fa fa-trash"></i></a>
                                         </div>
-                                        <div ng-show="elem.notSaved">
-                                            <a href ng-click="parentScope.saveElement(elem.validFrom)"><i class="fa fa-floppy-o"></i></a> |
+                                        <div ng-show="!elem.isCurrent">
                                             <a href ng-click="parentScope.deleteOne(elem.validFrom)"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
@@ -85,7 +88,7 @@
                             <tbody>
                            
                                 <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate: 'reverse' ">
-                                    <td>{{elem.amount}}%</td>
+                                    <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
                                 </tr>

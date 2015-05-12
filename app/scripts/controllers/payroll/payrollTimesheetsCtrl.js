@@ -185,6 +185,8 @@ angular.module('origApp.controllers')
 		$scope.finishEditing =function(batchIndex, timesheetIndex, elementIndex, state, payRate, units){
 			
 					console.log('######');
+					console.log(payRate);
+					console.log(units);
 			if(state){
 				if(!payRate){
 	        Notification.error({message: 'pay Rate must be Number', delay: 2000});

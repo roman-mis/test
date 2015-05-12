@@ -20,6 +20,7 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 				$scope.statutoryRates = data.statutoryRates;
 			}
 			console.log($scope.statutoryRates )
+			$scope.getCurrentForAll();
 			docId = data.id;
 		});
 
@@ -66,23 +67,33 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 				newElement.notSaved = true;
 				$scope.statutoryRates[$scope.type].push(angular.copy(newElement));
 				newElement = {};
-				// StatutoryRatesService.addToStatutoryRates(newElement, $scope.type)
-				// .then(function(res){
-				// 	console.log(res);
-				// 	$scope.statutoryRates = res.data.object;
-				// 	$scope.loading = false;
-				// 	Notification.success({message:'Added successfully', delay:2000});
-				// },function(){
-				// 	$scope.loading = false;
-				// });
 			}
 		};
+
+		function deleteFromDb (id){
+			StatutoryRatesService.deleteFromStatutoryRates(id,$scope.type)
+			.then(function(res){
+				console.log(res);
+				$scope.statutoryRates = res.data.object;
+				$scope.loading = false;
+				$scope.getCurrentForAll();
+			},function(){
+				$scope.loading = false;
+			});
+		}
+		
 
 		$scope.deleteOne = function(validFrom){
 			console.log(validFrom);
 			for(var i = 0; i < $scope.statutoryRates[$scope.type].length; i++){
 				if($scope.statutoryRates[$scope.type][i].validFrom+'' === validFrom+''){
-					$scope.statutoryRates[$scope.type].splice(i,1);
+					if($scope.statutoryRates[$scope.type][i].notSaved &&
+					$scope.statutoryRates[$scope.type][i].notSave === true){
+						$scope.statutoryRates[$scope.type].splice(i,1);	
+					}else{
+						deleteFromDb($scope.statutoryRates[$scope.type][i]._id);
+
+					}
 				}
 			}
 		};
@@ -95,9 +106,34 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 				$scope.statutoryRates = res.data.object;
 				$scope.loading = false;
 				Notification.success({message:'Added successfully', delay:2000});
+				$scope.getCurrentForAll();
 			},function(){
 				$scope.loading = false;
 			});
+		};
+
+		$scope.getCurrent = function(type){
+			console.log(type);
+			var current ;
+			var d = new Date();
+			var today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+			for(var i = 0; i < $scope.statutoryRates[type].length; i++){
+				console.log($scope.statutoryRates[type]);
+				console.log(Date.parse($scope.statutoryRates[type][i].validFrom));
+				if(Date.parse($scope.statutoryRates[type][i].validFrom) <= Date.parse(today) &&
+					Date.parse($scope.statutoryRates[type][i].validTo) >= Date.parse(today)){
+					$scope.statutoryRates[type][i].isCurrent = true;
+					current = $scope.statutoryRates[type][i].amount;
+					break;
+				}
+			}
+			return current;
+		};
+
+		$scope.getCurrentForAll = function(){
+			for(var key in $scope.statutoryRates){
+				$scope.statutoryRates[key].current = $scope.getCurrent(key);
+			}
 		};
 
 		$scope.disableSave = function(){
@@ -117,34 +153,39 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 					i--;
 				}
 			}
+			$scope.getCurrentForAll();
 		};
 
-		$scope.saveElement = function(validFrom){
-			console.log(validFrom);
-			console.log($scope.statutoryRates[$scope.type]);
-			var clone = angular.copy($scope.statutoryRates[$scope.type])
-			var temp = [];
-			for(var i = 0; i < clone.length; i++){
-				if(clone[i].validFrom+'' !== validFrom+'' && clone[i].notSaved === true){
-					temp.push(clone.splice(i,1)[0]);
-					break;
-				}
-			}
-			StatutoryRatesService.saveStatutoryRates(clone, $scope.type)
-			.then(function(res){
-				console.log(res);
-				$scope.statutoryRates = res.data.object;
-				console.log(temp)
-				for(var i = 0; i < temp.length; i++){
-					$scope.statutoryRates[$scope.type].push(temp[i]);
-				}
-				$scope.loading = false;
-				console.log($scope.statutoryRates[$scope.type]);
-				Notification.success({message:'Added successfully', delay:2000});
-			},function(){
-				$scope.loading = false;
-			});
-		};
+		// $scope.saveElement = function(validFrom){
+		// 	console.log(validFrom);
+		// 	console.log($scope.statutoryRates[$scope.type]);
+		// 	var clone = angular.copy($scope.statutoryRates[$scope.type])
+		// 	var temp = [];
+		// 	for(var i = 0; i < clone.length; i++){
+		// 		if(clone[i].validFrom+'' !== validFrom+'' && clone[i].notSaved === true){
+		// 			temp.push(clone.splice(i,1)[0]);
+		// 			break;
+		// 		}
+		// 	}
+		// 	StatutoryRatesService.saveStatutoryRates(clone, $scope.type)
+		// 	.then(function(res){
+		// 		console.log(res);
+		// 		$scope.statutoryRates = res.data.object;
+		// 		console.log(temp)
+		// 		for(var i = 0; i < temp.length; i++){
+		// 			$scope.statutoryRates[$scope.type].push(temp[i]);
+		// 		}
+		// 		$scope.loading = false;
+		// 		console.log($scope.statutoryRates[$scope.type]);
+		// 		Notification.success({message:'Added successfully', delay:2000});
+		// 		$scope.getCurrentForAll();
+		// 	},function(){
+		// 		$scope.loading = false;
+		// 	});
+		// };
+
+
+
 
 		$scope.openModal = function(type) {
 			$scope.type = type;
