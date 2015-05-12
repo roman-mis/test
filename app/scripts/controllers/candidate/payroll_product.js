@@ -177,6 +177,16 @@ angular.module('origApp.controllers')
       }
     };
 
+    $scope.agencySelected = function() {
+      console.log('got here');
+      for (var i = 0; i < $scope.agencies.length; i++) {
+        if ($scope.agencies[i]._id === $scope.product.agency) {
+          $scope.product.agencyRef = $scope.agencies[i].agencyNo;
+          break;
+        }
+      }            
+    }
+
     // Close Modal
     $scope.cancelEdit = function() {
       $scope.product = {};
