@@ -552,4 +552,9 @@
             </button>
         </div><!-- /modal footer -->
     </div>
+    <div ng-if="!stepThreeAvailable">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div><!-- /modal footer -->
+    </div>
 </div>
