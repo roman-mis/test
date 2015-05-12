@@ -47,6 +47,10 @@ angular.module('origApp.controllers')
     $scope.saveTax = function() {
       $scope.isTaxSaving = true;
       console.log($scope.tax);
+      if ($scope.tax.declaration != 2) {
+        delete $scope.tax.p45GrossTax;
+        delete $scope.tax.p45TaxDeducted;
+      }
       candidateResource.create($scope.tax).patch('payrolltax')
       .then(function(response) {
         $scope.isTaxSaving = false;
