@@ -27,6 +27,9 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 		function checkDates(newElement) {
 			var acceptedDates = true;
 			for(var i = 0; i < $scope.statutoryRates[$scope.type].length; i++){
+				if( $scope.statutoryRates[$scope.type][i].status === 'delete'){
+					continue;
+				}
 
 				if(Date.parse(newElement.validFrom) > Date.parse(newElement.validTo)){
 					Notification.error({message: 'the Valid From Date Can Not Be After The Valid TO Date', delay: 3000});
