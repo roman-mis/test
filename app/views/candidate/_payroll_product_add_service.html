@@ -16,7 +16,7 @@
                 <div class="col-xs-12 nonepadding">
                     <div class="col-sm-4 form-group">Agency</div>
                     <div class="col-sm-8 form-group">
-                        <ui-select ng-model="product.agency" ng-change="agencySelected()" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                        <ui-select ng-model="product.agency" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
                             <ui-select-match>{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="item._id as item in agencies">{{item.name}}</ui-select-choices>
                         </ui-select>
