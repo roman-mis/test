@@ -353,7 +353,6 @@ module.exports = function(){
 		}
 
         var logoUrl = (agency.logoFileName) ? 'api/agencies/' + agency._id + '/file_redirect_url/' + agency.logoFileName : '';
-
 		return {
 			_id:agency._id,
 			name:agency.name,
@@ -368,7 +367,8 @@ module.exports = function(){
 			branches: _branches,
 			status:agency.status,
             logoFileName: agency.logoFileName || '',
-            logoUrl: logoUrl
+            logoUrl: logoUrl,
+            agencyNo : agency.agencyNo
         };
 	}
 

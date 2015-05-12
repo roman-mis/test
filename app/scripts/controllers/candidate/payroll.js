@@ -19,6 +19,8 @@ angular.module('origApp.controllers')
           $scope.paymentTerms = ConstantsResource.get('paymentterms');
           $scope.paymentMethods = ConstantsResource.get('paymentmethods');
 
+          $scope.addSubBreadcrumb({'text': 'Payroll'});
+
           $scope.setTabActive = function(newValue) {
             console.log(newValue);
 
