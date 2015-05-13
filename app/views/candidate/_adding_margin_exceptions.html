@@ -7,7 +7,7 @@
             <div class="form-group">
                 <label class="col-sm-6">Type of Margin Exception</label>
                 <div class="col-sm-6">
-                    <ui-select ng-model="data.marginType" theme="select2" search-enabled="false">
+                    <ui-select ng-model="data.marginType" theme="select2" search-enabled="false" required>
                         <ui-select-match>{{$select.selected.description}}</ui-select-match>
                         <ui-select-choices repeat="item.code as item in marginExceptionTypes">{{item.description}}</ui-select-choices>
                     </ui-select>
@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label class="col-sm-6">Reason</label>
                 <div class="col-sm-6">
-                    <ui-select ng-model="data.reason" theme="select2" search-enabled="false">
+                    <ui-select ng-model="data.reason" theme="select2" search-enabled="false" required>
                         <ui-select-match>{{$select.selected.description}}</ui-select-match>
                         <ui-select-choices repeat="item.code as item in exceptionReasons">{{item.description}}</ui-select-choices>
                     </ui-select>
@@ -27,19 +27,19 @@
             <div class="form-group">
                 <label class="col-sm-6">Deduction Type</label>
                 <div class="col-sm-6">
-                    <ui-select ng-model="data.deductionType" theme="select2" search-enabled="false">
+                    <ui-select ng-model="data.deductionType" theme="select2" search-enabled="false" required>
                         <ui-select-match>{{$select.selected.description}}</ui-select-match>
                         <ui-select-choices repeat="item.code as item in deductionTypes">{{item.description}}</ui-select-choices>
                     </ui-select>
                 </div>
             </div>
-            <div class="form-group" ng-show="data.deductionType==='1'">
+            <div class="form-group" ng-if="data.deductionType==='1'">
                 <label class="col-sm-6">Date</label>
                 <div class="col-sm-6">
                     <div class="input-group orig-datepicker" ng-init="popup = false">
-                        <input type="text" class="form-control" placeholder="" ng-model="data.deductionDate" datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}" is-open="popup" date-disabled="disabled(date, mode)" ng-click="$event.preventDefault();
+                        <input required type="text" class="form-control" placeholder="" ng-model="data.deductionDate" datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}" is-open="popup" date-disabled="disabled(date, mode)" ng-click="$event.preventDefault();
                        $event.stopPropagation();
-                       popup = true;" />
+                       popup = true;"/>
                         <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="$event.preventDefault();
                   $event.stopPropagation();
@@ -50,16 +50,16 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group" ng-show="data.deductionType==='2'">
+            <div class="form-group" ng-if="data.deductionType==='2'">
                 <label class="col-sm-6">Period</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" ng-model="data.deductionPeriod" />
+                    <input required type="text" class="form-control" ng-model="data.deductionPeriod"/>
                 </div>
             </div>
-            <div class="form-group" ng-show="data.deductionType==='3'">
+            <div class="form-group" ng-if="data.deductionType==='3'">
                 <label class="col-sm-6">Number of Payroll</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" ng-model="data.deductionNumberOfPayroll" />
+                    <input required type="text" class="form-control" ng-model="data.deductionNumberOfPayroll" />
                 </div>
             </div>
         </form>

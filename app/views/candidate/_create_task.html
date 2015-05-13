@@ -60,8 +60,8 @@
                         <label class="col-xs-6 col-md-5">Select Agency *</label>
                         <div class="col-xs-6 col-md-7">
                             <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
-                                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-                                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+                                <ui-select-match placeholder="Select an agency">{{$select.selected.agency.name}}</ui-select-match>
+                                <ui-select-choices repeat="item.agency._id as item in agencies | filter: $select.search">{{item.agency.name}}</ui-select-choices>
 
                             </ui-select>
                         </div>

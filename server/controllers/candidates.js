@@ -476,7 +476,7 @@ module.exports = function (dbs) {
             'address3': worker.address3, 'county': worker.county, 'postCode': worker.postCode, 'nationality': worker.nationality,
             'contactNumber': worker.contactNumber, gender: worker.gender,'candidateNo':user.candidateNo,
             'phone': contact.phone, 'mobile': contact.mobile, 'altEmail': contact.altEmail,
-            'facebook': contact.facebook, 'linkedin': contact.linkedin, 'google': contact.google, status: user.worker.status
+            'facebook': contact.facebook, 'linkedin': contact.linkedin, 'google': contact.google, status: user.worker.status,town: worker.town
         };
     }
 
