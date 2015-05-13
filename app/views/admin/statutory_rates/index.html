@@ -22,20 +22,10 @@
                             </tr>
                         </span>
 
-                        <span ng-show="statutoryRates.employeesNiRate">
-                            <tr>
-                                <td>Employees NI main rate</td>
-                                <td>{{statutoryRates.employeesNiRate.current}}</td>
-                                <td class="text-center">
-                                    <a href="" ng-click="openModal('employeesNiRate')"><i class="fa fa-edit"></i></a>
-                                </td>
-                            </tr>
-                        </span>
-
                         <span ng-show="statutoryRates.employersNiThreshold">
                             <tr>
-                                <td>Employers NI threshold</td>
-                                <td>{{statutoryRates.employersNiThreshold.current}}</td>
+                                <td>Employer's NI threshold</td>
+                                <td>{{statutoryRates.employersNiThreshold.current}}  &pound;</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('employersNiThreshold')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -44,23 +34,67 @@
 
                         <span ng-show="statutoryRates.employersNiRate">
                             <tr>
-                                <td>Employers NI rate</td>
-                                <td>{{statutoryRates.employersNiRate.current}}</td>
+                                <td>Employer's NI rate</td>
+                                <td>{{statutoryRates.employersNiRate.current}} %</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('employersNiRate')"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         </span>
-                        
-                        <span ng-show="statutoryRates.employeesHighEarnerNiRate">
+
+                        <span ng-show="statutoryRates.employeesNiRate">
                             <tr>
-                                <td>Employees NI high earner rate</td>
-                                <td>{{statutoryRates.employeesHighEarnerNiRate.current}}</td>
+                                <td>Employee's NI threshold - lower</td>
+                                <td>{{statutoryRates.employeesNiThreshold.current}} &pound;</td>
+                                <td class="text-center">
+                                    <a href="" ng-click="openModal('employeesNiThreshold')"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        </span>
+
+                        <span ng-show="statutoryRates.employeesNiRate">
+                            <tr>
+                                <td>Employee's NI main rate</td>
+                                <td>{{statutoryRates.employeesNiRate.current}} %</td>
+                                <td class="text-center">
+                                    <a href="" ng-click="openModal('employeesNiRate')"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        </span>
+
+
+                        <span ng-show="statutoryRates.employeesNiRate">
+                            <tr>
+                                <td>Employee's NI threshold - higher</td>
+                                <td>{{statutoryRates.employeesHighEarnerNiThreshold.current}} &pound;</td>
+                                <td class="text-center">
+                                    <a href="" ng-click="openModal('employeesHighEarnerNiThreshold')"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        </span>
+
+
+                        <span ng-show="statutoryRates.employeesNiRate">
+                            <tr>
+                                <td>Employee's NI high earner rate</td>
+                                <td>{{statutoryRates.employeesHighEarnerNiRate.current}} %</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('employeesHighEarnerNiRate')"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         </span>
+
+                        
+                        <!-- 
+                        <span ng-show="statutoryRates.employeesHighEarnerNiRate">
+                            <tr>
+                                <td>Employee's NI high earner rate</td>
+                                <td>{{statutoryRates.employeesHighEarnerNiRate.current}}</td>
+                                <td class="text-center">
+                                    <a href="" ng-click="openModal('employeesHighEarnerNiRate')"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        </span> -->
 
                         
                         <span ng-show="statutoryRates.incomeTaxHigherRateThreshold">

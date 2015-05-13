@@ -54,7 +54,7 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 			console.log($scope.ageRanges[i].id);
 				if($scope.ageRanges[i].id === id){
 					$scope.newElement.ageLower = $scope.ageRanges[i].ageLower;
-					$scope.newElement.ageUpper = $scope.ageRanges[i].ageUpper;
+					$scope.newElement.ageUpper = $scope.ageRanges[id].ageUpper;
 				}
 			}
 		};
