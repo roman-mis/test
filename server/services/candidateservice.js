@@ -77,7 +77,13 @@
 			if(searchTextFilter){
 				// var =request.filters[idx];
 				var searchTerm=new RegExp(searchTextFilter.term,'i');
-				q.or([{'firstName':searchTerm},{'lastName':searchTerm},{emailAddress:searchTerm}]);
+				var refSearch = Number(searchTextFilter.term);
+				if (isNaN(refSearch)) {
+					refSearch = -1;
+				}
+				console.log(refSearch);
+				console.log(searchTerm);
+				q.or([{'firstName':searchTerm},{'lastName':searchTerm}, {'candidateNo':refSearch}, {emailAddress:searchTerm}]);
 
 				delete request.filters['searchText'];
 			}

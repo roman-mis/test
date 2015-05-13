@@ -128,8 +128,14 @@ module.exports = function(mongoose) {
             ],
             employeesNiRate: [
                 {
-                    lowerThreshold: Number,
-                    upperThreshold: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
+                }
+            ],
+            employeesNiThreshold: [
+                {
                     amount: Number,
                     validFrom: Date,
                     validTo: Date,
@@ -138,7 +144,14 @@ module.exports = function(mongoose) {
             ],
             employeesHighEarnerNiRate: [
                 {
-                    lowerThreshold: Number,
+                    amount: Number,
+                    validFrom: Date,
+                    validTo: Date,
+                    status: { type: String, default: 'active' }
+                }
+            ],
+            employeesHighEarnerNiThreshold: [
+                {
                     amount: Number,
                     validFrom: Date,
                     validTo: Date,
