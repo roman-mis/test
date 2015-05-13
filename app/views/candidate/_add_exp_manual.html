@@ -221,7 +221,7 @@
                                         <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
                                     </div>
                                     <div class="form-group col-sm-3 postcodeInput" style="display: inline-flex;">
-                                        <input type="text" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)" />
+                                        <input type="number" min="0" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)" />
                                         <div class="input-group" ng-show="addData.type && !isPpmDefined(addData.type)">
                                             <div class="input-group-addon">&#163;</div>
                                             <input class="form-control" type="number" ng-model="addData.mileage">
@@ -546,7 +546,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-            <button type="button" class="btn btn-primary" ng-click="okManual()" ng-disabled="expenseData.summaries.length == 0 || !isAgreedOnTerms || isSaving">
+            <button type="button" class="btn btn-primary" ng-click="okManual()" ng-disabled="expenseData.summaries.length == 0 || isSaving">
                 <div ng-show="!isSaving">Submit Expenses</div>
                 <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> Saving...</div>
             </button>
