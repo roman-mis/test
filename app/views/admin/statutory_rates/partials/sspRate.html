@@ -20,21 +20,20 @@
                         <div class="row form-group">
                             <form name="newElementForm" >
                                 <div class="col-xs-3">
-                                    <input type="number" ng-model="newElement.amount" class="form-control" placeholder="Rate" required/>
+                                    <input type="number" ng-model="parentScope.newElement.amount" class="form-control" placeholder="Rate"/>
                                 </div>
                                 <div class="col-xs-4 no-padding-left">
                                     <div class="input-group date" id="datepickerFrom">
-                                        <input type="text" name="due" ng-model="newElement.validFrom" orig-datepicker required/>
+                                        <input type="text" name="date1" date-changed="parentScope.updateValidTo"  ng-model="parentScope.newElement.validFrom" orig-datepicker required/>
                                     </div>
                                 </div>
                                 <div class="col-xs-4 no-padding-left">
                                     <div class="input-group date" id="datepickerTo">
-                        
-                                        <input type="text" name="due" ng-model="newElement.validTo" orig-datepicker required/>
+                                        <input type="text" name="date2" ng-model="parentScope.newElement.validTo" orig-datepicker required/>
                                     </div>
                                 </div>
                                 <div class="col-xs-1 no-padding-left">
-                                    <button ng-disabled="newElementForm.$invalid" class="btn btn-primary form-control" ng-click="parentScope.addNew(newElement)"><i class="fa fa-plus"></i></button>
+                                    <button ng-disabled="newElementForm.$invalid" class="btn btn-primary form-control" ng-click="parentScope.addNew(parentScope.newElement)"><i class="fa fa-plus"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -51,8 +50,8 @@
                             <tbody>
                                 <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate ">
                                     <td width="3px">
-                                        <a ng-show="!elem.notSaved"><i class="fa fa-floppy-o"></i></a>
-                                        <a ng-show="elem.notSaved"><i class="fa fa-plus-square"></i></a>
+                                        <span style="color:LawnGreen" ng-show="!elem.notSaved"><i class="fa fa-floppy-o"></i></span>
+                                        <span  style="color:LawnGreen" ng-show="elem.notSaved"><i class="fa fa-plus-square"></i></span>
                                     </td>
                                     <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>

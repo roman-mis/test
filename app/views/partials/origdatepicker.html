@@ -1,9 +1,9 @@
 <div class="input-group orig-datepicker" ng-init="popup = false">
     <input type="text" 
            class="form-control" 
-           datepicker-options="{{dateOptions}}"
            placeholder={{placeholder}} 		
            ng-model="ngModel"
+           ng-change="dateChanged(ngModel)"
            datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}"
            is-open="popup" 
 		       date-disabled="dateDisabled(date, mode)"	

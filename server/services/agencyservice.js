@@ -1,5 +1,5 @@
  'use strict';
- 
+
 var db = require('../models');
 var Q=require('q');
 var _=require('lodash');
@@ -37,23 +37,23 @@ function updateConsultant(agency,consultant){
 					resolve({result:true,object:{consultant:consultant,user:user}});
 				},reject);
 			},reject);
-	});
+	})
 }
 
 service.getAllAgencies=function(request){
-	
+
 	return Q.Promise(function(resolve,reject){
 		var q=db.Agency.find().populate('branches');
-		
+
 		queryutils.applySearch(q,db.Agency,request)
 		.then(resolve,reject);
 	});
-	
+
 };
 
 service.saveAgency = function(agencyDetails, agencyId){
 	console.log('saveAgency');
-	return Q.Promise(function(resolve,reject){	
+	return Q.Promise(function(resolve,reject){
 		var agency;
 		if(agencyId === null){
 			// Add Agency
@@ -78,7 +78,7 @@ service.saveAgency = function(agencyDetails, agencyId){
 					resolve({agency:agency,branch:branch});
 				},reject);
 		}else{
-			
+
 
 			// Update Agency
 			return Q.all([service.getAgency(agencyId),service.getBranches([{'agency':agencyId},{'branchType':'HQ'}])])
@@ -90,7 +90,7 @@ service.saveAgency = function(agencyDetails, agencyId){
 					console.log(agency);
 					return Q.nfcall(agency.save.bind(agency))
 						.then(function(){
-							
+
 							if(branches && branches.length>0){
 								branch=branches[0];
 								var branchDetails = {
@@ -116,17 +116,17 @@ service.saveAgency = function(agencyDetails, agencyId){
 							}
 
 							return true;
-							
+
 						})
 						.then(function(){
 							console.log('all done');
 							resolve({agency:agency,branch:branch});
 						},reject);
-					
+
 				},reject);
 
-				
-			
+
+
 		}
 	});
 };
@@ -139,7 +139,7 @@ service.saveAgencyContact = function(agencyId, contactDetails){
 			.then(function(agency){
 				if(agency){
 					utils.updateSubModel(agency.contactInformation, contactDetails);
-					
+
 					Q.nfcall(agency.save.bind(agency))
 					.then(function(){
 						resolve(agency);
@@ -192,7 +192,7 @@ service.getConsultant=function(id){
 	return Q.Promise(function(resolve,reject){
 		var q=db.Consultant.findById(id).populate('agency').populate('branch').populate('user');
 			return Q.nfcall(q.exec.bind(q)).then(function(consultant){
-				
+
 				resolve(consultant);
 
 			},reject);
@@ -303,12 +303,12 @@ service.getBranches=function(filter,populate){
 			});
 			console.log('after all consultants');
 			return db.Consultant.populate(consultantList,'user')
-				
+
 				.then(function(){
 					console.log('after populate');
 					return branches;
 				});
-				
+
 
 		});
 
@@ -318,35 +318,35 @@ service.deleteBranch=function(branchId){
 	return Q.Promise(function(resolve,reject){
 		return service.getBranch(branchId)
 			.then(function(branch){
-				
+
 					if(branch){
 						// Get Index
-						
+
 						return Q.nfcall(branch.remove.bind(branch))
 							.then(function(){
 								service.getAgency(branch.agency)
 									.then(function(agency){
-										
+
 										var index = agency.branches.indexOf(branchId);
-										
+
 										if(index>=0){
-											
+
 											agency.branches.splice(index, 1);
 										}
-										
+
 										return Q.nfcall(agency.save.bind(agency))
 											.then(function(){
 												console.log('removing branch 5');
 												resolve({result:true});
 											},reject);
 									});
-								
-								
+
+
 							},reject);
 					}else{
 						reject({result:false,name:'NOTFOUND',message:'Branch not found'});
 					}
-				
+
 			},reject);
 	});
 };
@@ -355,8 +355,8 @@ service.postConsultant=function(branchId, consultantInfo){
 	return Q.Promise(function(resolve,reject){
 		return service.getBranch(branchId)
 				.then(function(branch){
-					
-						
+
+
 						if(branch){
 							// For Consultant User Login
 							var fullUrl = global.baseUrl + '/register/activate/'+consultantInfo.emailAddress;
@@ -367,7 +367,7 @@ service.postConsultant=function(branchId, consultantInfo){
 
 							var guid=uuid.v1();
 							console.log('Activation Code is : '+guid);
-							
+
 							var newUser = {
 								firstName: consultantInfo.firstName,
 								lastName: consultantInfo.lastName,
@@ -376,7 +376,7 @@ service.postConsultant=function(branchId, consultantInfo){
 								contactDetail:{phone:consultantInfo.phone},
 								activationCode: guid
 							};
-							
+
 							return userservice.createUser(opt, newUser).then(function(user){
 								// Add
 								console.log('user created');
@@ -385,18 +385,18 @@ service.postConsultant=function(branchId, consultantInfo){
 								consultant.branch=branch._id;
 								consultant.agency=branch.agency;
 								branch.consultants.push(consultant._id);
-								
+
 								return Q.all([Q.nfcall(consultant.save.bind(consultant)),Q.nfcall(branch.save.bind(branch))])
 								.then(function(){
 									resolve({result:true,object:{branch:branch, consultant:consultant, user: user}});
 								},reject);
 
-								
+
 							},reject);
 						}else{
 							reject({result:false,name:'NOTFOUND',message:'Branch not found'});
 						}
-					
+
 				},reject);
 	});
 };
@@ -405,7 +405,7 @@ service.patchConsultant=function(consultantId, consultantInfo){
 	return Q.Promise(function(resolve,reject){
 		service.getConsultant(consultantId)
 			.then(function(consultant){
-				
+
 				if(consultant){
 					var agency=consultant.agency;
 					var branch=consultant.branch;
@@ -426,9 +426,9 @@ service.patchConsultant=function(consultantId, consultantInfo){
 							resolve({result:true,object:{agency:agency, branch:branch, consultant:result.object.consultant,user:result.object.user}});
 						},reject);
 					}
-					
+
 				}else{
-						
+
 					reject({result:false,name:'NOTFOUND',message:'Consultant not found'});
 				}
 			},reject);
@@ -490,13 +490,13 @@ service.saveAgencySales = function(agencyId, salesDetails, administrationCostDet
 		service.getAgency(agencyId)
 			.then(function(agency){
 				if(agency){
-					
+
 					// Default Invoicing
 					utils.updateSubModel(agency.sales, salesDetails); // Edit
-					
+
 					// Default Payroll
 					utils.updateSubModel(agency.administrationCost, administrationCostDetails); // Edit
-					
+
 					Q.nfcall(agency.save.bind(agency))
 					.then(function(){
 						resolve(agency);

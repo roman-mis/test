@@ -31,7 +31,6 @@ module.exports = {
         'Payrolled': 'payrolled'
     },
     expenseStatus: {
-
         'Approve': 'approved',
         'Reject': 'rejected'
     },

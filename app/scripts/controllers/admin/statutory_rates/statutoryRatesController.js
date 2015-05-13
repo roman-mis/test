@@ -12,50 +12,92 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 
 		$scope.loading = false;
 		$scope.statutoryRates = {};
+		$scope.newElement = {};
 		var docId = null;
+		$scope.ageRanges =
+		[
+			{
+				id:0,
+				description:'21 and over',
+				ageLower:21,
+				ageUpper:1000
+			},
+			{
+				id:1,
+				description:'18 - 20',
+				ageLower:18,
+				ageUpper:20
+			},
+			{
+				id:2,
+				description:'Under 18',
+				ageLower:0,
+				ageUpper:18
+			}
+		];
+		
 		
 		// ge statutory rates from the server
 		StatutoryRatesService.getStatutoryRates().then(function(data){
 			if(data.statutoryRates){
 				$scope.statutoryRates = data.statutoryRates;
 			}
-			console.log($scope.statutoryRates )
+			console.log($scope.statutoryRates );
 			$scope.getCurrentForAll();
 			docId = data.id;
 		});
 
+		$scope.selectRange = function(id){
+			console.log(id);
+			for(var i = 0; i < $scope.ageRanges.length; i++){
+				
+			console.log($scope.ageRanges[i].id);
+				if($scope.ageRanges[i].id === id){
+					$scope.newElement.ageLower = $scope.ageRanges[i].ageLower;
+					$scope.newElement.ageUpper = $scope.ageRanges[i].ageUpper;
+				}
+			}
+		};
 		function checkDates(newElement) {
 			var acceptedDates = true;
+			if(!newElement.amount){
+				Notification.error({message: 'Please Enter The Amount Value', delay: 3000});
+				return false;
+			}
+
+			if(Number(newElement.amount) < 0){
+				Notification.error({message: 'Amount Must Be Positive', delay: 3000});
+				return false;
+			}
+
 			for(var i = 0; i < $scope.statutoryRates[$scope.type].length; i++){
 				if( $scope.statutoryRates[$scope.type][i].status === 'delete'){
 					continue;
 				}
 
 				if(Date.parse(newElement.validFrom) > Date.parse(newElement.validTo)){
-					Notification.error({message: 'the Valid From Date Can Not Be After The Valid TO Date', delay: 3000});
+					Notification.error({message: 'Start date cannot be after the end date', delay: 3000});
 					acceptedDates = false;
 					break;
 				}
 
 				if(Date.parse($scope.statutoryRates[$scope.type][i].validFrom) <= Date.parse(newElement.validFrom) &&
 				Date.parse($scope.statutoryRates[$scope.type][i].validTo) >= Date.parse(newElement.validFrom)){
-					Notification.error({message: 'the Valid From Date Is Not Accepted', delay: 3000});
-				console.log(i);
-				console.log($scope.statutoryRates[$scope.type][i]);
+					Notification.error({message: 'Start date not valid', delay: 3000});
 					acceptedDates = false;
 					break;
 				}
 
 				if(Date.parse($scope.statutoryRates[$scope.type][i].validFrom) <= Date.parse(newElement.validTo) &&
 				Date.parse($scope.statutoryRates[$scope.type][i].validTo) >= Date.parse(newElement.validTo	)){
-					Notification.error({message: 'the Valid To Date Is Not Accepted', delay: 3000});
+					Notification.error({message: 'end date not valid', delay: 3000});
 					acceptedDates = false;
 					break;
 				}
 
 				if(Date.parse($scope.statutoryRates[$scope.type][i].validFrom) >= Date.parse(newElement.validFrom) &&
 				Date.parse($scope.statutoryRates[$scope.type][i].validTo) <= Date.parse(newElement.validTo	)){
-					Notification.error({message: 'The New Period Can Not Contain an Old Period', delay: 3000});
+					Notification.error({message: 'The new range cannot contain an existing range', delay: 3000});
 					acceptedDates = false;
 					break;
 				}
@@ -63,23 +105,29 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 			return acceptedDates;
 		}
 
+		$scope.updateValidTo = function(validFrom){
+			console.log('0');
+			console.log(validFrom);
+			var d = validFrom;
+	    var day = new Date(d.getFullYear() + 1, d.getMonth(), d.getDate());
+			$scope.newElement.validTo = day;
+		};
 
 		$scope.addNew = function(newElement){
 			$scope.loading = true;
 			if(checkDates(newElement) === true){
 				newElement.notSaved = true;
 				$scope.statutoryRates[$scope.type].push(angular.copy(newElement));
-				newElement = {};
+				$scope.newElement = {};
 			}
 		};
 
-		function deleteFromDb (id){
+		function deleteFromDb (id, index){
 			StatutoryRatesService.deleteFromStatutoryRates(id,$scope.type)
 			.then(function(res){
 				console.log(res);
-				$scope.statutoryRates = res.data.object;
+				$scope.statutoryRates[$scope.type].splice(index,1);					
 				$scope.loading = false;
-				$scope.getCurrentForAll();
 			},function(){
 				$scope.loading = false;
 			});
@@ -90,12 +138,13 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 			console.log(validFrom);
 			for(var i = 0; i < $scope.statutoryRates[$scope.type].length; i++){
 				if($scope.statutoryRates[$scope.type][i].validFrom+'' === validFrom+''){
+					console.log($scope.statutoryRates[$scope.type][i].notSaved);
 					if($scope.statutoryRates[$scope.type][i].notSaved &&
-					$scope.statutoryRates[$scope.type][i].notSave === true){
+					$scope.statutoryRates[$scope.type][i].notSaved === true){
 						$scope.statutoryRates[$scope.type].splice(i,1);	
 					}else{
-						deleteFromDb($scope.statutoryRates[$scope.type][i]._id);
-
+						console.log(validFrom);
+						deleteFromDb($scope.statutoryRates[$scope.type][i]._id, i);
 					}
 				}
 			}
@@ -121,8 +170,6 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 			var d = new Date();
 			var today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
 			for(var i = 0; i < $scope.statutoryRates[type].length; i++){
-				console.log($scope.statutoryRates[type]);
-				console.log(Date.parse($scope.statutoryRates[type][i].validFrom));
 				if(Date.parse($scope.statutoryRates[type][i].validFrom) <= Date.parse(today) &&
 					Date.parse($scope.statutoryRates[type][i].validTo) >= Date.parse(today)){
 					$scope.statutoryRates[type][i].isCurrent = true;
@@ -158,37 +205,6 @@ app.controller('statutoryRatesController',['$scope', '$rootScope', 'StatutoryRat
 			}
 			$scope.getCurrentForAll();
 		};
-
-		// $scope.saveElement = function(validFrom){
-		// 	console.log(validFrom);
-		// 	console.log($scope.statutoryRates[$scope.type]);
-		// 	var clone = angular.copy($scope.statutoryRates[$scope.type])
-		// 	var temp = [];
-		// 	for(var i = 0; i < clone.length; i++){
-		// 		if(clone[i].validFrom+'' !== validFrom+'' && clone[i].notSaved === true){
-		// 			temp.push(clone.splice(i,1)[0]);
-		// 			break;
-		// 		}
-		// 	}
-		// 	StatutoryRatesService.saveStatutoryRates(clone, $scope.type)
-		// 	.then(function(res){
-		// 		console.log(res);
-		// 		$scope.statutoryRates = res.data.object;
-		// 		console.log(temp)
-		// 		for(var i = 0; i < temp.length; i++){
-		// 			$scope.statutoryRates[$scope.type].push(temp[i]);
-		// 		}
-		// 		$scope.loading = false;
-		// 		console.log($scope.statutoryRates[$scope.type]);
-		// 		Notification.success({message:'Added successfully', delay:2000});
-		// 		$scope.getCurrentForAll();
-		// 	},function(){
-		// 		$scope.loading = false;
-		// 	});
-		// };
-
-
-
 
 		$scope.openModal = function(type) {
 			$scope.type = type;

@@ -66,7 +66,6 @@ module.exports=service={
 
 	    s3Params=_.assign(s3Params,opt);
 
-
 	    console.log(s3Params);
 
 	    //console.log(s3Params);

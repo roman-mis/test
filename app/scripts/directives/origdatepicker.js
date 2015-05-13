@@ -15,15 +15,16 @@ angular.module('origApp.directives')
                     ngModel: '=',
                     placeholder: '@',
                     dateFormat: '@',
-					dateDisabled: '&'
+					dateDisabled: '&',
+                    dateChanged: '='
                 },
                 templateUrl: 'views/partials/origdatepicker.html',
                 replace: true,
                 link: function(scope, element, attrs) {
-                    scope.dateOptions = {
-                        minDate: new Date(2014, 11, 1),
-                        maxDate: new Date(2015, 1, 28),
-                        initDate: new Date(2015, 0, 9)
+                    
+                    scope.changed = function(){
+
+                        scope.dateChanged();
                     };
                     scope.initDate =new Date('01-01-1900');
                     scope.firstDate = Date.parse(new Date(2014,8,5));
