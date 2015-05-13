@@ -16,15 +16,15 @@
                     <input type="text" class="form-control" ng-model="dpa.answer">
                 </div>
                 <div class="text-right">
-                    <input type="button" class="btn btn-default" value="Regenerate Question" ng-click="reGenerateSet($index)">
-                    <input type="button" class="btn btn-default" value="Correct" ng-class="{'btn-primary': dpa.correct}" ng-click="correctSet($index)">
+                    <input type="button" class="btn btn-warning" value="Regenerate Question" ng-click="reGenerateSet($index)">
+                    <input type="button" class="btn btn-success" value="Correct" ng-class="{'btn-primary': dpa.correct}" ng-click="correctSet($index)">
                 </div>
             </div>
         </form>
     </div>
 
     <div class="modal-footer">
-        <input type="button" class="btn btn-default pull-left" value="Regenerate Questions" ng-click="reGenerateAllSets()">
+        <input type="button" class="btn btn-warning pull-left" value="Regenerate Questions" ng-click="reGenerateAllSets()">
         <button class="btn btn-default" ng-click="cancel()">
             Cancel
         </button>
