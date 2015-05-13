@@ -9,3 +9,4 @@ module.exports = function(app){
 };
 
 router.post('/authenticate', controller.authenticate);
+router.post('/editprofilepassword', controller.changePassword);

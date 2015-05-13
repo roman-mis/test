@@ -1,41 +1,86 @@
 <div class="modal-window">
-    <div class="modal-header">
-        <h3 class="modal-title">Holiday Pay Request</h3>
-    </div>
-    <!-- /modal-header -->
+    <form name="holiday" novalidate ng-submit="sendPayroll(holiday.$valid)">
+       <div class="modal-header">
+           <h3 class="modal-title">Holiday Pay Request</h3>
+       </div><!-- /modal-header -->
+       <div class="modal-body">
+           <div class="row">
+               <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
+               <div class="col-xs-6 col-sm-3 form-group text-right">{{candidateInfo.firstName}}  {{candidateInfo.lastName}} </div>
+               <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+               <div class="col-xs-6 col-sm-3 form-group text-right">{{candidateInfo.candidateRef}}</div>
+           </div>
+           <div class="line-horizontal"></div>
+           <div class="row">
+               <div class="col-xs-8 form-group">Holiday fund available</div>
+               <div class="col-xs-4 form-group text-right">&pound; {{ candidate.payrollValues.holidayPayRetained?(candidate.payrollValues.holidayPayRetained || 0):0 }}</div>
+               
+           </div>
+           
+           <div class="row">
+               <div class="col-xs-12 col-sm-7 control-label">
+                   Holiday fund requested
+               </div>
+               <div class="col-xs-8 col-sm-2 control-label">
+                   Amount
+               </div>
+               <div class="col-xs-4 col-sm-3 form-group">
+                   <div class="row">
+                        <!-- <div class="col-xs-2 pull-left">
+                            &pound;
+                        </div> -->
+                        <div class="col-xs-10 input-group">
+                            <div class="input-group-addon">&pound;</div>
+                            <input  min="0"  type="number"  class="form-control" name="amount" ng-model="hpObject.holidayPay.amount" required />
+                        </div>
+                    </div>
+                    
+                    
+                    <div ng-if="holiday.amount.$invalid && submitted">
+                       <p ng-if="holiday.amount.$error.required" class="alert alert-danger">
+                           Please enter amount.
+                       </p>
+                       <p ng-if="holiday.amount.$error.min" class="alert alert-danger">
+                         Please enter amount greater than 0.
+                     </p>
+                     
+                     
+                     
+                 </div>
+                 <div ng-if="submitted && hpObject.holidayPay.amount > candidate.payrollValues.holidayPayRetained">
+                    <p  class="alert alert-danger">
+                      Holiday fund requested should be less than or equal to holiday fund available.
+                  </p>
+              </div>
+              
+              <div ng-if="submitted && candidate.payrollValues.holidayPayRetained===0">
+               
+               
+                <p  class="alert alert-danger">
+                  You cannot request holiday fund.
+              </p>
+          </div>
+      </div>
+  </div>
+</div><!-- /modal-body -->
 
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
-            <div class="col-xs-6 col-sm-3 form-group text-right">{{ candidate.firstName }} {{ candidate.lastName }}</div>
-            <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
-            <div class="col-xs-6 col-sm-3 form-group text-right">{{ contactdetail.candidateNo }}</div>
-        </div>
-        <div class="line-horizontal"></div>
-        <div class="row">
-            <div class="col-xs-8 form-group">Holiday fund available</div>
-            <div class="col-xs-4 form-group text-right">&pound; {{ candidate.payrollValues.holidayPayRetained || 0 }}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-7 control-label">
-                Holiday fund requested
-            </div>
-            <div class="col-xs-8 col-sm-2 control-label">
-                Amount
-            </div>
-            <div class="col-xs-4 col-sm-3 form-group">
-                <input type="text" ng-model="holidayPay.amount" />
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-footer">
-        <div class="row rowFooter" style="height: 38px">
-            <div class="col-xs-12 btn-footer form-group">
-                <a href="" ng-click="closeModal()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                <button ng-click="sendPayroll()" type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
+<div class="modal-footer">
+   <a href="javascript:void(0)" ng-click="closeModal()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</a>
+   <button ng-if="!showMe" type="submit"  class="btn btn-primary">Save</button>
+   <div class="btn-group" ng-if="showMe">
+       <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-expanded="false">Action</button>
+       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+           <span class="caret"></span>
+           <span class="sr-only">Toggle Dropdown</span>
+       </button>
+       <ul class="dropdown-menu dropdown-menu-right" role="menu">
+           <li><a href=""  ng-click="savePayroll(holiday.$valid,'save');">Save</a></li>
+           <li><a href=""  ng-click="savePayroll(holiday.$valid,'approve');">Save and Approve</a></li>
+           <li><a href=""  ng-click="savePayroll(holiday.$valid,'reject');" >Save and Reject</a></li>
+           <li><a href=""  ng-click="savePayroll(holiday.$valid,'refer');">Save and Refer</a></li>
+       </ul>
+   </div>
+   
+</div><!-- /modal footer -->
+</form>
 </div>

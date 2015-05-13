@@ -23,6 +23,7 @@ router.post('/:userId/ssp', controller.postSsp);
 router.post('/:userId/smp', controller.postSmp);
 
 router.post('/:userId/spp', controller.postSpp);
+router.post('/:userId/p45', controller.postP45);
 
 router.post('/:userId/holidaypay', controller.postHolidayPay);
 

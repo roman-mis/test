@@ -14,13 +14,13 @@
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Add Agency</label>
                 <div class="col-sm-8">
+
                     <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
-                        <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+                        <ui-select-match placeholder="Select an agency">{{$select.selected.agency.name}}</ui-select-match>
+                        <ui-select-choices repeat="item.agency._id as item in agencies | filter: $select.search">{{item.agency.name}}</ui-select-choices>
                     </ui-select>
                 </div>
             </div>
-
             <div class="form-group col-sm-12">
                 <label class="col-sm-4">Activity Type</label>
                 <div class="col-sm-8">
@@ -34,7 +34,7 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         <button class="btn btn-primary" ng-click="next()" ng-disabled="addActivityForm.$invalid"><i class="fa fa-arrow-right"></i> &nbsp; Next</button>
     </div>
 </div>

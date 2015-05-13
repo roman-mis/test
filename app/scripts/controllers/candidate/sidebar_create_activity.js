@@ -15,7 +15,7 @@ angular.module('origApp.controllers')
             {key: 'AOE', label: 'Attachment of Earnings'}
           ];
 
-          $scope.agencies = HttpResource.model('agencies').query({});
+          $scope.agencies = HttpResource.model('candidates/' + parentScope.candidate._id + '/payrollproduct').query({});
           $scope.candidate = parentScope.candidate;
 
 

@@ -1,73 +1,23 @@
 <div class="modal-header modal-headerExpenses">
-  <h4 class="modal-title" id="myModalLabel">Expenses #7 | Receipts</h4>
-  <small>Match expenses to receipt uploads.</small>
+  <h4 class="modal-title" id="myModalLabel">Uploaded data
 </div><!-- /modal-header -->
-
-<div class="modal-body">
-
-    <div class="col-xs-12 col-sm-2 text-center filter">
-      <p>Filter:</p>
-    </div>
-    <div class="col-xs-12 col-sm-10 text-center">
-      <button type="button" class="btn btn-default redDark ovalButton" ng-click="filterByType('Subsistence')">Subsistence</button>
-      <button type="button" class="btn btn-default greyDark ovalButton" ng-click="filterByType('Transport')">Transport</button>
-      <button type="button" class="btn btn-default blueDark ovalButton" ng-click="filterByType('Other')">Other</button>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <table class="table table-striped" id="tableHeader">
-        <thead>
-        <tr>
-          <th>Date
-            <a href="" class="pull-right" ng-click="sortDir = !sortDir">
-              <i class="fa fa-sort" ng-show="sortDir !== false && !sortDir"></i>
-              <i class="fa fa-caret-up" ng-show="sortDir === true"></i>
-              <i class="fa fa-caret-down" ng-show="sortDir === false"></i>
-            </a>
-          </th>
-          <th>Category</th>
-          <th>Type</th>
-          <th>Cost</th>
-          <th>Match</th>
-        </tr>
-        </thead>
-      </table>
-      <div class="tableWrapper">
-        <table class="table table-striped" id="tableBody">
-          <tbody>
-          <tr ng-repeat="item in listData| filter:{expenseType: searchType} | orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
-            <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
-            <td>{{item.expenseType}}</td>
-            <td>{{item.subType}}</td>
-            <td>&#163;{{item.value| formatNumber}}</td>
-            <td class="text-center" style="padding:0; width: 34px;">
-              <label>
-                <input type="checkbox" ng-model="item.checked"/>
-              </label>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="table orig-grid">
+        <div ng-repeat="day in days" class="raw col-xs-12">
+          <div style="margin-bottom:5px;background-color:#EEEEEE;text-align: center;vertical-align:bottom" ng-repeat="expense in day.expenses" class="col-xs-12">
+            <div class="col-xs-3" style="height:25px"><span><b>{{day.date|formatDate:'ddd DD/MM/YYYY'}}</b></span></div>
+            <div class="col-xs-3" style="height:25px"><span><b>{{expense.expenseType}}</b></span></div>
+            <div class="col-xs-3" style="height:25px"><span><b>{{getName(expense.subType)}}</b></span></div>
+            <div class="col-xs-3" style="height:25px"><span><b>{{expense.value}}</b></span></div>
+          </div>
+          <div>&nbsp;&nbsp;&nbsp;</div>
+        </div>
       </div>
     </div>
     <div class="col-xs-12 text-center">
       <!-- Split button -->
-      <div class="btn-group">
-        <button type="button" class="btn btn-default" ng-disabled="isUploading" data-toggle="dropdown">
-          <div ng-show="!isUploading">Match Selected</div>
-          <div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> Uploading file...</div>
-        </button>
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <span class="caret"></span>
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="javascript: void(0)" ng-click="startMatchEntries()">Match entries to upload</a></li>
-          <li><a href="javascript: void(0)" ng-click="showPreviousUploaded()">Previous receipt upload</a></li>
-        </ul>
-      </div>
     </div>
   </div> <!-- row -->
 </div><!-- /modal-body -->
@@ -75,5 +25,5 @@
 <div class="modal-footer">
   <a ng-click="gotoPrevious()" class="btn pull-left"><i class="fa fa-chevron-left"></i></a>
   <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-  <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="isUploading">Next</button>
+  <button type="button" class="btn btn-primary" ng-click="ok()" ng-disabled="isUploading">Upload</button>
 </div><!-- /modal footer -->

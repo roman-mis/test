@@ -6,7 +6,7 @@ module.exports=function(dbs){
 	// var candidateService=require('../candidateservice')(db);
 	var candidateCommonService=require('../candidatecommonservice')(db);
 	var timesheetService=require('../timesheetservice')(db);
-	var payrollService=require('../payrollservice')(db);
+	// var payrollService=require('../payrollservice')(db);
 	var systemService=require('../systemservice')(db);
 	var enums=require('../../utils/enums');
 	var _=require('lodash');
@@ -17,12 +17,18 @@ module.exports=function(dbs){
 	var moment=require('moment');
 
 	service.saveActionRequest=function(userId,details){
-
+						console.log('******####11')
 		return Q.Promise(function(resolve,reject){
+						console.log('******####12')
 			return candidateCommonService.getUser(userId)
 					.then(function(user){
+						console.log('******####1')
+
 						if(user){
+						console.log('******####2')
+
 							var actionRequestModel=new db.ActionRequest(details);
+							console.log('******####2')
 							return Q.nfcall(actionRequestModel.save.bind(actionRequestModel))
 								.then(function(){
 									resolve({result:true,object:{'actionRequestModel':actionRequestModel,'user':user}});
@@ -111,183 +117,69 @@ module.exports=function(dbs){
 						console.log(currentRate);*/
 						console.log('user pay frequency is ');
 						console.log(user.worker.payrollTax.payFrequency);
-						return calculatePayPeriods(user,request,options)
-							.then(function(response){
-								console.log('week calculations done');
-								if(!response.result){
-									reject(response);
-									return false;
-								}
-								var records=response.objects;
-
-							/*	console.log('total records ');
-								console.log(records);
-								console.log('records[0].periodStartDate.toDate()   '+records[0].periodStartDate );
-								console.log('records[records.length-1].periodStartDate.toDate()    '+records[records.length-1].periodStartDate); */
-								return applyPeriodNumbers(user,records,response.options)
-								.then(function(){
-									console.log('---------Final records are-----');
-									console.log(records);
-									resolve({result:true,objects:records});
-								});
-							})
-							;
-
-
-					})
-					;
+						return calculatePayPeriods(user,request,options,payType)
+						.then(function(records){
+							console.log('week calculations done');
+							resolve({result:true,objects:records});
+						});
+					});
 		});
 	};
 
-	function calculatePayPeriods(user,request,options){
-
+	function calculatePayPeriods(user,request,options,payType){
 		var maxPeriods=request.maxPeriods||0;
-		console.log('max periods.... '+maxPeriods);
-
-		// var dateInformed=request.dateInformed;
-
-		var startDate=moment(request.startDate);
-		console.log('startDate:  '+request.startDate);
-		var endDate=request.endDate?moment(request.endDate):null;
-
-		console.log('endDate:  '+request.endDate);
+		var payFrequency = user.worker.payrollTax.payFrequency;
+		var startDate=moment(request.startDate);	
+		var endDate = request.endDate?moment(request.endDate):startDate.clone().add(Number(request.maxPeriods),'weeks').add(-1,'days');
 		var periodicPay=options.periodicPay//options.periodicPay=88.45;
 		var perDayPay=periodicPay/7;
-		// var workingDaysPerWeek=5;
-
-		// var payFrequency=user.payrollTax.payFrequency||enums.payFrequency.Weekly;
+		var q=db.TaxTable.find({periodType: (payFrequency === 'monthly')? 'monthly': 'weekly'}).and([{'endDate':{$gte:startDate.toDate()}},{'startDate':{$lte:endDate.toDate()}}]);
+		var q1 = db.System.findOne().select('statutoryTables.sspRate statutoryTables.smpRate statutoryTables.sppRate')
 		return Q.Promise(function(resolve,reject){
-			var payFrequency=user.worker.payrollTax.payFrequency;
-			var waitingDays=0;
-			waitingDays=0;//TODO: work out waiting days
-			var weeks=[];
-			// totalNumberOfDays=endDate.diff(startDate,'days')+1;
-			// console.log('totalNumberOfDays: '+totalNumberOfDays);
-
-			var requestStartDays=startDate.clone().add(waitingDays,'days');
-			console.log('requestStartDays: '+requestStartDays.toISOString());
-			// var weekIndex=-1;
-			var nextStartDate=requestStartDays.clone();
-			console.log('nextStartDate '+nextStartDate.toISOString());
-			var i=0;
-			var totalWeeks=i;
-			var maxPeriodLastDate=null;
-			if(maxPeriods>0){
-				maxPeriodLastDate=nextStartDate.clone().add(maxPeriods,'weeks');
-			}
-
-			while(true){
-				console.log('current nextStartDate is '+nextStartDate.toISOString());
-				if(maxPeriodLastDate && maxPeriodLastDate.diff(nextStartDate)<0){
-					console.log('max Period '+maxPeriods  + ' exceeded');
-					break;
-				}
-				// if(maxPeriods>0 && maxPeriods<(i+1)){
-				// 	console.log('max periods '+ maxPeriods + ' Exceeded');
-				// 	break;
-				// }
-				if(endDate && nextStartDate>endDate){
-					console.log('nextStartDate '+ nextStartDate.toISOString() + ' Exceeded from endDate '+endDate.toISOString());
-					break;
-				}
-
-				var thisPeriodLastDate;
-				if(payFrequency===enums.payFrequency.Monthly){
-					thisPeriodLastDate=nextStartDate.clone().endOf('month');
-					
-				}
-				else{
-					thisPeriodLastDate=nextStartDate.clone().day(5);
-				}
-
-				var thisPeriodEndDate=endDate && thisPeriodLastDate.diff(endDate,'days')>0?endDate.clone():
-						maxPeriodLastDate && thisPeriodLastDate.diff(maxPeriodLastDate,'days')>0?maxPeriodLastDate.clone() 
-						:thisPeriodLastDate.clone();
-				var noOfDays=thisPeriodEndDate.diff(nextStartDate,'days')+1;
-				console.log('noOfDays '+noOfDays);
-				weeks[i]={'days':[],amount:0,periodStartDate:null,weekNumber:-1,monthNumber:-1};
-				weeks[i].noOfDays=noOfDays;
-
-				weeks[i].periodStartDate=utils.getDateValue(nextStartDate.clone().day(0).toDate());
-				if(payFrequency===enums.payFrequency.Monthly){
-					nextStartDate=nextStartDate.add(1,'months').startOf('month');
-					
-				}
-				else{
-					nextStartDate=nextStartDate.clone().add(7,'days').day(1);
-				}
-
-				
-				i++;
-
-				if(payFrequency===enums.payFrequency.Weekly){
-					totalWeeks=i;
-				}
-
-			}
-
-
-			_.forEach(weeks,function(week,idx){
-
-				week.amount=perDayPay * week.noOfDays;
-			});
-
-			resolve({result:true,objects:weeks,options:{perDayPay:perDayPay}});
-		});
-	}
-
-
-	function applyPeriodNumbers(user,records,options){
-		var perDayPay=options.perDayPay;
-		var payFrequency=user.worker.payrollTax.payFrequency;
-
-		var q=db.TaxTable.find().or([{'startDate':{$gte:records[0].periodStartDate}},{'startDate':{$lte:records[records.length-1].periodStartDate}}]);
-		console.log('query formed');
-		return Q.Promise(function(resolve,reject){
-			return q.exec(function(err,taxTables){
-				console.log('taxTables');
-				console.log(taxTables);
-				_.forEach(records,function(week,idx){
-					var taxTable=_.first(_.filter(taxTables,function(tbl){
-						//console.log('comparing dates : ');
-						//console.log(week.periodStartDate+ '  ,  '+tbl.startDate);
-						var taxTableStartDate;
-						if(payFrequency===enums.payFrequency.Monthly){
-							taxTableStartDate=moment(tbl.startDate).startOf('month').toDate();
-							
-						}
-						else{
-							taxTableStartDate=moment(tbl.startDate).day(0).toDate();
-						}
-						
-						console.log('comparing dates  '+week.periodStartDate + '      with      '+taxTableStartDate);
-						var ret= utils.areDateEqual(week.periodStartDate,taxTableStartDate);
-						console.log(ret);
-						return ret;
-					}));
-
-					if(taxTable){
-						// console.log('taxTable found ');
-						// console.log(taxTable);
-						if(payFrequency===enums.payFrequency.Monthly){
-							week.monthNumber=taxTable.monthNumber;
-							
-						}
-						else{
-							week.weekNumber=taxTable.weekNumber;
-						}
-						
-						
+			// q.exec(function(err,taxTables){
+			Q.all([Q.nfcall(q.exec.bind(q)),Q.nfcall(q1.exec.bind(q1))]).then(function(res){
+				var taxTables = res[0];
+				var rates = res[1].statutoryTables[payType+'Rate'];
+				var weeks = [];
+				_.forEach(taxTables,function(taxTable){
+					//outside the range
+					var week = {};
+					if(taxTable.startDate > endDate.toDate() || taxTable.endDate < startDate.toDate()){
+						return;
 					}
+					week.year = taxTable.year;
+					week.weekNumber = taxTable.weekNumber;
+					week.monthNumber = taxTable.monthNumber;
+					week.periodType = taxTable.periodType;
+					week.amount = 0;
 
-					// week.amount=perDayPay * week.days.length;
+					var startPoint = Math.max(Date.parse(taxTable.startDate), Date.parse(startDate.toDate()));
+					var endPoint = Math.min(Date.parse(taxTable.endDate), Date.parse(endDate.toDate()))	;
+					var index = 0;
+					for(var day = moment(startPoint).clone(); moment(endPoint).startOf('day').diff(day.clone().startOf('day'),'days')>=0; day.add(1,'days')){
+						// continue when sunday or saturday
+						if(day.day() === 0 || day.day() === 6){
+							console.log(day.toDate());
+							continue;
+						}
+						index++;
+						perDayPay = 0;
+						for(var g = 0; g < rates.length; g++){
+							if(Date.parse(rates[g].validFrom) - Date.now()<=0 && Date.parse(rates[g].validTo) - Date.now()>=0){
+								perDayPay = rates[g].amount / 7;
+							}
+						}
+						week.amount += perDayPay;
+					}
+					console.log(index);
+					weeks.push(week);
 				});
-
-				resolve(records);
+				weeks.sort(function(a, b){return Math.max(a.weekNumber,a.monthNumber)-Math.max(b.weekNumber,b.monthNumber);});
+				resolve(weeks);
+			},function(err){
+				reject(err); 
 			});
 		});
-
-
 	}
 
 	service.validateSsp=function(id,validationParams){
@@ -376,17 +268,31 @@ module.exports=function(dbs){
 	service.getActionRequestData = function(request){
 		return Q.Promise(function(resolve,reject){
 			var q=db.ActionRequest.find().populate('worker').populate('createdBy');
-			return queryutils.applySearch(q,db.ActionRequest,request)
+			queryutils.applySearch(q,db.ActionRequest,request)
 				.then(resolve,reject);
 		});
 		
-	return Q.nfcall(q.exec.bind(q));
+	// return Q.nfcall(q.exec.bind(q));
 	};
 
 	service.getActionRequestDataById = function(id){
 		var q=db.ActionRequest.findById(id).populate('worker').populate('createdBy');
 	return Q.nfcall(q.exec.bind(q));
 	};
+
+
+    service.getActionRequestByCandidatesIds = function(ids){
+        //expected [id1,id2,...]
+        var q;
+        var promisArray = [];
+        console.log(ids);
+        ids.forEach(function(id){
+          q = db.ActionRequest.find({'worker':id});
+          console.log('88888888888888888');
+          promisArray.push(Q.nfcall(q.exec.bind(q)));
+        });
+        return Q.all(promisArray);
+    };
 
 	return service;
 };

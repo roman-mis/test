@@ -1,0 +1,129 @@
+
+
+<div class="modal-window">
+
+	<div class="modal-header">
+		<h3 class="modal-title" id="myModalLabel">Edit Profile / Change Password</h3>
+	</div><!-- /modal-header -->
+
+	<div class="modal-body">
+	<div class="row">
+		
+	
+	<div class="col-xs-12">
+		<div ng-if = "!user.avatarFileName"class="col-sm-3">
+			
+			<img ng-src="/images/profilePicPlaceholder.jpg" height="200" width="200" alt="Profile Pic">
+		</div>	
+		<div ng-if = "user.avatarFileName"class="col-sm-3">
+			
+			<img ng-src="{{avatar}}" height="200" width="200" alt="Profile Pic">
+		</div>	
+		<div class="col-xs-9">
+			
+			<form class="form-horizontal" role="form" name = "form">
+			<div class="row">
+				<div class="form-group col-xs-12">
+					<div class="col-xs-3">
+						<label class="control-label">Email</label>
+					</div>
+					<div class="col-xs-7">
+						<div ng-show="!edit" class="control-label">
+							
+							{{user.emailAddress}}
+						</div>
+						<div ng-show = "edit">
+							<input name = "email" ng-pattern = "/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" class = "form-control"type="text" ng-model = "backupEmail" />
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<span ng-show="!edit" class = "control-label">
+							<a href ng-click = "edit = true; editEmail(edit,false)"><i class="fa fa-pencil-square-o"></i></a>
+						</span>
+						<span ng-show="edit" class = "control-label">
+						<span ng-hide = "form.email.$error.pattern">
+							<a href ng-click = "edit = false; keep = true; editEmail(edit,keep)"><i class="fa fa-check"></i></a>
+							</span>
+							<a href ng-click = "edit = false"><i class="fa fa-times"></i></a></span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-xs-12">
+						<div class="col-xs-3">
+							<label class="control-label">Current Password</label>
+						</div>
+						<div class="col-xs-9">
+							<input type="password" class = "form-control"type="text" ng-model = "profile.password" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-xs-12">
+						<div class="col-xs-3">
+							<label class="control-label">New Password</label>
+						</div>
+						<div class="col-xs-9">
+							<input name = "newPassword" type="password" class = "form-control"type="text" ng-model = "profile.newPassword" />
+							<div  class="col-xs-9 alert alert-danger" ng-show="comparePasswords().noMatch" role="alert">
+                 Passwords Do Not Match!
+            </div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-xs-12">
+						<div class="col-xs-3">
+							<label class="control-label">Confirm Password</label>
+						</div>
+						<div class="col-xs-9">
+							<input type="password" class = "form-control"type="text" ng-model = "profile.confirmPassword" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-xs-12">
+						<div class="col-xs-3">
+							<label class="control-label">Update Profile Pic</label>
+						</div>
+						
+							
+							<div class="col-xs-5 pull-left">
+								<input type = "file" ng-file-select = "onFileSelect($files)" accept="image/*" />
+							</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-xs-12">
+						<div class="col-xs-3">
+							<label class="control-label">Vehicle Spec</label>
+						</div>
+						<div class="col-xs-9">
+							<div class="control-label"><a href ng-click = "vehicle()">Vehicle Information</a></div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+
+
+
+
+
+	</div>
+		
+		</div>
+		</div><!-- /modal-body -->
+
+		<div class="modal-footer">
+			<button  type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+			<button ng-disabled = "uploading ||edit||disableForm||(profile.newPassword&&!profile.confirmPassword)||(profile.confirmPassword&&!profile.newPassword)" ng-click = "save()" type="button" class="btn btn-primary"><div ng-show="!uploading"><i class="fa fa-save"></i> &nbsp; Save & Close</div>
+      <div ng-show="uploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div></button>
+
+		</div>
+	</div>
+
+

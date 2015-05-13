@@ -8,7 +8,7 @@
  * Controller of the origApp
  */
 angular.module('origApp.controllers', [])
-        .controller('MainController', function($timeout,$interval, $scope, $rootScope, $location, AuthService, userPermissions) {
+        .controller('MainController', function($timeout,$interval, $scope, $rootScope, $location, AuthService, userPermissions,$state) {
           $rootScope.breadcrumbs = [{link:'/', text:'Home'}];
           $rootScope.currentUser = null;
           $rootScope.$watch('breadcrumbs', function () {
@@ -31,4 +31,8 @@ angular.module('origApp.controllers', [])
               console.log($scope.permissions);
 	          });
           }
+
+          $scope.isStateIncludes = function(pathKey){
+            return $state.includes('app.' + pathKey);
+          };
         });

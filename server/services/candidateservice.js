@@ -68,7 +68,7 @@
 	};
 
 	service.getUserByEmail=candidatecommonservice.getUserByEmail;
-
+	service.getUserById = candidatecommonservice.getUser;
 	service.getAllCandidates=function(request){
 
 		return Q.Promise(function(resolve,reject){
@@ -77,7 +77,13 @@
 			if(searchTextFilter){
 				// var =request.filters[idx];
 				var searchTerm=new RegExp(searchTextFilter.term,'i');
-				q.or([{'firstName':searchTerm},{'lastName':searchTerm},{emailAddress:searchTerm}]);
+				var refSearch = Number(searchTextFilter.term);
+				if (isNaN(refSearch)) {
+					refSearch = -1;
+				}
+				console.log(refSearch);
+				console.log(searchTerm);
+				q.or([{'firstName':searchTerm},{'lastName':searchTerm}, {'candidateNo':refSearch}, {emailAddress:searchTerm}]);
 
 				delete request.filters['searchText'];
 			}
@@ -421,6 +427,58 @@
 				}
 				else{
 					deff.reject({name:'InvalidLogin',message:'User not found',detail:(user && !user.isActive?'not activated '+user.isActive:'user object not found in db')});
+				}
+
+			},function(err){
+				deff.reject(err);
+			});
+
+		return deff.promise;
+	};
+
+	service.changePassword=function(id,password,newPassword,confirmPassword){
+		var deff=Q.defer();
+		console.log('authenticate user email address: '+id+' and password : '+password);
+		service.getUserById(id)
+			.then(function(user){
+				// console.log('user object');
+				// console.log(user);
+				var correctPassword = false;
+				if(newPassword === confirmPassword){
+					console.log('true');
+					correctPassword= true;
+				}
+				else{
+					console.log('false');
+					correctPassword = false;
+				}
+				if(user && user.isActive && correctPassword){
+					utils.compareSecureString(user.password,password)
+					.then(function(result){
+						console.log('after comparing passwords',password);
+						if(result){
+							
+						utils.secureString(newPassword).
+							then(function(securePassword){
+								console.log('password hashed : '+securePassword);
+								
+							
+							db.User.update({'_id':user._id},{$set:{'password':securePassword}},function(err){
+						        console.log(err);
+						    });
+							});
+							deff.resolve(user);
+						}
+						else{
+							// deff.reject(user);
+							deff.reject({name:'InvalidLogin',message:'User not found',detail:'wrong password'});
+
+						}
+					});
+				}
+				else{
+					console.log('else');
+					deff.reject({name:'InvalidLogin',message:'passwords do not match',detail:'incorrect match'});
 				}
 
 			},function(err){

@@ -9,6 +9,8 @@ angular.module('origApp.controllers')
             isFirstDisabled: false
           };
 
+          $scope.addSubBreadcrumb({'text': 'Agencies'});
+
           $scope.serviceUsed = ConstantsResource.get('servicesused');
           $scope.serviceMargins = ConstantsResource.get('margins');
           $scope.payrollProducts = HttpResource.model('candidates/' + candidateId + '/payrollproduct').query({});

@@ -1,10 +1,11 @@
-<div class="modal-content">
+<div class="modal-window">
 
     <div class="modal-header"> 
-        <h4 class="modal-title">Income Tax Higher Rate Threshold</h4>
+        <h3 class="modal-title">Income Tax Higher Rate Threshold</h3>
     </div>
 
     <div class="modal-body">
+    
         <div class="row">
             <div class="col-xs-12">
                 <!-- Nav tabs -->
@@ -13,51 +14,67 @@
                     <li role="presentation"><a data-target="#historic" aria-controls="historic" role="tab" data-toggle="tab">Historic</a></li>
                 </ul>
                 <!-- Tab panels -->
+                                    <div class="spinner"></div>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="currentAndFuture">
                         <div class="row form-group">
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" placeholder="Rate"/>
-                            </div>
-                            <div class="col-xs-4 no-padding-left">
-                                <div class="input-group date" id="datepickerFrom">
-                                    <input type="text" class="form-control" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <form name="newElementForm" >
+                                <div class="col-xs-3">
+                                    <input type="number" ng-model="parentScope.newElement.amount" class="form-control" placeholder="Rate"/>
                                 </div>
-                            </div>
-                            <div class="col-xs-4 no-padding-left">
-                                <div class="input-group date" id="datepickerTo">
-                                    <input type="text" class="form-control" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <div class="col-xs-4 no-padding-left">
+                                    <div class="input-group date" id="datepickerFrom">
+                                        <input type="text" name="date1" date-changed="parentScope.updateValidTo"  ng-model="parentScope.newElement.validFrom" orig-datepicker required/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-1 no-padding-left">
-                                <button class="btn btn-primary form-control"><i class="fa fa-plus"></i></button>
-                            </div>
+                                <div class="col-xs-4 no-padding-left">
+                                    <div class="input-group date" id="datepickerTo">
+                                        <input type="text" name="date2" ng-model="parentScope.newElement.validTo" orig-datepicker required/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 no-padding-left">
+                                    <button ng-disabled="newElementForm.$invalid" class="btn btn-primary form-control" ng-click="parentScope.addNew(parentScope.newElement)"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </form>
                         </div>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Rate</th>
-                                    <th>Valid From</th>
-                                    <th>Valid To</th>
+                                    <th width="3px" class="text-center" >.</th>
+                                    <th>Amount</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th class="text-center">.</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="elem in data | validDate ">
-                                    <td>&pound;{{elem.amount}}</td>
+                                <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate ">
+                                    <td width="3px">
+                                        <span style="color:LawnGreen" ng-show="!elem.notSaved"><i class="fa fa-floppy-o"></i></span>
+                                        <span  style="color:LawnGreen" ng-show="elem.notSaved"><i class="fa fa-plus-square"></i></span>
+                                    </td>
+                                    <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
+                                    <td class="text-center">
+                                        <div ng-show="elem.isCurrent">
+                                            <a style="color:gray"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                        <div ng-show="!elem.isCurrent">
+                                            <a href ng-click="parentScope.deleteOne(elem.validFrom)"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
                                 </tr>
+
                             </tbody>
                         </table>
 
                         <div class="text-right">
-                            <button ng-click="cancel()"class="btn btn-default">Cancel</button>
-                            <button ng-click="ok()" class="btn btn-primary" style="margin-left:12px;"><i class="fa fa-save"></i> &nbsp; Save</button>
+                            <button ng-click="cancel()" class="btn btn-default">Cancel</button>
+                            <button ng-click="ok()" ng-disabled="parentScope.disableSave()"class="btn btn-primary" style="margin-left:12px;"><i class="fa fa-save"></i> &nbsp; Save</button>
                         </div>
                     </div>
-
+                    
                     <div role="tabpanel" class="tab-pane" id="historic">
                         <table class="table table-striped">
                             <thead>
@@ -68,11 +85,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="elem in data | validDate: 'reverse' ">
-                                    <td>&pound;{{elem.amount}}</td>
+                           
+                                <tr ng-repeat="elem in parentScope.statutoryRates[parentScope.type] | validDate: 'reverse' ">
+                                    <td>{{elem.amount}}</td>
                                     <td>{{elem.validFrom | formatDate:'DD/MM/YYYY'}}</td>
                                     <td>{{elem.validTo   | formatDate:'DD/MM/YYYY'}}</td>
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>

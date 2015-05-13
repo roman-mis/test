@@ -1,0 +1,52 @@
+<div class="modal-window">
+  	<div class="modal-header modal-headerExpenses">
+	  <h3 class="modal-title" id="myModalLabel">Vehicle Information</h3>
+	  
+	</div><!-- /modal-header -->
+	
+	<div class="modal-body">
+	  <form class="form-horizontal" name="vehicleForm" id="vehicleForm">
+	    <div class="form-group">
+	      <label class="col-sm-3" for="fuel-type">Fuel type</label>
+	      <div class="col-sm-3 fuelType">
+	        <select class="form-control" id="fuel-type" ng-model="vehicle.fuelType" required
+	                ng-change="onChangeFuelType()"
+	                ng-options="type.code as type.description for type in fuelTypes">
+	        </select>
+	      </div>
+	
+	      <label class="col-sm-3" for="engine-size">Engine size</label>
+	      <div class="col-sm-3">
+	        <select class="form-control" id="engine-size" ng-model="vehicle.engineSize" required
+	                ng-options="type.code as type.description for type in engineSizes">
+	        </select>
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label class="col-sm-3" for="make-model">Make &#38; model </label>
+	      <div class="col-sm-6">
+	        <input type="text" id="make-model" class="form-control" ng-model="vehicle.make" required>
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label class="col-sm-3" for="registration-number">Registration No.</label>
+	      <div class="col-sm-6">
+	        <input type="text" class="form-control" id="registration-number" ng-model="vehicle.registration">
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label class="col-sm-3" for="company-car">Company car?</label>
+	      <div class="col-sm-9">
+	        <label>
+	          <input type="checkbox" id="company-car" ng-model="vehicle.companyCar"> Leave unchecked for private vehicle.
+	        </label>
+	      </div>
+	    </div>
+	  </form>
+	</div><!-- /modal-body -->
+	<div class="modal-footer">
+	  <button type="button" class="btn btn-primary" 
+	          ng-click="save()" 
+	          ng-disabled="isVehicleSaving || vehicleForm.$invalid">Save</button>
+	</div><!-- /modal footer -->
+</div>

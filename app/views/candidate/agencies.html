@@ -46,7 +46,7 @@
                             </div>
                             <div class="pure-u-1-1">
                                 <p class="entry-title pure-u-1">Exception History
-                                    <a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgenciesAddingMargin(product)"><i class="fa fa-plus-square-o"></i></a>
+                                    <a ng-if="!(permissions.taps.Agencies.addExpesesHistory.hide)" class="icon-edit pull-right" href="javascript:void(0);" ng-click="openAgenciesAddingMargin(product)"><i class="fa fa-plus-square-o"></i></a>
                                 </p>
                             </div>
                             <div class="pure-u-1">
@@ -60,7 +60,7 @@
                                             <th>Deduction</th>
                                             <th>Remaining</th>
                                             <th>Amount</th>
-                                            <th width="50px"></th>
+                                            <th width="50px" ng-if="!(permissions.taps.Agencies.exceptionHistoryControls.hide)"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -70,7 +70,7 @@
                                             <td>{{exception.deductionDate?(exception.deductionDate | formatDate: 'DD/MM/YYYY'):''}}</td>
                                             <td>{{exception.deductionPeriod}}</td>
                                             <td>{{exception.deductionNumberOfPayroll}}</td>
-                                            <td class="text-center" style="white-space: nowrap; width: 50px">
+                                            <td ng-if="!(permissions.taps.Agencies.exceptionHistoryControls.hide)" class="text-center" style="white-space: nowrap; width: 50px">
                                                 <a href="" ng-click="openAgenciesAddingMargin(product, exception)"><i class="fa fa-edit"></i></a>
                                                 <a href="" ng-click="deleteMarginException(product, exception)"><i class="fa fa-trash-o"></i></a>
                                             </td>

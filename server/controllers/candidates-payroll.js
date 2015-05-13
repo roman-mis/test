@@ -70,6 +70,13 @@ module.exports = function(db){
       });
     };
 
+    controller.getCandidatesPayrollProducts=function (req,res){
+      candidatepayrollservice.getCandidatesPayrollProducts(req.params.candidateId, req.params.productId)
+      .then(function(payrollProduct){
+        res.json(payrollProduct);
+      });
+    };
+
     function getPayrollProduct(candidateId, productId){
       var deff=Q.defer();
       candidatepayrollservice.getPayrollProductDetails(candidateId)
@@ -100,6 +107,18 @@ module.exports = function(db){
             res.json({result:false, message:'Payroll Product Information not found'});
           }
         },res.sendFailureResponse);
+    };
+
+    controller.getCandidatesPayrollProducts=function (req,res){
+      console.log('1111111111111111111111');
+      candidatepayrollservice.getCandidatesPayrollProducts(JSON.parse(req.params.candidateIds))
+        .then(function(payrollProducts){
+            console.log('ooooooooooooooooooooooooooooooooo');
+            res.json({result:true, objects: payrollProducts});
+        },function(err){
+          console.log(err);
+          res.sendFailureResponse(err);
+        });
     };
 
     controller.postPayrollProduct=function (req,res){

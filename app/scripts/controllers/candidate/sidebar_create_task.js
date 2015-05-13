@@ -3,6 +3,7 @@ angular.module('origApp.controllers')
         .controller('CandidateSidebarCreateTaskController', function($q,$rootScope,$scope, $modalInstance, parentScope, HttpResource, ConstantsResource, params, MsgService) {
           $scope.permissions = parentScope.permissions;
           $scope.data = {};
+
           var prioritiesDone = false;
           var statusesDone = false;
           var taskDone = false;
@@ -70,8 +71,9 @@ angular.module('origApp.controllers')
           }
 
           if($rootScope.currentUser.userType === 'WK'){
-            $scope.agencies = HttpResource.model('candidates/' + parentScope.candidate._id + '/agencies').query({});
+            $scope.agencies = HttpResource.model('candidates/' + parentScope.candidate._id + '/payrollproduct').query({});
             //assign values
+            $scope.data.agency = params.agency;
             $scope.data.templateTitle = $scope.permissions.rightToolBar.callLog.functionality.title.setTo;
             promise.promise.then(function(data){
               console.log('********************'+data+'********************');
@@ -82,13 +84,14 @@ angular.module('origApp.controllers')
           }else{
             $scope.taskTypes = ConstantsResource.get($scope.activityType === 'callLog' ? 'calllogtasktypes' : 'createtasktypes');
             $scope.templates = HttpResource.model('templates').query({templateType: 'TASK'});
-            $scope.agencies = HttpResource.model('agencies').query({});
+            $scope.agencies = HttpResource.model('candidates/' + parentScope.candidate._id + '/payrollproduct').query({});
+            $scope.data.agency = params.agency;
             $scope.users = HttpResource.model('users').query({});
           }
           $scope.activityType = params.activityType;
 
           $scope.candidate = parentScope.candidate;
-          $scope.agencies = HttpResource.model('agencies').query({});
+          $scope.agencies = HttpResource.model('candidates/' + parentScope.candidate._id + '/payrollproduct').query({});
           $scope.users = HttpResource.model('users').query({});
           $scope.templates = HttpResource.model('templates').query({templateType: 'TASK'});
 

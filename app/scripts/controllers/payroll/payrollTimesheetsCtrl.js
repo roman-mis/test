@@ -14,7 +14,17 @@ angular.module('origApp.controllers')
         currentPage:1,
         limit:20
     };
-
+    var vatRate = 0;
+		HttpResource.model('systems/vat').query({}, function (data) {
+      var allVatRates = data.data.objects;
+      var now = Date.now();
+      for (var i = 0; i < allVatRates.length; i++) {
+        if(now >= Date.parse(allVatRates[i].validFrom) && now <= Date.parse(allVatRates[i].validTo)  ){
+          vatRate = allVatRates[i].amount/100;
+          break;
+        }
+      }
+    });
 
     HttpResource.model('systems/paymentrates').query({}, function (data) {
 
@@ -150,19 +160,42 @@ angular.module('origApp.controllers')
 			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].amount = 
 			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].units * 
 			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].payRate;
+			
+			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].vat = 
+			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].amount * vatRate;
+
 			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].total = 
 			Number($scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].amount) +
 			Number($scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].vat);
+			$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].elementName =
+			getElementName($scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].elementType);
+		}
+
+		function getElementName (id){
+			var elementName = '';
+			for (var i = 0; i < $scope.paymentRates.length; i++) {
+				if($scope.paymentRates[i]._id === id){
+					elementName = $scope.paymentRates[i].name;
+					break;
+				}
+			}
+			return elementName;
 		}
 
 		$scope.finishEditing =function(batchIndex, timesheetIndex, elementIndex, state, payRate, units){
+			
+					console.log('######');
+					console.log(payRate);
+					console.log(units);
 			if(state){
 				if(!payRate){
 	        Notification.error({message: 'pay Rate must be Number', delay: 2000});
+	        return true;
 				}
 
 				if(!units){
 	        Notification.error({message: 'units must be Number', delay: 2000});
+	        return true;
 				}
 			}
 			if(state === true){
@@ -173,6 +206,7 @@ angular.module('origApp.controllers')
 						$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex].editData[key] || 
 						$scope.timesheetBatches[batchIndex].timesheets[timesheetIndex].elements[elementIndex][key];
 					}
+					
 					generateBatchesData(batchIndex, timesheetIndex, elementIndex);
 					var req = {};
 					req.reqBody = [];

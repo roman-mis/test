@@ -16,6 +16,7 @@ angular.module('origApp.controllers')
     };
     HttpResource.model('systems/cisverification').query({},function (res) {
         $scope.cis = res.data.object;
+        console.log($scope.cis)
     });
     $scope.editCis = function () {
         ModalService.open({

@@ -16,6 +16,9 @@ router.get('/signTempS3',controller.getUploadDocumentSignedUrl);
 router.get('/signTempViewdocS3',controller.getViewDocumentSignedUrl);
 router.delete('/delete/:fileName',controller.deleteTempDocument);
 
+router.get('/:id/avatar/signedurl',controller.getAvatarSignedUrl);
+router.get('/:id/avatar/viewsignedurl',controller.getViewAvatarSignedUrl);
+
 router.get('/receipts/signedUrl',controller.getUploadReceiptSignedUrl);
 router.get('/receipts/:receiptName',controller.viewReceipt);
 router.get('/receipts/viewsignedurl/:fileName',routeDefaultModifier({params:{folder:'receipts'}}),controller.viewDocSignedUrl);

@@ -1,17 +1,36 @@
 <div class="hmrc">
-    <div class="wrapper-tabs" role="tabpanel">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" ng-class="{active: tab==='rti'}"><a ui-sref="app.admin.hmrc.rti" style="color:green">RTI Submissions</a></li>
-        <li role="presentation" ng-class="{active: tab==='mileage'}"><a ui-sref="app.admin.hmrc.mileage" style="color:green">Approved Mileage Rates</a></li>
-        <li role="presentation" ng-class="{active: tab==='cis'}"><a ui-sref="app.admin.hmrc.cis" style="color:green">CIS Verification</a></li>
-    </ul>
+	<div class="table-view meta-box container-fluid">
+        <div class="row hidden-lg hidden-md hidden-sm">
+            <div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" ng-click="tab.isMenuCollapsed = !tab.isMenuCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+        </div>
+		
+		<div class="tabs-wrapper row" role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs candidate-tabs collapse navbar-collapse" role="tablist">
+				<li role="presentation" ng-class="{active: tab==='rti'}">
+					<a ui-sref="app.admin.hmrc.rti" style="color:green">RTI Submissions</a>
+				</li>
+				<li role="presentation" ng-class="{active: tab==='mileage'}">
+					<a ui-sref="app.admin.hmrc.mileage" style="color:green">Approved Mileage Rates</a>
+				</li>
+				<li role="presentation" ng-class="{active: tab==='cis'}">
+					<a ui-sref="app.admin.hmrc.cis" style="color:green">CIS Verification</a>
+				</li>
+			</ul>
 
-    <!-- Tab panels -->
-    <div class="tab-content">
-        <br />
-        <div ui-view></div>
-        <!-- /tab-pane -->
-    </div><!-- /tab-content -->
-    </div><!-- /wrapper-tabs -->
+			<!-- Tab panels -->
+			<div class="tab-content">
+				<br />
+				<div ui-view></div>
+				<!-- /tab-pane -->
+			</div><!-- /tab-content -->
+		</div><!-- /wrapper-tabs -->
+	</div>
 </div><!-- /hmrc -->

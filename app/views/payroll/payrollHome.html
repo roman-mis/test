@@ -63,8 +63,8 @@
                     <li>
                         <a href ng-click="importTimesheets()">Import&nbsp;Timesheets</a>
                     </li>
-                    <li>
-                        <a ng-href="#">Import&nbsp;Expenses</a>
+                    <li ng-file-select="onFileSelect($files)">
+                        <a href >Import&nbsp;Expenses</a>
                     </li>
                     <li>
                         <a ng-href="#">Import&nbsp;Margin</a>

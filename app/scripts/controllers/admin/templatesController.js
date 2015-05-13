@@ -1,4 +1,6 @@
+/*global _comma_separated_list_of_variables_*/
 'use strict';
+
 var app = angular.module('origApp.controllers');
 
 app.controller('templatesController',['$rootScope', '$scope','$location','HttpResource', 'adminTemplate','userPermissions','$timeout',
@@ -7,7 +9,7 @@ app.controller('templatesController',['$rootScope', '$scope','$location','HttpRe
 
   $rootScope.breadcrumbs = [{link:'/', text:'Home'},
                               {link: '/admin/home', text: 'Admin'},
-                              {link: '/admin/templates', text: 'Templates'},
+                              {link: '/admin/templates', text: 'Templates'}
                               ];
 	$scope.getImage = function(v){
     // console.log('v ==========> ' + v)

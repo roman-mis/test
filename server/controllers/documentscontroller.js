@@ -53,6 +53,35 @@ module.exports = function(){
         },res.sendFailureResponse);
     };
 
+    controller.getAvatarSignedUrl=function(req,res){
+       var objectName=req.query.fileName;
+            var objectType=req.query.mimeType;
+            // var documentUpload=req.query.documentUpload||false;
+            console.log('paraaaaaams id',req.params.id);
+            var folder='avatars/'+req.params.id+'/';
+            console.log('avataaaaaaar foler', process.env.S3_AVATARS_FOLDER);
+        awsService.getS3SignedUrl('putObject', objectName,objectType,folder)
+        .then(function(returnData){
+            res.json(returnData);
+
+        },res.sendFailureResponse);
+    };
+
+    controller.getViewAvatarSignedUrl=function(req,res){
+       var objectName=req.query.fileName;
+       console.log('in getAvataaaaaaaaaaar');
+         //   var objectType=req.query.mimeType;
+            // var documentUpload=req.query.documentUpload||false;
+            var folder='avatars/'+req.params.id+'/';
+
+        awsService.getS3SignedUrl('getObject', objectName,null,folder)
+        .then(function(returnData){
+            res.json(returnData);
+            console.log('returned data',returnData);
+
+        },res.sendFailureResponse);
+    };
+
     controller.deleteTempDocument=function(req,res){
        var objectName = req.params.fileName;
            // var objectType=req.query.mimeType;

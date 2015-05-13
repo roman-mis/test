@@ -60,8 +60,8 @@
                         <label class="col-xs-6 col-md-5">Select Agency *</label>
                         <div class="col-xs-6 col-md-7">
                             <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required>
-                                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-                                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+                                <ui-select-match placeholder="Select an agency">{{$select.selected.agency.name}}</ui-select-match>
+                                <ui-select-choices repeat="item.agency._id as item in agencies | filter: $select.search">{{item.agency.name}}</ui-select-choices>
 
                             </ui-select>
                         </div>
@@ -124,7 +124,7 @@
 
         </label>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         <button class="btn btn-primary" ng-click="save()" ng-disabled="createTaskForm.$invalid || isSaving">
             <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Create</div>
             <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Creating...</div>
