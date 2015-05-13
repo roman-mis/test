@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExp10Controller', function ($scope, HttpResource, ConstantsResource) {
+        .controller('CandidateSidebarAddExp10Controller', function ($scope, Notification,  HttpResource, ConstantsResource) {
             $scope.types = ConstantsResource.get('otherexpensetypes');
             $scope.ok = function () {
                 $scope.isSaving = true;
@@ -17,6 +17,10 @@ angular.module('origApp.controllers')
             };
 
             $scope.okManual = function () {
+                if (!$scope.isAgreedOnTerms) {
+                    Notification.warning('Please agree to the terms and conditions');
+                    return;
+                }
                 $scope.summaries = $scope.generateSummaries();
                 $scope.sendData = {
                     expense: $scope.generateSendData(),
