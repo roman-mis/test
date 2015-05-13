@@ -9,7 +9,8 @@ angular.module('origApp').config(function($stateProvider) {
 	})
 	.state('app.admin.home', {
 		url: '/home',
-		templateUrl: 'views/admin/home.html'
+		templateUrl: 'views/admin/home.html',
+		controller: 'adminHomeController'
 	})
 	.state('app.admin.templates', {
 		url: '/templates',
