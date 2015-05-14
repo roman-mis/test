@@ -56,7 +56,7 @@ exports.config = {
   suites: {
     main: regNewUser.concat(login).concat(logout),
     remote: adminCredentials.concat(login).concat(candidateSidebar),
-    dummy: adminCredentials.concat(login).concat(test)
+    dummy: adminCredentials.concat(login).concat(candidateTabs)
   },
 
   onPrepare: function () {
