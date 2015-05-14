@@ -32,6 +32,11 @@ input.btn:active {
     }
 }
 
+.btn-primary {
+	background: #059347 !important;
+	border-color: #059347 !important;			
+}
+
 .orig-button {
     $orig-button-border: 4px;
     display: flex;

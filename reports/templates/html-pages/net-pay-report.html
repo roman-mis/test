@@ -1,0 +1,252 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Net Pay Report</title>
+		<meta name="description" content="Net Pay Report">
+		<meta name="author" content="Tesla">
+		<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../css/style.css?v=1.0">
+		<link rel="stylesheet" href="style.css">
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="js/tablesplit.js" type="text/javascript"></script>-->
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body class="netpayreport">
+	<header>
+		<img class="middle" src="../images/company-logo.png" width="187" height="88" alt="Company Header Logo" />
+		<h1>{Company Title}</h1>
+		<h2>Net Pay Listing - Pending Only</h2>
+	</header>
+	
+	<table class="tmain" width="100%">
+	
+		<thead> 
+			<tr> 
+				<th align=left width=100%>
+					
+					<table class="summary">
+						<colgroup>
+							<col style="width: 25%">
+							<col style="width: 25%">
+							<col style="width: 25%">
+							<col style="width: 25%">
+						</colgroup>
+						<tr>
+							<td>Pay Frequency</td>
+							<td class="var">{Pay_Freq.}</td>
+							<td>Tax Year</td>
+							<td class="var">{Tax_Year}</td>
+						</tr>
+						<tr>
+							<td>Period No.</td>
+							<td class="var">{Period_number}</td>
+							<td>Process Date</td>
+							<td class="var">{Process date}</td>
+						</tr>
+						<tr>
+							<td>Date</td>
+							<td class="var">{Date}</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+					
+				</th>
+			</tr>
+			<tr>
+				<th>
+					
+
+				
+				</th>
+			</tr>	
+		</thead>
+		
+		<tbody>
+			
+			<tr>
+				<td width="100%">
+			
+					<table class="results">
+					  <thead class="printhead">
+						<tr class="hrowprint">
+							<td>Payroll No.</td>
+							<td>Name</td>
+							<td>Bank Name</td>
+							<td>A/C Number</td>
+							<td>Sort Code</td>
+							<td>B. Soc. No./ &nbsp; Empe. Ref.</td>
+							<td>Bank Ref.</td>
+							<td>Net Pay</td>
+							<td>Paid So Far</td>
+							<td>Owing</td>
+							<td>Pay Method</td>
+							<td>Mobile</td>
+						</tr>
+						<tr class="separator"></tr>
+					  </thead>
+					<tbody>
+					  <colgroup>
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 5%">
+						<col style="width: 10%">
+						<col style="width: 5%">
+						<col style="width: 10%">
+						<col style="width: 5%">
+					  </colgroup>
+					  <tr class="hrow">
+					    <th class="textleft">Payroll No.</th>
+					    <th class="textleft">Name</th>
+					    <th class="textleft">Bank Name</th>
+					    <th class="textleft">A/C Number</th>
+					    <th class="textleft">Sort Code</th>
+					    <th class="textleft">B. Soc. No./ Empe. Ref.</th>
+					    <th class="textleft">Bank Ref.</th>
+					    <th>Net Pay</th>
+					    <th>Paid So Far</th>
+					    <th>Owing</th>
+					    <th class="textleft">Pay Method</th>
+					    <th class="textleft">Mobile</th>
+					  </tr>
+					  <tr>
+					    <td>{Payroll No.}</td>
+					    <td>{Name}</td>
+					    <td>{Bank A/C. Name}</td>
+					    <td>{A/C Number}</td>
+					    <td>{Sort Code}</td>
+					    <td>{B.Soc.No./ Empe.Ref.}</td>
+					    <td>{Bank Ref.}</td>
+					    <td class="money">{Net Pay}</td>
+					    <td class="money">{Paid So Far}</td>
+					    <td class="money">{Owing}</td>
+					    <td>{Pay Method}</td>
+					    <td>{Mobile}</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr>
+					    <td>500022</td>
+					    <td>Hudson Michael</td>
+					    <td></td>
+					    <td>25431268</td>
+					    <td>77-20-33</td>
+					    <td></td>
+					    <td></td>
+					    <td class="money">159.00</td>
+					    <td class="money">0.00</td>
+					    <td class="money">159.00</td>
+					    <td>Bacs</td>
+					    <td>0773954554</td>
+					  </tr>
+					  <tr class="payrow">
+					    <td colspan="2">Total Employess:</td>
+					    <td class="totals left">13</td>
+					    <td colspan="4"></td>
+					    <td class="totals">11489.52</td>
+					    <td class="totals">0.00</td>
+					    <td class="totals">11489.52</td>
+					    <td colspan="2"></td>
+					  </tr>
+					  </tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+		
+		</table>
+	
+	</body>
+
+</html>
