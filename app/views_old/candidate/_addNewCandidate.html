@@ -1,0 +1,71 @@
+<div class="modal-window">
+    <div class="modal-header">
+        <h4 class="modal-title">Add New Candidate</h3>
+    </div>
+    
+    <div class="modal-body">
+        <form name="form" class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Title*</label>
+                <div class="col-sm-8">
+                    <ui-select ng-model="can.title" name="title" theme="select2" ng-disabled="disabled" search-enabled="false" required>
+                        <ui-select-match>{{can.title}}</ui-select-match>
+                        <ui-select-choices repeat="item in titleary | filter: $select.search">
+                            <span ng-bind-html="item"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">First Name*</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-pristine ng-animate ng-invalid ng-invalid-required" ng-model="can.firstName" required style="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Last Name*</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-pristine ng-valid" required ng-model="can.lastName" style="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">E-mail Address*</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control ng-pristine ng-valid" required ng-model="can.email" style="" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Contact Number*</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="can.contactNumber" style="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">NI Number*</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="can.niNumber" style="" orig-ni required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Date of Birth*</label>
+                <div class="col-sm-8">
+                    <div class="input-group" name="birthDate" ng-model="can.birthDate" orig-datepicker required />
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label class="col-sm-4">Address</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="can.address" style="">
+                </div>
+            </div>-->
+        </form>
+    </div>
+    <div class="modal-footer">
+       <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-disabled="form.$invalid" disabled="disabled" ng-click="ok()">
+            <span><i class="fa fa-save"></i> &nbsp; Save </span>
+        </button>
+        
+    </div>
+    </div>

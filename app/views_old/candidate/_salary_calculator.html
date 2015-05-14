@@ -1,0 +1,198 @@
+<div class="modal-window">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-xs-8 col-sm-10">
+                <h3 class="modal-title">Welcome to the online calculator</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <fieldset class="no-margin-top">
+                <legend>Input Information</legend>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Agency Name</label>
+                    <div class="col-sm-7">
+                        <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
+                            <ui-select-match placeholder="Select Agency">{{data.agency.description}}</ui-select-match>
+                            <ui-select-choices repeat="item in priorities | filter: $select.search">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Product Used *</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">RAYE Rate *</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Margin *</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Outsource Rate*</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Holiday *</label>
+                    <div class="col-sm-7">
+                        <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
+                            <ui-select-match placeholder="Select Holiday">{{data.agency.description}}</ui-select-match>
+                            <ui-select-choices repeat="item in priorities | filter: $select.search">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="form-group">
+            <fieldset>
+                <legend>Expenses</legend>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Subsistance</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Vehicle Type</label>
+                    <div class="col-sm-7">
+                        <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
+                            <ui-select-match placeholder="Select Holiday">{{data.agency.description}}</ui-select-match>
+                            <ui-select-choices repeat="item in priorities | filter: $select.search">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Other</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                    <label class="col-sm-5">Mileage</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <button class="btn btn-primary" style="width: 100%">Calculate</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <fieldset class="fieldsetTimesheet">
+                                <legend>PAYE</legend>
+
+                                <div class="form-group">
+                                    <label>NET</label>
+                                    <input type="text" class="form-control" placeholder="9999.99">
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <fieldset class="fieldsetTimesheet">
+                                <legend>Autofill Product used</legend>
+
+                                <div class="form-group">
+                                    <label>NET</label>
+                                    <input type="text" class="form-control" placeholder="9999.99">
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <fieldset class="fieldsetTimesheet">
+                                <legend>Agency Saving</legend>
+
+                                <div class="form-group">
+                                    <label>Saving</label>
+                                    <input type="text" class="form-control" placeholder="9999.99">
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <fieldset class="fieldsetTimesheet">
+                                <legend>Difference</legend>
+
+                                <div class="form-group">
+                                    <label>Difference</label>
+                                    <input type="text" class="form-control" placeholder="9999.99">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <fieldset>
+                        <legend>Uplift Needed</legend>
+
+                        <div class="form-group">
+                            <label>Unit type</label>
+                            <ui-select ng-model="data.agency" theme="select2" search-enabled="true">
+                                <ui-select-match placeholder="Select Holiday">{{data.agency.description}}</ui-select-match>
+                                <ui-select-choices repeat="item in priorities | filter: $select.search">{{item.description}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control" placeholder="9999.99">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-warning btn-block">Re-Calculate</button>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <button class="btn btn-primary" style="width: 100%"><i class="fa fa-calculator"></i> &nbsp; Calculation Breakdown</button>
+            </div>
+
+            <div class="form-group col-sm-4">
+                <button class="btn btn-primary" style="width: 100%"><i class="fa fa-envelope-o"></i> &nbsp; Send Email</button>
+            </div>
+
+            <div class="form-group col-sm-4">
+                <button class="btn btn-primary" style="width: 100%"><i class="fa fa-save"></i> &nbsp; Save & Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>

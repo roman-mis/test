@@ -22,8 +22,9 @@ module.exports = function(){
       updates.lastName = req.body.lastName;
       updates.emailAddress = req.body.emailAddress;
       updates.userType = req.body.userType;
+      updates.avatarFileName = req.body.avatarFileName;
       console.log(req.body);
-      userservice.updateUser(req.body.id,updates).then(function(data){
+      userservice.updateUser(req.params.id,updates).then(function(data){
         res.json({result:true,data:data});
       },function(err){
         res.json({result:false,data:err});
@@ -191,7 +192,8 @@ module.exports = function(){
     function getUserViewModel(user){
       return {
         _id:user._id,title:user.title,firstName:user.firstName,lastName:user.lastName,
-        emailAddress:user.emailAddress,lastLogin:user.lastLogin,createdDate: user.createdDate,userType:user.userType,locked:user.locked
+        emailAddress:user.emailAddress,lastLogin:user.lastLogin,createdDate: user.createdDate,userType:user.userType,locked:user.locked,
+        avatarFileName:user.avatarFileName
       };
     }
 

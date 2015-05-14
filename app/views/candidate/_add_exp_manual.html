@@ -221,7 +221,7 @@
                                         <a href="" class="postcodeInfo"><i class="fa fa-question-circle"></i></a>
                                     </div>
                                     <div class="form-group col-sm-3 postcodeInput" style="display: inline-flex;">
-                                        <input type="text" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)" />
+                                        <input type="number" min="0" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)" />
                                         <div class="input-group" ng-show="addData.type && !isPpmDefined(addData.type)">
                                             <div class="input-group-addon">&#163;</div>
                                             <input class="form-control" type="number" ng-model="addData.mileage">
@@ -275,7 +275,7 @@
                                                             </div>
                                                             <div ng-if="receiptUrlArray[$index].length == 0">
                                                                 <a style="cursor:pointer" ng-click="viewReceipt($index)">
-                                                                    <i class="fa fa-picture-o absent"></i>
+                                                                    <i style="color:red" class="fa fa-picture-o absent"></i>
                                                                 </a>
                                                             </div>
                                                         </td>
@@ -426,7 +426,7 @@
                                                     </div>
                                                     <div ng-if="receiptUrlArray[$index].length == 0">
                                                         <a style="cursor:pointer" ng-click="viewReceipt($index)">
-                                                            <i class="fa fa-picture-o absent"></i>
+                                                            <i style="color:red" class="fa fa-picture-o absent"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -515,7 +515,7 @@
                                                     </div>
                                                     <div ng-if="receiptUrlArray[$index].length == 0">
                                                         <a style="cursor:pointer" ng-click="viewReceipt($index)">
-                                                            <i class="fa fa-picture-o absent"></i>
+                                                            <i style="color:red" class="fa fa-picture-o absent"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -546,10 +546,15 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-            <button type="button" class="btn btn-primary" ng-click="okManual()" ng-disabled="expenseData.summaries.length == 0 || !isAgreedOnTerms || isSaving">
+            <button type="button" class="btn btn-primary" ng-click="okManual()" ng-disabled="expenseData.summaries.length == 0 || isSaving">
                 <div ng-show="!isSaving">Submit Expenses</div>
                 <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> Saving...</div>
             </button>
+        </div><!-- /modal footer -->
+    </div>
+    <div ng-if="!stepThreeAvailable">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
         </div><!-- /modal footer -->
     </div>
 </div>

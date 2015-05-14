@@ -1,4 +1,4 @@
-<div class="candidate-modal">
+<div class="modal-window">
     <div class="modal-header">
         <h3 class="modal-title">Edit Contact</h3>
     </div>
@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Tel</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" ng-model="companyProfile.contact.telephone" name="tel" required ng-pattern = "/^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/"/>
+                            <input type="number" class="form-control" ng-model="companyProfile.contact.telephone" name="tel"/>
                         </div>
                     </div>
 
@@ -103,11 +103,10 @@
                     <div class="form-group">
                         <label class="control-label col-xs-6">Fax</label>
                         <div class="col-xs-6">
-                            <input type="number" class="form-control" ng-model="companyProfile.contact.fax" name="fax" ng-pattern = "/^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/"/>
+                            <input type="number" class="form-control" ng-model="companyProfile.contact.fax" name="fax"/>
                             <div ng-show="contactForm.fax.$invalid || contactForm.fax.$pristine">
-                                <div class="alert alert-danger" ng-show="contactForm.postcode.$error.pattern">Please enter valid fax.</div>
+                                <div class="alert alert-danger" ng-show="contactForm.postcode.$error.number">Please enter valid fax.</div>
                             </div>
-
                         </div>
                     </div>
 
@@ -131,11 +130,11 @@
 
 
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="saveCompanyProfile(contactForm.$valid,'contact')">
+       <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-primary" ng-click="saveCompanyProfile('contact')" ng-disabled="isSaving || contactForm.$invalid">
             <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
             <span ng-show="isSaving" ng-disabled="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-        </button>
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        </button>        
     </div>
 
 </div>

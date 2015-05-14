@@ -1,116 +1,118 @@
-<div class="modal-header">
-    <h3 class="modal-title">Adding New Service</h3>
-</div>
-
-<form class="payroll-product-form" name="productForm" novalidate>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-xs-12" style="margin-top: 15px">
-                Calculation Settings
-            </div>
-        </div>
-        <hr>
-
-        <div class="row">
-            <div class="col-xs-12 nonepadding">
-                <div class="col-sm-4 form-group">Agency</div>
-                <div class="col-sm-8 form-group">
-                    <ui-select ng-model="product.agency" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="item._id as item in agencies">{{item.name}}</ui-select-choices>
-                    </ui-select>
-                </div>
-                <div class="col-sm-4 form-group">Holiday Pay Rule</div>
-                <div class="col-sm-8 form-group">
-                    <ui-select ng-model="product.holidayPayRule" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in holidayPayRules">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-                <!-- <div class="col-sm-4 form-group">Margin</div>
-                <div class="col-sm-8 form-group">
-                    <ui-select ng-model="product.margin" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in margins">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div> -->
-                <div class="col-sm-4 form-group">Derogation Contract</div>
-                <div class="col-sm-8 form-group">
-                    <ui-select ng-model="product.derogationContract" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in derogationContracts">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-            </div>
-            <div class="col-xs-12 nonepadding">
-                <!-- <div class="col-sm-4 form-group">Margin Fixed</div>
-                <div class="col-sm-8 form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">&#163;</div>
-                        <input class="form-control" type="text" ng-model="product.marginFixed" ng-disabled="!product.margin" ng-required="candidate.status == 'Live'">
-                    </div>
-                </div> -->
-                <div class="col-sm-4 form-group">Derogation Spread</div>
-                <div class="col-sm-8 form-group">
-                    <input class="form-control" type="text" placeholder="" ng-model="product.derogationSpread">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12" style="margin-top: 15px">
-                Contract Type
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-xs-12 nonepadding">
-                <div class="col-xs-4 form-group">Service Used</div>
-                <div class="col-xs-8 form-group">
-                    <ui-select ng-model="product.serviceUsed" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in serviceUsed">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-4 form-group">Payment Terms</div>
-                <div class="col-xs-8 form-group">
-                    <ui-select ng-model="product.paymentTerms" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in paymentTerms">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-xs-4 form-group">Payment Method</div>
-                <div class="col-xs-8 form-group">
-                    <ui-select ng-model="product.paymentMethod" name="title" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
-                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                        <ui-select-choices repeat="item.code as item in paymentMethods">{{item.description}}</ui-select-choices>
-                    </ui-select>
-                </div>
-                <div class="col-xs-4 form-group">Agency Ref</div>
-                <div class="col-xs-8 form-group">
-                    <input class="form-control" type="text" placeholder="" ng-model="product.agencyRef">
-                </div>
-                <div class="col-xs-4 form-group">Job Description</div>
-                <div class="col-xs-8 form-group">
-                    <input name="jobDesc" class="form-control" type="text" placeholder="" ng-model="product.jobDescription" ng-required="candidate.status == 'Live'">
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+<div class="modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title">Adding New Service</h3>
     </div>
-</form>
-
-<div class="modal-footer">
-    <div class="row">
-        <div class="col-sm-12">
-            <button class="btn btn-warning" ng-click="cancelEdit()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-            <button class="btn btn-primary" ng-click="saveProduct(product)" ng-disabled="productForm.$invalid || isSaving">
-                <div ng-show="!isSaving && product._id"><i class="fa fa-save"></i> &nbsp; Save</div>
-                <div ng-show="!isSaving && !product._id"><i class="fa fa-plus"></i> &nbsp; Add</div>
-                <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>
-            </button>
+    
+    <form class="payroll-product-form" name="productForm" novalidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-12" style="margin-top: 15px">
+                    Calculation Settings
+                </div>
+            </div>
+            <hr>
+    
+            <div class="row">
+                <div class="col-xs-12 nonepadding">
+                    <div class="col-sm-4 form-group">Agency</div>
+                    <div class="col-sm-8 form-group">
+                        <ui-select ng-model="product.agency" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item._id as item in agencies">{{item.name}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4 form-group">Holiday Pay Rule</div>
+                    <div class="col-sm-8 form-group">
+                        <ui-select ng-model="product.holidayPayRule" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in holidayPayRules">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4 form-group">Margin</div>
+                    <div class="col-sm-8 form-group">
+                        <ui-select ng-model="product.margin" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in margins">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-4 form-group">Derogation Contract</div>
+                    <div class="col-sm-8 form-group">
+                        <ui-select ng-model="product.derogationContract" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in derogationContracts">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-xs-12 nonepadding">
+                    <div class="col-sm-4 form-group">Margin Fixed</div>
+                    <div class="col-sm-8 form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">&#163;</div>
+                            <input class="form-control" type="text" ng-model="product.marginFixed" ng-disabled="!product.margin" ng-required="candidate.status == 'Live'">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">Derogation Spread</div>
+                    <div class="col-sm-8 form-group">
+                        <input class="form-control" ng-required= "product.derogationContract == 2" type="number" min="0" placeholder="" ng-model="product.derogationSpread">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-xs-12" style="margin-top: 15px">
+                    Contract Type
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 nonepadding">
+                    <div class="col-xs-4 form-group">Service Used</div>
+                    <div class="col-xs-8 form-group">
+                        <ui-select ng-model="product.serviceUsed" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in serviceUsed">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-4 form-group">Payment Terms</div>
+                    <div class="col-xs-8 form-group">
+                        <ui-select ng-model="product.paymentTerms" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in paymentTerms">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-4 form-group">Payment Method</div>
+                    <div class="col-xs-8 form-group">
+                        <ui-select ng-model="product.paymentMethod" name="title" theme="select2" search-enabled="false" ng-required="candidate.status == 'Live'">
+                            <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="item.code as item in paymentMethods">{{item.description}}</ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-xs-4 form-group">Agency Ref</div>
+                    <div class="col-xs-8 form-group">
+                        <input class="form-control" type="text" placeholder="" ng-model="product.agencyRef">
+                    </div>
+                    <div class="col-xs-4 form-group">Job Description</div>
+                    <div class="col-xs-8 form-group">
+                        <input name="jobDesc" class="form-control" type="text" placeholder="" ng-model="product.jobDescription" ng-required="candidate.status == 'Live'">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-12">
+                <button class="btn btn-default" ng-click="cancelEdit()">Cancel</button>
+                <button class="btn btn-primary" ng-click="saveProduct()" ng-disabled="productForm.$invalid || isSaving">
+                    <div ng-show="!isSaving && product._id"><i class="fa fa-save"></i> &nbsp; Save</div>
+                    <div ng-show="!isSaving && !product._id"><i class="fa fa-plus"></i> &nbsp; Add</div>
+                    <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>
+                </button>
+            </div>
         </div>
     </div>
 </div>

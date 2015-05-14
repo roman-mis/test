@@ -1,14 +1,13 @@
 <div class="input-group orig-datepicker" ng-init="popup = false">
     <input type="text" 
            class="form-control" 
-           placeholder="{{placeholder}}" 		
+           placeholder={{placeholder}} 		
            ng-model="ngModel"
+           ng-change="dateChanged(ngModel)"
            datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}"
            is-open="popup" 
-		   date-disabled="dateDisabled(date, mode)"	
-           ng-click="$event.preventDefault();
-               $event.stopPropagation();
-               popup = true;"
+		       date-disabled="dateDisabled(date, mode)"	
+           
            />
     <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="$event.preventDefault();

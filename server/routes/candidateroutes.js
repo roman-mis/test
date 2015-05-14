@@ -71,6 +71,7 @@ router.get('/:candidateId/payrolltax', candidatepayrollcontroller.getPayrollTax)
 router.patch('/:candidateId/payrolltax', candidatepayrollcontroller.postPayrollTax );
 
 router.get('/:candidateId/payrollproduct', candidatepayrollcontroller.getPayrollProducts);
+router.get('/payrollproduct/:candidateIds', candidatepayrollcontroller.getCandidatesPayrollProducts);
 router.post('/:candidateId/payrollproduct', candidatepayrollcontroller.postPayrollProduct);
 router.get('/:candidateId/payrollproduct/:productId', candidatepayrollcontroller.getPayrollProduct);
 router.patch('/:candidateId/payrollproduct/:productId', candidatepayrollcontroller.patchPayrollProduct);
@@ -100,6 +101,7 @@ router.post('/:id/document',candidatecontroller.uploadDocuments);
 
 router.get('/:id/expenses', restMiddleware(db), expensecontroller.getExpenses);
 router.post('/:id/expenses', expensecontroller.postExpense);
+router.post('/many/manyexpenses', expensecontroller.postManyExpenses);
 
 
 router.patch('/:id/vehicleinformation/:code', candidatecontroller.patchVehicleInformation);

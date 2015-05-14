@@ -14,11 +14,11 @@
         </div>
         <div class="form-group col-sm-3 col-xs-4">
           <select class="form-control" ng-model="addData.type" ng-options="type.description for type in transportTypes track by type.code">
-            <option value="" disabled style="display:none">-Transport Type-</option>
+            <option value="">-Transport Type-</option>
           </select>
         </div>
         <div class="form-group col-sm-3 col-xs-3 postcodeInput" style="display: inline-flex;">
-          <input type="text" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)"/>
+          <input type="number" min="0" class="form-control" placeholder="Mileage" ng-model="addData.mileage" ng-show="!addData.type || isPpmDefined(addData.type)"/>
           <div class="input-group" ng-show="addData.type && !isPpmDefined(addData.type)">
             <div class="input-group-addon">&#163;</div>
             <input class="form-control" type="number" ng-model="addData.mileage">

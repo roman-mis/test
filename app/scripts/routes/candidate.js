@@ -35,7 +35,7 @@ angular.module('origApp').config(function($stateProvider) {
     .state('app.candidate.payslips', {
       url: '/payslips',
       templateUrl: 'views/candidate/payslip.html',
-      controller: ''
+      controller: 'CandidatePayslipsController'
     })
     .state('app.candidate.agencies', {
       url: '/agencies',
@@ -45,11 +45,11 @@ angular.module('origApp').config(function($stateProvider) {
     .state('app.candidate.compliance', {
       url: '/compliance',
       templateUrl: 'views/candidate/compliance.html',
-      controller: ''
+      controller: 'CandidateCompilanceController'
     })
     .state('app.candidate.history', {
       url: '/history',
       templateUrl: 'views/candidate/history.html',
-      controller: ''
+      controller: 'CandidateHistoryController'
     });
 }); 

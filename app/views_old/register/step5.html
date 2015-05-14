@@ -1,0 +1,66 @@
+<div class="row form-header">
+    <div class="wizard-status-bar">
+        <div class="step step1">1</div>
+        <div class="step step2">2</div>
+        <div class="step step3">3</div>
+        <div class="step step4">4</div>
+        <div class="step step5 selected">5</div>
+    </div>
+</div>
+<div class="row form-body">
+    <div class="col-xs-6 left-side">
+        <div class="from-title">
+            Tax Information
+        </div>
+        I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.
+        <br/>
+        <br/> But also this area could be used for notifications, validations and potentially the non UK national extra bit!
+    </div>
+    <div class="col-xs-6 right-side">
+        <form role="form" name="registerform" class="register-form form-step5" orig-validate-form>
+            <div class="form-group nonepadding">
+                Do you have a current P45?
+            </div>
+            <div class="form-group p45-buttons">
+                <div class="col-xs-6 nonepadding">
+                    <a class="btn btn-yes form-control" ng-click="candidate.details.currentP45 = true">Yes<span ng-show="candidate.details.currentP45 == true">&nbsp;&nbsp;&nbsp; <i class="fa fa-check"></i></span></a>
+                </div>
+                <div class="col-xs-6 nonepadding">
+                    <a class="btn btn-no form-control" ng-click="candidate.details.currentP45 = false">No<span ng-show="candidate.details.currentP45 === false">&nbsp;&nbsp;&nbsp;<i class="fa fa-times"></i></span></a>
+                </div>
+            </div>
+            <div class="form-group nonepadding">
+                &nbsp;
+                <br/> If yes, Please upload here:
+            </div>
+            <div class="form-group fileupoad-area">
+                <div class="col-xs-12" ng-model="candidate.details.p45Document" name="p45document" orig-s3-fileupload placeholder="Upload P45"></div>
+            </div>
+            
+
+            <div class="form-group form-chech-header nonepadding">
+                &nbsp;
+                <br/> Document Completed:
+                <br/>
+            </div>
+            <div class="form-group form-checkbox">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="p45" ng-model="candidate.details.p45Uploaded" />
+                    <label for="p45">&nbsp;</label>
+                </div>
+                <div class="checkbox-label-wrapper nonepadding">
+                    P45 Uploaded
+                </div>
+            </div>
+            <div class="form-group form-checkbox">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" ng-model="candidate.details.p46Uploaded" id="p46" />
+                    <label for="p46">&nbsp;</label>
+                </div>
+                <div class="checkbox-label-wrapper nonepadding">
+                    P46 Information Completed
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

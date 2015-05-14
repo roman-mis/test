@@ -1,25 +1,24 @@
-<div class="candidate-modal">
+<div class="modal-window">
     <div class="modal-header">
-        <h3 class="modal-title">Edit Default Payroll</h3>
+        <h3 class="modal-title">Edit default payroll</h3>
     </div>
+    
     <div class="modal-body">
         <form class="form-horizontal" name="form" role="form" novalidate>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <label>Product Type</label>
+                            <label>Product type</label>
                             <label ng-if="status == 'Live'? true:false">*</label>
                         </div>
                         <div class="col-sm-6">
-                            <select class="form-control" ng-model="data.productType"
-                                    ng-options="item.code as item.description for item in serviceUsed"
-                                    ng-required="status == 'Live'? true:false"></select>
+                            <select class="form-control" ng-model="data.productType" ng-options="item.code as item.description for item in serviceUsed" ng-required="status == 'Live'? true:false"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-9 col-sm-6">
-                            <label>Margin Charged to agency</label>
+                            <label>Margin charged to agency</label>
                             <label ng-if="status == 'Live'? true:false">*</label>
                         </div>
                         <div class="col-xs-3 col-sm-6">
@@ -32,52 +31,49 @@
                             <select class="form-control" ng-options="item.code as item.value for item in options" ng-model="data.marginChargedToAgency" ng-required="status == 'Live'? true:false"></select>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <div class="col-sm-6">
-                            <label>Margin Type</label>
+                            <label>Margin type</label>
                             <label ng-if="status == 'Live'? true:false">*</label>
                         </div>
                         <div class="col-sm-6">
-                            <select class="form-control" ng-model="data.marginType"
-                                    ng-options="item.code as item.description for item in marginTypes"
-                                    ng-required="status == 'Live'? true:false"></select>
+                            <select class="form-control" ng-model="data.marginType" ng-options="item.code as item.description for item in marginTypes" ng-required="status == 'Live'? true:false"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <label>Margin Amount</label>
+                            <label>Margin amount</label>
                             <label ng-if="status == 'Live'? true:false">*</label>
                         </div>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <div class="input-group-addon">&#163;</div>
-                                <input class="form-control" type="number" ng-model="data.marginAmount"
-                                       ng-required="status == 'Live'? true:false"/>
+                                <input class="form-control" type="number" ng-model="data.marginAmount" ng-required="status == 'Live'? true:false" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-6">
-                            <label>Holiday Amount</label>
+                            <label>Holiday amount</label>
                             <label ng-if="status == 'Live'? true:false">*</label>
                         </div>
                         <div class="col-sm-6">
                             <div class="input-group">
                                 <div class="input-group-addon">&percnt;</div>
-                                <input class="form-control" type="number" ng-model="data.holidayAmount"
-                                       ng-required="status == 'Live'? true:false" />
+                                <input class="form-control" type="number" ng-model="data.holidayAmount" ng-required="status == 'Live'? true:false" />
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+    
     <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
         <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || form.$invalid">
             <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
             <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
         </button>
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
     </div>
 </div>

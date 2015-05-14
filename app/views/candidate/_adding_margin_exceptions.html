@@ -1,83 +1,85 @@
-<div class="modal-header">
-    <h3 class="modal-title">{{editing ? 'Editing' : 'Adding'}} Margin Exceptions</h3>
-</div>
-<div class="modal-body">
-    <form name="exceptionForm" class="form-horizontal" style="padding: 15px;" role="form">
-        <div class="form-group">
-            <label class="col-sm-6">Type of Margin Exception</label>
-            <div class="col-sm-6">
-                <ui-select ng-model="data.marginType" theme="select2" search-enabled="false">
-                    <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                    <ui-select-choices repeat="item.code as item in marginExceptionTypes">{{item.description}}</ui-select-choices>
-                </ui-select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-6">Reason</label>
-            <div class="col-sm-6">
-                <ui-select ng-model="data.reason" theme="select2" search-enabled="false">
-                    <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                    <ui-select-choices repeat="item.code as item in exceptionReasons">{{item.description}}</ui-select-choices>
-                </ui-select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-6">Deduction Type</label>
-            <div class="col-sm-6">
-                <ui-select ng-model="data.deductionType" theme="select2" search-enabled="false">
-                    <ui-select-match>{{$select.selected.description}}</ui-select-match>
-                    <ui-select-choices repeat="item.code as item in deductionTypes">{{item.description}}</ui-select-choices>
-                </ui-select>
-            </div>
-        </div>
-        <div class="form-group" ng-show="data.deductionType==='1'">
-            <label class="col-sm-6">Date</label>
-            <div class="col-sm-6">
-                <div class="input-group orig-datepicker" ng-init="popup = false">
-                    <input type="text" class="form-control" placeholder="" ng-model="data.deductionDate" datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}" is-open="popup" date-disabled="disabled(date, mode)" ng-click="$event.preventDefault();
-                   $event.stopPropagation();
-                   popup = true;" />
-                    <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="$event.preventDefault();
-              $event.stopPropagation();
-              popup = true">
-              <i class="fa fa-calendar"></i>
-            </button>
-          </span>
+<div class="modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title">{{editing ? 'Editing' : 'Adding'}} Margin Exceptions</h3>
+    </div>
+    <div class="modal-body">
+        <form name="exceptionForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-6">Type of Margin Exception</label>
+                <div class="col-sm-6">
+                    <ui-select ng-model="data.marginType" theme="select2" search-enabled="false" required>
+                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                        <ui-select-choices repeat="item.code as item in marginExceptionTypes">{{item.description}}</ui-select-choices>
+                    </ui-select>
                 </div>
             </div>
-        </div>
-        <div class="form-group" ng-show="data.deductionType==='2'">
-            <label class="col-sm-6">Period</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="data.deductionPeriod" />
-            </div>
-        </div>
-        <div class="form-group" ng-show="data.deductionType==='3'">
-            <label class="col-sm-6">Number of Payroll</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="data.deductionNumberOfPayroll" />
-            </div>
-        </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <div class="row">
-        <div class="col-sm-7">
-            <p class="text-left" style="margin:0; font-size:16px;" ng-show="editing">
-                Created By <span>{{data.createdBy.firstName}} {{data.createdBy.lastName}}</span>
-                <br/> Date Created <span>{{data.createdDate | formatDate: 'DD/MM/YYYY HH:mm'}}</span>
-            </p>
-        </div>
-        <div class="col-sm-5">
-            <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-            <button class="btn btn-primary" ng-click="saveException()" ng-disabled="exceptionForm.$invalid || isSaving">
-                <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Approve</div>
-                <div ng-show="isSaving">Saving... <i class="fa fa-spinner fa-spin"></i>
+
+            <div class="form-group">
+                <label class="col-sm-6">Reason</label>
+                <div class="col-sm-6">
+                    <ui-select ng-model="data.reason" theme="select2" search-enabled="false" required>
+                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                        <ui-select-choices repeat="item.code as item in exceptionReasons">{{item.description}}</ui-select-choices>
+                    </ui-select>
                 </div>
-            </button>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6">Deduction Type</label>
+                <div class="col-sm-6">
+                    <ui-select ng-model="data.deductionType" theme="select2" search-enabled="false" required>
+                        <ui-select-match>{{$select.selected.description}}</ui-select-match>
+                        <ui-select-choices repeat="item.code as item in deductionTypes">{{item.description}}</ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="form-group" ng-if="data.deductionType==='1'">
+                <label class="col-sm-6">Date</label>
+                <div class="col-sm-6">
+                    <div class="input-group orig-datepicker" ng-init="popup = false">
+                        <input required type="text" class="form-control" placeholder="" ng-model="data.deductionDate" datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}" is-open="popup" date-disabled="disabled(date, mode)" ng-click="$event.preventDefault();
+                       $event.stopPropagation();
+                       popup = true;"/>
+                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="$event.preventDefault();
+                  $event.stopPropagation();
+                  popup = true">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-if="data.deductionType==='2'">
+                <label class="col-sm-6">Period</label>
+                <div class="col-sm-6">
+                    <input required type="text" class="form-control" ng-model="data.deductionPeriod"/>
+                </div>
+            </div>
+            <div class="form-group" ng-if="data.deductionType==='3'">
+                <label class="col-sm-6">Number of Payroll</label>
+                <div class="col-sm-6">
+                    <input required type="text" class="form-control" ng-model="data.deductionNumberOfPayroll" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-7">
+                <p class="text-left" style="margin:0; font-size:16px;" ng-show="editing">
+                    Created By <span>{{data.createdBy.firstName}} {{data.createdBy.lastName}}</span>
+                    <br/> Date Created <span>{{data.createdDate | formatDate: 'DD/MM/YYYY HH:mm'}}</span>
+                </p>
+            </div>
+            <div class="col-sm-5">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-primary" ng-click="saveException()" ng-disabled="exceptionForm.$invalid || isSaving">
+                    <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Approve</div>
+                    <div ng-show="isSaving">Saving... <i class="fa fa-spinner fa-spin"></i>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 </div>

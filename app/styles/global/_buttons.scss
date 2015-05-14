@@ -1,0 +1,93 @@
+button,
+button:active,
+button:focus,
+input.btn,
+input.btn:focus,
+input.btn:active {
+    outline: none !important;
+}
+
+.btn {
+    @include basic-transition();
+    &:hover {
+        @include box-shadow-hover();
+    }
+}
+
+.btn-success {
+    background: $green-light;
+    border-color: $green-light;
+    &:hover {
+        background: $green;
+        border-color: $green;
+    }
+}
+
+.btn-warning {
+    background: $state-warning-bg;
+    border-color: $state-warning-bg;
+    &:hover {
+        background: $gray;
+        border-color: $gray;
+    }
+}
+
+.btn-primary {
+	background: #059347 !important;
+	border-color: #059347 !important;			
+}
+
+.orig-button {
+    $orig-button-border: 4px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: $control-width;
+    height: $input-height-base + $orig-button-border;
+    color: $gray-lightest;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: color 0, background-color $trans-duration, box-shadow $trans-duration;
+    i, span {
+        @include basic-transition();
+    }
+    &:hover {
+        @include box-shadow-hover();
+    }
+    &:hover,
+    &:focus {
+        .fa, .title {
+            color: $white;
+        }
+    }
+    > .fa {
+        display: inline-block;
+        width: 40px;
+        height: 100%;
+        line-height: $input-height-base + $orig-button-border;
+        flex-shrink: 0;
+        text-align: center;
+        background-color: $green-light;
+    }
+    .title {
+        display: inline-block;
+        width: calc(100% - 40px);
+        height: 100%;
+        line-height: $input-height-base + $orig-button-border;
+        text-transform: uppercase;
+        padding-left: $padding-base-horizontal;
+        text-align: left;
+        background-color: $gray;
+        border-bottom: $orig-button-border solid $gray-light;
+        .fa {
+            margin-right: $padding-base-horizontal / 2;
+        }
+    }
+}
+
+.btn.input-btn {
+    width: 40px;
+    padding: 0 5px;
+    text-align: center;
+    border-radius: 0 4px 4px 0;
+}

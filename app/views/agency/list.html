@@ -1,25 +1,29 @@
-<div class="candidate-layout">
-    <div class="candidate-center">
-        <div class="candidate-main padding-10 meta-box container-fluid">
-            <div class="col-xs-12 row top-search-row">
-                <div class="candidate-search">
-                    <input class="form-control" type="text" ng-keyup="onDelaySearch()" placeholder="Search" ng-model="searchName"/>
+<div class="table-view-layout">
+    <div class="table-view-main-content">
+        <div class="table-view padding-10 meta-box container-fluid">
+            <div class="tv-search-row">
+                <div class="tv-search-container">
+                    
+                        <input class="form-control" type="text" ng-keyup="onDelaySearch()" placeholder="Search" ng-model="searchName"/>
+                    
                 </div>
-                <div class="candidate-search-btn">
-                    <button class="btn btn-success form-control" ng-click="onDelaySearch()">Go</button>
+                <div class="col-sm-3 col-lg-2 nonepadding text-right">
+                    <button ng-click="addNewAgency()" class="btn btn-success">
+                        <i class="fa fa-plus"></i> Add Agency
+                    </button>
                 </div>
-                <button ng-click="addNewAgency()" style="position: absolute;right:0px" class="col-xs-2 btn btn-success pull-left" ><div>Add Agency <i class="fa fa-plus"></i> </div></button>
+
             </div>
             <div class="row">
                 <div class="col-sm-12" id="agency_list">
                     <div orig-grid="gridOptions" external-scope="$scope"></div>
                 </div>
             </div>
-            <!-- <div class="col-sm-12">
+<!--            <div class="col-sm-12">
                 <div class="form-group">
                     <button type="button" class="btn btn-success form-control" ng-disabled="isLoading" ng-show="ableLoadMore" ng-click="loadAgencies(false)">Load More...</button>
                 </div>
-            </div> -->
+            </div>-->
         </div>
     </div>
 

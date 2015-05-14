@@ -1,54 +1,53 @@
-<div class="candidate-modal">
-	<div class="modal-header">
-		<h3 class="modal-title">{{editingConsultant?'Edit a consultant':'Adding a consultant to a branch'}}</h3>
-	</div>
-	<div class="modal-body">
-		<form name="form" class="form-horizontal" role="form">
-			<div class="form-group">
-				<label class="col-sm-4">First Name</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" ng-model="data.firstName" required>
-				</div>
-			</div>
-      <div class="form-group">
-				<label class="col-sm-4">Last Name</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" ng-model="data.lastName" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-4">Email</label>
-				<div class="col-sm-8">
-					<input type="email" class="form-control" ng-model="data.emailAddress" required>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-4">Phone</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" ng-model="data.phone">
-				</div>
-			</div>
-      <div class="form-group">
-				<label class="col-sm-4">Role</label>
-				<div class="col-sm-8">
-					<select class="form-control" ng-model="data.role"
-                  ng-options="item.description for item in roles track by item.code"></select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-4">Status</label>
-				<div class="col-sm-8">
-          <select class="form-control" ng-model="data.status" 
-                  ng-options="item.description for item in statuses track by item.code"></select>
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || form.$invalid">
-      <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-      <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-    </button>
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-	</div>
+<div class="modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title-alt">{{editingConsultant?'Edit a Consultant':'Adding a Consultant to a Branch'}}</h3>
+    </div>
+    <div class="modal-body">
+        <form name="form" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-4">First Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="data.firstName" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">Last Name</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="data.lastName" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" ng-model="data.emailAddress" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">Phone</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="data.phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">Role</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="data.role" ng-options="item.description for item in roles track by item.code"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4">Status</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="data.status" ng-options="item.description for item in statuses track by item.code"></select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || form.$invalid">
+            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+        </button>
+
+    </div>
 </div>

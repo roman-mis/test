@@ -33,18 +33,18 @@ module.exports = function(mongoose,autoIncrement) {
             haveLoan: Boolean,
             payDirectly: Boolean
         },
+        p45: {
+            dateRequested: Date,
+            leavingDate: Date
+        },
         imageUrl: String,
-        days: [
+        periods: [
             {
                 weekNumber: Number,
                 monthNumber: Number,
-                amountPaid: Number,
                 amount: Number,
-                worker: Boolean,
-                paid: Boolean,
-                excluded: Boolean,
-                sick: Boolean,
-                notes: String
+                year:Number,
+                beenPaid: Boolean
             }
         ]
 

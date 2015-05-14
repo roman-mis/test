@@ -1032,6 +1032,14 @@
         {
             "code": 3,
             "value": "P45 Out"
+        },
+        {
+            "code": 4,
+            "value": "Deceased"
+        },
+        {
+            "code": 5,
+            "value": "Closed"
         }
     ],
 
@@ -1126,12 +1134,18 @@
                     "breadCrump": {
                         "hide": true
                     },
+                    "candidateStatus": {
+                        "editable": false
+                    },
                     "taps": {
                         "Home": {
                             "hide": false
                         },
                         "Contact": {
-                            "hide": false
+                            "hide": false,
+                            "bankDetail":{
+                                "notEdit":true
+                            }
                         },
                         "Payroll": {
                             "hide": true
@@ -1140,7 +1154,13 @@
                             "hide": false
                         },
                         "Agencies": {
-                            "hide": false
+                            "hide": false,
+                            "addExpesesHistory":{
+                                "hide":true
+                            },
+                            "exceptionHistoryControls":{
+                                "hide":true
+                            }
                         },
                         "Compliance": {
                             "hide": true

@@ -1,0 +1,82 @@
+.table > thead > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > th,
+.table > tbody > tr > td,
+.table > tfoot > tr > th,
+.table > tfoot > tr > td {
+	padding: 4px 12px;
+	font-size: 13px;
+	vertical-align: top;
+	font-family: $main-font;
+}
+
+.table > thead > tr > th {
+	border: 0;
+}
+
+.orig-table {
+	border-collapse: separate;
+	border-spacing: 3px;
+	thead th {
+		border: none;
+		background-color: $green-light;
+		color: $white;
+		text-transform: uppercase;
+		font-weight: normal;
+		a {
+			color: $gray-lightest;
+		}
+	}
+	tbody > tr {
+		cursor: pointer;
+		td {
+			border: none;
+			color: $gray;
+			a {
+				text-decoration: underline;
+				color: $green-light;
+				&:hover {
+					color: $green;
+				}
+			}
+		}
+		&:nth-child(even) {
+			background-color: $gray-lightest;
+		}
+		&:hover {
+			background-color: #dfdfdf;
+		}
+	}
+}
+
+.orig-grid-pagination-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin-bottom: $grid-gutter-width-md;
+	font-size: 14px;
+	padding: 0 3px;
+	.pagination {
+		margin: 0;
+		flex-shrink: 0;
+	}
+	.page-rows-count {
+		flex-shrink: 0;
+	}
+	.btn:hover {
+		box-shadow: none;
+	}
+}
+
+.table-responsive {
+	@media screen and (max-width: $screen-sm-max) {
+		width: 100%;
+		margin-bottom: ($line-height-computed * .75);
+		overflow-y: hidden;
+		overflow-x: auto;
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+		border: 0;
+		-webkit-overflow-scrolling: touch;
+	}
+}

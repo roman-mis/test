@@ -1,6 +1,6 @@
 'use strict';
 angular.module('origApp.controllers')
-        .controller('CandidateSidebarAddExpController', function ($scope, $modalInstance, parentScope, HttpResource, $stateParams, ConstantsResource, MsgService) {
+        .controller('CandidateSidebarAddExpController', function ($scope, Notification, $modalInstance, parentScope, HttpResource, $stateParams, ConstantsResource, MsgService) {
 
             $scope.mainData = { step: 1, candidateId: $stateParams.candidateId, carvanTransportType: '1' };
 
@@ -23,7 +23,19 @@ angular.module('origApp.controllers')
             };
 
             $scope.gotoManual = function () {
-                $scope.mainData.step = 'manual';
+                var payrollProducts = HttpResource.model('candidates/' + $scope.mainData.candidateId + '/payrollproduct').query({}, function(){
+                    $scope.agencies = [];
+                    angular.forEach(payrollProducts, function(pp) {
+                      if($scope.agencies.indexOf(pp.agency)===-1) {
+                        $scope.agencies.push(pp.agency); 
+                      }
+                    });
+                    if($scope.agencies.length == 0){
+                        Notification.warning('No agencies attached to this user');
+                        return;
+                    }
+                    $scope.mainData.step = 'manual';
+                  });
             };
 
             //check if all dates are selected

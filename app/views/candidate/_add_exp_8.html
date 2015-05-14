@@ -59,8 +59,7 @@
             <tbody>
               <tr ng-repeat="item in expenseData.others| orderBy:(sortDir === true || sortDir===false?'date':'index'):sortDir">
                 <td>{{item.date|formatDate:'ddd DD/MM/YYYY'}}</td>
-                <td>{{item.type.description}}</td>
-                <td style="min-width: 100px;">{{item.description}}</td>
+                <td style="min-width: 100px;">{{item.type.name}}</td>
                 <td>&#163;{{item.cost| formatNumber}} <a href="" class="pull-right" ng-click="remove($index)"><i class="fa fa-times"></i></a></td>
               </tr>
             </tbody>

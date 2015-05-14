@@ -1,35 +1,30 @@
-
-   <div class='col-sm-12 col-md-6'>
-      <p class="entry-title">Contact Details<a class="icon-edit pull-right" href ng-click="editDetails()"><i class="fa fa-edit"></i></a>
-      </p>
-      <ul class="entry-content">
-         <li class="clearfix">Title<span class="meta">{{candidate.title}}</span>
-         </li>
-         <li class="clearfix">First Name<span class="meta">{{candidate.firstName}}</span>
-         </li>
-         <li class="clearfix">Middle Name<span class="meta">{{candidate.middleName}}</span>
-         </li>
-         <li class="clearfix">Last Name<span class="meta">{{candidate.lastName}}</span>
-         </li>
-         <li class="clearfix">Gender<span class="meta">{{candidate.gender}}</span>
-         </li>
-         <li class="clearfix">Date of Birth<span class="meta">{{candidate.birthDate | formatDateOnly}}</span>
-         </li>
-         <li class="clearfix">Nationality<span class="meta">{{candidate.nationality}}</span>
-         </li>
-      </ul>
-   </div>
-   <div class="col-sm-12 col-md-6">
-      <p class="entry-title">Logs</p>
-      <ul class="entry-content">
-         <li ng-repeat="i in lastLogs">
+<div class='col-sm-12 col-md-6'>
+    <p class="entry-title">Contact Details<a class="icon-edit pull-right" href ng-click="editDetails()"><i class="fa fa-edit"></i></a>
+    </p>
+    <ul class="entry-content">
+        <li class="clearfix">Title<span class="meta">{{candidate.title}}</span>
+        </li>
+        <li class="clearfix">First Name<span class="meta">{{candidate.firstName}}</span>
+        </li>
+        <li class="clearfix">Middle Name<span class="meta">{{candidate.middleName}}</span>
+        </li>
+        <li class="clearfix">Last Name<span class="meta">{{candidate.lastName}}</span>
+        </li>
+        <li class="clearfix">Gender<span class="meta">{{candidate.gender}}</span>
+        </li>
+        <li class="clearfix">Date of Birth<span class="meta">{{candidate.birthDate | date:"dd/MM/yyyy"}}</span>
+        </li>
+        <li class="clearfix">Nationality<span class="meta">{{candidate.nationality}}</span>
+        </li>
+    </ul>
+</div>
+<div class="col-sm-12 col-md-6">
+    <p class="entry-title">Logs</p>
+    <ul class="entry-content">
+        <li ng-repeat="i in lastLogs">
             <span ng-if="i.object.lastLogin">Last Logged In: <span class="meta">{{i.object.lastLogin | date:'MM/dd/yyyy @ h:mma'}}</span></span>
             <span ng-if="i.object.lastCallLog">Last Call Log: <span class="meta">{{i.object.lastCallLog | date:'MM/dd/yyyy @ h:mma'}}</span></span>
             <span ng-if="i.object.lastExpense">Last Expenses: <span class="meta">{{i.object.lastExpense | date:'MM/dd/yyyy @ h:mma'}}</span></span>
-         </li>
-      </ul>
-   </div>
-
-<!--<div ng-repeat='item in payrollProduct'>
-	<span ><a style="color:green;margin:20px;font-weight: bold" ui-sref="app.agency.home({agencyId:item.agency._id})">{{item.agency.name}}</a></span>
-</div> -->
+        </li>
+    </ul>
+</div>

@@ -25,14 +25,17 @@ service.updateUser = function(id,updates){
 		return service.getUser(id).then(function(user){
 			if(user){
 				for(var key in updates){
-					user[key] = updates[key];
+					user[key] = updates[key] || user[key];
 				}
 				console.log('********************************************')
 				console.log('********************************************')
 				console.log(user);
 				return Q.nfcall(user.save.bind(user)).then(function(){
 					resolve({result:true,object:user});
-					},reject);
+					},function (err) {
+						// body...
+						reject(err);
+					});
 			}else{
 				reject({result:false,message:'User does not exist'});
 			}
@@ -140,7 +143,17 @@ service.isCodeValid=function(emailAddress,verificationCode){
 service.getAllUsers=function(request){
 	return Q.Promise(function(resolve,reject){
 		var q=db.User.find();
-		// q.where('userType').ne('WK');
+	    // q.where('userType').ne('WK');
+		var searchTextFilter = request.filters['searchText'];
+		if (searchTextFilter) {
+		    console.log(searchTextFilter);
+		    // var =request.filters[idx];
+		    var searchTerm = new RegExp(searchTextFilter.term, 'i');
+		    q.or([{ 'firstName': searchTerm }, { 'lastName': searchTerm }, { emailAddress: searchTerm }]);
+
+		    delete request.filters['searchText'];
+		}
+        q.where();
 		queryutils.applySearch(q,db.User,request)
 		.then(resolve,reject);
 	});

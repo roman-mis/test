@@ -4,20 +4,37 @@ module.exports = function(){
 	var adminStatutoryRatesService = require('../../services/admin/adminStatutoryRatesservice');
 
 	controller.getAllAdminStatutoryRates = function(req, res){
-		adminStatutoryRatesService.getAllAdminStatutoryRates(req._restOptions)
+		adminStatutoryRatesService.getAllAdminStatutoryRates()
 		.then(function(result){
-			var pagination = req._restOptions.pagination||{};
-			var resp = {result:true,objects:result.rows, meta:{limit:pagination.limit,offset:pagination.offset,totalCount:result.count}};
-			res.json({result: true, statutoryRates: resp.objects[0].statutoryTables, id: resp.objects[0]._id});
+			console.log(result.statutoryTables);
+			res.json({result: true, statutoryRates: result.statutoryTables});
 		},function(err){
 			res.sendFailureResponse(err);
 		});
 	};
 
+	controller.addToAdminStatutoryRates = function(req, res){
+		console.log('req.body', req.body);
+		console.log('req.params', req.params);
+		var type = req.params.type;
+		adminStatutoryRatesService.addToAdminStatutoryRates(type, req.body).then(
+			function(data){
+				res.json({result:true, object:data});
+			},
+			function(err){
+				console.log(err + 'err');
+				res.sendFailureResponse(err);
+			});
+	};
+
+
 	controller.saveAdminStatutoryRates = function(req, res){
-		adminStatutoryRatesService.saveAdminStatutoryRates(req.body).then(
-			function(){
-				res.json({result:true, object:'vm'});
+		console.log('req.body', req.body);
+		console.log('req.params', req.params);
+		var type = req.params.type;
+		adminStatutoryRatesService.saveAdminStatutoryRates(type, req.body).then(
+			function(data){
+				res.json({result:true, object:data});
 			},
 			function(err){
 				console.log(err + 'err');
@@ -32,8 +49,18 @@ module.exports = function(){
 			},res.sendFailureResponse);
 	};
 
-	controller.deleteAdminStatutoryRates = function(req, res){
-		res.json({'x': 'y'});
+	controller.deleteFromAdminStatutoryRates = function(req, res){
+		console.log('req.params', req.params);
+		var type = req.params.type;
+		var id = req.params.id;
+		adminStatutoryRatesService.deleteFromAdminStatutoryRates(type, id).then(
+			function(data){
+				res.json({result:true, object:data});
+			},
+			function(err){
+				console.log(err + 'err');
+				res.sendFailureResponse(err);
+			});
 	};
 
 	return controller;

@@ -1,4 +1,4 @@
-<div class="candidate-modal">
+<div class="modal-window">
     <div class="modal-header">
         <h3 class="modal-title">{{ title }}</h3>
     </div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
             <button class="btn btn-primary"  ng-click="save(addPaymentForm.$valid)" ng-disabled="isSaving || addPaymentForm.$invalid">
                 <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
                 <span ng-show="isSaving" ng-disabled="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>

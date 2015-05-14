@@ -1,146 +1,145 @@
-<div class="candidate-modal">
-  <div class="modal-header">
-    <h3 class="modal-title">Upload Documents</h3>
-  </div>
-
-  <div class="modal-body">
-
-    <form name="uploadDocumentForm" class="form-horizontal" role="form" novalidate enctype="multipart/form-data">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label class="col-sm-3">Candidate Name</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" readonly value="{{candidate.firstName}} {{candidate.lastName}}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-3">Add Agency</label>
-            <div class="col-sm-9">
-              <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required name="agency">
-                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-        </div>
-      </div>	
-
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="col-sm-3">
-            <div class="form-group">		
-              <label>Document</label>
-            </div>
-          </div>		
-          <div class="col-sm-4">
-            <div class="form-group">
-              <ui-select ng-model="data.documentType" theme="select2" required name="documentType">
-                <ui-select-match placeholder="Select Document Type">{{$select.selected.description}}</ui-select-match>
-                <ui-select-choices repeat="item.code as item in documentTypes">{{item.description}}</ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Display document Path" readonly ng-model="data.documentPath" required name="documentPath">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="col-sm-3">
-            <div class="form-group">		
-              <label>Document Name</label>
-            </div>
-          </div>		
-          <div class="col-sm-4">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Document Name" ng-model="data.documentName" required name="documentName">
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="form-group">
-              <button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
-              <input type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;"/>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12">		
-          <div class="form-group">
-            <label class="col-sm-7">Below is a list of the documents you wish to upload</label>
-            <div class="col-sm-5">
-              <button class="btn btn-primary btn-block" ng-disabled="uploadDocumentForm.$invalid || isUploading" ng-click="uploadFile()">
-                <div ng-show="!isUploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
-                <div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
-              </button>
-            </div>
-          </div>
-        </div>	
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12">
-          <fieldset>
-            <legend>Documents to Upload</legend>
-            <table class="table">
-              <thead>
-                <tr> 
-                  <th>Document Name</th>
-                  <th>Document Type</th>
-                  <th>Agency Name</th>
-                  <th>Date uploaded</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="file in files">
-                  <td>{{file.documentName}}</td>
-                  <td>{{getConstantDescription('documenttypes', file.documentType)}}</td>
-                  <td>{{getConstantDescription('agencies', file.agency)}}</td>
-                  <td>{{file.createdDate| formatDate}}</td>
-                  <td>
-                    <div>
-                      <a href="" ng-click="viewFile(file.generatedName, $event)"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
-                      <a href="" ng-click="deleteFile(file.generatedName)"><i class="fa fa-times-circle-o"></i></a>
-                    </div>
-                  </td>	
-                </tr>
-              </tbody>
-            </table>	
-          </fieldset>
-        </div>
-      </div>	
-    </form>
-  </div>
-
-  <div class="modal-footer">
-    <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-    <button class="btn btn-primary" ng-click="save()" ng-disabled="files.length===0 || isSaving">
-      <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save & Close</div>
-      <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>
-    </button>
-  </div>
-</div>
-
-<script type="text/ng-template" id="views/candidate/_documentview.html">
-  <div class="documentview-modal">
+<div class="modal-window">
     <div class="modal-header">
-      <h3 class="modal-title">{{fileName}}</h3>
+        <h3 class="modal-title">Upload Documents</h3>
     </div>
 
     <div class="modal-body">
-      <iframe frameborder="0" style="width: 100%; box-sizing: border-box; height: 400px;" name="docviewFrame"></iframe>
+        <form name="uploadDocumentForm" class="form-horizontal" role="form" novalidate enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-3">Candidate Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" readonly value="{{candidate.firstName}} {{candidate.lastName}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3">Add Agency</label>
+                        <div class="col-sm-9">
+                            <ui-select ng-model="data.agency" theme="select2" search-enabled="true" required name="agency">
+                                <ui-select-match placeholder="Select an agency">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item._id as item in agencies | filter: $select.search">{{item.name}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Document</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <ui-select ng-model="data.documentType" theme="select2" required name="documentType">
+                                <ui-select-match placeholder="Select Document Type">{{$select.selected.description}}</ui-select-match>
+                                <ui-select-choices repeat="item.code as item in documentTypes">{{item.description}}</ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Display document Path" readonly ng-model="data.documentPath" required name="documentPath">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Document Name</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Document Name" ng-model="data.documentName" required name="documentName">
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block form-control" onclick="$('#upload_file').click();">Browse</button>
+                            <input type="file" onchange="angular.element(this).scope().onSelectFile(this)" id="upload_file" ng-model="data.file" name="document" style="display: none;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="col-sm-7">Below is a list of the documents you wish to upload</label>
+                        <div class="col-sm-5">
+                            <button class="btn btn-primary btn-block" ng-disabled="uploadDocumentForm.$invalid || isUploading" ng-click="uploadFile()">
+                                <div ng-show="!isUploading"><i class="fa fa-cloud-upload"></i> &nbsp; Upload</div>
+                                <div ng-show="isUploading"><i class="fa fa-spinner fa-spin"></i> &nbsp; Uploading...</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <fieldset>
+                        <legend>Documents to Upload</legend>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Document Name</th>
+                                    <th>Document Type</th>
+                                    <th>Agency Name</th>
+                                    <th>Date uploaded</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="file in files">
+                                    <td>{{file.documentName}}</td>
+                                    <td>{{getConstantDescription('documenttypes', file.documentType)}}</td>
+                                    <td>{{getConstantDescription('agencies', file.agency)}}</td>
+                                    <td>{{file.createdDate| formatDate}}</td>
+                                    <td>
+                                        <div>
+                                            <a href="" ng-click="viewFile(file.generatedName, $event)"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+                                            <a href="" ng-click="deleteFile(file.generatedName)"><i class="fa fa-times-circle-o"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-default" ng-click="close()"><i class="fa fa-close"></i> &nbsp; Close</button>
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="files.length===0 || isSaving">
+            <div ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save & Close</div>
+            <div ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving...</div>
+        </button>
     </div>
-  </div>
+</div>
+
+<script type="text/ng-template" id="views/candidate/_documentview.html">
+    <div class="documentview-modal">
+        <div class="modal-header">
+            <h3 class="modal-title">{{fileName}}</h3>
+        </div>
+
+        <div class="modal-body">
+            <iframe frameborder="0" style="width: 100%; box-sizing: border-box; height: 400px;" name="docviewFrame"></iframe>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="close()">Close</button>
+        </div>
+    </div>
 </script>

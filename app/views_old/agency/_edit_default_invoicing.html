@@ -1,0 +1,129 @@
+<div class="modal-window">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Default Invoicing</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="form" role="form" novalidate>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Holiday Pay included</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <!--<div class="make-switch">
+                              <label class="switch_wrap pull-right" for="field">
+                                <input id="field" type="checkbox" ng-model="data.holidayPayIncluded" />
+                                <div class="switch"><span class="bullet"></span></div>
+                              </label>
+                            </div>-->
+                            <select class="form-control" ng-options="item.code as item.value for item in options" ng-model="data.holidayPayIncluded" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Employers NI included</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <!--<div class="make-switch">
+                              <label class="switch_wrap pull-right" for="fieldNI">
+                                <input id="fieldNI" type="checkbox" ng-model="data.employersNiIncluded" />
+                                <div class="switch"><span class="bullet"></span></div>
+                              </label>
+                            </div>-->
+                            <select class="form-control" ng-options="item.code as item.value for item in options" ng-model="data.employersNiIncluded" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>VAT charged</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <!--<div class="make-switch pull-right">
+                                <label class="switch_wrap" for="fieldVAT">
+                                    <input id="fieldVAT" type="checkbox" ng-model="data.invoiceVatCharged" />
+                                    <div class="switch"><span class="bullet"></span></div>
+                                </label>
+                            </div>-->
+                            <select class="form-control" ng-options="item.code as item.value for item in options" ng-model="data.invoiceVatCharged" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Invoice Method</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="data.invoiceMethod" ng-options="item.code as item.description for item in invoiceMethods" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Invoice Design</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="data.invoiceDesign" ng-options="item._id as item.name for item in invoiceDesigns" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Invoice Email Primary</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" type="text" ng-model="data.invoiceEmailPrimary" ng-required="status == 'Live'? true:false" ng-pattern="emailPat">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label class="col-xs-6">Invoice Email Secondary</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" type="text" ng-model="data.invoiceEmailSecondary" ng-pattern="emailPat">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Payment Terms</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="data.paymentTerms" ng-options="item.code as item.description for item in paymentTerms" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label>Invoice to</label>
+                            <label ng-if="status == 'Live'? true:false">*</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="data.invoiceTo" ng-options="item._id as item.name for item in agency.branches" ng-required="status == 'Live'? true:false"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
+        <button class="btn btn-primary" ng-click="ok()" ng-disabled="isSaving || form.$invalid">
+            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+            <span ng-show="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+        </button>
+
+    </div>
+</div>

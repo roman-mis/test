@@ -1,127 +1,123 @@
-<div class="candidate-modal">
-    <div class="modal-header">
-        <h3 class="modal-title">{{ title }}</h3>
-    </div>
+<div class="modal-window">
+	<div class="modal-header">
+		<h3 class="modal-title">{{ title }}</h3>
+	</div>
 
-    <div class="modal-body">
-        <form name="expensesRateForm"  class="form-horizontal row" role="form" novalidate>
+	<div class="modal-body">
+		<form name="expensesRateForm" class="form-horizontal row" role="form" novalidate>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Name<span>*</span></label>
-                <div class="col-sm-8">
-                    <input name="name" type="text" class="form-control" ng-model="expensesRate.name" required>
-                    <div ng-show="expensesRateForm.name.$invalid && expensesRateForm.name.$dirty" style="line-height: 20px;">
-                        <div class="alert alert-danger"
-                             ng-show="expensesRateForm.name.$error.required">Name cannot be empty.</div>
-                    </div>
-                </div>
-            </div>
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Name<span>*</span>
+				</label>
+				<div class="col-sm-8">
+					<input name="name" type="text" class="form-control" ng-model="expensesRate.name" required>
+					<div ng-show="expensesRateForm.name.$invalid && expensesRateForm.name.$dirty" style="line-height: 20px;">
+						<div class="alert alert-danger" ng-show="expensesRateForm.name.$error.required">Name cannot be empty.</div>
+					</div>
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Amount</label>
-                <div class="col-sm-8">
-                    <input type="number" min="0" class="form-control"
-                           name="amount" ng-model="expensesRate.amount" valu
-                           e="{{expensesRate.amount | number:2}}">
-                </div>
-            </div>
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Value</label>
+				<div class="col-sm-8">
+					<input type="number" min="0" class="form-control" name="amount" ng-model="expensesRate.amount" valu e="{{expensesRate.amount | number:2}}">
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Types</label>
-                <div class="col-sm-8">
-                    <ui-select name="expensesRateType" ng-model="expensesRate.expensesRateType" theme="select2" search-enabled="false">
-                        <ui-select-match value="" placeholder="Select a expenses rate">{{$select
-                            .selected.code}}</ui-select-match>
-                        <ui-select-choices
-                                repeat="item.code as item in expensesRateTypes">{{
-                            item.code
-                            }}</ui-select-choices>
-                    </ui-select>
-                </div>
-            </div>
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Types</label>
+				<div class="col-sm-8">
+					<ui-select name="expensesRateType" ng-model="expensesRate.expensesRateType" theme="select2" search-enabled="false">
+						<ui-select-match value="" placeholder="Select a expenses rate">{{$select .selected.code}}
+						</ui-select-match>
+						<ui-select-choices repeat="item.code as item in expensesRateTypes">{{ item.code }}
+						</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Tax Applicable ?</label>
-                <div class="col-sm-8">
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Tax Applicable ?</label>
+				<div class="col-sm-8">
 
-                    <div class="make-switch">
-                        <label class="switch_wrap">
-                            <input type="checkbox" ng-model="expensesRate.taxApplicable"/>
-                            <div class="switch"><span class="bullet"></span></div>
-                        </label>
-                    </div>
+					<div class="make-switch">
+						<label class="switch_wrap">
+							<input type="checkbox" ng-model="expensesRate.taxApplicable" />
+							<div class="switch"><span class="bullet"></span>
+							</div>
+						</label>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Vat</label>
-                <div class="col-sm-8">
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Vat</label>
+				<div class="col-sm-8">
 
-                    <div class="make-switch">
-                        <label class="switch_wrap">
-                            <input type="checkbox" ng-model="expensesRate.vat" />
-                            <div class="switch"><span class="bullet"></span></div>
-                        </label>
-                    </div>
+					<div class="make-switch">
+						<label class="switch_wrap">
+							<input type="checkbox" ng-model="expensesRate.vat" />
+							<div class="switch"><span class="bullet"></span>
+							</div>
+						</label>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Dispensation</label>
-                <div class="col-sm-8">
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Dispensation</label>
+				<div class="col-sm-8">
 
-                    <div class="make-switch">
-                        <label class="switch_wrap">
-                            <input type="checkbox" ng-model="expensesRate.dispensation"/>
-                            <div class="switch"><span class="bullet"></span></div>
-                        </label>
-                    </div>
+					<div class="make-switch">
+						<label class="switch_wrap">
+							<input type="checkbox" ng-model="expensesRate.dispensation" />
+							<div class="switch"><span class="bullet"></span>
+							</div>
+						</label>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Receipted</label>
-                <div class="col-sm-8">
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Receipted</label>
+				<div class="col-sm-8">
 
-                    <div class="make-switch">
-                        <label class="switch_wrap">
-                            <input type="checkbox" ng-model="expensesRate.receipted"/>
-                            <div class="switch"><span class="bullet"></span></div>
-                        </label>
-                    </div>
+					<div class="make-switch">
+						<label class="switch_wrap">
+							<input type="checkbox" ng-model="expensesRate.receipted" />
+							<div class="switch"><span class="bullet"></span>
+							</div>
+						</label>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div class="form-group col-sm-12">
-                <label class="col-sm-4">Status</label>
-                <div class="col-sm-8">
+			<div class="form-group col-sm-12">
+				<label class="col-sm-4">Status</label>
+				<div class="col-sm-8">
 
-                    <div class="make-switch">
-                        <label class="switch_wrap">
-                            <input type="checkbox" ng-model="expensesRate.isEnabled"/>
-                            <div class="switch"><span class="bullet"></span></div>
-                        </label>
-                    </div>
+					<div class="make-switch">
+						<label class="switch_wrap">
+							<input type="checkbox" ng-model="expensesRate.isEnabled" />
+							<div class="switch"><span class="bullet"></span>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 
-                </div>
-            </div>
-
-        </form>
-
-    </div>
-
-    <div class="modal-footer">
-
-        <button class="btn btn-primary" ng-click="save(expensesRateForm.$valid)" ng-disabled="isSaving || expensesRateForm.$invalid">
-            <span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
-            <span ng-show="isSaving" ng-disabled="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
-        </button>
-        <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-close"></i> &nbsp; Cancel</button>
-
-    </div>
-    </form>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+		<button class="btn btn-primary" ng-click="save(expensesRateForm.$valid)" ng-disabled="isSaving || expensesRateForm.$invalid">
+			<span ng-show="!isSaving"><i class="fa fa-save"></i> &nbsp; Save </span>
+			<span ng-show="isSaving" ng-disabled="isSaving"><i class="fa fa-spinner fa-spin"></i> &nbsp; Saving... </span>
+		</button>
+	</div>
+	</form>
 </div>

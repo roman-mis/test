@@ -1,0 +1,37 @@
+﻿{
+  "output": "Message",
+  "ignore": [
+    "angular"
+  ],
+  "options": {
+    "predef": {},
+    "ass": true,
+    "bitwise": false,
+    "browser": true,
+    "closure": false,
+    "continue": true,
+    "couch": true,
+    "debug": false,
+    "devel": true,
+    "eqeq": false,
+    "evil": false,
+    "forin": false,
+    "newcap": false,
+    "node": true,
+    "nomen": true,
+    "passfail": false,
+    "plusplus": true,
+    "regexp": false,
+    "rhino": true,
+    "unparam": false,
+    "sloppy": false,
+    "stupid": false,
+    "sub": false,
+    "todo": false,
+    "vars": false,
+    "white": true
+  },
+  "runOnSave": true,
+  "runOnBuild": true,
+  "cancelBuild": false
+}

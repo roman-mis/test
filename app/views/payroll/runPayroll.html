@@ -3,6 +3,7 @@
 </div>
  -->    
  <div class="">
+     
 <div class="orig-grid-wrapper">
     <div>
         <form class="form-horizontal">
@@ -25,7 +26,7 @@
                         <label  class="control-label pull-right">Agency</label>
                     </div>
                         <div class="col-xs-8">
-                            <select ng-change="getPayrollRunWorker()" ng-model="agency.id" ng-options="option.agency._id as option.agency.name for option in payroll.details.agencies" class="form-control">
+                        <select ng-change="getPayrollRunWorker()" ng-model="agency.id" ng-options="option.agency._id as option.agency.name for option in payroll.details.agencies" class="form-control">
                                 <option ng-selected="true">Select</option>
                             </select>
                         </div>

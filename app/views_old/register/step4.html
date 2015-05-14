@@ -1,0 +1,37 @@
+<div class="row form-header">
+    <div class="wizard-status-bar">
+        <div class="step step1">1</div>
+        <div class="step step2">2</div>
+        <div class="step step3">3</div>
+        <div class="step step4 selected">4</div>
+        <div class="step step5">5</div>
+    </div>
+</div>                
+<div class="row form-body">
+    <div class="col-xs-6 left-side">
+        <div class="from-title">
+           Bank Details
+        </div>          
+        I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.<br/><br/>
+        But also this area could be used for notifications, validations and potentially the non UK national extra bit!        
+    </div>
+    <div class="col-xs-6 right-side">
+        <form role="form" name="registerform" class="register-form" orig-validate-form>                
+            <div class="form-group">
+                <input type="text" ng-model="candidate.details.bankName" name="bankname" class="form-control" placeholder="* Bank Name" maxlength="50" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.details.accountName" name="accountname" class="form-control" placeholder="* Account Name" maxlength="50" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.details.sortCode" name="sortcode" class="form-control" placeholder="* Sort Code" maxlength="10" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.details.accountNo" name="accountNo" class="form-control" placeholder="* Account No." maxlength="15" required/>
+            </div>
+            <div class="form-group">
+                <input type="text" ng-model="candidate.details.bankRollNo" name="bankRollNo" class="form-control" placeholder=" Bank Roll No" maxlength="15"/>
+            </div>            
+        </form>
+    </div>
+</div>

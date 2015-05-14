@@ -1,0 +1,293 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Credit Note</title>
+		<meta name="description" content="Validation Report">
+		<meta name="author" content="Tesla">
+		<link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../css/style.css?v=1.0">
+		<link rel="stylesheet" href="style.css">
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="js/tablesplit.js" type="text/javascript"></script>-->
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body class="invoice">
+	<header>
+	<img class="middle" src="../images/company-logo.png" width="187" height="88" alt="Company Header Logo" />
+	
+	<h1 class="middle">Credit Note</h1>
+	
+	<div class="colhalf">
+		<h3><strong>Document No:</strong> <span class="green">{Invoice No}</span></h3> 
+		<h3><strong>Date:</strong> <span class="green">{Date}</span></h3>
+	</div>
+	
+	<div class="colhalf textright">
+		<h3><span class="green">{Company Name}</span></h3>
+		<p>{Company Address Line 1}<br>
+		{Company Address Line 2}<br>
+		{Company Postcode}</p>
+		<p>Phone: {Company Phone}</p>
+		<p>Email: {Company Email}</p>
+		<p>Fax: {Company Fax}</p>
+		<p>VAT Reg. No: {VAT Reg No.}</p>
+		<p>Registered No: {Company Reg No.}</p>
+	</div>
+		
+	<div class="colhalf">
+		<h2>To:</h2>
+		
+		<div class="box">
+			<h3><span class="darkgreen">{Client Name}</span></h3>
+			<p>{Client Address Line 1}<br>
+			{Client Address Line 2}<br>
+			{Client Postcode}</p>
+		</div>
+	</div>
+	
+	<div class="colhalf">
+		<h2>Deliver To:</h2>
+		
+		<div class="box">
+			<h3><span class="darkgreen">{Client Name}</span></h3>
+			<p>{Client Address Line 1}<br>
+			{Client Address Line 2}<br>
+			{Client Postcode}</p>
+		</div>
+	</div>
+	</header>
+	
+	<table class="tmain" width="100%">
+	
+		<thead> 
+			<tr> 
+				<th align=left width=100%>
+					<table class="summary">
+						<colgroup>
+							<col style="width: 14.2%">
+							<col style="width: 14.2%">
+							<col style="width: 14.2%">
+							<col style="width: 14.2%">
+							<col style="width: 14.2%">
+							<col style="width: 14.2%">
+							<col style="width: 14.2%">
+						</colgroup>
+						<tr>
+							<th>A/C No.</th>
+							<th>Date</th>
+							<th>Your Ref.</th>
+							<th>Our Ref.</th>
+							<th>Source Ref.</th>
+							<th>Currency</th>
+							<th>Payment Due</th>
+						</tr>
+						<tr>
+							<td><span class="green">{A/C No.}</span></td>
+							<td><span class="green">{Date}</span></td>
+							<td><span class="green">{Your Ref.}</span></td>
+							<td><span class="green">{Our Ref.}</span></td>
+							<td><span class="green">{Source Ref.}</span></td>
+							<td><span class="green">{Currency}</span></td>
+							<td><span class="green">{Payment Due}</span></td>
+						</tr>
+					</table>
+					
+				</th>
+			</tr>
+			
+		</thead>
+		
+		<tbody>
+			<tr>
+				<td width="100%">
+			
+				  <table class="results">
+					 <thead class="printhead">
+					  <tr class="hrowprint">
+						<td>Product</td>
+						<td>Description</td>
+						<td>Unit</td>
+						<td>Quantity</td>
+						<td class="textright">Price</td>
+						<td class="textright">Net</td>
+						<td class="textright">VAT</td>
+					  </tr>
+					  <tr class="separator"></tr>
+					</thead>
+					<tbody>
+					  <colgroup>
+						<col style="width: 15%">
+						<col style="width: 35%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+						<col style="width: 10%">
+					  </colgroup>
+					  <tr class="hrow">
+						<td>Product</td>
+					    <td>Description</td>
+					    <td>Unit</td>
+					    <td>Quantity</td>
+					    <td class="textright">Price</td>
+					    <td class="textright">Net</td>
+					    <td class="textright">VAT</td>
+					  </tr>
+					  <tr>
+					    <td>TSGROUP</td>
+					    <td>Timesheet for WE : 25-01-2015 for 1 contractors</td>
+					    <td></td>
+					    <td>-1</td>
+					    <td class="money">50.00</td>
+					    <td class="money">50.00</td>
+					    <td class="money">S</td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					   <td></td>
+					   <td></td>
+					   <td></td>
+					   <td></td>
+					   <td></td>
+					   <td></td>
+					   <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr class="lasttrow">
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td class="tcell">Net</td>
+					    <td class="tcell money">50.00</td>					    
+					  </tr>
+					  <tr class="trow">
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td class="tcell">VAT</td>
+					    <td class="tcell money">10.00</td>					    
+					  </tr>
+					  <tr class="footerrow">
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td class="tcell">Total</td>
+					    <td class="tcell money">60.00</td>					    
+					  </tr>
+					  </tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+		
+		<tfoot>
+			<table class="foottable">
+				<tr>
+				    <th colspan="4" >VAT Analysis</th>
+				  </tr>
+				  <tr align=center>
+				    <td><span class="green">Code</span></td>
+				    <td><span class="green">Goods</span></td>
+				    <td><span class="green">VAT  Rule</span></td>
+				    <td><span class="green">VAT Totals</span></td>
+				  
+				  </tr>
+				  <tr>
+				    <td>S</td>
+				    <td class="money">-50.00</td>
+				    <td>20.00</td>
+				    <td class="money">-10.00</td>
+				  </tr>
+			</table>
+			
+			<table class="foottable">
+				<tr>
+				    <td>Thank you for choosing {company name}</th>
+				</tr>
+			</table>
+		</tfoot>
+		</table>
+	
+	</body>
+
+</html>
