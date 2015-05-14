@@ -4,6 +4,7 @@ angular.module('origApp.controllers')
 
 .controller('sppController', function($scope, parentScope, HttpResource, ConstantsResource, $http, $modalInstance, MsgService) {
 
+    console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
     $scope.candidateId = parentScope.candidateId;
     if (!$scope.sppObject) {
         $scope.sppObject = {}
