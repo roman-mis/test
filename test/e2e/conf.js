@@ -19,7 +19,7 @@ var candidateTabs=[
 //  './spec/candidate/home_tab.js',
  // './spec/candidate/payroll_tax_tab.js',
   './spec/candidate/payroll_product_tab.js',
-  './spec/candidate/agencies_tab.js',
+ // './spec/candidate/agencies_tab.js',
 ];
 var candidateSidebar=[
 //  './spec/candidate/sidebar/dpa.js',
@@ -56,7 +56,7 @@ exports.config = {
   suites: {
     main: regNewUser.concat(login).concat(logout),
     remote: adminCredentials.concat(login).concat(candidateSidebar),
-    dummy: adminCredentials.concat(login).concat(candidateTabs)
+    dummy: adminCredentials.concat(login).concat(candidateTabs).concat(logout)
   },
 
   onPrepare: function () {
