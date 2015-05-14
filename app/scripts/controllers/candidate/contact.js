@@ -5,7 +5,7 @@ angular.module('origApp.controllers')
           //define public properties and functions
           $scope.candidateId = $stateParams.candidateId;
           $scope.nationalities = ConstantsResource.get('nationalities');
-
+          $scope.message = "If you would like to update your bank details, please contact Originem on <Company Phone Number> or email: <Company Email Address>"
           $scope.getNationality = function(code) {
             var na = $scope.nationalities.filter(function(val) {
               return val.code === code;

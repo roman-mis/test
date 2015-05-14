@@ -66,7 +66,7 @@ angular.module('origApp.controllers')
                 Notification.error({message: 'Values Must be Positive', delay: 2000});   
             }
         }else{
-            Notification.error({message: 'Values Must be Number', delay: 2000});
+            Notification.error({message: 'Values must be numerical', delay: 2000});
         }
         console.log($scope.mileageRates);
         HttpResource.model('systems/mileagerates').create($scope.mileageRates).post().then(function() {
