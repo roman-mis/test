@@ -1032,6 +1032,14 @@
         {
             "code": 3,
             "value": "P45 Out"
+        },
+        {
+            "code": 4,
+            "value": "Deceased"
+        },
+        {
+            "code": 5,
+            "value": "Closed"
         }
     ],
 
