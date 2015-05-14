@@ -1,11 +1,7 @@
 var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
 describe('Navigating to Payroll-Product tab', function () {
-/*
-	var innerTabs = $$('.tabs-payroll .nav-tabs li');
-	var innerLinks = $$('.tabs-payroll .nav-tabs li a');
-	var tabContents = $$('.tabs-payroll .tab-content');
-*/
+
 	it('Checking Product subtab', function () {
 		links.get(2).click();
 		$$('.tab-content .nav-tabs li[ng-class="{active: isTabActive(\'product\')}"] a[ng-click="setTabActive(\'product\')"]').click();
