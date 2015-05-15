@@ -27,7 +27,7 @@
                 <input type="text" ng-model="candidate.details.sortCode" name="sortcode" class="form-control" placeholder="* Sort Code" maxlength="10" required/>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.details.accountNo" name="accountNo" class="form-control" placeholder="* Account No." maxlength="15" required/>
+                <input type="text" ng-model="candidate.details.accountNo" name="accountNo" class="form-control" placeholder="* Account No."  ng-pattern="/[0-9]$/" maxlength="15" required/>
             </div>
             <div class="form-group">
                 <input type="text" ng-model="candidate.details.bankRollNo" name="bankRollNo" class="form-control" placeholder=" Bank Roll No" maxlength="15"/>
