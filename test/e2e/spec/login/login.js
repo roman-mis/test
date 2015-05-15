@@ -1,4 +1,3 @@
-var helper = require('./../ui-helper.js');
 loginData.userName=loginData.userName || 'originemtest_t568300';
 loginData.userEmail= loginData.userEmail || 'originemtest+t568300@yandex.com';
 loginData.userPassword= loginData.userPassword || 'andyboss';

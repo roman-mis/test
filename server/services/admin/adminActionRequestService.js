@@ -129,6 +129,7 @@ module.exports=function(dbs){
 	function calculatePayPeriods(user,request,options,payType){
 		var maxPeriods=request.maxPeriods||0;
 		var payFrequency = user.worker.payrollTax.payFrequency;
+		
 		var startDate=moment(request.startDate);	
 		var endDate = request.endDate?moment(request.endDate):startDate.clone().add(Number(request.maxPeriods),'weeks').add(-1,'days');
 		var periodicPay=options.periodicPay//options.periodicPay=88.45;
@@ -140,6 +141,9 @@ module.exports=function(dbs){
 			Q.all([Q.nfcall(q.exec.bind(q)),Q.nfcall(q1.exec.bind(q1))]).then(function(res){
 				var taxTables = res[0];
 				var rates = res[1].statutoryTables[payType+'Rate'];
+				console.log('################');
+
+				console.log(rates);
 				var weeks = [];
 				_.forEach(taxTables,function(taxTable){
 					//outside the range
@@ -152,26 +156,30 @@ module.exports=function(dbs){
 					week.monthNumber = taxTable.monthNumber;
 					week.periodType = taxTable.periodType;
 					week.amount = 0;
-
 					var startPoint = Math.max(Date.parse(taxTable.startDate), Date.parse(startDate.toDate()));
 					var endPoint = Math.min(Date.parse(taxTable.endDate), Date.parse(endDate.toDate()))	;
 					var index = 0;
+					// var todayStartMoment = moment(Date.now()).startOf('day');
 					for(var day = moment(startPoint).clone(); moment(endPoint).startOf('day').diff(day.clone().startOf('day'),'days')>=0; day.add(1,'days')){
 						// continue when sunday or saturday
 						if(day.day() === 0 || day.day() === 6){
-							console.log(day.toDate());
 							continue;
 						}
 						index++;
 						perDayPay = 0;
 						for(var g = 0; g < rates.length; g++){
-							if(Date.parse(rates[g].validFrom) - Date.now()<=0 && Date.parse(rates[g].validTo) - Date.now()>=0){
+							if(moment(rates[g].validFrom).startOf('day').diff(day.clone().startOf('day')) <= 0 &&
+								moment(rates[g].validTo).startOf('day').diff(day.clone().startOf('day')) >=0){
 								perDayPay = rates[g].amount / 7;
+								console.log('$$$$$$$$$$$');
+								console.log(day.toDate());
+								console.log('!!!!!!!!!!!');
+								console.log(rates[g].amount);
 							}
 						}
 						week.amount += perDayPay;
 					}
-					console.log(index);
+					// console.log(index);
 					weeks.push(week);
 				});
 				weeks.sort(function(a, b){return Math.max(a.weekNumber,a.monthNumber)-Math.max(b.weekNumber,b.monthNumber);});

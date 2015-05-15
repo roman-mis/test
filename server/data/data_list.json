@@ -702,7 +702,15 @@
             "engineSizes": [
                 {
                     "code": "1",
-                    "description": "Upto 1000 cc"
+                    "description": "1400cc or less"
+                },
+                {
+                    "code": "2",
+                    "description": "1401cc to 2000cc"
+                },
+                {
+                    "code": "3",
+                    "description": "Over 2000cc"
                 }
             ]
         },
@@ -712,7 +720,15 @@
             "engineSizes": [
                 {
                     "code": "1",
-                    "description": "Upto 1200 cc"
+                    "description": "1600cc or less"
+                },
+                {
+                    "code": "2",
+                    "description": "1601cc to 2000cc"
+                },
+                {
+                    "code": "3",
+                    "description": "Over 2000cc"
                 }
             ]
         },
@@ -723,6 +739,14 @@
                 {
                     "code": "1",
                     "description": "Upto 1400 cc"
+                },
+                {
+                    "code": "2",
+                    "description": "1401cc to 2000cc"
+                },
+                {
+                    "code": "3",
+                    "description": "Over 2000cc"
                 }
             ]
         }
@@ -1032,6 +1056,14 @@
         {
             "code": 3,
             "value": "P45 Out"
+        },
+        {
+            "code": 4,
+            "value": "Deceased"
+        },
+        {
+            "code": 5,
+            "value": "Closed"
         }
     ],
 
@@ -1134,7 +1166,10 @@
                             "hide": false
                         },
                         "Contact": {
-                            "hide": false
+                            "hide": false,
+                            "bankDetail":{
+                                "notEdit":true
+                            }
                         },
                         "Payroll": {
                             "hide": true

@@ -1,14 +1,5 @@
 <div class="sidebar-menu-inner" ng-controller="CandidateSidebarController">
-    <div ng-if="!permissions.rightToolBar.hide" class="search-wrapper">
-        <div class="form-group nonepadding">
-            <ui-select ng-model="title" name="title" theme="select2" ng-disabled="disabled" search-enabled="false" ng-init="titleary = [{key: 1, value: 1}, {key: 2, value: 2}]" required>
-                <ui-select-match placeholder="Select Agency">{{title.value}}</ui-select-match>
-                <ui-select-choices repeat="item in titleary | filter: $select.search">
-                    <span ng-bind-html="item.value"></span>
-                </ui-select-choices>
-            </ui-select>
-        </div>
-    </div>
+    
 
     <div class="company-logo">
         <img src="http://placehold.it/300x150" class="user-photo" alt="Company logo" />

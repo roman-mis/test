@@ -30,9 +30,13 @@
     </ul>
 </div>
 <div class='col-xs-12'>
-    <p class="entry-title">Bank Details<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openBankDetailsEdit()"><i class="fa fa-edit"></i></a>
+    <p ng-if="permissions.taps.Contact.bankDetail.notEdit" class="entry-title">Bank Details<a class="icon-edit pull-right" href="javascript:void(0);" popover-placement="left" popover={{message}}><i class="fa fa-question"></i></i></a>
+    
+
+    <p ng-if="!permissions.taps.Contact.bankDetail.notEdit" class="entry-title">Bank Details<a class="icon-edit pull-right" href="javascript:void(0);" ng-click="openBankDetailsEdit()"><i class="fa fa-edit"></i></a>
     </p>
 </div>
+  
 <div class="col-sm-12 col-md-6">
     <ul class='entry-content'>
         <li class="clearfix">Name on Account<span class="meta">{{bankDetail.accountName}}</span>
@@ -43,7 +47,7 @@
 </div>
 <div class="col-sm-12 col-md-6">
     <ul class='entry-content'>
-        <li class="clearfix">Account No.<span class="meta">{{bankDetail.accountNo}}</span>
+        <li class="clearfix">Account No.<span class="meta">{{bankDetail.hashedBankNo}}</span>
         </li>
         <li class="clearfix">Sort Code<span class="meta">{{bankDetail.sortCode}}</span>
         </li>

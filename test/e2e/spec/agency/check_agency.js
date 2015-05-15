@@ -1,6 +1,3 @@
-var helper = require('./../ui-helper.js');
-
-
 describe('Getting first agency properties', function () {
 
 

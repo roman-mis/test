@@ -5,7 +5,7 @@ angular.module('origApp.controllers')
           //define public properties and functions
           $scope.candidateId = $stateParams.candidateId;
           $scope.nationalities = ConstantsResource.get('nationalities');
-
+          $scope.message = "If you would like to update your bank details, please contact Originem on <Company Phone Number> or email: <Company Email Address>"
           $scope.getNationality = function(code) {
             var na = $scope.nationalities.filter(function(val) {
               return val.code === code;
@@ -52,8 +52,23 @@ angular.module('origApp.controllers')
           }
 
           function loadBankDetail() {
-            $scope.bankDetail = candidateResource.get('bankdetail');
+            $scope.bankDetail = candidateResource.get('bankdetail', function(){
+              console.log('hdushshfuiohsioh')
+              $scope.bankDetail.hashedBankNo = $scope.replaceWithAstric($scope.bankDetail.accountNo,3);
+            });
           }
+
+          $scope.replaceWithAstric = function(info,lastShowenNo){
+            var infoArr = info.split('')
+            var t = ''
+            for(var i = 0; i < infoArr.length - lastShowenNo; i++){
+              t += '*';
+            }
+            for (i = infoArr.length - lastShowenNo; i < infoArr.length; i++) {
+              t += infoArr[i];
+            }
+            return t;
+          };
 
           //share this data over all sub pages
           $scope.addSubBreadcrumb({'text': 'Contact'});
@@ -77,6 +92,8 @@ angular.module('origApp.controllers')
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
+
+
 
           $scope.ok = function() {
             $scope.isSaving = true;

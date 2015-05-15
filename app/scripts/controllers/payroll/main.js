@@ -88,7 +88,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
     $scope.openCreateValidation = function(){
         console.log(220);
         ModalService.open({
-          templateUrl: 'views/payroll/.html',
+          templateUrl: 'views/payroll/createValidation.html',
           parentScope: $scope,
           controller: 'createValidationController',
           size: 'lg'
@@ -175,7 +175,7 @@ app.controller('PayrollMainController',['$state', '$rootScope', '$scope', 'HttpR
          $scope.payroll.agencyList.push($scope.payroll.agencies[i]);
      }
     }
-    console.log(111111111111)
+    console.log(111111111111);
   $state.go('app.payroll.view',{type:state});
 };
 

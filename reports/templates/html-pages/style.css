@@ -1,0 +1,363 @@
+body {
+	font-family: 'Questrial', sans-serif;
+	font-size: 12px;
+	max-width: 1200px;
+}
+body.doc {
+	width: 750px;
+	margin: 0 auto;
+	font-size: 14px;
+}
+body.doc header {
+	text-align: center;
+	background: #f1f1f1;
+	padding: 20px;
+}
+header {
+	margin: 20px 0 0 0;
+}
+	a {color: #94d4f0;}
+	h1 {color: #94d4f0; margin: 10px 0 10px 0; font-size: 28px;}
+	h2 {color: #8dc044; border-bottom: 1px solid #f1f1f1; padding: 5px 0 10px 0;}
+	h3{color: #8dc044;}
+	.green {color: #8dc044;}
+	.darkgreen {color: #059347;}
+	.payslip table.results td.bg-green {background-color: #8dc044;text-align: center; color: #fff;}
+	.payslip table.results td.bg-darkgreen {background-color: #059347;text-align: center; color: white;}
+	.blue {color: #94d4f0;}
+	.middle {margin: 0 auto; display: block; text-align: center;}
+	.textright {text-align: right;}
+	.textleft {text-align: left;}
+	.right {float: right;}
+	.box {border: 1px solid #059347; padding: 10px 20px; }
+	.big {font-weight: bold; font-size: 14px; color: #8dc044;}
+
+.colhalf {
+	float: left;
+	width: 49%;
+	margin: 0 2% 10px 0;
+}
+
+.colhalf:nth-of-type(2n) {
+	margin: 0;
+}
+	
+.colthird {
+	float: left;
+	width: 31%;
+	padding: 0 1% 2% 1%;
+}
+
+.var {
+	color: #8cc541;
+}
+.hrow {
+	border-bottom: 1px solid #525252;
+	background: #059347;
+	color: white;
+}
+table.results .hrow td {
+	color: white;
+}
+.hrowprint {
+	border-bottom: 1px solid #525252;
+	font-weight: bold;
+}
+
+tr.lasttrow {
+	border-top: 1px solid #f1f1f1;
+}
+tr.trow td {
+	border-bottom: 1px solid #f1f1f1;
+	border-top: 1px solid #f1f1f1;
+}
+table.results .tcell {
+	border: 2px solid #525252;
+	background: #f1f1f1;
+}
+table.results .tcell:last-child {
+	border-right: 2px solid #525252;
+}
+.money {
+	text-align: right;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+/* Summary table */
+
+table.summary {
+	border:  1px solid #525252;
+	background: #f1f1f1;
+}
+table.summary td, table.foottable td {
+	padding: 10px;
+	border-left: 1px solid #525252;
+	border-top: 1px solid #525252;
+}
+table.summary th, table.foottable th  {
+	background-color: #8dc044;
+	color: #ffffff;
+	padding: 10px 0;
+}
+/* Results table */
+
+table.results {
+	margin: 20px 0;
+	border: 1px solid #525252;
+}
+
+table.results td {
+	padding: 10px;
+	color: #525252;
+}
+table.results td:first-child {
+    border-left: 1px solid #525252;
+}
+table.results td:last-child {
+    border-right: 1px solid #525252;
+}
+
+table.results td.totals {
+	color: #8cc541;
+	text-align: right;
+}
+table.results td.totals.left {
+	text-align: left;
+}
+table.results th {
+	padding: 10px;
+	/*text-align: left;*/
+	/*border-bottom: 2px solid #525252;*/
+}
+table.results th.textright,
+table.results td.textright {
+    text-align: right;
+}
+thead {display: table-header-group; }
+
+.foottable {
+	border: 1px solid #525252;
+	width: 49%;
+	float: left;
+	margin: 0 2% 20px 0;
+}
+.foottable:last-of-type {
+	margin: 0 0 20px 0;
+}
+.uline {
+	border-bottom: 1px dotted #8dc044;
+	height: 30px;
+}
+header.printonly {
+	display: none;
+}
+
+ul, ol {
+	list-style-type: none;
+	margin: 20px 0 20px 5px;
+	padding: 0 0 0 10px;
+}
+li {
+	margin: 10px 0;
+}
+ul.disc {
+	list-style-type: disc;
+}
+dt {
+	color: #059347;
+	font-weight: bold;
+}
+
+dd {
+	margin: 10px 0;
+	padding: 0 0 0 10px;
+}
+/* Payslip Styles */
+table.results tr.payrow td {
+	padding: 10px;
+	border-left: 1px solid #525252;
+	border-top: 1px solid #525252;
+	border-bottom: 1px solid #525252;
+	background: #f1f1f1;
+}
+.payslip table.results td {
+	padding: 10px;
+	color: #525252;
+	border-right: 1px solid #525252;
+}
+.payslip table.foottable {
+	width: 100%;
+	margin: 20px 0;
+}
+.payslip table.foottable td {
+	border: none;
+}
+.payslip table.foottable tr.payrow td {
+	padding: 10px;
+	border-left: 1px solid #525252;
+	border-top: 1px solid #525252;
+	border-bottom: 1px solid #525252;
+	background: #f1f1f1;
+}
+.control td.arow {
+	border-top: 1px solid #525252;
+	border-bottom: 1px solid #525252;
+	background: #8dc044;
+	color: white;
+}
+
+/* Page rules */
+
+@media all {
+	.page-break	{ display: none; }
+	.print, .printhead {display: none;}	
+	
+} 
+
+@media print {
+
+	body {
+	    width: 198mm;
+	    height: 250mm;
+		margin: 0 8px;
+	}
+	thead {
+		display: table-header-group; 
+	}
+	table { 
+		page-break-inside:auto; 
+	}
+	tr { 
+		page-break-inside:avoid;
+		page-break-after:auto;
+	}
+	table tr.separator { 
+		height: 10px; 
+	}
+	.hrow { 
+		display: none; 
+	}
+	.tmain {
+		page-break-after: always;
+	}
+	.box {
+		border-color: #525252;
+	}
+	.printhead {
+		display: table-header-group; 
+		border-top: 1px solid #525252;
+	} 
+	.printhead tr {
+		padding: 20px 0;
+		height: 40px;
+	}
+	.printhead tr  td{
+		color: #000;
+	}
+
+	header.printonly {
+		display: block;
+	}
+	body.netpayreport {
+		height: 100%;
+	}
+	.netpayreport .tmain {
+		page-break-after: auto;
+		font-size:11px;
+	}
+	table.summary {
+		background: none;
+	}
+	table.results { 
+		border: none;
+	}
+	table.results td,
+	table.results th	{
+		padding: 10px 3px;
+		text-align: left;
+	}
+	table.results th.textright, table.results td.textright {
+		text-align: left;
+	}
+	table.results .tcell {
+		background: none;
+		border: 1px solid #525252;
+	}
+	table.results .tcell:last-child {
+		border-right: 1px solid #525252;
+	}
+    table.results td:first-child, 
+    table.results td:last-child {
+        border-left: none;
+        border-right: none;
+    } 
+	table.results tr.payrow td {
+		border-left: none;
+		border-top: 1px solid #525252;
+		border-bottom: 1px solid #525252;
+		background: none;
+	}
+	div.tablePage {
+	    page-break-inside:avoid; 
+		page-break-after:always; 
+	}
+	div.break {
+		/*page-break-inside:avoid; */
+		page-break-after: always;
+	}
+	
+	.payslip table.results {
+		margin: 20px 0;
+		border-top: 1px solid #525252;
+	}
+	.payslip table.results td {
+		border-right: none;
+	}
+	.payslip table.foottable {
+		page-break-inside:avoid; 
+		page-break-before: auto;
+		border: none;
+		border-top: 1px solid #525252;
+		border-bottom: 1px solid #525252;
+	}
+	.payslip table.foottable-last {
+		display: none;
+	}
+	.payslip table.foottable tr th {	
+		border-bottom: 1px solid #525252;
+	}
+	.payslip table.foottable tr.payrow td {
+		border-left: none;
+		border-top: 1px solid #525252;
+		background: none;
+	}
+	.payslip table.results td.bg-green,
+	.payslip table.results td.bg-darkgreen {
+		background: none;
+		color: #000;
+		font-weight: bold;
+	}
+	.control table.results td,
+	.control table.results tr.payrow td 	{
+		padding: 10px 4px;
+	}
+	.control table.printhead, .control table.results {
+		font-size: 9px;
+		page-break-after:auto;
+	}	
+	table.summary th,
+	table.foottable th,
+	.control td.arow 	{
+		background: none;
+		color: #000;
+	}
+	
+	@page {
+		size: A4;
+		margin: 1cm 0.5cm 1cm 0.5cm;
+	}
+	
+}

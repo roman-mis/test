@@ -58,12 +58,16 @@ angular.module('origApp.controllers')
     };
 
     $scope.save = function(index){
-        // if(Number($scope.tempValue)){
-                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue);      
-            // }else{
-            //     Notification.error({message: 'Values must be Number', delay: 2000});
-            // }
-            hideAllEdites();
+        if(Number($scope.tempValue)){
+            if(Number($scope.tempValue)>=0){
+                $scope.mileageRates[$scope.mileageRatesNames[index]] = Number($scope.tempValue).toFixed(2);      
+                hideAllEdites();
+            }else{
+                Notification.error({message: 'Values Must be Positive', delay: 2000});   
+            }
+        }else{
+            Notification.error({message: 'Values must be numerical', delay: 2000});
+        }
         console.log($scope.mileageRates);
         HttpResource.model('systems/mileagerates').create($scope.mileageRates).post().then(function() {
         });

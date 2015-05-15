@@ -1,5 +1,3 @@
-var helper = require('../../ui-helper.js');
-
 describe('Checking Activity', function () {
   var openActivityDialog = function () {
       $('[ng-click="openAddActivityWin()"]').click();

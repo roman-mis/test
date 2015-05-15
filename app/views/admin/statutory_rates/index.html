@@ -25,7 +25,7 @@
                         <span ng-show="statutoryRates.employersNiThreshold">
                             <tr>
                                 <td>Employer's NI threshold</td>
-                                <td>{{statutoryRates.employersNiThreshold.current}}  &pound;</td>
+                                <td> &pound;{{statutoryRates.employersNiThreshold.current}} </td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('employersNiThreshold')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -45,7 +45,7 @@
                         <span ng-show="statutoryRates.employeesNiRate">
                             <tr>
                                 <td>Employee's NI threshold - lower</td>
-                                <td>{{statutoryRates.employeesNiThreshold.current}} &pound;</td>
+                                <td> &pound;{{statutoryRates.employeesNiThreshold.current}} </td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('employeesNiThreshold')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -66,7 +66,7 @@
                         <span ng-show="statutoryRates.employeesNiRate">
                             <tr>
                                 <td>Employee's NI threshold - higher</td>
-                                <td>{{statutoryRates.employeesHighEarnerNiThreshold.current}} &pound;</td>
+                                <td> &pound;{{statutoryRates.employeesHighEarnerNiThreshold.current}}</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('employeesHighEarnerNiThreshold')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -82,25 +82,11 @@
                                     <a href="" ng-click="openModal('employeesHighEarnerNiRate')"><i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
-                        </span>
-
-                        
-                        <!-- 
-                        <span ng-show="statutoryRates.employeesHighEarnerNiRate">
-                            <tr>
-                                <td>Employee's NI high earner rate</td>
-                                <td>{{statutoryRates.employeesHighEarnerNiRate.current}}</td>
-                                <td class="text-center">
-                                    <a href="" ng-click="openModal('employeesHighEarnerNiRate')"><i class="fa fa-edit"></i></a>
-                                </td>
-                            </tr>
-                        </span> -->
-
-                        
+                        </span>                       
                         <span ng-show="statutoryRates.incomeTaxHigherRateThreshold">
                             <tr>
                                 <td>Income Tax Higher Rate Threshold</td>
-                                <td>{{statutoryRates.incomeTaxHigherRateThreshold.current}}</td>
+                                <td> &pound;{{statutoryRates.incomeTaxHigherRateThreshold.current}}</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('incomeTaxHigherRateThreshold')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -110,7 +96,7 @@
                         <span ng-show="statutoryRates.incomeTaxAdditionalRateThreshold">
                             <tr>
                                 <td>Income Tax Additional Rate Threshold</td>
-                                <td>{{statutoryRates.incomeTaxAdditionalRateThreshold.current}}</td>
+                                <td> &pound;{{statutoryRates.incomeTaxAdditionalRateThreshold.current}}</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('incomeTaxAdditionalRateThreshold')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -120,7 +106,7 @@
                         <span ng-show="statutoryRates.incomeTaxBasicRate">
                             <tr>
                                 <td>Income Tax Basic Rate</td>
-                                <td>{{statutoryRates.incomeTaxBasicRate.current}}</td>
+                                <td>{{statutoryRates.incomeTaxBasicRate.current}} %</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('incomeTaxBasicRate')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -130,7 +116,7 @@
                         <span ng-show="statutoryRates.incomeTaxHigherRate">
                             <tr>
                                 <td>Income Tax Higher Rate</td>
-                                <td>{{statutoryRates.incomeTaxHigherRate.current}}</td>
+                                <td>{{statutoryRates.incomeTaxHigherRate.current}} %</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('incomeTaxHigherRate')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -140,7 +126,7 @@
                         <span ng-show="statutoryRates.incomeTaxAdditionalRate">
                             <tr>
                                 <td>Income Tax Additional Rate</td>
-                                <td>{{statutoryRates.incomeTaxAdditionalRate.current}}</td>
+                                <td>{{statutoryRates.incomeTaxAdditionalRate.current}} %</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('incomeTaxAdditionalRate')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -151,7 +137,7 @@
                             
                             <tr>
                                 <td>VAT</td>
-                                <td>{{statutoryRates.vat.current}}</td>
+                                <td>{{statutoryRates.vat.current}} %</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('vat')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -161,7 +147,7 @@
                         <span ng-show="statutoryRates.sspRate">
                             <tr>
                                 <td>SSP Rate</td>
-                                <td>{{statutoryRates.sspRate.current}}</td>
+                                <td>&pound;{{statutoryRates.sspRate.current}}</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('sspRate')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -171,7 +157,7 @@
                         <span ng-show="statutoryRates.smpRate">
                             <tr>
                                 <td >SMP Rate</td>
-                                <td>{{statutoryRates.smpRate.current}}</td>
+                                <td>&pound;{{statutoryRates.smpRate.current}}</td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('smpRate')"><i class="fa fa-edit"></i></a>
                                 </td>
@@ -181,7 +167,7 @@
                         <span ng-show="statutoryRates.sppRate">
                             <tr>
                                 <td>SPP Rate</td>
-                                <td>{{statutoryRates.sppRate.current}}</td>
+                                <td>&pound;{{statutoryRates.sppRate.current}}</td>
                                 </td>
                                 <td class="text-center">
                                     <a href="" ng-click="openModal('sppRate')"><i class="fa fa-edit"></i></a>

@@ -9,7 +9,7 @@
 </div>
 <div class="row form-body">
     <div class="col-xs-6 left-side">
-        <div class="from-title">
+        <div class="form-title">
             Contact Details
         </div>
         I think a lovely paragraph about how wonderful an experience it will be to use the new originem software.
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="text" ng-model="candidate.details.phone" name="phone" class="form-control" placeholder="* Contact Number" maxlength="15" required/>
+                <input type="text" ng-model="candidate.details.phone" name="phone" class="form-control" placeholder="* Contact Number" maxlength="15" ng-pattern="/[0-9]$/" required/>
             </div>
             <div class="form-group">
                 <input type="text" ng-model="candidate.details.niNumber" orig-ni name="ninumber" class="form-control" placeholder="* NI Number" maxlength="13" required/>
