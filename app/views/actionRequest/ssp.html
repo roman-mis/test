@@ -59,8 +59,8 @@
 				</div>
 				<div class="col-xs-12 form-group"></div>
 			</div>
-	
-			<div class="row" ng-if="!validDate && sspMessage">
+			
+			<div class="row" ng-if="!validDate === true && sspMessage">
 				<div class="col-xs-12 form-group" ng-if="!validDate">
 					<p class="alert alert-danger">{{sspMessage}}</p>
 	

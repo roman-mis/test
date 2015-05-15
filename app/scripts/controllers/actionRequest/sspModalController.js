@@ -41,7 +41,7 @@ angular.module('origApp.controllers')
 
                 if ($scope.ssp && $scope.ssp.periods && $scope.ssp.periods.length === 0) {
                     $scope.validDate = false;
-                    $scope.sspMessage = 'No  Statutory data';
+                    $scope.sspMessage = 'Please enter date range';
                 }
             }
         };
@@ -59,6 +59,8 @@ angular.module('origApp.controllers')
         };
 
         $scope.checkDate = function() {
+            $scope.validDate = true;
+            $scope.ssp.periods = [];
 
             $scope.sspMessage=null;
             if (!$scope.ssp) {
@@ -74,55 +76,57 @@ angular.module('origApp.controllers')
 
             var validTill = sickDayTo + 604800000;
 
-
-            if (n >= sickDayTo && n <= validTill && (sickDayTo - sickDayFrom >= 345600000)) {
-                $scope.validDate = true;
-                $scope.sspMessage = null;
-
-                // console.log(arguments);
-                // if(arguments.length){
-                console.log('**************')
-                console.log($scope.ssp);
-                    HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {
-                        'dateInformed': $scope.ssp.dateInformed,
-                        'startDate': $scope.ssp.startDate,
-                        'endDate': $scope.ssp.endDate,
-                        'maxPeriods': 29
-                    }, function(data) {
-                        console.log(data);
-                        $scope.ssp.periods = data.data.objects;
-
-                    }, function(err) {
-                    });
-                // }
-                return true;
-
-
-            } else {
+            if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
+                $scope.submitted = true;
+            }
+            
+            if(sickDayFrom > sickDayTo){
+                console.log(1)
+                $scope.sspMessage = 'Sick date to" is before the "sick day from.';
                 $scope.validDate = false;
-                if(arguments.length){
-
-                 $scope.ssp.periods=[];
-
-                }
-
-                if (n < sickDayTo) {
-                    $scope.sspMessage = 'Informed date is before the SSP start date.';
-                }
-                else if(sickDayFrom > sickDayTo){
-
-                   $scope.sspMessage = '"Sick date to" is before the "sick day from".';
-                }
-                 else if (n > validTill) {
-                    $scope.sspMessage = 'He/she hasnot informed within 7 periods from Date of sick note to.';
-                }
-                 else if ((sickDayTo - sickDayFrom) < 345600000) {
-                    $scope.sspMessage = 'The period of sick pay must be at least four periods long to qualify for SSP.';
-                } else if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
-                    $scope.submitted = true;
-                }
                 return false;
             }
+
+            if ((sickDayTo - sickDayFrom) < 345600000) {
+                console.log(2)
+                $scope.sspMessage = 'The period of sick pay must be at least four periods long to qualify for SSP.';
+                $scope.validDate = false;
+                return false;
+            }
+
+            if (n < sickDayTo) {
+                console.log(3)
+                $scope.sspMessage = 'Informed date is before the SSP end date.';
+                $scope.validDate = false;
+                return false;
+            }
+
+
+            if (n > validTill) {
+                console.log(4)
+                $scope.sspMessage = 'He/she hasnot informed within 7 periods from Date of sick note to.';
+                $scope.validDate = false;
+                return false;
+            }
+
+            // console.log(arguments);
+            // if(arguments.length){
+            console.log('**************');
+            console.log($scope.ssp);
+            HttpResource.model('actionrequests/' + $scope.candidateId + '/ssp').customGet('verify', {
+                'dateInformed': $scope.ssp.dateInformed,
+                'startDate': $scope.ssp.startDate,
+                'endDate': $scope.ssp.endDate,
+                'maxPeriods': 29
+            }, function(data) {
+                console.log(data);
+                $scope.ssp.periods = data.data.objects;
+
+            }, function(err) {
+            });
+            // }
+            return true;
+        
         };
 
         $scope.$watch('fileupload', function(fileInfo) {
