@@ -1,5 +1,4 @@
 var links = $$('.candidate-tabs li a');
-var helper = require('../ui-helper.js');
 
 describe('Navigating to Payroll-Tax tab', function () {
 

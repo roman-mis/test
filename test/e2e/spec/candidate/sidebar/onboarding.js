@@ -1,5 +1,3 @@
-var helper = require('../../ui-helper.js');
-
 describe('Checking ONBOARDING', function () {
 
   it('should open onboarding dialog', function () {
