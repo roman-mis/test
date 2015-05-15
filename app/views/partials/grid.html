@@ -21,7 +21,9 @@
           {{col| date:'yyyy-MM-dd'}}
         </td>
         <td class="col-xs-3 text-center">
-          <i ng-click="options.loadAdminTemplate($index)"class="fa fa-eye"></i> &nbsp;| &nbsp;<i class="fa fa-files-o" ng-click="options.clone($index)"></i> &nbsp;| &nbsp; <i ng-click="options.deleteAdminTemplate($index)" class="fa fa-trash"></i>
+          <a tooltip-placement="top" tooltip="Edit" href ng-click="options.loadAdminTemplate($index) " <i class="fa fa-eye"></i> </a> &nbsp;| &nbsp;
+          <a tooltip-placement="top" tooltip="Clone" href ng-click="options.clone($index)"><i class="fa fa-files-o" ></i></a> &nbsp;| &nbsp; 
+          <a tooltip-placement="top" tooltip="Delete" href ng-click="options.deleteAdminTemplate($index)" ><i class="fa fa-trash"></i></a>
         </td>
       </tr>
 
