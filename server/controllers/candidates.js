@@ -527,7 +527,7 @@ module.exports = function (dbs) {
             registration: req.body.registration,
             companyCar: req.body.companyCar
         };
-
+        console.log(vehicleInfo.engineSize);
         candidateservice.updateVehicleInformation(req.params.id, vehicleInfo)
           .then(function (user) {
               res.json({ result: true, object: vehicleInformationVm(user, req.params.code) });
@@ -554,14 +554,19 @@ module.exports = function (dbs) {
         var vehicleInformation = {};
         _.forEach(user.worker.vehicleInformation, function (vehicle) {
             if (vehicle.vehicleCode === code) {
+                console.log('vehicle ', vehicle);
                 vehicleInformation = {
                     vehicleCode: utils.findInArray(dataList.VehicleTypes, vehicle.vehicleCode, 'code'),
                     fuelType: utils.findInArray(dataList.Fuels, vehicle.fuelType, 'code'),
-                    engineSize: utils.findInArray(dataList.EngineSizes, vehicle.engineSize, 'code'),
-                    make: vehicle.make,
+                    //engineSize: utils.findInArray(this.fuelType, vehicle.engineSize, 'engineSizes'),
+                    make: vehicle.make, 
                     registration: vehicle.registration,
                     companyCar: vehicle.companyCar
                 };
+                console.log(vehicleInformation.fuelType.engineSizes);
+                    vehicleInformation.engineSize =  utils.findInArray(vehicleInformation.fuelType.engineSizes, vehicle.engineSize, 'code');
+
+                console.log('55555555', vehicleInformation.engineSize,'engineSize', vehicle.engineSize,'datalistFuelEngie',dataList.Fuels);
                 return false;
             }
         });
