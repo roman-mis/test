@@ -40,7 +40,7 @@ app.controller("expensesAuthorizationCtrl",
                 logs($scope.system, 'system doc');
                 $scope.expensesArray = expenses.data.object.claims;
                 $scope.options.totalItems = expenses.data.object.totalCount;
-                console.log($scope.options);
+                logs($scope.options, 'options');
                 $scope.system.statutoryTables.vat.forEach(function (time) {
                     var validFrom = new Date(time.validFrom);
                     var validTo = new Date(time.validTo);
@@ -632,7 +632,7 @@ app.controller("expensesAuthorizationCtrl",
                 });
                 req.objects.push(obj);
             });
-            console.log(req);
+            logs(req,'approve expenses request');
             $http.patch('/api/candidates/expenses/approve', req).success(function (res) {
                 if (res.result) {
                     req.objects.forEach(function (claim) {
@@ -687,7 +687,7 @@ app.controller("expensesAuthorizationCtrl",
                 });
                 req.objects.push(obj);
             });
-            console.log(req);
+            logs(req, 'reject expenses request');
             Notification.primary('Marked for Rejection');
             req.objects.forEach(function (claim) {
                 claim.expenses.forEach(function (exp) {
