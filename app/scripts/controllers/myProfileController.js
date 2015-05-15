@@ -8,6 +8,7 @@ angular.module('origApp.controllers')
 			console.log(res);
 			$scope.user = res.data.object;
 			console.log($scope.user);
+			if($scope.user.avatarFileName){
 
 			HttpResource.model('documents/'+parentScope.currentUser._id+'/avatar').customGet('viewsignedurl', {
 				fileName: $scope.user.avatarFileName
@@ -15,6 +16,7 @@ angular.module('origApp.controllers')
 				console.log(res);
 				$scope.avatar = res.data.signedRequest;
 			});
+		}
 		});
 		$scope.comparePasswords = function () {
 			if(($scope.profile.newPassword && $scope.profile.confirmPassword)&&$scope.profile.newPassword !== $scope.profile.confirmPassword){
@@ -29,11 +31,13 @@ angular.module('origApp.controllers')
 
 		};
 		$scope.onFileSelect = function (files) {
+
 			$scope.files = files;
-			console.log(files[0]);
-			if($scope.files){
+			//console.log(files[0]);
+			if($scope.files && $scope.files.length>0 ){
 				$scope.user.avatarFileName=new Date().getTime().toString() + '_' + $scope.files[0].name;
 			}
+			
 		};
 		$scope.editEmail = function (edit,keep) {
 			if(edit === true){
