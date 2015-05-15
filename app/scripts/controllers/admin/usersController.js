@@ -15,11 +15,13 @@ angular.module('origApp.controllers')
         }];
 
         $scope.options = {};
-
-
+        console.log(555555555555555555555)
+        console.log(555555555555555555555)
+        console.log($scope.options)
         var usersAPI = HttpResource.model('users');
 
         $scope.loadAllUsers = function() {
+            console.log($scope.options)
             var params = {};
             //     console.log('$scope.gridOptions.limit ==> ' + $scope.gridOptions.limit);
             if ($scope.options.limit) {
@@ -57,8 +59,8 @@ angular.module('origApp.controllers')
 
         if ($rootScope.filterName || $rootScope.filterEmail) {
 
-            $scope.options.filterName = $rootScope.filterName;
-            $scope.options.filterEmail = $rootScope.filterEmail;
+            // $scope.options.filterName = $rootScope.filterName;
+            // $scope.options.filterEmail = $rootScope.filterEmail;
             $scope.loadAllUsers();
         } else {
 

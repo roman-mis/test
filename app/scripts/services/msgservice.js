@@ -3,8 +3,8 @@ angular.module('origApp.services')
   .factory('MsgService', function($timeout, $rootScope, $interpolate, $modal, notify) {
     var defaultDuration = 2500;
     var messages = {
-      'RegisterError': 'There was a problem registering candidate, please try again',
-      'LoginError': 'Email address or Password is incorrect.'
+      'RegisterError': 'There was a Problem Registering Candidate, Please Try Again',
+      'LoginError': 'Email ِِِِAddress or Password is Incorrect.'
     };
     var _MsgSrv = {
       /**
