@@ -85,7 +85,7 @@ describe('Checking candidates contact tab', function () {
 
   });
 
-  it('Bank Details data input', function () {
+  it('Bank Details inserting data', function () {
     /// Second dialog
     editLink3.click();
 
@@ -99,14 +99,31 @@ describe('Checking candidates contact tab', function () {
     inputs.get(3).sendKeys(number);
     inputs.get(4).clear();
     inputs.get(4).sendKeys(number);
+    
     saveBtn.click();
-
-
-	expect(labels.get(2).getText()).toBe('Bank_' + number);
-    expect(labels.get(3).getText()).toBe('RBS_' + number);
-    expect(labels.get(4).getText()).toBe('81' + number);
-    expect(labels.get(5).getText()).toBe(number);
-    expect(labels.get(6).getText()).toBe(number);
-
   });
+  
+  it('Bank number should match input value', function(){
+	
+	expect(labels.get(2).getText()).toBe('Bank_' + number);  
+    
+  });
+  
+  it('RBS number should match input value', function(){
+	  expect(labels.get(3).getText()).toBe('RBS_' + number);
+  });
+  
+  it('Account number should match last 3 digits of input value. Other digits must be masked with \'*\'', function(){
+	  var input_3_masked = ('81' + number).replace(/(.*)(\d{3})$/, function(m, p0, p1){
+		return p0.replace(/\d/g,'*')+p1;
+	  });
+	
+	  expect(labels.get(4).getText()).toBe(input_3_masked);	
+  });
+  
+  it('Checking other bank details', function(){
+	  expect(labels.get(5).getText()).toBe(number);
+      expect(labels.get(6).getText()).toBe(number);
+  });
+  
 });
