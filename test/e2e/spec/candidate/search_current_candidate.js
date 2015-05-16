@@ -1,7 +1,8 @@
 describe('Navigate to candidates url', function () {
 
   it('should navigate to page with login options ', function () {
-    browser.get('/candidates');
+    //browser.get('/candidates');
+    $$('.main-menu a[href="/candidates"]').click();
   });
 
   it('should have working search engine', function () {

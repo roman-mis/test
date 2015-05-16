@@ -1,8 +1,8 @@
-var links = $$('.candidate-tabs li a');
+var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
 describe('Candidate Home tab', function () {
   it('Checking dialog data input',function(){
-    links.get(0).click();
+    helper.getByText(links, 'Home').click();
     $('[ng-click="editDetails()"]').click();
     expect($('.modal-content').isDisplayed()).toBeTruthy();
 

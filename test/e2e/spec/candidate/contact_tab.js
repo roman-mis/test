@@ -1,4 +1,4 @@
-var links = $$('.candidate-tabs li a');
+var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
 describe('Checking candidates contact tab', function () {
 
@@ -21,7 +21,7 @@ describe('Checking candidates contact tab', function () {
   };
 
   it('Testing popup dialog for open/close', function () {
-    links.get(1).click();
+    helper.getByText(links, 'Contact').click();
     testDialog(editLink1);
     testDialog(editLink2);
     testDialog(editLink3);
@@ -41,13 +41,22 @@ describe('Checking candidates contact tab', function () {
     inputs.get(1).clear().sendKeys('Address2_' + number);
     inputs.get(2).clear().sendKeys('Address3_' + number);
     inputs.get(3).clear().sendKeys('Town_' + number);
-    inputs.get(4).clear().sendKeys('Country_' + number);
-    inputs.get(5).clear().sendKeys('E20 2BB');
+    inputs.get(4).clear().sendKeys('E20 2BB');
+    //inputs.get(4).clear().sendKeys('Country_' + number);
+    //inputs.get(5).clear().sendKeys('E20 2BB');
     saveBtn.click();
 
     expect($('[ng-show="contactDetail.address1"]').getText()).toBe('Address1_' + number);
     expect($('[ng-show="contactDetail.address2"]').getText()).toBe('Address2_' + number);
     expect($('[ng-show="contactDetail.address3"]').getText()).toBe('Address3_' + number);
+    
+    browser.refresh();
+    
+    browser.waitForAngular(function(){
+		expect($('[ng-show="contactDetail.address1"]').getText()).toBe('Address1_' + number);
+		expect($('[ng-show="contactDetail.address2"]').getText()).toBe('Address2_' + number);
+		expect($('[ng-show="contactDetail.address3"]').getText()).toBe('Address3_' + number);
+	});
     // expect($('[ng-show="contactDetail.nationality"]').getText()).toBe('Afghan');
 
   });
@@ -93,8 +102,7 @@ describe('Checking candidates contact tab', function () {
     saveBtn.click();
 
 
-
-    expect(labels.get(2).getText()).toBe('Bank_' + number);
+	expect(labels.get(2).getText()).toBe('Bank_' + number);
     expect(labels.get(3).getText()).toBe('RBS_' + number);
     expect(labels.get(4).getText()).toBe('81' + number);
     expect(labels.get(5).getText()).toBe(number);

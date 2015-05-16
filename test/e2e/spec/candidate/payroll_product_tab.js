@@ -3,7 +3,7 @@ var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candi
 describe('Navigating to Payroll-Product tab', function () {
 
 	it('Checking Product subtab', function () {
-		links.get(2).click();
+		helper.getByText(links, 'Payroll').click();
 		$$('.tab-content .nav-tabs li[ng-class="{active: isTabActive(\'product\')}"] a[ng-click="setTabActive(\'product\')"]').click();
 
 		var number = helper.getDefaultNumber();
@@ -22,7 +22,7 @@ describe('Navigating to Payroll-Product tab', function () {
 
 		var addNew=function(agencyIndex){
 			$('[ng-click="openAddPayrollProductModal()"]').click();
-
+				
 			helper.selectSelector(agency, agencyIndex);
 			helper.selectSelector(rule, 1);
 			helper.selectSelector(contract, 1);
@@ -32,7 +32,7 @@ describe('Navigating to Payroll-Product tab', function () {
 			helper.selectSelector(method, 1);
 			desc.clear().sendKeys('desc' + number.substr(-3, 3));
 
-			$('[ng-click="saveProduct()"]').click();
+			$('[ng-click="saveProduct()"]').click();			
 		};
 
 		addNew(0);

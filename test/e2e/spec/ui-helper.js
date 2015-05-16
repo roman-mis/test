@@ -1,6 +1,12 @@
 var fs = require('fs');
 var helper={
-
+  getByText: function(selector, text){
+	  return selector.filter(function(e, i){
+		  return e.getText().then(function(el_text){
+			  return el_text === text;
+		  });
+	  }).get(0);
+  },
   selectSelector:function(select,item){
     select.all(by.css('[ng-click="$select.toggle($event)"]')).get(0).click();
     select.all(by.css('[ng-click="$select.select(item,false,$event)"]')).get(item).click();

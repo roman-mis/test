@@ -16,17 +16,19 @@ var logout=['./spec/login/logout.js'];
 var candidateTabs=[
   './spec/candidate/search_current_candidate.js',
 //  './spec/candidate/check_admin_tabs.js',
-//  './spec/candidate/home_tab.js',
- // './spec/candidate/payroll_tax_tab.js',
-  './spec/candidate/payroll_product_tab.js',
+ //'./spec/candidate/home_tab.js',
+ //'./spec/candidate/payroll_product_tab.js',
+ //'./spec/candidate/payroll_tax_tab.js', 
  // './spec/candidate/agencies_tab.js',
+  './spec/candidate/contact_tab.js',
 ];
 var candidateSidebar=[
-//  './spec/candidate/sidebar/dpa.js',
-//  './spec/candidate/sidebar/onboarding.js',
-//  './spec/candidate/sidebar/add_call_log.js',
-  //'./spec/candidate/sidebar/activity.js',
-//  './spec/candidate/sidebar/agencies.js',
+  './spec/candidate/search_current_candidate.js',
+  './spec/candidate/sidebar/dpa.js',
+  './spec/candidate/sidebar/onboarding.js',
+  './spec/candidate/sidebar/add_call_log.js',
+  './spec/candidate/sidebar/activity.js',
+  './spec/candidate/sidebar/agencies.js',
   './spec/candidate/sidebar/expense_wizard.js'
 ];
 var prefill=[
@@ -55,7 +57,7 @@ exports.config = {
   }],*/
   suites: {
     main: regNewUser.concat(login).concat(logout),
-    remote: adminCredentials.concat(login).concat(candidateSidebar),
+    remote: adminCredentials.concat(login).concat(candidateSidebar).concat(logout),
     dummy: adminCredentials.concat(login).concat(candidateTabs).concat(logout)
   },
 

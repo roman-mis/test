@@ -1,9 +1,9 @@
-var links = $$('.candidate-tabs li a');
+var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
 describe('Checking AGENCIES tab', function (){
   it('Sufficient agency count',function(){
  //   browser.driver.get('http://originempayroll-qa.elasticbeanstalk.com/candidates/54d8b6fed7672edf6a63dfbc/agencies');
-    links.get(5).click();
+    helper.getByText(links, 'Agencies').click();
     expect(element.all(by.repeater('product in payrollProducts')).count()).toBeGreaterThan(2);
   });
 
