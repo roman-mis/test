@@ -2,16 +2,14 @@
 angular.module('origApp.controllers')
 	.controller('vehicleCtrl', ['$scope', 'ConstantsResource', 'HttpResource', '$modalInstance', 'parentScope',
 		function($scope, ConstantsResource, HttpResource, $modalInstance, parentScope) {
-			console.log($scope.vehicle);
 			$scope.fuelTypes = ConstantsResource.get('fuels');
 			HttpResource.model('candidates/' + parentScope.user._id + '/vehicleinformation/1')
 				.query({}, function(res) {
 					var vehicleInfo = res.data.object.vehicleInformaiton;
-					console.log(vehicleInfo)
 					if(Object.keys(vehicleInfo).length>0){
 						$scope.vehicle = {
 							fuelType: vehicleInfo.fuelType.code,
-							engineSize: vehicleInfo.fuelType.engineSizes[0].code,
+							engineSize: vehicleInfo.engineSize.code,
 							make: vehicleInfo.make,
 							registration: vehicleInfo.registration,
 							companyCar: vehicleInfo.companyCar
