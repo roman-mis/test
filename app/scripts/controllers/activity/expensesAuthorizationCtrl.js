@@ -361,6 +361,18 @@ app.controller("expensesAuthorizationCtrl",
 
                             //logs($scope.cloned[expenseIndex].expenses[i].expenseDetail.vat, 'cloned');
                             //logs($scope.expensesArray[expenseIndex].expenses[i].expenseDetail.vat, 'original');
+                            //logs($scope.cloned[expenseIndex].expenses[i], 'check this one');
+                            
+                            if (!$scope.cloned[expenseIndex].expenses[i].amount) {
+                                $scope.cloned[expenseIndex].expenses[i].amount = $scope.expensesArray[expenseIndex].expenses[i].amount;
+                                Notification.warning('Invalid amount input');
+                            }
+                            
+                            if (!$scope.cloned[expenseIndex].expenses[i].value && $scope.cloned[expenseIndex].expenses[i].expenseType !== 'Transport') {
+                                $scope.cloned[expenseIndex].expenses[i].value = $scope.expensesArray[expenseIndex].expenses[i].value;
+                                Notification.warning('Invalid value input');
+                            }
+                            
                             angular.copy($scope.cloned[expenseIndex].expenses[i], $scope.expensesArray[expenseIndex].expenses[i]);
                             if (origStatus) {
                                 $scope.expensesArray[expenseIndex].expenses[i].origStatus = origStatus;
@@ -1002,8 +1014,8 @@ app.controller("expensesAuthorizationCtrl",
             }
 
             function logs(record, label) {
-                //if (label) console.log(label + ':', record);
-                //else console.log(record);
+//                if (label) console.log(label + ':', record);
+//                else console.log(record);
             }
 
         }]);
