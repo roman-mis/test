@@ -22,6 +22,7 @@ angular.module('origApp.directives')
                 templateUrl: 'views/partials/origdatepicker.html',
                 replace: true,
                 link: function(scope, element, attrs) {
+                    console.log(scope.till);
                     if(scope.till){
                         var d = new Date(scope.till);
                         scope.maxDate = d.getFullYear() +

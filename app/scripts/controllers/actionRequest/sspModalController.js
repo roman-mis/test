@@ -100,14 +100,14 @@ angular.module('origApp.controllers')
             }
 
             if (n < sickDayFrom) {
-                $scope.sspMessage = 'Informed date is before the SSP start date.';
+                $scope.sspMessage = '< Date informed: > needs to be within 7 days of < Sick note from: >';
                 $scope.validDate = false;
                 return false;
             }
 
 
             if (n > validTill) {
-                $scope.sspMessage = 'He/she hasnot informed within 7 periods from Date of sick note from.';
+                $scope.sspMessage = '< Date informed: > needs to be within 7 days of < Sick note from: >';
                 $scope.validDate = false;
                 return false;
             }
