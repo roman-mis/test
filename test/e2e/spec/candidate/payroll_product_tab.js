@@ -30,7 +30,7 @@ var addNew = function (agencyIndex) {
   helper.selectSelector(method, 1);
   desc.clear().sendKeys('desc' + number.substr(-3, 3));
 
-  $('[ng-click="saveProduct()"]').click();
+  $('[ng-click="saveProduct()"]').click();  
 };
 describe('Navigating to Payroll-Product tab', function () {
 
@@ -38,6 +38,12 @@ describe('Navigating to Payroll-Product tab', function () {
 
     helper.getByText(links, 'Payroll').click();
     $$('.tab-content .nav-tabs li[ng-class="{active: isTabActive(\'product\')}"] a[ng-click="setTabActive(\'product\')"]').click();
+    
+    // make sure product list is clean and ready for tests
+    element.all(by.css('[ng-click="getExternalScope().deleteProduct(row)"]')).each(function(element, index) {
+       element.click();        
+    });
+    
     addNew(0);
 
   });
