@@ -84,6 +84,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     expect(basis.getText()).toBe('W1/M1');
 
     $('[ng-click="cancel()"]').click().then(function () {
+	  browser.sleep(1000); // wait for "remove-modal" animation
       expect($('.modal-content').isPresent()).toBeFalsy();
     });
 

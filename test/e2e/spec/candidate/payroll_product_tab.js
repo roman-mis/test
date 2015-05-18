@@ -1,8 +1,9 @@
 var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
-var addNew = function (agencyIndex) {
+var addNew = function (agencyIndex) { 
 
   $('[ng-click="openAddPayrollProductModal()"]').click();
+  browser.sleep(1000);
 
   var number = helper.getDefaultNumber();
   var agency = element(by.model('product.agency'));
@@ -33,6 +34,8 @@ var addNew = function (agencyIndex) {
 };
 
 describe('Navigating to Payroll-Product tab', function () {
+	
+  
 
   it('Adding one product', function () {
 
