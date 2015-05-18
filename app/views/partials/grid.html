@@ -1,37 +1,31 @@
-
 <div class="orig-grid-wrapper">
   <table class="table orig-grid">
     <thead>
-      <tr >
+      <tr>
         <td class="col-xs-2 btn-success text-center">
           <img style="width:15px;height:15px" src="/images/64px/0371-insert-template.png" alt="">
         </td>
-        <td class="col-xs-2 btn-success text-center" ng-repeat="col in options.columns">
-          {{col}}
-        </td>
+        <td class="col-xs-2 btn-success text-center" ng-repeat="col in options.columns">{{col}}</td>
       </tr>
     </thead>
     <tbody>
-      <tr  ng-repeat="raw in options.data" >
-        <td   class="col-xs-1 text-center">
-          <img style="width:15px;height:15px"
-               ng-src='{{options.getImage(options.allData[$index].templateType)}}' alt="">
+      <tr ng-repeat="raw in options.data">
+        <td class="col-xs-1 text-center">
+          <img style="width:15px;height:15px" ng-src='{{options.getImage(options.allData[$index].templateType)}}' alt="">
         </td>
-        <td class="col-xs-2 text-center" ng-repeat="col in raw track by $index">
-          {{col| date:'yyyy-MM-dd'}}
-        </td>
+        <td class="col-xs-2 text-center" ng-repeat="col in raw track by $index">{{col| date:'yyyy-MM-dd'}}</td>
         <td class="col-xs-3 text-center">
-          <a tooltip-placement="top" tooltip="Edit" href ng-click="options.loadAdminTemplate($index) " <i class="fa fa-eye"></i> </a> &nbsp;| &nbsp;
-          <a tooltip-placement="top" tooltip="Clone" href ng-click="options.clone($index)"><i class="fa fa-files-o" ></i></a> &nbsp;| &nbsp; 
-          <a tooltip-placement="top" tooltip="Delete" href ng-click="options.deleteAdminTemplate($index)" ><i class="fa fa-trash"></i></a>
+          <a tooltip-placement="top" tooltip="Edit" href ng-click="options.loadAdminTemplate($index) "> <i class="fa fa-eye"></i> </a>&nbsp;| &nbsp;
+          <a tooltip-placement="top" tooltip="Clone" href ng-click="options.clone($index)"><i class="fa fa-files-o" ></i></a>&nbsp;| &nbsp;
+          <a tooltip-placement="top" tooltip="Delete" href ng-click="options.deleteAdminTemplate($index)"><i class="fa fa-trash"></i></a>
         </td>
       </tr>
-
     </tbody>
   </table>
   <div class="orig-grid-pagination-wrapper">
     <div class="page-rows-count">
-      <label>Results per page</label><br>
+      <label>Results per page</label>
+      <br>
       <div class="btn-group">
         <button class="btn btn-default" ng-model="options.limit" btn-radio="20">20</button>
         <button class="btn btn-default" ng-model="options.limit" btn-radio="40">40</button>
@@ -39,15 +33,7 @@
         <button class="btn btn-default" ng-model="options.limit" btn-radio="80">80</button>
       </div>
     </div>
-    <pagination
-      total-items="options.totalItems"
-      ng-model="options.currentPage"
-      items-per-page="options.limit"
-      max-size="options.maxVisiblePages"
-      class="pagination"
-      boundary-links="true"
-      rotate="false"
-      num-pages="options.numPages"></pagination>
+    <pagination total-items="options.totalItems" ng-model="options.currentPage" items-per-page="options.limit" max-size="options.maxVisiblePages"
+    class="pagination" boundary-links="true" rotate="false" num-pages="options.numPages"></pagination>
   </div>
 </div>
-

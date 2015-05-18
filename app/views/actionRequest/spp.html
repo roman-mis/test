@@ -7,16 +7,16 @@
 	<form name="sppForm" novalidate ng-submit="submitInformation(sppForm.$valid)">
 		<div class="modal-body">
 			<div class="row">
-				<div class="ol-xs-6 col-sm-3 form-group">Contractor name</div>
+				<div class="ol-xs-6 col-sm-3 form-group">Contractor name:</div>
 				<div class="col-xs-6 col-sm-4 form-group no-padding-left text-right">{{candidateInfo.firstName}} {{candidateInfo.lastName}} </div>
-				<div class="col-xs-6 col-sm-3 form-group">Contractor ID</div>
+				<div class="col-xs-6 col-sm-3 form-group">Contractor ID:</div>
 				<div class="col-xs-6 col-sm-2 form-group no-padding-left text-right">{{candidateInfo.candidateRef}}</div>
 			</div>
 
 			<div class="line-horizontal"></div>
 			<div class="row">
 
-				<div class="col-xs-6 col-sm-4 form-group control-label">Baby due date</div>
+				<div class="col-xs-6 col-sm-4 form-group control-label">Baby due date:</div>
 				<div class="col-xs-6 col-sm-8 form-group form-group">
 					<input type="text" name="due" ng-model="sppObject.startDate" orig-datepicker required/>
 
@@ -24,7 +24,7 @@
 	                                    <p class="alert alert-danger" ng-if="sppForm.due.$error.required">Please enter baby due date.</p>
 	                                </span>
 				</div>
-				<div class="col-xs-6 col-sm-4 control-label no-padding-right">Confirm relationship</div>
+				<div class="col-xs-6 col-sm-4 control-label no-padding-right">Confirm relationship:</div>
 				<div class="col-xs-6 col-sm-8 form-group form-group">
 					<select class="form-control" ng-model="sppObject.spp.relationship" ng-options="opt.code as opt.description for opt in relationships">
 						<option value="">Select relationship</option>
