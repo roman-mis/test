@@ -4,20 +4,20 @@
   	</div><!-- /modal-header -->
   	<div class="modal-body">
   	  <div class="row">
-  	    <div class="col-xs-6 col-sm-3 form-group">Candidate name</div>
+  	    <div class="col-xs-6 col-sm-3 form-group">Candidate name:</div>
   	    <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{ candidate.name | capitalizeAll}}</div>
-  	    <div class="col-xs-6 col-sm-3 form-group">Candidate ID</div>
+  	    <div class="col-xs-6 col-sm-3 form-group">Candidate ID:</div>
   	    <div class="col-xs-6 col-sm-3 form-group no-padding-left text-right">{{candidate.candidateRef}}</div>
   	  </div>
   	  <div class="line-horizontal"></div>
   	  <div class="row">
-  	    <div class="col-xs-6 col-sm-3 control-label">Start date</div>
+  	    <div class="col-xs-6 col-sm-3 control-label">Start date:</div>
   	    <div class="col-xs-6 col-sm-3 form-group no-padding-left">
   	     <div class="input-group date" id="datepickerStartDate">
   	       <input type="text" ng-model="smpObject.startDate" orig-datepicker class="">
   	     </div>
   	   </div>
-  	   <div class="col-xs-6 col-sm-3 control-label">Baby due date</div>
+  	   <div class="col-xs-6 col-sm-3 control-label">Baby due date:</div>
   	   <div class="col-xs-6 col-sm-3 form-group  no-padding-left">
   	    <div class="input-group date" id="datepickerDate">
   	      <input type="text" ng-model="smpObject.smp.babyDueDate" orig-datepicker class="">
@@ -26,7 +26,7 @@
   	 </div>
   	 <div class="line-horizontal"></div>
   	 <div class="row">
-  	<div class="col-xs-6 col-sm-3 control-label no-padding-right">Intended start date</div>
+  	<div class="col-xs-6 col-sm-3 control-label no-padding-right">Intended start date:</div>
   	<div class="col-xs-6 col-sm-3 form-group no-padding-left">
   	  <div class="input-group date" id="datepickerIndendedStartDate">
   	   <input type="text" ng-model="smpObject.intendedStartDate" orig-datepicker class="">
@@ -90,7 +90,7 @@
   	<div class="row rowFooter">
   	<div class="col-xs-6 col-sm-5">
   	 <fieldset class="fieldsetSMP">
-  	  <legend class="text-center">Upload certificate</legend>
+  	  <legend class="text-center">Upload certificate:</legend>
   	  <div class="row">
   	    <div class="col-xs-12 text-center">
   	      <div class="fileUpload btn btn-primary" style="width: 100%; margin-bottom: 5px">
@@ -112,7 +112,7 @@
   	  <div class="col-xs-12" ng-if="temp.logoFileName || temp.logoSize">
   	    <div class="form-group">
   	      <div class="col-xs-12 label-control">
-  	        <p>File details</p>
+  	        <p>File details:</p>
   	      </div>
   	    </div>
   	  </div>
@@ -139,7 +139,7 @@
   	<div class="col-xs-6 col-sm-7">
   	<div class="row">
   	  <div class="col-xs-12 col-sm-6 control-label no-padding-right no-padding-left">
-  	    <span>Date employer informed</span>
+  	    <span>Date employer informed:</span>
   	  </div>
   	  <div class="col-xs-12 col-sm-6 form-group no-padding-left">
   	   <input type="text" ng-model="smpObject.dateInformed" orig-datepicker class="">
@@ -147,7 +147,7 @@
   	 </div>
   	 <div class="row">
   	<div class="col-xs-12 col-sm-6 control-label no-padding-left">
-  	  <span>Actual start date</span>
+  	  <span>Actual start date:</span>
   	</div>
   	<div class="col-xs-12 col-sm-6 form-group no-padding-left">
   	 <input type="text" orig-datepicker ng-model="smpObject.actualStartDate" class="">
@@ -175,7 +175,7 @@
   	</div>
   	<div class="row">
   	<div class="col-xs-12 col-sm-6 control-label no-padding-left">
-  	  <span>Actual birth date</span>
+  	  <span>Actual birth date:</span>
   	</div>
   	<div class="col-xs-12 col-sm-6 form-group no-padding-left">
   	  <input type="text" ng-model="smpObject.smp.actualBirthDate" orig-datepicker class="">
