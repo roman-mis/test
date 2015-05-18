@@ -10,11 +10,11 @@
         </li>
         <li class="clearfix">Last Name<span class="meta">{{candidate.lastName}}</span>
         </li>
-        <li class="clearfix">Gender<span class="meta">{{candidate.gender}}</span>
+        <li class="clearfix">Gender<span class="meta">{{candidate.gender === 'M' ? 'Male' : 'Female'}}</span>
         </li>
         <li class="clearfix">Date of Birth<span class="meta">{{candidate.birthDate | date:"dd/MM/yyyy"}}</span>
         </li>
-        <li class="clearfix">Nationality<span class="meta">{{candidate.nationality}}</span>
+        <li class="clearfix">Nationality<span class="meta">{{candidateStringNationality}}</span>
         </li>
     </ul>
 </div>
