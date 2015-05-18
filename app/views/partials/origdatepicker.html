@@ -6,7 +6,8 @@
            ng-change="dateChanged(ngModel)"
            datepicker-popup="{{dateFormat||'dd/MM/yyyy'}}"
            is-open="popup" 
-		       date-disabled="dateDisabled(date, mode)"	
+		   date-disabled="dateDisabled(date, mode)"
+           max-date="'{{till}}'"
            
            />
     <span class="input-group-btn">
