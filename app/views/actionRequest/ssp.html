@@ -3,7 +3,6 @@
 		<div class="modal-header">
 			<h3 class="modal-title">Request Statutory Sick Pay</h3>
 		</div>
-	
 		<div class="modal-body">
 			<div class="row form-group">
 				<div class="col-xs-6 col-sm-3 control-label">Candidate name:</div>
@@ -43,8 +42,8 @@
 				</div>
 				<div style="text-align: right;" class="col-xs-6 col-sm-1 form-group control-label">To: &nbsp; </div>
 				<div class="col-xs-6 col-sm-3 form-group no-padding-left">
-					<div id="datepickerTo" class="input-group date">
-						<input type="text" name="end" ng-model="ssp.endDate" orig-datepicker required />
+					<div id="datepickerTo" class="input-group date"> 
+						<input type="text" name="end" ng-model="ssp.endDate"  orig-datepicker required />
 						<span ng-if="sick.end.$invalid && submitted">
 	                                <p ng-show="sick.end.$error.required" class="alert alert-danger">Please enter date of sick
 	                                    end.</p>

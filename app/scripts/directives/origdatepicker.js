@@ -15,17 +15,28 @@ angular.module('origApp.directives')
                     ngModel: '=',
                     placeholder: '@',
                     dateFormat: '@',
-					dateDisabled: '&',
-                    dateChanged: '='
+                    till: '@',
+					dateDisabled: '&'
+                    
                 },
                 templateUrl: 'views/partials/origdatepicker.html',
                 replace: true,
                 link: function(scope, element, attrs) {
-                    
-                    scope.changed = function(){
-
-                        scope.dateChanged();
+                    console.log(scope.till);
+                    if(scope.till){
+                        var d = new Date(scope.till);
+                        scope.maxDate = d.getFullYear() +
+                         '-' + 
+                         d.getMonth() + 
+                         '-' + 
+                         d.getDate();
+                    }else{
+                        scope.till = null;
+                    }
+                    scope.dateChanged = function(date){
+                        console.log(date);
                     };
+
                     scope.initDate =new Date('01-01-1900');
                     scope.firstDate = Date.parse(new Date(2014,8,5));
 					scope.dateDisabled = function(date, mode) {

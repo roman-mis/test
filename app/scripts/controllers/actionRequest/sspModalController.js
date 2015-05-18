@@ -1,3 +1,4 @@
+/// <reference path="../../../../typings/angularjs/angular.d.ts"/>
 'use strict';
 angular.module('origApp.controllers')
     .controller('sspModalController', function($scope, parentScope, HttpResource, $http, MsgService, $modalInstance,ModalService,$modal) {
@@ -7,6 +8,12 @@ angular.module('origApp.controllers')
         $scope.candidateId = parentScope.candidateId;
         $scope.candidate = parentScope.candidate;
         $scope.showMe = parentScope.showMe;
+        if(!$scope.ssp){
+            $scope.ssp = {};
+            $scope.ssp.periods = [];
+        }
+        
+        
         
         if (!$scope.ssp) {
             $scope.ssp = {};
@@ -41,7 +48,7 @@ angular.module('origApp.controllers')
 
                 if ($scope.ssp && $scope.ssp.periods && $scope.ssp.periods.length === 0) {
                     $scope.validDate = false;
-                    $scope.sspMessage = 'Please enter date range';
+                    $scope.sspMessage = 'Please Check If Qualify First';
                 }
             }
         };
@@ -57,10 +64,8 @@ angular.module('origApp.controllers')
         $scope.changeAmount = function(i) {
             i = false;
         };
-
         $scope.checkDate = function() {
             $scope.validDate = true;
-            $scope.ssp.periods = [];
 
             $scope.sspMessage=null;
             if (!$scope.ssp) {
@@ -74,37 +79,35 @@ angular.module('origApp.controllers')
             console.log('sickDayFrom', sickDayFrom);
             console.log('sickDayTo', sickDayTo);
 
-            var validTill = sickDayTo + 604800000;
+            var validTill = sickDayFrom + 604800000;
 
             if ($scope.sick.inform.$error.required || $scope.sick.start.$error.required || $scope.sick.end.$error.required) {
                 $scope.submitted = true;
+                $scope.validDate = false;
+                return false;
             }
             
             if(sickDayFrom > sickDayTo){
-                console.log(1)
                 $scope.sspMessage = 'Sick date to" is before the "sick day from.';
                 $scope.validDate = false;
                 return false;
             }
 
             if ((sickDayTo - sickDayFrom) < 345600000) {
-                console.log(2)
                 $scope.sspMessage = 'The period of sick pay must be at least four periods long to qualify for SSP.';
                 $scope.validDate = false;
                 return false;
             }
 
-            if (n < sickDayTo) {
-                console.log(3)
-                $scope.sspMessage = 'Informed date is before the SSP end date.';
+            if (n < sickDayFrom) {
+                $scope.sspMessage = '< Date informed: > needs to be within 7 days of < Sick note from: >';
                 $scope.validDate = false;
                 return false;
             }
 
 
             if (n > validTill) {
-                console.log(4)
-                $scope.sspMessage = 'He/she hasnot informed within 7 periods from Date of sick note to.';
+                $scope.sspMessage = '< Date informed: > needs to be within 7 days of < Sick note from: >';
                 $scope.validDate = false;
                 return false;
             }
