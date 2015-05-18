@@ -1,4 +1,4 @@
-var links = $$('.candidate-tabs li a');
+var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
 describe('Checking candidates contact tab', function () {
 
@@ -21,7 +21,7 @@ describe('Checking candidates contact tab', function () {
   };
 
   it('Testing popup dialog for open/close', function () {
-    links.get(1).click();
+    helper.getByText(links, 'Contact').click();
     testDialog(editLink1);
     testDialog(editLink2);
     testDialog(editLink3);
@@ -41,13 +41,22 @@ describe('Checking candidates contact tab', function () {
     inputs.get(1).clear().sendKeys('Address2_' + number);
     inputs.get(2).clear().sendKeys('Address3_' + number);
     inputs.get(3).clear().sendKeys('Town_' + number);
-    inputs.get(4).clear().sendKeys('Country_' + number);
-    inputs.get(5).clear().sendKeys('E20 2BB');
+    inputs.get(4).clear().sendKeys('E20 2BB');
+    //inputs.get(4).clear().sendKeys('Country_' + number);
+    //inputs.get(5).clear().sendKeys('E20 2BB');
     saveBtn.click();
 
     expect($('[ng-show="contactDetail.address1"]').getText()).toBe('Address1_' + number);
     expect($('[ng-show="contactDetail.address2"]').getText()).toBe('Address2_' + number);
     expect($('[ng-show="contactDetail.address3"]').getText()).toBe('Address3_' + number);
+
+    browser.refresh();
+
+    browser.waitForAngular(function(){
+		expect($('[ng-show="contactDetail.address1"]').getText()).toBe('Address1_' + number);
+		expect($('[ng-show="contactDetail.address2"]').getText()).toBe('Address2_' + number);
+		expect($('[ng-show="contactDetail.address3"]').getText()).toBe('Address3_' + number);
+	});
     // expect($('[ng-show="contactDetail.nationality"]').getText()).toBe('Afghan');
 
   });
@@ -66,6 +75,7 @@ describe('Checking candidates contact tab', function () {
     inputs.get(4).clear().sendKeys('https://www.facebook.com/boojaka' + number);
     inputs.get(5).clear().sendKeys('https://www.linkedin.com/profile/view?id=16' + number);
     saveBtn.click();
+    browser.refresh();
 
     expect(labels.get(0).getText()).toBe('02012' + number);
     expect(labels.get(1).getText()).toBe('07012' + number);
@@ -76,7 +86,7 @@ describe('Checking candidates contact tab', function () {
 
   });
 
-  it('Bank Details data input', function () {
+  it('Bank Details inserting data', function () {
     /// Second dialog
     editLink3.click();
 
@@ -90,15 +100,32 @@ describe('Checking candidates contact tab', function () {
     inputs.get(3).sendKeys(number);
     inputs.get(4).clear();
     inputs.get(4).sendKeys(number);
+
     saveBtn.click();
+    browser.refresh();
+  });
 
+  it('Bank number should match input value', function(){
 
-
-    expect(labels.get(2).getText()).toBe('Bank_' + number);
-    expect(labels.get(3).getText()).toBe('RBS_' + number);
-    expect(labels.get(4).getText()).toBe('81' + number);
-    expect(labels.get(5).getText()).toBe(number);
-    expect(labels.get(6).getText()).toBe(number);
+	expect(labels.get(2).getText()).toBe('Bank_' + number);
 
   });
+
+  it('RBS number should match input value', function(){
+	  expect(labels.get(3).getText()).toBe('RBS_' + number);
+  });
+
+  it('Account number should match last 3 digits of input value. Other digits must be masked with \'*\'', function(){
+	  var input_3_masked = ('81' + number).replace(/(.*)(\d{3})$/, function(m, p0, p1){
+		return p0.replace(/\d/g,'*')+p1;
+	  });
+
+	  expect(labels.get(4).getText()).toBe(input_3_masked);
+  });
+
+  it('Checking other bank details', function(){
+	  expect(labels.get(5).getText()).toBe(number);
+      expect(labels.get(6).getText()).toBe(number);
+  });
+
 });

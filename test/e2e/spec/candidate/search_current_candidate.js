@@ -1,7 +1,8 @@
 describe('Navigate to candidates url', function () {
 
   it('should navigate to page with login options ', function () {
-    browser.get('/candidates');
+    //browser.get('/candidates');
+    $$('.main-menu a[href="/candidates"]').click();
   });
 
   it('should have working search engine', function () {
@@ -9,7 +10,7 @@ describe('Navigate to candidates url', function () {
     var initCount = items.count();
 
     var searchInput = element(by.model('searchText'));
-    searchInput.sendKeys(loginData.userName);
+    searchInput.sendKeys(loginData.userEmail.split('@')[0]);
 
     expect(items.count()).toBeGreaterThan(0);
    // expect(items.count()).toBeLessThan(initCount);

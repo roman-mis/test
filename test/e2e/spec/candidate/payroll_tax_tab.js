@@ -1,15 +1,15 @@
-var links = $$('.candidate-tabs li a');
+var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 
 describe('Navigating to Payroll-Tax tab', function () {
 
-  var innerTabs = $$('.tabs-payroll .nav-tabs li');
-  var innerLinks = $$('.tabs-payroll .nav-tabs li a');
-  var tabContents = $$('.tabs-payroll .tab-content');
+  var innerTabs = $$('.tab-content .nav-tabs li[ng-class^="{active: isTabActive"]');
+  var innerLinks = $$('.tab-content .nav-tabs li[ng-class^="{active: isTabActive"] a');
+  var tabContents = $$('.tab-content .tab-content');
 
 
   it('if inner tabs are working', function () {
 
-    links.get(2).click();
+    helper.getByText(links, 'Payroll').click();
     var checkInnerTabs = function (i) {
       innerLinks.get(i).click();
       expect(innerTabs.get(i).getAttribute('class')).toContain('active');
@@ -34,6 +34,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     helper.selectSelector(decl, 0);
 
     var number = helper.getDefaultNumber();
+/*
     var input1 = element(by.model('tax.p45GrossTax'));
     input1.clear();
     input1.sendKeys(parseInt(number.substr(-3, 3)));
@@ -41,7 +42,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     var input2 = element(by.model('tax.p45TaxDeducted'));
     input2.clear();
     input2.sendKeys(parseInt(number.substr(-3, 3)));
-
+*/
     var date = helper.getDateByModel('tax.startDate');
     date.clear().sendKeys('26/01/2012');
 
@@ -74,8 +75,8 @@ describe('Navigating to Payroll-Tax tab', function () {
     });
 
     expect(decl.getText()).toBe('Not Applicable');
-    expect(input1.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
-    expect(input2.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
+    //expect(input1.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
+    //expect(input2.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
     expect(date.getAttribute('value')).toBe('26/01/2012');
     expect(freq.getText()).toBe('4 Weekly');
     expect(ni.getAttribute('value')).toBe('AB123456C');
