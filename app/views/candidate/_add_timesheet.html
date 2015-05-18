@@ -42,7 +42,7 @@
                                 <button class="btn btn-primary" ng-click="okay();clicked =false">OK</button>
                             </div>
                         </div>
-                        <input type="text" class="form-control" placeholder="Select a week" ng-model="dateHolder" ng-click="clicked = true" readonly style="cursor:text">
+                        <input type="text" class="form-control" placeholder="Select a week*" ng-model="dateHolder" ng-click="clicked = true" readonly style="cursor:text">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="clicked = true"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -53,7 +53,7 @@
         <hr>
         <div class="row">
             <div class="col-md-3 col-sm-12 form-group">
-                <span>Rate</span>
+                <span>Rate*</span>
                 <select ng-model="saveRate" class="col-sm-12 form-control" ng-options="rate.name for rate in paymentRates"></select>
             </div>
             <div class="col-sm-12 form-group hidden-md hidden-lg">
@@ -63,11 +63,11 @@
                 <div class="row">
                     <div class="col-sm-12 no-padding-right">
                         <div class="col-xs-2 form-group margin-8 text-center">
-                            <span>Unit</span>
+                            <span>Unit*</span>
                             <input ng-model="elements.unit" type="number" class="form-control" />
                         </div>
                         <div class="col-xs-2 form-group margin-8 text-center">
-                            <span>Pay Rate</span>
+                            <span>Pay Rate*</span>
                             <input min="0" ng-model="elements.payRate" type="number" class="form-control" />
                         </div>
                         <div class="col-xs-2 form-group margin-8 text-center">
