@@ -107,7 +107,7 @@ angular.module('origApp.controllers')
 
 
             if (n > validTill) {
-                $scope.sspMessage = 'He/she hasnot informed within 7 periods from Date of sick note to.';
+                $scope.sspMessage = 'He/she hasnot informed within 7 periods from Date of sick note from.';
                 $scope.validDate = false;
                 return false;
             }
