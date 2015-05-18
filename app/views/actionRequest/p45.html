@@ -7,14 +7,14 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="row form-group">
-					<div class="col-xs-6 col-sm-3">Candidate Name</div>
+					<div class="col-xs-6 col-sm-3">Candidate name:</div>
 					<div class="col-xs-6 col-sm-3">{{candidate.firstName}}&nbsp;{{candidate.lastName}}</div>
-					<div class="col-xs-6 col-sm-3">Candidate ID</div>
+					<div class="col-xs-6 col-sm-3">Candidate ID:</div>
 					<div class="col-xs-6 col-sm-3">{{candidate.candidateRef | number}}</div>
 				</div>
 
 				<div class="row form-group">
-					<label class="col-xs-6">Date Requested</label>
+					<label class="col-xs-6">Date requested:</label>
 					<div class="col-xs-6">
 						<div class="input-group date" id="datepickerFrom">
 							<div class="input-group" required ng-model="dateRequested" placeholder="Date requested" orig-datepicker />
@@ -22,7 +22,7 @@
 					</div>
 				</div>
 				<div class="row form-group">
-					<label class="col-xs-6">Leaving Date</label>
+					<label class="col-xs-6">Leaving date:</label>
 					<div class="col-xs-6">
 						<div class="input-group date" id="datepickerTo">
 							<div class="input-group" required ng-model="leavingDate" placeholder="Leaving date" orig-datepicker />
@@ -55,7 +55,7 @@
 						<div class="col-xs-12 col-sm-6"></div>
 						<div class="col-xs-12 col-sm-6">
 							<button ng-click="cancelUpload()" type="button" class="btn btn-warning">
-								<div>Cancel Upload</div>
+								<div>Cancel upload</div>
 							</button>
 						</div>
 					</div>
@@ -66,11 +66,11 @@
 						</h4>
 					</div>
 					<div class="row control-label">
-						<div class="col-xs-3">Name</div>
+						<div class="col-xs-3">Name:</div>
 						<div class="col-xs-9" id="uploadFileCustom" style="word-wrap:break-word"></div>
 					</div>
 					<div class="row control-label">
-						<div class="col-xs-3">Size</div>
+						<div class="col-xs-3">Size:</div>
 						<div class="col-xs-9" id="fileSize"></div>
 					</div>
 				</fieldset>

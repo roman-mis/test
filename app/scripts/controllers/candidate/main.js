@@ -17,6 +17,17 @@ angular.module('origApp.controllers')
             $scope.candidate = cddAPI.get($scope.candidateId, function() {
               $scope.baseBreadcrumbs[2].text = $scope.candidate.firstName + ' ' + $scope.candidate.lastName;
               $rootScope.breadcrumbs = $scope.baseBreadcrumbs;
+              HttpResource.model('constants/nationalities').query({},function (res) {
+                // body...
+                $scope.nationalities = res.data;
+                $scope.candidateStringNationality = '';
+                for (var i = 0; i < $scope.nationalities.length; i++) {
+                  if ($scope.candidate.nationality == $scope.nationalities[i].code) {
+                    $scope.candidateStringNationality = $scope.nationalities[i].description;
+                    break;
+                  }
+                }
+            });
             });
           };
 

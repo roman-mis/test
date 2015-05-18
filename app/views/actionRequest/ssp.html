@@ -5,16 +5,16 @@
 		</div>
 		<div class="modal-body">
 			<div class="row form-group">
-				<div class="col-xs-6 col-sm-3 control-label">Candidate Name</div>
+				<div class="col-xs-6 col-sm-3 control-label">Candidate name:</div>
 				<div class="col-xs-6 col-sm-3 control-label">{{candidateInfo.firstName}} {{candidateInfo.lastName}}</div>
-				<div class="col-xs-6 col-sm-3 control-label">Candidate ID</div>
+				<div class="col-xs-6 col-sm-3 control-label">Candidate ID:</div>
 				<div class="col-xs-6 col-sm-3 control-label" ng-if="!ssp.worker">{{candidateInfo.candidateRef}}</div>
 				<div class="col-xs-6 col-sm-3 control-label" ng-if="ssp.worker">
 					{{ssp.worker.candidateRef}}</div>
 			</div>
 			<div class="line-horizontal"></div>
 			<div class="row form-group">
-				<div class="col-xs-6 col-sm-4 control-label">Date Informed</div>
+				<div class="col-xs-6 col-sm-4 control-label">Date informed:</div>
 				<div class="col-xs-6 col-sm-4 no-padding-left">
 					<div id="datepickerDate" class="input-group date">
 						<input type="text" ng-model="ssp.dateInformed" name="inform" orig-datepicker till="{{Date(Date.now())}}" required/>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="row form-group">
-				<div class="col-xs-12 col-sm-3 control-label">Date of Sick Note</div>
+				<div class="col-xs-12 col-sm-3 control-label">Period of sick note:</div>
 				<div style="text-align: right;" class="col-xs-6 col-sm-2 control-label">From: &nbsp; </div>
 				<div class="col-xs-6 col-sm-3 no-padding-left">
 					<div id="datepickerFrom" class="input-group date">
@@ -53,7 +53,7 @@
 			</div>
 			<div class="row" ng-if='!showMe'>
 				<div class="col-xs-12 form-group">
-					<button class="btn btn-primary pull-right" type="button" ng-click="checkDate('first')">Check if qualifies
+					<button class="btn btn-primary pull-right" type="button" ng-click="checkDate('first')">Calculate
 					</button>
 				</div>
 				<div class="col-xs-12 form-group"></div>
@@ -107,7 +107,7 @@
 			<div class="row">
 				<div class="col-xs-7 col-sm-6">
 					<fieldset>
-						<legend class="text-center">Upload Sick Note</legend>
+						<legend class="text-center">Upload sick note</legend>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 text-center">
 								<div class="fileUpload btn btn-primary">
