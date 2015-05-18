@@ -12,12 +12,8 @@ angular.module('origApp.controllers')
             $scope.ssp = {};
             $scope.ssp.periods = [];
         }
-        
-        
-        
-        if (!$scope.ssp) {
-            $scope.ssp = {};
-        }
+        $scope.maxDate = new Date(Date.now());
+         $scope.Date = Date
 
         $scope.validDate = true;
 
