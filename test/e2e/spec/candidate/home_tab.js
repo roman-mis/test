@@ -28,8 +28,8 @@ describe('Candidate Home tab', function () {
     expect(labels.get(1).getText()).toBe('FirstName');
     expect(labels.get(2).getText()).toBe('MiddleName');
     expect(labels.get(3).getText()).toBe('LastName');
-    expect(labels.get(4).getText()).toBe('M');
-    expect(labels.get(6).getText()).toBe('1');
+    expect(labels.get(4).getText()).toBe('Male');
+    expect(labels.get(6).getText()).toBe('United Kingdom');
 
   });
 });

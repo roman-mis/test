@@ -10,7 +10,7 @@ describe('Navigate to candidates url', function () {
     var initCount = items.count();
 
     var searchInput = element(by.model('searchText'));
-    searchInput.sendKeys(loginData.userName);
+    searchInput.sendKeys(loginData.userEmail.split('@')[0]);
 
     expect(items.count()).toBeGreaterThan(0);
    // expect(items.count()).toBeLessThan(initCount);
