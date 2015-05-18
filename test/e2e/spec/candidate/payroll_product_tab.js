@@ -32,10 +32,7 @@ var addNew = function (agencyIndex) {
 
   $('[ng-click="saveProduct()"]').click();
 };
-
 describe('Navigating to Payroll-Product tab', function () {
-	
-  
 
   it('Adding one product', function () {
 
