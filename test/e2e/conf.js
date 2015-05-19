@@ -25,11 +25,11 @@ var candidateTabs=[
 var candidateSidebar=[
   './spec/candidate/search_current_candidate.js',
   './spec/candidate/sidebar/dpa.js',
-  './spec/candidate/sidebar/onboarding.js',
-  './spec/candidate/sidebar/add_call_log.js',
-  './spec/candidate/sidebar/activity.js',
-  './spec/candidate/sidebar/agencies.js',
-  './spec/candidate/sidebar/expense_wizard.js'
+  //'./spec/candidate/sidebar/onboarding.js',
+  //'./spec/candidate/sidebar/add_call_log.js',
+  //'./spec/candidate/sidebar/activity.js',
+  //'./spec/candidate/sidebar/agencies.js',
+  //'./spec/candidate/sidebar/expense_wizard.js'
 ];
 var prefill=[
 //  './spec/admin/payment_rate.js',
