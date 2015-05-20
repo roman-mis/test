@@ -17,8 +17,8 @@ describe('Checking Call Log', function () {
     element(by.model('data.templateTitle')).clear().sendKeys('Super task title');
     element(by.model('data.templateHtml')).clear().sendKeys('Super task desc');
     helper.getDateByModel('data.followUpTaskDate').clear().sendKeys('01/01/2015');
-    helper.selectSelector(element.all(by.model('data.assignee')), 1);
-    element(by.css('[ng-click="save(true)"]')).click();
+    helper.selectSelector(element.all(by.model('data.assignee')), 1);    
+    element(by.css('[ng-click="save()"]')).click();
     expect($('.alert-success').isPresent()).toBeTruthy();
     expect($('.modal-content').isPresent()).toBeFalsy();
   });

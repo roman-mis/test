@@ -9,10 +9,10 @@ describe('Checking Activity', function () {
     helper.selectSelector(element(by.model('data.agency')), 1);
     helper.selectSelector(element(by.model('data.activityType')), 0);
     $('.modal-content [ng-click="next()"]').click();
-
-    expect($('.modal-title [ng-show="activityType==\'callLog\'"]').getText()).toContain('call log');
+    expect($('.modal-title [ng-show="activityType==\'callLog\'"]').getText()).toContain('Call Log');
     expect($('.modal-title [ng-show="activityType==\'callLog\'"]').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -22,9 +22,10 @@ describe('Checking Activity', function () {
     helper.selectSelector(element(by.model('data.activityType')), 1);
     $('.modal-content [ng-click="next()"]').click();
 
-    expect($('.modal-title [ng-show="activityType==\'task\'"]').getText()).toContain('task wizard');
+    expect($('.modal-title [ng-show="activityType==\'task\'"]').getText()).toContain('Task Wizard');
     expect($('.modal-title [ng-show="activityType==\'task\'"]').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
