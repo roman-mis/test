@@ -49,8 +49,8 @@ describe('Navigating to Payroll-Tax tab', function () {
     var freq = element(by.model('tax.payFrequency'));
     helper.selectSelector(freq, 2);
 
-    var niPad = element(by.model('tax.employeesNIpaid'));
-    helper.selectSelector(niPad, 1);
+    var niCat = element(by.model('tax.niCategory'));
+    helper.selectSelector(niCat, 1);
 
     var ni = element(by.model('tax.niNumber'));
     ni.clear().sendKeys('AB123456C');
@@ -75,10 +75,9 @@ describe('Navigating to Payroll-Tax tab', function () {
     });
 
     expect(decl.getText()).toBe('Not Applicable');
-    //expect(input1.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
-    //expect(input2.getAttribute('value')).toBe(String(parseInt(number.substr(-3, 3))));
     expect(date.getAttribute('value')).toBe('26/01/2012');
     expect(freq.getText()).toBe('4 Weekly');
+    expect(niCat.getText()).toBe('E');
     expect(ni.getAttribute('value')).toBe('AB123456C');
     expect(code.getAttribute('value')).toBe(String(parseInt(number.substr(-2, 2))));
     expect(basis.getText()).toBe('W1/M1');

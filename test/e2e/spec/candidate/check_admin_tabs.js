@@ -1,5 +1,5 @@
-var tabs = $$('.candidate-tabs li');
-var links = $$('.candidate-tabs li a');
+var tabs = $$('.nav-tabs li');
+var links = $$('.nav-tabs li a');
 
 describe('Navigate to users tabs', function () {
 

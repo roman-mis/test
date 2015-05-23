@@ -15,6 +15,7 @@ describe('Candidate Home tab', function () {
     helper.selectSelector(element(by.model('candidate.nationality')),0);
 
     $('[ng-click="saveCandidate()"]').click();
+    browser.driver.switchTo().alert().accept();
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 

@@ -68,8 +68,8 @@ describe('Checking candidates contact tab', function () {
   it('Primary contact info data input', function () {
     editLink2.click();
 
-    inputs.get(0).clear().sendKeys('020121' + number);
-    inputs.get(1).clear().sendKeys('070121' + number);
+    inputs.get(0).clear().sendKeys('07625' + number);
+    inputs.get(1).clear().sendKeys('07624' + number);
     inputs.get(2).clear().sendKeys('boojaka_r' + number + '@gmail.com');
     inputs.get(3).clear().sendKeys('alt_r' + number + '@gmail.com');
     inputs.get(4).clear().sendKeys('https://www.facebook.com/boojaka' + number);
@@ -77,8 +77,8 @@ describe('Checking candidates contact tab', function () {
     saveBtn.click();
     browser.refresh();
 
-    expect(labels.get(0).getText()).toBe('020121' + number);
-    expect(labels.get(1).getText()).toBe('070121' + number);
+    expect(labels.get(0).getText()).toBe('07625' + number);
+    expect(labels.get(1).getText()).toBe('07624' + number);
     expect(labels2.get(0).getText()).toBe('boojaka_r' + number + '@gmail.com');
     expect(labels2.get(1).getText()).toBe('alt_r' + number + '@gmail.com');
     expect(labels2.get(2).getText()).toBe('https://www.facebook.com/boojaka' + number);
