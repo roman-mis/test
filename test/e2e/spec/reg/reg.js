@@ -84,7 +84,7 @@ describe('Browse to sign up', function() {
     expectValid(input);
 
 
-    validateInputByModel('candidate.details.phone','+44777612345');
+    validateInputByModel('candidate.details.phone','07624123456');
     validateInputByModel('candidate.details.niNumber','AB 12 34 56 C');
 
     helper.getDateByModel('candidate.details.birthDate').clear().sendKeys('26/03/1987');
@@ -172,7 +172,7 @@ describe('Browse to sign up', function() {
     nextBtn.click();
     validateInputByModel('candidate.details.bankName', 'Super bank');
     validateInputByModel('candidate.details.accountName', 'Super account name');
-    validateInputByModel('candidate.details.sortCode', '77-00');
+    validateInputByModel('candidate.details.sortCode', '123456');
     validateInputByModel('candidate.details.accountNo', '12345678');
 
     nextBtn.click();

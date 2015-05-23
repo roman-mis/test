@@ -33,7 +33,7 @@ var candidateSidebar=[
 ];
 var prefill=[
 //  './spec/admin/payment_rate.js',
-  './spec/admin/expense_rate.js',
+ // './spec/admin/expense_rate.js',
 ];
 
 var test=[
@@ -54,7 +54,7 @@ exports.config = {
     'browserName': 'chrome'
   }, {
     'browserName': 'chrome'
-  }],*/
+  }],*/ 
   suites: {
     main: regNewUser.concat(login).concat(logout),
     remote: adminCredentials.concat(login).concat(candidateSidebar).concat(logout),
