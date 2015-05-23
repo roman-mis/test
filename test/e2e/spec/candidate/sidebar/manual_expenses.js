@@ -22,13 +22,58 @@ describe('checking manual expense', function () {
     var startM = element.all(by.model('addData.startMins')).get(0);
     var endH = element.all(by.model('addData.endHours')).get(0);
     var endM = element.all(by.model('addData.endMins')).get(0);
+    
+    browser.wait(function(){ console.log('adding time 1'); return true; });
+    
     helper.selectSimpleSelect(days, 2);
     helper.selectSimpleSelect(startH, 10);
     helper.selectSimpleSelect(startM, 2);
     helper.selectSimpleSelect(endH, 17);
     helper.selectSimpleSelect(endM, 3);
     
-    element.all(by.css('[ng-click="add()"]')).get(0).click();
+    element.all(by.css('#addDateButton')).get(0).click();
+    
+    browser.wait(function(){ console.log('adding time 2'); return true; });
+    
+    helper.selectSimpleSelect(days, 3);
+    helper.selectSimpleSelect(startH, 11);
+    helper.selectSimpleSelect(startM, 6);
+    helper.selectSimpleSelect(endH, 15);
+    helper.selectSimpleSelect(endM, 8);
+    
+    element.all(by.css('#addDateButton')).get(0).click();
+    
+    helper.selectSimpleSelect(days, 4);
+    helper.selectSimpleSelect(startH, 11);
+    helper.selectSimpleSelect(startM, 6);
+    helper.selectSimpleSelect(endH, 15);
+    helper.selectSimpleSelect(endM, 8);
+    
+    element.all(by.css('#addDateButton')).get(0).click();
+    
+    helper.selectSimpleSelect(days, 5);
+    helper.selectSimpleSelect(startH, 11);
+    helper.selectSimpleSelect(startM, 6);
+    helper.selectSimpleSelect(endH, 15);
+    helper.selectSimpleSelect(endM, 8);
+    
+    element.all(by.css('#addDateButton')).get(0).click();
+    
+    browser.wait(function(){ console.log('removing times'); return true; });
+    
+    element.all(by.repeater('item in expenseData.times')).each(function(row){
+		row.all(by.css('[ng-click="remove($index)"]')).get(0).click();
+	});
+	
+	expect(element.all(by.repeater('item in expenseData.times')).count()).toBe(0);
+	
+	helper.selectSimpleSelect(days, 2);
+    helper.selectSimpleSelect(startH, 10);
+    helper.selectSimpleSelect(startM, 2);
+    helper.selectSimpleSelect(endH, 17);
+    helper.selectSimpleSelect(endM, 3);
+    
+    element(by.css('#addDateButton')).click();
     
     element.all(by.repeater('item in expenseData.times')).each(function(row){
 		row.all(by.tagName('td')).then(function (cols) {
@@ -54,15 +99,15 @@ describe('checking manual expense', function () {
     helper.selectSimpleSelect(element.all(by.model('addData.date')).get(1), 2);        
     helper.selectSimpleSelect(element.all(by.model('addData.type')).get(0), 1);    
     element.all(by.model('addData.mileage')).get(0).sendKeys('100');    
-    element(by.css('[ng-click="addManual()"]')).click();    
+    element(by.css('#addMilagePostcode')).click();    
     element(by.css('a[href="#subsistence"]')).click();  
   });
   
   it('add subsistence', function() {
 	helper.selectSimpleSelect(element.all(by.model('addData.date')).get(2), 2);
 	helper.selectSimpleSelect(element.all(by.model('addData.type')).get(1), 1);
-	element.all(by.model('addData.cost')).get(0).sendKeys('100');
-	element.all(by.css('[ng-click="add()"]')).get(1).click();
+	element.all(by.model('addData.cost')).get(0).clear().sendKeys('100');
+	element(by.css('#addSubsistenceButton')).click();
 	element(by.css('a[href="#other"]')).click();   
   });
   
@@ -71,7 +116,7 @@ describe('checking manual expense', function () {
     helper.selectSimpleSelect(element.all(by.model('addData.date')).get(3), 2);
     helper.selectSimpleSelect(element.all(by.model('addData.type')).get(2), 1);
     element.all(by.model('addData.cost')).get(1).sendKeys('100');
-    element.all(by.css('[ng-click="add()"]')).get(2).click();
+    element(by.css('#addOtherButton')).click();
     
   });
   
