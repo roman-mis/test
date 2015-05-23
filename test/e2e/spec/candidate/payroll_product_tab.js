@@ -71,7 +71,7 @@ describe('Navigating to Payroll-Product tab', function () {
 
 
         element(rows.row(i - 1)).element(by.css('[ng-click="getExternalScope().editProduct(row)"]')).click();
-		//element(rows.row(i - 1)).all(by.css('td')).get(0).getText().then(function(t){ console.log(t); });
+		
         expect(used.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(0).getText());
         expect(agency.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(1).getText());
         expect(rule.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(3).getText());
