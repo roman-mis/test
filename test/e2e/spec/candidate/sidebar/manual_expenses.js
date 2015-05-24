@@ -1,8 +1,11 @@
 describe('checking manual expense', function () {
 
   it('selecting wizard option', function () {
+	  
+	  browser.refresh();
 
       $('[ng-click="openAddExpensesWin()"]').click();
+      browser.sleep(1000);
       expect($('.modal-content').isDisplayed()).toBeTruthy();
 
   });
@@ -136,8 +139,8 @@ describe('checking manual expense', function () {
   
   it('submit expenses', function () {	    
     element(by.model('isAgreedOnTerms')).click();
-    expect(element.all(by.css('[ng-click="okManual()"]')).get(1).isEnabled()).toBeTruthy();
-    element.all(by.css('[ng-click="okManual()"]')).get(1).click();
+    expect(element.all(by.css('[ng-click="okManual()"]')).get(1).isEnabled()).toBeTruthy();    
+    element(by.partialButtonText('Submit Expenses')).click();
   });
   
   it('thank you screen', function () {
