@@ -23,7 +23,7 @@ var helper={
   printStage: function(){
 	  var args = Array.prototype.map.call(arguments, function(x){ return x; });
 	  browser.wait(function(){
-		  console.log('\033[33m         * '+args.join(' ')+'\033[39m'); // print text with yellow color
+		  console.log('\033[33m    * '+args.join(' ')+'\033[39m'); // print text with yellow color
 		  return true;
 	  })
   }

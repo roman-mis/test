@@ -130,7 +130,6 @@ describe('checking expense wizard', function () {
     element(by.css('[ng-click="add()"]')).click();
     
     element.all(by.repeater('item in expenseData.others')).each(function (row) {
-	  row.all(by.tagName('td')).count(function(n){ console.log(n); });
       row.all(by.tagName('td')).then(function (cols) {
         expect(cols[0].getText()).toContain(days.all(by.tagName('option')).get(2).getText());
      //   expect(cols[1].getText()).toContain(element(by.model('addData.type')).all(by.tagName('option')).get(1).getText());
