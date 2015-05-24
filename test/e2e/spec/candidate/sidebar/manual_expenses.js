@@ -23,7 +23,7 @@ describe('checking manual expense', function () {
     var endH = element.all(by.model('addData.endHours')).get(0);
     var endM = element.all(by.model('addData.endMins')).get(0);
     
-    browser.wait(function(){ console.log('adding time 1'); return true; });
+    helper.printStage('adding date #1');
     
     helper.selectSimpleSelect(days, 2);
     helper.selectSimpleSelect(startH, 10);
@@ -33,7 +33,7 @@ describe('checking manual expense', function () {
     
     element.all(by.css('#addDateButton')).get(0).click();
     
-    browser.wait(function(){ console.log('adding time 2'); return true; });
+    helper.printStage('adding date #2');
     
     helper.selectSimpleSelect(days, 3);
     helper.selectSimpleSelect(startH, 11);
@@ -43,6 +43,8 @@ describe('checking manual expense', function () {
     
     element.all(by.css('#addDateButton')).get(0).click();
     
+    helper.printStage('adding date #3');
+    
     helper.selectSimpleSelect(days, 4);
     helper.selectSimpleSelect(startH, 11);
     helper.selectSimpleSelect(startM, 6);
@@ -50,6 +52,8 @@ describe('checking manual expense', function () {
     helper.selectSimpleSelect(endM, 8);
     
     element.all(by.css('#addDateButton')).get(0).click();
+    
+    helper.printStage('adding date #4');
     
     helper.selectSimpleSelect(days, 5);
     helper.selectSimpleSelect(startH, 11);
@@ -59,7 +63,9 @@ describe('checking manual expense', function () {
     
     element.all(by.css('#addDateButton')).get(0).click();
     
-    browser.wait(function(){ console.log('removing times'); return true; });
+    expect(element.all(by.repeater('item in expenseData.times')).count()).toBe(4);
+    
+    helper.printStage('removing recently created 4 dates'); 
     
     element.all(by.repeater('item in expenseData.times')).each(function(row){
 		row.all(by.css('[ng-click="remove($index)"]')).get(0).click();
