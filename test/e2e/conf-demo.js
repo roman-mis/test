@@ -18,6 +18,10 @@ var login2=['./spec/login/login2.js'];
 
 var logout=['./spec/login/logout.js'];
 
+var accountSetup=[
+ './spec/account/change_password.js'
+];
+
 var candidateTabs=[
   './spec/candidate/search_current_candidate.js',
   './spec/candidate/home_tab.js',
@@ -69,6 +73,7 @@ exports.config = {
   suites: {
     main: regNewUser.concat(login1).concat(logout).concat(adminCredentials).concat(login2).concat(prefill).concat(candidateTabs),
     remote: adminCredentials.concat(login1).concat(candidateTabs),
+    account_setup: adminCredentials.concat(login1).concat(accountSetup).concat(logout),
     //dummy: regNewUser.concat(login).concat(logout).concat(adminCredentials).concat(login).concat(prefill).concat(candidateTabs).concat(candidateSidebar)
     dummy: regNewUser.concat(login1).concat(logout).concat(adminCredentials).concat(login2).concat(prefill).concat(candidateTabs)//.concat(candidateSidebar)
   },
