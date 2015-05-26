@@ -56,7 +56,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     ni.clear().sendKeys('AB123456C');
 
     var code = element(by.model('tax.taxCode'));
-    code.clear().sendKeys(parseInt(number.substr(-2, 2)));
+    code.clear().sendKeys('1060L');
 
     var basis = element(by.model('tax.taxBasis'));
     helper.selectSelector(basis, 1);
@@ -79,7 +79,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     expect(freq.getText()).toBe('4 Weekly');
     expect(niCat.getText()).toBe('E');
     expect(ni.getAttribute('value')).toBe('AB123456C');
-    expect(code.getAttribute('value')).toBe(String(parseInt(number.substr(-2, 2))));
+    expect(code.getAttribute('value')).toBe('1060L');
     expect(basis.getText()).toBe('W1/M1');
 
     $('[ng-click="cancel()"]').click().then(function () {
