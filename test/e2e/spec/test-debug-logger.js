@@ -9,11 +9,15 @@ module.exports = function wrapJs(source_file){
 	
 	var tmp_path = path.dirname(source_file)+'/.tmp_'+path.basename(source_file);
 	
-	fs.writeFileSync(tmp_path, fs.readFileSync(source_file).toString().replace(/\/\/\!([^\r?\n]+)/g, function(m, p0){
-		return 'helper.printStage(' + p0 + ');';
-	}));
+	if(wrappedFiles.indexOf(tmp_path) == -1){
 	
-	wrappedFiles.push(tmp_path);
+		fs.writeFileSync(tmp_path, fs.readFileSync(source_file).toString().replace(/\/\/\!([^\r?\n]+)/g, function(m, p0){
+			return 'helper.printStage(' + p0 + ');';
+		}));
+	
+		wrappedFiles.push(tmp_path);
+		
+	}
 	
 	return tmp_path;	
 };
@@ -24,9 +28,7 @@ module.exports.wrapper = function(x){
 
 process.on('exit', function(){
 	wrappedFiles.forEach(function(file){
-		try {
-			fs.unlinkSync(file);
-		} catch(e) { }
+		fs.unlinkSync(file);
 	});
 }); 
 

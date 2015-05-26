@@ -45,5 +45,58 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
       });
     });
   });
+  
+  it('Edit expenses test', function(){
+	  //! 'scanning columns in "expeses rate" table'
+	  var column_names = {};
+	  element(by.css('[ng-show="expensesRate"] + table')).all(by.css('th')).each(function(el, index){
+		  el.getText().then(function(caption){
+			  column_names['_' + caption] = index;
+		  });
+	  });
+	  //! 'getting first "expenserate" object'
+	  var expenserate = element.all(by.repeater('expenserate in expensesRate')).first();	  
+	  //! 'opening "Edit Expense Rate" dialog by clicking on "edit" icon'
+	  expenserate.all(by.css("[ng-click=\"openModal('expensesRate', $index)\"]")).get(0).click();	  
+	  //! ' getting "td" columns of "expenserate" object'
+	  expenserate.all(by.css('td')).then(function(cols){
+		  //! ' cheking if ng-model:name took a name of "expense rate" object'
+		  expect(element(by.model('expensesRate.name')).getAttribute('value')).toBe(cols[column_names._Name].getText());
+		  //! ' checking if ng-model:amount value match'
+		  element(by.model('expensesRate.amount')).getAttribute('value').then(function(value){
+			  expect((value*1).toFixed(2)).toBe(cols[column_names._Amount].getText());
+		  });
+		  //! ' checking if ng-model:expenses_rate_type value match'
+		  element(by.model('expensesRate.expensesRateType')).all(by.css('.ng-binding.ng-scope')).first().getText('value').then(function(value){
+			  expect(value).toBe(cols[column_names['_Expenses Rate Type']].getText());
+		  });
+		  //! ' checking if ng-model:tax_applicable flag match'
+		  element(by.model('expensesRate.taxApplicable')).getAttribute('checked').then(function(value){
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names['_Tax Applicable']].getText());
+		  });
+		  //! ' checking if ng-model:vat flag match'
+		  element(by.model('expensesRate.vat')).getAttribute('checked').then(function(value){
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names._Vat].getText());
+		  });
+		  //! ' checking if ng-model:dispensation flag match'
+		  element(by.model('expensesRate.dispensation')).getAttribute('checked').then(function(value){
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names._Dispensation].getText());
+		  });
+		  //! ' checking if ng-model:receipted flag match'
+		  element(by.model('expensesRate.receipted')).getAttribute('checked').then(function(value){
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names._Receipted].getText());
+		  });
+		  //! ' checking if ng-model:isEnabled flag match'
+		  element(by.model('expensesRate.isEnabled')).getAttribute('checked').then(function(value){
+			  expect(value ? 'ON' : 'OFF').toBe(cols[column_names._Status].getText());
+		  });
+	  });
+	  //! 'TODO: make "edit entries" test here'
+	  
+	  //! 'closing "Edit Expense Rate" dialog by clicking on button with css [ng-click="cancel()"]'
+	  element(by.css('[ng-click="cancel()"]')).click();
+	  //! 'checking if dialog is disappeared'
+	  expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
+  });
 
 });
