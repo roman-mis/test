@@ -170,8 +170,9 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
           element(by.model('expensesRate.isEnabled')).click();
           return true;
 	  });
-	  //! 'closing "Edit Expense Rate" dialog by clicking on button with css [ng-click="cancel()"]'
-	  element(by.css('[ng-click="cancel()"]')).click();
+      element(by.css('[ng-click="save(expensesRateForm.$valid)"]')).click();
+	  // /! 'closing "Edit Expense Rate" dialog by clicking on button with css [ng-click="cancel()"]'
+	  //element(by.css('[ng-click="cancel()"]')).click();
 	  //! 'checking if dialog is disappeared'
 	  expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
   });
