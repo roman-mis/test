@@ -46,7 +46,7 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
     });
   });
   
-  it('Edit expenses test', function(){
+  it('Edit expenses rate', function(){
 	  //! 'scanning columns in "expeses rate" table'
 	  var column_names = {};
 	  element(by.css('[ng-show="expensesRate"] + table')).all(by.css('th')).each(function(el, index){
@@ -92,7 +92,84 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
 		  });
 	  });
 	  //! 'TODO: make "edit entries" test here'
-	  
+	  //! 'make some backup before test will play with it'
+	  var backup = {};
+	  element(by.model('expensesRate.amount')).getAttribute('value').then(function(value){
+          backup.amount = value;	
+	  });
+	  element(by.model('expensesRate.taxApplicable')).getAttribute('checked').then(function(value){
+          backup.taxApplicable = !!value;
+	  });
+      element(by.model('expensesRate.vat')).getAttribute('checked').then(function(value){
+          backup.vat = !!value;
+      });
+      element(by.model('expensesRate.dispensation')).getAttribute('checked').then(function(value){
+          backup.dispensation = !!value;
+      });
+	  element(by.model('expensesRate.receipted')).getAttribute('checked').then(function(value){
+          backup.receipted = !!value;
+      });
+      element(by.model('expensesRate.isEnabled')).getAttribute('checked').then(function(value){
+          backup.isEnabled = !!value;
+      });      
+      browser.wait(function(){
+		  //! 'change something'
+		  var v = backup.amount*1+Math.floor(Math.random()*150);
+		  var v_fixed = v.toFixed(2);
+          element(by.model('expensesRate.amount')).clear().sendKeys(v_fixed);
+          element(by.model('expensesRate.taxApplicable')).click();
+          element(by.model('expensesRate.vat')).click();
+          element(by.model('expensesRate.dispensation')).click();
+          element(by.model('expensesRate.receipted')).click();
+          element(by.model('expensesRate.isEnabled')).click();
+          
+          //! 'saving changes by clicking on button with css [ng-click="save(expensesRateForm.$valid)"]'
+          element(by.css('[ng-click="save(expensesRateForm.$valid)"]')).click();
+          
+          browser.sleep(1000);
+          browser.refresh();
+          browser.sleep(1000);
+          
+          //! 'opening "edit expenses rate" dialog again'
+          expenserate.all(by.css("[ng-click=\"openModal('expensesRate', $index)\"]")).get(0).click();
+          
+          //! 'check if changes are saved'
+          //! ' checking if ng-model:amount value match'
+		  element(by.model('expensesRate.amount')).getAttribute('value').then(function(value){
+			  expect((value*1).toFixed(2)).toBe(v_fixed);
+		  });
+		  //! ' checking if ng-model:tax_applicable flag match'
+		  element(by.model('expensesRate.taxApplicable')).getAttribute('checked').then(function(value){
+			  expect(!!value).toBe(!backup.taxApplicable);
+		  });
+		  //! ' checking if ng-model:vat flag match'
+		  element(by.model('expensesRate.vat')).getAttribute('checked').then(function(value){
+			  expect(!!value).toBe(!backup.vat);
+		  });
+		  //! ' checking if ng-model:dispensation flag match'
+		  element(by.model('expensesRate.dispensation')).getAttribute('checked').then(function(value){
+			  expect(!!value).toBe(!backup.dispensation);
+		  });
+		  //! ' checking if ng-model:receipted flag match'
+		  element(by.model('expensesRate.receipted')).getAttribute('checked').then(function(value){
+			  expect(!!value).toBe(!backup.receipted);
+		  });
+		  //! ' checking if ng-model:isEnabled flag match'
+		  element(by.model('expensesRate.isEnabled')).getAttribute('checked').then(function(value){
+			  expect(!!value).toBe(!backup.isEnabled);
+		  });
+          return true;
+	  });
+	  //! 'restore backup'
+	  browser.wait(function(){
+          element(by.model('expensesRate.amount')).clear().sendKeys(backup.amount);
+          element(by.model('expensesRate.taxApplicable')).click();
+          element(by.model('expensesRate.vat')).click();
+          element(by.model('expensesRate.dispensation')).click();
+          element(by.model('expensesRate.receipted')).click();
+          element(by.model('expensesRate.isEnabled')).click();
+          return true;
+	  });
 	  //! 'closing "Edit Expense Rate" dialog by clicking on button with css [ng-click="cancel()"]'
 	  element(by.css('[ng-click="cancel()"]')).click();
 	  //! 'checking if dialog is disappeared'
