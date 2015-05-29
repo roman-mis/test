@@ -23,23 +23,23 @@ describe('Checking Action Requests', function(){
 		});
 	}
 	
+	var btnSave = element(by.css('.modal-footer')).all(by.buttonText('Save')).first();
+	
 	it('should make Student Loan (SL) requests', function(){
 		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openSl()"]')).click();
-		browser.sleep(1000);
 		expect(element(by.css('.modal-content')).isPresent()).toBeTruthy();
 		
 		//! 'Clicking on checkboxes'
 		element(by.model('studentLoan.haveLoan')).click();
 		element(by.model('studentLoan.payDirectly')).click();
 		
-		//! 'Saving changes by clicking on button'
-		element(by.css('.modal-footer')).all(by.buttonText('Save')).first().click();
-		browser.sleep(50);
+		//! 'Saving changes by clicking on button'		
+		btnSave.click();
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
-		browser.sleep(500);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
+		
 	});
 	
 	it('should make P45 requests', function(){
@@ -69,10 +69,8 @@ describe('Checking Action Requests', function(){
 		});
 		
 		//! 'Clicking on "Save" button'
-		element(by.css('.modal-footer')).all(by.buttonText('Save')).first().click();
-		browser.sleep(100);
+		btnSave.click();
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
-		browser.sleep(500);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
 	});
 }); 
