@@ -81,7 +81,21 @@ describe('Checking Activity', function () {
     expect($('.modal-title').getText()).toContain('Upload Documents');
     expect($('.modal-title').isDisplayed()).toBeTruthy();
     
+    helper.selectSelector(element(by.model('data.agency')), 1);
+    
     helper.selectSelector(element(by.model('data.documentType')), 1);
+    
+    var expectedAgency = null;
+    var expectedDocumentType = null;
+    
+    
+    element(by.model('data.agency')).getText().then(function(v){
+		expectedAgency = v;
+	});
+    
+    element(by.model('data.documentType')).getText().then(function(v){
+		expectedDocumentType = v;
+	});	
     
     element(by.model('data.documentName')).sendKeys('Test Document');
     
@@ -95,6 +109,15 @@ describe('Checking Activity', function () {
 			return !b;
 		});
 	});
+	
+	element.all(by.repeater('file in files')).each(function(row){
+		row.all(by.css('td')).then(function(cols){
+			expect(cols[0].getText()).toBe('Test Document');
+			expect(cols[1].getText()).toBe(expectedDocumentType);
+			expect(cols[2].getText()).toBe(expectedAgency);
+		});
+	});
+	
     
     $('.modal-content [ng-click="save()"]').click();
     expect($('.alert-success').isPresent()).toBeTruthy();  
