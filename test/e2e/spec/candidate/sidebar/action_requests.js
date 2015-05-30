@@ -1,4 +1,4 @@
-var path = require('path');
+var picturePath = require('path').normalize(__dirname + '../../../../sample.png');
 
 describe('Checking Action Requests', function(){
 	function toggleOnActionRequestMenu()
@@ -42,8 +42,7 @@ describe('Checking Action Requests', function(){
 		
 	});
 	
-	it('should make P45 requests', function(){
-		var picturePath = path.normalize(__dirname + '../../../../res/test.jpg');
+	it('should make P45 requests', function(){		
 		
 		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
@@ -57,7 +56,7 @@ describe('Checking Action Requests', function(){
 		
 		//! 'Temporaly make input[type="file"] displayable'
 		browser.executeScript('$("#uploadBtn").css("display","inline-block")');
-		//! 'Using picture at "'+picturePath+'"'
+		//! 'Using picture "'+picturePath+'"'
 		element(by.css('#uploadBtn')).sendKeys(picturePath);		
 		browser.executeScript('$("#uploadBtn").css("display","none")');
 		//! 'Clicking on "Upload" button'

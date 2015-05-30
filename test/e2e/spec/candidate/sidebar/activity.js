@@ -1,12 +1,10 @@
-var path = require('path');
+var picturePath = require('path').normalize(__dirname + '../../../../sample.png');
 
 describe('Checking Activity', function () {
   var openActivityDialog = function () {
       $('[ng-click="openAddActivityWin()"]').click();
       expect($('.modal-content').isDisplayed()).toBeTruthy();
-  };
-  
-  var picturePath = path.normalize(__dirname + '../../../../res/test.jpg');
+  };  
 
   it('should open Call-log dialog', function () {
     openActivityDialog();
