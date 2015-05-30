@@ -10,9 +10,9 @@ describe('Checking Action Requests', function(){
 				//! 'toggle on "Action Request" buttons'
 				element(by.css('#left-menu [ng-if="!permissions.rightToolBar.actionRequest.hide"] [ng-click="toggle()"]')).click();
 				//! 'wait for "toggle" animation'
-				browser.sleep(1000);
+				browser.sleep(2000);
 				el.getAttribute('class').then(function(classStr){
-					var isToggledOn = classStr.split(/ +/g).indexOf('in') == -1;
+					var isToggledOn = classStr.split(' ').indexOf('in') != -1;
 					//! 'check if toggled:', isToggledOn
 					expect(isToggledOn).toBeTruthy();
 				});
@@ -25,8 +25,12 @@ describe('Checking Action Requests', function(){
 	
 	var btnSave = element(by.css('.modal-footer')).all(by.buttonText('Save')).first();
 	
-	it('should make Student Loan (SL) requests', function(){
+	it('should display action requests menu', function(){
 		toggleOnActionRequestMenu();
+	});
+	
+	it('should make Student Loan (SL) requests', function(){
+		toggleOnActionRequestMenu();		
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openSl()"]')).click();
 		expect(element(by.css('.modal-content')).isPresent()).toBeTruthy();
@@ -35,15 +39,17 @@ describe('Checking Action Requests', function(){
 		element(by.model('studentLoan.haveLoan')).click();
 		element(by.model('studentLoan.payDirectly')).click();
 		
-		//! 'Saving changes by clicking on button'		
+		browser.sleep(1500); // some promise is blocking protractor
+		//! 'Saving changes by clicking on button'	
 		btnSave.click();
+		browser.sleep(50);
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
+		browser.sleep(500);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
 		
 	});
 	
-	it('should make P45 requests', function(){		
-		
+	it('should make P45 requests', function(){
 		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openP45()"]')).click();
