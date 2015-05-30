@@ -26,7 +26,7 @@ describe("checking company profile bank details tab", function () {
 		accountNumberFieldError = $('div[ng-show="bankDetailsForm.accountNumber.$error.required || bankDetailsForm.accountNumber.$error.number "]'),
 		sortCodeFieldError = $('div[ng-show="bankDetailsForm.sort.$error.required || bankDetailsForm.sort.$error.number "]'),
 		payrollRefFieldEmptyError = $('div[ng-show="bankDetailsForm.payrollRef.$error.required"]'),
-		accountNumberExceedError = $('div[ng-show="bankDetailsForm.accountNumber.$error.maxlength"]');
+		accountNumberExceedError = element.all(by.css('div[ng-show="bankDetailsForm.accountNumber.$error.maxlength"]')).get(0);
 	
 	var bankDetails = {
 		bankName : "Hana Bank",
