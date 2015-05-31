@@ -1,19 +1,19 @@
 describe('Checking DPA', function () {
 
   it('should open DPA dialog', function () {
-      var link=element(by.css('[ng-click="openDPAWin()"]'));
-      link.click();
-      browser.sleep(1000);
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-      $('.modal-content [ng-click="cancel()"]').click();
-      expect($('.modal-content').isPresent()).toBeFalsy();
-      link.click();
-      browser.sleep(1000);
+    var link = element(by.css('[ng-click="openDPAWin()"]'));
+    link.click();
+    browser.sleep(1000);
+    expect($('.modal-content').isDisplayed()).toBeTruthy();
+    $('.modal-content [ng-click="cancel()"]').click();
+    expect($('.modal-content').isPresent()).toBeFalsy();
+    link.click();
+    browser.sleep(1000);
   });
 
   it('DPA should generate unique questions', function () {
-	// for questions  
-	var ensureUniqueTexts = function (inputPromise) {
+    // for questions
+    var ensureUniqueTexts = function (inputPromise) {
       var arr = [];
       inputPromise.each(function (el) {
         el.getText().then(function (val) {
@@ -56,9 +56,10 @@ describe('Checking DPA', function () {
     });
     element.all(by.css('[ng-click="correctSet($index)"]')).each(function (btn) {
       btn.click();
+      browser.sleep(200);
       // check if it is set as corrected (should have .btn-primary) //
-      btn.getAttribute('class').then(function(classAttr){
-		var classes = classAttr.split(/\s+/g);
+      btn.getAttribute('class').then(function (classAttr) {
+        var classes = classAttr.split(/\s+/g);
         expect(classes.indexOf('btn-primary')).not.toBe(-1);
       });
     }).then(function () {

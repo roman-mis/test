@@ -21,11 +21,13 @@ describe('checking companyProfile defaults tab', function () {
 	cancelButton = element.all(by.css('.modal-footer button')).get(0);
 
 	it("checking defaults link text", function () {
-		editLink.click();
+	/*	editLink.click();
+    browser.sleep(1000);*/
 		bankDetailsLink.click();
-		expect(bankDetailsLink.getText()).toEqual("Defaults");	
+    browser.sleep(1000);
+		expect(bankDetailsLink.getText()).toEqual("Defaults");
 	});
-	
+
 	it("checking entry-title text", function () {
 		expect(entryTitle.getText()).toEqual("Defaults");
 	});
@@ -43,9 +45,9 @@ describe('checking companyProfile defaults tab', function () {
 		expect(defaultItems.get(5).getText()).toContain("Derogation Spread Weeks");
 		expect(defaultItems.get(6).getText()).toContain("Communication Method");
 		expect(defaultItems.get(7).getText()).toContain("Contractor Status");
-		expect(defaultItems.get(8).getText()).toContain("Default Tax Code Contractors");		
+		expect(defaultItems.get(8).getText()).toContain("Default Tax Code Contractors");
 	});
-	
+
 	it("checking edit button click", function () {
 		editButton.click();
 		expect(modalWindow.isDisplayed()).toBeTruthy();
@@ -67,13 +69,13 @@ describe('checking companyProfile defaults tab', function () {
 			expect(labels.get(6).getText()).toEqual("Communication Method");
 			expect(labels.get(7).getText()).toEqual("Contractor Status");
 			expect(labels.get(8).getText()).toContain("Default Tax Code Contractors");
-			
+
 	});
 
 
 	/* баг з перезавантаженням */
 	it("should check if changing information by select options work properly", function () {
-		
+
 		var items = $$('ul.entry-content li span'),
 			arr = [];
 		payFrequency.all(by.css('option')).get(1).click();
@@ -94,22 +96,22 @@ describe('checking companyProfile defaults tab', function () {
 			arr.push(contractorStatus.all(by.css('option')).get(1).getText());
 		taxCodeContractors.clear().sendKeys("2");
 			arr.push(taxCodeContractors.getText());
-		
-		
+
+
 		saveButton.click().then(function () {
 			bankDetailsLink.click(function () {
 				var i = 0;
 				while(arr.length){
 					expect(items.get(i).getText()).toEqual(arr.shift());
-					i++;	
-				}	
+					i++;
+				}
 			});
 
 		});
-		
-		
 
-		
+
+
+
 
 
 	});

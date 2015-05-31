@@ -3,25 +3,28 @@ var SpecReporter = require('jasmine-spec-reporter');
 var fs = require('fs');
 var awsservice=require('./awsservice');
 
-var adminCredentials=['./spec/login/admin_data.js'];
-var userCredentials=['./spec/login/user_data.js'];
+var adminCredentials=['./spec/account/login/admin_data.js'];
+var userCredentials=['./spec/account/login/user_data.js'];
 
 
 var regNewUser=[
-  './spec/reg/reg.js',
-  './spec/reg/check-inbox.js',
-  './spec/reg/activate.js'
+  './spec/account/reg/reg.js',
+  './spec/account/reg/check-inbox.js',
+  './spec/account/reg/activate.js'
 ];
 
-var login1=['./spec/login/login1.js'];
-var login2=['./spec/login/login2.js'];
+var login1=['./spec/account/login/login1.js'];
+var login2=['./spec/account/login/login2.js'];
+var logout=['./spec/account/login/logout.js'];
 
-var logout=['./spec/login/logout.js'];
-
-var accountSetup=[
- './spec/account/change_password.js'
+var prefill=[
+  './spec/admin/payment_rate.js',
+  './spec/admin/expense_rate.js',
+  './spec/agency/agency_prefill.js',
 ];
 
+
+/* CANDIDATES TAB */
 var candidateTabs=[
   './spec/candidate/search_current_candidate.js',
   './spec/candidate/home_tab.js',
@@ -32,30 +35,38 @@ var candidateTabs=[
   './spec/candidate/check_admin_tabs.js',
 ];
 var candidateSidebar=[
-
-  /* Working*/
   './spec/candidate/sidebar/dpa.js',
   './spec/candidate/sidebar/add_call_log.js',
   './spec/candidate/sidebar/expense_wizard.js',
   './spec/candidate/sidebar/manual_expenses.js',
-  './spec/candidate/sidebar/agencies.js'
+  './spec/candidate/sidebar/agencies.js',
+  './spec/candidate/sidebar/activity.js',
+  './spec/candidate/sidebar/action_requests.js',
 
   /* Not Working */
 //  './spec/candidate/sidebar/onboarding.js',
-  //'./spec/candidate/sidebar/activity.js',
-
-];
-var prefill=[
-  './spec/admin/payment_rate.js',
-  './spec/admin/expense_rate.js',
-  './spec/agency/agency_prefill.js',
 ];
 
-var test=[
-  './spec/candidate/search_current_candidate.js',
-  // './spec/candidate/margin_tab.js',
-]
 
+
+/* ADMIN TAB */
+var companyProfile=[
+  './spec/admin/companyProfile/companyInfo.js',
+  './spec/admin/companyProfile/companyProfileAccounts.js',
+  './spec/admin/companyProfile/companyProfileBankDetails.js',
+  './spec/admin/companyProfile/companyProfileContact.js',
+//  './spec/admin/companyProfile/companyProfileDefaults.js',
+];
+
+var adminTab=companyProfile;
+
+
+/* ACCOUNT SETTINGS */
+var accountSettings=[
+  './spec/account/settings/change_avatar.js',
+  './spec/account/settings/change_password.js',
+  './spec/account/settings/vehicle_info.js',
+];
 
 exports.config = {
 
@@ -71,11 +82,9 @@ exports.config = {
    'browserName': 'chrome'
    }],*/
   suites: {
-    main: regNewUser.concat(login1).concat(logout).concat(adminCredentials).concat(login2).concat(prefill).concat(candidateTabs),
+    main: regNewUser.concat(login1).concat(accountSettings).concat(logout).concat(adminCredentials).concat(login2).concat(prefill).concat(candidateTabs).concat(candidateSidebar),
     remote: adminCredentials.concat(login1).concat(candidateTabs),
-    account_setup: adminCredentials.concat(login1).concat(accountSetup).concat(logout),
-    //dummy: regNewUser.concat(login).concat(logout).concat(adminCredentials).concat(login).concat(prefill).concat(candidateTabs).concat(candidateSidebar)
-    dummy: regNewUser.concat(login1).concat(logout).concat(adminCredentials).concat(login2).concat(prefill).concat(candidateTabs)//.concat(candidateSidebar)
+    dummy: adminCredentials.concat(login1).concat(adminTab)
   },
 
   onPrepare: function () {
