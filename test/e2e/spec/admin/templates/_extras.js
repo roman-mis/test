@@ -40,7 +40,7 @@ describe('"Admin / Templates": remove templates', function(){
 		});
 	});
 	
-	it('remove template', function(){
+	it('remove template', function processRemoval(){
 		var l = null;
 		element.all(by.repeater('raw in options.data')).then(function(rows){
 			l = rows.length;
@@ -51,7 +51,31 @@ describe('"Admin / Templates": remove templates', function(){
 		});
 		element.all(by.repeater('raw in options.data')).count().then(function(n){
 			expect(n).toBeLessThan(l);
+			if(n > 9)
+				processRemoval();
 		});
 	});	
+	
+});
+
+describe('"Admin / Templates": checking search engine', function(){
+	it('Getting templates url', function () {
+		browser.get('/admin/templates');
+		browser.wait(function () {
+			return browser.getCurrentUrl().then(function (url) {
+				return (url.indexOf('templates') !== -1);
+			});
+		});
+	});
+	
+	it('checking search engine', function(){
+		element(by.model('filterName')).sendKeys('Call Log');
+		
+		element.all(by.repeater('raw in options.data')).each(function(row){
+			row.all(by.css('td')).get(1).getText().then(function(t){
+				expect(t.toLowerCase()).toContain('call log');
+			});
+		});
+	});
 	
 });

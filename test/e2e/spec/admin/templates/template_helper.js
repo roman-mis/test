@@ -9,6 +9,15 @@ module.exports.fillInputFields = function fillInputFields(options){
 	
 	var templateBody = element(by.css('#question'));
 	
+	options.expect_name && console.log('    checking if data is saved');
+	options.expect_name && expect(element(by.model('data.details.name')).getAttribute('value')).toContain(options.expect_name);
+	
+	options.expect_title && expect(element(by.model('data.details.title')).getAttribute('value')).toContain(options.expect_title);
+	
+	
+	options.expect_subType && expect(element(by.model('data.details.current.subType')).getAttribute('value')).toContain(options.expect_subType);
+	
+	options.expect_question && expect(templateBody.getText()).toContain(options.expect_question);
 		
 	!options.nohead && element(by.model('data.details.name')).clear().sendKeys(options.name.toLowerCase() + ' template #' + templateNameNumber);
 		
@@ -20,7 +29,7 @@ module.exports.fillInputFields = function fillInputFields(options){
 	
 	templateBody.click();
 		
-	templateBody.clear().sendKeys(options.name+" Template Description");
+	templateBody.clear().sendKeys(options.name+" Template Question");
 		
 	//! 'clicking on "subType" input'
 	element(by.model('data.details.current.subType')).click();
@@ -45,6 +54,22 @@ module.exports.fillInputFields = function fillInputFields(options){
 		}
 	});
 	
+	element(by.model('data.details.name')).getAttribute('value').then(function(value){
+		options.expect_name = value;
+	});
+	
+	element(by.model('data.details.title')).getAttribute('value').then(function(value){
+		options.expect_title = value;
+	});
+	
+	element(by.model('data.details.current.subType')).getAttribute('value').then(function(value){
+		options.expect_subType = value;
+	});
+	
+	templateBody.getText().then(function(value){
+		options.expect_question = value;
+	});
+	
 	
 	//! 'clicking on "Save"'
 	expect(element(by.css('[ng-click="save()"]')).isEnabled()).toBeTruthy();
@@ -57,23 +82,15 @@ module.exports.fillInputFields = function fillInputFields(options){
 		});
 	});
 	
-	element.all(by.repeater('col in options.columns')).then(function(cols){
-		var column_names = {};
-		
-		cols.forEach(function(col, index){
-			col.getText().then(function(name){
-				column_names['_'+name.trim().replace(' ','_','g')] = index;
-			});
-		});
-		
-		
-	});
-	
 };
 
 module.exports.testTemplate = function(template_name){
 	
 	var template_name_lc = template_name.toLowerCase();
+	
+	var test_options = {
+		name: template_name
+	};
 	
 	describe('"Admin / Templates": create '+template_name_lc+' template', function() {
 
@@ -102,12 +119,10 @@ module.exports.testTemplate = function(template_name){
 				});
 			});
 		});
-	
+		
 		it('create '+template_name_lc+' template', function(){
 		
-			templateHelper.fillInputFields({
-				name: template_name
-			});
+			templateHelper.fillInputFields(test_options);
 		
 		
 		});
@@ -134,9 +149,7 @@ module.exports.testTemplate = function(template_name){
 	
 		it('edit template', function(){
 		
-			templateHelper.fillInputFields({
-				name: template_name
-			});
+			templateHelper.fillInputFields(test_options);
 		
 		});
 	
