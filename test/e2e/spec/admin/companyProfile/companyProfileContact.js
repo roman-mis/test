@@ -1,7 +1,6 @@
 describe('checking company profile',function () {
-	
-	var editLink = $('a[href="/admin/companyprofile/contact"]'),
-	    links = $$('.candidate-tabs li a'),
+
+	var links = $$('.candidate-tabs li a'),
 
 	    company = {
 	    	companyName : 'company',
@@ -16,8 +15,16 @@ describe('checking company profile',function () {
 
 	    };
 
+  it('Getting right url', function () {
+    browser.get('/admin/companyprofile/contact');
+    browser.wait(function () {
+      return browser.getCurrentUrl().then(function (url) {
+        return (url.indexOf('/admin/companyprofile/contact') !== -1);
+      });
+    });
+  });
+
 	it("should check links if there are 4 links", function () {
-		editLink.click();
 		expect(links.count()).toBe(4);
 	});
 	it("shout check the text of links", function () {
@@ -25,7 +32,7 @@ describe('checking company profile',function () {
 		expect(links.get(1).getText()).toEqual("Accounts");
 		expect(links.get(2).getText()).toEqual("Bank Details");
 		expect(links.get(3).getText()).toEqual("Defaults");
-		
+
 	});
 	it("should check correctness of error messages  information", function () {
 		editInfoLink = $('p.entry-title a.pull-right');
@@ -33,7 +40,7 @@ describe('checking company profile',function () {
 			expect($('div.modal-window').isDisplayed()).toBeTruthy();
 			var companyNameField =  element(by.model('companyProfile.contact.companyName'));
 				companyNameField.click().clear();
-			var button = element.all(by.css('div.modal-footer button')).get(1);				
+			var button = element.all(by.css('div.modal-footer button')).get(1);
 			/* checking companyName empty error*/
 			var errMess = $('div [ng-show="contactForm.companyName.$error.required"]');
 			expect(errMess.isDisplayed()).toBeTruthy();
@@ -46,7 +53,7 @@ describe('checking company profile',function () {
 			expect(errMess.isDisplayed()).not.toBeTruthy();
 			var errMess2 = $('div [ng-show="contactForm.companyName.$error.maxlength"]');
 			expect(errMess2.isDisplayed()).toBeTruthy();
-			
+
 			/* checking Address1 empty error*/
 			var companyAddressField = element(by.model('companyProfile.contact.address1'));
 				companyAddressField.sendKeys("2131231");
@@ -80,10 +87,10 @@ describe('checking company profile',function () {
 				emailError = $('div [ng-show="contactForm.email.$error.email"]');
 				emailEl.clear().sendKeys("qwe");
 				expect(emailError.isDisplayed()).toBeTruthy();
-	
+
 
 		});
-		
+
 	});
 
 	it("should check correctness of editing", function () {
@@ -99,21 +106,21 @@ describe('checking company profile',function () {
 		var button = element.all(by.css('div.modal-footer button')).get(1),
 		    modalWindow = $('div.modal-window');
 		expect(button.isEnabled()).toBe(true);
-		
+
 		button.click();
 		expect(browser.isElementPresent(modalWindow)).toEqual(false);
-		
+
 
 	});
-	
+
 	it("should check cancel button", function () {
 		editInfoLink = $('p.entry-title a.pull-right');
-		
+
 		/*
 		button = element.by.css('button[ng-click="cancel()"]');
 		button.click();
 		*/
-		
+
 	});
-	
+
 });
