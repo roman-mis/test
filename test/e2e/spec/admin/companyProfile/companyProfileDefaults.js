@@ -1,6 +1,6 @@
 describe('checking companyProfile defaults tab', function () {
 
-//	var editLink = $('a[href="/admin/companyprofile/contact"]'),
+  var
 	bankDetailsLink = $('a[href="/admin/companyprofile/defaults"]'),
 	entryTitle = $('p.entry-title'),
 	defaultItems = $$('ul.entry-content li'),
@@ -30,7 +30,6 @@ describe('checking companyProfile defaults tab', function () {
   });
 
 	it("checking defaults link text", function () {
- //     bankDetailsLink.click();
       expect(bankDetailsLink.getText()).toEqual("Defaults");
 	});
 

@@ -3,7 +3,7 @@ var helper={
   getByText: function(selector, text){
 	  return selector.filter(function(e, i){
 		  return e.getText().then(function(el_text){
-			  return el_text === text;
+			  return el_text.indexOf(text) != -1;
 		  });
 	  }).get(0);
   },

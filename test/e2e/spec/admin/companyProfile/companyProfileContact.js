@@ -1,7 +1,6 @@
 describe('checking company profile',function () {
 
-//	var editLink = $('a[href="/admin/companyprofile/contact"]'),
-	    links = $$('.candidate-tabs li a'),
+	var links = $$('.candidate-tabs li a'),
 
 	    company = {
 	    	companyName : 'company',
@@ -26,7 +25,6 @@ describe('checking company profile',function () {
   });
 
 	it("should check links if there are 4 links", function () {
-	//	editLink.click();
 		expect(links.count()).toBe(4);
 	});
 	it("shout check the text of links", function () {
@@ -117,7 +115,7 @@ describe('checking company profile',function () {
 
 	it("should check cancel button", function () {
 		editInfoLink = $('p.entry-title a.pull-right');
-		editInfoLink.click();
+
 		/*
 		button = element.by.css('button[ng-click="cancel()"]');
 		button.click();
