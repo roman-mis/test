@@ -21,8 +21,9 @@ describe('checking companyProfile defaults tab', function () {
 	cancelButton = element.all(by.css('.modal-footer button')).get(0);
 
 	it("checking defaults link text", function () {
-	/*	editLink.click();
+	/*	
     browser.sleep(1000);*/
+    editLink.click();
 		bankDetailsLink.click();
     browser.sleep(1000);
 		expect(bankDetailsLink.getText()).toEqual("Defaults");
