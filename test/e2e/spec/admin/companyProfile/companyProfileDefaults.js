@@ -1,6 +1,6 @@
 describe('checking companyProfile defaults tab', function () {
 
-	var editLink = $('a[href="/admin/companyprofile/contact"]'),
+//	var editLink = $('a[href="/admin/companyprofile/contact"]'),
 	bankDetailsLink = $('a[href="/admin/companyprofile/defaults"]'),
 	entryTitle = $('p.entry-title'),
 	defaultItems = $$('ul.entry-content li'),
@@ -20,12 +20,18 @@ describe('checking companyProfile defaults tab', function () {
 	saveButton = element.all(by.css('.modal-footer button')).get(1),
 	cancelButton = element.all(by.css('.modal-footer button')).get(0);
 
+  it('Getting right url', function () {
+    browser.get('/admin/companyprofile/defaults');
+    browser.wait(function () {
+      return browser.getCurrentUrl().then(function (url) {
+        return (url.indexOf('/admin/companyprofile/defaults') !== -1);
+      });
+    });
+  });
+
 	it("checking defaults link text", function () {
-	/*	editLink.click();
-    browser.sleep(1000);*/
-		bankDetailsLink.click();
-    browser.sleep(1000);
-		expect(bankDetailsLink.getText()).toEqual("Defaults");
+ //     bankDetailsLink.click();
+      expect(bankDetailsLink.getText()).toEqual("Defaults");
 	});
 
 	it("checking entry-title text", function () {

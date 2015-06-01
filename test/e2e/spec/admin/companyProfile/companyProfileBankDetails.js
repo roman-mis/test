@@ -1,6 +1,6 @@
 describe("checking company profile bank details tab", function () {
-	var editLink = $('a[href="/admin/companyprofile/contact"]'),
-		bankDetailsLink = $('a[href="/admin/companyprofile/bankdetails"]'),
+
+	var	bankDetailsLink = $('a[href="/admin/companyprofile/bankdetails"]'),
 		editBankDetails = element(by.css('a.pull-right'));
 
 
@@ -27,7 +27,7 @@ describe("checking company profile bank details tab", function () {
 		sortCodeFieldError = $('div[ng-show="bankDetailsForm.sort.$error.required || bankDetailsForm.sort.$error.number "]'),
 		payrollRefFieldEmptyError = $('div[ng-show="bankDetailsForm.payrollRef.$error.required"]'),
 		accountNumberExceedError = element.all(by.css('div[ng-show="bankDetailsForm.accountNumber.$error.maxlength"]')).get(0);
-	
+
 	var bankDetails = {
 		bankName : "Hana Bank",
 		address1 : "55, Eulji-ro",
@@ -43,16 +43,23 @@ describe("checking company profile bank details tab", function () {
 
 	};
 
-		
-	it("current tub text equal bank details", function () {
-		editLink.click();
+  it('Getting right url', function () {
+    browser.get('/admin/companyprofile/bankdetails');
+    browser.wait(function () {
+      return browser.getCurrentUrl().then(function (url) {
+        return (url.indexOf('/admin/companyprofile/bankdetails') !== -1);
+      });
+    });
+  });
+
+	it("current tab text equal bank details", function () {
 		expect(bankDetailsLink.getText()).toEqual("Bank Details");
 	});
 	it("contact details title", function () {
 		expect(element(by.css('p.entry-title')).getText()).toEqual("Contact Details");
 	});
 	it("entry content list items count = 11 ", function () {
-		var items = $$('ul.entry-content li');	
+		var items = $$('ul.entry-content li');
 		bankDetailsLink.click().then( function () {
 			expect(items.count()).toBe(11);
 		});
@@ -70,7 +77,7 @@ describe("checking company profile bank details tab", function () {
 		expect(items.get(8).getText()).toContain("Account Number");
 		expect(items.get(9).getText()).toContain("Sort Code");
 		expect(items.get(10).getText()).toContain("Payroll Reference");
-		
+
 	});
 	it("icon edit works", function () {
 		var iconEdit = $('a.icon-edit'),
@@ -97,15 +104,15 @@ describe("checking company profile bank details tab", function () {
 			expect(items.get(8).getText()).toContain("Account Number");
 			expect(items.get(9).getText()).toContain("Sort Code");
 			expect(items.get(10).getText()).toContain("Payroll Reference");
-			
+
 	});
 	it("checking modal window inputs", function () {
 		var inputs = $$('div.modal-body div.form-group input');
 		expect(inputs.count()).toBe(11);
 	});
 
-	
-	
+
+
 	it("should check bankNameField", function () {
 		bankNameField.clear();
 		expect(saveButton.isEnabled()).not.toBeTruthy();
@@ -113,7 +120,7 @@ describe("checking company profile bank details tab", function () {
 		expect(bankNameFieldEmptyError.getText()).toEqual("Bank Name cannot be empty.");
 		bankNameField.sendKeys(bankDetails.bankName);
 		expect(bankNameFieldEmptyError.isDisplayed()).not.toBeTruthy();
-		expect(saveButton.isEnabled()).toBeTruthy();	
+		expect(saveButton.isEnabled()).toBeTruthy();
 	});
 	it("address1 field error", function () {
 		address1Field.clear();
@@ -133,7 +140,7 @@ describe("checking company profile bank details tab", function () {
 		townField.sendKeys(bankDetails.town);
 		expect(townFieldEmptyError.isDisplayed()).not.toBeTruthy();
 		expect(saveButton.isEnabled()).toBeTruthy();
-		
+
 	});
 
 	it("post code valid error", function () {
@@ -144,7 +151,7 @@ describe("checking company profile bank details tab", function () {
 		postcodeField.clear().sendKeys(bankDetails.postcode);
 		expect(saveButton.isEnabled()).toBeTruthy();
 		expect(postcodeFieldPatternError.isDisplayed()).not.toBeTruthy();
-		
+
 	});
 
 	it("account name empty error", function () {
@@ -171,7 +178,7 @@ describe("checking company profile bank details tab", function () {
 		accountNumber.sendKeys("f");
 		expect(accountNumberFieldError.isDisplayed()).toBeTruthy();
 		expect(accountNumberExceedError.isDisplayed()).not.toBeTruthy();
-				
+
 		expect(saveButton.isEnabled()).not.toBeTruthy();
 
 		cancelButton.click().then(function () {
@@ -182,12 +189,12 @@ describe("checking company profile bank details tab", function () {
 				expect(saveButton.isEnabled()).not.toBeTruthy();
 				accountNumber.clear().sendKeys("12345678").then(function () {
 					expect(accountNumberExceedError.isDisplayed()).not.toBeTruthy();
-					expect(accountNumberFieldError.isDisplayed()).not.toBeTruthy();			
+					expect(accountNumberFieldError.isDisplayed()).not.toBeTruthy();
 				});
 			});
 		});
-		
-		
+
+
 	});
 
 
@@ -203,8 +210,8 @@ describe("checking company profile bank details tab", function () {
 		expect(sortCodeFieldError.isDisplayed()).toBeTruthy();
 		expect(sortCodeFieldError.getText()).toEqual("Please enter valid Sort Code.");
 		expect(saveButton.isEnabled()).not.toBeTruthy();
-		
-		
+
+
 		cancelButton.click().then(function () {
 			editBankDetails.click().then(function () {
 				sortCodeField.clear().sendKeys("12312");
@@ -222,7 +229,7 @@ describe("checking company profile bank details tab", function () {
 		payrollRefField.sendKeys("sadsda");
 		expect(payrollRefFieldEmptyError.isDisplayed()).not.toBeTruthy();
 		expect(saveButton.isEnabled()).toBeTruthy();
-		
+
 	});
 
 	it("checking correctness of changing information", function () {
@@ -238,7 +245,7 @@ describe("checking company profile bank details tab", function () {
 		sortCodeField.clear().sendKeys(bankDetails.sortCode);
 		payrollRefField.clear().sendKeys(bankDetails.payrollRef);
 		expect(saveButton.isEnabled()).toBeTruthy();
-		
+
 		saveButton.click().then(function () {
 			var items = $$('ul.entry-content li span');
 				expect(items.get(0).getText()).toEqual(bankDetails.bankName);
@@ -252,9 +259,9 @@ describe("checking company profile bank details tab", function () {
 				expect(items.get(8).getText()).toEqual(bankDetails.accountNumber);
 				expect(items.get(9).getText()).toEqual(bankDetails.sortCode);
 				expect(items.get(10).getText()).toEqual(bankDetails.payrollRef);
-				
-				
+
+
 		});
 	});
-	
+
 });

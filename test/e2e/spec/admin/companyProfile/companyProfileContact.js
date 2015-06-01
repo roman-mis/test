@@ -1,6 +1,6 @@
 describe('checking company profile',function () {
 
-	var editLink = $('a[href="/admin/companyprofile/contact"]'),
+//	var editLink = $('a[href="/admin/companyprofile/contact"]'),
 	    links = $$('.candidate-tabs li a'),
 
 	    company = {
@@ -16,8 +16,17 @@ describe('checking company profile',function () {
 
 	    };
 
+  it('Getting right url', function () {
+    browser.get('/admin/companyprofile/contact');
+    browser.wait(function () {
+      return browser.getCurrentUrl().then(function (url) {
+        return (url.indexOf('/admin/companyprofile/contact') !== -1);
+      });
+    });
+  });
+
 	it("should check links if there are 4 links", function () {
-		editLink.click();
+	//	editLink.click();
 		expect(links.count()).toBe(4);
 	});
 	it("shout check the text of links", function () {
