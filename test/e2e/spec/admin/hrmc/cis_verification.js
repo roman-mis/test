@@ -62,7 +62,7 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 			});
 			
 			field.getAttribute('ng-model').then(function(model){
-				inputs[model.replace(/^rti\./, '')] = (value == null ? '' : value).toString();
+				inputs[model.replace(/^cis\./, '')] = (value == null ? '' : value).toString();
 			});
 		});
 		
@@ -94,9 +94,9 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 			});
 			
 			field.getAttribute('ng-model').then(function(model){
-				//! 'input:', inputs[model.replace(/^rti\./, '')]
-				//! 'checking:', model.replace(/^rti\./, ''), value
-				expect((value == null ? '' : value).toString()).toBe(inputs[model.replace(/^rti\./, '')]);
+				//! 'input:', inputs[model.replace(/^cis\./, '')]
+				//! 'checking:', model.replace(/^cis\./, ''), value
+				expect((value == null ? '' : value).toString()).toBe(inputs[model.replace(/^cis\./, '')]);
 			});
 		});
 		
