@@ -81,7 +81,7 @@ describe('Editing home tab', function () {
   var number = helper.getDefaultNumber();
   var saveBtn = $('.modal-content [ng-click="ok()"]');
 
-  it('checking tabs consistency', function () {
+  it('checking Address Information', function () {
 
     links.get(0).click();
 
@@ -151,7 +151,9 @@ describe('Editing home tab', function () {
 		
 	});
 
-
+  });
+  
+  it('checking Contacts Information', function(){
 	//! 'open Edit Contacts dialog'
 	$('[ng-click="openContactEdit()"]').click();
 	
@@ -191,15 +193,15 @@ describe('Editing home tab', function () {
 
 
 });
-/*
+
 describe('Editing consultants tab', function () {
 
   var number = helper.getDefaultNumber();
 
+  var currRow=$$('.panel').last().element(by.repeater('consultant in branch.consultants').row(0));
 
   it('add new branch', function () {
 	  
-	browser.refresh();
 
     links.get(2).click();
     $('[ng-click="openAgencyBranchModal(null)"]').click();
@@ -209,14 +211,13 @@ describe('Editing consultants tab', function () {
     element(by.model('data.address2')).clear().sendKeys('Address2_'+number);
     element(by.model('data.address3')).clear().sendKeys('Address3_'+number);
     element(by.model('data.town')).clear().sendKeys('Town_'+number);
-    element(by.model('data.postcode')).clear().sendKeys('E22 2EE');
+    element(by.model('data.postCode')).clear().sendKeys('E22 2EE');
 
     $('[ng-click="ok()"]').click();
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
   it('editing new branch', function () {
-    browser.refresh();
 
     $$('[ng-click="toggleOpen()"]').last().click();
     $$('[ng-click="openAgencyBranchModal(branch)"]').last().click();
@@ -233,7 +234,6 @@ describe('Editing consultants tab', function () {
   });
 
   it('editing new consultant', function () {
-    browser.refresh();
     $$('[ng-click="openAgencyConsultantModal(branch, null)"]').last().click();
 
     element(by.model('data.firstName')).clear().sendKeys('FirstName_'+number);
@@ -250,20 +250,15 @@ describe('Editing consultants tab', function () {
 
 
   it('checking consultant info', function () {
-    links.get(2).click();
-    $$('[ng-click="toggleOpen()"]').last().click();
+      
 
-
-    var currRow=$$('.panel').last().element(by.repeater('consultant in branch.consultants').row(0));
-
-// CHECKING LOCKING OPTION
-
+    //! 'CHECKING LOCKING OPTION'
     expect(currRow.element(by.css('[ng-click="changeConsultantLockStatus(consultant)"]')).element(by.css('.fa-unlock')).isPresent()).toBeTruthy();
     currRow.element(by.css('[ng-click="changeConsultantLockStatus(consultant)"]')).click();
     expect(currRow.element(by.css('[ng-click="changeConsultantLockStatus(consultant)"]')).element(by.css('.fa-lock')).isPresent()).toBeTruthy();
 
-// Checking consultant info
-
+	//! 'Checking consultant info'
+   
     currRow.element(by.css('[ng-click="openAgencyConsultantModal(branch, consultant)"]')).click();
     expect(element(by.model('data.firstName')).getAttribute('value')).toBe('FirstName_'+number);
     expect(element(by.model('data.lastName')).getAttribute('value')).toBe('LastName_'+number);
@@ -273,34 +268,48 @@ describe('Editing consultants tab', function () {
     expect(element(by.model('data.status')).element(by.css('[selected="selected"]')).getText()).toContain('Live');
     $('[ng-click="ok()"]').click();
     expect($('.modal-content').isPresent()).toBeFalsy();
-
-
-//SENDING CHANGE EMAIL REQUEST
-// Email would be checked later
+    
+  });
+  
+  it('send "change password" email request to consultant', function(){
+	//! 'SENDING CHANGE EMAIL REQUEST'
+	//! '(Email would be checked later)'
 
     currRow.element(by.css('[ng-click="changeConsultantPassword(consultant)"]')).click();
     browser.driver.switchTo().alert().accept();
     expect($('.alert-success').isPresent()).toBeTruthy();
-
-// DELETIGN CANDIDATE
-
+  });
+  
+  it('remove consultant', function(){
+    
+    //! 'removing consultant'
     currRow.element(by.css('[ng-click="deleteAgencyConsultant(branch, consultant)"]')).click();
     browser.driver.switchTo().alert().accept();
-    expect($$('.panel').last().all(by.repeater('consultant in branch.consultants')).count()).toBe(0);
 
 
-// DELETIGN BRANCH
+  });
+  
+  it('delete branch', function(){
+	  
+	//! 'DELETING BRANCH'
+	
+	(function cleanup(){
 
-    element.all(by.repeater('branch in branches')).count().then(function(count){
-      $$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
-      browser.driver.switchTo().alert().accept();
-      expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
-    })
+		element.all(by.repeater('branch in branches')).count().then(function(count){
+			$$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
+			browser.driver.switchTo().alert().accept();
+			expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
+			if(count > 3) cleanup();
+		});
+		
+	})();
+		
+    
   });
 
 
 });
-
+/*
 describe('Editing payroll tab', function () {
 
   var inputs = element.all(by.css('.modal-content input'));
