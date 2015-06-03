@@ -31,6 +31,26 @@ var checkTabUrl = function (path) {
   }, 3000);
 };
 
+var selectSimpleDynamicSelect = function ( element, optionNum, textGetter ) {
+	expect(typeof(optionNum)).toBe('number');
+	element.click();
+	// for checks //
+	typeof(textGetter) == 'function' && element.element(by.css('option[value="'+optionNum+'"]')).getText().then(textGetter);
+	////////////////
+	element.element(by.css('option[value="'+optionNum+'"]')).click();
+	element.element(by.xpath('..')).click();
+};
+
+var pickRandomSelect = function(element, textGetter){
+	element.click();
+	var selector = element.all(by.css('option[value]'));
+	selector.count().then(function(n){
+		var opt = selector.get(Math.round(Math.random()*(n-1))|0);
+		typeof(textGetter) == 'function' && opt.getText().then(textGetter);
+		opt.click();
+	});
+	element.element(by.xpath('..')).click();
+};
 
 describe('Getting first agency properties', function () {
 
@@ -67,11 +87,6 @@ describe('Getting first agency properties', function () {
     checkTabUrl('other');
 
   });
-/*
-  it('selecting first agency in the list', function () {
-
-  });
-*/
 });
 
 describe('Editing home tab', function () {
@@ -309,49 +324,127 @@ describe('Editing consultants tab', function () {
 
 
 });
-/*
+
 describe('Editing payroll tab', function () {
 
   var inputs = element.all(by.css('.modal-content input'));
 
   var number = helper.getDefaultNumber();
   var saveBtn = $('.modal-content [ng-click="ok()"]');
+  
+  var labels = element.all(by.css('.meta'));
+  var labels2 = element.all(by.css('.meta-o'));
 
-  it('fill in first panel info', function () {
+  it('edit default invoicing', function () {
 
     links.get(1).click();
 
-    $('[ng-click="openAgencyDefaultInvoicing()"]').click();
-    element.all(by.css('.switch_wrap input[type="checkbox"]:checked')).each(function (el, i) {
-      el.element(by.xpath('..')).element(by.css('.bullet')).click();
-    });
+	var holidayPayIncluded,
+	employersNiIncluded,
+	invoiceVatCharged,
+	paymentTerms,
+	invoiceMethod,
+	invoiceDesign,
+	invoiceTo,
+	invoiceEmailPrimary,
+	invoiceEmailSecondary;
+	
+	
 
-    element(by.model('data.invoiceEmailPrimary')).clear().sendKeys('primary@email.com');
-    element(by.model('data.invoiceEmailSecondary')).clear().sendKeys('secondary@email.com');
-
-    helper.selectSimpleSelect(element(by.model('data.paymentTerms')), 0);
-    helper.selectSimpleSelect(element(by.model('data.invoiceMethod')), 0);
-   // helper.selectSimpleSelect(element(by.model('data.invoiceDesign')), 0);
+	//! 'open "edit default invocing" dialog'
+    $('[ng-click="openAgencyDefaultInvoicing()"]').click();   
+    
+    //! 'selecting "holiday pay include"'
+    pickRandomSelect(element(by.model('data.holidayPayIncluded')), function(value){
+		holidayPayIncluded = value;
+	});
+    
+    //! 'selecting "employers ni included"'
+    pickRandomSelect(element(by.model('data.employersNiIncluded')), function(value){
+		employersNiIncluded = value;
+	});
+        
+    //! 'selecting "Vat charged"'
+    pickRandomSelect(element(by.model('data.invoiceVatCharged')), function(value){
+		invoiceVatCharged = value;
+	});
+        
+    //! 'selecting "payment terms"'
+    pickRandomSelect(element(by.model('data.paymentTerms')), function(value){
+		paymentTerms = value;
+	});
+    
+    //! 'selecting "invoice method"'
+    pickRandomSelect(element(by.model('data.invoiceMethod')), function(value){
+		invoiceMethod = value;
+	});
+    
+    //! 'selecting "invoice design"'
+    pickRandomSelect(element(by.model('data.invoiceDesign')), function(value){
+		invoiceDesign = value;
+	});
+        
+    //! 'selecting "invoice to"'
+    pickRandomSelect(element(by.model('data.invoiceTo')), function(value){
+		invoiceTo = value;
+	});
+      
+    
+    //! 'typing "primary & secondary emails"'
+    element(by.model('data.invoiceEmailPrimary')).clear().sendKeys('primary_'+number+'@email.com');
+    
+    element(by.model('data.invoiceEmailPrimary')).getAttribute('value').then(function(value){
+		invoiceEmailPrimary = value;
+	});
+	
+    element(by.model('data.invoiceEmailSecondary')).clear().sendKeys('secondary_'+number+'@email.com');
+    
+    element(by.model('data.invoiceEmailSecondary')).getAttribute('value').then(function(value){
+		invoiceEmailSecondary = value;
+	});
+    
+    //! 'clicking on "save button"'
     saveBtn.click();
+    
+    browser.refresh();
+        
+    
+    
+    browser.wait(function(){
+		//! 'check "Holiday Pay included" to be', holidayPayIncluded
+		expect(labels.get(0).getText()).toContain(holidayPayIncluded);
+		//! 'check "Employers NI included" to be', employersNiIncluded
+		expect(labels.get(1).getText()).toBe(employersNiIncluded);		
+		//! 'check "VAT charged" to be', invoiceVatCharged
+		expect(labels.get(2).getText()).toBe(invoiceVatCharged);
+		//! 'check "Invoice method" to be', invoiceMethod
+		expect(labels.get(3).getText()).toBe(invoiceMethod);
+		//! 'check "Invoice design" to be', invoiceDesign
+		expect(labels.get(4).getText()).toBe(invoiceDesign);
 
-    var labels = element.all(by.css('.meta-o'));
-
-    expect(labels.get(0).getText()).toBe('No');
-    expect(labels.get(1).getText()).toBe('No');
-    expect(labels.get(2).getText()).toBe('No');
-    expect(labels.get(3).getText()).toBe('Consolidate by Import');
-    expect(labels.get(5).getText()).toBe('On partial receipt');
-
-    var labels2 = element.all(by.css('.meta'));
-    expect(labels2.get(0).getText()).toBe('primary@email.com');
-    expect(labels2.get(1).getText()).toBe('secondary@email.com');
-
+		//! 'check "Primary email address" to be', invoiceEmailPrimary
+		expect(labels2.get(0).getText()).toBe(invoiceEmailPrimary);
+		//! 'check "Primary secondary address" to be', invoiceEmailSecondary
+		expect(labels2.get(1).getText()).toBe(invoiceEmailSecondary);
+		
+		//! 'check "Payment terms" to be', paymentTerms
+		expect(labels.get(5).getText()).toBe(paymentTerms);
+		//! 'check "Invoice to" to be', invoiceTo
+		expect(labels.get(6).getText()).toBe(invoiceTo);
+		
+		return true;
+    });
+    
   });
 
-  it('fill in first panel info', function () {
+  it('edit default payroll', function () {
+	  
+	var productType,
+	marginType,
+	marginChargedToAgency;
 
     links.get(1).click();
-
+	
     $('[ng-click="openAgencyDefaultPayroll()"]').click();
     element.all(by.css('.switch_wrap input[type="checkbox"]:checked')).each(function (el, i) {
       el.element(by.xpath('..')).element(by.css('.bullet')).click();
@@ -360,18 +453,32 @@ describe('Editing payroll tab', function () {
     element(by.model('data.marginAmount')).clear().sendKeys('5');
     element(by.model('data.holidayAmount')).clear().sendKeys('19');
 
-    helper.selectSimpleSelect(element(by.model('data.productType')), 0);
-    helper.selectSimpleSelect(element(by.model('data.marginType')), 0);
+    pickRandomSelect(element(by.model('data.productType')), function(v){
+		productType = v;
+	});
+	
+	pickRandomSelect(element(by.model('data.marginChargedToAgency')), function(v){
+		marginChargedToAgency = v;
+	});
+	
+    pickRandomSelect(element(by.model('data.marginType')), function(v){
+		marginType = v;
+	});	
     saveBtn.click();
+	
+	browser.refresh();
 
-    var labels = element.all(by.css('.meta-o'));
-
-    expect(labels.get(7).getText()).toBe('Umbrella');
-    expect(labels.get(8).getText()).toBe('No');
-    expect(labels.get(9).getText()).toBe('Use contractor rules');
-    expect(labels.get(10).getText()).toBe('£5');
-    expect(labels.get(11).getText()).toBe('19%');
-
+	browser.wait(function(){
+		//! 'check "Product Type" to be', productType
+		expect(labels.get(7).getText()).toBe(productType);
+		//! 'check "Margin charged to agency" to be', marginChargedToAgency
+		expect(labels.get(8).getText()).toBe(marginChargedToAgency);
+		//! 'check "Margin Type" to be', marginType
+		expect(labels.get(9).getText()).toBe(marginType);
+		expect(labels.get(10).getText()).toBe('£5');
+		expect(labels.get(11).getText()).toBe('19%');
+		return true;
+	});
 
   });
 
