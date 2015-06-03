@@ -14,6 +14,34 @@ var helper={
   selectSimpleSelect:function ( element, optionNum ) {
       element.all(by.css('option')).get(optionNum).click();
   },
+  selectSimpleDynamicSelect:function ( element, optionNum, textGetter ) {
+	expect(typeof(optionNum)).toBe('number');
+	element.click();
+	// for checks //
+	typeof(textGetter) == 'function' && element.element(by.css('option[value="'+optionNum+'"]')).getText().then(textGetter);
+	////////////////
+	element.element(by.css('option[value="'+optionNum+'"]')).click();
+	element.element(by.xpath('..')).click();
+  },
+  pickRandomOptionOnSelectSimple:function(element, textGetter){
+	element.click();
+	var selector = element.all(by.css('option[value]'));
+	selector.count().then(function(n){
+		expect(n).toBeGreaterThan(0);
+		var opt = selector.get(Math.round(Math.random()*(n-1))|0);
+		typeof(textGetter) == 'function' && opt.getText().then(textGetter);
+		var value;
+		opt.getAttribute('value').then(function(v){
+			value = v;
+		});
+		opt.click();
+		browser.wait(function(){
+			expect(element.getAttribute('value')).toBe(value);
+			element.element(by.xpath('..')).click();
+			return true;
+		});
+	});	
+  },
   getDefaultNumber:function(){
     return String(parseInt(new Date().getTime().toString().substr(-9,6)));
   },
