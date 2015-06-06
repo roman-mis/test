@@ -53,7 +53,7 @@ describe('Check "Admin / Statutory rates"', function() {
 		
 		var hasComboBox = false;
 	
-		it('"' + itemName + '" > ' + 'insert rate into table', function() {	
+		it('"' + itemName + '" check', function() {	
 			
 			expect(item.all(by.tagName('td')).get(0).getText()).toBe(itemName);
 		
@@ -128,11 +128,7 @@ describe('Check "Admin / Statutory rates"', function() {
 		
 				return true;
 			});
-				
-		
-		});
-	
-		it('"' + itemName + '" > ' + 'remove rate from table', function(){
+			
 			row.element(by.css('[ng-click="parentScope.deleteOne(elem.validFrom)"]')).click();
 		
 			cancelBtn.click();

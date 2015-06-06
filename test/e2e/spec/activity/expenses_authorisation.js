@@ -24,9 +24,10 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 	it('"Total" value check', function(){
 		var sum = 0;
 		expenseData.all(by.repeater('item in expense.expenses')).each(function(row){
-			//! 'reading row'
-			row.element(by.css('td:nth-child(7)')).getText().then(function(totalText){
-				var m = totalText.match(/\d+(\.\d\d)?/);
+			row.element(by.css('td:nth-child(7)')).getText().then(function(totalTxt){
+				
+				//! totalTxt
+				var m = totalTxt.replace(',','').match(/\d+(\.\d\d)?/);
 				if(m){
 					sum += m[0]*1;
 				}
@@ -34,7 +35,7 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		});
 		
 		expenseObject.element(by.css('td:nth-child(7)')).getText().then(function(value){
-			var m = value.match(/\d+(\.\d\d)?/);
+			var m = value.replace(',','').match(/\d+(\.\d\d)?/);
 			expect(m).toBeTruthy();
 			m && expect(sum.toFixed(2)).toBe(m[0]);
 		});		
@@ -92,7 +93,6 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		//! 'check if items are approved'
 		
 		expenseData.all(by.repeater('item in expense.expenses')).each(function(row){
-			//! 'reading row'
 			row.element(by.css('td:nth-child(9)')).getText().then(function(text){
 				expect(text).toBe('Approved');
 			});
@@ -109,7 +109,6 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		//! 'check if items are rejected'
 		
 		expenseData.all(by.repeater('item in expense.expenses')).each(function(row){
-			//! 'reading row'
 			row.element(by.css('td:nth-child(9)')).getText().then(function(text){
 				expect(text).toBe('Rejected');
 			});
@@ -119,14 +118,73 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 	});
 	
 	it('edit expenses', function(){
+		$$('a[ng-hide="item.edit"]').get(0).click();
+		
+		var detailName,
+		date,
+		amount = '123',
+		status;
+		
+		var selectorDetailName = element(by.model('cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].expenseDetail.name'));
+		
+		var selectorDate = element(by.model('cloned[$parent.$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$parent.$index].date'));
+		
+		var numberAmount = element(by.model('cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].amount'));
+		
+		var expenseItemStatus = element(by.model('cloned[$parent.$parent.$parent.$parent.$parent.$index].expenses[$parent.$index].status'));
+		
+		var saveExpenseItems = element(by.css('[ng-click="item.edit=false; finishEditing($parent.$parent.$parent.$parent.$parent.$index, item._id, true)"]'));
+		
+		var row = expenseData.all(by.repeater('item in expense.expenses')).get(0);
+		
+		helper.selectSimpleDynamicSelect(selectorDetailName, 1, function(v){
+			detailName = v;
+		});
+		
+		helper.selectSimpleDynamicSelect(selectorDate, 1, function(v){
+			date = v;
+		});
+		
+		numberAmount.clear().sendKeys(amount);
+		
+		helper.selectSimpleDynamicSelect(expenseItemStatus, 0, function(v){
+			status = v;
+		});
+		
+		saveExpenseItems.click();
+		
+		
+		browser.wait(function(){
+			expect(row.element(by.css('td:nth-child(2)')).getText()).toBe(detailName);
+			expect(row.element(by.css('td:nth-child(3)')).getText()).toBe(date);
+			expect(row.element(by.css('td:nth-child(4)')).getText()).toBe((amount*1).toFixed(2));
+			expect(row.element(by.css('td:nth-child(9)')).getText()).toBe(status);
+			return true;
+		});
+		
+	});
+	
+	it('Review summary & reject', function(){
+		$('[ng-click="reviewSummary()"]').click();
+		
+		expect($('.modal-content').isPresent()).toBeTruthy();
+		
+		element.all(by.model('expense.reason')).each(function(reasonType){
+			helper.selectSimpleSelect(reasonType, 1);
+		});
+		
+		$('[ng-click="ok()"]').click();
+		
+		expect($('.modal-content').isPresent()).toBeFalsy();
 	});
 	
 	function collapseItems(){
-		collapseListButton.click();
+		collapseListButton.click();			
 		
 		expenseData.all(by.css('[ng-click^="test2"]')).each(function(btn){
 			btn.click();
 		});
+		
 	}
   
 });
