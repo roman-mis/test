@@ -11,7 +11,7 @@ describe('checking company profile',function () {
 	    	postCode: 'WC2H 7LT',
 	    	tel : '34543214352',
 	    	fax : '12345443434',
-	    	email: 'boojaka@gmail.com'
+	    	email: 'originemtest2@yandex.com'
 
 	    };
 

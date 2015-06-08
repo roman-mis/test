@@ -1,18 +1,18 @@
 var userEmail=null;
 var userPassword='andyboss';
-describe('Checking mailbox', function() {
+describe('Navigating to mailbox', function() {
 
   it('should navigate to mail.yandex.com and redirect to passport', function () {
     browser.driver.get('https://mail.yandex.com/lite/inbox');
 
     browser.driver.wait(function () {
-      return browser.driver.getCurrentUrl().then(function (url) {
-        return (url.indexOf('passport') !== -1);
+      return browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
+        return bool;
       });
     }, 30000);
   });
-
-
+});
+  describe('Checking mailbox', function() {
   it('should find login button and fill it', function () {
     browser.driver.findElement(by.css('[name="login"]')).sendKeys('originemtest');
     browser.driver.findElement(by.css('[name="passwd"]')).sendKeys('andyboss');

@@ -1,12 +1,4 @@
 var links = $$('.nav-tabs li a');
-var checkTabUrl = function (path) {
-  browser.wait(function () {
-    return browser.getCurrentUrl().then(function (url) {
-      var re = new RegExp("agencies\/.{24}\/?" + path, 'g');
-      return (url.match(re));
-    });
-  }, 3000);
-};
 
 describe('Editing consultants tab', function () {
 
@@ -15,7 +7,7 @@ describe('Editing consultants tab', function () {
   var currRow=$$('.panel').last().element(by.repeater('consultant in branch.consultants').row(0));
 
   it('add new branch', function () {
-	  
+
 
     links.get(2).click();
     $('[ng-click="openAgencyBranchModal(null)"]').click();
@@ -52,7 +44,7 @@ describe('Editing consultants tab', function () {
 
     element(by.model('data.firstName')).clear().sendKeys('FirstName_'+number);
     element(by.model('data.lastName')).clear().sendKeys('LastName_'+number);
-    element(by.model('data.emailAddress')).clear().sendKeys('boojaka_'+number+'@gmail.com');
+    element(by.model('data.emailAddress')).clear().sendKeys('originemtest2+t'+number+'@yandex.com');
     element(by.model('data.phone')).clear().sendKeys(number);
     helper.selectSimpleSelect(element(by.model('data.role')),1)
     helper.selectSimpleSelect(element(by.model('data.status')),1)
@@ -64,7 +56,7 @@ describe('Editing consultants tab', function () {
 
 
   it('checking consultant info', function () {
-      
+
 
     //! 'CHECKING LOCKING OPTION'
     expect(currRow.element(by.css('[ng-click="changeConsultantLockStatus(consultant)"]')).element(by.css('.fa-unlock')).isPresent()).toBeTruthy();
@@ -72,19 +64,19 @@ describe('Editing consultants tab', function () {
     expect(currRow.element(by.css('[ng-click="changeConsultantLockStatus(consultant)"]')).element(by.css('.fa-lock')).isPresent()).toBeTruthy();
 
 	//! 'Checking consultant info'
-   
+
     currRow.element(by.css('[ng-click="openAgencyConsultantModal(branch, consultant)"]')).click();
     expect(element(by.model('data.firstName')).getAttribute('value')).toBe('FirstName_'+number);
     expect(element(by.model('data.lastName')).getAttribute('value')).toBe('LastName_'+number);
-    expect(element(by.model('data.emailAddress')).getAttribute('value')).toBe('boojaka_'+number+'@gmail.com');
+    expect(element(by.model('data.emailAddress')).getAttribute('value')).toBe('originemtest2+t'+number+'@yandex.com');
     expect(element(by.model('data.phone')).getAttribute('value')).toBe(number);
     expect(element(by.model('data.role')).element(by.css('[selected="selected"]')).getText()).toContain('Manager');
     expect(element(by.model('data.status')).element(by.css('[selected="selected"]')).getText()).toContain('Live');
     $('[ng-click="ok()"]').click();
     expect($('.modal-content').isPresent()).toBeFalsy();
-    
+
   });
-  
+/*
   it('send "change password" email request to consultant', function(){
 	//! 'SENDING CHANGE EMAIL REQUEST'
 	//! '(Email would be checked later)'
@@ -92,21 +84,21 @@ describe('Editing consultants tab', function () {
     currRow.element(by.css('[ng-click="changeConsultantPassword(consultant)"]')).click();
     browser.driver.switchTo().alert().accept();
     expect($('.alert-success').isPresent()).toBeTruthy();
-  });
-  
+  });*/
+
   it('remove consultant', function(){
-    
+
     //! 'removing consultant'
     currRow.element(by.css('[ng-click="deleteAgencyConsultant(branch, consultant)"]')).click();
     browser.driver.switchTo().alert().accept();
 
 
   });
-  
+
   it('delete branch', function(){
-	  
+
 	//! 'DELETING BRANCH'
-	
+
 	(function cleanup(){
 
 		element.all(by.repeater('branch in branches')).count().then(function(count){
@@ -115,11 +107,11 @@ describe('Editing consultants tab', function () {
 			expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
 			if(count > 3) cleanup();
 		});
-		
+
 	})();
-		
-    
+
+
   });
 
 
-}); 
+});

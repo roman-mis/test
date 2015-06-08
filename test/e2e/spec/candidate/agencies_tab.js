@@ -17,14 +17,14 @@ describe('Checking AGENCIES tab', function (){
         console.log('waringing: tabs initially closed');
         $$('[ng-click="toggleOpen()"]').first().click();
       }
+      browser.sleep(1000);
+      addLink.click();
+
+      expect($('.modal-content').isDisplayed()).toBeTruthy();
+      $('.modal-content [ng-click="cancel()"]').click();
+      expect($('.modal-content').isPresent()).toBeFalsy();
+
     });
-
-    addLink.click();
-    expect($('.modal-content').isDisplayed()).toBeTruthy();
-    $('.modal-content [ng-click="cancel()"]').click();
-    expect($('.modal-content').isPresent()).toBeFalsy();
-
-
 
   });
  it('Checking Margin data entry dialog',function(){

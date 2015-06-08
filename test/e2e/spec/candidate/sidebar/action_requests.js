@@ -22,48 +22,48 @@ describe('Checking Action Requests', function(){
 			}
 		});
 	}
-	
+
 	var btnSave = element(by.css('.modal-footer')).all(by.buttonText('Save')).first();
-	
+
 	it('should display action requests menu', function(){
 		toggleOnActionRequestMenu();
 	});
-	
+
 	it('should make Student Loan (SL) requests', function(){
-		toggleOnActionRequestMenu();		
+		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openSl()"]')).click();
 		expect(element(by.css('.modal-content')).isPresent()).toBeTruthy();
-		
+
 		//! 'Clicking on checkboxes'
 		element(by.model('studentLoan.haveLoan')).click();
 		element(by.model('studentLoan.payDirectly')).click();
-		
+
 		browser.sleep(1500); // some promise is blocking protractor
-		//! 'Saving changes by clicking on button'	
+		//! 'Saving changes by clicking on button'
 		btnSave.click();
 		browser.sleep(50);
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
 		browser.sleep(500);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
-		
+
 	});
-	
+
 	it('should make P45 requests', function(){
 		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openP45()"]')).click();
 		expect(element(by.css('.modal-content')).isPresent()).toBeTruthy();
-		
+
 		//! 'Typing request date'
 		element.all(by.model('dateRequested')).all(by.css('input')).first().clear().sendKeys('01/01/2015');
 		//! 'Typing leaving date'
 		element.all(by.model('leavingDate')).all(by.css('input')).first().clear().sendKeys('07/01/2015');
-		
+
 		//! 'Temporaly make input[type="file"] displayable'
 		browser.executeScript('$("#uploadBtn").css("display","inline-block")');
 		//! 'Using picture "'+picturePath+'"'
-		element(by.css('#uploadBtn')).sendKeys(picturePath);		
+		element(by.css('#uploadBtn')).sendKeys(picturePath);
 		browser.executeScript('$("#uploadBtn").css("display","none")');
 		//! 'Clicking on "Upload" button'
 		element(by.css('[ng-click="uploadFile()"]')).click();
@@ -72,10 +72,12 @@ describe('Checking Action Requests', function(){
 				return !b;
 			});
 		});
-		
+
 		//! 'Clicking on "Save" button'
+
 		btnSave.click();
+    browser.sleep(1000);
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
 	});
-}); 
+});
