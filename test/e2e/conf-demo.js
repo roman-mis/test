@@ -17,10 +17,67 @@ var login1=['./spec/account/login/login1.js'];
 var login2=['./spec/account/login/login2.js'];
 var logout=['./spec/account/login/logout.js'];
 
-var prefill=[
+
+
+
+/* ***************** ADMIN TAB ****************************/
+
+var companyProfile=[
+  './spec/admin/companyProfile/companyProfileContact.js',
+  './spec/admin/companyProfile/companyProfileAccounts.js',
+  './spec/admin/companyProfile/companyProfileBankDetails.js',
+  './spec/admin/companyProfile/companyProfileDefaults.js',
+];
+
+var userManagment=[
+  './spec/admin/users/update_user_info.js'
+];
+
+var templateManagment=[
+  './spec/admin/templates/template_helper.js',
+  './spec/admin/templates/call_log.js',
+  './spec/admin/templates/task.js',
+  './spec/admin/templates/document.js',
+  './spec/admin/templates/email.js',
+  './spec/admin/templates/payslip.js',
+  './spec/admin/templates/invoice.js',
+  './spec/admin/templates/_extras.js',
+];
+var HRMC=[
+  './spec/admin/hrmc/rti_submissions.js',
+  './spec/admin/hrmc/mileage_rates.js',
+  './spec/admin/hrmc/cis_verification.js',
+];
+
+var adminRates=[
+//  './spec/admin/statutory_rate.js',
   './spec/admin/payment_rate.js',
   './spec/admin/expense_rate.js',
+];
+
+///combining admin tabs together
+var adminTab=companyProfile.concat(userManagment).concat(templateManagment).concat(HRMC).concat(adminRates);
+
+
+
+/*************************** AGENCY *****************************/
+var agencyTab=[
   './spec/agency/agency_prefill.js',
+  './spec/agency/check_agency.js',
+  './spec/agency/tabs/consultants.js'
+]
+
+/************************** ACCOUNT SETTINGS **********************/
+var accountSettings=[
+  './spec/account/settings/change_avatar.js',
+  './spec/account/settings/change_password.js',
+  './spec/account/settings/vehicle_info.js',
+];
+
+
+/*************************** Activity ******************************/
+var activity=[
+  './spec/activity/expenses_authorisation.js',
 ];
 
 
@@ -42,32 +99,26 @@ var candidateSidebar=[
   './spec/candidate/sidebar/agencies.js',
   './spec/candidate/sidebar/activity.js',
   './spec/candidate/sidebar/action_requests.js',
-
-  /* Not Working */
-//  './spec/candidate/sidebar/onboarding.js',
+  // './spec/candidate/sidebar/timesheet.js',
 ];
+/*
+ * General flow:
+ * Register new user and login him in and logout
+ * Change credentials to admin user
+ * Check account settings
+ * Checking system preferences from admin tab
+ * Checking agencies
+ * Checking candidates
+ * Checking activity tab
+ *
+ * */
 
+var test=[
+  './spec/candidate/search_current_candidate.js',
+  './spec/candidate/search_current_candidate.js',
+]
 
-
-/* ADMIN TAB */
-var companyProfile=[
-  './spec/admin/companyProfile/companyInfo.js',
-  './spec/admin/companyProfile/companyProfileAccounts.js',
-  './spec/admin/companyProfile/companyProfileBankDetails.js',
-  './spec/admin/companyProfile/companyProfileContact.js',
-//  './spec/admin/companyProfile/companyProfileDefaults.js',
-];
-
-var adminTab=companyProfile;
-
-
-/* ACCOUNT SETTINGS */
-var accountSettings=[
-  './spec/account/settings/change_avatar.js',
-  './spec/account/settings/change_password.js',
-  './spec/account/settings/vehicle_info.js',
-];
-
+/* ----------------------- CONFIG --------------------------- */
 exports.config = {
 
   framework: 'jasmine2',
@@ -82,9 +133,11 @@ exports.config = {
    'browserName': 'chrome'
    }],*/
   suites: {
-    main: regNewUser.concat(login1).concat(accountSettings).concat(logout).concat(adminCredentials).concat(login2).concat(prefill).concat(candidateTabs).concat(candidateSidebar),
+    main: regNewUser.concat(login1).concat(logout).concat(adminCredentials)
+      .concat(login2).concat(accountSettings).concat(adminTab).concat(agencyTab)
+      .concat(candidateTabs).concat(candidateSidebar).concat(activity),
     remote: adminCredentials.concat(login1).concat(candidateTabs),
-    dummy: adminCredentials.concat(login1).concat(adminTab)
+    dummy:  adminCredentials.concat(login1).concat(agencyTab)
   },
 
   onPrepare: function () {
@@ -129,7 +182,7 @@ exports.config = {
   },
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 60000,
+    defaultTimeoutInterval: 120000,
     print: function() {}
   }
 

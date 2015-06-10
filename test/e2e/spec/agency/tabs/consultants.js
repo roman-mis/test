@@ -25,7 +25,9 @@ describe('Editing consultants tab', function () {
 
   it('editing new branch', function () {
 
+
     $$('[ng-click="toggleOpen()"]').last().click();
+    browser.sleep(500);
     $$('[ng-click="openAgencyBranchModal(branch)"]').last().click();
 
     expect(element(by.model('data.name')).getAttribute('value')).toBe('Branch_'+number);
@@ -33,9 +35,9 @@ describe('Editing consultants tab', function () {
     expect(element(by.model('data.address2')).getAttribute('value')).toBe('Address2_'+number);
     expect(element(by.model('data.address3')).getAttribute('value')).toBe('Address3_'+number);
     expect(element(by.model('data.town')).getAttribute('value')).toBe('Town_'+number);
-    //expect(element(by.model('data.postcode')).getAttribute('value')).toBe('E22 2EE');
 
     $('[ng-click="ok()"]').click();
+    browser.sleep(500);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -97,19 +99,27 @@ describe('Editing consultants tab', function () {
 
   it('delete branch', function(){
 
-	//! 'DELETING BRANCH'
+    element.all(by.repeater('branch in branches')).count().then(function(count){
+      $$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
+      browser.driver.switchTo().alert().accept();
+      expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
+    });
 
-	(function cleanup(){
+	  //! 'DELETING BRANCH'
+/*
 
-		element.all(by.repeater('branch in branches')).count().then(function(count){
-			$$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
-			browser.driver.switchTo().alert().accept();
-			expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
-			if(count > 3) cleanup();
-		});
+    (function cleanup(){
 
-	})();
+      element.all(by.repeater('branch in branches')).count().then(function(count){
+        $$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
+        browser.driver.switchTo().alert().accept();
+        expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
+        if(count > 3) cleanup();
+      });
 
+    })();
+
+*/
 
   });
 
