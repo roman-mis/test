@@ -20,7 +20,7 @@ describe('Candidate Home tab', function () {
     element(by.model('candidate.lastName')).clear().sendKeys('LastName');
     helper.selectSelector(element(by.model('candidate.gender')),0);
     
- //   element(by.css('[ng-model="candidate.birthDate"] [ng-model="ngModel"]')).clear().sendKeys('26/03/1987');
+    element(by.css('[ng-model="candidate.birthDate"] [ng-model="ngModel"]')).clear().sendKeys('3/26/1987');
     helper.selectSelector(element(by.model('candidate.nationality')),0);
     
     element(by.model('candidate.passportNumber')).clear().sendKeys(passportNumber);
@@ -46,6 +46,7 @@ describe('Candidate Home tab', function () {
     expect(labels.get(2).getText()).toBe('MiddleName');
     expect(labels.get(3).getText()).toBe('LastName');
     expect(labels.get(4).getText()).toBe('Male');
+    expect(labels.get(5).getText()).toBe('26/03/1987');
     expect(labels.get(6).getText()).toBe('United Kingdom');
     expect(labels.get(7).getText()).toBe(passportNumber);
 	expect(labels.get(8).getText()).toBe(readingExpireDateStr);
