@@ -12,21 +12,18 @@ describe('Checking Timesheet', function(){
 	it('adding timesheet', function(){
 		//! 'selecting agency'
 		helper.selectSimpleSelect(element(by.model('saveAgency')), 0);
-		//! 'clicking on add date'
-		element.all(by.css('[ng-click="clicked = true"]')).get(1).click();
-		//! 'selecting week'
-		element(by.css('[ng-click="move(-1)"]')).click();
-		element.all(by.css('[ng-click="select(dt.date)"]')).get(12).click();
-
+		
 		//! 'accepting date'
+		element(by.css('#datepicker input')).click();		
 		element(by.css('.add-tsh-datepicker [ng-click^="okay()"]')).click();
+		
 		//! 'typing unit'
 		element(by.model('elements.unit')).clear().sendKeys('12');
 		//! 'typing payrate'
 		element(by.model('elements.payRate')).clear().sendKeys('8');
 		//! 'typing description'
 		element(by.model('userDescription')).clear().sendKeys('Timesheet description');
-
+		
 		var rate, description, unit, payRate;
 
 		element(by.model('saveRate')).getAttribute('value').then(function(index){
