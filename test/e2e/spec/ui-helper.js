@@ -54,6 +54,11 @@ var helper={
 		  console.log('\033[33m    * '+args.join(' ')+'\033[39m'); // print text with yellow color
 		  return true;
 	  })
+  },
+  alertAccept: function(){
+	  //browser.driver.switchTo().alert().accept();
+	  browser.sleep(1000);
+	  element(by.css('button.confirm')).click();
   }
 };
 

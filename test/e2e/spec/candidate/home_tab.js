@@ -31,7 +31,7 @@ describe('Candidate Home tab', function () {
 	element(by.model('candidate.drivingLicenceNumber')).clear().sendKeys('MORGA657054SM0IJ');
 
     $('[ng-click="saveCandidate()"]').click();
-    browser.driver.switchTo().alert().accept();
+    helper.alertAccept();
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 

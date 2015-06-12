@@ -35,6 +35,7 @@ var addNew = function (agencyIndex) {
   desc.clear().sendKeys('desc' + number.substr(-3, 3));
 
   $('[ng-click="saveProduct()"]').click();
+  helper.alertAccept();
 };
 
 var removeAll=function(){
@@ -42,7 +43,7 @@ var removeAll=function(){
   element.all(by.repeater('row in options.data')).count().then(function (count) {
     for (var k = 0; k < count; k++) {
       element(rows.row(0)).element(by.css('[ng-click="getExternalScope().deleteProduct(row)"]')).click(); //delete
-      browser.driver.switchTo().alert().accept();
+      helper.alertAccept();
     }
   });
 }
@@ -51,7 +52,7 @@ var removeAll=function(){
 describe('Navigating to Payroll-Product tab', function () {
 
   it('Adding one product', function () {
-
+    browser.refresh();
     helper.getByText(links, 'Payroll').click();
     $$('.tab-content .nav-tabs li[ng-class="{active: isTabActive(\'product\')}"] a[ng-click="setTabActive(\'product\')"]').click();
 
@@ -71,7 +72,7 @@ describe('Navigating to Payroll-Product tab', function () {
 
 
         element(rows.row(i - 1)).element(by.css('[ng-click="getExternalScope().editProduct(row)"]')).click();
-		
+		browser.sleep(500);
         expect(used.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(0).getText());
         expect(agency.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(1).getText());
         expect(rule.getText()).toBe(element(rows.row(i - 1)).all(by.css('td')).get(3).getText());
@@ -83,7 +84,7 @@ describe('Navigating to Payroll-Product tab', function () {
         expect(method.getText()).toBe('BACS');
 
         $('[ng-click="cancelEdit()"]').click();
-
+		helper.alertAccept();
         removeAll();
 
 

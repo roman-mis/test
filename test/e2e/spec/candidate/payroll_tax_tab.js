@@ -8,7 +8,7 @@ describe('Navigating to Payroll-Tax tab', function () {
 
 
   it('if inner tabs are working', function () {
-
+    browser.refresh();
     helper.getByText(links, 'Payroll').click();
     var checkInnerTabs = function (i) {
       innerLinks.get(i).click();
@@ -61,18 +61,22 @@ describe('Navigating to Payroll-Tax tab', function () {
     var basis = element(by.model('tax.taxBasis'));
     helper.selectSelector(basis, 1);
 
-    $('[ng-click="saveTax()"]').click().then(function () {
-      expect($('.alert-success').isPresent()).toBeTruthy();
-      expect($('.modal-content').isPresent()).toBeFalsy();
-    });
+    $('[ng-click="saveTax()"]').click();
+    
+    helper.alertAccept();
+    
+    expect($('.alert-success').isPresent()).toBeTruthy();
+    expect($('.modal-content').isPresent()).toBeFalsy();
+    
 
     browser.getCurrentUrl().then(function (url) {
       browser.get(url);
     });
     innerLinks.get(1).click();
-    $('[ng-click="openTaxSetting()"]').click().then(function () {
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-    });
+    $('[ng-click="openTaxSetting()"]').click();
+    browser.sleep(3000);
+    
+    expect($('.modal-content').isDisplayed()).toBeTruthy();    
 
     expect(decl.getText()).toBe('Not Applicable');
     expect(date.getAttribute('value')).toBe('26/01/2012');
@@ -82,20 +86,27 @@ describe('Navigating to Payroll-Tax tab', function () {
     expect(code.getAttribute('value')).toBe('1060L');
     expect(basis.getText()).toBe('W1/M1');
 
-    $('[ng-click="cancel()"]').click().then(function () {
-	  browser.sleep(1000); // wait for "remove-modal" animation
-      expect($('.modal-content').isPresent()).toBeFalsy();
-    });
+    $('[ng-click="cancel()"]').click();
+    
+    helper.alertAccept();
+    
+    browser.sleep(1000); // wait for "remove-modal" animation
+    expect($('.modal-content').isPresent()).toBeFalsy();    
 
   });
 
   it('Open payslips dialog', function () {
-    $('[ng-click="openPayslipSetting()"]').click().then(function () {
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-      $('.modal.fade').click().then(function () {
-        expect($('.modal-content').isPresent()).toBeFalsy();
-      });
-    });
+    $('[ng-click="openPayslipSetting()"]').click();
+    
+    expect($('.modal-content').isDisplayed()).toBeTruthy();
+      
+    browser.sleep(1000);
+      
+    $('[ng-click="ok()"]').click();
+    helper.alertAccept(); // what does it cancel?
+    browser.sleep(1000);
+    expect($('.modal-content').isPresent()).toBeFalsy();      
+    
   });
 
 });
