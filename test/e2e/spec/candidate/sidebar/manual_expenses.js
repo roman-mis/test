@@ -215,6 +215,7 @@ describe('checking manual expense', function () {
 	//! 'check if ID is there'
 	expect(element(by.binding('expenseData.claimReference')).getText()).toBeTruthy();
     element(by.css('[ng-click="cancel()"]')).click();
+    helper.alertAccept();
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 });

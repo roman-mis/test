@@ -26,10 +26,12 @@ describe('Checking Action Requests', function(){
 	var btnSave = element(by.css('.modal-footer')).all(by.buttonText('Save')).first();
 
 	it('should display action requests menu', function(){
+		browser.refresh();
 		toggleOnActionRequestMenu();
 	});
 
 	it('should make Student Loan (SL) requests', function(){
+		browser.refresh();
 		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openSl()"]')).click();
@@ -42,6 +44,7 @@ describe('Checking Action Requests', function(){
 		browser.sleep(1500); // some promise is blocking protractor
 		//! 'Saving changes by clicking on button'
 		btnSave.click();
+		helper.alertAccept();
 		browser.sleep(50);
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
 		browser.sleep(500);
@@ -50,6 +53,7 @@ describe('Checking Action Requests', function(){
 	});
 
 	it('should make P45 requests', function(){
+		browser.refresh();
 		toggleOnActionRequestMenu();
 		//! 'Opening dialog'
 		element(by.css('[ng-click="openP45()"]')).click();
@@ -76,8 +80,9 @@ describe('Checking Action Requests', function(){
 		//! 'Clicking on "Save" button'
 
 		btnSave.click();
-    browser.sleep(1000);
+		helper.alertAccept();    
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
+		browser.sleep(1000);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
 	});
 });

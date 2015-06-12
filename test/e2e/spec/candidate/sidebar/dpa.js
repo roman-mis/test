@@ -6,6 +6,7 @@ describe('Checking DPA', function () {
     browser.sleep(1000);
     expect($('.modal-content').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
+    helper.alertAccept();
     expect($('.modal-content').isPresent()).toBeFalsy();
     link.click();
     browser.sleep(1000);
@@ -64,6 +65,8 @@ describe('Checking DPA', function () {
       });
     }).then(function () {
       $('[ng-click="save()"]').click();
+      helper.alertAccept();
+      browser.sleep(2000);
       expect($('.modal-content').isPresent()).toBeFalsy();
     });
 

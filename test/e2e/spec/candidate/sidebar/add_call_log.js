@@ -6,6 +6,7 @@ describe('Checking Call Log', function () {
     link.click();
     expect($('.modal-content').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
+    helper.alertAccept();
     expect($('.modal-content').isPresent()).toBeFalsy();
     link.click();
 
@@ -19,6 +20,7 @@ describe('Checking Call Log', function () {
     helper.getDateByModel('data.followUpTaskDate').clear().sendKeys('01/01/2015');
     helper.selectSelector(element.all(by.model('data.assignee')), 1);
     element(by.css('[ng-click="save()"]')).click();
+    helper.alertAccept();
     browser.sleep(1000);
     expect($('.alert-success').isPresent()).toBeTruthy();
     expect($('.modal-content').isPresent()).toBeFalsy();

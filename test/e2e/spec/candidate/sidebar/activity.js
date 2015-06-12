@@ -14,6 +14,7 @@ describe('Checking Activity', function () {
     expect($('.modal-title [ng-show="activityType==\'callLog\'"]').getText()).toContain('Call Log');
     expect($('.modal-title [ng-show="activityType==\'callLog\'"]').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
+    helper.alertAccept();
     browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
@@ -28,6 +29,7 @@ describe('Checking Activity', function () {
     expect($('.modal-title [ng-show="activityType==\'task\'"]').isDisplayed()).toBeTruthy();
 
     $('.modal-content [ng-click="cancel()"]').click();
+    helper.alertAccept();
     browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
@@ -53,8 +55,9 @@ describe('Checking Activity', function () {
     helper.selectSelector(element(by.model('data.assignee')), 1);
 
     $('.modal-content [ng-click="save()"]').click();
-    browser.sleep(1000);
+    helper.alertAccept();
     expect($('.alert-success').isPresent()).toBeTruthy();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -67,6 +70,7 @@ describe('Checking Activity', function () {
     expect($('.modal-title').getText()).toContain('Upload Documents');
     expect($('.modal-title').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
+    helper.alertAccept();
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -118,6 +122,7 @@ describe('Checking Activity', function () {
 
 
     $('.modal-content [ng-click="save()"]').click();
+    helper.alertAccept();
     browser.sleep(1000);
     expect($('.alert-success').isPresent()).toBeTruthy();
     expect($('.modal-content').isPresent()).toBeFalsy();
