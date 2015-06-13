@@ -25,10 +25,8 @@ describe('Navigating to Payroll-Tax tab', function () {
     ///Check Tax subtab
     innerLinks.get(1).click();
 
-    $('[ng-click="openTaxSetting()"]').click().then(function () {
-      expect($('.modal-content').isDisplayed()).toBeTruthy();
-    });
-
+    $('[ng-click="openTaxSetting()"]').click();
+    expect($('.modal-content').isDisplayed()).toBeTruthy();
 
     var decl = element(by.model('tax.declaration'));
     helper.selectSelector(decl, 0);
@@ -64,14 +62,13 @@ describe('Navigating to Payroll-Tax tab', function () {
     $('[ng-click="saveTax()"]').click();
     
     helper.alertAccept();
-    
+    browser.sleep(200);
     expect($('.alert-success').isPresent()).toBeTruthy();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
     
 
-    browser.getCurrentUrl().then(function (url) {
-      browser.get(url);
-    });
+    browser.refresh();
     innerLinks.get(1).click();
     $('[ng-click="openTaxSetting()"]').click();
     browser.sleep(3000);

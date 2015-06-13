@@ -56,6 +56,7 @@ describe('Checking Activity', function () {
 
     $('.modal-content [ng-click="save()"]').click();
     helper.alertAccept();
+    browser.sleep(50);
     expect($('.alert-success').isPresent()).toBeTruthy();
     browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
@@ -71,6 +72,7 @@ describe('Checking Activity', function () {
     expect($('.modal-title').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
     helper.alertAccept();
+    browser.sleep(2000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -123,8 +125,9 @@ describe('Checking Activity', function () {
 
     $('.modal-content [ng-click="save()"]').click();
     helper.alertAccept();
-    browser.sleep(1000);
+    browser.sleep(50);
     expect($('.alert-success').isPresent()).toBeTruthy();
+    browser.sleep(1000);    
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
   /*
