@@ -20,6 +20,8 @@ describe('Editing consultants tab', function () {
     element(by.model('data.postCode')).clear().sendKeys('E22 2EE');
 
     $('[ng-click="ok()"]').click();
+    helper.alertAccept();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -37,7 +39,8 @@ describe('Editing consultants tab', function () {
     expect(element(by.model('data.town')).getAttribute('value')).toBe('Town_'+number);
 
     $('[ng-click="ok()"]').click();
-    browser.sleep(500);
+    helper.alertAccept();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -52,6 +55,8 @@ describe('Editing consultants tab', function () {
     helper.selectSimpleSelect(element(by.model('data.status')),1)
 
     $('[ng-click="ok()"]').click();
+    helper.alertAccept();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
@@ -75,6 +80,8 @@ describe('Editing consultants tab', function () {
     expect(element(by.model('data.role')).element(by.css('[selected="selected"]')).getText()).toContain('Manager');
     expect(element(by.model('data.status')).element(by.css('[selected="selected"]')).getText()).toContain('Live');
     $('[ng-click="ok()"]').click();
+    helper.alertAccept();
+    browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
 
   });
@@ -92,7 +99,9 @@ describe('Editing consultants tab', function () {
 
     //! 'removing consultant'
     currRow.element(by.css('[ng-click="deleteAgencyConsultant(branch, consultant)"]')).click();
-    browser.driver.switchTo().alert().accept();
+    //browser.driver.switchTo().alert().accept();
+    helper.alertAccept();
+    browser.sleep(1000);
 
 
   });
@@ -101,7 +110,8 @@ describe('Editing consultants tab', function () {
 
     element.all(by.repeater('branch in branches')).count().then(function(count){
       $$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
-      browser.driver.switchTo().alert().accept();
+      helper.alertAccept();
+	  browser.sleep(1000);
       expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
     });
 
