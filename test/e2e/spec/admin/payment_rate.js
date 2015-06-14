@@ -25,6 +25,8 @@ describe('Going to check for sufficient payment rate count (at least 3)', functi
       element(by.model('paymentRates.hours')).sendKeys(8+i);
 
       $('[ng-click="save(addPaymentForm.$valid)"]').click();
+      helper.alertAccept();
+      browser.sleep(1000);
       expect($('.modal-content').isPresent()).toBeFalsy();
 
     };
@@ -77,6 +79,8 @@ describe('Going to check for sufficient payment rate count (at least 3)', functi
 	  });
 	  
 	  $('[ng-click="save(addPaymentForm.$valid)"]').click();
+	  helper.alertAccept();
+      browser.sleep(1000);
 	  
 	  expect($('.modal-content').isPresent()).toBeFalsy();
 	  
@@ -103,6 +107,8 @@ describe('Going to check for sufficient payment rate count (at least 3)', functi
 	  });
 	  
 	  $('[ng-click="cancel()"]').click();
+	  helper.alertAccept();
+      browser.sleep(1000);
 	  
 	  expect($('.modal-content').isPresent()).toBeFalsy();
 	  

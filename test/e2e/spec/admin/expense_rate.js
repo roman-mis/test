@@ -25,6 +25,8 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
       element(by.model('expensesRate.amount')).sendKeys(6+i);
 
       $('[ng-click="save(expensesRateForm.$valid)"]').click();
+      helper.alertAccept();
+      browser.sleep(1000);
       expect($('.modal-content').isPresent()).toBeFalsy();
 
     };
@@ -125,6 +127,8 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
           
           //! 'saving changes by clicking on button with css [ng-click="save(expensesRateForm.$valid)"]'
           element(by.css('[ng-click="save(expensesRateForm.$valid)"]')).click();
+          helper.alertAccept();
+	      browser.sleep(1000);
           
           browser.sleep(1000);
           browser.refresh();
@@ -171,6 +175,8 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
           return true;
 	  });
       element(by.css('[ng-click="save(expensesRateForm.$valid)"]')).click();
+      helper.alertAccept();
+      browser.sleep(1000);
 	  // /! 'closing "Edit Expense Rate" dialog by clicking on button with css [ng-click="cancel()"]'
 	  //element(by.css('[ng-click="cancel()"]')).click();
 	  //! 'checking if dialog is disappeared'
