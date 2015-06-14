@@ -64,6 +64,8 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		});
 		
 		cancelBtn.click();
+		helper.alertAccept();
+		browser.sleep(1000);
 		
 		expect(expenseData.all(by.css('[ng-click^="viewReceipt("]')).get(0).element(by.css('.present')).isPresent()).toBeTruthy();
 		
@@ -76,6 +78,7 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		});
 		
 		cancelBtn.click();
+		helper.alertAccept();
 		
 		expect(expenseData.all(by.css('[ng-click^="viewReceipt("]')).get(0).element(by.css('.present')).isPresent()).toBeFalsy();
 	});
@@ -88,7 +91,7 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		
 		majorDropDownMenuBtn.click();
 		
-		majorDropDownMenu.all(by.tagName('li')).get(0).click();
+		majorDropDownMenu.all(by.tagName('li')).get(0).click();		
 		
 		//! 'check if items are approved'
 		
@@ -151,8 +154,7 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 			status = v;
 		});
 		
-		saveExpenseItems.click();
-		
+		saveExpenseItems.click();		
 		
 		browser.wait(function(){
 			expect(row.element(by.css('td:nth-child(2)')).getText()).toBe(detailName);
@@ -174,6 +176,8 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		});
 		
 		$('[ng-click="ok()"]').click();
+		helper.alertAccept();
+		browser.sleep(1000);
 		
 		expect($('.modal-content').isPresent()).toBeFalsy();
 	});
