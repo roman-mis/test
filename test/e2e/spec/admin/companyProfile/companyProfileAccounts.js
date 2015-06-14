@@ -72,6 +72,7 @@ describe('checking companyProfile accounts tab', function () {
 
   it("should check valid company registration number error message", function () {
     element.all(by.css('div.modal-footer button')).get(0).click().then(function () {
+		helper.alertAccept();
       $('a.pull-right').click();
       var regNumber = element(by.model('companyProfile.accounts.companyRegNo')),
         regNumError = $(' div [ng-show="accountsForm.reg.$error.number"]');
@@ -97,6 +98,7 @@ describe('checking companyProfile accounts tab', function () {
       expect(utrValidNumberError.isDisplayed()).toBeTruthy();
       expect(element.all(by.css('.modal-footer button')).get(1).isEnabled()).toBe(false);
       element.all(by.css('div.modal-footer button')).get(0).click().then(function () {
+		  helper.alertAccept();
         $('a.pull-right').click();
         utrNumber.clear().sendKeys('12312312').then(function () {
           expect(utrValidNumberError.isDisplayed()).not.toBeTruthy();
@@ -126,6 +128,7 @@ describe('checking companyProfile accounts tab', function () {
     expect(element.all(by.css('.modal-footer button')).get(1).isEnabled()).toBe(true);
 
     element.all(by.css('.modal-footer button')).get(1).click().then(function () {
+		helper.alertAccept();
       content = $$('ul.entry-content li span');
       expect(content.get(0).getText()).toEqual(details.vatNumber);
       expect(content.get(1).getText()).toEqual(details.companyRegNo);

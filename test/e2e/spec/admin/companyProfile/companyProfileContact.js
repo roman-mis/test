@@ -108,6 +108,7 @@ describe('checking company profile',function () {
 		expect(button.isEnabled()).toBe(true);
 
 		button.click();
+		helper.alertAccept();
 		expect(browser.isElementPresent(modalWindow)).toEqual(false);
 
 

@@ -181,20 +181,17 @@ describe("checking company profile bank details tab", function () {
 
 		expect(saveButton.isEnabled()).not.toBeTruthy();
 
-		cancelButton.click().then(function () {
-			editBankDetails.click().then(function () {
-				accountNumber.clear().sendKeys("123456789");
-				expect(accountNumberExceedError.isDisplayed()).toBeTruthy();
-				expect(accountNumberExceedError.getText()).toEqual("Account Number cannot exceed 8 digits.");
-				expect(saveButton.isEnabled()).not.toBeTruthy();
-				accountNumber.clear().sendKeys("12345678").then(function () {
-					expect(accountNumberExceedError.isDisplayed()).not.toBeTruthy();
-					expect(accountNumberFieldError.isDisplayed()).not.toBeTruthy();
-				});
-			});
+		cancelButton.click();
+		helper.alertAccept();
+		editBankDetails.click();
+		accountNumber.clear().sendKeys("123456789");
+		expect(accountNumberExceedError.isDisplayed()).toBeTruthy();
+		expect(accountNumberExceedError.getText()).toEqual("Account Number cannot exceed 8 digits.");
+		expect(saveButton.isEnabled()).not.toBeTruthy();
+		accountNumber.clear().sendKeys("12345678").then(function () {
+			expect(accountNumberExceedError.isDisplayed()).not.toBeTruthy();
+			expect(accountNumberFieldError.isDisplayed()).not.toBeTruthy();
 		});
-
-
 	});
 
 
@@ -212,13 +209,12 @@ describe("checking company profile bank details tab", function () {
 		expect(saveButton.isEnabled()).not.toBeTruthy();
 
 
-		cancelButton.click().then(function () {
-			editBankDetails.click().then(function () {
-				sortCodeField.clear().sendKeys("12312");
-				expect(sortCodeFieldError.isDisplayed()).not.toBeTruthy();
-				expect(saveButton.isEnabled()).toBeTruthy();
-			});
-		});
+		cancelButton.click();
+		helper.alertAccept();
+		editBankDetails.click();
+		sortCodeField.clear().sendKeys("12312");
+		expect(sortCodeFieldError.isDisplayed()).not.toBeTruthy();
+		expect(saveButton.isEnabled()).toBeTruthy();		
 	});
 
 	it("Payroll Reference empty error", function () {
@@ -246,22 +242,20 @@ describe("checking company profile bank details tab", function () {
 		payrollRefField.clear().sendKeys(bankDetails.payrollRef);
 		expect(saveButton.isEnabled()).toBeTruthy();
 
-		saveButton.click().then(function () {
-			var items = $$('ul.entry-content li span');
-				expect(items.get(0).getText()).toEqual(bankDetails.bankName);
-				expect(items.get(1).getText()).toEqual(bankDetails.address1);
-				expect(items.get(2).getText()).toEqual(bankDetails.address2);
-				expect(items.get(3).getText()).toEqual(bankDetails.town);
-				expect(items.get(4).getText()).toEqual(bankDetails.county);
-				expect(items.get(5).getText()).toEqual(bankDetails.country);
-				expect(items.get(6).getText()).toEqual(bankDetails.postcode);
-				expect(items.get(7).getText()).toEqual(bankDetails.accountName);
-				expect(items.get(8).getText()).toEqual(bankDetails.accountNumber);
-				expect(items.get(9).getText()).toEqual(bankDetails.sortCode);
-				expect(items.get(10).getText()).toEqual(bankDetails.payrollRef);
-
-
-		});
+		saveButton.click();
+		helper.alertAccept();
+		var items = $$('ul.entry-content li span');
+		expect(items.get(0).getText()).toEqual(bankDetails.bankName);
+		expect(items.get(1).getText()).toEqual(bankDetails.address1);
+		expect(items.get(2).getText()).toEqual(bankDetails.address2);
+		expect(items.get(3).getText()).toEqual(bankDetails.town);
+		expect(items.get(4).getText()).toEqual(bankDetails.county);
+		expect(items.get(5).getText()).toEqual(bankDetails.country);
+		expect(items.get(6).getText()).toEqual(bankDetails.postcode);
+		expect(items.get(7).getText()).toEqual(bankDetails.accountName);
+		expect(items.get(8).getText()).toEqual(bankDetails.accountNumber);
+		expect(items.get(9).getText()).toEqual(bankDetails.sortCode);
+		expect(items.get(10).getText()).toEqual(bankDetails.payrollRef);
 	});
 
 });

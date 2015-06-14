@@ -104,6 +104,7 @@ describe('checking companyProfile defaults tab', function () {
 
 
 		saveButton.click().then(function () {
+			helper.alertAccept();
 			bankDetailsLink.click(function () {
 				var i = 0;
 				while(arr.length){
