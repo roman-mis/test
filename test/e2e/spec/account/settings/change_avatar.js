@@ -10,7 +10,8 @@ describe('changing avatar', function () {
 	it('should change avatar picture', function(){
 		element(by.css('.modal-content input[type="file"]')).sendKeys(picturePath);	
 		element(by.css('[ng-click="save()"]')).click();
-		browser.sleep(100);
+		helper.alertAccept();
+		browser.sleep(50);
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
 		browser.sleep(100);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();

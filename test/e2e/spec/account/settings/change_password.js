@@ -24,6 +24,7 @@ describe('changing password', function () {
 	it('should change password', function(){
 		loginData.userPassword = newPassword; // "change password" (set new password) -> "log out" -> "log in" -> "change password" (restore old one)
 		element(by.css('[ng-click="save()"]')).click();
+		helper.alertAccept();
 		browser.sleep(100);
 		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
 		browser.sleep(100);

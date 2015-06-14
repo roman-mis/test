@@ -9,6 +9,7 @@ describe('changing vehicle information', function () {
 		element(by.css('[ng-click="vehicle()"]')).click();
 		
 		$$('.modal-content').get(1).all(by.css('[ng-click="cancel()"]')).first().click();
+		helper.alertAccept();
 	});
 	it('should change vehicle information', function(){
 		[0,1,2].forEach(function(number){
@@ -30,6 +31,7 @@ describe('changing vehicle information', function () {
 		
 		
 			$$('.modal-content').get(1).all(by.css('[ng-click="save()"]')).first().click();
+			helper.alertAccept();
 		
 			element(by.css('[ng-click="vehicle()"]')).click();
 		
@@ -39,7 +41,8 @@ describe('changing vehicle information', function () {
 				return true;
 			});
 		
-			$$('.modal-content').get(1).all(by.css('[ng-click="cancel()"]')).first().click();
+			$$('.modal-content').get(1).element(by.css('[ng-click="cancel()"]')).click();
+			helper.alertAccept();
 		});
 		
 		[
@@ -68,7 +71,8 @@ describe('changing vehicle information', function () {
 			});
 						
 					
-			$$('.modal-content').get(1).all(by.css('[ng-click="save()"]')).first().click();
+			$$('.modal-content').get(1).element(by.css('[ng-click="save()"]')).click();
+			helper.alertAccept();
 		
 			element(by.css('[ng-click="vehicle()"]')).click();
 		
@@ -79,8 +83,10 @@ describe('changing vehicle information', function () {
 			});
 		
 			$$('.modal-content').get(1).all(by.css('[ng-click="cancel()"]')).first().click();
+			helper.alertAccept();
 		});
 		
 		element(by.css('[ng-click="cancel()"]')).click();
+		helper.alertAccept();
 	});
 }); 
