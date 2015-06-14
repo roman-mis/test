@@ -21,6 +21,7 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 	it('Edit Details', function(){
 		//! 'clicking on "Clear Data()"'
 		element(by.css('[ng-click="delete()"]')).click();
+		helper.alertAccept();
 
 		//! 'filling entries'
 		element(by.model('cis.userId')).sendKeys(helper.getDefaultNumber());
@@ -67,6 +68,7 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 		});
 
 		element(by.css('[ng-click="save()"]')).click();
+		helper.alertAccept();
 
 	});
 
@@ -101,6 +103,7 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 		});
 
 		element(by.css('[ng-click="save()"]')).click();
+		helper.alertAccept();
 
 	});
 

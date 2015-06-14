@@ -21,6 +21,7 @@ describe('"Admin / HRMC": Check RTI Submissions', function(){
 	it('Edit Details', function(){
 		//! 'clicking on "Clear Data()"'
 		element(by.css('[ng-click="delete()"]')).click();
+		helper.alertAccept();
 
 		//! 'filling entries'
 		element(by.model('rti.enableRti')).click();
@@ -73,6 +74,7 @@ describe('"Admin / HRMC": Check RTI Submissions', function(){
 		});
 
 		element(by.css('[ng-click="save()"]')).click();
+		helper.alertAccept();
 
 	});
 
@@ -107,6 +109,7 @@ describe('"Admin / HRMC": Check RTI Submissions', function(){
 		});
 
 		element(by.css('[ng-click="save()"]')).click();
+		helper.alertAccept();
 
 	});
 
