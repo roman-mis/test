@@ -1,10 +1,13 @@
 
 
   describe('Navigating to mailbox', function () {
-
-    it('should navigate to mail.yandex.com and redirect to passport', function () {
-      browser.driver.get('https://mail.yandex.com/lite/inbox');
-      browser.sleep(10000);
+    var n = 9;
+    it('should navigate to mail.yandex.com and redirect to passport', function openMailUrl() {
+      (n & 1) && browser.driver.get('https://mail.yandex.com/lite/inbox');
+      browser.sleep(5000);
+      browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
+          if(!bool && n-->0) openMailUrl();
+      });
     /*  browser.driver.wait(function () {
         return browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
           return bool;
