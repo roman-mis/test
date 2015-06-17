@@ -46,7 +46,7 @@ describe('Candidate Home tab', function () {
     expect(labels.get(2).getText()).toBe('MiddleName');
     expect(labels.get(3).getText()).toBe('LastName');
     expect(labels.get(4).getText()).toBe('Male');
-    expect(labels.get(5).getText()).toBe('1987/03/26');
+    expect(labels.get(5).getText()).toBe('26/03/1987');
     expect(labels.get(6).getText()).toBe('United Kingdom');
     expect(labels.get(7).getText()).toBe(passportNumber);
 	expect(labels.get(8).getText()).toBe(readingExpireDateStr);
