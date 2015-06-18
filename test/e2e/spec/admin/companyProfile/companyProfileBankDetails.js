@@ -82,9 +82,9 @@ describe("checking company profile bank details tab", function () {
 	it("icon edit works", function () {
 		var iconEdit = $('a.icon-edit'),
 			modalWindow = $('div.modal-window');
-		iconEdit.click().then(function () {
-			expect(modalWindow.isDisplayed()).toBeTruthy();
-		});
+		iconEdit.click();
+		browser.sleep(1000);
+		expect(modalWindow.isDisplayed()).toBeTruthy();	
 
 	});
 

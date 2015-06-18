@@ -27,14 +27,14 @@ describe('checking company profile',function () {
 	it("should check links if there are 4 links", function () {
 		expect(links.count()).toBe(4);
 	});
-	it("shout check the text of links", function () {
+	it("should check the text of links", function () {
 		expect(links.get(0).getText()).toEqual("Contact");
 		expect(links.get(1).getText()).toEqual("Accounts");
 		expect(links.get(2).getText()).toEqual("Bank Details");
 		expect(links.get(3).getText()).toEqual("Defaults");
 
 	});
-	it("should check correctness of error messages  information", function () {
+	it("should check correctness of error messages information", function () {
 		editInfoLink = $('p.entry-title a.pull-right');
 		editInfoLink.click().then(function () {
 			expect($('div.modal-window').isDisplayed()).toBeTruthy();
@@ -42,7 +42,8 @@ describe('checking company profile',function () {
 				companyNameField.click().clear();
 			var button = element.all(by.css('div.modal-footer button')).get(1);
 			/* checking companyName empty error*/
-			var errMess = $('div [ng-show="contactForm.companyName.$error.required"]');
+			browser.sleep(500);
+			var errMess = $('.alert-danger[ng-show="contactForm.companyName.$error.required"]');
 			expect(errMess.isDisplayed()).toBeTruthy();
 			expect(errMess.getText()).toBe("Company Name cannot be empty.");
 			expect(button.isEnabled()).toBe(false);
@@ -51,7 +52,7 @@ describe('checking company profile',function () {
 				companyNameField.sendKeys("1");
 			}
 			expect(errMess.isDisplayed()).not.toBeTruthy();
-			var errMess2 = $('div [ng-show="contactForm.companyName.$error.maxlength"]');
+			var errMess2 = $('[ng-show="contactForm.companyName.$error.maxlength"]');
 			expect(errMess2.isDisplayed()).toBeTruthy();
 
 			/* checking Address1 empty error*/
@@ -80,12 +81,14 @@ describe('checking company profile',function () {
 			var postCodeEl = element(by.model('companyProfile.contact.postcode')),
 				postCodeError = $('div [ng-show="contactForm.postcode.$error.pattern"]');
 				postCodeEl.clear().sendKeys('qwe');
+				browser.sleep(10);
 				expect(postCodeError.isDisplayed()).toBeTruthy();
 
 			/*cheking email error*/
 			var emailEl = element(by.model('companyProfile.contact.email')),
-				emailError = $('div [ng-show="contactForm.email.$error.email"]');
+				emailError = $('.alert-danger[ng-show="contactForm.email.$error.email"]');
 				emailEl.clear().sendKeys("qwe");
+				browser.sleep(10);
 				expect(emailError.isDisplayed()).toBeTruthy();
 
 
