@@ -62,8 +62,6 @@ describe('Navigating to Payroll-Tax tab', function () {
     $('[ng-click="saveTax()"]').click();
 
     helper.alertAccept();
-    browser.sleep(200);
-    expect($('.alert-success').isPresent()).toBeTruthy();
     browser.sleep(1000);
     expect($('.modal-content').isPresent()).toBeFalsy();
 
