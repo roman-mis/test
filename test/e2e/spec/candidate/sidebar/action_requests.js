@@ -44,9 +44,7 @@ describe('Checking Action Requests', function(){
 		browser.sleep(1500); // some promise is blocking protractor
 		//! 'Saving changes by clicking on button'
 		btnSave.click();
-		helper.alertAccept();
-		browser.sleep(50);
-		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
+		helper.alertAccept();		
 		browser.sleep(500);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
 
@@ -80,8 +78,7 @@ describe('Checking Action Requests', function(){
 		//! 'Clicking on "Save" button'
 
 		btnSave.click();
-		helper.alertAccept();    
-		expect(element(by.css('.alert-success')).isPresent()).toBeTruthy();
+		helper.alertAccept();
 		browser.sleep(1000);
 		expect(element(by.css('.modal-content')).isPresent()).toBeFalsy();
 	});
