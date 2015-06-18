@@ -21,8 +21,7 @@ describe('Checking Call Log', function () {
     helper.selectSelector(element.all(by.model('data.assignee')), 1);
     element(by.css('[ng-click="save()"]')).click();
     helper.alertAccept();
-    browser.sleep(1000);
-    expect($('.alert-success').isPresent()).toBeTruthy();
+    browser.sleep(1000);    
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 

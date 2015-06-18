@@ -208,6 +208,7 @@ describe('checking manual expense', function () {
     //! 'clicking on "Submit Expenses" which should be allowed by now'
     expect(element(by.partialButtonText('Submit Expenses')).isEnabled()).toBeTruthy();
     element(by.partialButtonText('Submit Expenses')).click();
+    helper.alertAccept();
   });
 
   it('thank you screen', function () {
