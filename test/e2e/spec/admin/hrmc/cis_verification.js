@@ -22,6 +22,8 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 		//! 'clicking on "Clear Data()"'
 		element(by.css('[ng-click="delete()"]')).click();
 		helper.alertAccept();
+		
+		expect(element(by.model('cis.firstName')).getAttribute('value')).toBe('');
 
 		//! 'filling entries'
 		element(by.model('cis.userId')).sendKeys(helper.getDefaultNumber());
@@ -36,13 +38,13 @@ describe('"Admin / HRMC": Check CIS Verification', function(){
 
 		element(by.model('cis.town')).sendKeys('London');
 
-		element(by.model('cis.country')).sendKeys('Great Britan');
+		element(by.model('cis.country')).sendKeys('Great Britain');
 
 		element(by.model('cis.postCode')).sendKeys('E20 2BB');
 
-		element(by.model('cis.telephone')).sendKeys(helper.getDefaultNumber());
+		element(by.model('cis.telephone')).sendKeys('02023'+helper.getDefaultNumber());
 
-		element(by.model('cis.fax')).sendKeys(helper.getDefaultNumber());
+		element(by.model('cis.fax')).sendKeys('07023'+helper.getDefaultNumber());
 
 		element(by.model('cis.emailAddress')).sendKeys('originemtest2@yandex.com');
 
