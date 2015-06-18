@@ -18,10 +18,12 @@ describe('Checking AGENCIES tab', function (){
         $$('[ng-click="toggleOpen()"]').first().click();
       }
       browser.sleep(1000);
-      addLink.click();
+      addLink.click();      
 
       expect($('.modal-content').isDisplayed()).toBeTruthy();
       $('.modal-content [ng-click="cancel()"]').click();
+      helper.alertAccept();
+      browser.sleep(1000);
       expect($('.modal-content').isPresent()).toBeFalsy();
 
     });
@@ -37,6 +39,7 @@ describe('Checking AGENCIES tab', function (){
       helper.selectSelector(element(by.model('data.deductionType')), 2);
       element(by.model('data.deductionNumberOfPayroll')).sendKeys('123');
       $('[ng-click="saveException()"]').click();
+      helper.alertAccept();      
       expect(rows.count()).toBe(i+1);
     });
 
@@ -52,6 +55,7 @@ describe('Checking AGENCIES tab', function (){
 
     element(by.model('data.deductionNumberOfPayroll')).clear().sendKeys('321');
     $('[ng-click="saveException()"]').click();
+    helper.alertAccept();
 
     expect('321').toBe(rows.first().all(by.css('td')).get(4).getText());
   });
@@ -59,6 +63,7 @@ describe('Checking AGENCIES tab', function (){
   it('Checking if margins could be deleted',function(){
     rows.count().then(function(i){
       rows.first().all(by.css('[ng-click="deleteMarginException(product, exception)"]')).get(0).click();
+      helper.alertAccept();
       expect(rows.count()).toBe(i-1);
     });
   });
