@@ -1,30 +1,28 @@
-
-
-  describe('Navigating to mailbox', function () {
-    var n = 9;
-    it('should navigate to mail.yandex.com and redirect to passport', function openMailUrl() {
-      (n & 1) && browser.driver.get('https://mail.yandex.com/lite/inbox');
-      browser.sleep(5000);
-      browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
-          if(!bool && n-->0) openMailUrl();
-      });
-    /*  browser.driver.wait(function () {
-        return browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
-          return bool;
-        });
-      }, 120000);*/
-    });
+describe('Navigating to mailbox', function () {
+  it('should navigate to mail.yandex.com and redirect to passport', function() {
+    browser.driver.get('http://mail.yandex.com');
+     browser.driver.wait(function () {
+     return browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
+       return bool;
+     });
+     }, 120000);
   });
+});
 
 
-  describe('Checking mailbox', function() {
+
+describe('Checking mailbox', function() {
   it('should find login button and fill it', function () {
     browser.driver.findElement(by.css('[name="login"]')).sendKeys('originemtest');
     browser.driver.findElement(by.css('[name="passwd"]')).sendKeys('andyboss');
-    browser.driver.findElement(by.css('.action-button')).click();
+    browser.driver.findElement(by.css('._nb-action-button')).click();
   });
 
+
+
   it('ensure we are /lite/ url in', function () {
+    browser.sleep(5000);
+    browser.driver.get('https://mail.yandex.com/lite/inbox');
     browser.driver.wait(function () {
       return browser.driver.getCurrentUrl().then(function (url) {
         return (url.indexOf('lite') !== -1);
