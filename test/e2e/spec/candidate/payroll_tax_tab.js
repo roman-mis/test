@@ -89,21 +89,4 @@ describe('Navigating to Payroll-Tax tab', function () {
     expect($('.modal-content').isPresent()).toBeFalsy();
 
   });
-
-  it('Open payslips dialog', function () {
-    $('[ng-click="openPayslipSetting()"]').click();
-
-    expect($('.modal-content').isDisplayed()).toBeTruthy();
-
-    browser.sleep(1000);
-
-    $('[ng-click="ok()"]').click().then(function(){
-      helper.alertAccept(); // what does it cancel?
-      browser.sleep(1000);
-      expect($('.modal-content').isPresent()).toBeFalsy();
-    });
-
-
-  });
-
 });
