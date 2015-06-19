@@ -38,10 +38,16 @@ var workerAccountLoginData = {
 	__dirname + '/../login/logout.js',
 	workerAccountLoginData.load,
 	__dirname + '/../login/login1.js',
+	function(){
+		global.isNonAdminSession = true;
+	},
 	// TODO test worker account //
 	__dirname + '/../../candidate/home_tab.js',
-	//__dirname + '/../../candidate/contact_tab.js',
+	__dirname + '/../../candidate/contact_tab.js',
 	__dirname + '/../login/logout.js',
+	function(){
+		global.isNonAdminSession = false;
+	},
 	
 ].forEach(function(x){
 	if(typeof(x) == 'function')
