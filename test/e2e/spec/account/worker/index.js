@@ -1,5 +1,4 @@
 
-var path = require('path');
 
 var workerAccountLoginData = {
 	save: function(){
@@ -23,7 +22,7 @@ var workerAccountLoginData = {
 		});
 	}
 };
-
+// proposal: 
 [
 	__dirname + '/../reg/reg.js',
 	__dirname + '/../reg/check-inbox.js',
@@ -41,25 +40,18 @@ var workerAccountLoginData = {
 	function(){
 		global.isNonAdminSession = true;
 	},
-	// TODO test worker account //
+	// TODO test worker account //	
 	__dirname + '/../../candidate/home_tab.js',
 	__dirname + '/../../candidate/contact_tab.js',
+	__dirname + '/../settings/change_avatar.js',
+	__dirname + '/../settings/change_password.js',
+	__dirname + '/../settings/vehicle_info.js',
 	__dirname + '/../login/logout.js',
 	function(){
 		global.isNonAdminSession = false;
 	},
 	
-].forEach(function(x){
-	if(typeof(x) == 'function')
-		x();
-	else 
-	if(typeof(x) == 'string'){
-		x = path.normalize(x);
-		delete require.cache[x]; // remove from cache if has it
-		require(x);	
-	}
-	else throw new Error('Invalid argument: ' + x);
-});
+].forEach(helper.execScript);
  
 
  

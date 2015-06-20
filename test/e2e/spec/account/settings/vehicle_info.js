@@ -15,8 +15,8 @@ describe('changing vehicle information', function () {
 		[0,1,2].forEach(function(number){
 			element(by.css('[ng-click="vehicle()"]')).click();
 			
-			helper.selectSimpleSelect(element(by.model('vehicle.fuelType')), number);
-			helper.selectSimpleSelect(element(by.model('vehicle.engineSize')), number);		
+			helper.selectSimpleDynamicSelect(element(by.model('vehicle.fuelType')), number);
+			helper.selectSimpleDynamicSelect(element(by.model('vehicle.engineSize')), number);		
 		
 			var fuelType = null;
 			var engineSize = null;
@@ -28,6 +28,9 @@ describe('changing vehicle information', function () {
 			element(by.model('vehicle.engineSize')).getAttribute('value').then(function(val){
 				engineSize = val;
 			});
+			
+			element(by.model('vehicle.make')).clear().sendKeys('Merzedes demo123');
+			element(by.model('vehicle.registration')).clear().sendKeys('123123123');
 		
 		
 			$$('.modal-content').get(1).all(by.css('[ng-click="save()"]')).first().click();

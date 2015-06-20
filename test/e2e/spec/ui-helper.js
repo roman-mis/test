@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var helper={
   getByText: function(selector, text){
 	  return selector.filter(function(e, i){
@@ -59,6 +60,17 @@ var helper={
 	  //browser.driver.switchTo().alert().accept();
 	  browser.sleep(1000);
 	  element(by.css('button.confirm')).click();
+  },
+  execScript: function(x){
+	if(typeof(x) == 'function')
+		x();
+	else 
+	if(typeof(x) == 'string'){
+		x = path.normalize(x);
+		delete require.cache[x]; // remove from cache if has it
+		require(x);	
+	}
+	else throw new Error('Invalid argument: ' + x);
   }
 };
 
