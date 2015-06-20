@@ -22,7 +22,7 @@ var workerAccountLoginData = {
 		});
 	}
 };
-// proposal: 
+// proposal: put "global.e2edir = __dirname" in 'conf-demo.js' to make more like absulute path...
 [
 	__dirname + '/../reg/reg.js',
 	__dirname + '/../reg/check-inbox.js',
