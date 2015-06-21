@@ -1,4 +1,4 @@
-describe('"Admin / Users" > check if is worker', function() {
+describe('"Admin / Users" > check if is agency consultant', function() {
 
     var userRow = element.all(by.repeater('item in allData')).get(0);
 
@@ -11,7 +11,7 @@ describe('"Admin / Users" > check if is worker', function() {
 		});
 	});
 	
-	it('check if registered user account type = Worker', function(){
+	it('check if registered user account type = Agency Consultant', function(){
 		
 		var number = helper.getDefaultNumber();
 		
@@ -25,12 +25,12 @@ describe('"Admin / Users" > check if is worker', function() {
 			});			
 		}, 5000);
 		
-		helper.selectSimpleSelect(element(by.model('user.userType')), 0);
+		helper.selectSimpleSelect(element(by.model('user.userType')), 1);
 		
 		element(by.css('[ng-click="update()"]')).click();
 		
-		expect(element(by.model('user.userType')).getAttribute('value')).toBe('0');
-		expect(element(by.model('user.userType')).element(by.css('option:first-child')).getText()).toBe('Worker');
+		expect(element(by.model('user.userType')).getAttribute('value')).toBe('1');
+		expect(element(by.model('user.userType')).element(by.css('option:nth-child(2)')).getText()).toBe('Agency Consultant');
 	
 		
 	});

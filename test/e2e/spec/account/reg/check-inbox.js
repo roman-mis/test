@@ -2,8 +2,20 @@ describe('Navigating to mailbox', function () {
   it('should navigate to mail.yandex.com and redirect to passport', function() {
     browser.driver.get('http://mail.yandex.com');
      browser.driver.wait(function () {
-     return browser.driver.isElementPresent(by.css('[name="login"]')).then(function (bool) {
-       return bool;
+     return browser.driver.isElementPresent(by.css('[name="login"]')).then(function (isLoginPage) {
+		 if(!isLoginPage){ // logout if was online since last visit (or should we use this session)
+			 return browser.driver.getCurrentUrl().then(function(url){
+				 if(url.indexOf('originemtest') != -1){      
+					 browser.driver.findElement(by.css('.header-user')).click();
+					 browser.sleep(500);
+					 browser.driver.findElement(by.css('a.b-mail-dropdown__item__content[data-metric="Меню сервисов:Выход"]')).click();
+					 browser.sleep(2000);
+					 browser.driver.get('http://mail.yandex.com');				 
+				 }
+				 return false;
+			 });
+		 }
+		 return isLoginPage;
      });
      }, 120000);
   });
@@ -13,6 +25,7 @@ describe('Navigating to mailbox', function () {
 
 describe('Checking mailbox', function() {
   it('should find login button and fill it', function () {
+	browser.driver.findElement(by.css('[name="login"]')).clear();  
     browser.driver.findElement(by.css('[name="login"]')).sendKeys('originemtest');
     browser.driver.findElement(by.css('[name="passwd"]')).sendKeys('andyboss');
     browser.driver.findElement(by.css('._nb-action-button')).click();
@@ -68,6 +81,7 @@ describe('Checking mailbox', function() {
   it('should follow email link in email & deleting email', function () {
     browser.driver.findElement(by.css('.b-message-body__content a')).getAttribute('href').then(function (href) {
       browser.driver.findElement(by.css('.b-toolbar__i [name="delete"]')).click();
+            
       browser.driver.get(href);
     });
   });

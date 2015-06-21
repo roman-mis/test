@@ -25,7 +25,7 @@ var workerAccountLoginData = {
 // proposal: put "global.e2edir = __dirname" in 'conf-demo.js' to make more like absulute path...
 [
 	function(){
-		describe('Performing "Worker" account tests', function(){
+		describe('Performing "Consultant Agency" account tests', function(){
 		});
 	},
 	__dirname + '/../reg/reg.js',
@@ -36,8 +36,8 @@ var workerAccountLoginData = {
 	workerAccountLoginData.save,
 	__dirname + '/../login/admin_data.js',
 	__dirname + '/../login/login1.js',
-	// TODO set registered user account type to worker //
-	__dirname + '/admin_check_is_worker.js',
+	// TODO set registered user account type to consultant //
+	__dirname + '/admin_check_is_consultant.js',
 	__dirname + '/../login/logout.js',
 	workerAccountLoginData.load,
 	__dirname + '/../login/login1.js',
