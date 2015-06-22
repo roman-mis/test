@@ -87,7 +87,7 @@ describe('Browse to sign up', function() {
     validateInputByModel('candidate.details.phone','07624123456');
     validateInputByModel('candidate.details.niNumber','AB 12 34 56 C');
 
-    helper.getDateByModel('candidate.details.birthDate').clear().sendKeys('26/03/1987');
+    helper.getDateByModel('candidate.details.birthDate').clear().sendKeys('1987/03/26');
 
     nextBtn.click();
   });
@@ -152,7 +152,7 @@ describe('Browse to sign up', function() {
 
   it('should validate step3 form', function() {
     validateInputByModel('candidate.details.agencyName', 'Super Agency');
-    helper.getDateByModel('candidate.details.startDate').sendKeys('02/01/2014');
+    helper.getDateByModel('candidate.details.startDate').sendKeys('2014/01/02');
     nextBtn.click();
   });
 
