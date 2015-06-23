@@ -20,6 +20,8 @@ describe('Candidate Home tab', function () {
     element(by.model('candidate.lastName')).clear().sendKeys('LastName');
     helper.selectSelector(element(by.model('candidate.gender')),0);
     
+    browser.executeScript("$('[orig-datepicker] input').removeAttr('readonly')");
+    
     element(by.css('[ng-model="candidate.birthDate"] [ng-model="ngModel"]')).clear().sendKeys('3/26/1987');
     helper.selectSelector(element(by.model('candidate.nationality')),0);
     
