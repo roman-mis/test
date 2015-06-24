@@ -6,7 +6,7 @@ describe('Editing consultants tab', function () {
 
   var currRow=$$('.panel').last().element(by.repeater('consultant in branch.consultants').row(0));
   
-  it('cleanup agency from last tests', function cleanup(){	  
+  it('cleanup agencies created by previous tests', function cleanup(){	  
 	  
 	  links.get(2).click();	  
 
@@ -111,7 +111,7 @@ describe('Editing consultants tab', function () {
     expect($('.alert-success').isPresent()).toBeTruthy();
   });*/
 
-  it('remove consultant', function(){
+  global.TestConsultant || it('remove consultant', function(){
 
     //! 'removing consultant'
     currRow.element(by.css('[ng-click="deleteAgencyConsultant(branch, consultant)"]')).click();
@@ -122,7 +122,7 @@ describe('Editing consultants tab', function () {
 
   });
 
-  it('delete branch', function(){
+  global.TestConsultant || it('delete branch', function(){
 
     element.all(by.repeater('branch in branches')).count().then(function(count){
       $$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
