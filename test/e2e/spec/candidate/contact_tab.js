@@ -70,8 +70,8 @@ describe('Checking candidates contact tab', function () {
   it('Primary contact info data input', function () {
     editLink2.click();
 
-    inputs.get(0).clear().sendKeys('020231' + number);
-    inputs.get(1).clear().sendKeys('070231' + number);        
+    inputs.get(0).clear().sendKeys('02023' + number);
+    inputs.get(1).clear().sendKeys('07023' + number);        
     inputs.get(2).clear().sendKeys(isNonAdminSession ? loginData.userEmail.replace('+','_') : 'boojaka_r' + number + '@gmail.com');
     inputs.get(3).clear().sendKeys('alt_r' + number + '@gmail.com');
     inputs.get(4).clear().sendKeys('https://www.facebook.com/' + (isNonAdminSession ? 'originemtest' : 'boojaka') + number);
@@ -82,8 +82,8 @@ describe('Checking candidates contact tab', function () {
     helper.alertAccept();
     browser.refresh();
 
-    expect(labels.get(0).getText()).toBe('020231' + number);
-    expect(labels.get(1).getText()).toBe('070231' + number);
+    expect(labels.get(0).getText()).toBe('02023' + number);
+    expect(labels.get(1).getText()).toBe('07023' + number);
     expect(labels2.get(0).getText()).toBe(isNonAdminSession ? loginData.userEmail.replace('+','_') : 'boojaka_r' + number + '@gmail.com');
     expect(labels2.get(1).getText()).toBe('alt_r' + number + '@gmail.com');
     expect(labels2.get(2).getText()).toBe('https://www.facebook.com/' + (isNonAdminSession ? 'originemtest' : 'boojaka') + number);
@@ -100,16 +100,15 @@ describe('Checking candidates contact tab', function () {
     inputs.get(1).clear();
     inputs.get(1).sendKeys('RBS_' + number);
     inputs.get(2).clear();
-    inputs.get(2).sendKeys('812' + number);
+    inputs.get(2).sendKeys('81' + number);
     inputs.get(3).clear();
-    inputs.get(3).sendKeys(number+'1');
+    inputs.get(3).sendKeys(number);
     inputs.get(4).clear();
     inputs.get(4).sendKeys(number+'2');
-    
     // Third party account options need to tested //
     //helper.selectSimpleSelect(inputs.get(5),1);
     //helper.selectSimpleSelect(inputs.get(6),1);
-
+	//browser.sleep(40000);
     saveBtn.click();
     helper.alertAccept();
     browser.refresh();
@@ -126,7 +125,7 @@ describe('Checking candidates contact tab', function () {
   });
 
   isNonAdminSession || it('Account number should match last 3 digits of input value. Other digits must be masked with \'*\'', function(){
-	  var input_3_masked = ('812' + number).replace(/(.*)(\d{3})$/, function(m, p0, p1){
+	  var input_3_masked = ('81' + number).replace(/(.*)(\d{3})$/, function(m, p0, p1){
 		return p0.replace(/\d/g,'*')+p1;
 	  });
 
@@ -134,7 +133,7 @@ describe('Checking candidates contact tab', function () {
   });
 
   isNonAdminSession || it('Checking other bank details', function(){
-	  expect(labels.get(5).getText()).toBe(number+'1');
+	  expect(labels.get(5).getText()).toBe(number);
       expect(labels.get(6).getText()).toBe(number+'2');
   });
 

@@ -24,6 +24,12 @@ var helper={
 	element.element(by.css('option[value="'+optionNum+'"]')).click();
 	element.element(by.xpath('..')).click();
   },
+  setDatepickerDate: function(element, value){
+	  element.click();
+	  browser.executeScript("$(document.activeElement).val('')");
+	  browser.sleep(1000);
+	  browser.executeScript("$(document.activeElement).val("+JSON.stringify(value)+")");	  
+  },
   pickRandomOptionOnSelectSimple:function(element, textGetter){
 	element.click();
 	var selector = element.all(by.css('option[value]'));
