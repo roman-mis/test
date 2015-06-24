@@ -5,12 +5,28 @@ describe('Editing consultants tab', function () {
   var number = helper.getDefaultNumber();
 
   var currRow=$$('.panel').last().element(by.repeater('consultant in branch.consultants').row(0));
+  
+  it('cleanup agency from last tests', function cleanup(){	  
+	  
+	  links.get(2).click();	  
+
+      element.all(by.repeater('branch in branches')).count().then(function(count){
+		  if(count > 1){
+			$$('[ng-click="toggleOpen()"]').last().click();
+			$$('[ng-click="deleteAgencyBranch(branch)"]').last().click();
+			helper.alertAccept();
+			expect( element.all(by.repeater('branch in branches')).count()).toBe(count-1);
+			cleanup();
+		  }
+       });    
+  });
 
   it('add new branch', function () {
 
 
     links.get(2).click();
-    $('[ng-click="openAgencyBranchModal(null)"]').click();
+    
+    $$('[ng-click="openAgencyBranchModal(null)"]').last().click();
 
     element(by.model('data.name')).clear().sendKeys('Branch_'+number);
     element(by.model('data.address1')).clear().sendKeys('Address1_'+number);

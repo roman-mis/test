@@ -194,7 +194,7 @@ describe('checking manual expense', function () {
      //   expect(cols[1].getText()).toContain(element.all(by.model('addData.type')).get(2).all(by.tagName('option')).get(1).getText());
 
         //! ' checking "cost"'
-        expect(cols[4].getText()).toContain('100');
+        expect(cols[3].getText()).toContain('£100.00');
       });
     });
 
@@ -208,7 +208,7 @@ describe('checking manual expense', function () {
     //! 'clicking on "Submit Expenses" which should be allowed by now'
     expect(element(by.partialButtonText('Submit Expenses')).isEnabled()).toBeTruthy();
     element(by.partialButtonText('Submit Expenses')).click();
-    helper.alertAccept();
+    //helper.alertAccept();
   });
 
   it('thank you screen', function () {

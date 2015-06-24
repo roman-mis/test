@@ -158,6 +158,7 @@ describe('checking expense wizard', function () {
 	expect(element(by.binding('expenseData.claimReference')).getText()).toBeTruthy();
     element(by.css('[ng-click="cancel()"]')).click();
     helper.alertAccept();
+    browser.sleep(2000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 });

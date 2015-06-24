@@ -30,7 +30,7 @@ describe('Candidate Home tab', function () {
     helper.setDatepickerDate(element(by.model('candidate.passportExpiryDate')), readingExpireDateStr);
 	
 	element(by.model('candidate.drivingLicenceNumber')).clear().sendKeys('MORGA657054SM0IJ');
-
+	browser.sleep(30000);
     $('[ng-click="saveCandidate()"]').click();
     helper.alertAccept();
     expect($('.modal-content').isPresent()).toBeFalsy();

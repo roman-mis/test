@@ -7,6 +7,7 @@ describe('Checking DPA', function () {
     expect($('.modal-content').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
     helper.alertAccept();
+    browser.sleep(2000);
     expect($('.modal-content').isPresent()).toBeFalsy();
     link.click();
     browser.sleep(1000);
