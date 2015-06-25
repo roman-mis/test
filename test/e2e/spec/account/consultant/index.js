@@ -26,21 +26,30 @@ var workerAccountLoginData = {
 [
 	function(){
 		describe('Performing "Consultant Agency" account tests', function(){
+			global.TestConsultant = {
+				loginUser: 'originemtest+t'+helper.getDefaultNumber()+'@yandex.com',
+				loginPassword: 'andyboss'
+			};
+		});
+	},	
+	__dirname + '/../login/admin_data.js',
+	__dirname + '/../login/login1.js',	
+	__dirname + '/../../agency/agency_prefill.js',	
+    __dirname + '/../../agency/check_agency.js',
+	__dirname + '/../../agency/tabs/consultants.js',
+	__dirname + '/../login/logout.js',
+	function(){
+		describe('Set up login instructions for "Consultant Agency" user', function(){
+			var testConsultant = global.TestConsultant;
+			it('setup consultant login', function(){
+				loginData.userEmail=testConsultant.loginUser;
+				loginData.userPassword=testConsultant.loginPassword;
+			});
 		});
 	},
-	__dirname + '/../reg/reg.js',
 	__dirname + '/../reg/check-inbox.js',
 	__dirname + '/../reg/activate.js',
-	__dirname + '/../login/login1.js',
-	__dirname + '/../login/logout.js',
-	workerAccountLoginData.save,
-	__dirname + '/../login/admin_data.js',
-	__dirname + '/../login/login1.js',
-	// TODO set registered user account type to consultant //
-	__dirname + '/admin_check_is_consultant.js',
-	__dirname + '/../login/logout.js',
-	workerAccountLoginData.load,
-	__dirname + '/../login/login1.js',
+	__dirname + '/../login/login1.js',	
 	function(){
 		global.isNonAdminSession = true;
 	},
@@ -53,6 +62,11 @@ var workerAccountLoginData = {
 	__dirname + '/../login/logout.js',
 	function(){
 		global.isNonAdminSession = false;
+	},
+	function(){
+		describe('Tests "Consultant Agency" finished', function(){
+			global.TestConsultant = null;
+		});
 	},
 	
 ].forEach(helper.execScript);

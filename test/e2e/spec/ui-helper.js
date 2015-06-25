@@ -28,7 +28,8 @@ var helper={
 	  element.click();
 	  browser.executeScript("$(document.activeElement).val('')");
 	  browser.sleep(1000);
-	  browser.executeScript("$(document.activeElement).val("+JSON.stringify(value)+")");	  
+	  browser.executeScript("$(document.activeElement).val("+JSON.stringify(value)+")");
+	  //element.element(by.css('input')).clear().sendKeys(value);
   },
   pickRandomOptionOnSelectSimple:function(element, textGetter){
 	element.click();

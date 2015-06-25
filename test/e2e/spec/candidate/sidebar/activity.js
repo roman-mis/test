@@ -7,6 +7,7 @@ describe('Checking Activity', function () {
   };
 
   it('should open Call-log dialog', function () {
+	 browser.refresh();
     openActivityDialog();
     helper.selectSelector(element(by.model('data.agency')), 0);
     helper.selectSelector(element(by.model('data.activityType')), 0);
