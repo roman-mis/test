@@ -12,9 +12,9 @@ describe('Navigate to users tabs', function () {
     }, 3000);
   };
 
-  it('tabs should change url after click and amount of 7', function () {
+  it('tabs should change url after click and amount of 8', function () {
 
-    expect(tabs.count()).toBe(7);
+    expect(tabs.count()).toBe(8);
 
 
     expect(tabs.get(0).getText()).toBe('Home');
@@ -31,21 +31,24 @@ describe('Navigate to users tabs', function () {
      links.get(2).click();
      checkTabUrl('payroll');
 
-
-    expect(tabs.get(3).getText()).toBe('Payslips');
+	expect(tabs.get(3).getText()).toBe('Margin');
     links.get(3).click();
+    checkTabUrl('margin');
+
+    expect(tabs.get(4).getText()).toBe('Payslips');
+    links.get(4).click();
     checkTabUrl('payslips');
 
-    expect(tabs.get(4).getText()).toBe('Agencies');
-    links.get(4).click();
+    expect(tabs.get(5).getText()).toBe('Agencies');
+    links.get(5).click();
     checkTabUrl('agencies');
 
-    expect(tabs.get(5).getText()).toBe('Compliance');
-    links.get(5).click();
+    expect(tabs.get(6).getText()).toBe('Compliance');
+    links.get(6).click();
     checkTabUrl('compliance');
 
-    expect(tabs.get(6).getText()).toBe('History');
-    links.get(6).click();
+    expect(tabs.get(7).getText()).toBe('History');
+    links.get(7).click();
     checkTabUrl('history');
   });
 

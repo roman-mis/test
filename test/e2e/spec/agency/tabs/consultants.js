@@ -10,7 +10,7 @@ describe('Editing consultants tab', function () {
   
   it('cleanup agencies created by previous tests', function cleanup(){	  
 	  
-	  links.get(2).click();	  
+	  links.get(3).click();	  
 
       element.all(by.repeater('branch in branches')).count().then(function(count){
 		  if(count > 1){
@@ -26,7 +26,7 @@ describe('Editing consultants tab', function () {
   it('add new branch', function () {
 
 
-    links.get(2).click();
+    links.get(3).click();
     
     $$('[ng-click="openAgencyBranchModal(null)"]').last().click();
 

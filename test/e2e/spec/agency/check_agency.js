@@ -38,31 +38,35 @@ describe('Getting first agency properties', function () {
 	//! 'checking link names'
     expect(links.get(0).getText()).toBe('Home');
     expect(links.get(1).getText()).toBe('Payroll');
-    expect(links.get(2).getText()).toBe('Consultants');
-    expect(links.get(3).getText()).toBe('Candidates');
-    expect(links.get(4).getText()).toBe('Sales');
-    expect(links.get(5).getText()).toBe('History');
-    expect(links.get(6).getText()).toBe('Other');
+    expect(links.get(2).getText()).toBe('Margin');
+    expect(links.get(3).getText()).toBe('Consultants');
+    expect(links.get(4).getText()).toBe('Candidates');
+    expect(links.get(5).getText()).toBe('Sales');
+    expect(links.get(6).getText()).toBe('History');
+    expect(links.get(7).getText()).toBe('Other');
 	//! 'checking Home url address'
     links.get(0).click();
     checkTabUrl('');
     //! 'checking Payroll url address'
     links.get(1).click();
     checkTabUrl('payroll');
-    //! 'checking Consultants url address'
+    //! 'checking Margin url address'
     links.get(2).click();
+    checkTabUrl('margin');
+    //! 'checking Consultants url address'
+    links.get(3).click();
     checkTabUrl('consultants');
     //! 'checking Candidates url address'
-    links.get(3).click();
+    links.get(4).click();
     checkTabUrl('candidates');
     //! 'checking Sales url address'
-    links.get(4).click();
+    links.get(5).click();
     checkTabUrl('sales');
     //! 'checking History url address'
-    links.get(5).click();
+    links.get(6).click();
     checkTabUrl('history');
     //! 'checking Other url address'
-    links.get(6).click();
+    links.get(7).click();
     checkTabUrl('other');
 
   });
