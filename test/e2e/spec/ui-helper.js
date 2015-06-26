@@ -30,7 +30,7 @@ var helper={
 	  //browser.executeScript("$(document.activeElement).val('')");
 	  //browser.sleep(1000);
 	  //browser.executeScript("$(document.activeElement).val("+JSON.stringify(value)+")");
-	  element.element(by.css('input')).clear().sendKeys(m && [m[2].replace(/^0/,''),m[1].replace(/^0/,''),m[3]].join('/')||'');
+	  element.element(by.css('input')).clear().sendKeys(m && [m[2].replace(/^0/,''),m[1].replace(/^0/,''),m[3]]||'');
   },
   pickRandomOptionOnSelectSimple:function(element, textGetter){
 	element.click();
