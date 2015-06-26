@@ -57,7 +57,7 @@ describe('checking companyProfile accounts tab', function () {
 
 
   });
-
+/* No longer displayable
   it("should check company registration chars exceed error message", function () {
     var regNumber = element(by.model('companyProfile.accounts.companyRegNo')),
       regNumError = $(' div [ng-show="accountsForm.reg.$error.maxlength"]');
@@ -69,10 +69,13 @@ describe('checking companyProfile accounts tab', function () {
     expect(element.all(by.css('.modal-footer button')).get(1).isEnabled()).toBe(false);
 
   });
-
+*/
   it("should check valid company registration number error message", function () {
+	  //! 'clicking on "Cancel" button...'
     element.all(by.css('div.modal-footer button')).get(0).click().then(function () {
 		helper.alertAccept();
+		browser.sleep(2000);
+		//! 'open dialog again...'
       $('a.pull-right').click();
       var regNumber = element(by.model('companyProfile.accounts.companyRegNo')),
         regNumError = $(' div [ng-show="accountsForm.reg.$error.number"]');
@@ -94,18 +97,17 @@ describe('checking companyProfile accounts tab', function () {
     expect(utrNumError.isDisplayed()).toBeTruthy();
     expect(utrNumError.getText()).toEqual('Enter less than 10 digits.');
     expect(element.all(by.css('.modal-footer button')).get(1).isEnabled()).toBe(false);
-    utrNumber.clear().sendKeys('123123f').then(function () {
-      expect(utrValidNumberError.isDisplayed()).toBeTruthy();
-      expect(element.all(by.css('.modal-footer button')).get(1).isEnabled()).toBe(false);
-      element.all(by.css('div.modal-footer button')).get(0).click().then(function () {
-		  helper.alertAccept();
-        $('a.pull-right').click();
-        utrNumber.clear().sendKeys('12312312').then(function () {
-          expect(utrValidNumberError.isDisplayed()).not.toBeTruthy();
-          expect(utrNumError.isDisplayed()).not.toBeTruthy();
-        });
-      });
-    });
+    utrNumber.clear().sendKeys('123123f');
+    expect(utrValidNumberError.isDisplayed()).toBeTruthy();
+    expect(element.all(by.css('.modal-footer button')).get(1).isEnabled()).toBe(false);
+    element.all(by.css('div.modal-footer button')).get(0).click();
+    helper.alertAccept();
+	browser.sleep(2000);
+    $('a.pull-right').click();
+    utrNumber.clear().sendKeys('12312312');
+    expect(utrValidNumberError.isDisplayed()).not.toBeTruthy();
+    expect(utrNumError.isDisplayed()).not.toBeTruthy();
+    
   });
 
 

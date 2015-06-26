@@ -180,9 +180,12 @@ describe("checking company profile bank details tab", function () {
 		expect(accountNumberExceedError.isDisplayed()).not.toBeTruthy();
 
 		expect(saveButton.isEnabled()).not.toBeTruthy();
-
+		//! 'Canceling'
 		cancelButton.click();
+		//! 'Prompting'
 		helper.alertAccept();
+		//! 'Edit bank details'
+		browser.sleep(3000);
 		editBankDetails.click();
 		accountNumber.clear().sendKeys("123456789");
 		expect(accountNumberExceedError.isDisplayed()).toBeTruthy();
@@ -211,6 +214,7 @@ describe("checking company profile bank details tab", function () {
 
 		cancelButton.click();
 		helper.alertAccept();
+		browser.sleep(2000);
 		editBankDetails.click();
 		sortCodeField.clear().sendKeys("12312");
 		expect(sortCodeFieldError.isDisplayed()).not.toBeTruthy();

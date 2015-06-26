@@ -9,8 +9,8 @@ describe('checking company profile',function () {
 	    	town : 'town',
 	    	country : 'country',
 	    	postCode: 'WC2H 7LT',
-	    	tel : '34543214352',
-	    	fax : '12345443434',
+	    	tel : '02023'+helper.getDefaultNumber(),
+	    	fax : '07023'+helper.getDefaultNumber(),
 	    	email: 'originemtest2@yandex.com'
 
 	    };
@@ -41,13 +41,13 @@ describe('checking company profile',function () {
 			var companyNameField =  element(by.model('companyProfile.contact.companyName'));
 				companyNameField.click().clear();
 			var button = element.all(by.css('div.modal-footer button')).get(1);
-			/* checking companyName empty error*/
+			//! 'checking companyName empty error'
 			browser.sleep(500);
 			var errMess = $('.alert-danger[ng-show="contactForm.companyName.$error.required"]');
 			expect(errMess.isDisplayed()).toBeTruthy();
 			expect(errMess.getText()).toBe("Company Name cannot be empty.");
 			expect(button.isEnabled()).toBe(false);
-			/* checking length exceed error */
+			//! 'checking length exceed error'
 			for(var i =0; i<=36; i++){
 				companyNameField.sendKeys("1");
 			}
@@ -55,7 +55,7 @@ describe('checking company profile',function () {
 			var errMess2 = $('[ng-show="contactForm.companyName.$error.maxlength"]');
 			expect(errMess2.isDisplayed()).toBeTruthy();
 
-			/* checking Address1 empty error*/
+			//! 'checking Address1 empty error'
 			var companyAddressField = element(by.model('companyProfile.contact.address1'));
 				companyAddressField.sendKeys("2131231");
 				companyAddressField.click().clear();
@@ -63,28 +63,28 @@ describe('checking company profile',function () {
 				expect(adMessErr.isDisplayed()).toBeTruthy();
 				expect(adMessErr.getText()).toBe("Please enter Address 1.");
 				expect(button.isEnabled()).toBe(false);
-			/* checking town empty error*/
+			//! 'checking town empty error'
 			var companyTownField = element(by.model('companyProfile.contact.town')),
 				townEmptyError = $('div [ng-show="contactForm.town.$error.required"]');
 				companyTownField.sendKeys("12132").click().clear();
 				expect(townEmptyError.isDisplayed()).toBeTruthy();
 				expect(button.isEnabled()).toBe(false);
 
-			/* checking town country error*/
+			//! 'checking town country error'
 			var companyCountryField = element(by.model('companyProfile.contact.country')),
 				countryEmptyError = $('div [ng-show="contactForm.country.$error.required"]');
 				companyCountryField.sendKeys("12132").click().clear();
+				browser.sleep(100);
 				expect(countryEmptyError.isDisplayed()).toBeTruthy();
 				expect(button.isEnabled()).toBe(false);
 
-			/*checking post code*/
+			//! 'checking post code'
 			var postCodeEl = element(by.model('companyProfile.contact.postcode')),
-				postCodeError = $('div [ng-show="contactForm.postcode.$error.pattern"]');
+				postCodeError = $('input.ng-invalid[name="postcode"]');
 				postCodeEl.clear().sendKeys('qwe');
-				browser.sleep(10);
 				expect(postCodeError.isDisplayed()).toBeTruthy();
 
-			/*cheking email error*/
+			//! 'cheking email error'
 			var emailEl = element(by.model('companyProfile.contact.email')),
 				emailError = $('.alert-danger[ng-show="contactForm.email.$error.email"]');
 				emailEl.clear().sendKeys("qwe");
@@ -107,11 +107,12 @@ describe('checking company profile',function () {
 		element(by.model('companyProfile.contact.fax')).clear().sendKeys(company.fax);
 		element(by.model('companyProfile.contact.email')).clear().sendKeys(company.email);
 		var button = element.all(by.css('div.modal-footer button')).get(1),
-		    modalWindow = $('div.modal-window');
+		    modalWindow = $('div.modal-window'); 
 		expect(button.isEnabled()).toBe(true);
 
 		button.click();
 		helper.alertAccept();
+		browser.sleep(2000);
 		expect(browser.isElementPresent(modalWindow)).toEqual(false);
 
 
