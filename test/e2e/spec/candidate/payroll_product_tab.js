@@ -36,6 +36,7 @@ var addNew = function (agencyIndex) {
 
   $('[ng-click="saveProduct()"]').click();
   helper.alertAccept();
+  browser.sleep(2000);
 };
 
 var removeAll=function(){
@@ -85,6 +86,7 @@ describe('Navigating to Payroll-Product tab', function () {
 
         $('[ng-click="cancelEdit()"]').click();
 		helper.alertAccept();
+		browser.sleep(2000);
         removeAll();
 
 

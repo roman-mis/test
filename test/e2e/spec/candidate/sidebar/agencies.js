@@ -1,11 +1,13 @@
 describe('Checking Agencies', function () {
 
   it('should allow to create task', function () {
+	browser.refresh(); // refresh page if previous test failed
     var link=element(by.css('[ng-click="openCreateTaskWin({activityType: \'task\'})"]'));
     link.click();
     expect($('.modal-content').isDisplayed()).toBeTruthy();
     $('.modal-content [ng-click="cancel()"]').click();
     helper.alertAccept();
+    browser.sleep(2000);
     expect($('.modal-content').isPresent()).toBeFalsy();
     link.click();
 
@@ -20,6 +22,7 @@ describe('Checking Agencies', function () {
     helper.selectSelector(element.all(by.model('data.assignee')), 1);
     element(by.css('[ng-click="save()"]')).click();
     helper.alertAccept();
+    browser.sleep(2000);
     expect($('.modal-content').isPresent()).toBeFalsy();
   });
 
