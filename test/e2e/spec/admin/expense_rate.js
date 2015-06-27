@@ -26,7 +26,7 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
 
       $('[ng-click="save(expensesRateForm.$valid)"]').click();
       helper.alertAccept();
-      browser.sleep(1000);
+      browser.sleep(2000);
       expect($('.modal-content').isPresent()).toBeFalsy();
 
     };
@@ -128,11 +128,8 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
           //! 'saving changes by clicking on button with css [ng-click="save(expensesRateForm.$valid)"]'
           element(by.css('[ng-click="save(expensesRateForm.$valid)"]')).click();
           helper.alertAccept();
-	      browser.sleep(1000);
-          
-          browser.sleep(1000);
+	      browser.sleep(2000);          
           browser.refresh();
-          browser.sleep(1000);
           
           //! 'opening "edit expenses rate" dialog again'
           expenserate.all(by.css("[ng-click=\"openModal('expensesRate', $index)\"]")).get(0).click();
