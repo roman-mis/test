@@ -26,8 +26,10 @@ var workerAccountLoginData = {
 [
 	function(){
 		describe('Performing "Worker" account tests', function(){
+			console.log('but first we need to close Admin session');
 		});
 	},
+	__dirname + '/../login/logout.js', // but first we need to close Admin session
 	__dirname + '/../reg/reg.js',
 	__dirname + '/../reg/check-inbox.js',
 	__dirname + '/../reg/activate.js',
