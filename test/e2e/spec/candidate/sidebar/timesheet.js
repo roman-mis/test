@@ -67,6 +67,7 @@ describe('Checking Timesheet', function(){
 		element(by.css('[ng-click="uploadFile()"]')).click();
 		//! 'adding timesheet'
 		element(by.buttonText('Add Timesheet')).click();
+		helper.alertAccept();
 	});
 
 });
