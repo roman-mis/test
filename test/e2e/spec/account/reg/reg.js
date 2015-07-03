@@ -45,12 +45,7 @@ describe('Browse to sign up', function() {
 
 
   it('should navigate to page with register options ', function() {
-    browser.get('/register/home');
-  });
-  it('should find reg button ', function() {
-    var regButton=element(by.css('[ng-click="$parent.nextstep()"]'));
-    expect(regButton.isPresent()).toBe(true);
-    regButton.click();
+    browser.get('/register/step1');
   });
   it('should navigate to step1 page ', function() {
     browser.wait(function() {
@@ -222,34 +217,24 @@ describe('Browse to sign up', function() {
 
 
   it('should validate confirm form', function() {
+	  
+	//browser.sleep(120000);
 
-    browser.executeScript("document.getElementById('contact1').checked = false");
-    browser.executeScript("document.getElementById('contact1').click();").then(function() {
-      expectValid(element(by.model('$parent.confirm.ContactDetail1')));
-    });
+	element(by.model('$parent.confirm.ContactDetail1')).click();
+    expectValid(element(by.model('$parent.confirm.ContactDetail1')));
 
-    browser.executeScript("document.getElementById('contact2').checked = false");
-    browser.executeScript("document.getElementById('contact2').click();").then(function() {
-      expectValid(element(by.model('$parent.confirm.ContactDetail2')));
-    });
+    element(by.model('$parent.confirm.ContactDetail2')).click();
+    expectValid(element(by.model('$parent.confirm.ContactDetail2')));    
 
-    browser.executeScript("document.getElementById('bank').checked = false");
-    browser.executeScript("document.getElementById('bank').click();").then(function() {
-      expectValid(element(by.model('$parent.confirm.BankDetail')));
-    });
+    element(by.model('$parent.confirm.BankDetail')).click();
+    expectValid(element(by.model('$parent.confirm.BankDetail')));    
 
-    browser.executeScript("document.getElementById('tax').checked = false");
-    browser.executeScript("document.getElementById('tax').click();").then(function() {
-      expectValid(element(by.model('$parent.confirm.TaxDetail')));
-    });
+    element(by.model('$parent.confirm.TaxDetail')).click();
+    expectValid(element(by.model('$parent.confirm.TaxDetail')));
 
 
-    browser.executeScript("document.getElementById('accpetterms').checked = false");
-    browser.executeScript("document.getElementById('accpetterms').click();").then(function() {
-      expectValid(element(by.model('$parent.confirm.AcceptTerms')));
-    });
-
-
+    element(by.model('$parent.confirm.AcceptTerms')).click();
+    expectValid(element(by.model('$parent.confirm.AcceptTerms')));
 
     submitBtn.click();
 
