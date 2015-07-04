@@ -9,8 +9,8 @@ describe('checking company profile',function () {
 	    	town : 'town',
 	    	country : 'country',
 	    	postCode: 'WC2H 7LT',
-	    	tel : '02023'+helper.getDefaultNumber(),
-	    	fax : '07023'+helper.getDefaultNumber(),
+	    	tel : '020231'+helper.getDefaultNumber(),
+	    	fax : '070231'+helper.getDefaultNumber(),
 	    	email: 'originemtest2@yandex.com'
 
 	    };
@@ -109,7 +109,7 @@ describe('checking company profile',function () {
 		var button = element.all(by.css('div.modal-footer button')).get(1),
 		    modalWindow = $('div.modal-window'); 
 		expect(button.isEnabled()).toBe(true);
-
+		//browser.sleep(40000);
 		button.click();
 		helper.alertAccept();
 		browser.sleep(2000);
