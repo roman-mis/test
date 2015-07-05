@@ -51,7 +51,7 @@ var workerAccountLoginData = {
 	__dirname + '/../../candidate/contact_tab.js',
 	__dirname + '/../settings/change_avatar.js',
 	__dirname + '/../settings/change_password.js',
-	//__dirname + '/../settings/vehicle_info.js',
+	__dirname + '/../settings/vehicle_info.js',
 	__dirname + '/../login/logout.js',
 	function(){
 		global.isNonAdminSession = false;

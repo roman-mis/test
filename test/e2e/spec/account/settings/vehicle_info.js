@@ -7,13 +7,15 @@ describe('changing vehicle information', function () {
 	});
 	it('should open Vehicle Information dialog', function(){
 		element(by.css('[ng-click="vehicle()"]')).click();
-		
+		browser.sleep(2000);
 		$$('.modal-content').get(1).all(by.css('[ng-click="cancel()"]')).first().click();
 		helper.alertAccept();
+		browser.sleep(2000);
 	});
 	it('should change vehicle information', function(){
 		[0,1,2].forEach(function(number){
 			element(by.css('[ng-click="vehicle()"]')).click();
+			browser.sleep(2000);
 			
 			helper.selectSimpleDynamicSelect(element(by.model('vehicle.fuelType')), number);
 			helper.selectSimpleDynamicSelect(element(by.model('vehicle.engineSize')), number);		
@@ -34,7 +36,9 @@ describe('changing vehicle information', function () {
 		
 		
 			$$('.modal-content').get(1).all(by.css('[ng-click="save()"]')).first().click();
+			browser.sleep(2000);
 			helper.alertAccept();
+			browser.sleep(2000);
 		
 			element(by.css('[ng-click="vehicle()"]')).click();
 		
@@ -45,7 +49,9 @@ describe('changing vehicle information', function () {
 			});
 		
 			$$('.modal-content').get(1).element(by.css('[ng-click="cancel()"]')).click();
+			browser.sleep(2000);
 			helper.alertAccept();
+			browser.sleep(2000);
 		});
 		
 		[
