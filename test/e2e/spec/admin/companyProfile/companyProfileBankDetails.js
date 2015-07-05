@@ -38,8 +38,8 @@ describe("checking company profile bank details tab", function () {
 		postcode: "CB10 1AA",
 		accountName: "accountName",
 		accountNumber: "84472132",
-		sortCode: "121221",
-		payrollRef: "123432"
+		sortCode: "12122",
+		payrollRef: "12343"
 
 	};
 

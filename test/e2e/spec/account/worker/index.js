@@ -1,6 +1,6 @@
 
 
-var workerAccountLoginData = {
+var workerAccountLoginData = global.workerAccoutLoginData = {
 	save: function(){
 		describe('Save login details', function() {
 			it('save worker login details', function () {

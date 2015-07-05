@@ -1,6 +1,8 @@
 
+var msgBody = 'Testing Originem email manager service';
 
 describe('Check candidate email manager', function(){
+
 	
 	it('should open email manager dialog', function(){
 		element(by.css('[ng-click="openEmailManagerWin()"]')).click();
@@ -15,7 +17,7 @@ describe('Check candidate email manager', function(){
 		
 		element(by.css('#question')).click();
 		
-		element(by.css('#question')).clear().sendKeys('Testing email manager service');
+		element(by.css('#question')).clear().sendKeys(msgBody);
 		
 		expect(element(by.css('[ng-click="send()"]')).isEnabled()).toBeTruthy();
 		
@@ -29,4 +31,3 @@ describe('Check candidate email manager', function(){
 	});
 	
 });
- 

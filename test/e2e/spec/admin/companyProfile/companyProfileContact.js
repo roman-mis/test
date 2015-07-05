@@ -9,8 +9,8 @@ describe('checking company profile',function () {
 	    	town : 'town',
 	    	country : 'country',
 	    	postCode: 'WC2H 7LT',
-	    	tel : '020231'+helper.getDefaultNumber(),
-	    	fax : '070231'+helper.getDefaultNumber(),
+	    	tel : '02023'+helper.getDefaultNumber(),
+	    	fax : '07023'+helper.getDefaultNumber(),
 	    	email: 'originemtest2@yandex.com'
 
 	    };

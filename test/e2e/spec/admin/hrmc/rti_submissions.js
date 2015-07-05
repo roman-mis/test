@@ -49,9 +49,9 @@ describe('"Admin / HRMC": Check RTI Submissions', function(){
 
 		element(by.model('rti.postCode')).sendKeys('E20 2BB');
 
-		element(by.model('rti.telephone')).sendKeys('020231'+number);
+		element(by.model('rti.telephone')).sendKeys('02023'+number);
 
-		element(by.model('rti.fax')).sendKeys('070231'+number);
+		element(by.model('rti.fax')).sendKeys('07023'+number);
 
 		element(by.model('rti.emailAddress')).sendKeys('originemtest2@yandex.com');
 		//browser.sleep(20000);
@@ -76,8 +76,8 @@ describe('"Admin / HRMC": Check RTI Submissions', function(){
 		expect(fields.get(8).getText()).toBe('London');
 		expect(fields.get(9).getText()).toBe('United Kingdom');
 		expect(fields.get(10).getText()).toBe('E20 2BB');
-		expect(fields.get(11).getText()).toBe('020231'+number);
-		expect(fields.get(12).getText()).toBe('070231'+number);
+		expect(fields.get(11).getText()).toBe('02023'+number);
+		expect(fields.get(12).getText()).toBe('07023'+number);
 		expect(fields.get(13).getText()).toBe('originemtest2@yandex.com');
 		
 	});
