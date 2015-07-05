@@ -68,6 +68,7 @@ var helper={
 	  //browser.driver.switchTo().alert().accept();
 	  browser.sleep(1000);
 	  element(by.css('button.confirm')).click();
+	  browser.sleep(2000);
   },
   execScript: function(x){
 	if(typeof(x) == 'function')

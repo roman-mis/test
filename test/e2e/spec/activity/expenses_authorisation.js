@@ -7,7 +7,7 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 	var expenseData = expenseObject.all(by.xpath('following-sibling::tr')).get(0);
 	var collapseListButton = expenseObject.element(by.css('[ng-click^="test1["]'));
 	var cancelBtn = element(by.css('[ng-click="cancel()"]'));
-	var majorDropDownMenuBtn = element(by.css('table.expenses-auth>thead [data-toggle="dropdown"]'));
+	var majorDropDownMenuBtn = element.all(by.css('table.expenses-auth')).first().all(by.css('[data-toggle="dropdown"]')).first();
 	var majorDropDownMenu = majorDropDownMenuBtn.all(by.xpath('following-sibling::ul')).get(0);
 
 	it('Getting Expenses Authorisation url', function () {
@@ -84,8 +84,7 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 	});
 	
 	it('"Change Status" check', function(){
-				
-		expenseObject.element(by.model('expense.majorChecked')).click();
+		expenseData.all(by.model('item.checked')).get(0).click();
 		
 		//! 'Approve expense'
 		
@@ -95,28 +94,13 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 		
 		//! 'check if items are approved'
 		
-		expenseData.all(by.repeater('item in expense.expenses')).each(function(row){
-			row.element(by.css('td:nth-child(9)')).getText().then(function(text){
+		expenseData.all(by.repeater('item in expense.expenses')).then(function(rows){
+			rows[0].element(by.css('td:nth-child(9)')).getText().then(function(text){
 				expect(text).toBe('Approved');
 			});
-		});
-				
-		//! 'Reject expense'
+		});		
 		
-		majorDropDownMenuBtn.click();
 		
-		majorDropDownMenu.all(by.tagName('li')).get(1).click();
-		
-		expect(element(by.css('div.message')).isPresent()).toBeTruthy();
-		
-		//! 'check if items are rejected'
-		
-		expenseData.all(by.repeater('item in expense.expenses')).each(function(row){
-			row.element(by.css('td:nth-child(9)')).getText().then(function(text){
-				expect(text).toBe('Rejected');
-			});
-		});
-				
 		
 	});
 	
@@ -162,11 +146,29 @@ describe('Check "Activity / Expenses Authorisation"', function() {
 			expect(row.element(by.css('td:nth-child(4)')).getText()).toBe((amount*1).toFixed(2));
 			expect(row.element(by.css('td:nth-child(9)')).getText()).toBe(status);
 			return true;
-		});
+		});	
 		
 	});
 	
 	it('Review summary & reject', function(){
+		
+		//! 'Reject expense'
+				
+		majorDropDownMenuBtn.click();
+		
+		majorDropDownMenu.all(by.tagName('li')).get(1).click();
+		
+		expect(element(by.css('div.message')).isPresent()).toBeTruthy();
+		
+		//! 'check if items are rejected'
+		
+		expenseData.all(by.repeater('item in expense.expenses')).then(function(rows){
+			rows[0].element(by.css('td:nth-child(9)')).getText().then(function(text){
+				expect(text).toBe('Rejected');
+			});
+		});
+				
+		
 		$('[ng-click="reviewSummary()"]').click();
 		
 		expect($('.modal-content').isPresent()).toBeTruthy();

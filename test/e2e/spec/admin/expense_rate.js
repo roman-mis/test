@@ -1,5 +1,7 @@
 var count=5;
 
+var expenserate = element.all(by.repeater('expenserate in expensesRate')).first();	
+
 describe('Going to check for sufficient expense rate count (at least 3)', function() {
 
 
@@ -52,7 +54,7 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
 
 describe('Editing existing expense rates', function(){
   
-  it('Edit expenses rate', function(){
+  it('check if table values match input models', function(){
 	  //! 'scanning columns in "expeses rate" table'
 	  var column_names = {};
 	  element(by.css('[ng-show="expensesRate"] + table')).all(by.css('th')).each(function(el, index){
@@ -60,8 +62,7 @@ describe('Editing existing expense rates', function(){
 			  column_names[caption.toLowerCase().replace(/\s+/g,'_')] = index;
 		  });
 	  });
-	  //! 'getting first "expenserate" object'
-	  var expenserate = element.all(by.repeater('expenserate in expensesRate')).first();	  
+	    
 	  //! 'opening "Edit Expense Rate" dialog by clicking on "edit" icon'
 	  expenserate.all(by.css("[ng-click=\"openModal('expensesRate', $index)\"]")).get(0).click();	  
 	  //! ' getting "td" columns of "expenserate" object'
@@ -97,8 +98,8 @@ describe('Editing existing expense rates', function(){
 			  expect(value ? 'ON' : 'OFF').toBe(cols[column_names.status].getText());
 		  });
 	  });
-	  
-	  //! 'TODO: make "edit entries" test here'
+   });
+   it('changing data', function(){
 	  //! 'make some backup before test will play with it'
 	  var backup = {};
 	  element(by.model('expensesRate.amount')).getAttribute('value').then(function(value){
