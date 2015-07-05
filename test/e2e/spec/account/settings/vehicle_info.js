@@ -95,7 +95,7 @@ describe('changing vehicle information', function () {
 			helper.alertAccept();
 		});
 		
-		element(by.css('[ng-click="cancel()"]')).click();
+		element.all(by.css('[ng-click="cancel()"]')).first().click();
 		helper.alertAccept();
 	});
 }); 

@@ -48,12 +48,16 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
     });
   });
   
+});
+
+describe('Editing existing expense rates', function(){
+  
   it('Edit expenses rate', function(){
 	  //! 'scanning columns in "expeses rate" table'
 	  var column_names = {};
 	  element(by.css('[ng-show="expensesRate"] + table')).all(by.css('th')).each(function(el, index){
 		  el.getText().then(function(caption){
-			  column_names['_' + caption] = index;
+			  column_names[caption.toLowerCase().replace(/\s+/g,'_')] = index;
 		  });
 	  });
 	  //! 'getting first "expenserate" object'
@@ -63,36 +67,37 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
 	  //! ' getting "td" columns of "expenserate" object'
 	  expenserate.all(by.css('td')).then(function(cols){
 		  //! ' cheking if ng-model:name took a name of "expense rate" object'
-		  expect(element(by.model('expensesRate.name')).getAttribute('value')).toBe(cols[column_names._Name].getText());
+		  expect(element(by.model('expensesRate.name')).getAttribute('value')).toBe(cols[column_names.name].getText());
 		  //! ' checking if ng-model:amount value match'
 		  element(by.model('expensesRate.amount')).getAttribute('value').then(function(value){
-			  expect((value*1).toFixed(2)).toBe(cols[column_names._Amount].getText());
+			  expect((value*1).toFixed(2)).toBe(cols[column_names.amount].getText());
 		  });
 		  //! ' checking if ng-model:expenses_rate_type value match'
 		  element(by.model('expensesRate.expensesRateType')).all(by.css('.ng-binding.ng-scope')).first().getText('value').then(function(value){
-			  expect(value).toBe(cols[column_names['_Expenses Rate Type']].getText());
+			  expect(value).toBe(cols[column_names.expenses_rate_type].getText());
 		  });
 		  //! ' checking if ng-model:tax_applicable flag match'
 		  element(by.model('expensesRate.taxApplicable')).getAttribute('checked').then(function(value){
-			  expect(value ? 'Yes' : 'No').toBe(cols[column_names['_Tax Applicable']].getText());
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names.tax_applicable].getText());
 		  });
 		  //! ' checking if ng-model:vat flag match'
 		  element(by.model('expensesRate.vat')).getAttribute('checked').then(function(value){
-			  expect(value ? 'Yes' : 'No').toBe(cols[column_names._Vat].getText());
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names.vat].getText());
 		  });
 		  //! ' checking if ng-model:dispensation flag match'
 		  element(by.model('expensesRate.dispensation')).getAttribute('checked').then(function(value){
-			  expect(value ? 'Yes' : 'No').toBe(cols[column_names._Dispensation].getText());
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names.dispensation].getText());
 		  });
 		  //! ' checking if ng-model:receipted flag match'
 		  element(by.model('expensesRate.receipted')).getAttribute('checked').then(function(value){
-			  expect(value ? 'Yes' : 'No').toBe(cols[column_names._Receipted].getText());
+			  expect(value ? 'Yes' : 'No').toBe(cols[column_names.receipted].getText());
 		  });
 		  //! ' checking if ng-model:isEnabled flag match'
 		  element(by.model('expensesRate.isEnabled')).getAttribute('checked').then(function(value){
-			  expect(value ? 'ON' : 'OFF').toBe(cols[column_names._Status].getText());
+			  expect(value ? 'ON' : 'OFF').toBe(cols[column_names.status].getText());
 		  });
 	  });
+	  
 	  //! 'TODO: make "edit entries" test here'
 	  //! 'make some backup before test will play with it'
 	  var backup = {};
@@ -173,7 +178,7 @@ describe('Going to check for sufficient expense rate count (at least 3)', functi
 	  });
       element(by.css('[ng-click="save(expensesRateForm.$valid)"]')).click();
       helper.alertAccept();
-      browser.sleep(2000);
+      browser.sleep(4000);
 	  // /! 'closing "Edit Expense Rate" dialog by clicking on button with css [ng-click="cancel()"]'
 	  //element(by.css('[ng-click="cancel()"]')).click();
 	  //! 'checking if dialog is disappeared'
