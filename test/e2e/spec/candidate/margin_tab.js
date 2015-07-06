@@ -42,7 +42,7 @@ describe('Navigating to Margin tab', function () {
   });
   
   it('should save fixed fee amount', function(){
-	var value = helper.getDefaultNumber().substr(4);
+	var value = helper.getDefaultNumber().substr(4).replace(/^0+/,'');
 	  
 	//! 'Fixed fee'
 	element(by.css('a[data-target="#fixedFee"]')).click();

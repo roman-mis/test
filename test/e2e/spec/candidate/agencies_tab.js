@@ -11,19 +11,21 @@ describe('Checking AGENCIES tab', function (){
   var rows=element.all(by.css('.panel-collapse.in')).first().all(by.repeater('exception in product.marginException'));
 
   it('Agencies should have working add Margin dialog', function () {
-
+    //! 'counting collapsed objects'
     $$('.panel-collapse.in').count().then(function(i){
       if(i==0){
         console.log('waringing: tabs initially closed');
         $$('[ng-click="toggleOpen()"]').first().click();
       }
+      //! i
       browser.sleep(1000);
-      addLink.click();      
+      //! 'Clicking on "Add link"'
+      addLink.click();  // element is hidden
 
       expect($('.modal-content').isDisplayed()).toBeTruthy();
+      //! 'Canceling'
       $('.modal-content [ng-click="cancel()"]').click();
       helper.alertAccept();
-      browser.sleep(1000);
       expect($('.modal-content').isPresent()).toBeFalsy();
 
     });
@@ -31,8 +33,7 @@ describe('Checking AGENCIES tab', function (){
   });
  it('Checking Margin data entry dialog',function(){
 
-
-       rows.count().then(function(i){
+    rows.count().then(function(i){
       addLink.click();
       helper.selectSelector(element(by.model('data.marginType')), 1);
       helper.selectSelector(element(by.model('data.reason')), 1);
