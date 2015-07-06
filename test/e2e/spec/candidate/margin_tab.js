@@ -1,6 +1,6 @@
 var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candidates/"]');
 var tabs = element.all(by.css('.tabs-payroll li[role="presentation"]'));
-var activeTab = element(by.css('.tabs-payroll li.active[role="presentation"]'));
+var activeTab = element(by.css('.tabs-wrapper li.active[role="presentation"]'));
 
 describe('Navigating to Margin tab', function () {
 
@@ -26,20 +26,17 @@ describe('Navigating to Margin tab', function () {
   });
 
   it('navigating inner tabs', function () {	
-	
-	expect(tabs.get(0).getText()).toBe('Fixed Fee');	
-	expect(tabs.get(1).getText()).toBe('% of Timesheets');	
-	expect(tabs.get(2).getText()).toBe('Total Hours');	
-	expect(tabs.get(3).getText()).toBe('Fixed on Timesheets');	
-	expect(tabs.count()).toBe(4);
-	
-	tabs.get(0).element(by.css('a')).click();
+	//! 'Fixed fee'
+	element(by.css('a[data-target="#fixedFee"]')).click();
 	expect(activeTab.getText()).toBe('Fixed Fee');
-	tabs.get(1).element(by.css('a')).click();
+	//! '% of timesheets'
+	element(by.css('a[data-target="#percentOfTimesheets"]')).click();
 	expect(activeTab.getText()).toBe('% of Timesheets');
-	tabs.get(2).element(by.css('a')).click();
+	//! 'Total hours'
+	element(by.css('a[data-target="#totalHours"]')).click();
 	expect(activeTab.getText()).toBe('Total Hours');
-	tabs.get(3).element(by.css('a')).click();
+	//! 'Fixed on timesheets'
+	element(by.css('a[data-target="#fixedOnTimesheets"]')).click();
 	expect(activeTab.getText()).toBe('Fixed on Timesheets');
 
   });
@@ -47,7 +44,8 @@ describe('Navigating to Margin tab', function () {
   it('should save fixed fee amount', function(){
 	var value = helper.getDefaultNumber().substr(4);
 	  
-	tabs.get(0).element(by.css('a')).click();
+	//! 'Fixed fee'
+	element(by.css('a[data-target="#fixedFee"]')).click();
 	expect(activeTab.getText()).toBe('Fixed Fee');
 	
 	element(by.model('marginFee.margin.fixedFee')).clear().sendKeys(value);
@@ -56,7 +54,8 @@ describe('Navigating to Margin tab', function () {
 	
 	browser.refresh();
 	
-	tabs.get(0).element(by.css('a')).click();
+	//! 'Fixed fee'
+	element(by.css('a[data-target="#fixedFee"]')).click();
 	expect(activeTab.getText()).toBe('Fixed Fee');
 	
 	expect(element(by.model('marginFee.margin.fixedFee')).getAttribute('value')).toBe(value+'');
@@ -75,7 +74,8 @@ describe('Navigating to Margin tab', function () {
 	  
 	  var rows = element.all(by.repeater('timesheet in marginFee.margin.percentageOfTimesheets.ranges'));
 	  //! 'navigating'
-	  tabs.get(1).element(by.css('a')).click();
+	  //! '% of timesheets'
+	  element(by.css('a[data-target="#percentOfTimesheets"]')).click();
 	  expect(activeTab.getText()).toBe('% of Timesheets');
 	  //! 'removing'
 	  element.all(by.css('[ng-click="timesheetsDeleteRow($index)"]')).each(function(btn){
@@ -89,7 +89,8 @@ describe('Navigating to Margin tab', function () {
 	  
 	  browser.refresh();
 	  //! 'navigating'
-	  tabs.get(1).element(by.css('a')).click();
+	  //! '% of timesheets'
+	  element(by.css('a[data-target="#percentOfTimesheets"]')).click();
 	  expect(activeTab.getText()).toBe('% of Timesheets');
 	  //! 'checking min-max'
 	  expect(maxAmountModel.getAttribute('value')).toBe(maxValue.toString());
@@ -105,7 +106,8 @@ describe('Navigating to Margin tab', function () {
 	  
 	  browser.refresh();
 	  //! 'navigating'
-	  tabs.get(1).element(by.css('a')).click();
+	  //! '% of timesheets'
+	  element(by.css('a[data-target="#percentOfTimesheets"]')).click();
 	  expect(activeTab.getText()).toBe('% of Timesheets');
 	  //! 'checking'
 	  expect(rows.first().all(by.css('td')).get(0).getText()).toBe(timesheetFrom.toString());
@@ -129,7 +131,8 @@ describe('Navigating to Margin tab', function () {
 	  
 	  var rows = element.all(by.repeater('totalHour in marginFee.margin.totalHours.ranges'));
 	  
-	  tabs.get(2).element(by.css('a')).click();
+	  //! 'Total hours'
+	  element(by.css('a[data-target="#totalHours"]')).click();
 	  expect(activeTab.getText()).toBe('Total Hours');
 	  
 	  element.all(by.css('[ng-click="hoursDeleteRow($index)"]')).each(function(btn){
@@ -143,7 +146,8 @@ describe('Navigating to Margin tab', function () {
 	  
 	  browser.refresh();
 	  
-	  tabs.get(2).element(by.css('a')).click();
+	  //! 'Total hours'
+	  element(by.css('a[data-target="#totalHours"]')).click();
 	  expect(activeTab.getText()).toBe('Total Hours');
 	  
 	  expect(maxAmountModel.getAttribute('value')).toBe(maxValue+'');
@@ -159,7 +163,8 @@ describe('Navigating to Margin tab', function () {
 	  
 	  browser.refresh();
 	  
-	  tabs.get(2).element(by.css('a')).click();
+	  //! 'Total hours'
+	  element(by.css('a[data-target="#totalHours"]')).click();
 	  expect(activeTab.getText()).toBe('Total Hours');
 	  
 	  expect(rows.first().all(by.css('td')).get(0).getText()).toBe(totalHoursFrom+'');
@@ -174,7 +179,8 @@ describe('Navigating to Margin tab', function () {
   it('should save fixed on timesheets amount', function(){
 	var value = helper.getDefaultNumber().substr(4);
 	  
-	tabs.get(3).element(by.css('a')).click();
+	//! 'Fixed on timesheets'
+	element(by.css('a[data-target="#fixedOnTimesheets"]')).click();
 	expect(activeTab.getText()).toBe('Fixed on Timesheets');
 	
 	element(by.model('marginFee.margin.fixedOnTimesheets')).clear().sendKeys(value);
@@ -183,7 +189,8 @@ describe('Navigating to Margin tab', function () {
 	
 	browser.refresh();
 	
-	tabs.get(3).element(by.css('a')).click();
+	//! 'Fixed on timesheets'
+	element(by.css('a[data-target="#fixedOnTimesheets"]')).click();
 	expect(activeTab.getText()).toBe('Fixed on Timesheets');
 	
 	expect(element(by.model('marginFee.margin.fixedOnTimesheets')).getAttribute('value')).toBe(value+'');
