@@ -58,9 +58,9 @@ describe('Checking Action Requests', function(){
 		expect(element(by.css('.modal-content')).isPresent()).toBeTruthy();
 
 		//! 'Typing request date'
-		element.all(by.model('dateRequested')).all(by.css('input')).first().clear().sendKeys('01/01/2015');
+		element.all(by.model('dateRequested')).all(by.css('input')).first().clear().sendKeys('5/5/1991');
 		//! 'Typing leaving date'
-		element.all(by.model('leavingDate')).all(by.css('input')).first().clear().sendKeys('07/01/2015');
+		element.all(by.model('leavingDate')).all(by.css('input')).first().clear().sendKeys('5/5/1991');
 
 		//! 'Temporaly make input[type="file"] displayable'
 		browser.executeScript('$("#uploadBtn").css("display","inline-block")');

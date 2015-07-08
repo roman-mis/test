@@ -42,7 +42,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     input2.sendKeys(parseInt(number.substr(-3, 3)));
 */
     var date = helper.getDateByModel('tax.startDate');
-    date.clear().sendKeys('26/01/2012');
+    date.clear().sendKeys('5/5/1991');
 
     var freq = element(by.model('tax.payFrequency'));
     helper.selectSelector(freq, 2);
@@ -74,7 +74,7 @@ describe('Navigating to Payroll-Tax tab', function () {
     expect($('.modal-content').isDisplayed()).toBeTruthy();
 
     expect(decl.getText()).toBe('Not Applicable');
-    expect(date.getAttribute('value')).toBe('26/01/2012');
+    expect(date.getAttribute('value')).toBe('05/05/1991');
     expect(freq.getText()).toBe('4 Weekly');
     expect(niCat.getText()).toBe('E');
     expect(ni.getAttribute('value')).toBe('AB123456C');

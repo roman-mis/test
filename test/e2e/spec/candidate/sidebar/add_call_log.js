@@ -18,7 +18,7 @@ describe('Checking Call Log', function () {
     // helper.selectSelector(element.all(by.model('data.template')),0);
     element(by.model('data.templateTitle')).clear().sendKeys('Super task title');
     element(by.model('data.templateHtml')).clear().sendKeys('Super task desc');
-    helper.getDateByModel('data.followUpTaskDate').clear().sendKeys('01/01/2015');
+    helper.getDateByModel('data.followUpTaskDate').clear().sendKeys('5/5/1991');
     helper.selectSelector(element.all(by.model('data.assignee')), 1);
     element(by.css('[ng-click="save()"]')).click();
     helper.alertAccept();

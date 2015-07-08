@@ -51,7 +51,7 @@ describe('Checking Activity', function () {
     element(by.model('data.templateTitle')).sendKeys('Task Title');
     element(by.model('data.templateHtml')).sendKeys('Task Description');
 
-    element.all(by.model('data.followUpTaskDate')).all(by.css('input')).first().clear().sendKeys('01/01/2015');
+    element.all(by.model('data.followUpTaskDate')).all(by.css('input')).first().clear().sendKeys('5/5/1991');
 
     helper.selectSelector(element(by.model('data.assignee')), 1);
 
