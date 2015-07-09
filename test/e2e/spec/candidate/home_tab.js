@@ -3,11 +3,11 @@ var links = $$('.table-view-main-content .tabs-wrapper .nav-tabs a[href^="/candi
 describe('Candidate Home tab', function () {
   var passportNumber = helper.getDefaultNumber();
   
-  var expireDate = new Date(new Date().getTime() + 1000*60*60*24*305);
+  //var expireDate = new Date(new Date().getTime() + 1000*60*60*24*305);
   
-  var typingExpireDateStr = [expireDate.getMonth()+1, expireDate.getDate(), expireDate.getFullYear()].join('/');
+  //var typingExpireDateStr = [expireDate.getMonth()+1, expireDate.getDate(), expireDate.getFullYear()].join('/');
   
-  var readingExpireDateStr = [('0'+expireDate.getDate()).slice(-2), ('0'+(expireDate.getMonth()+1)).slice(-2), expireDate.getFullYear()].join('/');
+  //var readingExpireDateStr = [('0'+expireDate.getDate()).slice(-2), ('0'+(expireDate.getMonth()+1)).slice(-2), expireDate.getFullYear()].join('/');
   
   it('Checking dialog data input',function(){
     helper.getByText(links, 'Home').click();
@@ -27,7 +27,7 @@ describe('Candidate Home tab', function () {
     element(by.model('candidate.passportNumber')).clear().sendKeys(passportNumber);
     
     
-    helper.setDatepickerDate(element(by.model('candidate.passportExpiryDate')), readingExpireDateStr);
+    helper.setDatepickerDate(element(by.model('candidate.passportExpiryDate')), '5/5/1991');
 	
 	element(by.model('candidate.drivingLicenceNumber')).clear().sendKeys('MORGA657054SM0IJ');
 	//browser.sleep(30000);
@@ -50,7 +50,7 @@ describe('Candidate Home tab', function () {
     expect(labels.get(5).getText()).toBe('05/05/1991');
     expect(labels.get(6).getText()).toBe('United Kingdom');
     expect(labels.get(7).getText()).toBe(passportNumber);
-	expect(labels.get(8).getText()).toBe(readingExpireDateStr);
+	expect(labels.get(8).getText()).toBe('05/05/1991');
     expect(labels.get(9).getText()).toBe('MORGA657054SM0IJ');
 
   });

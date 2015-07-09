@@ -6,11 +6,13 @@ describe('Navigate to candidates url', function () {
   });
 
   it('should have working search engine', function () {
+	  
     var items = element.all(by.repeater('row in options.data'));
     var initCount = items.count();
 
     var searchInput = element(by.model('searchText'));
-    searchInput.sendKeys(loginData.userEmail.split('@')[0]);
+    //searchInput.sendKeys(loginData.userEmail.split('@')[0]);
+    searchInput.sendKeys('originemtest');
 
     expect(items.count()).toBeGreaterThan(0);
    // expect(items.count()).toBeLessThan(initCount);
