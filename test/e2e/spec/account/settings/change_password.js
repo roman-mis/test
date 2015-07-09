@@ -5,7 +5,7 @@ var testPassword = 'originemtestpassword'
 describe('password change setup', function(){
 	it('set test password "' + testPassword + '"', function(){
 		oldPassword = loginData.userPassword;
-		loginData.userEmail = loginData.userEmail.replace('+','_');
+		//loginData.userEmail = loginData.userEmail.replace('+','_');
 		loginData.userPassword = testPassword;
 		console.log('saving old password', oldPassword);
 	});

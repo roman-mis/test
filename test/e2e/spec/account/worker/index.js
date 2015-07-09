@@ -28,9 +28,9 @@ var workerAccountLoginData = global.workerAccoutLoginData = {
 		describe('Performing "Worker" account tests', function(){
 			console.log('but first we need to close Admin session');
 		});
-	},
+	},	
 	__dirname + '/../login/logout.js', // but first we need to close Admin session
-	__dirname + '/../reg/reg.js',
+	/*__dirname + '/../reg/reg.js',
 	__dirname + '/../reg/check-inbox.js',
 	__dirname + '/../reg/activate.js',
 	__dirname + '/../login/login1.js',
@@ -42,13 +42,23 @@ var workerAccountLoginData = global.workerAccoutLoginData = {
 	__dirname + '/admin_check_is_worker.js',
 	__dirname + '/../login/logout.js',
 	workerAccountLoginData.load,
+	*/
+	/* setup prefill */
+	function(){
+		describe('Setting up worker credentials', function(){
+			it('setting up worker login details', function () {
+				loginData.userEmail = 'originemtest+worker@yandex.com';
+				loginData.userPassword = 'andyboss';
+			});
+		});
+	},
 	__dirname + '/../login/login1.js',
 	function(){
 		global.isNonAdminSession = true;
 	},
 	// TODO test worker account //	
 	__dirname + '/../../candidate/home_tab.js',
-	__dirname + '/../../candidate/contact_tab.js',
+	//__dirname + '/../../candidate/contact_tab.js', // this may break access to worker account
 	__dirname + '/../settings/change_avatar.js',
 	__dirname + '/../settings/change_password.js',
 	__dirname + '/../settings/vehicle_info.js',

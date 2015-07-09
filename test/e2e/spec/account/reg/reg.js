@@ -121,11 +121,11 @@ describe('Browse to sign up', function() {
     expect($('.addtionalinfo-container').isDisplayed()).toBeTruthy();
 
     var date=helper.getDateByModel('candidate.details.arrivalDate');
-    date.sendKeys('2000/01/29');
+    date.sendKeys('5/5/1991');
     expect(date.getAttribute('class')).toContain('ng-valid');
 
     var date=helper.getDateByModel('candidate.details.recentDepDate');
-    date.sendKeys('2000/01/01');
+    date.sendKeys('5/5/1991');
     expect(date.getAttribute('class')).toContain('ng-valid');
 
     var checkboxes=$$('.addtionalinfo-container [ng-model="candidate.details.empLastVisit"] ');
